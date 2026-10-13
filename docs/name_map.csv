@@ -445,3 +445,4 @@ $8FFEB4,ShowGoalBox,CODE_8FFEB4,93G,93G renamed from DisplayPlayerAttributeMenu,
 #$0BFC,SPAHold,,ram93snes,SPA offset,routines/hockey/holdcheck.asm
 #$1386,SPAhook2,,ram93snes,SPA offset,routines/hockey/holdcheck.asm
 #$0C2E,SPAHold2,,ram93snes,SPA offset,routines/hockey/holdcheck.asm
+#$1124,SPAstanley,,ram93snes,SPA offset,routines/logic/assstanley.asm

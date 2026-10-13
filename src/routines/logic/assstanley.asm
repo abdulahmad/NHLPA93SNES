@@ -15,7 +15,7 @@ assstanley:		;Assignment: skate to the side of the screen holding the Stanley Cu
 .0:
 	lda.w Vpos
 	sta.w temp4,x
-	lda.w #$1124
+	lda.w #SPAstanley
 	sta.b d1
 	jsl.l SetSPA
 .nna:
