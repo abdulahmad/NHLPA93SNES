@@ -448,3 +448,7 @@ $8FFEB4,ShowGoalBox,CODE_8FFEB4,93G,93G renamed from DisplayPlayerAttributeMenu,
 #$1124,SPAstanley,,ram93snes,SPA offset,routines/logic/assstanley.asm
 #$101A,SPAwallright,,ram93snes,SPA offset,routines/logic/asseben.asm
 #$0189,SPFpuck,,ram93snes,sprite frame,routines/logic/puckshadow.asm
+$0188,SPFpad+2,,ram93snes,sprite frame,routines/video/FfoInitTable.asm
+$0186,SPFpad,,ram93snes,sprite frame,routines/video/FfoInitTable.asm
+$0187,SPFpad+1,,ram93snes,sprite frame,routines/video/FfoInitTable.asm
+$0161,SPFgloves,,ram93snes,sprite frame,routines/video/FfoInitTable.asm
