@@ -15,11 +15,18 @@ Replaced the remaining raw SPA and SPF immediates with equates that already exis
 | routines/hockey/updateplayers.asm | 2 | SPFfinjury, SPFPen |
 | routines/logic/GetHot.asm | 1 | SPFPen |
 
-38 replacements. A second pass found no other immediate that is a SetSPA argument, an SPA compare, or a frame field and equals an existing equate.
+38 replacements of immediates that already had equates. The SNES sprite-set frames that have no 68000 SPF base now have their own:
 
-Unsure (left numeric, same judgment as 93 Genesis):
-- `showcrowd.asm`: `#$001A` (frames 26), `#$001D` (frames 29), +31 for the horizontal rink, `#$0292` as the crowd-frame base.
-- `showzam.asm`: `#$022D`.
+| file | symbol |
+|---|---|
+| routines/video/checkfo.asm | SPFfaceoff-1 |
+| routines/video/setffo.asm | SPFsmallfont |
+| routines/video/showzam.asm | SPFzamboni |
+| routines/video/showcrowd.asm | SPFcrowd-1 |
+| routines/video/addframe.asm, addframe_hi.asm | SPFcrowd |
+| routines/logic/GetHot.asm | SPFPen-SPFfinjury, (HotListEnd-HotList)/2+1 |
+
+Still numeric, as in 93 Genesis: `showcrowd.asm` local crowd frames `#$001A` and `#$001D`, and +31 for the horizontal rink.
 
 ## Current state (file layout reorganization, 2026-10-12)
 

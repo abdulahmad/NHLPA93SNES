@@ -625,6 +625,10 @@ SPFhook		= 590	; 585
 SPFstumble	= 566	; 601
 SPFflip		= 558	; 625
 SPFbglass	= 622	; 645
+SPFfaceoff	= 532	; big faceoff sprites (frame 1; checkfo adds SPFfaceoff-1)
+SPFsmallfont	= 542	; pad-label glyphs (the glyph index is added)
+SPFzamboni	= 557	; zamboni
+SPFcrowd	= 659	; crowd and penalty-box sprites; first frame stored as 6-byte pieces
 ; sounds (sfx numbers)
 SFXstop		= $9C	; +0/1: skate stop (dostop, controlled player)
 SFXshotwiff	= $98	; +0-3: missed shot (doshot)

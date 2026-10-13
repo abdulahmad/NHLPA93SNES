@@ -4,11 +4,11 @@ GetHot:		;d0 / d1 = the hot spot x / y of object A's current frame
 	stz.b d0
 	stz.b d1
 	lda.w frame,y
-	cmp.w #SPFPen		; the hotspot list skips 6 frames there
+	cmp.w #SPFPen		; the hotspot list skips the injury frames
 	bcc .remap
-	sbc.w #$0006
+	sbc.w #SPFPen-SPFfinjury
 .remap:
-	cmp.w #$0226		; frames 1-$225 have hot spots
+	cmp.w #(HotListEnd-HotList)/2+1		; frames past the hotspot list
 	bcs .ex
 	dec a
 	bmi .ex

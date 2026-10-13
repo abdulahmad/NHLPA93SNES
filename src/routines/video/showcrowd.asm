@@ -55,7 +55,7 @@ showcrowd:		;Draw the crowd and penalty box sprites
 	bpl .pbt
 .rtl:
 	rtl
-.sc:		;d0 = frame (0 = none): sprite frame $292 + d0 (+31 horizontal) at the rink scroll position
+.sc:		;d0 = frame (0 = none): SPFcrowd-1 + d0 (+31 horizontal) at the rink scroll position
 	lda.b d0		; frame byte
 	and.w #$00FF
 	sta.b d0
@@ -69,7 +69,7 @@ showcrowd:		;Draw the crowd and penalty box sprites
 .chk:
 	lda.b d0
 	clc
-	adc.w #$0292		; crowd frames start at $293
+	adc.w #SPFcrowd-1		; local frame 1 is SPFcrowd
 	sta.b sprframe
 	lda.w #$FFC0		; x = $FFC0 - Hpos
 	sec

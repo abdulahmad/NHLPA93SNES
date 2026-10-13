@@ -95,7 +95,7 @@ setffo:		;Update the pads, then draw the objects tied to rink scrolling (the pad
 	and.w #$00FF
 	cmp.w #$00FF
 	beq .sp
-	adc.w #$021E		; small font sprite base $21E
+	adc.w #SPFsmallfont		; glyph index plus the label sprites
 	sta.b sprframe
 	lda.b d0
 	sta.b sprx
