@@ -1,4 +1,5 @@
 SortObjInitTable:		;Start positions, frames and assignments of the players
+	; x, y, height, frame, attribute (bit 0 = visiting palette), collision width, collision height, assignment, flags
 	dw $0160,$00C0,$0000,SPFskatewp,$0000,$0008,$0004,$0000,$0000
 	dw $FF38,$FF9C,$0000,SPFskatewp,$0000,$0008,$0004,$0000,$0000
 	dw $FF38,$FFB0,$0000,SPFskatewp,$0000,$0008,$0004,$0000,$0000
