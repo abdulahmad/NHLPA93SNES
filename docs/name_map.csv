@@ -436,3 +436,7 @@ $8FFEB4,ShowGoalBox,CODE_8FFEB4,93G,93G renamed from DisplayPlayerAttributeMenu,
 #$02D2,SPAgswing,,ram93snes,SPA offset,routines/logic/dopass.asm
 #$06C4,SPApassf,,ram93snes,SPA offset,routines/logic/dopass.asm
 #$0736,SPApassb,,ram93snes,SPA offset,routines/logic/dopass.asm
+#$0EDA,SPAfight,,ram93snes,SPA offset,routines/logic/fightinput.asm
+#$0F50,SPAfhigh,,ram93snes,SPA offset,routines/logic/fightinput.asm
+#$0F82,SPAflow,,ram93snes,SPA offset,routines/logic/fightinput.asm
+#$0F0C,SPAfgrab,,ram93snes,SPA offset,routines/logic/fightinput.asm

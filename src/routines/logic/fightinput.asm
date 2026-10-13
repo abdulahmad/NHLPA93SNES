@@ -5,7 +5,7 @@ fightinput:		;Pad input in a fight: move and punch
 	jmp.w .rtl
 .go:
 	lda.w SPA,x
-	cmp.w #$0EDA
+	cmp.w #SPAfight
 	bne .input
 	jmp.w .rtl
 .input:
@@ -66,7 +66,7 @@ fightinput:		;Pad input in a fight: move and punch
 	bne .rtl
 	lda.b d1
 	sta.b d2
-	lda.w #$0F50
+	lda.w #SPAfhigh
 	sta.b d1
 	sta.w pf2aip,x
 	lda.b d2
@@ -74,14 +74,14 @@ fightinput:		;Pad input in a fight: move and punch
 	beq .p2
 	jml.l SetSPA
 .p2:
-	lda.w #$0F82
+	lda.w #SPAflow
 	sta.b d1
 	lda.b d2
 	bit.w #$8000
 	beq .p3
 	jml.l SetSPA
 .p3:
-	lda.w #$0F0C
+	lda.w #SPAfgrab
 	sta.b d1
 	lda.b d2
 	bit.w #$4000
