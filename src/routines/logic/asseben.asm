@@ -25,7 +25,7 @@ asseben:		;Assignment: player X comes onto the ice from the bench
 	lda.w #$0002
 	sta.w facedir,x
 	sta.w pfalock,x
-	lda.w #$101A
+	lda.w #SPAwallright
 	sta.b d1
 	jml.l SetSPA
 .rtl:
