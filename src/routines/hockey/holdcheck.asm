@@ -54,7 +54,7 @@ holdcheck:		;Player X holds or hooks a2: both slow down, and a holding or hookin
 	ror a
 	sta.w Yvel,x
 	sta.w Yvel,y
-	lda.w #$0C60
+	lda.w #SPAflail
 	sta.b d1
 	sta.w pfalock,x
 	jsl.l SetSPA
@@ -62,13 +62,13 @@ holdcheck:		;Player X holds or hooks a2: both slow down, and a holding or hookin
 	ldy.b a3
 	stx.b a3
 	sty.b a2
-	lda.w #$0C2E
+	lda.w #SPAHold2
 	sta.b d1
 	sta.w pfalock,x
 	lda.w SPA,x
-	cmp.w #$0BFC
+	cmp.w #SPAHold
 	beq .h2
-	lda.w #$1386
+	lda.w #SPAhook2
 	sta.b d1
 .h2:
 	jsl.l SetSPA
@@ -79,7 +79,7 @@ holdcheck:		;Player X holds or hooks a2: both slow down, and a holding or hookin
 	lda.w #$0024
 	sta.b d0
 	lda.w SPA,x
-	cmp.w #$0C2E
+	cmp.w #SPAHold2
 	beq .pen
 	lda.w #$001E
 	sta.b d0
