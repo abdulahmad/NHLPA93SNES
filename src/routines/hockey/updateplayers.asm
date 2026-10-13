@@ -343,10 +343,10 @@ updateplayers:		;Animation, speed, position, input and assignment for every obje
 .nf1:
 	sta.w impact,x
 	sta.w limpact,x
-	lda.w frame,x		; frames $173-$178: x kept within +-$60
-	cmp.w #$0173
+	lda.w frame,x		; injury frames: SPFfinjury inclusive, SPFPen exclusive, and x kept within +-$60
+	cmp.w #SPFfinjury
 	bcc .next
-	cmp.w #$0179
+	cmp.w #SPFPen
 	bcs .next
 	lda.w Xpos,x
 	sec

@@ -468,3 +468,5 @@ $0194,SPFgoal,,ram93snes,sprite frame,routines/video/SortObjInitTable.asm
 $0195,SPFgoal+1,,ram93snes,sprite frame,routines/video/SortObjInitTable.asm
 $018A,SPFpuck+1,,ram93snes,sprite frame,routines/video/SortObjInitTable.asm
 $0189,SPFpuck,,ram93snes,sprite frame,routines/video/SortObjInitTable.asm
+#$0173,SPFfinjury,,ram93snes,sprite frame,routines/hockey/updateplayers.asm
+#$0179,SPFPen,,ram93snes,sprite frame,routines/hockey/updateplayers.asm
