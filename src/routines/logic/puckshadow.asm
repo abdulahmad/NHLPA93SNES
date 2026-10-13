@@ -1,6 +1,6 @@
 puckshadow:		;Assignment: the puck shadow follows the puck
 	lda.w frame,x
-	cmp.w #$0189		; puck frame: shadow under the puck
+	cmp.w #SPFpuck		; puck frame: shadow under the puck
 	bne .none
 	lda.w puckx
 	sta.w Xpos,x
