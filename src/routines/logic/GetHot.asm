@@ -4,7 +4,7 @@ GetHot:		;d0 / d1 = the hot spot x / y of object A's current frame
 	stz.b d0
 	stz.b d1
 	lda.w frame,y
-	cmp.w #$0179		; the SNES frame list skips 6 frames from $179
+	cmp.w #SPFPen		; the hotspot list skips 6 frames there
 	bcc .remap
 	sbc.w #$0006
 .remap:

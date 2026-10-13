@@ -1,3 +1,26 @@
+## Animation and sprite-frame immediates (2026-10-13)
+
+Replaced the remaining raw SPA and SPF immediates with equates that already exist in `src/ram93snes.asm`. No new equates were added.
+
+| file | count | symbols |
+|---|---|---|
+| routines/logic/dopass.asm | 3 | SPAgswing, SPApassf, SPApassb |
+| routines/logic/fightinput.asm | 4 | SPAfight, SPAfhigh, SPAflow, SPAfgrab |
+| routines/hockey/holdcheck.asm | 5 | SPAflail, SPAHold2 (load and compare), SPAHold, SPAhook2 |
+| routines/logic/assstanley.asm | 1 | SPAstanley |
+| routines/logic/asseben.asm | 1 | SPAwallright |
+| routines/logic/puckshadow.asm | 1 | SPFpuck |
+| routines/video/FfoInitTable.asm | 4 | SPFpad+2, SPFpad, SPFpad+1, SPFgloves |
+| routines/video/SortObjInitTable.asm | 16 | SPFskatewp (12 player rows), SPFgoal, SPFgoal+1, SPFpuck+1, SPFpuck |
+| routines/hockey/updateplayers.asm | 2 | SPFfinjury, SPFPen |
+| routines/logic/GetHot.asm | 1 | SPFPen |
+
+38 replacements. A second pass found no other immediate that is a SetSPA argument, an SPA compare, or a frame field and equals an existing equate.
+
+Unsure (left numeric, same judgment as 93 Genesis):
+- `showcrowd.asm`: `#$001A` (frames 26), `#$001D` (frames 29), +31 for the horizontal rink, `#$0292` as the crowd-frame base.
+- `showzam.asm`: `#$022D`.
+
 ## Current state (file layout reorganization, 2026-10-12)
 
 Moving to the bank/routine layout: `src/banks/bXX_<name>.asm` (one per bank: `org` + includes in ROM order),
