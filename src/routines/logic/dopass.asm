@@ -228,15 +228,15 @@ dopass:		;Pass the puck in the pass direction, to the best teammate there if any
 	lda.w puckvy
 	sta.b d1
 	jsl.l vtoa
-	lda.w #$02D2
+	lda.w #SPAgswing
 	sta.b d1
 	lda.w position,x
 	beq .e1
-	lda.w #$06C4
+	lda.w #SPApassf
 	sta.b d1
 	jsl.l Findhittype
 	beq .e1
-	lda.w #$0736
+	lda.w #SPApassb
 	sta.b d1
 .e1:
 	jsl.l SetSPA

@@ -433,3 +433,6 @@ $8FFDD8,ResetAndSelectPlayers,CODE_8FFDD8,93G,,logic_b8F
 $8FFE7B,MusicCue,CODE_8FFE7B,SNES,from StartSong1-5,sound_b8F
 $8FFE8E,sfx8F,CODE_8FFE8E,SNES,,sound_b8F
 $8FFEB4,ShowGoalBox,CODE_8FFEB4,93G,93G renamed from DisplayPlayerAttributeMenu,hockey_b8F
+#$02D2,SPAgswing,,ram93snes,SPA offset,routines/logic/dopass.asm
+#$06C4,SPApassf,,ram93snes,SPA offset,routines/logic/dopass.asm
+#$0736,SPApassb,,ram93snes,SPA offset,routines/logic/dopass.asm
