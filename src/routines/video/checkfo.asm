@@ -13,9 +13,9 @@ checkfo:		;Draw the face off sprites
 	sta.b sprx
 	lda.w fodropy
 	sta.b spry
-	lda.w fofdata2,x		; frame + faceoff sprite base $213
+	lda.w fofdata2,x		; 1-based faceoff frame
 	clc
-	adc.w #$0213
+	adc.w #SPFfaceoff-1
 	sta.b sprframe
 	lda.w fofdata2+2,x
 	and.w #$0800

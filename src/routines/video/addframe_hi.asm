@@ -1,6 +1,6 @@
 addframe_hi:		;addframe for the high frame numbers: find the frame set and draw it with DrawFrameHi
 	lda.b sprframe
-	cmp.w #$0293
+	cmp.w #SPFcrowd		; 6-byte pieces from SPFcrowd on
 	bcs .hi
 	jml.l addframe_end
 .hi:

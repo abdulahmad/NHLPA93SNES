@@ -16,7 +16,7 @@ showzam:		;Draw the zamboni moving across the horizontal rink
 	sta.b sprx
 	lda.w #$00C8
 	sta.b spry
-	lda.w #$022D
+	lda.w #SPFzamboni
 	sta.b sprframe
 	jsl.l addframe
 .rtl:
