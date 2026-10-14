@@ -32,9 +32,10 @@ The last line must be `MATCH` and both sha1 lines must equal `76a01492cfb656e9fc
 ## 3. Source layout
 
 The segment phase is finished: every bank is disassembled and named (the per-slice log is in `SEGMENT_AGENT.md`).
-The source is laid out by bank: `src/nhlpa93snes.asm` includes `src/banks/bXX_<name>.asm` in bank order. Each bank file has one
-`org` (the bank start, or the first byte after a block that runs over from the bank before) and then `incsrc` lines in exact ROM order,
-nothing else. Code is one routine per file in `src/routines/<93G module>/<Routine>.asm` (`hockey`, `logic`, `middle`, `penalty`,
+The source is laid out by bank: `src/nhlpa93snes.asm` includes `src/banks/bXX_<name>.asm` in bank order. Bank $80 has one
+unconditional `org`. Each later bank orgs only when `pc()` has not already reached that address, then `incsrc` lines in exact ROM
+order, nothing else. Bank $90 (`b90_expanded.asm`) is included last and writes no bytes in the stock build. Adding a team is
+`docs/ADDING_A_TEAM.md`. Code is one routine per file in `src/routines/<93G module>/<Routine>.asm` (`hockey`, `logic`, `middle`, `penalty`,
 `video`, `stats`, `sound`, `main`); a routine that falls through into the next keeps both in one file, named after the first. Small
 tables a module uses stay in its routines folder. Non-code data is in `src/data/<category>/<Name>.asm` (`sound`, `gfx`, `frames`,
 `teams`, `text`). The SNES header and vectors are `src/header/snes_header.asm`. `docs/file_map.md` lists every bank's files with

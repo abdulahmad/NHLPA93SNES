@@ -1,3 +1,14 @@
+## Expanded banks and the team count (2026-10-14)
+
+The stock image still matches (`76a01492cfb656e9fce0094bca356c312adfea0e`). No team was added. How to add one is `docs/ADDING_A_TEAM.md`.
+
+- `check bankcross` stays off. Turning it on fails the stock assemble: asar 1.91 warns `Wfeature_deprecated` (`check bankcross on` is the old name of `bankcheck on`, and it points at `bankcheck full` or `bankcheck half`) and then errors `Ebank_border_crossed` on the in-game sample `incbin` in `src/data/sound/gamesound.asm`. That stream runs from bank $81 into $82, and `b82` starts where it ends. No other stock bank crosses. `bankcheck half` and `bankcheck full` were not tried; the cross is the sample data, so the check stays off.
+- `src/header/snes_header.asm` keeps size `$09`, complement `$B75A`, checksum `$48A5`. `build.sh` and `build.ps1` still pass `--fix-checksum=off`, then run `python3 tools/patchheader.py` on `output/nhlpa93snes.sfc`. On the retail image the patch writes nothing. On a larger image it pads with `$00` to the next SNES size (`$0A` = 1MB, `$0B` = 2MB, `$0C` = 4MB), stores the checksum and its complement little-endian, and checks that the finished file sums to that word. A complement pair always adds `$01FE`. Cartridge type stays ROM only. SRAM size stays 0. There is no cart save RAM. Running the patch on `lst/nhlpa93snes.bin` leaves `$48A5` and `$B75A`.
+- Each bank file after `$80` orgs only when `pc()` has not already reached that address. On the stock tree the PC arrives exactly there, so the org is skipped. Bank `$80` stays an unconditional org. `src/banks/b90_expanded.asm` is included last and writes no bytes in the stock build. `tools/gen_file_map.py` reads the guarded org; `docs/file_map.md` was regenerated.
+- `NumofTeams` stays 26 (clubs 0-23, AllStarsEast 24, AllStarsWest 25). TeamList, TeamBlocksMap and playoffseats (34 trees, left alone) are asserted. The two demo `randoma` ranges and the Team 1 and Team 2 counts in `setoptions` `.pslim` use `NumofTeams`. Playoff Team 1 stays `lda.w #$0018`. `NewPO` stays `cmp.w #24`.
+
+Next: a new team follows `docs/ADDING_A_TEAM.md`. Bank `$83`'s `$FF` fill is 354 bytes (`unusedFF83`); a record does not fit, so it is assembled in bank `$90` and TeamList points at it. Bank `$87` ends with 9 bytes of `$FF`, so a TeamBlocksMap row needs `assepen` and its fill moved to bank `$90`. `DrawFrame` and `addframe_end` stay together. The `FrameSetTable` header sum checked at startup is `$131D`; leave the sprite-set headers alone.
+
 ## Animation and sprite-frame immediates (2026-10-13)
 
 Replaced the remaining raw SPA and SPF immediates with equates that already exist in `src/ram93snes.asm`. No new equates were added.

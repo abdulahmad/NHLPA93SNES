@@ -18,7 +18,7 @@ Source style:
 - Local labels in 92 style: `.loop`, `.next`, `.done`, `.exit`, and plain numbers for trivial jumps.
 - File headers are short plain-English stories of what the file does, modelled on `hockey93.asm`, `main93.asm` and `menu93.asm`.
 
-Layout (SNES repos, 93S and 94S): `src/banks/` holds ordered bank files named by content (one `org`, then `incsrc` lines in ROM order),
+Layout (SNES repos, 93S and 94S): `src/banks/` holds ordered bank files named by content (bank $80 has an unconditional `org`; each later bank orgs only when `pc()` is still below that address, then `incsrc` lines in ROM order),
 `src/routines/<module>/<Routine>.asm` holds one routine per file, `src/data/<category>/` holds data. The folder is the module of the
 routine's origin: 94G for 94 code, else 93G, else 92G; SNES-only code goes in a sensibly named SNES folder. Segment build stubs go in
 `src/stubinc`, tools in `tools/`. The build runs a prebuild ROM check that names the path, file name, SHA-1 and size of the ROM it needs
@@ -30,7 +30,7 @@ Work in small steps: every change is built and checked byte for byte against the
 ## Layout note (bank/routine layout, 2026-10-12)
 
 The 93G module files below (`src/hockey_b80.asm`, `src/gfx/...`) were split by `tools/split_routines.py` into:
-`src/banks/bXX_<name>.asm` (one per bank: one `org`, then `incsrc` lines in exact ROM order, nothing else),
+`src/banks/bXX_<name>.asm` (one per bank: bank $80 orgs unconditionally, each later bank orgs only when `pc()` has not reached that address, then `incsrc` lines in exact ROM order, nothing else),
 `src/routines/<93G module>/<Routine>.asm` (one routine per file; fall-through routines stay with the first; local labels stay with their routine)
 and `src/data/<category>/<Name>.asm` (sound, gfx, text; bank $83 team data is one file `data/teamdata93s.asm`, the SPC streams are `data/sound/gamesound.asm` and `data/sound/bootsound.asm`). Header/vectors: `src/header/snes_header.asm`.
 
@@ -40,6 +40,8 @@ Rules for adding or splitting routines:
 - Add one `incsrc "../routines/<module>/<Routine>.asm"` line to the bank file at its exact ROM position. No `org` in routine or data files.
 - Splitting a routine out of a file: cut at its global label line (move the comment lines right above the label with it); bytes stay in order.
 - Unused padding/filler goes with the routine before it, or in a clearly named file.
+- Bank $90 (`src/banks/b90_expanded.asm`) is included last and writes no bytes in the stock build. Keep each routine inside one bank: a 65816 instruction that straddles a 32 KB bank does not run. Adding a team is `docs/ADDING_A_TEAM.md`.
+- Leave `check bankcross off` (asar 1.91 deprecates it, and the in-game sample incbin crosses from bank $81 into $82). Do not switch it to `bankcheck half` or `bankcheck full`.
 - Build MATCH, then `python3 tools/gen_file_map.py` to refresh `docs/file_map.md`.
 
 ## Layout note (cleanup pass)
