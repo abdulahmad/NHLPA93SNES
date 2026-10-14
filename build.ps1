@@ -1,4 +1,4 @@
-# Windows build: assemble with tools\bin\asar.exe (or asar on PATH) and verify sha1 against lst\nhlpa93snes.bin.
+# Windows build: assemble with tools\bin\asar.exe (or asar on PATH), patch the SNES header if the image grew, and verify sha1 against lst\nhlpa93snes.bin.
 $ErrorActionPreference = 'Stop'
 Set-Location $PSScriptRoot
 $asar = Join-Path $PSScriptRoot 'tools\bin\asar.exe'; if (-not (Test-Path $asar)) { $asar = 'asar' }
@@ -6,6 +6,8 @@ New-Item -ItemType Directory -Force -Path output | Out-Null
 Remove-Item -ErrorAction SilentlyContinue output\nhlpa93snes.sfc
 & $asar --fix-checksum=off --symbols=wla --symbols-path=output/nhlpa93snes.sym src/nhlpa93snes.asm output/nhlpa93snes.sfc
 if ($LASTEXITCODE -ne 0 -or -not (Test-Path output\nhlpa93snes.sfc)) { Write-Host 'MISMATCH (assembly failed)'; exit 1 }
+python3 tools/patchheader.py output/nhlpa93snes.sfc
+if ($LASTEXITCODE -ne 0) { Write-Host 'MISMATCH (header patch failed)'; exit 1 }
 $ref = (Get-FileHash -Algorithm SHA1 lst\nhlpa93snes.bin).Hash.ToLower()
 $out = (Get-FileHash -Algorithm SHA1 output\nhlpa93snes.sfc).Hash.ToLower()
 Write-Host "ref $ref"; Write-Host "out $out"
