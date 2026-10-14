@@ -1,12 +1,17 @@
 # Source file map
 
-`src/nhlpa93snes.asm` includes one file per bank (`src/banks/bXX_<name>.asm`). A bank file sets the bank address with one `org`
-and includes its routine and data files in exact ROM order. Routines are in `src/routines/<93G module>/<Routine>.asm`
+`src/nhlpa93snes.asm` includes one file per bank (`src/banks/bXX_<name>.asm`). Bank $80 sets its address with `org`.
+Each later bank orgs only when `pc()` has not already reached that address, so a bank that grew is not rewound.
+On the stock tree the PC arrives exactly there and the org is skipped. A bank file then includes its routine and data
+files in exact ROM order. Routines are in `src/routines/<93G module>/<Routine>.asm`
 (one routine per file; a routine that falls through into the next keeps both), non-code data in `src/data/<category>/<Name>.asm`.
 The SNES internal header and vectors are in `src/header/snes_header.asm` (end of bank $80).
+Bank $90 is included last. The stock build writes no bytes there.
 Regenerate this file with `python3 tools/gen_file_map.py` after `./build.sh`.
 
 ## src/banks/b80_engine.asm
+
+org `$808000`.
 
 - `$808000` routines/main/Start.asm
 - `$8080B2` routines/hockey/BRKHalt.asm
@@ -197,9 +202,13 @@ Regenerate this file with `python3 tools/gen_file_map.py` after `./build.sh`.
 
 ## src/banks/b81_sfx.asm
 
+org `$818000` when `pc()` is below it.
+
 - `$818000` data/sound/gamesound.asm (also GameSampleDir, GameSampleDirEnd, GameSamples, GameSamplesEnd)
 
 ## src/banks/b82_sfx_rink.asm
+
+org `$82B86C` when `pc()` is below it.
 
 - `$82B86C` data/frames93s.asm (also SPAgready_table, SPAgready2_table, SPAgglover_table, SPAgglovel_table, SPAgstickr_table, SPAgstickl_table, SPAgstackr_table, SPAgstackl_table, SPAgswing_table, SPAgskate_table, SPApflip_table, SPAglide_table, SPAskatewp_table, SPAskate_table, SPAturnl_table, SPAturnr_table, SPAstop_table, SPApassf_table, SPApassb_table, SPAshotf_table, SPAshotb_table, SPAglideback_table, SPAskateback_table, SPAsweepchk_table, SPAshoulderchkl_table, SPAshoulderchkr_table, SPAhipchkl_table, SPAhipchkr_table, SPAburst_table, SPAHold_table, SPAHold2_table, SPAflail_table, SPAfallfwd_table, SPAfallback_table, SPAcelebrate_table, SPApump_table, SPAfight_table, SPAfgrab_table, SPAfheld_table, SPAfhigh_table, SPAflow_table, SPAfhith_table, SPAfhitl_table, SPAffall_table, SPAwallright_table, SPAwallleft_table, SPAfaceoff_table, SPAfaceoffr_table, SPAsiren_table, SPAstanley_table, SPAfinjury_table, SPAflip_table, SPAstumble_table, SPAhook_table, SPAhook2_table, SPAcatch_table, SPAbglass_table, SPAgdive_table, SPAinjury1_table, SPAListEnd)
 - `$82CDA0` data/gfx/IceRinkTiles.asm (also IceRinkTilesEnd)
@@ -234,6 +243,8 @@ Regenerate this file with `python3 tools/gen_file_map.py` after `./build.sh`.
 
 ## src/banks/b83_teams.asm
 
+org `$838000` when `pc()` is below it.
+
 - `$838000` data/teamdata93s.asm (also TeamListEnd, AllStarsEast, AllStarsWest, Boston, Buffalo, Calgary, Chicago, Detroit, Edmonton, Hartford, LosAngeles, LongIsland, Minnesota, Montreal, NewJersey, NewYork, Ottawa, Philadelphia, Pittsburgh, Quebec, SanJose, StLouis, TampaBay, Toronto, Vancouver, Winnipeg, Washington, playoffseats, playoffseatsEnd)
 - `$83C6D8` data/gfx/SmallFontTiles.asm (also SmallFontTilesEnd)
 - `$83CC0C` routines/hockey/PlayerNumName.asm
@@ -251,6 +262,8 @@ Regenerate this file with `python3 tools/gen_file_map.py` after `./build.sh`.
 
 ## src/banks/b84_scouting.asm
 
+org `$848000` when `pc()` is below it.
+
 - `$848000` data/gfx/SpriteSet9.asm (also SpriteSet9End)
 - `$84D630` data/text/ScoutingReportText.asm (also ScoutingReportTextEnd)
 - `$84E949` data/gfx/FaceOffMap.asm
@@ -266,7 +279,7 @@ Regenerate this file with `python3 tools/gen_file_map.py` after `./build.sh`.
 - `$84EDF3` routines/hockey/ScoutScripts.asm
 - `$84EEE3` routines/hockey/ScoutLineOrder.asm
 - `$84EEF4` routines/hockey/DrawScoutPlayers.asm (also DrawScoutPlayer)
-- `$84EF3C` data/gfx/HotList.asm
+- `$84EF3C` data/gfx/HotList.asm (also HotListEnd)
 - `$84F386` data/gfx/RinkLogoTiles.asm (also RinkLogoTilesEnd)
 - `$84F532` routines/hockey/UpdateScoutingDisplay.asm
 - `$84F734` routines/hockey/ScrollDisplayUp.asm
@@ -290,6 +303,8 @@ Regenerate this file with `python3 tools/gen_file_map.py` after `./build.sh`.
 
 ## src/banks/b85_title_gfx.asm
 
+org `$858000` when `pc()` is below it.
+
 - `$858000` data/gfx/SpriteSet4.asm (also SpriteSet4End)
 - `$85D5A4` routines/hockey/GetShifter.asm
 - `$85D5C0` data/gfx/Title1Map.asm (also Title1MapEnd)
@@ -300,6 +315,8 @@ Regenerate this file with `python3 tools/gen_file_map.py` after `./build.sh`.
 - `$85FF97` routines/hockey/ResetClock.asm (also unusedFF85)
 
 ## src/banks/b86_sound_driver.asm
+
+org `$868000` when `pc()` is below it.
 
 - `$868000` data/sound/bootsound.asm (also SPCDriver, SPCDriverEnd, BootInstruments, BootInstrumentsEnd, BootSampleDir, BootSampleDirEnd, BootSamples, BootSamplesEnd)
 - `$86FA3E` routines/middle/DecompressBytecode.asm
@@ -318,10 +335,12 @@ Regenerate this file with `python3 tools/gen_file_map.py` after `./build.sh`.
 
 ## src/banks/b87_player_sprites.asm
 
+org `$878000` when `pc()` is below it.
+
 - `$878000` data/gfx/SpriteSet2.asm (also SpriteSet2End)
 - `$87C3A0` data/gfx/EASNMap.asm
 - `$87C6B4` data/gfx/FaceOffTiles.asm
-- `$87CABA` data/gfx/TeamBlocksMap.asm
+- `$87CABA` data/gfx/TeamBlocksMap.asm (also TeamBlocksMapEnd)
 - `$87CE62` routines/video/DrawFrame.asm
 - `$87D1FE` routines/video/addframe_end.asm
 - `$87D205` data/gfx/SpriteSet6.asm (also SpriteSet6End)
@@ -331,6 +350,8 @@ Regenerate this file with `python3 tools/gen_file_map.py` after `./build.sh`.
 - `$87FF78` routines/logic/assepen.asm (also unusedFF87)
 
 ## src/banks/b88_title_playoffs.asm
+
+org `$888000` when `pc()` is below it.
 
 - `$888000` data/gfx/GameSetupMap.asm (also GameSetupMapEnd)
 - `$88822F` data/gfx/SmallFontMap.asm
@@ -361,6 +382,8 @@ Regenerate this file with `python3 tools/gen_file_map.py` after `./build.sh`.
 
 ## src/banks/b89_replay_music.asm
 
+org `$898000` when `pc()` is below it.
+
 - `$898000` data/gfx/SpriteSet11.asm (also SpriteSet11End)
 - `$8990F0` routines/hockey/ReplayMode.asm
 - `$899383` data/gfx/SpriteSet13.asm (also SpriteSet13End)
@@ -389,6 +412,8 @@ Regenerate this file with `python3 tools/gen_file_map.py` after `./build.sh`.
 
 ## src/banks/b8A_playoffbracket_credits.asm
 
+org `$8A8000` when `pc()` is below it.
+
 - `$8A8000` data/gfx/SpriteSet12.asm (also SpriteSet12End)
 - `$8AF880` data/gfx/PlayoffBracketMap.asm
 - `$8AFAA8` data/text/Credits.asm
@@ -397,6 +422,8 @@ Regenerate this file with `python3 tools/gen_file_map.py` after `./build.sh`.
 - `$8AFE21` routines/penalty/SetScore.asm (also unusedFF8A)
 
 ## src/banks/b8B_opening.asm
+
+org `$8B8000` when `pc()` is below it.
 
 - `$8B8000` routines/hockey/NewPO.asm
 - `$8B807D` routines/hockey/FigureJoy.asm
@@ -412,12 +439,16 @@ Regenerate this file with `python3 tools/gen_file_map.py` after `./build.sh`.
 
 ## src/banks/b8C_skate_sprites.asm
 
+org `$8C8000` when `pc()` is below it.
+
 - `$8C8000` data/gfx/NHLPALogo.asm (also NHLPALogoEnd)
 - `$8C845A` data/gfx/SpriteSet0.asm (also SpriteSet0End)
 - `$8CFC1A` routines/video/checksso.asm
 - `$8CFD83` routines/logic/chk4pass.asm (also unusedFF8C)
 
 ## src/banks/b8D_fonts.asm
+
+org `$8D8000` when `pc()` is below it.
 
 - `$8D8000` routines/hockey/maketree.asm
 - `$8D8120` routines/video/InitPPU.asm
@@ -444,6 +475,8 @@ Regenerate this file with `python3 tools/gen_file_map.py` after `./build.sh`.
 
 ## src/banks/b8E_gameloop.asm
 
+org `$8E8000` when `pc()` is below it.
+
 - `$8E8000` routines/hockey/Gameloop.asm
 - `$8E8182` routines/hockey/PlayerShortName.asm
 - `$8E826B` routines/logic/assbench.asm
@@ -452,6 +485,8 @@ Regenerate this file with `python3 tools/gen_file_map.py` after `./build.sh`.
 - `$8EFE73` routines/logic/assdefo.asm (also unused008E)
 
 ## src/banks/b8F_frontend.asm
+
+org `$8F8000` when `pc()` is below it.
 
 - `$8F8000` data/gfx/BigFontMap.asm
 - `$8F8130` routines/video/unusedEnergyBar.asm
@@ -572,3 +607,9 @@ Regenerate this file with `python3 tools/gen_file_map.py` after `./build.sh`.
 - `$8FFE8E` routines/sound/sfx8F.asm
 - `$8FFEB4` routines/hockey/ShowGoalBox.asm
 - `$8FFFDC` data/text/GoalBoxText.asm (also unusedFF8F)
+
+## src/banks/b90_expanded.asm
+
+org `$908000` when `pc()` is below it.
+
+No bytes in the stock build.
