@@ -355,10 +355,10 @@ TeamRoster:		;Team Roster screen: each line's players and one attribute column. 
 	sec
 	sbc.w #$0005
 	beq .row
-	bmi .lt5
+	bmi .neg
 	bvc .fewer
 	bra .row
-.lt5:
+.neg:
 	bvc .row
 .fewer:
 	dec.b d1

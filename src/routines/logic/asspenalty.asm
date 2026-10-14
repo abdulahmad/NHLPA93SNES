@@ -76,11 +76,11 @@ asspenalty:		;Assignment: player X skates to the penalty box, glides in and face
 	sta.b d0
 	sec
 	sbc.w #-24
-	bmi .lt
+	bmi .neg
 	bvc .near
 .st0:
 	jmp.w .st
-.lt:
+.neg:
 	bvc .st0
 .near:
 	lda.w temp1,x
@@ -116,10 +116,10 @@ asspenalty:		;Assignment: player X skates to the penalty box, glides in and face
 	lda.b d0
 	sec
 	sbc.w #-8
-	bmi .lt2
+	bmi .neg1
 	bvc .stop
 	bra .rtl
-.lt2:
+.neg1:
 	bvc .rtl
 .stop:
 	stz.w Xvel,x

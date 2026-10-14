@@ -71,10 +71,10 @@ assdefd:		;Assignment: a defenseman on defense stays between the furthest attack
 	sta.b d3
 	sec
 	sbc.w #$58
-	bmi .lt
+	bmi .neg
 	bvc .pastline
 	bra .de0
-.lt:
+.neg:
 	bvc .de0
 .pastline:
 	ldy.b a2
@@ -149,10 +149,10 @@ assdefd:		;Assignment: a defenseman on defense stays between the furthest attack
 	sec
 	sbc.b d0
 	beq .gu3
-	bmi .gt
+	bmi .neg1
 	bvs .gu3
 	bra .gu0
-.gt:
+.neg1:
 	bvs .gu0
 .gu3:
 	lda.b d1
@@ -214,10 +214,10 @@ assdefd:		;Assignment: a defenseman on defense stays between the furthest attack
 	sta.b d1
 	sec
 	sbc.b d0
-	bmi .lt2
+	bmi .neg2
 	bvc .gd3
 	bra .gd0
-.lt2:
+.neg2:
 	bvc .gd0
 .gd3:
 	lda.b d1
@@ -233,10 +233,10 @@ assdefd:		;Assignment: a defenseman on defense stays between the furthest attack
 	sta.b d0
 	sec
 	sbc.w #190
-	bmi .lt3
+	bmi .neg3
 	bvc .cl2
 	bra .gd1
-.lt3:
+.neg3:
 	bvc .gd1
 .cl2:
 	lda.w #220

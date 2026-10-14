@@ -54,11 +54,11 @@ assdefo:		;Assignment: a defenseman on offense holds the blue line on his side; 
 	lda.b d1		; the puck back behind the blue line
 	sec
 	sbc.w #$5D
-	bmi .lt
+	bmi .neg
 	bvc .pc
 .def:
 	jml.l assreplace
-.lt:
+.neg:
 	bvc .def
 .pc:
 	lda.w puckc		; the other team has the puck

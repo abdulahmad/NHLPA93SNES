@@ -82,10 +82,10 @@ asswingo:		;Assignment: a wing on offense skates to a spot in the zone of the pu
 	lda.b d3
 	sec
 	sbc.w #-88
-	bmi .lt1
+	bmi .neg
 	bvc .z1
 	bra .de2
-.lt1:
+.neg:
 	bvc .de2
 .z1:
 	lda.w #8		; zone 8: centre
@@ -93,10 +93,10 @@ asswingo:		;Assignment: a wing on offense skates to a spot in the zone of the pu
 	lda.b d0
 	sec
 	sbc.w #88
-	bmi .lt2
+	bmi .neg1
 	bvc .z2
 	bra .de2
-.lt2:
+.neg1:
 	bvc .de2
 .z2:
 	ldy.b a2
@@ -107,10 +107,10 @@ asswingo:		;Assignment: a wing on offense skates to a spot in the zone of the pu
 	lda.b d3
 	sec
 	sbc.w #264
-	bmi .lt3
+	bmi .neg2
 	bvc .z3
 	bra .de2
-.lt3:
+.neg2:
 	bvc .de2
 .z3:
 	lda.w #24		; zone 24: past the goal line

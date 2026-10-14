@@ -32,10 +32,10 @@ assstanley:		;Assignment: skate to the side of the screen holding the Stanley Cu
 	sec
 	sbc.w #$0007
 	beq .turn
-	bmi .lt
+	bmi .neg
 	bvs .turn
 	bra .rtl
-.lt:
+.neg:
 	bvs .rtl
 .turn:
 	lda.b d0

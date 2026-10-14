@@ -15,10 +15,10 @@ EncodePW:		;After a playoff game, work out the winners and the new password, or 
 	lda.w pojoy		; pojoy < 2: one player or teammates
 	sec
 	sbc.w #$0002
-	bmi .lt
+	bmi .neg
 	bvc .two
 	bra .userfailed
-.lt:
+.neg:
 	bvc .userfailed
 .two:		;two players, first round: switch to the other team
 	lda.w gamelevel

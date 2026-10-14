@@ -77,10 +77,10 @@ asswingd:		;Assignment: a wing on defense covers his side between the puck and t
 	sec
 	sbc.w pucky
 	beq .hi0
-	bmi .lt
+	bmi .neg
 	bvs .hi0
 	bra .lo
-.lt:
+.neg:
 	bvs .lo
 .hi0:
 	lda.w pucky
@@ -93,10 +93,10 @@ asswingd:		;Assignment: a wing on defense covers his side between the puck and t
 	sta.b d2
 	sec
 	sbc.w pucky
-	bmi .lt2
+	bmi .neg1
 	bvc .set1
 	bra .go
-.lt2:
+.neg1:
 	bvc .go
 .set1:
 	bra .set
@@ -110,10 +110,10 @@ asswingd:		;Assignment: a wing on defense covers his side between the puck and t
 	lda.b d2
 	sec
 	sbc.w pucky
-	bmi .lt3
+	bmi .neg2
 	bvc .up0
 	bra .hi
-.lt3:
+.neg2:
 	bvc .hi
 .up0:
 	lda.w pucky
@@ -125,10 +125,10 @@ asswingd:		;Assignment: a wing on defense covers his side between the puck and t
 	sec
 	sbc.w pucky
 	beq .set
-	bmi .lt4
+	bmi .neg3
 	bvs .set
 	bra .go
-.lt4:
+.neg3:
 	bvs .go
 .set:
 	lda.b d2

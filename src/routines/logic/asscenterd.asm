@@ -57,10 +57,10 @@ asscenterd:		;Assignment: the center on defense, halfway between the puck and hi
 	sec
 	sbc.w pucky
 	beq .half
-	bmi .lt
+	bmi .neg
 	bvs .half
 	bra .z1
-.lt:
+.neg:
 	bvs .z1
 .half:
 	lda.w #$FF80
@@ -78,10 +78,10 @@ asscenterd:		;Assignment: the center on defense, halfway between the puck and hi
 	lda.w #$0058
 	sec
 	sbc.w pucky
-	bmi .lt2
+	bmi .neg1
 	bvc .half2
 	bra .z1
-.lt2:
+.neg1:
 	bvc .z1
 .half2:
 	lda.b d1

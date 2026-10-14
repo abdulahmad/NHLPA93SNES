@@ -68,11 +68,11 @@ assbench:		;Assignment: player X skates to the bench door and leaves; the new pl
 	sec
 	sbc.w #32
 	beq .gli0
-	bmi .lt
+	bmi .neg
 	bvs .gli0
 .nd:
 	jmp.w .nodec
-.lt:
+.neg:
 	bvs .nd
 .gli0:
 	lda.w #SPAglide		; SPAglide (goalie SPAgready)
@@ -99,10 +99,10 @@ assbench:		;Assignment: player X skates to the bench door and leaves; the new pl
 	sec
 	sbc.w #16
 	beq .stop
-	bmi .lt2
+	bmi .neg1
 	bvs .stop
 	bra .rtl
-.lt2:
+.neg1:
 	bvs .rtl
 .stop:
 	stz.w Xvel,x

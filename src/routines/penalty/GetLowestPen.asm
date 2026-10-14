@@ -70,10 +70,10 @@ GetLowestPen:		;d0 = the power play time left, from the penalty box times. a2 = 
 	lda.b d0
 	sec
 	sbc.w tmpdst,y
-	bmi .lt
+	bmi .neg
 	bvc .add
 	bra .rtl
-.lt:
+.neg:
 	bvc .rtl
 .add:
 	lda.b d0

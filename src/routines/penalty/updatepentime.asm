@@ -92,10 +92,10 @@ updatepentime:		;Once a second, count down the penalty box times of both teams a
 	sec
 	sbc.w #$0005
 	beq .le5
-	bmi .lt
+	bmi .neg
 	bvs .le5
 	bra .rtl
-.lt:
+.neg:
 	bvs .rtl
 .le5:
 	lda.w tmpdst,y

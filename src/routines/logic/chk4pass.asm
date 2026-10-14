@@ -92,10 +92,10 @@ chk4pass:		;Computer player X looks for a good pass: an onside teammate with no 
 	sec
 	sbc.w #88
 	beq .le
-	bmi .lt
+	bmi .neg
 	bvs .le
 	bra .ok
-.lt:
+.neg:
 	bvs .ok
 .le:
 	lda.b d0
@@ -104,11 +104,11 @@ chk4pass:		;Computer player X looks for a good pass: an onside teammate with no 
 	sta.b d0
 	sec
 	sbc.w #-15
-	bmi .lt2
+	bmi .neg1
 	bvc .ok
 .no:
 	jmp.w .rtl
-.lt2:
+.neg1:
 	bvc .no
 .ok:
 	lda.w Ypos,y		; passdir, d2 = distance squared

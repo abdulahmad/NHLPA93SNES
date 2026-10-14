@@ -173,11 +173,11 @@ playeracc:		;Accelerate player X in direction d2 by his weight and leg strength,
 	sta.b d0
 	sec
 	sbc.w #$0C00
-	bmi .lt
+	bmi .neg
 	bvc .add
 .set:
 	jmp.w setpde
-.lt:
+.neg:
 	bvc .set
 .add:
 	lda.w endurance,x
