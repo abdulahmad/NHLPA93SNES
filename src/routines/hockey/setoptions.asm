@@ -228,12 +228,12 @@ setoptions:		;The options screen: up and down pick a line, left and right change
 	sta.b vbint
 	dec.b d6
 	bpl .frame
-	lda.w #$001A		; demo: random teams, both computer
+	lda.w #NumofTeams		; demo: random teams, both computer
 	jsl.l randoma
 	sta.w OptTeam1
 	sta.w HomeTeam
 .team2:
-	lda.w #$001A
+	lda.w #NumofTeams
 	jsl.l randoma
 	cmp.w OptTeam1
 	beq .team2
@@ -544,7 +544,7 @@ setoptions:		;The options screen: up and down pick a line, left and right change
 	rtl
 	dw 0
 .pslim:		;choices of each line (Play Mode, Players, Team 1, Team 2, Per. Length, Penalties, Line Changes)
-	dw $4,$6,$1A,$1A,$3,$3,$2
+	dw $4,$6,NumofTeams,NumofTeams,$3,$3,$2
 .pl:		;offsets from .pl of the choice strings of each line
 	dw .pl0-.pl
 	dw .pl1-.pl
