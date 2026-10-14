@@ -6,7 +6,9 @@ Locals renamed only where 93 Genesis has no such label: `TitleScreen` `.clearvr`
 
 Left on their 93 Genesis names: `TryAddPlayerToList` `.no`, `UpdateScoutingDisplay` `.cont`, `checkcoll` `.xx`, `checkwindow` `.ok`, `assbench` / `asspenalty` `.ok`, `assgoalie` `.out`, `chk4shot` `.no1`, `GetNameandAttrib` `.skip`. `.loop`, `.next`, `.done` and `.exit` stay. `.cont1` stays: it is the controller-1 side of `cont1team` / `cont2team`.
 
-Still open: `.go`, `.set`, `.clr`, `.hi`, `.lo`, `.x` and `.add` (read each one; keep a name that matches 93G), the `assgoalie` `.outx` / `.out2` / `.outn` family, 93G inline comments, and the hockey routines that were not body-checked (67 of that folder were read).
+Inline comments from 93 Genesis, on the matching instruction: `holdcheck` (facing, the puck carrier, the second hold anim, the two penalties), `chkprogress` (the minutes search, `temp1 = 120*60`), `GetNameandAttrib` (the roster record, the rating sum). The `holdcheck` header had X and a2 swapped: a2 is the one holding, X is the opponent.
+
+Still open: `.go`, `.set`, `.clr`, `.hi`, `.lo`, `.x` and `.add` (read each one; keep a name that matches 93G), the `assgoalie` `.outx` / `.out2` / `.outn` family, the rest of the 93G inline comments, and the hockey routines that were not body-checked (67 of that folder were read).
 
 ## Expanded banks and the team count (2026-10-14)
 

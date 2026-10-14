@@ -31,7 +31,7 @@ GetNameandAttrib:		;Print player d0's number and name, then the roster column pi
 	ldy.b a2
 	lda.w #TeamList>>16
 	sta.b a0+2
-	lda.w tmdata,y
+	lda.w tmdata,y		; team data, player records
 	sta.b a0
 	clc
 	ldy.w #Playerdata
@@ -96,11 +96,11 @@ GetNameandAttrib:		;Print player d0's number and name, then the roster column pi
 	sta.b d3
 	clc
 	adc.b d0
-	sta.b d0
+	sta.b d0		; d0 = sum of ratings
 	lda.b d1
 	clc
 	adc.w #$000F
-	sta.b d1
+	sta.b d1		; d1 = 15 * count (max)
 .next:
 	dec.b d2
 	bpl .bit

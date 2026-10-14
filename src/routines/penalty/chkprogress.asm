@@ -21,7 +21,7 @@ chkprogress:		;Move the referee and the game through a penalty: when the stop de
 	sta.b a0
 	lda.w #$0000
 	sta.b a0+2
-.find:
+.find:		; look for any penalty with minutes
 	lda.b [a0]
 	inc.b a0
 	inc.b a0
@@ -58,7 +58,7 @@ chkprogress:		;Move the referee and the game through a penalty: when the stop de
 	jsl.l assinsert
 	lda.w #$1C20
 	ldx.b a3
-	sta.w temp1,x
+	sta.w temp1,x		; temp1 = 120*60
 	lda.w #$FF00		; RefStep negative, RefCnt 0; UpdatePA; RefCnt 50; PushRef 0
 	tsb.w RefStep
 	stz.w RefCnt
