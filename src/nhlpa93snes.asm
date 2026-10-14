@@ -1,5 +1,6 @@
 ; NHLPA Hockey '93 (SNES) - top level: hardware registers, macros, RAM names, then one file per bank in ROM order (docs/file_map.md).
 ; LoROM + FastROM (map mode $30), 4 Mbit, 16 banks mapped at $80-$8F.
+; Bank $90 is included last. The stock build writes no bytes there.
 asar 1.91
 lorom
 check bankcross off
@@ -22,3 +23,4 @@ incsrc "banks/b8C_skate_sprites.asm"
 incsrc "banks/b8D_fonts.asm"
 incsrc "banks/b8E_gameloop.asm"
 incsrc "banks/b8F_frontend.asm"
+incsrc "banks/b90_expanded.asm"
