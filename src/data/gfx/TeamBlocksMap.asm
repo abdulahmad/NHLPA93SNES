@@ -1,4 +1,4 @@
-TeamBlocksMap:		;TeamBlocks.map: per team (26) a 9 x 2 tile block map (palette 1, tiles from TeamBlocksTiles), 36 bytes each (team * 36, read by PlayoffScreen and DrawTeamBlocks)
+TeamBlocksMap:		;TeamBlocks.map: one 9 x 2 tile block per team (palette 1, tiles from TeamBlocksTiles), 36 bytes each (read by PlayoffScreen and DrawTeamBlocks)
 	dw $0400,$0401,$0402,$0403,$0404,$0405,$0406,$0401,$0407,$0408,$0409,$040A,$040B,$040C,$040D,$040E,$0409,$040F		; team 0
 	dw $0410,$0411,$0412,$0413,$0414,$0415,$0416,$0417,$0418,$0408,$0419,$041A,$041B,$041C,$041D,$041E,$041F,$040F		; team 1
 	dw $0420,$0421,$0422,$0423,$0424,$0425,$0426,$0427,$0428,$0408,$0429,$042A,$042B,$042C,$042D,$042E,$0409,$040F		; team 2
@@ -25,3 +25,5 @@ TeamBlocksMap:		;TeamBlocks.map: per team (26) a 9 x 2 tile block map (palette 1
 	dw $0449,$0564,$0565,$0566,$0567,$0568,$0569,$056A,$0451,$0435,$056B,$056C,$056D,$056E,$056F,$0570,$0571,$043D		; team 23
 	dw $0572,$0573,$0574,$0575,$0576,$0577,$0578,$0579,$0407,$057A,$057B,$057C,$057D,$057E,$057F,$0580,$0581,$0582		; team 24
 	dw $0583,$0584,$0585,$0586,$0587,$0588,$0589,$058A,$058B,$058C,$058D,$058E,$058F,$0590,$0591,$0592,$0593,$0594		; team 25
+TeamBlocksMapEnd:
+	assert (TeamBlocksMapEnd-TeamBlocksMap)/36 == NumofTeams

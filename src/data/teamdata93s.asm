@@ -1344,3 +1344,4 @@ playoffseats:		;34 playoff trees, 16 team numbers each (maketree)
 	db 3,19,4,9, 21,23,8,5, 10,13,0,1, 12,11,22,15		; tree 32
 	db 3,18,4,19, 21,23,8,5, 10,6,0,13, 12,11,22,15		; tree 33
 playoffseatsEnd:
+	assert (playoffseatsEnd-playoffseats)/16 == 34
