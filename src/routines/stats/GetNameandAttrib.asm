@@ -37,14 +37,14 @@ GetNameandAttrib:		;Print player d0's number and name, then the roster column pi
 	ldy.w #Playerdata
 	adc.b [a0],y
 	sta.b a0
-.skip:
+.nextpl:
 	lda.b a0
 	clc
 	adc.b [a0]
 	adc.w #$0008
 	sta.b a0
 	dec.b d0
-	bpl .skip
+	bpl .nextpl
 	stz.b d0
 	stz.b d1
 	lda.w #$000F

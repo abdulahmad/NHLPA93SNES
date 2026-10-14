@@ -57,9 +57,9 @@ updatepentime:		;Once a second, count down the penalty box times of both teams a
 	lda.w tmpdst,y
 	dec a
 	sta.w tmpdst,y
-	bne .cont
+	bne .stay
 	jsl.l RemovePlayerFromList
-.cont:
+.stay:
 	bra .next
 .rtl:
 	rtl

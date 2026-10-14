@@ -33,7 +33,7 @@ printbig:		;print with the big font (2 by 2 tiles per character)
 .dochar:
 	and.w #$00FF
 	bne .lc
-	jmp.w .skip
+	jmp.w .nextch
 .lc:
 	cmp.w #'a'		; lower case to upper case
 	bcc .uc
@@ -112,7 +112,7 @@ printbig:		;print with the big font (2 by 2 tiles per character)
 	inc.w printx
 .next:
 	inc.w printx
-.skip:
+.nextch:
 	iny
 	jmp.w .top
 .blank:

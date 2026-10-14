@@ -105,7 +105,7 @@ DrawFrameHi:		;Draw a sprite frame at sprx / spry: one sprite per piece, uploadi
 	bmi .xlov
 	bvc .xhi
 .xloout:
-	jmp.w .skip
+	jmp.w .nextpiece
 .xlov:
 	bvc .xloout
 .xhi:
@@ -116,7 +116,7 @@ DrawFrameHi:		;Draw a sprite frame at sprx / spry: one sprite per piece, uploadi
 	bmi .xhiv
 	bvs .ylo
 .xhiout:
-	jmp.w .skip
+	jmp.w .nextpiece
 .xhiv:
 	bvs .xhiout
 .ylo:
@@ -126,7 +126,7 @@ DrawFrameHi:		;Draw a sprite frame at sprx / spry: one sprite per piece, uploadi
 	bmi .ylov
 	bvc .yhi
 .yloout:
-	jmp.w .skip
+	jmp.w .nextpiece
 .ylov:
 	bvc .yloout
 .yhi:
@@ -137,7 +137,7 @@ DrawFrameHi:		;Draw a sprite frame at sprx / spry: one sprite per piece, uploadi
 	bmi .yhiv
 	bvs .cache
 .yhiout:
-	jmp.w .skip
+	jmp.w .nextpiece
 .yhiv:
 	bvs .yhiout
 .cache:		;cached and still fresh: reuse its slot
@@ -249,7 +249,7 @@ DrawFrameHi:		;Draw a sprite frame at sprx / spry: one sprite per piece, uploadi
 .next:
 	rep #$30
 	inc.b sprcount
-	jmp.w .skip
+	jmp.w .nextpiece
 .himask:		;SattHi masks that clear the x bit 8 of sprite 0-3 in a byte
 	db $FE,$FB,$EF,$BF
 .big:		;16 x 16 piece
@@ -271,7 +271,7 @@ DrawFrameHi:		;Draw a sprite frame at sprx / spry: one sprite per piece, uploadi
 	bmi .bxlov
 	bvc .bxhi
 .bxloout:
-	jmp.w .skip
+	jmp.w .nextpiece
 .bxlov:
 	bvc .bxloout
 .bxhi:
@@ -282,7 +282,7 @@ DrawFrameHi:		;Draw a sprite frame at sprx / spry: one sprite per piece, uploadi
 	bmi .bxhiv
 	bvs .bylo
 .bxhiout:
-	jmp.w .skip
+	jmp.w .nextpiece
 .bxhiv:
 	bvs .bxhiout
 .bylo:
@@ -292,7 +292,7 @@ DrawFrameHi:		;Draw a sprite frame at sprx / spry: one sprite per piece, uploadi
 	bmi .bylov
 	bvc .byhi
 .byloout:
-	jmp.w .skip
+	jmp.w .nextpiece
 .bylov:
 	bvc .byloout
 .byhi:
@@ -303,7 +303,7 @@ DrawFrameHi:		;Draw a sprite frame at sprx / spry: one sprite per piece, uploadi
 	bmi .byhiv
 	bvs .bcache
 .byhiout:
-	jmp.w .skip
+	jmp.w .nextpiece
 .byhiv:
 	bvs .byhiout
 .bcache:
@@ -454,7 +454,7 @@ DrawFrameHi:		;Draw a sprite frame at sprx / spry: one sprite per piece, uploadi
 .bnext:
 	rep #$30
 	inc.b sprcount
-.skip:		;next piece
+.nextpiece:		;next piece
 	inc.b sprframe
 	dec.w sprpieces
 	beq .done

@@ -105,11 +105,11 @@ asspenalty:		;Assignment: player X skates to the penalty box, glides in and face
 .left:
 	lda.w facedir,x
 	cmp.b d2
-	beq .ok
+	beq .vel
 	inc a
 	and.w #$0007
 	sta.w facedir,x
-.ok:
+.vel:
 	stz.w Yvel,x
 	lda.w #$1000
 	sta.w Xvel,x

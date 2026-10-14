@@ -19,25 +19,25 @@ RemapTiles:		;Copy tiles to video memory with each pixel color remapped through 
 .pixel:
 	ldy.b #$00
 	asl.b tmp1+1
-	bcc .lt
+	bcc .bit3
 	ldy.b #$08
-.lt:
+.bit3:
 	asl.b tmp1
-	bcc .lt2
+	bcc .bit2
 	iny
 	iny
 	iny
 	iny
-.lt2:
+.bit2:
 	asl.b tmp0+1
-	bcc .lt3
+	bcc .bit1
 	iny
 	iny
-.lt3:
+.bit1:
 	asl.b tmp0
-	bcc .lt4
+	bcc .bit0
 	iny
-.lt4:
+.bit0:
 	lda.b [a1],y
 	lsr a
 	rol.b mula,x
@@ -54,13 +54,13 @@ RemapTiles:		;Copy tiles to video memory with each pixel color remapped through 
 	bpl .tile
 	rep #$30
 	ldx.w #$0000
-.out:
+.vram:
 	lda.b mula,x
 	sta.w VMDATAL
 	inx
 	inx
 	cpx.w #$0020
-	bne .out
+	bne .vram
 	lda.b a0
 	clc
 	adc.w #$0020

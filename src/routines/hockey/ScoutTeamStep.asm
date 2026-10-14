@@ -150,12 +150,12 @@ ScoutTeamStep:		;Step team a2's player on the scouting report through his animat
 	lda.b [a0]		; then the last name on the next line
 	sta.b tmp0
 	ldy.w #$0001
-.skip:
+.space:
 	iny
 	lda.b [a0],y
 	and.w #$00FF
 	cmp.w #$0020
-	bne .skip
+	bne .space
 	lda.w #mesarea+2
 	sta.b a1
 	lda.w #$0000

@@ -45,7 +45,6 @@ prefmes:		;Print the message for penalty d0, or clear it when negative: under th
 	lda.w #PenaltyList
 	sta.b a1
 	lda.w #PenaltyList>>16
-.skip:
 	sta.b a1+2
 	lda.b [a1],y
 	clc
@@ -96,7 +95,6 @@ prefmes:		;Print the message for penalty d0, or clear it when negative: under th
 	lda.w #PenaltyList
 	sta.b a1
 	lda.w #PenaltyList>>16
-.skip2:
 	sta.b a1+2
 	ldy.b d0
 	lda.b [a1],y

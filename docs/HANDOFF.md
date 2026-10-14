@@ -1,3 +1,11 @@
+## Local names (2026-10-14)
+
+Signed-compare overflow tails (`bmi` / `bvs` / `bvc`) are `.neg`, `.neg1`, `.neg2`, ... in source order. The earlier `.vN` pass is unchanged. `bcc` tests were not part of that pattern: `RemapTiles` pixel bits are `.bit3`..`.bit0`, `CompShoot` stores the capped swing time at `.time`, and `holdcheck` treats a facing delta under 3 as `.close`. `assdefd` had one leftover `.gt1` tail; it is `.neg2`, and the later tails in that routine moved to `.neg3` and `.neg4`.
+
+Other locals renamed from the code: `TitleScreen` `.clearvr` (16 VRAM words), `VBjsr` `.rti`, `TryAddPlayerToList` `.reject`, `checkwindow` `.follow`, `ScoutTeamStep` `.space`, `UpdateScoutingDisplay` `.type`, `updatepentime` `.stay`, `updatepwrplay` `.diff`, `chkprogress` `.over`, `PrintStringFromList` `.step`, `GetNameandAttrib` `.nextpl`, `DrawFrame` / `DrawFrameHi` `.nextpiece`, `assgoalie` `.behind`, `assbench` / `asspenalty` `.vel`, `chk4pass` `.miss` / `.ydist`, `printbig` `.nextch`, `checkcoll` `.pull`, `chk4shot` `.chance`, `RemapTiles` `.vram`. Unused labels with no branch were removed from `prefmes` and `passtoa0`. `.loop`, `.next`, `.done` and `.exit` stay. `.cont1` stays: it is the controller-1 side of `cont1team` / `cont2team`.
+
+Still open: `.go`, `.set`, `.clr`, `.hi`, `.lo`, `.x` and `.add` (read each one; keep a name that matches 93G), the `assgoalie` `.outx` / `.out2` / `.outn` family, 93G inline comments, and the hockey routines that were not body-checked (67 of that folder were read).
+
 ## Expanded banks and the team count (2026-10-14)
 
 The stock image still matches (`76a01492cfb656e9fce0094bca356c312adfea0e`). No team was added. How to add one is `docs/ADDING_A_TEAM.md`.
@@ -106,7 +114,7 @@ Left as is (with reason):
 
 What's next:
 - Copy the important 93G inline comments, matching them instruction by instruction.
-- Rename the remaining generic locals (`.zero`, `.join`, `.skip`, `.lt`, ...) by reading the code.
+- Rename the remaining generic locals (`.go`, `.set`, `.clr`, `.hi`, `.lo`, `.x`, `.add`, ...) by reading the code. The `.zero` / `.skip` / `.lt` / signed-compare pass is in the 2026-10-14 local-names note.
 - Split the larger `hockey_bXX`/`logic_bXX` files further once more routines are identified, and keep `docs/file_map.md` in step with them.
 
 ## Routine header rewrite (2026-10-12)

@@ -80,10 +80,10 @@ TitleScreen:		;The title screen with its music and the scrolling credits; Start 
 	bne .pal
 	rep #$30
 	ldx.w #$0010
-.zero:
+.clearvr:
 	stz.w VMDATAL
 	dex
-	bne .zero
+	bne .clearvr
 	lda.w #SmallFontTiles		; remapped with PixelRemap8F
 	sta.b tmp0
 	lda.w #SmallFontTiles>>16

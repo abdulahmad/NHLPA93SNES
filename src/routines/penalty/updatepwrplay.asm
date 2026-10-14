@@ -6,9 +6,9 @@ updatepwrplay:		;Show the power play box: the time left and the team on the powe
 	sec
 	sbc.w tmap+2
 	sta.b d0
-	bne .ne
+	bne .diff
 	jmp.w updatepwrplay_clr
-.ne:
+.diff:
 	bpl .t0
 	lda.w sflags
 	bit.w #sf2pwrtm

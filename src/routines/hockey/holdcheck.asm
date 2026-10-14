@@ -25,9 +25,9 @@ holdcheck:		;Player X holds or hooks a2: both slow down, and a holding or hookin
 	inc a
 	and.w #$0007
 	cmp.w #$0003
-	bcc .lt
+	bcc .close
 	jmp.w .rtl
-.lt:
+.close:
 	lda.w puckc
 	asl a
 	cmp.b a3

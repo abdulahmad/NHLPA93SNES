@@ -8,7 +8,7 @@ checkwindow:		;Move the view so the screen follows the puck
 	bne .dd
 	ldx.w #puckobj		; follow the puck, or its carrier with yleader
 	lda.w puckc
-	bmi .ok
+	bmi .follow
 	asl a
 	tax
 	lda.w pfgoal,x		; carrier goes up: yleader up to 50, else down to -50
@@ -20,13 +20,13 @@ checkwindow:		;Move the view so the screen follows the puck
 	sbc.w #$0032
 	bmi .neg
 	bvc .ylmax
-	bra .ok
+	bra .follow
 .neg:
-	bvc .ok
+	bvc .follow
 .ylmax:
 	lda.w #$0032
 	sta.w yleader
-	bra .ok
+	bra .follow
 .gd:
 	lda.w yleader
 	sec
@@ -37,13 +37,13 @@ checkwindow:		;Move the view so the screen follows the puck
 	beq .ylmin
 	bmi .vl
 	bvs .ylmin
-	bra .ok
+	bra .follow
 .vl:
-	bvs .ok
+	bvs .follow
 .ylmin:
 	lda.w #$FFCE
 	sta.w yleader
-.ok:		;d2 = Ypos + Yvel/128 + yleader, d3 = Xpos
+.follow:		;d2 = Ypos + Yvel/128 + yleader, d3 = Xpos
 	lda.w Yvel,x
 	lsr a
 	lsr a

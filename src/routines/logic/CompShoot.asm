@@ -20,10 +20,10 @@ CompShoot:		;Computer player X shoots
 	lsr a
 	sta.b d1
 	cmp.w #$0014
-	bcc .lt
+	bcc .time
 	lda.w #$0014
 	sta.b d1
-.lt:
+.time:
 	stz.w temp2,x
 	lda.b d1
 	sta.w temp2b,x

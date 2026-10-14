@@ -87,11 +87,11 @@ assbench:		;Assignment: player X skates to the bench door and leaves; the new pl
 	sta.w pfnc,x
 	lda.w facedir,x
 	cmp.w #4
-	beq .ok
+	beq .vel
 	inc a
 	and.w #$0007
 	sta.w facedir,x
-.ok:
+.vel:
 	stz.w Yvel,x
 	lda.w #$F800
 	sta.w Xvel,x

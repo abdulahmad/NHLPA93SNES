@@ -12,9 +12,9 @@ chkprogress:		;Move the referee and the game through a penalty: when the stop de
 	sec
 	sbc.b d7
 	sta.w Pencntdwn
-	bmi .out
+	bmi .over
 	jmp.w .rtl
-.out:
+.over:
 	lda.w #gmpendel		; stop delay over: clear gmpendel
 	trb.w gmode
 	lda.w #PenBuf

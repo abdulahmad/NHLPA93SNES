@@ -1,8 +1,8 @@
 PrintStringFromList:		;Print string d0 of the string list [a1]
 	lda.b d0
-	bne .skip
+	bne .step
 	jml.l print
-.skip:
+.step:
 	lda.b [a1]
 	clc
 	adc.b a1

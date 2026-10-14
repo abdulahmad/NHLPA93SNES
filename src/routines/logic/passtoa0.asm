@@ -15,7 +15,6 @@ passtoa0:		;Pass the puck to player a0, leading him by his speed
 	ldy.b a3
 	stx.b a3
 	sty.b a0
-.skip:
 	lda.w #$0013
 	sta.b d0
 	jsl.l assinsert

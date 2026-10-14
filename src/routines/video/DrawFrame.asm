@@ -107,7 +107,7 @@ DrawFrame:		;Draw a sprite frame made of small pieces, as DrawFrameHi
 	bmi .xlov
 	bvc .xhi
 .xloout:
-	jmp.w .skip
+	jmp.w .nextpiece
 .xlov:
 	bvc .xloout
 .xhi:
@@ -118,7 +118,7 @@ DrawFrame:		;Draw a sprite frame made of small pieces, as DrawFrameHi
 	bmi .xhiv
 	bvs .sy
 .xhiout:
-	jmp.w .skip
+	jmp.w .nextpiece
 .xhiv:
 	bvs .xhiout
 .sy:
@@ -138,7 +138,7 @@ DrawFrame:		;Draw a sprite frame made of small pieces, as DrawFrameHi
 	bmi .ylov
 	bvc .yhi
 .yloout:
-	jmp.w .skip
+	jmp.w .nextpiece
 .ylov:
 	bvc .yloout
 .yhi:
@@ -149,7 +149,7 @@ DrawFrame:		;Draw a sprite frame made of small pieces, as DrawFrameHi
 	bmi .yhiv
 	bvs .cache
 .yhiout:
-	jmp.w .skip
+	jmp.w .nextpiece
 .yhiv:
 	bvs .yhiout
 .cache:
@@ -271,7 +271,7 @@ DrawFrame:		;Draw a sprite frame made of small pieces, as DrawFrameHi
 .next:
 	rep #$30
 	inc.b sprcount
-	jmp.w .skip
+	jmp.w .nextpiece
 .himask:		;SattHi masks that clear the x bit 8 of sprite 0-3 in a byte
 	db $FE,$FB,$EF,$BF
 .big:
@@ -291,7 +291,7 @@ DrawFrame:		;Draw a sprite frame made of small pieces, as DrawFrameHi
 	bmi .bxlov
 	bvc .bxhi
 .bxloout:
-	jmp.w .skip
+	jmp.w .nextpiece
 .bxlov:
 	bvc .bxloout
 .bxhi:
@@ -302,7 +302,7 @@ DrawFrame:		;Draw a sprite frame made of small pieces, as DrawFrameHi
 	bmi .bxhiv
 	bvs .by
 .bxhiout:
-	jmp.w .skip
+	jmp.w .nextpiece
 .bxhiv:
 	bvs .bxhiout
 .by:
@@ -322,7 +322,7 @@ DrawFrame:		;Draw a sprite frame made of small pieces, as DrawFrameHi
 	bmi .bylov
 	bvc .byhi
 .byloout:
-	jmp.w .skip
+	jmp.w .nextpiece
 .bylov:
 	bvc .byloout
 .byhi:
@@ -333,7 +333,7 @@ DrawFrame:		;Draw a sprite frame made of small pieces, as DrawFrameHi
 	bmi .byhiv
 	bvs .bcache
 .byhiout:
-	jmp.w .skip
+	jmp.w .nextpiece
 .byhiv:
 	bvs .byhiout
 .bcache:
@@ -495,7 +495,7 @@ DrawFrame:		;Draw a sprite frame made of small pieces, as DrawFrameHi
 .bnext:
 	rep #$30
 	inc.b sprcount
-.skip:
+.nextpiece:
 	inc.b sprframe
 	dec.w sprpieces
 	beq addframe_end
