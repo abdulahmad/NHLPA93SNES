@@ -272,7 +272,7 @@ assgoalie:		;Assignment: the goalie. Back to the crease, hold or pass the puck (
 	inc a
 .de2y:
 	cmp.w #$0105
-	bcs .behind
+	bcs .out
 	lda.w puckx		; face the puck: ClampYPosition, vtoa, AdjustFacingDirection
 	sta.b d0
 	lda.w pucky
@@ -297,7 +297,7 @@ assgoalie:		;Assignment: the goalie. Back to the crease, hold or pass the puck (
 	lda.b $03,s
 	sta.b d1
 	jmp.w .sq
-.behind:		;behind the goal line
+.out:		;behind the goal line
 	stz.b d2
 	stz.b d0
 	lda.w Xpos,x

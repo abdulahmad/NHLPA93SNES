@@ -21,7 +21,7 @@ UpdateScoutingDisplay:		;Every frame of the scouting report: print the next word
 	sta.b a1+2
 	lda.w PlayerScrollCtr
 	sta.b d0
-	bpl .type
+	bpl .cont
 	stz.w DispAttribCtr		; next paragraph number from TestList; -1: stop typing, leave the screen in 480 frames
 	ldy.w SelectedPlayerIdx
 	inc.w SelectedPlayerIdx
@@ -59,7 +59,7 @@ UpdateScoutingDisplay:		;Every frame of the scouting report: print the next word
 	sec
 	sbc.b a1
 	sta.b d0
-.type:
+.cont:
 	lda.b a1
 	clc
 	adc.b d0

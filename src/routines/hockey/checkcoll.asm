@@ -50,9 +50,9 @@ checkcoll:		;Move object X to its new x / y (d2 / d3), checking wall and player 
 	jsl.l checkwallcoll
 	lda.w Wallcos,x		; wall hit: done
 	ora.w Wallsin,x
-	bne .pull
+	bne .xx
 	cpx.w #$0018		; only players: the end of the stick
-	bcs .pull
+	bcs .xx
 	lda.b $01,s
 	sta.b d0
 	lda.b $03,s
@@ -95,7 +95,7 @@ checkcoll:		;Move object X to its new x / y (d2 / d3), checking wall and player 
 	sta.w wcradiusx
 	sta.w wcradiusy
 	jsl.l checkwallcoll
-.pull:
+.xx:
 	pla
 	sta.b d0
 	pla

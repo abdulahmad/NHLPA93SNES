@@ -15,13 +15,13 @@ TryAddPlayerToList:		;Add roster player d0 to slot d4 of the list of players wan
 	beq .chk
 	bmi .neg
 	bvs .chk
-	bra .reject
+	bra .no
 .neg:
-	bvs .reject
+	bvs .no
 .chk:
 	lda.w tmpdst,y
 	cmp.w #TMPDOUT		; TMPDOUT: not available
-	beq .reject
+	beq .no
 	lda.w #$0005
 	sta.b d0
 .s2:
@@ -32,7 +32,7 @@ TryAddPlayerToList:		;Add roster player d0 to slot d4 of the list of players wan
 	lda.b d1
 	and.w #$00FF
 	cmp.b tmp0
-	beq .reject		; already in PlList
+	beq .no		; already in PlList
 	dec.b d0
 	bpl .s2
 	ldy.b d4
@@ -43,7 +43,7 @@ TryAddPlayerToList:		;Add roster player d0 to slot d4 of the list of players wan
 	lda.b d1
 	and.w #$00FF
 	rtl
-.reject:
+.no:
 	lda.w #$0000
 	sta.b d1
 	rtl

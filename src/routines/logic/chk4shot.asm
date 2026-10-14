@@ -63,7 +63,7 @@ chk4shot:		;Computer player X looks for a shot. A penalty killer under pressure 
 	cmp.w #$2711		; distance^2 > 100*100?
 	lda.b tmp1
 	sbc.w #$0000
-	bcs .chance
+	bcs .no1
 	lsr.b d4
 	lsr.b d4
 	lsr.b d4
@@ -105,7 +105,7 @@ chk4shot:		;Computer player X looks for a shot. A penalty killer under pressure 
 	inc.b a1
 	dec.b d3
 	bpl .co0
-.chance:
+.no1:
 	lda.b d4
 	jsl.l randoma
 	cmp.w #$0009		; no shot if random(d4) > 8
