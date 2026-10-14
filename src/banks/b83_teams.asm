@@ -1,6 +1,8 @@
 ; Bank $83: teams. Files in ROM order (docs/file_map.md).
 
-org $838000
+if pc() < $838000
+	org $838000
+endif
 incsrc "../data/teamdata93s.asm"
 incsrc "../data/gfx/SmallFontTiles.asm"
 incsrc "../routines/hockey/PlayerNumName.asm"

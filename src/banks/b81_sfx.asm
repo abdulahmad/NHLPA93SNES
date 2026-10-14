@@ -1,4 +1,6 @@
 ; Bank $81: sfx. Files in ROM order (docs/file_map.md).
 
-org $818000
+if pc() < $818000
+	org $818000
+endif
 incsrc "../data/sound/gamesound.asm"

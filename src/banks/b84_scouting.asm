@@ -1,6 +1,8 @@
 ; Bank $84: scouting. Files in ROM order (docs/file_map.md).
 
-org $848000
+if pc() < $848000
+	org $848000
+endif
 incsrc "../data/gfx/SpriteSet9.asm"
 incsrc "../data/text/ScoutingReportText.asm"
 incsrc "../data/gfx/FaceOffMap.asm"

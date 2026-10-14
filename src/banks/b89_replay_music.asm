@@ -1,6 +1,8 @@
 ; Bank $89: replay music. Files in ROM order (docs/file_map.md).
 
-org $898000
+if pc() < $898000
+	org $898000
+endif
 incsrc "../data/gfx/SpriteSet11.asm"
 incsrc "../routines/hockey/ReplayMode.asm"
 incsrc "../data/gfx/SpriteSet13.asm"

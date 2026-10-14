@@ -1,6 +1,8 @@
 ; Bank $8F: frontend. Files in ROM order (docs/file_map.md).
 
-org $8F8000
+if pc() < $8F8000
+	org $8F8000
+endif
 incsrc "../data/gfx/BigFontMap.asm"
 incsrc "../routines/video/unusedEnergyBar.asm"
 incsrc "../routines/hockey/linelist.asm"

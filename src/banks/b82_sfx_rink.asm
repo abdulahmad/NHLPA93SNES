@@ -1,6 +1,8 @@
 ; Bank $82: sfx rink. Files in ROM order (docs/file_map.md).
 
-org $82B86C
+if pc() < $82B86C
+	org $82B86C
+endif
 incsrc "../data/frames93s.asm"
 incsrc "../data/gfx/IceRinkTiles.asm"
 incsrc "../routines/penalty/SetPA2.asm"

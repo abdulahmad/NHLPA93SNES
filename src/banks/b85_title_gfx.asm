@@ -1,6 +1,8 @@
 ; Bank $85: title gfx. Files in ROM order (docs/file_map.md).
 
-org $858000
+if pc() < $858000
+	org $858000
+endif
 incsrc "../data/gfx/SpriteSet4.asm"
 incsrc "../routines/hockey/GetShifter.asm"
 incsrc "../data/gfx/Title1Map.asm"

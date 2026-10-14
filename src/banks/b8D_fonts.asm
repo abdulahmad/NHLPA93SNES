@@ -1,6 +1,8 @@
 ; Bank $8D: fonts. Files in ROM order (docs/file_map.md).
 
-org $8D8000
+if pc() < $8D8000
+	org $8D8000
+endif
 incsrc "../routines/hockey/maketree.asm"
 incsrc "../routines/video/InitPPU.asm"
 incsrc "../routines/hockey/StartPer.asm"

@@ -1,6 +1,8 @@
 ; Bank $8B: opening. Files in ROM order (docs/file_map.md).
 
-org $8B8000
+if pc() < $8B8000
+	org $8B8000
+endif
 incsrc "../routines/hockey/NewPO.asm"
 incsrc "../routines/hockey/FigureJoy.asm"
 incsrc "../routines/hockey/Opening.asm"

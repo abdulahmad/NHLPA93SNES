@@ -1,6 +1,8 @@
 ; Bank $86: sound driver. Files in ROM order (docs/file_map.md).
 
-org $868000
+if pc() < $868000
+	org $868000
+endif
 incsrc "../data/sound/bootsound.asm"
 incsrc "../routines/middle/DecompressBytecode.asm"
 incsrc "../routines/hockey/RestoreBenchEnergy.asm"

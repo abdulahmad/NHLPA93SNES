@@ -1,6 +1,8 @@
 ; Bank $8E: gameloop. Files in ROM order (docs/file_map.md).
 
-org $8E8000
+if pc() < $8E8000
+	org $8E8000
+endif
 incsrc "../routines/hockey/Gameloop.asm"
 incsrc "../routines/hockey/PlayerShortName.asm"
 incsrc "../routines/logic/assbench.asm"
