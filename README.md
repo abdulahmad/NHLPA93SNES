@@ -2,7 +2,7 @@
 
 > **Work in progress:** this disassembly is unfinished and unpolished, and is being actively worked on. Expect labels, file layout and docs to change.
 
-Current status:
+## 🚧 Current Status
 
 - About 75-80% done.
 - Remaining: a pass to align it with NHLPA 93 Genesis, checking every asset is extracted correctly, and using the same file names and formats as the Genesis version (e.g. a file called title1 on Genesis is title1 on SNES too).
