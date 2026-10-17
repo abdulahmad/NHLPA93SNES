@@ -127,7 +127,7 @@ assdefd:		;Assignment: a defenseman on defense stays between the furthest attack
 .gup:
 	ldy.b a0
 	lda.w pflags,y
-	bit.w #$1000
+	bit.w #pf2unav
 	bne .gu0
 	lda.w position,y
 	bmi .gu0
@@ -193,7 +193,7 @@ assdefd:		;Assignment: a defenseman on defense stays between the furthest attack
 .gdwn:
 	ldy.b a0
 	lda.w pflags,y
-	bit.w #$1000
+	bit.w #pf2unav
 	bne .gd0
 	lda.w position,y
 	bmi .gd0

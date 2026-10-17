@@ -9,7 +9,7 @@ asswingd:		;Assignment: a wing on defense covers his side between the puck and t
 .bench:
 	jsl.l check4bench
 	lda.w pflags,x
-	bit.w #$0008
+	bit.w #pfjoycon
 	beq .na
 	jmp.w .rtl
 .na:

@@ -66,7 +66,7 @@ dopass:		;Pass the puck in the pass direction, to the best teammate there if any
 	jmp.w .next
 .2:
 	lda.w pflags,y
-	bit.w #$1000
+	bit.w #pf2unav
 	beq .3
 	jmp.w .next
 .3:

@@ -59,7 +59,7 @@ changeplayer:		;Switch controller d4 to the teammate nearest the puck, or sweep 
 	bmi .next
 	beq .next
 	lda.w pflags,x		; pf2unav or pfalock: skip
-	and.w #$1000
+	and.w #pf2unav
 	ora.w pfalock,x
 	bne .next
 	lda.b $01,s

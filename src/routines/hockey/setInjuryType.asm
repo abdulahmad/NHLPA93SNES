@@ -1,7 +1,7 @@
 setInjuryType:		;Player a2 is injured for the period: the crowd reacts, the view locks on him and the injury box gets his name
 	ldy.b a2
 	lda.w pflags,y
-	ora.w #$1000
+	ora.w #pf2unav
 	sta.w pflags,y
 	lda.b crowdlevel
 	clc

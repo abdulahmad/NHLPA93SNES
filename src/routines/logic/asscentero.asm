@@ -83,7 +83,7 @@ asscentero:		;Assignment: the center on offense skates to a spot in the zone of 
 .z2:
 	ldy.b a2		; tmflags bit 4: stay in the middle zone
 	lda.w tmflags,y
-	bit.w #$0010
+	bit.w #tmfoffside
 	bne .de2
 	asl.b d2
 	lda.b d0

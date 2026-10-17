@@ -9,7 +9,7 @@ checkagr:		;Penalty roll for player X: small results call a penalty. Joystick pl
 	asl a
 	sta.b d0
 	lda.w pflags,x
-	bit.w #$0008
+	bit.w #pfjoycon
 	beq .nojoy
 	asl.b d0
 .nojoy:

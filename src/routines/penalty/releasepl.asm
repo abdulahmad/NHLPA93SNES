@@ -55,7 +55,7 @@ releasepl:		;Player d0's penalty time is up: let him out of the box and put him 
 	jsl.l Setplass
 	jsl.l setplayer
 	lda.w pflags,x
-	ora.w #$1000
+	ora.w #pf2unav
 	sta.w pflags,x
 	stx.b xsave
 	ldx.w #$000E

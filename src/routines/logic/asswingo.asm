@@ -9,7 +9,7 @@ asswingo:		;Assignment: a wing on offense skates to a spot in the zone of the pu
 .notclock:
 	jsl.l check4bench
 	lda.w pflags,x
-	bit.w #$0008
+	bit.w #pfjoycon
 	beq .notjoy
 	jmp.w .rtl
 .notjoy:
