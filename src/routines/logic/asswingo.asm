@@ -9,7 +9,7 @@ asswingo:		;Assignment: a wing on offense skates to a spot in the zone of the pu
 .notclock:
 	jsl.l check4bench
 	lda.w pflags,x
-	bit.w #$0008
+	bit.w #pfjoycon
 	beq .notjoy
 	jmp.w .rtl
 .notjoy:
@@ -101,7 +101,7 @@ asswingo:		;Assignment: a wing on offense skates to a spot in the zone of the pu
 .z2:
 	ldy.b a2
 	lda.w tmflags,y
-	bit.w #tmfoffside		; offsides: stay back
+	bit.w #tmfoside		; offsides: stay back
 	bne .de2
 	asl.b d2		; zone 16: their zone
 	lda.b d3

@@ -1,7 +1,7 @@
 ClearOffsidesIfAllPlayers:		;Clear team a2's offsides flag once none of its skaters is past the blue line
 	ldy.b a2
-	lda.w tmflags,y		; tmfoffside
-	bit.w #tmfoffside
+	lda.w tmflags,y		; tmfoside
+	bit.w #tmfoside
 	bne .go
 	jmp.w ChkOffsides_rtl
 .go:
@@ -39,6 +39,6 @@ ClearOffsidesIfAllPlayers:		;Clear team a2's offsides flag once none of its skat
 	bpl .top
 	ldy.b a2
 	lda.w tmflags,y
-	and.w #~tmfoffside&$FFFF		; clear tmfoffside
+	and.w #~tmfoside&$FFFF		; clear tmfoside
 	sta.w tmflags,y
 	rtl

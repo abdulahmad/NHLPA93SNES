@@ -55,7 +55,7 @@ noturn0:		;doplayeracc when the wanted direction needs no turn
 	lda.w #SPAskate
 	sta.b d1
 	lda.w pflags,x		; pflags $0004 (pflags2 bit 6): stumble
-	bit.w #$0004
+	bit.w #pf2inj
 	beq .nb6
 	lda.w #SPAstumble
 	sta.b d1

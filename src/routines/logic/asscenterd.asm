@@ -6,7 +6,7 @@ asscenterd:		;Assignment: the center on defense, halfway between the puck and hi
 .go:
 	jsl.l check4bench
 	lda.w pflags,x
-	bit.w #$0008
+	bit.w #pfjoycon
 	beq .nopflags
 	jmp.w .rtl
 .nopflags:

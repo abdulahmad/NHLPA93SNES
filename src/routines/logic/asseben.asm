@@ -2,7 +2,7 @@ asseben:		;Assignment: player X comes onto the ice from the bench
 	lda.w pfalock,x
 	bne .rtl
 	lda.w pflags,x
-	bit.w #$0002
+	bit.w #pfna
 	beq .nna
 	and.w #$FFFD
 	sta.w pflags,x

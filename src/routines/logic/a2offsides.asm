@@ -29,7 +29,7 @@ a2offsides:		;Offsides if the player's team is flagged and the puck is past the 
 .1:
 	ldy.b a0
 	lda.w tmflags,y
-	bit.w #tmfoffside		; team flagged offsides
+	bit.w #tmfoside		; team flagged offsides
 	beq .rtl
 	lda.w gmode
 	bit.w #gmhl		; gmhl

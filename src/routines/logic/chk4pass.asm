@@ -54,7 +54,7 @@ chk4pass:		;Computer player X looks for a good pass: an onside teammate with no 
 	jmp.w .rtl
 .b3:
 	lda.w pflags,y		; not unavailable or locked
-	and.w #$1000
+	and.w #pf2unav
 	ora.w pfalock,y
 	beq .b4
 	jmp.w .rtl

@@ -2,7 +2,7 @@ assstanley:		;Assignment: skate to the side of the screen holding the Stanley Cu
 	lda.w pfalock,x
 	bne .rtl
 	lda.w pflags,x
-	bit.w #$0002
+	bit.w #pfna
 	beq .nna
 	and.w #$FFFD
 	sta.w pflags,x

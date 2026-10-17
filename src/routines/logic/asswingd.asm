@@ -9,7 +9,7 @@ asswingd:		;Assignment: a wing on defense covers his side between the puck and t
 .bench:
 	jsl.l check4bench
 	lda.w pflags,x
-	bit.w #$0008
+	bit.w #pfjoycon
 	beq .na
 	jmp.w .rtl
 .na:
@@ -71,7 +71,7 @@ asswingd:		;Assignment: a wing on defense covers his side between the puck and t
 	sta.b d2
 	ldy.b a2
 	lda.w tmflags,y		; offsides: stay at the blue line
-	bit.w #tmfoffside
+	bit.w #tmfoside
 	bne .set
 	lda.b d2
 	sec
@@ -105,7 +105,7 @@ asswingd:		;Assignment: a wing on defense covers his side between the puck and t
 	sta.b d2
 	ldy.b a2
 	lda.w tmflags,y
-	bit.w #tmfoffside
+	bit.w #tmfoside
 	bne .set
 	lda.b d2
 	sec

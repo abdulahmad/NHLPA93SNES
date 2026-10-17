@@ -12,7 +12,7 @@ puckfaceoff:		;Assignment: the start of play. Period end and overtime checks, a 
 	jml.l PeriodOver
 .endper:
 	lda.w gmode
-	bit.w #gmendper
+	bit.w #gmeog
 	beq .ot
 	jml.l PeriodOver
 .ot:
@@ -37,7 +37,7 @@ puckfaceoff:		;Assignment: the start of play. Period end and overtime checks, a 
 	beq .lines
 	jmp.w .nna
 .lines:		;line changes on: no team in lc mode, clear pf2lcm on all 12 players
-	lda.w #tmflc
+	lda.w #tmflcm
 	trb.w tmflags
 	trb.w tmflags+2
 	ldy.w #$0016
