@@ -1,9 +1,9 @@
-restoreteams:		;Put both teams' players on the bench
+restoreteams:						;Put both teams' players on the bench
 	stz.b a2
 	jsl.l .r
 	lda.w #$0002
 	sta.b a2
-.r:		;one team (a2)
+.r:									;one team (a2)
 	ldy.b a2
 	lda.w #6
 	sta.w tmap,y
@@ -17,7 +17,7 @@ restoreteams:		;Put both teams' players on the bench
 	clc
 	adc.b d0
 	tay
-	lda.w #TMPDBENCH		; TMPDBENCH
+	lda.w #TMPDBENCH				; TMPDBENCH
 	sta.w tmpdst,y
 	dec.b d0
 	dec.b d0

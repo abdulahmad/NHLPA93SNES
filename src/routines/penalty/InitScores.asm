@@ -1,4 +1,4 @@
-InitScores:		;Playoffs: give the other games of the round random scores so far
+InitScores:							;Playoffs: give the other games of the round random scores so far
 	lda.w OptPlayMode
 	beq .rtl
 	lda.w gamelevel

@@ -1,8 +1,9 @@
-VBlank_VScroll:		;Vblank: set the vertical scroll and run the transfer list; once, then back to vb2
+VBlank_VScroll:						;Vblank: set the vertical scroll and run the transfer list; once, then
+									;back to vb2
 	sep #$20
 	lda.b #INIDISP_FBLANK
 	sta.w INIDISP
-	lda.b d0		; BG1VOFS = d0 (low, high)
+	lda.b d0						; BG1VOFS = d0 (low, high)
 	sta.w BG1VOFS
 	lda.b d0+1
 	sta.w BG1VOFS

@@ -1,4 +1,4 @@
-ClrPassBits:		;Clear the password bits
+ClrPassBits:						;Clear the password bits
 	stz.w passbits
 	stz.w passbits+2
 	stz.w passbits+4

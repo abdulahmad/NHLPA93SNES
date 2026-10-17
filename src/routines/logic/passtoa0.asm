@@ -1,4 +1,4 @@
-passtoa0:		;Pass the puck to player a0, leading him by his speed
+passtoa0:							;Pass the puck to player a0, leading him by his speed
 	jsl.l loadTeamStruct
 	lda.b a0
 	lsr a

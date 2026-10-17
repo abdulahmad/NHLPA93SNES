@@ -1,4 +1,4 @@
-VBlank_List:		;Vblank: run the transfer list once, then go back to vb2
+VBlank_List:						;Vblank: run the transfer list once, then go back to vb2
 	sep #$20
 	lda.b #INIDISP_FBLANK
 	sta.w INIDISP

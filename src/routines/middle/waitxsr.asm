@@ -1,4 +1,5 @@
-waitxsr:		;Wait d0 frames or until a button in d1 is pressed (used while the zamboni crosses)
+waitxsr:							;Wait d0 frames or until a button in d1 is pressed (used while the zamboni
+									;crosses)
 	lda.b d0
 	pha
 .wait:

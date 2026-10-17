@@ -1,5 +1,6 @@
-coinsearch:		;Count team a2's players kept off the ice by penalties (not coincidental ones) to set how many it has on the ice
-	lda.w #$0006		; d1 = 6 players, d0 = last roster word
+coinsearch:							;Count team a2's players kept off the ice by penalties (not coincidental
+									;ones) to set how many it has on the ice
+	lda.w #$0006					; d1 = 6 players, d0 = last roster word
 	sta.b d1
 	lda.w #$0032
 	sta.b d0
@@ -14,7 +15,7 @@ coinsearch:		;Count team a2's players kept off the ice by penalties (not coincid
 	lda.w tmpdst,y
 	bmi .nap
 	beq .nap
-	and.w #$DFFF		; clear bit $2000; coincidental or injured: does not count
+	and.w #$DFFF					; clear bit $2000; coincidental or injured: does not count
 	sta.w tmpdst,y
 	bit.w #TMPDINJ|$4000
 	bne .nap

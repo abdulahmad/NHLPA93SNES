@@ -1,4 +1,4 @@
-show_rink:		;Set the rink scroll from the camera position
+show_rink:							;Set the rink scroll from the camera position
 	lda.w sfhormode
 	bne .rtl
 	lda.w Hpos

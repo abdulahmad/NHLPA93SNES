@@ -1,4 +1,4 @@
-setc2player:		;Give controller 2 to player d0
+setc2player:						;Give controller 2 to player d0
 	lda.b d0
 	cmp.w c2playernum
 	beq .rtl

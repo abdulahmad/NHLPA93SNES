@@ -1,5 +1,5 @@
-GetPlayerCount:		;d0 = the number of players on team a2's roster
-	lda.b a0+2		; save a0
+GetPlayerCount:						;d0 = the number of players on team a2's roster
+	lda.b a0+2						; save a0
 	pha
 	lda.b a0
 	pha

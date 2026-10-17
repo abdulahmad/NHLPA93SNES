@@ -1,4 +1,4 @@
-PWprint:		;Print the password, unless it is hidden
+PWprint:							;Print the password, unless it is hidden
 	lda.w PassWord
 	bit.w #$0080
 	beq .show
@@ -24,11 +24,11 @@ PWprint:		;Print the password, unless it is hidden
 	cpx.w #$000C
 	bne .savea
 	ldx.b xsave
-	lda.w #PasstoText		; a2 = PasstoText
+	lda.w #PasstoText				; a2 = PasstoText
 	sta.b a2
 	lda.w #PasstoText>>16
 	sta.b a2+2
-	lda.w #mesarea		; a1 = mesarea
+	lda.w #mesarea					; a1 = mesarea
 	sta.b a1
 	lda.w #$0000
 	sta.b a1+2
@@ -36,7 +36,7 @@ PWprint:		;Print the password, unless it is hidden
 	sta.b a0
 	lda.w #$0000
 	sta.b a0+2
-	lda.w #18		; length 18: 16 characters
+	lda.w #18						; length 18: 16 characters
 	sta.b [a1]
 	inc.b a1
 	inc.b a1

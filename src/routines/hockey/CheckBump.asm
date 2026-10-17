@@ -1,4 +1,5 @@
-CheckBump:		;Goalie X pushed against the net with the puck near: if he is moving fast, bump the net, stop him and
+CheckBump:							;Goalie X pushed against the net with the puck near: if he is moving fast,
+									;bump the net, stop him and
 		;   call a goalie holding penalty
 	stx.b xsave
 	ldx.w #$0000
@@ -10,11 +11,11 @@ CheckBump:		;Goalie X pushed against the net with the puck near: if he is moving
 	cpx.w #$0008
 	bne .save
 	ldx.b xsave
-	lda.w seed		; 1 in 32 frames
+	lda.w seed						; 1 in 32 frames
 	and.w #$001F
 	bne .ex
 	ldy.b a2
-	lda.w pucky		; puck within 41 of the net in y
+	lda.w pucky						; puck within 41 of the net in y
 	sec
 	sbc.w Ypos,y
 	bit.w #$8000
@@ -55,7 +56,8 @@ CheckBump:		;Goalie X pushed against the net with the puck near: if he is moving
 	ldx.b xsave
 .rtl:
 	rtl
-.bb:		;drop the saved d0-d3 and the jsl return: return to the caller of checkgoalp
+.bb:								;drop the saved d0-d3 and the jsl return: return to the caller of
+									;checkgoalp
 	pla
 	pla
 	pla
@@ -64,7 +66,7 @@ CheckBump:		;Goalie X pushed against the net with the puck near: if he is moving
 	sep #$20
 	pla
 	rep #$30
-	lda.b d0		; net Xvel/Yvel = speed / 4; player stops
+	lda.b d0						; net Xvel/Yvel = speed / 4; player stops
 	lsr a
 	lsr a
 	bit.w #$2000

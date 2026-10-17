@@ -1,13 +1,13 @@
-updatereplay:		;Save this frame into the replay buffer
+updatereplay:						;Save this frame into the replay buffer
 	lda.w gmode
-	bit.w #gmhl		; gmhl: no recording
+	bit.w #gmhl						; gmhl: no recording
 	beq .rec
 	jmp.w .rtl
 .rec:
 	lda.w sflags
-	bit.w #sf2drec		; sf2drec: keep overwriting the same frame
+	bit.w #sf2drec					; sf2drec: keep overwriting the same frame
 	bne .frame
-	lda.w ReplayBufferPtr		; next record (113 bytes)
+	lda.w ReplayBufferPtr			; next record (113 bytes)
 	clc
 	adc.w #$0071
 	sta.w ReplayBufferPtr
@@ -19,7 +19,7 @@ updatereplay:		;Save this frame into the replay buffer
 	lda.w ReplayBufferPtr+2
 	cmp.w #ReplayBufferEnd>>16
 	bne .frame
-	lda.w #sfwrap		; wrapped: sfwrap, back to the start
+	lda.w #sfwrap					; wrapped: sfwrap, back to the start
 	tsb.w sflags
 	lda.w #ReplayBufferStart&$FFFF
 	sta.w ReplayBufferPtr
@@ -34,7 +34,7 @@ updatereplay:		;Save this frame into the replay buffer
 	sta.b d2
 	ldx.w #$0000
 	ldy.w #$0001
-.top:		;16 objects: x (12 bits) and y (12 bits), frame and flip bits
+.top:								;16 objects: x (12 bits) and y (12 bits), frame and flip bits
 	lda.w #$0000
 	sta.b [a0]
 	sta.b [a0],y
@@ -70,7 +70,7 @@ updatereplay:		;Save this frame into the replay buffer
 	lda.w #$0005
 	sta.b d2
 	ldx.w #$0000
-.pl:		;6 pairs: rostnum, positions
+.pl:								;6 pairs: rostnum, positions
 	lda.w rostnum,x
 	sta.b [a0]
 	inc.b a0
@@ -100,7 +100,8 @@ updatereplay:		;Save this frame into the replay buffer
 	inx
 	dec.b d2
 	bpl .pl
-	lda.w Zpos+puckobj		; puck and shadow height, lastsfx, d7, PadControlBits, crowdframe, glovecords, PBnum, Hpos, Vpos
+	lda.w Zpos+puckobj				;puck and shadow height, lastsfx, d7, PadControlBits, crowdframe,
+									;glovecords, PBnum, Hpos, Vpos
 	sta.b [a0]
 	inc.b a0
 	lda.w Zpos+$1E

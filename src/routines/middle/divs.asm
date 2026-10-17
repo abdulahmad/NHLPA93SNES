@@ -1,5 +1,5 @@
-divs:		;Signed divide: A = mulb (32-bit) / mula
-	stz.b mulsign		; mulsign = number of negative operands
+divs:								;Signed divide: A = mulb (32-bit) / mula
+	stz.b mulsign					; mulsign = number of negative operands
 	lda.b mula
 	bpl .apos
 	eor.w #$FFFF
@@ -8,7 +8,7 @@ divs:		;Signed divide: A = mulb (32-bit) / mula
 .apos:
 	sta.b mula+2
 	stz.b mula
-	lda.w #$0010		; 16 quotient bits
+	lda.w #$0010					; 16 quotient bits
 	sta.b mulcnt
 	lda.b mulb+2
 	bpl .loop

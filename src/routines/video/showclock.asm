@@ -1,4 +1,4 @@
-showclock:		;Draw the game clock (not during a replay)
+showclock:							;Draw the game clock (not during a replay)
 	lda.w sflags
 	bit.w #sf2replay
 	beq .nosf2replay

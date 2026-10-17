@@ -1,4 +1,4 @@
-asswingo:		;Assignment: a wing on offense skates to a spot in the zone of the puck
+asswingo:							;Assignment: a wing on offense skates to a spot in the zone of the puck
 	lda.w pfalock,x
 	beq .run
 	jmp.w .rtl
@@ -17,7 +17,7 @@ asswingo:		;Assignment: a wing on offense skates to a spot in the zone of the pu
 	beq .nna
 	and.w #$FFFD
 	sta.w pflags,x
-	lda.w #$FFFF		; temp5 = -1: no zone yet
+	lda.w #$FFFF					; temp5 = -1: no zone yet
 	sta.w temp5,x
 	stz.w temp1,x
 	stz.w temp2,x
@@ -37,9 +37,9 @@ asswingo:		;Assignment: a wing on offense skates to a spot in the zone of the pu
 	lda.w #$0000
 .t1:
 	sta.w temp1,x
-	lda.w #3		; awingd
+	lda.w #3						; awingd
 	sta.b d0
-	lda.w puckc		; the other team has the puck
+	lda.w puckc						; the other team has the puck
 	bmi .de0
 	sec
 	sbc.w #6
@@ -51,7 +51,7 @@ asswingo:		;Assignment: a wing on offense skates to a spot in the zone of the pu
 	bpl .de0
 	jml.l assreplace
 .de0:
-	lda.w pucky		; d3 = pucky + puckvy / 64
+	lda.w pucky						; d3 = pucky + puckvy / 64
 	sta.b d0
 	lda.w puckvy
 	lsr a
@@ -77,8 +77,8 @@ asswingo:		;Assignment: a wing on offense skates to a spot in the zone of the pu
 	eor.w #$FFFF
 	inc a
 	sta.b d3
-.de1:		;zone number
-	stz.b d2		; zone 0: own zone
+.de1:								;zone number
+	stz.b d2						; zone 0: own zone
 	lda.b d3
 	sec
 	sbc.w #-88
@@ -88,7 +88,7 @@ asswingo:		;Assignment: a wing on offense skates to a spot in the zone of the pu
 .neg:
 	bvc .de2
 .z1:
-	lda.w #8		; zone 8: centre
+	lda.w #8						; zone 8: centre
 	sta.b d2
 	lda.b d0
 	sec
@@ -101,9 +101,9 @@ asswingo:		;Assignment: a wing on offense skates to a spot in the zone of the pu
 .z2:
 	ldy.b a2
 	lda.w tmflags,y
-	bit.w #tmfoside		; offsides: stay back
+	bit.w #tmfoside					; offsides: stay back
 	bne .de2
-	asl.b d2		; zone 16: their zone
+	asl.b d2						; zone 16: their zone
 	lda.b d3
 	sec
 	sbc.w #264
@@ -113,20 +113,20 @@ asswingo:		;Assignment: a wing on offense skates to a spot in the zone of the pu
 .neg2:
 	bvc .de2
 .z3:
-	lda.w #24		; zone 24: past the goal line
+	lda.w #24						; zone 24: past the goal line
 	sta.b d2
 .de2:
 	lda.b d2
 	cmp.w temp5,x
 	bne .de3
-	lda.w seed		; same zone: new spot only now and then
+	lda.w seed						; same zone: new spot only now and then
 	cmp.w #$0200
 	bcs .nodec
 .de3:
 	lda.b d2
 	sta.w temp5,x
 	tay
-	lda.w #.dedata		; temp3 = x + random, temp4 = y + random
+	lda.w #.dedata					; temp3 = x + random, temp4 = y + random
 	sta.b a0
 	lda.w #.dedata>>16
 	sta.b a0+2
@@ -174,15 +174,15 @@ asswingo:		;Assignment: a wing on offense skates to a spot in the zone of the pu
 	inc a
 	sta.b d1
 .0:
-	lda.w #EvadePC		; avoid the puck carrier (EvadePC)
+	lda.w #EvadePC					; avoid the puck carrier (EvadePC)
 	sta.b a0
 	lda.w #EvadePC>>16
 	sta.b a0+2
 	jml.l skateto
 .rtl:
 	rtl
-.dedata:		;x, x random, y, y random per zone
-	dw 80,20,-70,10		; own zone
-	dw 100,20,60,10		; centre
-	dw 60,50,230,20		; their zone
-	dw 80,30,250,20		; past the goal line
+.dedata:							;x, x random, y, y random per zone
+	dw 80,20,-70,10					; own zone
+	dw 100,20,60,10					; centre
+	dw 60,50,230,20					; their zone
+	dw 80,30,250,20					; past the goal line

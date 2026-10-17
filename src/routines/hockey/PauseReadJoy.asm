@@ -1,4 +1,4 @@
-PauseReadJoy:		;Wait for a new button press; in the demo the pause ends by itself
+PauseReadJoy:						;Wait for a new button press; in the demo the pause ends by itself
 	jsl.l IntermissionTick
 	bne .force
 	jsl.l setvideo
@@ -6,14 +6,14 @@ PauseReadJoy:		;Wait for a new button press; in the demo the pause ends by itsel
 .vb:
 	cmp.b vcount
 	beq .vb
-	jsl.l ReadPads		; ReadPads; ignore L/R
+	jsl.l ReadPads					; ReadPads; ignore L/R
 	lda.w joypad1
 	ora.w joypad2
 	bit.w #JOYR|JOYL
 	bne PauseReadJoy
-	jsl.l getpzjoy		; menu sounds and ticker
+	jsl.l getpzjoy					; menu sounds and ticker
 	jsl.l nullrtl85
-	lda.w demoflag		; demo with no controller teams: count down pausetimer
+	lda.w demoflag					; demo with no controller teams: count down pausetimer
 	beq .chk
 	lda.w cont1team
 	ora.w cont2team

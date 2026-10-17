@@ -1,10 +1,11 @@
-ReadPads:		;Once per frame, read the four pads: buttons held, new presses and last buttons
-	lda.b vcount		; once per frame
+ReadPads:							;Once per frame, read the four pads: buttons held, new presses and last
+									;buttons
+	lda.b vcount					; once per frame
 	cmp.w padvcount
 	beq .new
 	sta.w padvcount
 	lda.w #$0001
-.wait:		;auto-joypad read busy
+.wait:								;auto-joypad read busy
 	bit.w HVBJOY
 	bne .wait
 	lda.w JOY1L
@@ -16,7 +17,7 @@ ReadPads:		;Once per frame, read the four pads: buttons held, new presses and la
 	lda.w JOY4L
 	sta.w joypad4
 .new:
-	lda.w joypad1		; new presses = changed and down
+	lda.w joypad1					; new presses = changed and down
 	eor.w padlast1
 	and.w joypad1
 	sta.w padnew1

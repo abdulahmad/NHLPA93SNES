@@ -1,4 +1,5 @@
-PickStartingGoalie:		;Pick team a2's starting goalie; computer teams in the later playoff rounds pick one at random by the
+PickStartingGoalie:					;Pick team a2's starting goalie; computer teams in the later playoff
+									;rounds pick one at random by the
 		;   scouting report weights
 	stx.b xsave
 	ldx.w #$0000
@@ -29,7 +30,7 @@ PickStartingGoalie:		;Pick team a2's starting goalie; computer teams in the late
 	lsr a
 	inc a
 	sta.b d0
-	cmp.w cont1team		; a controller team: keep goalie 0
+	cmp.w cont1team					; a controller team: keep goalie 0
 	beq .x
 	cmp.w cont2team
 	beq .x

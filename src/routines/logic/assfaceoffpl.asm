@@ -1,10 +1,10 @@
-assfaceoffpl:		;Assignment: the players taking the face off
+assfaceoffpl:						;Assignment: the players taking the face off
 	lda.w pfalock,x
 	beq .go
 	jmp.w .rts
 .go:
 	lda.w sflags
-	bit.w #sf2faceoff		; faceoff over
+	bit.w #sf2faceoff				; faceoff over
 	beq .exit
 	lda.w pflags,x
 	bit.w #pfna
@@ -13,7 +13,7 @@ assfaceoffpl:		;Assignment: the players taking the face off
 	sta.w pflags,x
 	stz.w temp1,x
 .nna:
-	lda.w #fofdata2		; a0 = fofdata2, +4 for the visitors
+	lda.w #fofdata2					; a0 = fofdata2, +4 for the visitors
 	sta.b a0
 	lda.w #$0000
 	sta.b a0+2
@@ -22,7 +22,7 @@ assfaceoffpl:		;Assignment: the players taking the face off
 	lda.w #fofdata2+4
 	sta.b a0
 .0:
-	lda.w SPAnum,x		; frame = SPAnum/4 + 1, +3 for a righty
+	lda.w SPAnum,x					; frame = SPAnum/4 + 1, +3 for a righty
 	lsr a
 	lsr a
 	inc a
@@ -36,9 +36,9 @@ assfaceoffpl:		;Assignment: the players taking the face off
 	lda.b d0
 	sta.b [a0]
 	lda.w pflags,x
-	bit.w #pfjoycon		; joystick: the player pulls
+	bit.w #pfjoycon					; joystick: the player pulls
 	bne .rts
-	lda.w pf2aip,x		; set pf2aip, test the old value
+	lda.w pf2aip,x					; set pf2aip, test the old value
 	pha
 	lda.w #$0001
 	sta.w pf2aip,x
@@ -47,7 +47,7 @@ assfaceoffpl:		;Assignment: the players taking the face off
 	bne .rts
 	lda.w #SPAfaceoff
 	sta.b d1
-	lda.w temp1+puckobj		; puck temp1 > $10: 7 in 8 reverse pull
+	lda.w temp1+puckobj				; puck temp1 > $10: 7 in 8 reverse pull
 	cmp.w #$0011
 	bcc .d
 	lda.w #$0008
@@ -64,6 +64,6 @@ assfaceoffpl:		;Assignment: the players taking the face off
 .rts:
 	rtl
 .exit:
-	lda.w #$0014		; nopuck = 20
+	lda.w #$0014					; nopuck = 20
 	sta.w nopuck,x
 	jmp.w assexit

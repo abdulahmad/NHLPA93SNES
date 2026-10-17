@@ -1,7 +1,8 @@
-assnearest:		;Assignment: the player nearest the puck who does not have it. Hands the job to a teammate who is nearer,
+assnearest:							;Assignment: the player nearest the puck who does not have it. Hands the
+									;job to a teammate who is nearer,
 		;   then skates to the puck or to a spot between the puck and his goal, looking for a check
 	lda.w pflags,x
-	bit.w #pfna		; pfna
+	bit.w #pfna						; pfna
 	beq .nna
 	and.w #~pfna&$FFFF
 	sta.w pflags,x
@@ -14,13 +15,13 @@ assnearest:		;Assignment: the player nearest the puck who does not have it. Hand
 	txa
 	lsr a
 	sta.b d1
-	cmp.w puckc		; X has the puck?
+	cmp.w puckc						; X has the puck?
 	bne .nopc
 	lda.w position,x
 	bne .pc
 	jmp.w assgoalie
 .pc:
-	lda.w #apuckc		; apuckc unless joystick controlled
+	lda.w #apuckc					; apuckc unless joystick controlled
 	sta.b d0
 	lda.w pflags,x
 	bit.w #pfjoycon
@@ -28,7 +29,7 @@ assnearest:		;Assignment: the player nearest the puck who does not have it. Hand
 	jmp.w assinsert
 .rts:
 	rtl
-.nopc:		;every aioff frames: find the teammate nearest the (moving) puck
+.nopc:								;every aioff frames: find the teammate nearest the (moving) puck
 	lda.w temp1,x
 	sec
 	sbc.b d7
@@ -36,13 +37,13 @@ assnearest:		;Assignment: the player nearest the puck who does not have it. Hand
 	bmi .dec
 	jmp.w .nodec
 .dec:
-	adc.w aioff,x		; reload temp1 from aioff
+	adc.w aioff,x					; reload temp1 from aioff
 	bpl .setcnt
 	lda.w #$0000
 .setcnt:
 	sta.w temp1,x
 	ldy.b a2
-	lda.w #$0000		; tmnear = 0
+	lda.w #$0000					; tmnear = 0
 	sta.w tmnear,y
 	sta.w tmnear+4,y
 	lda.w puckc
@@ -50,7 +51,7 @@ assnearest:		;Assignment: the player nearest the puck who does not have it. Hand
 	asl a
 	sta.b a1
 	tay
-	lda.w pfteam,y		; puck carrier on my team?
+	lda.w pfteam,y					; puck carrier on my team?
 	beq .pcteam
 	lda.w #$0001
 .pcteam:
@@ -63,13 +64,13 @@ assnearest:		;Assignment: the player nearest the puck who does not have it. Hand
 	bne .np
 	jmp.w .switch
 .np:
-	lda.w #$FFFF		; d2 = best distance^2 = $FFFFFFFF
+	lda.w #$FFFF					; d2 = best distance^2 = $FFFFFFFF
 	sta.b d2
 	sta.b d2+2
 	lda.w #$0005
 	sta.b d4
 	ldy.b a2
-	lda.w tmsort,y		; a0 = first object of the team
+	lda.w tmsort,y					; a0 = first object of the team
 	sta.b a0
 .de0:
 	ldy.b a0
@@ -96,7 +97,7 @@ assnearest:		;Assignment: the player nearest the puck who does not have it. Hand
 	tay
 	lda.w asslist,y
 	and.w #$00FF
-	cmp.w #apassrec		; skip a player on apassrec
+	cmp.w #apassrec					; skip a player on apassrec
 	bne .dist
 	jmp.w .next
 .dist:
@@ -115,7 +116,7 @@ assnearest:		;Assignment: the player nearest the puck who does not have it. Hand
 	sec
 	sbc.w pucky
 	sta.b d1
-	lda.w puckvx		; lead the puck: puckvx/64
+	lda.w puckvx					; lead the puck: puckvx/64
 	lsr a
 	lsr a
 	lsr a
@@ -163,7 +164,7 @@ assnearest:		;Assignment: the player nearest the puck who does not have it. Hand
 	lda.b mulres+2
 	adc.b d0+2
 	sta.b d0+2
-	lda.b d2		; nearer?
+	lda.b d2						; nearer?
 	cmp.b d0
 	lda.b d2+2
 	sbc.b d0+2
@@ -184,29 +185,29 @@ assnearest:		;Assignment: the player nearest the puck who does not have it. Hand
 	lda.b d2+2
 	bmi .de1
 	ldy.b a2
-	sta.w tmnear+4,y		; tmnear = nearest distance^2
+	sta.w tmnear+4,y				; tmnear = nearest distance^2
 	lda.b d2
 	sta.w tmnear,y
-.switch:		;if another player is nearer: give him anearest and leave
+.switch:							;if another player is nearer: give him anearest and leave
 	cpx.b a1
 	beq .de1
-	lda.w gmclock		; clock stopped
+	lda.w gmclock					; clock stopped
 	bne .de1
 	ldy.b a1
 	lda.w pflags,y
 	bit.w #pf2unav
 	bne .de1
-	ldx.b a1		; exg a1,a3 (X = a1)
+	ldx.b a1						; exg a1,a3 (X = a1)
 	ldy.b a3
 	stx.b a3
 	sty.b a1
 	lda.w pflags,x
-	and.w #~pfdoff&$FFFF		; clear pfdoff
+	and.w #~pfdoff&$FFFF			; clear pfdoff
 	sta.w pflags,x
-	lda.w #anearest		; anearest
+	lda.w #anearest					; anearest
 	sta.b d0
 	jsl.l assinsert
-	ldx.b a1		; exg back
+	ldx.b a1						; exg back
 	ldy.b a3
 	stx.b a3
 	sty.b a1
@@ -219,7 +220,7 @@ assnearest:		;Assignment: the player nearest the puck who does not have it. Hand
 	lda.w #$0002
 	sta.b d1
 	lda.b d2
-	cmp.w #$0191		; 20^2
+	cmp.w #$0191					; 20^2
 	bcs .nfar
 	stz.b d1
 	lda.w position,x
@@ -227,7 +228,7 @@ assnearest:		;Assignment: the player nearest the puck who does not have it. Hand
 	bcc .nodec
 .nfar:
 	lda.w sflags
-	bit.w #sf2pwrplay		; sf2pwrplay
+	bit.w #sf2pwrplay				; sf2pwrplay
 	beq .x
 	dec.b d1
 	dec.b d1
@@ -238,7 +239,7 @@ assnearest:		;Assignment: the player nearest the puck who does not have it. Hand
 	inc.b d1
 	inc.b d1
 .x:
-	lda.w #$0014		; ($14-aggress) << d1
+	lda.w #$0014					; ($14-aggress) << d1
 	sec
 	sbc.w aggress,x
 	sta.b d0
@@ -254,7 +255,7 @@ assnearest:		;Assignment: the player nearest the puck who does not have it. Hand
 	lda.b d0
 	cmp.w #$0002
 	bcs .nodec
-	lda.w #$00F0		; temp3 = 240
+	lda.w #$00F0					; temp3 = 240
 	sta.w temp3,x
 .nodec:
 	lda.w pfalock,x
@@ -271,7 +272,7 @@ assnearest:		;Assignment: the player nearest the puck who does not have it. Hand
 	jmp.w .rts
 .mode:
 	ldy.b a2
-	lda.w tmflags,y		; tmfmid: always the in-between spot
+	lda.w tmflags,y					; tmfmid: always the in-between spot
 	bit.w #tmfmid
 	bne .mid
 	lda.w puckc
@@ -286,8 +287,8 @@ assnearest:		;Assignment: the player nearest the puck who does not have it. Hand
 	jmp.w .topuck
 .clr:
 	stz.w temp3,x
-.mid:		;skate to halfway between the puck spot and the own goal mouth (0,+-$F4)
-	jsl.l skatetopuckinit		; d0/d1 = puck spot
+.mid:								;skate to halfway between the puck spot and the own goal mouth (0,+-$F4)
+	jsl.l skatetopuckinit			; d0/d1 = puck spot
 	lda.b d1
 	pha
 	lda.b d0
@@ -299,18 +300,18 @@ assnearest:		;Assignment: the player nearest the puck who does not have it. Hand
 	eor.w #$FFFF
 	inc a
 	clc
-	adc.w #$00F4		; own goal mouth y $F4
+	adc.w #$00F4					; own goal mouth y $F4
 	sta.b d1
 	lda.w pfgoal,x
 	beq .nd0
 	lda.b d1
 	sec
-	sbc.w #$01E8		; $1E8 = 2*$F4 for the top goal
+	sbc.w #$01E8					; $1E8 = 2*$F4 for the top goal
 	sta.b d1
 .nd0:
 	lda.b d0
 	pha
-	asl a		; asr #1
+	asl a							; asr #1
 	pla
 	ror a
 	sta.b d0
@@ -360,11 +361,11 @@ assnearest:		;Assignment: the player nearest the puck who does not have it. Hand
 	lda.w #$FFBC
 	sta.b d1
 .go:
-	lda.w #rtss		; a0 = rtss: nothing to do on arrival
+	lda.w #rtss						; a0 = rtss: nothing to do on arrival
 	sta.b a0
 	lda.w #rtss>>16
 	sta.b a0+2
-	jsl.l skateto		; d0/d1 = spot, [a0] = arrival routine
+	jsl.l skateto					; d0/d1 = spot, [a0] = arrival routine
 	jmp.w check4check
 .topuck:
 	jsl.l skatetopuck

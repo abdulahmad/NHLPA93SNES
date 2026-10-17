@@ -1,4 +1,4 @@
-ShowGoalBox:		;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the assists
+ShowGoalBox:						;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the assists
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -31,7 +31,7 @@ ShowGoalBox:		;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the ass
 	adc.w ScoreSumbytes
 	sta.b a4
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $BF,$0B,$02
 	lda.w #$0013
 	sta.b d0
@@ -69,7 +69,7 @@ ShowGoalBox:		;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the ass
 	adc.w #$001A
 .tmofs:
 	tay
-	lda.w tmgoals,y		; goals of the scorer
+	lda.w tmgoals,y					; goals of the scorer
 	and.w #$00FF
 	cmp.w #$0003
 	bne .goal
@@ -92,7 +92,7 @@ ShowGoalBox:		;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the ass
 	bit.w #$0080
 	bne .ex
 	jsl.l printz
-	dw $0012		; printz inline string: length (counts itself), then control bytes / text
+	dw $0012						; printz inline string: length (counts itself), then control bytes / text
 	db $BF,$0E,$06,"Assist by:",$BF,$0C,$07
 	jsl.l PlayerShortName
 	jsl.l print
@@ -103,7 +103,7 @@ ShowGoalBox:		;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the ass
 	bit.w #$0080
 	bne .ex
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $BF,$0C,$08
 	jsl.l PlayerShortName
 	jsl.l print

@@ -1,6 +1,7 @@
-ScoutTeamStep:		;Step team a2's player on the scouting report through his animation, then print his number and name
+ScoutTeamStep:						;Step team a2's player on the scouting report through his animation, then
+									;print his number and name
 	ldy.b a2
-	lda.w tmteam,y		; team changed?
+	lda.w tmteam,y					; team changed?
 	sta.b d0
 	cmp.w tmshots,y
 	beq .cur
@@ -12,13 +13,13 @@ ScoutTeamStep:		;Step team a2's player on the scouting report through his animat
 	jsl.l ScoutPlayerExit
 .cur:
 	ldy.b a2
-	lda.w tmsort,y		; X = a3 = first object of the team
+	lda.w tmsort,y					; X = a3 = first object of the team
 	sta.b a3
 	tax
 	lda.w tmflags,y
 	bit.w #$0002
 	beq .in
-	inc.w OldZpos,x		; skating out: x += 3
+	inc.w OldZpos,x					; skating out: x += 3
 	inc.w OldZpos,x
 	inc.w OldZpos,x
 	inc.w OldXpos,x
@@ -36,19 +37,19 @@ ScoutTeamStep:		;Step team a2's player on the scouting report through his animat
 	bvs .next1
 .rtl:
 	rtl
-.in:		;skating in from the left
-	lda.w OldXpos,x		; skating in: x += 1 while negative
+.in:								;skating in from the left
+	lda.w OldXpos,x					; skating in: x += 1 while negative
 	bpl .anim
 	inc.w OldZpos,x
 	inc.w OldXpos,x
 .anim:
 	jsl.l updateanim
-	lda.w pf2aip,x		; pf2aip: wait for the step delay
+	lda.w pf2aip,x					; pf2aip: wait for the step delay
 	beq .step
 	jmp.w ScoutPlayerExit_rtl
-.step:		;next script step
+.step:								;next script step
 	ldy.b a2
-	lda.w tmPenmin,y		; a0 = ScoutScripts + offset of the script + step; step += 4
+	lda.w tmPenmin,y				; a0 = ScoutScripts + offset of the script + step; step += 4
 	asl a
 	sta.b d0
 	tay
@@ -69,7 +70,7 @@ ScoutTeamStep:		;Step team a2's player on the scouting report through his animat
 	bne .set
 	jmp.w ScoutPlayerExit
 .set:
-	jsl.l SetSPA		; SetSPA d1, 9 frames per step, facedir
+	jsl.l SetSPA					; SetSPA d1, 9 frames per step, facedir
 	lda.w #$0009
 	sta.w pf2aip,x
 	ldy.w #$0002
@@ -77,14 +78,14 @@ ScoutTeamStep:		;Step team a2's player on the scouting report through his animat
 	sta.w facedir,x
 	bmi .flip
 	jmp.w ScoutPlayerExit_rtl
-.flip:		;negative facedir: first step of a new player, print the name
+.flip:								;negative facedir: first step of a new player, print the name
 	eor.w #$FFFF
 	inc a
 	sta.w facedir,x
 	ldy.b a2
 	lda.w tmPwrPlays,y
 	sta.b d0
-	jsl.l GetRosterEntry		; mesarea = number and the first name, centered in 11 columns
+	jsl.l GetRosterEntry			; mesarea = number and the first name, centered in 11 columns
 	jsl.l ScoutNamePos
 	lda.w printx
 	pha
@@ -147,7 +148,7 @@ ScoutTeamStep:		;Step team a2's player on the scouting report through his animat
 	pla
 	sta.w printx
 	inc.w printy
-	lda.b [a0]		; then the last name on the next line
+	lda.b [a0]						; then the last name on the next line
 	sta.b tmp0
 	ldy.w #$0001
 .space:

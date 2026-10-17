@@ -1,5 +1,5 @@
-checkpuckcoll:		;Puck collision with the players near it
-	lda.w Zpos+puckobj		; puck feet in the air (Zpos > 16): no collision
+checkpuckcoll:						;Puck collision with the players near it
+	lda.w Zpos+puckobj				; puck feet in the air (Zpos > 16): no collision
 	sec
 	sbc.w #$0010
 	beq .setup
@@ -9,11 +9,11 @@ checkpuckcoll:		;Puck collision with the players near it
 .neg:
 	bvs .rtl
 .setup:
-	lda.w OOlistpos+puckobj		; Y = puck position in OOlist
+	lda.w OOlistpos+puckobj			; Y = puck position in OOlist
 	sta.b d1
 .up:
 	ldy.b d1
-	cpy.w #$000F		; top object
+	cpy.w #$000F					; top object
 	beq .cl
 	lda.w OOlist+1,y
 	and.w #$00FF
@@ -23,7 +23,7 @@ checkpuckcoll:		;Puck collision with the players near it
 	sec
 	sbc.w pucky
 	sec
-	sbc.w #$0016		; next higher object within 22 in y
+	sbc.w #$0016					; next higher object within 22 in y
 	beq .cc1
 	bmi .neg1
 	bvs .cc1

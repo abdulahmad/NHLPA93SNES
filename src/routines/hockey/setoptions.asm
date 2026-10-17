@@ -1,4 +1,5 @@
-setoptions:		;The options screen: up and down pick a line, left and right change it, Start goes on;
+setoptions:							;The options screen: up and down pick a line, left and right change it,
+									;Start goes on;
 		;   left idle, a demo game starts with random teams
 	lda.w #vb2_blank
 	sta.b vbint
@@ -163,7 +164,7 @@ setoptions:		;The options screen: up and down pick a line, left and right change
 	lda.w #$0000
 	sta.b sprpriority
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $FE,$00,$00
 	jsl.l InitSortObjects
 	lda.w #$0028
@@ -173,7 +174,7 @@ setoptions:		;The options screen: up and down pick a line, left and right change
 	sta.b a1
 	lda.w #.text>>16
 	sta.b a1+2
-.textlp:		;print the .text lines until a 0 byte
+.textlp:							;print the .text lines until a 0 byte
 	jsl.l print
 	ldy.w #$0002
 	lda.b [a1],y
@@ -194,16 +195,16 @@ setoptions:		;The options screen: up and down pick a line, left and right change
 	jsl.l StartSong6
 	lda.w #$0001
 	sta.b fadein
-.idle:		;restart the idle count (d6 = $12C0 frames until the demo)
+.idle:								;restart the idle count (d6 = $12C0 frames until the demo)
 	lda.w #$12C0
 	sta.b d6
-.frame:		;one frame: seed counts up while waiting for VBlank_SprPal to run
+.frame:								;one frame: seed counts up while waiting for VBlank_SprPal to run
 	inc.w seed
 	bne .seed
 	inc.w seed+2
 .seed:
 	lda.b vbint
-	cmp.w #VBlank_SprPal		; VBlank_SprPal not run yet?
+	cmp.w #VBlank_SprPal			; VBlank_SprPal not run yet?
 	beq .frame
 	jsl.l ReadPads
 	lda.b vcount
@@ -228,7 +229,7 @@ setoptions:		;The options screen: up and down pick a line, left and right change
 	sta.b vbint
 	dec.b d6
 	bpl .frame
-	lda.w #NumofTeams		; demo: random teams, both computer
+	lda.w #NumofTeams				; demo: random teams, both computer
 	jsl.l randoma
 	sta.w OptTeam1
 	sta.w HomeTeam
@@ -242,7 +243,8 @@ setoptions:		;The options screen: up and down pick a line, left and right change
 	stz.w notdemo
 	stz.w OptPlayMode
 	stz.w OptPlayers
-.start:		;Start, or the demo: pojoy from OptPlayers, the password in Cont. Playoffs, then maketree
+.start:								;Start, or the demo: pojoy from OptPlayers, the password in Cont.
+									;Playoffs, then maketree
 	lda.w OptPlayers
 	sec
 	sbc.w #$0005
@@ -255,7 +257,8 @@ setoptions:		;The options screen: up and down pick a line, left and right change
 	lda.w #$0080
 	tsb.w PassWord
 	jml.l maketree
-.input:		;a pad pressed (d1): Start, Up/Down (.nms by 2), Left/Right (.IncItem by 1)
+.input:								;a pad pressed (d1): Start, Up/Down (.nms by 2), Left/Right (.IncItem by
+									;1)
 	lda.b d1
 	bit.w #$1000
 	bne .start
@@ -289,7 +292,9 @@ setoptions:		;The options screen: up and down pick a line, left and right change
 	jsl.l .IncItem
 	jsl.l .ps
 	jmp.w .idle
-.IncItem:		;add d2 to option d7 (OptPlayMode + d7) within .pslim (d2 = 0: just limit it). Players is fixed to One outside Regular Season; Team 1 has $18 choices in the playoffs; a new
+.IncItem:							;add d2 to option d7 (OptPlayMode + d7) within .pslim (d2 = 0: just limit
+									;it). Players is fixed to One outside Regular Season; Team 1 has $18
+									;choices in the playoffs; a new
 		;   mode or Team 1 in the playoffs restarts them (NewPO)
 	lda.w #OptPlayMode
 	sta.b a2
@@ -323,7 +328,7 @@ setoptions:		;The options screen: up and down pick a line, left and right change
 	lda.w #$0005
 	sta.b d4
 .ii1:
-	jsl.l .iilimit		; d3 = the new value
+	jsl.l .iilimit					; d3 = the new value
 	lda.b d3
 	sta.b [a2],y
 	lda.b d2
@@ -340,7 +345,7 @@ setoptions:		;The options screen: up and down pick a line, left and right change
 	jml.l NewPO
 .rts:
 	rtl
-.iilimit:		;d3 + d2, wrapped into d5 ... d4-1
+.iilimit:							;d3 + d2, wrapped into d5 ... d4-1
 	lda.b d3
 	clc
 	adc.b d2
@@ -369,7 +374,7 @@ setoptions:		;The options screen: up and down pick a line, left and right change
 	lda.b d5
 	sta.b d3
 	rtl
-.ps:		;print the choices of all 7 lines (.psd), then PrintTeamNames
+.ps:								;print the choices of all 7 lines (.psd), then PrintTeamNames
 	lda.b d7
 	sta.b d6
 	lda.w #$FFFE
@@ -386,9 +391,10 @@ setoptions:		;The options screen: up and down pick a line, left and right change
 	lda.b d6
 	sta.b d7
 	jml.l PrintTeamNames
-.psd:		;print the choice of line d7 at x $11 (14 chars erased first): string d3 of its .pl list; the team lines print the team name (.psdtp)
+.psd:								;print the choice of line d7 at x $11 (14 chars erased first): string d3
+									;of its .pl list; the team lines print the team name (.psdtp)
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $BE,$11,$0D
 	lda.w printy
 	clc
@@ -422,7 +428,7 @@ setoptions:		;The options screen: up and down pick a line, left and right change
 	clc
 	adc.b [a0],y
 	sta.b a0
-.psd3:		;step to string d3
+.psd3:								;step to string d3
 	lda.b a0+2
 	sta.b a1+2
 	lda.b a0
@@ -433,7 +439,8 @@ setoptions:		;The options screen: up and down pick a line, left and right change
 	dec.b d3
 	bpl .psd3
 	jml.l print
-.psdtp:		;team line: the name of team d3 from its bank $83 team record, or .playoffs in Cont. Playoffs
+.psdtp:								;team line: the name of team d3 from its bank $83 team record, or
+									;.playoffs in Cont. Playoffs
 	ldy.b d7
 	lda.w #OptPlayMode
 	sta.b a1
@@ -463,10 +470,12 @@ setoptions:		;The options screen: up and down pick a line, left and right change
 	sta.b a1+2
 .print:
 	jml.l print
-.playoffs:		;the Team 1 / Team 2 choice in Cont. Playoffs
+.playoffs:							;the Team 1 / Team 2 choice in Cont. Playoffs
 	dw 10
 	db "Playoffs"
-.nms:		;move to line d7 + d0 (0..$C), skipping the lines fixed in this mode (Players in the playoffs, lines 1-3 in Cont. Playoffs, Team 2 in the playoffs), then move the frame from line d3
+.nms:								;move to line d7 + d0 (0..$C), skipping the lines fixed in this mode
+									;(Players in the playoffs, lines 1-3 in Cont. Playoffs, Team 2 in the
+									;playoffs), then move the frame from line d3
 		;   to d7
 	lda.b d7
 	sta.b d3
@@ -508,7 +517,7 @@ setoptions:		;The options screen: up and down pick a line, left and right change
 	lda.b d7
 	cmp.w #$0006
 	beq .nms0
-.nms4:		;erase the old frame, draw the new one
+.nms4:								;erase the old frame, draw the new one
 	jsl.l .setrect
 	lda.w blankchar
 	sta.b d2
@@ -517,9 +526,10 @@ setoptions:		;The options screen: up and down pick a line, left and right change
 	sta.b d3
 	jsl.l .setrect
 	jml.l Framer
-.setrect:		;printx $10, printy $C + d3, frame size d0 x d1 = $10 x 3 (5 tall for Team 1 in the playoff modes)
+.setrect:							;printx $10, printy $C + d3, frame size d0 x d1 = $10 x 3 (5 tall for Team
+									;1 in the playoff modes)
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $FF,$10,$0C
 	lda.w printy
 	clc
@@ -543,9 +553,10 @@ setoptions:		;The options screen: up and down pick a line, left and right change
 	sta.b d1
 	rtl
 	dw 0
-.pslim:		;choices of each line (Play Mode, Players, Team 1, Team 2, Per. Length, Penalties, Line Changes)
+.pslim:								;choices of each line (Play Mode, Players, Team 1, Team 2, Per.
+									;Length, Penalties, Line Changes)
 	dw $4,$6,NumofTeams,NumofTeams,$3,$3,$2
-.pl:		;offsets from .pl of the choice strings of each line
+.pl:								;offsets from .pl of the choice strings of each line
 	dw .pl0-.pl
 	dw .pl1-.pl
 	dw .pl2-.pl
@@ -553,7 +564,7 @@ setoptions:		;The options screen: up and down pick a line, left and right change
 	dw .pl4-.pl
 	dw .pl5-.pl
 	dw .pl6-.pl
-.pl0:		;Play Mode
+.pl0:								;Play Mode
 	dw 16
 	db "Regular Season"
 	dw 16
@@ -562,7 +573,7 @@ setoptions:		;The options screen: up and down pick a line, left and right change
 	db "New Playoffs"
 	dw 11
 	db "Best of 7"
-.pl1:		;Players (the last, One, is the only choice in the playoffs)
+.pl1:								;Players (the last, One, is the only choice in the playoffs)
 	dw 6
 	db "Demo"
 	dw 12
@@ -575,7 +586,8 @@ setoptions:		;The options screen: up and down pick a line, left and right change
 	db "Head to Head"
 	dw 5
 	db "One"
-.pl2:		;Team 1 and Team 2 (not used: .psdtp prints team names), Per. Length (30 Seconds is beyond .pslim)
+.pl2:								;Team 1 and Team 2 (not used: .psdtp prints team names), Per. Length (30
+									;Seconds is beyond .pslim)
 .pl3:
 .pl4:
 	dw 11
@@ -586,19 +598,19 @@ setoptions:		;The options screen: up and down pick a line, left and right change
 	db "20 Minutes"
 	dw 12
 	db "30 Seconds"
-.pl5:		;Penalties
+.pl5:								;Penalties
 	dw 15
 	db "Only Fighting"
 	dw 4
 	db "On"
 	dw 16
 	db "On, No Offside"
-.pl6:		;Line Changes
+.pl6:								;Line Changes
 	dw 4
 	db "On"
 	dw 5
 	db "Off"
-.text:		;the line names
+.text:								;the line names
 	dw 14
 	db $FE,$03,$0D,"Play Mode"
 	dw 12
@@ -613,5 +625,5 @@ setoptions:		;The options screen: up and down pick a line, left and right change
 	db $FE,$03,$17,"Penalties"
 	dw 17
 	db $FE,$03,$19,"Line Changes"
-	dw 3		; end (a 0 byte)
+	dw 3							; end (a 0 byte)
 	db 0

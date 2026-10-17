@@ -1,4 +1,4 @@
-PushNumber:		;a1 = d0 as a decimal string, no leading zeros
+PushNumber:							;a1 = d0 as a decimal string, no leading zeros
 	lda.w #mesarea+30
 	sta.b a1
 	lda.w #mesarea>>16

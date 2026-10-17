@@ -1,4 +1,5 @@
-ScrollDisplayUp:		;The next line of the scouting report text; scroll the text box up when it is full
+ScrollDisplayUp:					;The next line of the scouting report text; scroll the text box up when it
+									;is full
 	stz.w DispAttribCtr
 	inc.w VertLineScrolling
 	lda.w VertLineScrolling
@@ -24,7 +25,7 @@ ScrollDisplayUp:		;The next line of the scouting report text; scroll the text bo
 	ldx.b xsave
 	lda.w #$0007
 	sta.b d3
-	lda.w #textmap+$114		; textmap+$114: the text box
+	lda.w #textmap+$114				; textmap+$114: the text box
 	sta.b d1
 	lda.w #textmap>>16
 	sta.b d1+2
@@ -37,7 +38,7 @@ ScrollDisplayUp:		;The next line of the scouting report text; scroll the text bo
 	sta.b d2
 	lda.b d1+2
 	sta.b d2+2
-	jsl.l CopyWords		; copy a textmap row
+	jsl.l CopyWords					; copy a textmap row
 	lda.b d2
 	sta.b d1
 	lda.b d2+2

@@ -1,4 +1,5 @@
-assdefd:		;Assignment: a defenseman on defense stays between the furthest attacker and his goal, and joins the attack
+assdefd:							;Assignment: a defenseman on defense stays between the furthest attacker
+									;and his goal, and joins the attack
 		;   when the puck is past the line
 	lda.w pfalock,x
 	beq .go
@@ -60,7 +61,7 @@ assdefd:		;Assignment: a defenseman on defense stays between the furthest attack
 	eor.w #$FFFF
 	inc a
 	sta.b d3
-.de00:		;only lead when moving up ice
+.de00:								;only lead when moving up ice
 	lda.b d3
 	bpl .v
 	stz.b d3
@@ -115,7 +116,7 @@ assdefd:		;Assignment: a defenseman on defense stays between the furthest attack
 	bcs .de2
 	lda.w #12
 	sta.b a0
-.de2:		;find the furthest-up attacker
+.de2:								;find the furthest-up attacker
 	lda.w #5
 	sta.b d2
 	lda.w #-1000

@@ -1,4 +1,5 @@
-doplayeracc:		;Player X skates in direction d0 (or glides or stops), turning toward it and skating backwards
+doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning toward it
+									;and skating backwards
 		;   in his own zone
 	lda.w position,x
 	bne .skater
@@ -22,13 +23,13 @@ doplayeracc:		;Player X skates in direction d0 (or glides or stops), turning tow
 	ora.w Yvel,x
 	beq .cgl
 	jml.l dostop
-.cgl:		;no turn animation playing (pf2aip): SetSPA
+.cgl:								;no turn animation playing (pf2aip): SetSPA
 	lda.w pf2aip,x
 	bne .rtl
 	jml.l SetSPA
 .rtl:
 	rtl
-.d1:		;a direction: pfrev, then the turn
+.d1:								;a direction: pfrev, then the turn
 	lda.b d1
 	pha
 	lda.b d0
@@ -129,7 +130,7 @@ doplayeracc:		;Player X skates in direction d0 (or glides or stops), turning tow
 	bra .done
 .clrrev:
 	stz.w pfrev,x
-.done:		;turn rate = .ftab (direction difference) * d7; 0: noturn0
+.done:								;turn rate = .ftab (direction difference) * d7; 0: noturn0
 	pla
 	sta.b d0
 	pla
@@ -201,7 +202,7 @@ doplayeracc:		;Player X skates in direction d0 (or glides or stops), turning tow
 	lda.w #$0000
 	sbc.b d4+2
 	sta.b d4+2
-.i0:		;facedir.l + d4
+.i0:								;facedir.l + d4
 	lda.w facefrac,x
 	clc
 	adc.b d4
@@ -226,7 +227,7 @@ doplayeracc:		;Player X skates in direction d0 (or glides or stops), turning tow
 	lda.b d1
 	eor.w #SPAturnl-SPAturnr
 	sta.b d1
-.s2:		;SPAturnr (or SPAturnl), pf2aip
+.s2:								;SPAturnr (or SPAturnl), pf2aip
 	lda.b d1
 	clc
 	adc.w #SPAturnr
@@ -240,5 +241,5 @@ doplayeracc:		;Player X skates in direction d0 (or glides or stops), turning tow
 	jml.l revplayeracc
 .rtl2:
 	rtl
-.ftab:		;turn rate by the direction difference
+.ftab:								;turn rate by the direction difference
 	dw 0,23,23,23,0,-23,-23,-23

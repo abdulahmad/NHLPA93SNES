@@ -1,4 +1,4 @@
-PushTime:		;a1 = the time d0 (seconds) as a minutes:seconds string
+PushTime:							;a1 = the time d0 (seconds) as a minutes:seconds string
 	lda.w #mesarea+30
 	sta.b a1
 	lda.w #mesarea>>16

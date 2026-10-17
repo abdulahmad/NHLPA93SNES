@@ -1,4 +1,4 @@
-TickerTeam:		;Print one ticker line: team d0's name and score d1
+TickerTeam:							;Print one ticker line: team d0's name and score d1
 	lda.b $04,s
 	sta.w printx
 	inc.w printy

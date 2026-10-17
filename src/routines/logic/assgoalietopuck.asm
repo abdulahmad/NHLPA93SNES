@@ -1,5 +1,6 @@
-assgoalietopuck:		;Assignment: the goalie skates out to a loose puck moving toward him, if allowed
-	lda.w pflags,x		; joystick controlled or clock stopped: assexit
+assgoalietopuck:					;Assignment: the goalie skates out to a loose puck moving toward him, if
+									;allowed
+	lda.w pflags,x					; joystick controlled or clock stopped: assexit
 	and.w #pfjoycon
 	ora.w gmclock
 	beq .ai
@@ -27,11 +28,11 @@ assgoalietopuck:		;Assignment: the goalie skates out to a loose puck moving towa
 	lda.w #$0000
 .store:
 	sta.w temp1,x
-	lda.w puckc		; carried puck: assexit
+	lda.w puckc						; carried puck: assexit
 	bmi .loose
 	jml.l assexit
 .loose:
-	lda.w puckvy		; puck moving away from my goal: assexit
+	lda.w puckvy					; puck moving away from my goal: assexit
 	sta.b tmp0
 	lda.w pfgoal,x
 	beq .dir
@@ -44,7 +45,7 @@ assgoalietopuck:		;Assignment: the goalie skates out to a loose puck moving towa
 	bpl .near
 	jml.l assexit
 .near:
-	stz.b a1		; tmnear of my team >= $E10 and of the other >= $640
+	stz.b a1						; tmnear of my team >= $E10 and of the other >= $640
 	lda.w #$0002
 	sta.b a2
 	lda.w pfteam,x
@@ -68,9 +69,9 @@ assgoalietopuck:		;Assignment: the goalie skates out to a loose puck moving towa
 	sbc.w #$0000
 	bcs .go
 	jml.l assexit
-.go:		;skatetopuck
+.go:								;skatetopuck
 	jml.l skatetopuck
-unusedFF83:		;unused, $FF fill to the end of the bank
+unusedFF83:							;unused, $FF fill to the end of the bank
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF

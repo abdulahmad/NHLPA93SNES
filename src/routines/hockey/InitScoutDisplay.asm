@@ -1,4 +1,4 @@
-InitScoutDisplay:		;Reset the scouting report text scroll
+InitScoutDisplay:					;Reset the scouting report text scroll
 	lda.w #$FFFF
 	sta.w VertLineScrolling
 	sta.w PlayerScrollCtr

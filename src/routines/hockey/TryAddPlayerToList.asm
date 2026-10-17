@@ -1,4 +1,5 @@
-TryAddPlayerToList:		;Add roster player d0 to slot d4 of the list of players wanted on the ice, if he is available
+TryAddPlayerToList:					;Add roster player d0 to slot d4 of the list of players wanted on the ice,
+									;if he is available
 	lda.b d0
 	sta.b d1
 	dec.b d0
@@ -20,7 +21,7 @@ TryAddPlayerToList:		;Add roster player d0 to slot d4 of the list of players wan
 	bvs .no
 .chk:
 	lda.w tmpdst,y
-	cmp.w #TMPDOUT		; TMPDOUT: not available
+	cmp.w #TMPDOUT					; TMPDOUT: not available
 	beq .no
 	lda.w #$0005
 	sta.b d0
@@ -32,7 +33,7 @@ TryAddPlayerToList:		;Add roster player d0 to slot d4 of the list of players wan
 	lda.b d1
 	and.w #$00FF
 	cmp.b tmp0
-	beq .no		; already in PlList
+	beq .no							; already in PlList
 	dec.b d0
 	bpl .s2
 	ldy.b d4

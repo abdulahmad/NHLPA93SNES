@@ -1,9 +1,9 @@
-EASNLogo:		;Draw the EASN logo on the rink unless a power play is on
+EASNLogo:							;Draw the EASN logo on the rink unless a power play is on
 	lda.w sflags
 	bit.w #sf2pwrplay
 	bne .rtl
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $BF,$01,$19
 	stz.b tmp0
 	stz.b tmp1
@@ -33,7 +33,7 @@ EASNLogo:		;Draw the EASN logo on the rink unless a power play is on
 	sta.b tmp1
 	dec.b tmp2
 	bne .row
-	lda.w #$0321		; dirty range of the rink map rows
+	lda.w #$0321					; dirty range of the rink map rows
 	cmp.b textdirtylo
 	bcs .hi
 	sta.b textdirtylo

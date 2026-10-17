@@ -1,16 +1,17 @@
-assshoot:		;Assignment: computer shooting: wind up, then shoot when the swing time runs out
+assshoot:							;Assignment: computer shooting: wind up, then shoot when the swing time
+									;runs out
 	lda.w pflags,x
-	bit.w #pfna		; pfna
+	bit.w #pfna						; pfna
 	beq .nna
 	and.w #~pfna&$FFFF
 	sta.w pflags,x
 	bra SetShotMode
 .nna:
 	lda.w sflags
-	bit.w #sfssdir		; sfssdir
+	bit.w #sfssdir					; sfssdir
 	bne .swing
 	jmp.w assexit
-.swing:		;count down the swing time; then press the shot button (d2 = cbut)
+.swing:								;count down the swing time; then press the shot button (d2 = cbut)
 	lda.w temp1,x
 	sta.b d0
 	stz.b d2

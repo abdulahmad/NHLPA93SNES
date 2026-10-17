@@ -1,4 +1,5 @@
-UpdateScoutingDisplay:		;Every frame of the scouting report: print the next word of the commentary when its timer runs out,
+UpdateScoutingDisplay:				;Every frame of the scouting report: print the next word of the commentary
+									;when its timer runs out,
 		;   filling in team and goalie names
 	lda.w ScoutingReportTimer		; text finished ($7FFF)
 	sec
@@ -10,7 +11,7 @@ UpdateScoutingDisplay:		;Every frame of the scouting report: print the next word
 .neg:
 	bvs .rtl
 .tm:
-	lda.w asv		; asv: no delay
+	lda.w asv						; asv: no delay
 	bmi .go
 	dec.w ScoutingReportTimer
 	bpl .rtl
@@ -22,7 +23,8 @@ UpdateScoutingDisplay:		;Every frame of the scouting report: print the next word
 	lda.w PlayerScrollCtr
 	sta.b d0
 	bpl .cont
-	stz.w DispAttribCtr		; next paragraph number from TestList; -1: stop typing, leave the screen in 480 frames
+	stz.w DispAttribCtr				;next paragraph number from TestList; -1: stop typing, leave the screen in
+									;480 frames
 	ldy.w SelectedPlayerIdx
 	inc.w SelectedPlayerIdx
 	inc.w SelectedPlayerIdx
@@ -39,7 +41,7 @@ UpdateScoutingDisplay:		;Every frame of the scouting report: print the next word
 	sta.w screentimer
 .rtl:
 	rtl
-.para:		;blank line between paragraphs
+.para:								;blank line between paragraphs
 	jsl.l ScrollDisplayUp
 	lda.b a1
 	sta.b a2
@@ -66,7 +68,7 @@ UpdateScoutingDisplay:		;Every frame of the scouting report: print the next word
 	sta.b a2
 	lda.b a1+2
 	sta.b a2+2
-	lda.w #$000A		; 10 frames per word
+	lda.w #$000A					; 10 frames per word
 	sta.w ScoutingReportTimer
 	lda.w DispAttribCtr
 	sta.b d0
@@ -91,7 +93,7 @@ UpdateScoutingDisplay:		;Every frame of the scouting report: print the next word
 	cmp.w #']'
 	bne .word
 	jmp.w .awtm
-.word:		;copy the word and its trailing spaces to mesarea+2
+.word:								;copy the word and its trailing spaces to mesarea+2
 	lda.w #$FFFF
 	sta.w PlayerScrollCtr
 	lda.w #mesarea+2
@@ -118,7 +120,7 @@ UpdateScoutingDisplay:		;Every frame of the scouting report: print the next word
 	beq .pause
 	cmp.w #'.'
 	bne .nopause
-.pause:		;40 more frames after punctuation
+.pause:								;40 more frames after punctuation
 	lda.w ScoutingReportTimer
 	clc
 	adc.w #$0028
@@ -139,7 +141,7 @@ UpdateScoutingDisplay:		;Every frame of the scouting report: print the next word
 	sbc.b a1
 	sta.b a2
 	sta.w PlayerScrollCtr
-.eol:		;make a String at mesarea
+.eol:								;make a String at mesarea
 	lda.b d1
 	inc a
 	inc a
@@ -148,7 +150,7 @@ UpdateScoutingDisplay:		;Every frame of the scouting report: print the next word
 	sta.b a1
 	lda.w #$0000
 	sta.b a1+2
-.print:		;past column 20: ScrollDisplayUp
+.print:								;past column 20: ScrollDisplayUp
 	lda.b d0
 	sec
 	sbc.w #$0014
@@ -161,8 +163,8 @@ UpdateScoutingDisplay:		;Every frame of the scouting report: print the next word
 .neg1:
 	bvs .scr
 .noscr:
-	jsl.l printz		; print at column + DispAttribCtr, line + VertLineScrolling
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	jsl.l printz					; print at column + DispAttribCtr, line + VertLineScrolling
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $FF,$0A,$04
 	lda.w DispAttribCtr
 	clc
@@ -178,11 +180,11 @@ UpdateScoutingDisplay:		;Every frame of the scouting report: print the next word
 	adc.b d1
 	sta.w DispAttribCtr
 	rtl
-.awtm:		;away goalie
+.awtm:								;away goalie
 	lda.w #$0002
 	sta.b a1
 	bra .team
-.hmtm:		;home goalie
+.hmtm:								;home goalie
 	stz.b a1
 .team:
 	ldy.b a1
@@ -208,13 +210,13 @@ UpdateScoutingDisplay:		;Every frame of the scouting report: print the next word
 	dec.b d1
 	bpl .pl
 	bra .name
-.away:		;away team name
+.away:								;away team name
 	lda.w tmdata+2
 	sta.b a1
 	lda.w #TeamList>>16
 	sta.b a1+2
 	bra .tname
-.under:		;~: the home team (Montreal for the All-Star teams)
+.under:								;~: the home team (Montreal for the All-Star teams)
 	lda.w #TeamList>>16
 	sta.b a1+2
 	lda.w tmdata
@@ -227,7 +229,7 @@ UpdateScoutingDisplay:		;Every frame of the scouting report: print the next word
 .ar:
 	sta.b a1
 	bra .tname
-.home:		;home team name
+.home:								;home team name
 	lda.w tmdata
 	sta.b a1
 	lda.w #TeamList>>16

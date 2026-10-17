@@ -1,10 +1,10 @@
-SpriteSet0:		;frame set 0 (SPFskatewp, SPFskate, SPFturnl, SPFturnr): frames 1-96
-	dw 96		; frames
-	dw 445		; pieces
-	dw 896		; tiles
+SpriteSet0:							;frame set 0 (SPFskatewp, SPFskate, SPFturnl, SPFturnr): frames 1-96
+	dw 96							; frames
+	dw 445							; pieces
+	dw 896							; tiles
 	dw .pieces-SpriteSet0
 	dw .tiles-SpriteSet0
-.frames:		;first piece of each frame (+1 entry for the end)
+.frames:							;first piece of each frame (+1 entry for the end)
 	dw 0,2,5,7,9,11,15,22
 	dw 28,32,37,40,44,51,59,65
 	dw 69,72,76,84,91,94,101,104
@@ -18,10 +18,10 @@ SpriteSet0:		;frame set 0 (SPFskatewp, SPFskate, SPFturnl, SPFturnr): frames 1-9
 	dw 353,357,362,369,376,380,385,392
 	dw 397,399,405,412,416,424,434,441
 	dw 445
-.pieces:		;x, y, tile, attributes per piece
+.pieces:							;x, y, tile, attributes per piece
 	incbin "../../../data/Sprites/set00.pieces"
 	assert .tiles-.pieces == 4*445
-.tiles:		;896 4bpp tiles (32 bytes each)
+.tiles:								;896 4bpp tiles (32 bytes each)
 	incbin "../../../data/Sprites/set00.chr"
 SpriteSet0End:
 	assert SpriteSet0End-SpriteSet0 == $7C0+896*32

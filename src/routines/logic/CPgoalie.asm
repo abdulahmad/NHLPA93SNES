@@ -1,6 +1,7 @@
-CPgoalie:		;Should the computer pull its goalie? In the last minute of the third period when behind by two and the play
+CPgoalie:							;Should the computer pull its goalie? In the last minute of the third
+									;period when behind by two and the play
 		;   is in its attacking half. d1 = puck or face off y
-	lda.w gsp		; 3rd period only
+	lda.w gsp						; 3rd period only
 	cmp.w #$0002
 	bne .rtl
 	ldy.b a1
@@ -10,14 +11,14 @@ CPgoalie:		;Should the computer pull its goalie? In the last minute of the third
 	sbc.w tmscore,y
 	sta.b d0
 	bmi .rtl
-	cmp.w #$0002		; behind by exactly 2
+	cmp.w #$0002					; behind by exactly 2
 	bne .rtl
 	lda.w gameclock
-	cmp.w #$003D		; 60 seconds or less
+	cmp.w #$003D					; 60 seconds or less
 	bcs .rtl
 	lda.w tmsort,y
 	tay
-	lda.w pfgoal,y		; own half of the faceoff/puck
+	lda.w pfgoal,y					; own half of the faceoff/puck
 	bne .0
 	lda.b d1
 	eor.w #$FFFF
@@ -28,7 +29,7 @@ CPgoalie:		;Should the computer pull its goalie? In the last minute of the third
 	bmi .rtl
 	ldy.b a2
 	lda.w tmgoalie,y
-	ora.w #$FF00		; pull the goalie
+	ora.w #$FF00					; pull the goalie
 	sta.w tmgoalie,y
 	jmp.w setpersonel
 .rtl:

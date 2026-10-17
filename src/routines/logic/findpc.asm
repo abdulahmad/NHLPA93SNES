@@ -1,4 +1,4 @@
-findpc:		;When and where the puck will cross each goal line
+findpc:								;When and where the puck will cross each goal line
 	stx.b xsave
 	ldx.w #$0000
 .save:

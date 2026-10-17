@@ -1,4 +1,4 @@
-PrintPerLabel:		;Print the label of the current period
+PrintPerLabel:						;Print the label of the current period
 	lda.w gsp
 	sta.b d0
 	lda.w #PerLabels

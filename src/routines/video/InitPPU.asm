@@ -1,4 +1,5 @@
-InitPPU:		;Set all video and I/O registers to their reset values, with the screen off
+InitPPU:							;Set all video and I/O registers to their reset
+									;values, with the screen off
 	sep #$20
 	lda.b #INIDISP_FBLANK|$0F
 	sta.w INIDISP

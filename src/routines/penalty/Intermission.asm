@@ -1,4 +1,5 @@
-Intermission:		;Between periods: the pause menu screen with the scores of the other games, then the highlights. Start cuts it short
+Intermission:						;Between periods: the pause menu screen with the scores of the other
+									;games, then the highlights. Start cuts it short
 	jsl.l sndqreset
 	jsl.l SetupTeamForIntermission
 	lda.w #$0000
@@ -42,7 +43,7 @@ Intermission:		;Between periods: the pause menu screen with the scores of the ot
 	dey
 	bpl .clr
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $BF,$05,$0C
 	lda.w #$0016
 	sta.b d0

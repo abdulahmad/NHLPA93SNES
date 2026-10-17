@@ -1,5 +1,6 @@
-ReadPassBits:		;Turn the password bits back into the playoff state; a bad checksum marks the password invalid
-	lda.w #512		; checksum first (range 512)
+ReadPassBits:						;Turn the password bits back into the playoff state; a bad checksum marks
+									;the password invalid
+	lda.w #512						; checksum first (range 512)
 	sta.b d0
 	jsl.l SuperDiv
 	lda.b d0
@@ -9,9 +10,9 @@ ReadPassBits:		;Turn the password bits back into the playoff state; a bad checks
 	sta.b d2
 	lda.w #14
 	sta.b a1
-.0:		;the 8 series scores, range 5
+.0:									;the 8 series scores, range 5
 	ldy.b a1
-	lda.w gsflags,y		; gsftf off
+	lda.w gsflags,y					; gsftf off
 	and.w #$FFFB
 	sta.w gsflags,y
 	lda.w #5
@@ -20,7 +21,7 @@ ReadPassBits:		;Turn the password bits back into the playoff state; a bad checks
 	lda.b d0
 	ldy.b a1
 	sta.w gspobwins,y
-	cmp.w #4		; 4 wins: gsftf (series over)
+	cmp.w #4						; 4 wins: gsftf (series over)
 	bne .nsf0
 	lda.w gsflags,y
 	ora.w #$0004
@@ -78,11 +79,11 @@ ReadPassBits:		;Turn the password bits back into the playoff state; a bad checks
 	pla
 	cmp.b tmp0
 	beq .rtl
-	lda.w #$FFFF		; bad password
+	lda.w #$FFFF					; bad password
 	sta.w postarts
 .rtl:
 	rtl
-.sd:		;d0 = passbits mod d0 (SuperDiv), added to the checksum d7
+.sd:								;d0 = passbits mod d0 (SuperDiv), added to the checksum d7
 	jsl.l SuperDiv
 	lda.b d7
 	clc

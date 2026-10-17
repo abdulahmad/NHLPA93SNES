@@ -1,7 +1,8 @@
-RestoreBenchEnergy:		;Once a second with line changes on, players on the bench get some energy back
+RestoreBenchEnergy:					;Once a second with line changes on, players on the bench get some energy
+									;back
 	lda.w OptLine
 	bne .x
-	stz.b a2		; home team, then the away team
+	stz.b a2						; home team, then the away team
 	jsl.l .team
 	lda.w #$0002
 	sta.b a2
@@ -16,7 +17,7 @@ RestoreBenchEnergy:		;Once a second with line changes on, players on the bench g
 	clc
 	adc.b d0
 	tay
-	lda.w tmpdst,y		; on the bench?
+	lda.w tmpdst,y					; on the bench?
 	cmp.w #TMPDBENCH
 	bne .next
 	lda.w tmpde,y

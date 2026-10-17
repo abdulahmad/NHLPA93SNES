@@ -1,5 +1,5 @@
-muls32:		;Signed multiply with a 32-bit result in mulres
-	stz.b mulneg		; mulneg = number of negative operands
+muls32:								;Signed multiply with a 32-bit result in mulres
+	stz.b mulneg					; mulneg = number of negative operands
 	lda.b mula
 	bpl .signb
 	eor.w #$FFFF
@@ -14,8 +14,8 @@ muls32:		;Signed multiply with a 32-bit result in mulres
 	sta.b mulb
 	inc.b mulneg
 .mul:
-	jsl.l mulu		; mulres = mula*mulb
-	lsr.b mulneg		; odd: negate the 32-bit result
+	jsl.l mulu						; mulres = mula*mulb
+	lsr.b mulneg					; odd: negate the 32-bit result
 	bcc .rtl
 	lda.w #$0000
 	sbc.b mulres

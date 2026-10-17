@@ -1,37 +1,38 @@
-Pausemode:		;Pause mode: save the screen, stop the sound, show the pause menu until it is left, then restore
+Pausemode:							;Pause mode: save the screen, stop the sound, show the pause menu until it
+									;is left, then restore
 	phx
 	ldx.w #$07FE
-.save:		;textsave = textmap
+.save:								;textsave = textmap
 	lda.l textmap,x
 	sta.l textsave,x
 	dex
 	dex
 	bpl .save
 	plx
-	jsl.l sndqreset		; sound off; keep sfhormode and sflags
+	jsl.l sndqreset					; sound off; keep sfhormode and sflags
 	lda.w sfhormode
 	pha
 	lda.w sflags
 	pha
 	jsl.l forceblack
-	lda.w #999		; Oldrow = 999, SetHor, setvideo
+	lda.w #999						; Oldrow = 999, SetHor, setvideo
 	sta.w Oldrow
 	jsl.l SetHor
 	jsl.l setvideo
 	jsl.l KillCrowd
-.top:		;draw the pause screen
-	jsl.l printbigz		; big PAUSE title and the menu frame (22 x 7)
-	dw $000A		; printz inline string: length (counts itself), then control bytes / text
+.top:								;draw the pause screen
+	jsl.l printbigz					; big PAUSE title and the menu frame (22 x 7)
+	dw $000A						; printz inline string: length (counts itself), then control bytes / text
 	db $BF,$0B,$02,"PAUSE"
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $BF,$05,$0C
 	lda.w #$0016
 	sta.b d0
 	lda.w #$0007
 	sta.b d1
-	jsl.l Framer		; d0 x d1
+	jsl.l Framer					; d0 x d1
 	jsl.l printscores1
-	jsl.l PauseMenu		; nonzero: draw again
+	jsl.l PauseMenu					; nonzero: draw again
 	bne .top
 	jml.l PauseExit

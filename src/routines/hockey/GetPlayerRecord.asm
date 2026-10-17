@@ -1,4 +1,4 @@
-GetPlayerRecord:		;a0 = the roster record of player d0 of team a2
+GetPlayerRecord:					;a0 = the roster record of player d0 of team a2
 	lda.w #TeamList>>16
 	sta.b a0+2
 	ldy.b a2

@@ -1,4 +1,5 @@
-IntermissionTick:		;During the intermission, show the next ticker score from time to time, then the highlights
+IntermissionTick:					;During the intermission, show the next ticker score from time to time,
+									;then the highlights
 	lda.w demoflag
 	beq .rtl
 	lda.b vcount

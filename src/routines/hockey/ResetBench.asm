@@ -1,6 +1,6 @@
-ResetBench:		;Empty the penalty boxes and put every player on his own bench
+ResetBench:							;Empty the penalty boxes and put every player on his own bench
 	stz.w PBnum
-	lda.w #$0010		; home: +$10 per player
+	lda.w #$0010					; home: +$10 per player
 	sta.b d1
 	stz.b a0
 	jsl.l .rb
@@ -8,8 +8,8 @@ ResetBench:		;Empty the penalty boxes and put every player on his own bench
 	sta.b d1
 	lda.w #$0002
 	sta.b a0
-.rb:		;team a0 (0/2), d1 = PBnum step
-	lda.w #(maxros-1)*2		; (MaxRos-1)*2
+.rb:								;team a0 (0/2), d1 = PBnum step
+	lda.w #(maxros-1)*2				; (MaxRos-1)*2
 	sta.b d0
 .rb1:
 	lda.w PBnum
@@ -23,11 +23,11 @@ ResetBench:		;Empty the penalty boxes and put every player on his own bench
 	adc.b d0
 	tay
 	lda.w tmpdst,y
-	bmi .nopen		; on the ice or bench
+	bmi .nopen						; on the ice or bench
 	beq .nopen
-	bit.w #TMPDINJ		; TMPDINJ: stays in the box
+	bit.w #TMPDINJ					; TMPDINJ: stays in the box
 	beq .next
-	and.w #$07FF		; no time left: not counted
+	and.w #$07FF					; no time left: not counted
 	sta.b d2
 	bne .next
 	lda.w PBnum
@@ -41,9 +41,9 @@ ResetBench:		;Empty the penalty boxes and put every player on his own bench
 	sbc.b d1
 	sta.w PBnum
 	lda.w tmpdst,y
-	cmp.w #TMPDOUT		; TMPDOUT stays out
+	cmp.w #TMPDOUT					; TMPDOUT stays out
 	beq .next
-	lda.w #TMPDBENCH		; TMPDBENCH
+	lda.w #TMPDBENCH				; TMPDBENCH
 	sta.w tmpdst,y
 .next:
 	dec.b d0

@@ -1,4 +1,4 @@
-unusedEnergyBar:		;Build an energy bar of d0 in the message area without printing it. Unused
+unusedEnergyBar:					;Build an energy bar of d0 in the message area without printing it. Unused
 	stx.b xsave
 	ldx.w #$0000
 .save:

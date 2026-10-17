@@ -1,5 +1,6 @@
-Restart:		;Restart from scratch: reset the hardware and RAM, set the default handlers and options, then the playoff screen
-	sei		; interrupts off, native mode
+Restart:							;Restart from scratch: reset the hardware and RAM, set the default
+									;handlers and options, then the playoff screen
+	sei								; interrupts off, native mode
 	clc
 	xce
 	rep #$30
@@ -18,11 +19,11 @@ Restart:		;Restart from scratch: reset the hardware and RAM, set the default han
 	inx
 	cpx.w #$15FF
 	bne .clr
-	lda.w #$005C		; jmlvector opcode, sprite slot life 18
+	lda.w #$005C					; jmlvector opcode, sprite slot life 18
 	sta.w jmlvector
 	lda.w #$0012
 	sta.b sprslotlife
-	lda.b sprclock		; free all sprite VRAM slots
+	lda.b sprclock					; free all sprite VRAM slots
 	sec
 	sbc.w #$003C
 	ldx.w #$0000

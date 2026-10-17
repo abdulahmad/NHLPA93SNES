@@ -1,4 +1,5 @@
-ScoutNextPlayer:		;The next player of team a2 to show on the scouting report, with an animation picked from his ratings
+ScoutNextPlayer:					;The next player of team a2 to show on the scouting report, with an
+									;animation picked from his ratings
 	jsl.l SetTeamColors
 	ldy.b a2
 	lda.w tmflags,y
@@ -15,7 +16,7 @@ ScoutNextPlayer:		;The next player of team a2 to show on the scouting report, wi
 	lda.w tmPwrGoals,y
 	sta.b d0
 	tay
-	lda.w #ScoutLineOrder		; ScoutLineOrder[tmPwrGoals]: $FF restarts the list
+	lda.w #ScoutLineOrder			; ScoutLineOrder[tmPwrGoals]: $FF restarts the list
 	sta.b a0
 	lda.w #ScoutLineOrder>>16
 	sta.b a0+2
@@ -37,7 +38,7 @@ ScoutNextPlayer:		;The next player of team a2 to show on the scouting report, wi
 	sta.w tmPwrGoals,y
 	lda.w #TeamList>>16
 	sta.b a0+2
-	lda.w tmdata,y		; roster player = LineSets byte - 1 (goalie slot: tmgoalie)
+	lda.w tmdata,y					; roster player = LineSets byte - 1 (goalie slot: tmgoalie)
 	sta.b a0
 	clc
 	ldy.w #LineSets
@@ -62,7 +63,7 @@ ScoutNextPlayer:		;The next player of team a2 to show on the scouting report, wi
 	clc
 	adc.b [a0]
 	sta.b a0
-	lda.w attribute,x		; handedness bit: flip
+	lda.w attribute,x				; handedness bit: flip
 	and.w #$F7FF
 	sta.w attribute,x
 	ldy.w #Playerdata+4
@@ -72,7 +73,8 @@ ScoutNextPlayer:		;The next player of team a2 to show on the scouting report, wi
 	lda.w attribute,x
 	ora.w #$0800
 	sta.w attribute,x
-.rate:		;ScoutPickScript for each of the 14 rating nibbles (ScoutScriptPick, goalies ScoutScriptPickG)
+.rate:								;ScoutPickScript for each of the 14 rating nibbles (ScoutScriptPick,
+									;goalies ScoutScriptPickG)
 	inc.b a0
 	lda.w #$0006
 	sta.b d0

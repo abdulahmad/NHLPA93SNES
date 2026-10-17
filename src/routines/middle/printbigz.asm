@@ -1,5 +1,5 @@
-printbigz:		;printbig with the string following the call
-	lda.b $03,s		; farptr-style: a1 = the inline string after the caller
+printbigz:							;printbig with the string following the call
+	lda.b $03,s						; farptr-style: a1 = the inline string after the caller
 	sta.b a1+2
 	lda.b $01,s
 	inc a
@@ -8,4 +8,4 @@ printbigz:		;printbig with the string following the call
 	clc
 	adc.b $01,s
 	sta.b $01,s
-	jml.l printbig		; print the inline string
+	jml.l printbig					; print the inline string

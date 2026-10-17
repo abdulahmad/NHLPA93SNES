@@ -1,6 +1,7 @@
-InProgress:		;The referee's work after a whistle: send each penalized player to the box, update the scoreboard and stats,
+InProgress:							;The referee's work after a whistle: send each penalized player to the
+									;box, update the scoreboard and stats,
 		;   then recount the players and go to the face off
-	lda.w RefCnt		; animation in progress: exit
+	lda.w RefCnt					; animation in progress: exit
 	bmi .step
 	jmp.w .rtl
 .step:
@@ -39,7 +40,7 @@ InProgress:		;The referee's work after a whistle: send each penalized player to 
 	cmp.w #$0000
 	bne .0
 	jmp.w .exit
-.0:		;find the end of the list
+.0:									;find the end of the list
 	lda.b [a0]
 	inc.b a0
 	inc.b a0
@@ -49,13 +50,13 @@ InProgress:		;The referee's work after a whistle: send each penalized player to 
 	dec.b a0
 	dec.b a0
 	dec.b a0
-	lda.b [a0]		; clear bit 15 of the entry (first pass)
+	lda.b [a0]						; clear bit 15 of the entry (first pass)
 	pha
 	and.w #$7FFF
 	sta.b [a0]
 	pla
 	bmi .Sa
-	lda.b [a0]		; later pass: clear it when the player left the ice
+	lda.b [a0]						; later pass: clear it when the player left the ice
 	xba
 	and.w #$00FF
 	asl a
@@ -69,7 +70,7 @@ InProgress:		;The referee's work after a whistle: send each penalized player to 
 	sta.b [a0]
 	jmp.w .ex
 .Sa:
-	lda.b [a0]		; d2 = penalty minutes; none: no player involved
+	lda.b [a0]						; d2 = penalty minutes; none: no player involved
 	and.w #$00FF
 	sta.b d0
 	tay
@@ -116,7 +117,7 @@ InProgress:		;The referee's work after a whistle: send each penalized player to 
 	tax
 	stx.b a3
 	stz.b d0
-	stz.b a2		; a2 = penalized team, a1 = other; d0 = $8000 for the visitors
+	stz.b a2						; a2 = penalized team, a1 = other; d0 = $8000 for the visitors
 	lda.w #$0002
 	sta.b a1
 	lda.w pfteam,x
@@ -127,7 +128,7 @@ InProgress:		;The referee's work after a whistle: send each penalized player to 
 	lda.w #$0002
 	sta.b a2
 .sa1:
-	ldy.b a2		; tmPenalties +1, tmPenmin += minutes
+	ldy.b a2						; tmPenalties +1, tmPenmin += minutes
 	lda.w tmPenalties,y
 	inc a
 	sta.w tmPenalties,y
@@ -135,7 +136,7 @@ InProgress:		;The referee's work after a whistle: send each penalized player to 
 	clc
 	adc.b d2
 	sta.w tmPenmin,y
-	lda.w pnum,x		; TempPlOffset = pnum | visitors
+	lda.w pnum,x					; TempPlOffset = pnum | visitors
 	and.w #$00FF
 	ora.b d0
 	sta.w TempPlOffset
@@ -146,12 +147,12 @@ InProgress:		;The referee's work after a whistle: send each penalized player to 
 .pn:
 	asl a
 	sta.b d0
-	lda.w #$003C		; d2 = minutes*60 | $2000
+	lda.w #$003C					; d2 = minutes*60 | $2000
 	sta.b mula
 	lda.b d2
 	and.w #$00FF
 	sta.b mulb
-	jsl.l mulu16		; mulu, A = mula*mulb
+	jsl.l mulu16					; mulu, A = mula*mulb
 	ora.w #$2000
 	sta.b d2
 	lda.b a2
@@ -161,7 +162,7 @@ InProgress:		;The referee's work after a whistle: send each penalized player to 
 	clc
 	adc.b d0
 	tay
-	lda.w tmpdst,y		; keep TMPDINJ of an old penalty time
+	lda.w tmpdst,y					; keep TMPDINJ of an old penalty time
 	bmi .st
 	and.w #TMPDINJ
 	tsb.b d2
@@ -172,7 +173,7 @@ InProgress:		;The referee's work after a whistle: send each penalized player to 
 	trb.b d2
 	lda.w #$0034
 	sta.b d1
-.ctop:		;same time on the other team: coincidental
+.ctop:								;same time on the other team: coincidental
 	dec.b d1
 	dec.b d1
 	bmi .nocoin
@@ -188,7 +189,7 @@ InProgress:		;The referee's work after a whistle: send each penalized player to 
 	sta.b d3
 	cmp.b d2
 	bne .ctop
-	lda.w tmpdst,y		; coincidental: $4000 on both
+	lda.w tmpdst,y					; coincidental: $4000 on both
 	ora.w #$4000
 	sta.w tmpdst,y
 	lda.b a2
@@ -201,7 +202,7 @@ InProgress:		;The referee's work after a whistle: send each penalized player to 
 	lda.w tmpdst,y
 	ora.w #$4000
 	sta.w tmpdst,y
-.nocoin:		;add the player to the penalty box list
+.nocoin:							;add the player to the penalty box list
 	lda.b a0+2
 	pha
 	lda.b a0
@@ -250,12 +251,12 @@ InProgress:		;The referee's work after a whistle: send each penalized player to 
 	dex
 	bpl .restore2
 	ldx.b xsave
-	ldx.b a3		; SetPA, USBoard
+	ldx.b a3						; SetPA, USBoard
 	jsl.l SetPA
 	jsl.l USBoard
 	bra .ex
 .sa2:
-	lda.w #$0000		; no minutes: clear it, SetPA
+	lda.w #$0000					; no minutes: clear it, SetPA
 	sta.b [a0]
 	lda.w sfhormode
 	beq .sa3
@@ -264,7 +265,7 @@ InProgress:		;The referee's work after a whistle: send each penalized player to 
 	jsl.l SetPA
 	bra .ex
 .exit:
-	stz.b a2		; coinsearch for both teams, clear gmpen, the puck: pfaceoff
+	stz.b a2						; coinsearch for both teams, clear gmpen, the puck: pfaceoff
 	jsl.l coinsearch
 	lda.w #$0002
 	sta.b a2

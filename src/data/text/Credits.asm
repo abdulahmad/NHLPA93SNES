@@ -1,4 +1,5 @@
-Credits:		;the title screen credit lines (length word, text); $FE ends the copyright page, $FF a page, an empty string the list
+Credits:							;the title screen credit lines (length word, text); $FE ends the copyright
+									;page, $FF a page, an empty string the list
 	dw 24
 	db "$ 1992 Electronic Arts"
 	dw 22
@@ -95,7 +96,7 @@ Credits:		;the title screen credit lines (length word, text); $FE ends the copyr
 	db "John McIntyre"
 	dw 3
 	db $FF
-	dw 2		; empty: end of the credits
+	dw 2							; empty: end of the credits
 	dw 3
 	db $FF
 	dw 3

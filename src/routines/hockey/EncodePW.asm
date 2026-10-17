@@ -1,4 +1,5 @@
-EncodePW:		;After a playoff game, work out the winners and the new password, or new playoffs when the user's team won or went out
+EncodePW:							;After a playoff game, work out the winners and the new password, or new
+									;playoffs when the user's team won or went out
 	lda.w OptPlayMode
 	bne .po
 	jmp.w .rtl
@@ -7,12 +8,12 @@ EncodePW:		;After a playoff game, work out the winners and the new password, or 
 	sta.w OptPlayMode
 	jsl.l ResolveGames
 	jsl.l maketree
-	lda.w gamelevel		; finished playoffs
+	lda.w gamelevel					; finished playoffs
 	cmp.w #$0004
 	beq .userwon
-	lda.w gamenum		; gamenum >= 0: player 1 won
+	lda.w gamenum					; gamenum >= 0: player 1 won
 	bpl .nofail
-	lda.w pojoy		; pojoy < 2: one player or teammates
+	lda.w pojoy						; pojoy < 2: one player or teammates
 	sec
 	sbc.w #$0002
 	bmi .neg
@@ -20,7 +21,7 @@ EncodePW:		;After a playoff game, work out the winners and the new password, or 
 	bra .userfailed
 .neg:
 	bvc .userfailed
-.two:		;two players, first round: switch to the other team
+.two:								;two players, first round: switch to the other team
 	lda.w gamelevel
 	cmp.w #$0001
 	bne .userfailed
@@ -33,7 +34,7 @@ EncodePW:		;After a playoff game, work out the winners and the new password, or 
 .nofail:
 	jsl.l WritePassBits
 	jsl.l BitstoPW
-	lda.w sflags3		; sf3alttree: passbits before all games were resolved
+	lda.w sflags3					; sf3alttree: passbits before all games were resolved
 	bit.w #sf3alttree
 	beq .tree
 	ldy.w #$000E
@@ -49,7 +50,7 @@ EncodePW:		;After a playoff game, work out the winners and the new password, or 
 .userwon:
 	jsl.l ResetPassWord
 .userfailed:
-	lda.w #$0080		; PassWord bit 7: no password
+	lda.w #$0080					; PassWord bit 7: no password
 	tsb.w PassWord
 	lda.w #$0002
 	sta.w OptPlayMode

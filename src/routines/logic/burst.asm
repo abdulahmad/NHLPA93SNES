@@ -1,18 +1,18 @@
-burst:		;Check button: a speed burst in the facing direction, which costs energy
+burst:								;Check button: a speed burst in the facing direction, which costs energy
 	jsl.l getpde
-	lda.w OptLine		; line changes off: no energy cost
+	lda.w OptLine					; line changes off: no energy cost
 	bne .0
 	lda.b d0
 	sec
-	sbc.w #$00CC		; $1000/20
+	sbc.w #$00CC					; $1000/20
 	sta.b d0
 	jsl.l setpde
-.0:		;speed = energy*$233/$10000
+.0:									;speed = energy*$233/$10000
 	lda.b d0
 	sta.b mula
 	lda.w #$0233
 	sta.b mulb
-	jsl.l mulu		; mulres = mula*mulb
+	jsl.l mulu						; mulres = mula*mulb
 	lda.b mulres+2
 	sta.b mulb
 	pha
@@ -52,8 +52,8 @@ burst:		;Check button: a speed burst in the facing direction, which costs energy
 .xabs:
 	clc
 	adc.b tmp0
-	sta.w pspeed,x		; |Xvel|+|Yvel|
-	lda.w #SPAburst		; SPAburst $C7E, pfalock
+	sta.w pspeed,x					; |Xvel|+|Yvel|
+	lda.w #SPAburst					; SPAburst $C7E, pfalock
 	sta.b d1
 	sta.w pfalock,x
 	jmp.w SetSPA

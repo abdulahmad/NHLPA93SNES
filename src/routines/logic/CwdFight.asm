@@ -1,19 +1,20 @@
-CwdFight:		;The crowd reacts to a punch; the hit player X is pushed back by the puncher's strength
+CwdFight:							;The crowd reacts to a punch; the hit player X is pushed back by the
+									;puncher's strength
 	ldy.b a0
 	lda.b crowdlevel
 	clc
-	adc.w #$0050		; +80
+	adc.w #$0050					; +80
 	sta.b crowdlevel
-	lda.w #$0005		; (5 + puncher strength) * 500
+	lda.w #$0005					; (5 + puncher strength) * 500
 	clc
 	adc.w temp3,y
 	sta.b mulb
 	lda.w #$01F4
 	sta.b mula
-	jsl.l mulu16		; mulu, mulres = mula*mulb
+	jsl.l mulu16					; mulu, mulres = mula*mulb
 	sta.b d0
 	lda.w facedir,x
-	cmp.w #$0002		; push the other way when facing right
+	cmp.w #$0002					; push the other way when facing right
 	bne .xveladj
 	lda.b d0
 	eor.w #$FFFF

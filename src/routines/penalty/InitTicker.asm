@@ -1,4 +1,4 @@
-InitTicker:		;Start the score ticker for the other games of the round
+InitTicker:							;Start the score ticker for the other games of the round
 	lda.w TickerNum
 	bmi .last
 	ora.w gamenum

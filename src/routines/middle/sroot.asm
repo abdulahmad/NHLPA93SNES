@@ -1,4 +1,4 @@
-sroot:		;d0 = the square root of d0
+sroot:								;d0 = the square root of d0
 	stz.b tmp0
 	lda.w #$1000
 	sta.b tmp1
@@ -12,7 +12,7 @@ sroot:		;d0 = the square root of d0
 	sta.b tmp2
 	sta.b mula
 	sta.b mulb
-	jsl.l mulu		; mulres = mula*mulb
+	jsl.l mulu						; mulres = mula*mulb
 	lda.b d0
 	cmp.b mulres
 	lda.b d0+2

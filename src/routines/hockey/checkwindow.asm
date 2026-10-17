@@ -1,17 +1,17 @@
-checkwindow:		;Move the view so the screen follows the puck
+checkwindow:						;Move the view so the screen follows the puck
 	lda.w yc1
 	sta.b d2
 	lda.w xc1
 	sta.b d3
-	lda.w sflags		; sfslock: use xc1/yc1
+	lda.w sflags					; sfslock: use xc1/yc1
 	bit.w #sfslock
 	bne .dd
-	ldx.w #puckobj		; follow the puck, or its carrier with yleader
+	ldx.w #puckobj					; follow the puck, or its carrier with yleader
 	lda.w puckc
 	bmi .ok
 	asl a
 	tax
-	lda.w pfgoal,x		; carrier goes up: yleader up to 50, else down to -50
+	lda.w pfgoal,x					; carrier goes up: yleader up to 50, else down to -50
 	beq .gd
 	lda.w yleader
 	adc.b impactstep
@@ -43,7 +43,7 @@ checkwindow:		;Move the view so the screen follows the puck
 .ylmin:
 	lda.w #$FFCE
 	sta.w yleader
-.ok:		;d2 = Ypos + Yvel/128 + yleader, d3 = Xpos
+.ok:								;d2 = Ypos + Yvel/128 + yleader, d3 = Xpos
 	lda.w Yvel,x
 	lsr a
 	lsr a
@@ -66,7 +66,7 @@ checkwindow:		;Move the view so the screen follows the puck
 	sta.b d3
 	sta.w xc1
 .dd:
-	lda.b d2		; |target - Vpos| > 10: scroll
+	lda.b d2						; |target - Vpos| > 10: scroll
 	sec
 	sbc.w Vpos
 	sta.b d0
@@ -119,7 +119,7 @@ checkwindow:		;Move the view so the screen follows the puck
 .yslimu:
 	lda.w #$0100
 	sta.b d1
-.2:		;Vpos += (target - Vpos) / 8 (at least 1)
+.2:									;Vpos += (target - Vpos) / 8 (at least 1)
 	lda.b d1
 	sec
 	sbc.w Vpos
@@ -139,7 +139,7 @@ checkwindow:		;Move the view so the screen follows the puck
 	adc.w Vpos
 	sta.w Vpos
 .2x:
-	lda.b d3		; |target - Hpos| > 40: scroll
+	lda.b d3						; |target - Hpos| > 40: scroll
 	sec
 	sbc.w Hpos
 	sta.b d0
@@ -192,7 +192,7 @@ checkwindow:		;Move the view so the screen follows the puck
 .xslim:
 	lda.w #$003C
 	sta.b d1
-.4:		;Hpos += (target - Hpos) / 8 (at least 1)
+.4:									;Hpos += (target - Hpos) / 8 (at least 1)
 	lda.b d1
 	sec
 	sbc.w Hpos

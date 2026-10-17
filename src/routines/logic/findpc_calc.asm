@@ -1,5 +1,5 @@
-findpc_calc:		;findpc for one goal line
-	lda.b d4		; d0 = line - pucky
+findpc_calc:						;findpc for one goal line
+	lda.b d4						; d0 = line - pucky
 	sec
 	sbc.w pucky
 	sta.b d0
@@ -8,7 +8,7 @@ findpc_calc:		;findpc for one goal line
 	jmp.w .nocross
 .div:
 	sta.b mula
-	lda.b d0		; mulb = d0 << 12
+	lda.b d0						; mulb = d0 << 12
 	stz.b mulb
 	lsr a
 	ror.b mulb
@@ -27,12 +27,12 @@ findpc_calc:		;findpc for one goal line
 	bpl .time
 	jmp.w .nocross
 .time:
-	sta.w puckcross+2,y		; frames until crossing
+	sta.w puckcross+2,y				; frames until crossing
 	lda.w puckvx
 	sta.b mula
 	lda.b d0
 	sta.b mulb
-	jsl.l muls32		; x offset = puckvx*d0/puckvy, if it fits
+	jsl.l muls32					; x offset = puckvx*d0/puckvy, if it fits
 	lda.w puckvy
 	bit.w #$8000
 	beq .vy
@@ -54,14 +54,14 @@ findpc_calc:		;findpc for one goal line
 	adc.w puckx
 	sta.b d0
 	sec
-	sbc.w #sideline		; sideline $88
+	sbc.w #sideline					; sideline $88
 	bmi .neg
 	bvc .o1
 	bra .o1b
 .neg:
 	bvc .o1b
-.o1:		;bounce off the right side boards
-	lda.w #$0198		; 3*$88 - x
+.o1:								;bounce off the right side boards
+	lda.w #$0198					; 3*$88 - x
 	sec
 	sbc.b d0
 	sta.b d0
@@ -75,8 +75,8 @@ findpc_calc:		;findpc for one goal line
 	bra .o2b
 .neg1:
 	bvs .o2b
-.o2:		;bounce off the left side boards
-	lda.w #$FE68		; -3*$88 - x
+.o2:								;bounce off the left side boards
+	lda.w #$FE68					; -3*$88 - x
 	sec
 	sbc.b d0
 	sta.b d0

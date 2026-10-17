@@ -1,5 +1,6 @@
-wallcoll:		;Bounce object X off a wall: the puck loses speed and spins; a hard hit makes a sound
-	lda.b d0		; Wallcos/Wallsin
+wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a hard hit
+									;makes a sound
+	lda.b d0						; Wallcos/Wallsin
 	sta.w Wallcos,x
 	lda.b d1
 	sta.w Wallsin,x
@@ -13,7 +14,7 @@ wallcoll:		;Bounce object X off a wall: the puck loses speed and spins; a hard h
 	cpx.w #$0008
 	bne .save
 	ldx.b xsave
-	lda.b d1		; v1n = (Yvel*cos - Xvel*sin)/256, negated; v1t = (Xvel*cos + Yvel*sin)/256
+	lda.b d1						;v1n = (Yvel*cos - Xvel*sin)/256, negated; v1t = (Xvel*cos + Yvel*sin)/256
 	pha
 	lda.b d0
 	pha
@@ -64,13 +65,13 @@ wallcoll:		;Bounce object X off a wall: the puck loses speed and spins; a hard h
 	beq .puck
 	jmp.w .player
 .puck:
-	lda.w #sf2shot		; puck: clear sf2shot
+	lda.w #sf2shot					; puck: clear sf2shot
 	trb.w sflags
-	lda.b d2		; moving away from the wall
+	lda.b d2						; moving away from the wall
 	bmi .pn
 	jmp.w .nocoll
 .pn:
-	lsr a		; normal speed /4
+	lsr a							; normal speed /4
 	lsr a
 	bit.w #$2000
 	beq .pn1
@@ -78,7 +79,7 @@ wallcoll:		;Bounce object X off a wall: the puck loses speed and spins; a hard h
 .pn1:
 	sta.b d2
 	sec
-	sbc.w #$FC00		; hard hit (v1n <= -$400): pop up, flip, sound by speed
+	sbc.w #$FC00					; hard hit (v1n <= -$400): pop up, flip, sound by speed
 	beq .hard
 	bmi .neg
 	bvs .hard
@@ -121,7 +122,7 @@ wallcoll:		;Bounce object X off a wall: the puck loses speed and spins; a hard h
 	pha
 .snd:
 	jsl.l sfx
-.pok:		;reduce the tangent speed of the puck
+.pok:								;reduce the tangent speed of the puck
 	lda.b d3
 	lsr a
 	lsr a
@@ -149,7 +150,7 @@ wallcoll:		;Bounce object X off a wall: the puck loses speed and spins; a hard h
 .player:
 	lda.b d2
 	sec
-	sbc.w #$03E8		; player: v1n > 1000: no collision
+	sbc.w #$03E8					; player: v1n > 1000: no collision
 	beq .p1
 	bmi .neg3
 	bvs .p1
@@ -160,7 +161,7 @@ wallcoll:		;Bounce object X off a wall: the puck loses speed and spins; a hard h
 .p1:
 	lda.b d2
 	sec
-	sbc.w #$F000		; v1n <= -$1000 and impact >= 10: board sound
+	sbc.w #$F000					; v1n <= -$1000 and impact >= 10: board sound
 	beq .imp
 	bmi .neg4
 	bvs .imp
@@ -193,7 +194,7 @@ wallcoll:		;Bounce object X off a wall: the puck loses speed and spins; a hard h
 .n1:
 	sta.b d2
 	sec
-	sbc.w #$FC7C		; v1n >= -900: -1000
+	sbc.w #$FC7C					; v1n >= -900: -1000
 	bmi .neg6
 	bvc .min
 	bra .noadd
@@ -202,7 +203,7 @@ wallcoll:		;Bounce object X off a wall: the puck loses speed and spins; a hard h
 .min:
 	lda.w #$FC18
 	sta.b d2
-.noadd:		;rotate back: new Xvel/Yvel
+.noadd:								;rotate back: new Xvel/Yvel
 	lda.b $01,s
 	sta.b mula
 	lda.b d3
@@ -245,7 +246,7 @@ wallcoll:		;Bounce object X off a wall: the puck loses speed and spins; a hard h
 	sta.b d3+2
 	lda.b d3+1
 	sta.w Yvel,x
-	lda.w Zvel,x		; moving up: Zvel = 0
+	lda.w Zvel,x					; moving up: Zvel = 0
 	bmi .nocoll
 	stz.w Zvel,x
 .nocoll:

@@ -1,4 +1,4 @@
-WeightedRandomSelect:		;d0 = a random index from 0 to d0-1, weighted by the words at nibblebuffer
+WeightedRandomSelect:				;d0 = a random index from 0 to d0-1, weighted by the words at nibblebuffer
 	lda.b d1+2
 	pha
 	lda.b d1

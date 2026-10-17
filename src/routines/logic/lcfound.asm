@@ -1,4 +1,4 @@
-lcfound:		;Change team a2 to the chosen line
+lcfound:							;Change team a2 to the chosen line
 	ldx.b a3
 	ldy.b a2
 	lda.b d2

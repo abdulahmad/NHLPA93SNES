@@ -1,4 +1,4 @@
-clrplayer:		;Take the controller off player X
+clrplayer:							;Take the controller off player X
 	lda.w pflags,x
 	bit.w #pfjoycon
 	beq asspenalty_rtl

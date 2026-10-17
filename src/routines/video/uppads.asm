@@ -1,5 +1,5 @@
-uppads:		;Update the gloves object and the pad objects, and queue new pad labels
-	ldy.w #$0008		; gloves (ffo 4): hidden unless glovecords
+uppads:								;Update the gloves object and the pad objects, and queue new pad labels
+	ldy.w #$0008					; gloves (ffo 4): hidden unless glovecords
 	lda.w #$FFFF
 	sta.w ffoz,y
 	lda.w glovecords
@@ -25,7 +25,7 @@ uppads:		;Update the gloves object and the pad objects, and queue new pad labels
 	lda.w #$0000
 	sta.w ffoz,y
 .nogloves:
-	lda.w #$0003		; 4 pads: a0 = ffo index, a1 = padcont, d3 = PadControlBits
+	lda.w #$0003					; 4 pads: a0 = ffo index, a1 = padcont, d3 = PadControlBits
 	sta.b d4
 	stz.b a0
 	lda.w #padcont
@@ -39,18 +39,18 @@ uppads:		;Update the gloves object and the pad objects, and queue new pad labels
 	lda.b d3
 	and.w #$000F
 	sta.b d0
-	lda.w #$000F		; label code for $E
+	lda.w #$000F					; label code for $E
 	sta.b d1
 	lda.b d0
 	cmp.w #$000E
 	beq .chg
-	ldy.b a0		; hidden
+	ldy.b a0						; hidden
 	lda.w #$FFFF
 	sta.w ffoz,y
 	lda.b d0
 	cmp.w #$000F
 	beq .next
-	asl.b d0		; pad at the player
+	asl.b d0						; pad at the player
 	ldy.b d0
 	lda.w Xpos,y
 	ldy.b a0

@@ -1,5 +1,6 @@
-checkgoal:		;Collision with the goal: over the top, into the net for a goal, off a post or off the side and back
-	lda.w Zpos,x		; Zpos > 13 (goal height): over the goal
+checkgoal:							;Collision with the goal: over the top, into the net for a goal, off a
+									;post or off the side and back
+	lda.w Zpos,x					; Zpos > 13 (goal height): over the goal
 	sec
 	sbc.w #$000D
 	beq .z
@@ -10,11 +11,11 @@ checkgoal:		;Collision with the goal: over the top, into the net for a goal, off
 .neg:
 	bvs .ex1
 .z:
-	cpx.w #puckobj		; not the puck: checkgoalp
+	cpx.w #puckobj					; not the puck: checkgoalp
 	beq .puck
 	jmp.w checkgoalp
-.puck:		;puck: inside |dx| <= 16+wcradiusx and |dy| <= 4+wcradiusy?
-	ldy.b a2		; d2 = x - goal x
+.puck:								;puck: inside |dx| <= 16+wcradiusx and |dy| <= 4+wcradiusy?
+	ldy.b a2						; d2 = x - goal x
 	lda.w #$0010
 	clc
 	adc.w wcradiusx
@@ -78,8 +79,8 @@ checkgoal:		;Collision with the goal: over the top, into the net for a goal, off
 	jmp.w .rtl
 .neg4:
 	bvc .ex5
-.inside:		;inside the goal area now
-	lda.w #$FFFF		; collflag
+.inside:							;inside the goal area now
+	lda.w #$FFFF					; collflag
 	sta.b collflag
 	lda.w OldZpos+puckobj
 	sec
@@ -89,13 +90,13 @@ checkgoal:		;Collision with the goal: over the top, into the net for a goal, off
 	bra .nod
 .neg5:
 	bvc .nod
-.over:		;OldZpos >= 13: came over the top
+.over:								;OldZpos >= 13: came over the top
 	lda.w OldZpos+puckobj
 	sta.w Zpos+puckobj
 	jmp.w .deflectz
-.nod:		;pfgoal of the puck = the carrier shot into his own goal
+.nod:								;pfgoal of the puck = the carrier shot into his own goal
 	stz.w pfgoal+puckobj
-	lda.w puckc		; carrier: loses the puck, nopuck 8
+	lda.w puckc						; carrier: loses the puck, nopuck 8
 	bmi .nocon
 	asl a
 	tay
@@ -116,8 +117,8 @@ checkgoal:		;Collision with the goal: over the top, into the net for a goal, off
 	bpl .nocon
 	lda.w #$0001
 	sta.w pfgoal+puckobj
-.nocon:		;d0 = -256 (top entry: +256)
-	lda.w #$FF00		; d1 = (Ypos - OldYpos) >> 8
+.nocon:								;d0 = -256 (top entry: +256)
+	lda.w #$FF00					; d1 = (Ypos - OldYpos) >> 8
 	sta.b d0
 	lda.w Yfrac,x
 	sec
@@ -140,13 +141,13 @@ checkgoal:		;Collision with the goal: over the top, into the net for a goal, off
 	eor.w #$FFFF
 	inc a
 	sta.b d5
-.0:		;d5 = dy at entry; d2 -= dx*dy/vy: x where the puck crossed the goal line
+.0:									;d5 = dy at entry; d2 -= dx*dy/vy: x where the puck crossed the goal line
 	lda.b d5
 	clc
 	adc.b d3
 	sta.b d5
 	sta.b mulb
-	lda.w Xfrac,x		; d3 = (Xpos - OldXpos) >> 8; d5*d3
+	lda.w Xfrac,x					; d3 = (Xpos - OldXpos) >> 8; d5*d3
 	sec
 	sbc.w OldXfrac,x
 	sta.b d3
@@ -157,7 +158,7 @@ checkgoal:		;Collision with the goal: over the top, into the net for a goal, off
 	sta.b d3
 	sta.b mula
 	jsl.l muls32
-	lda.b d1		; |d5*d3| < |d1|? else side entry
+	lda.b d1						; |d5*d3| < |d1|? else side entry
 	bit.w #$8000
 	beq .m1
 	eor.w #$FFFF
@@ -176,7 +177,7 @@ checkgoal:		;Collision with the goal: over the top, into the net for a goal, off
 .dv:
 	lda.b d1
 	sta.b mula
-	jsl.l divs		; d5 = d5*d3 / d1
+	jsl.l divs						; d5 = d5*d3 / d1
 	sta.b d5
 	lda.b d2
 	sec
@@ -205,9 +206,9 @@ checkgoal:		;Collision with the goal: over the top, into the net for a goal, off
 	jmp.w .sideentry
 .neg7:
 	bvs .se2
-.mouth:		;crossed between the posts
+.mouth:								;crossed between the posts
 	stz.b d1
-	lda.w pucky		; puck on the back side: wallcoll
+	lda.w pucky						; puck on the back side: wallcoll
 	eor.b d0
 	bpl .pf
 	jmp.w wallcoll
@@ -216,14 +217,14 @@ checkgoal:		;Collision with the goal: over the top, into the net for a goal, off
 	eor.w #$FFFF
 	inc a
 	sta.b d0
-	lda.w pfgoal+puckobj		; own goal by the carrier: wallcoll
+	lda.w pfgoal+puckobj			; own goal by the carrier: wallcoll
 	beq .z13
 	jmp.w wallcoll
-.z13:		;at the crossbar height: off the post
+.z13:								;at the crossbar height: off the post
 	lda.w Zpos+puckobj
 	cmp.w #$000D
 	beq .deflectsf
-	lda.b d4		; mouth = half width - 5
+	lda.b d4						; mouth = half width - 5
 	sec
 	sbc.w #$0005
 	sta.b d4
@@ -250,8 +251,8 @@ checkgoal:		;Collision with the goal: over the top, into the net for a goal, off
 	jmp.w Goal
 .neg9:
 	bvs .goal
-.deflectsf:		;off the post
-	jsl.l ChkShotStat		; off the post: sfx and crowd +300
+.deflectsf:							;off the post
+	jsl.l ChkShotStat				; off the post: sfx and crowd +300
 	lda.w #SFXpuckpost
 	pha
 	jsl.l sfx
@@ -259,7 +260,7 @@ checkgoal:		;Collision with the goal: over the top, into the net for a goal, off
 	clc
 	adc.w #$012C
 	sta.b crowdlevel
-	lda.w #$1000		; random Yvel away from the goal, Xvel/Zvel +-$1000
+	lda.w #$1000					; random Yvel away from the goal, Xvel/Zvel +-$1000
 	jsl.l randoma
 	sta.b d0
 	lda.w pucky
@@ -282,7 +283,7 @@ checkgoal:		;Collision with the goal: over the top, into the net for a goal, off
 	sbc.w #$1000
 	sta.w puckvz
 	jmp.w puckflip
-.deflectz:		;Zvel = |Zvel|
+.deflectz:							;Zvel = |Zvel|
 	lda.w puckvz
 	bit.w #$8000
 	beq .dz
@@ -292,9 +293,9 @@ checkgoal:		;Collision with the goal: over the top, into the net for a goal, off
 	sta.w puckvz
 .rtl:
 	rtl
-.sideentry:		;off the side: wallcoll with normal (0, +-256)
+.sideentry:							;off the side: wallcoll with normal (0, +-256)
 	stz.b d0
-	lda.w #$0100		; d1 = +-256 by the x movement
+	lda.w #$0100					; d1 = +-256 by the x movement
 	sta.b d1
 	lda.w puckx
 	sec

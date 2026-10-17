@@ -1,10 +1,10 @@
-assfwatch:		;Assignment: a player watching a fight skates to a spot near it
+assfwatch:							;Assignment: a player watching a fight skates to a spot near it
 	lda.w pfalock,x
 	beq .joy
 	jmp.w .rts
 .joy:
 	lda.w pflags,x
-	bit.w #pfjoycon		; joystick controlled
+	bit.w #pfjoycon					; joystick controlled
 	beq .na
 	jmp.w .rts
 .na:
@@ -20,8 +20,8 @@ assfwatch:		;Assignment: a player watching a fight skates to a spot near it
 	sta.w temp1,x
 	bmi .spot
 	jmp.w .go
-.spot:		;new spot every second
-	adc.w #$003C		; +60
+.spot:								;new spot every second
+	adc.w #$003C					; +60
 	sta.w temp1,x
 	lda.w Ypos,x
 	sec
@@ -46,7 +46,7 @@ assfwatch:		;Assignment: a player watching a fight skates to a spot near it
 	lda.b mulres+2
 	adc.b d0+2
 	sta.b d0+2
-	jsl.l sroot		; distance to the fight
+	jsl.l sroot						; distance to the fight
 	lda.b d0
 	bne .d
 	lda.w #$0001
@@ -57,7 +57,7 @@ assfwatch:		;Assignment: a player watching a fight skates to a spot near it
 	sta.b mulb
 	pla
 	sta.b d1
-	lda.w #$0050		; 80 pixels from the fight
+	lda.w #$0050					; 80 pixels from the fight
 	sta.b mula
 	jsl.l muls32
 	lda.b d2
@@ -65,7 +65,7 @@ assfwatch:		;Assignment: a player watching a fight skates to a spot near it
 	jsl.l divs
 	adc.w xc1
 	sta.b d0
-	lda.w #$007E		; x within +-$7E
+	lda.w #$007E					; x within +-$7E
 	sta.b d3
 	lda.b d0
 	sec
@@ -113,11 +113,11 @@ assfwatch:		;Assignment: a player watching a fight skates to a spot near it
 	sta.b d0
 	lda.w temp4,x
 	sta.b d1
-	lda.w #rtss		; a0 = rtss
+	lda.w #rtss						; a0 = rtss
 	sta.b a0
 	lda.w #rtss>>16
 	sta.b a0+2
-	lda.w Xvel,x		; halve the velocity while watching
+	lda.w Xvel,x					; halve the velocity while watching
 	pha
 	asl a
 	pla
@@ -129,7 +129,7 @@ assfwatch:		;Assignment: a player watching a fight skates to a spot near it
 	pla
 	ror a
 	sta.w Yvel,x
-	jsl.l skateto		; d0/d1 = spot, [a0] = arrival routine
+	jsl.l skateto					; d0/d1 = spot, [a0] = arrival routine
 	jmp.w check4check
 .rts:
 	rtl

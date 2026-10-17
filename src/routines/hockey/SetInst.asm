@@ -1,9 +1,10 @@
-SetInst:		;Start a fight between X and a2 when both are aggressive enough; if X was shoulder checking, an
+SetInst:							;Start a fight between X and a2 when both are aggressive enough; if X was
+									;shoulder checking, an
 		;   instigator penalty goes to one of his teammates
 	lda.w fightagg,x
 	cmp.b d0
 	bcc checkfight_rtl
-	ldy.b a2		; tmp0 = fightagg of a2 >= 2
+	ldy.b a2						; tmp0 = fightagg of a2 >= 2
 	lda.w fightagg,y
 	sta.b tmp0
 	sec
@@ -15,7 +16,7 @@ SetInst:		;Start a fight between X and a2 when both are aggressive enough; if X 
 .neg:
 	bvc .ex1
 .r2:
-	lda.w pnum,y		; d1 = $10 - 2 * a2 checks
+	lda.w pnum,y					; d1 = $10 - 2 * a2 checks
 	sta.b d1
 	lda.w pfteam,y
 	beq .tm
@@ -51,8 +52,9 @@ SetInst:		;Start a fight between X and a2 when both are aggressive enough; if X 
 	sta.w pf2fight,x
 	sta.w pf2fight,y
 	jmp.w .inst
-.inst:		;X in a shoulder check: PenInst for the first teammate on the ice without a penalty
-	jsl.l sndqreset		; sound reset
+.inst:								;X in a shoulder check: PenInst for the first teammate on the ice without
+									;a penalty
+	jsl.l sndqreset					; sound reset
 	lda.w SPA,x
 	cmp.w #SPAshoulderchkl
 	beq .chk

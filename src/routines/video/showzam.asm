@@ -1,4 +1,4 @@
-showzam:		;Draw the zamboni moving across the horizontal rink
+showzam:							;Draw the zamboni moving across the horizontal rink
 	lda.b vcount
 	ldy.b vcount+2
 	cmp.b vcount

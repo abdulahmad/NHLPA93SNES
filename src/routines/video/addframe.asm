@@ -1,6 +1,7 @@
-addframe:		;Draw sprite frame sprframe at sprx / spry: find its frame set, then draw it
+addframe:							;Draw sprite frame sprframe at sprx / spry: find its frame set, then draw
+									;it
 	lda.b sprframe
-	cmp.w #SPFcrowd		; 6-byte pieces from SPFcrowd on
+	cmp.w #SPFcrowd					; 6-byte pieces from SPFcrowd on
 	bcc .sprframelt
 	jml.l addframe_end
 .sprframelt:

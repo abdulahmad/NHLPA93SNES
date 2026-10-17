@@ -1,4 +1,5 @@
-checkagr:		;Penalty roll for player X: small results call a penalty. Joystick players are judged less often, players
+checkagr:							;Penalty roll for player X: small results call a penalty. Joystick players
+									;are judged less often, players
 		;   near the puck more often
 	lda.w #$0014
 	sec

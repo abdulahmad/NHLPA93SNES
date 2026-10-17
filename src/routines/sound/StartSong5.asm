@@ -1,4 +1,4 @@
-StartSong5:		;Start the mid-period music unless it is already playing
+StartSong5:							;Start the mid-period music unless it is already playing
 	lda.w cursong
 	cmp.w #$0005
 	beq .rtl
@@ -9,7 +9,7 @@ StartSong5:		;Start the mid-period music unless it is already playing
 	jsl.l SPCGameUpload
 .cmd:
 	lda.w #$0008
-	jsl.l MusicCue		; driver command A (music cue)
+	jsl.l MusicCue					; driver command A (music cue)
 	lda.w #$0005
 	sta.w cursong
 	lda.w #$041A

@@ -1,7 +1,7 @@
-updatefaceoff:		;Step the puck drop animation; at its end erase the face off box
+updatefaceoff:						;Step the puck drop animation; at its end erase the face off box
 	lda.w temp1,x
 	beq .erase
-	clc		; (temp1+6)/8 <= 2: drop frame 10-d0
+	clc								; (temp1+6)/8 <= 2: drop frame 10-d0
 	adc.w #$0006
 	lsr a
 	lsr a
@@ -26,8 +26,8 @@ updatefaceoff:		;Step the puck drop animation; at its end erase the face off box
 .rtl:
 	rtl
 .erase:
-	jsl.l printz		; erase the faceoff box
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	jsl.l printz					; erase the faceoff box
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $BF,$00,$00
 	lda.w fodropx
 	sec
@@ -57,4 +57,4 @@ updatefaceoff:		;Step the puck drop animation; at its end erase the face off box
 	sta.b d1
 	lda.w blankchar
 	sta.b d2
-	jml.l eraser		; d0/d1 size, d2 tile
+	jml.l eraser					; d0/d1 size, d2 tile

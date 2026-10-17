@@ -1,4 +1,5 @@
-chkatop:		;Once a second, add to the attack zone time of the team with the puck past the blue line
+chkatop:							;Once a second, add to the attack zone time of the team with the puck past
+									;the blue line
 	stz.b d1
 	lda.w pucky
 	sec
@@ -21,7 +22,7 @@ chkatop:		;Once a second, add to the attack zone time of the team with the puck 
 .neg1:
 	bvs .rtl
 .1:
-	lda.w gmode		; gmdir: swap the teams
+	lda.w gmode						; gmdir: swap the teams
 	bit.w #gmdir
 	beq .0
 	lda.b d1

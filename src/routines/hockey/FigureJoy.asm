@@ -1,14 +1,14 @@
-FigureJoy:		;Set which team each controller plays
+FigureJoy:							;Set which team each controller plays
 	stz.w cont1team
 	stz.w cont2team
-	lda.w notdemo		; after the demo: no controller teams
+	lda.w notdemo					; after the demo: no controller teams
 	beq .rtl
 	lda.w OptPlayMode
 	bne .po
 	jmp.w .fjnpo
 .po:
 	jsl.l GetShifter
-	lda.w #potree		; d2 = the po team
+	lda.w #potree					; d2 = the po team
 	sta.b a0
 	lda.w #$0000
 	sta.b a0+2
@@ -19,7 +19,7 @@ FigureJoy:		;Set which team each controller plays
 	lda.b d1
 	asl a
 	sta.b a1
-	lda.w #$FFFF		; gamenum -1: po team not playing
+	lda.w #$FFFF					; gamenum -1: po team not playing
 	sta.w gamenum
 	stz.b d0
 .f0:
@@ -33,7 +33,7 @@ FigureJoy:		;Set which team each controller plays
 	dec.b a1
 	dec.b d1
 	bpl .f0
-.rtl:		;po team not in the playoffs
+.rtl:								;po team not in the playoffs
 	rtl
 .it2:
 	lda.w #4
@@ -58,7 +58,7 @@ FigureJoy:		;Set which team each controller plays
 	sta.w VisTeam
 	asl.b d0
 	asl.b d0
-	lda.w #.pojoylist		; .pojoylist entry (pojoy + 4 if the po team is team 2)
+	lda.w #.pojoylist				; .pojoylist entry (pojoy + 4 if the po team is team 2)
 	sta.b a0
 	lda.w #.pojoylist>>16
 	sta.b a0+2
@@ -71,7 +71,7 @@ FigureJoy:		;Set which team each controller plays
 	sta.w cont2team
 	rtl
 .fjnpo:
-	lda.w OptPlayers		; regular season: .noplist by OptPlayers
+	lda.w OptPlayers				; regular season: .noplist by OptPlayers
 	asl a
 	asl a
 	sta.b d0
@@ -87,7 +87,7 @@ FigureJoy:		;Set which team each controller plays
 	lda.b [a0],y
 	sta.w cont2team
 	rtl
-.pojoylist:		;cont1team, cont2team by pojoy 0-3 (the po team as team 1), then as team 2
+.pojoylist:							;cont1team, cont2team by pojoy 0-3 (the po team as team 1), then as team 2
 	dw 1,0
 	dw 1,1
 	dw 1,2
@@ -96,7 +96,7 @@ FigureJoy:		;Set which team each controller plays
 	dw 2,2
 	dw 2,1
 	dw 1,2
-.noplist:		;cont1team, cont2team by OptPlayers
+.noplist:							;cont1team, cont2team by OptPlayers
 	dw 0,0
 	dw 1,0
 	dw 2,0

@@ -1,4 +1,4 @@
-PushRef:		;Draw referee frame d0 in the referee window; frame $40 erases the window
+PushRef:							;Draw referee frame d0 in the referee window; frame $40 erases the window
 	phx
 	stx.b xsave
 	ldx.w #$0000
@@ -34,7 +34,7 @@ PushRef:		;Draw referee frame d0 in the referee window; frame $40 erases the win
 	sta.b a0
 	lda.w #RefsMap>>16
 	sta.b a0+2
-	lda.w #(2*32+2)*2		; textmap offset of the window: row 2, column 2
+	lda.w #(2*32+2)*2				; textmap offset of the window: row 2, column 2
 	sta.b tmp1
 	lda.w refchars
 	sta.b tmp0
@@ -42,7 +42,7 @@ PushRef:		;Draw referee frame d0 in the referee window; frame $40 erases the win
 	beq .nosfhormode
 	lda.w refcharshor
 	sta.b tmp0
-	lda.w #(15*32+13)*2		; horizontal rink: row 15, column 13
+	lda.w #(15*32+13)*2				; horizontal rink: row 15, column 13
 	sta.b tmp1
 	lda.w #RefsMapHor
 	sta.b a0

@@ -1,4 +1,4 @@
-SuperAdd:		;password bits += d0
+SuperAdd:							;password bits += d0
 	phx
 	lda.w passbits
 	clc

@@ -1,14 +1,14 @@
-puckstick:		;The puck hits player a2's stick
+puckstick:							;The puck hits player a2's stick
 	ldy.b a2
 	lda.w position,y
 	bne .0
 	lda.w gmode
-	bit.w #gmhl		; gmhl: goalie ignores the puck
+	bit.w #gmhl						; gmhl: goalie ignores the puck
 	beq .0
 	jmp.w .rtl
 .0:
 	lda.w pflags,y
-	and.w #~pfdoff&$FFFF		; clear pfdoff
+	and.w #~pfdoff&$FFFF			; clear pfdoff
 	sta.w pflags,y
 	lda.w puckc
 	bpl .carried
@@ -32,14 +32,14 @@ puckstick:		;The puck hits player a2's stick
 	jmp.w .rtl
 .range:
 	lda.b d0
-	cmp.w #$0025		; 6*6: smaller range for stealing
+	cmp.w #$0025					; 6*6: smaller range for stealing
 	lda.b d0+2
 	sbc.w #$0000
 	bcc .roll
 	jmp.w .rtl
-.roll:		;steal roll: carrier stickhand - stealer stickhand + 36
+.roll:								;steal roll: carrier stickhand - stealer stickhand + 36
 	lda.w position,y
-	beq .steal		; goalie always steals
+	beq .steal						; goalie always steals
 	ldy.b a0
 	lda.w position,y
 	bne .rnd
@@ -67,7 +67,7 @@ puckstick:		;The puck hits player a2's stick
 	clc
 	adc.w #$0024
 	jsl.l randoma
-	cmp.w #$0003		; steal fails
+	cmp.w #$0003					; steal fails
 	bcs .rtl
 .steal:
 	ldy.b a0
@@ -76,7 +76,7 @@ puckstick:		;The puck hits player a2's stick
 	jsl.l makepde
 	lda.b d0
 	clc
-	adc.w #$0014		; nopuck = makepde(stickhand) + 20 for both
+	adc.w #$0014					; nopuck = makepde(stickhand) + 20 for both
 	ldy.b a0
 	sta.w nopuck,y
 	lda.b a0
@@ -97,18 +97,18 @@ puckstick:		;The puck hits player a2's stick
 	sty.b a0
 	tya
 	lsr a
-	sta.w lastplayer		; lastplayer = the old carrier
-	lda.w #sfspdir|sfssdir		; clear sfspdir/sfssdir
+	sta.w lastplayer				; lastplayer = the old carrier
+	lda.w #sfspdir|sfssdir			; clear sfspdir/sfssdir
 	trb.w sflags
-.stdef:		;stick deflect sound, touch, deflect
-	lda.w seed+1		; stick deflect sound (one of 4)
+.stdef:								;stick deflect sound, touch, deflect
+	lda.w seed+1					; stick deflect sound (one of 4)
 	and.w #$0003
 	clc
 	adc.w #SFXshotwiff
 	pha
 	jsl.l sfx
 	jsl.l a2touchpuck
-	jmp.w deflect		; deflect
+	jmp.w deflect					; deflect
 .rtl:
 	rtl
 .nosteal:
@@ -116,11 +116,11 @@ puckstick:		;The puck hits player a2's stick
 	lda.w position,y
 	bne .spd
 	lda.b d0
-	cmp.w #$0041		; goalie: loose puck within 8
+	cmp.w #$0041					; goalie: loose puck within 8
 	lda.b d0+2
 	sbc.w #$0000
 	bcs .rtl
-.spd:		;catch if the puck speed^2 <= (13000+700*stickhand)^2
+.spd:								;catch if the puck speed^2 <= (13000+700*stickhand)^2
 	lda.w puckvx
 	sta.b mula
 	sta.b mulb
@@ -138,28 +138,28 @@ puckstick:		;The puck hits player a2's stick
 	adc.b mulres+2
 	sta.b d0+2
 	stz.b d1
-	lda.w sflags		; sf2shot: no stickhand bonus
+	lda.w sflags					; sf2shot: no stickhand bonus
 	bit.w #sf2shot
 	bne .nohand
 	ldy.b a2
 	lda.w stickhand,y
 	sta.b mulb
-	lda.w #$02BC		; * 700
+	lda.w #$02BC					; * 700
 	sta.b mula
-	jsl.l mulu16		; mulu, mulres = mula*mulb
+	jsl.l mulu16					; mulu, mulres = mula*mulb
 	sta.b d1
 .nohand:
 	lda.b d1
 	clc
-	adc.w #$32C8		; + 13000
+	adc.w #$32C8					; + 13000
 	sta.b mula
 	sta.b mulb
-	jsl.l mulu		; mulres = mula*mulb
+	jsl.l mulu						; mulres = mula*mulb
 	cmp.b d0
 	lda.b mulres+2
 	sbc.b d0+2
 	bcs puckglue
 	ldy.b a2
-	lda.w #$0008		; too fast: nopuck 8, deflect
+	lda.w #$0008					; too fast: nopuck 8, deflect
 	sta.w nopuck,y
 	jmp.w .stdef

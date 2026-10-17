@@ -1,7 +1,7 @@
-chkhit:		;In a fight, is player X hit by player a0?
+chkhit:								;In a fight, is player X hit by player a0?
 	stx.b xsave
 	ldx.w #$0000
-.save:		;movem d0/a0-a3 to the stack
+.save:								;movem d0/a0-a3 to the stack
 	lda.b d0,x
 	pha
 	inx
@@ -19,11 +19,11 @@ chkhit:		;In a fight, is player X hit by player a0?
 	cpx.w #$0010
 	bne .savea
 	ldx.b xsave
-	ldy.b a0		; Y = opponent
+	ldy.b a0						; Y = opponent
 	lda.w frame,x
-	cmp.w oldframe,x		; same frame as last time: nothing new
+	cmp.w oldframe,x				; same frame as last time: nothing new
 	beq .ex
-	cmp.w #SPFfight+2		; gloves dropped frame
+	cmp.w #SPFfight+2				; gloves dropped frame
 	beq .dropped
 	lda.w Xpos,x
 	sec
@@ -33,7 +33,7 @@ chkhit:		;In a fight, is player X hit by player a0?
 	eor.w #$FFFF
 	inc a
 .dx:
-	cmp.w #$0017		; within 22 in x
+	cmp.w #$0017					; within 22 in x
 	bcs .ex
 	lda.w Ypos,x
 	sec
@@ -43,10 +43,10 @@ chkhit:		;In a fight, is player X hit by player a0?
 	eor.w #$FFFF
 	inc a
 .dy:
-	cmp.w #$0009		; within 8 in y
+	cmp.w #$0009					; within 8 in y
 	bcs .ex
 	lda.w frame,x
-	cmp.w #SPFfight+6		; high punch frames
+	cmp.w #SPFfight+6				; high punch frames
 	bne .1
 	jmp.w .hithigh
 .1:
@@ -54,7 +54,7 @@ chkhit:		;In a fight, is player X hit by player a0?
 	bne .2
 	jmp.w .hithigh
 .2:
-	cmp.w #SPFfight+7		; low punch frames
+	cmp.w #SPFfight+7				; low punch frames
 	bne .3
 	jmp.w .hitlow
 .3:
@@ -62,11 +62,11 @@ chkhit:		;In a fight, is player X hit by player a0?
 	bne .4
 	jmp.w .hitlow
 .4:
-	cmp.w #SPFfight+4		; grab frames
+	cmp.w #SPFfight+4				; grab frames
 	beq .grab
 	cmp.w #SPFfight+4+5
 	beq .grab
-.ex:		;movem the registers back (global: CwdFight/FightFall paths jump here)
+.ex:								;movem the registers back (global: CwdFight/FightFall paths jump here)
 	stx.b xsave
 	ldx.w #$000E
 .resta:
@@ -85,11 +85,11 @@ chkhit:		;In a fight, is player X hit by player a0?
 	dex
 	bpl .restore
 	ldx.b xsave
-	ldx.b a3		; X = a3 again
+	ldx.b a3						; X = a3 again
 	rtl
-.dropped:		;gloves dropped, glovecords from xc1/yc1 (x clamped +-90)
+.dropped:							;gloves dropped, glovecords from xc1/yc1 (x clamped +-90)
 	lda.w pflags,x
-	and.w #~pf2npc&$FFFF		; clear pf2npc: gloves dropped
+	and.w #~pf2npc&$FFFF			; clear pf2npc: gloves dropped
 	sta.w pflags,x
 	lda.w xc1
 	sta.b d0
@@ -124,15 +124,15 @@ chkhit:		;In a fight, is player X hit by player a0?
 	bne .dr0
 	inc a
 .dr0:
-	sta.w glovecords		; glovecords x byte (0 becomes 1)
+	sta.w glovecords				; glovecords x byte (0 becomes 1)
 	lda.w yc1
 	lsr a
 	lsr a
 	sep #$20
-	sta.w glovecords+1		; glovecords y byte
+	sta.w glovecords+1				; glovecords y byte
 	rep #$30
 	bra .ex
-.grab:		;exg a0,a3: the opponent is held
+.grab:								;exg a0,a3: the opponent is held
 	ldx.b a0
 	ldy.b a3
 	stx.b a3
@@ -148,9 +148,9 @@ chkhit:		;In a fight, is player X hit by player a0?
 	stx.b a3
 	sty.b a0
 	jsl.l CwdFight
-	lda.w #$0001		; pf2aip
+	lda.w #$0001					; pf2aip
 	sta.w pf2aip,x
-	dec.w temp3,x		; strength -1; out of strength: falls
+	dec.w temp3,x					; strength -1; out of strength: falls
 	bmi FightFall
 	lda.w #SPAfhith
 	sta.b d1

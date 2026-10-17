@@ -1,4 +1,4 @@
-GetPlayerNumInitial:		;a1 = the number, first initial and last name of player TempPlOffset
+GetPlayerNumInitial:				;a1 = the number, first initial and last name of player TempPlOffset
 	lda.b d0+2
 	pha
 	lda.b d0

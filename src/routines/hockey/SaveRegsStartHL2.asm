@@ -1,4 +1,4 @@
-SaveRegsStartHL2:		;Save the registers and go on to StartHL2
+SaveRegsStartHL2:					;Save the registers and go on to StartHL2
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -19,4 +19,4 @@ SaveRegsStartHL2:		;Save the registers and go on to StartHL2
 	cpx.w #$001C
 	bne .savea
 	ldx.b xsave
-	jml.l StartHL2		; pulls the saved registers
+	jml.l StartHL2					; pulls the saved registers

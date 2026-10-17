@@ -1,4 +1,5 @@
-PlayoffBracketMap:		;DrawTreeArrow graphics: 23 rows of 12 map words; PlayoffScreen copies column n (arrow graphics n) to the tree
+PlayoffBracketMap:					;DrawTreeArrow graphics: 23 rows of 12 map words; PlayoffScreen copies
+									;column n (arrow graphics n) to the tree
 	dw $0000,$0000,$0000,$0000,$0000,$0000,$0000,$0000,$0000,$0000,$0000,$0000
 	dw $0801,$0000,$0000,$0000,$0000,$0000,$0000,$0000,$0000,$0000,$0000,$4801
 	dw $0802,$0803,$0000,$0000,$0000,$0000,$0000,$0000,$0000,$0000,$4803,$4802

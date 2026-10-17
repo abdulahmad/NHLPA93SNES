@@ -1,10 +1,10 @@
-DrawScoutPlayers:		;Draw the two players shown on the scouting report
+DrawScoutPlayers:					;Draw the two players shown on the scouting report
 	ldx.w #$0000
 	stx.b a3
 	jsl.l DrawScoutPlayer
 	ldx.w #$000C
 	stx.b a3
-DrawScoutPlayer:		;SNES: addframe for object X at (Xpos + OldXpos - 144, Ypos - 128)
+DrawScoutPlayer:					;SNES: addframe for object X at (Xpos + OldXpos - 144, Ypos - 128)
 	lda.w Xpos,x
 	clc
 	adc.w OldXpos,x

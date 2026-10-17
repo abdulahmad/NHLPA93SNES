@@ -1,4 +1,5 @@
-TeamRoster:		;Team Roster screen: each line's players and one attribute column. The pad moves, Y switches team,
+TeamRoster:							;Team Roster screen: each line's players and one attribute column. The pad
+									;moves, Y switches team,
 		;   Start leaves
 	jsl.l forceblack
 	sep #$20
@@ -137,7 +138,7 @@ TeamRoster:		;Team Roster screen: each line's players and one attribute column. 
 	stz.w DispAttribCtr
 .redraw:
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $FE,$03,$01
 	lda.w #$001A
 	sta.b d0
@@ -154,7 +155,7 @@ TeamRoster:		;Team Roster screen: each line's players and one attribute column. 
 	dex
 	bpl .clrtext
 	jsl.l printbigz
-	dw $0014		; printz inline string: length (counts itself), then control bytes / text
+	dw $0014						; printz inline string: length (counts itself), then control bytes / text
 	db $BF,$05,$04,"Team  Roster",$BF,$0B,$01
 	lda.w HomeTeam
 	sta.b d1
@@ -167,7 +168,7 @@ TeamRoster:		;Team Roster screen: each line's players and one attribute column. 
 	sta.b d0
 	jsl.l DrawTeamBlocks
 	jsl.l printz
-	dw $0017		; printz inline string: length (counts itself), then control bytes / text
+	dw $0017						; printz inline string: length (counts itself), then control bytes / text
 	db $9F,$08,$0C,"Player",$9F,$18,$0C,"Rating",$BE,$01,$08
 	lda.w #$000F
 	sta.b d0
@@ -175,7 +176,7 @@ TeamRoster:		;Team Roster screen: each line's players and one attribute column. 
 	sta.b d1
 	jsl.l Framer
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $BE,$10,$08
 	lda.w #$000F
 	sta.b d0
@@ -248,9 +249,9 @@ TeamRoster:		;Team Roster screen: each line's players and one attribute column. 
 	eor.w #$0002
 	sta.b a2
 	jmp.w .redraw
-.show:		;print the selected line and attribute column
+.show:								;print the selected line and attribute column
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $9F,$02,$09
 	lda.w SelectedPlayerIdx
 	sta.b d0
@@ -302,7 +303,7 @@ TeamRoster:		;Team Roster screen: each line's players and one attribute column. 
 	lda.b [a1],y
 	sta.b d4
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $BF,$00,$0D
 	lda.w #$0020
 	sta.b d0
@@ -312,7 +313,7 @@ TeamRoster:		;Team Roster screen: each line's players and one attribute column. 
 	sta.b d2
 	jsl.l eraser
 	jsl.l printz
-	dw $0018		; printz inline string: length (counts itself), then control bytes / text
+	dw $0018						; printz inline string: length (counts itself), then control bytes / text
 	db $9F,$08,$1A,"Y - Switch Teams",$BF,$00,$0E
 	jsl.l GoalieCount
 	lda.b d0

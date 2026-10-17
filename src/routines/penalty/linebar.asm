@@ -1,4 +1,4 @@
-linebar:		;Draw the energy bar of line d0
+linebar:							;Draw the energy bar of line d0
 	jsl.l getlinee
 	lda.w printa
 	pha

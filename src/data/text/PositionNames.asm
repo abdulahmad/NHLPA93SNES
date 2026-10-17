@@ -1,4 +1,4 @@
-PositionNames:		;SNES: position names LD, RD, LW, C, RW
+PositionNames:						;SNES: position names LD, RD, LW, C, RW
 	dw 4
 	db "LD"
 	dw 4

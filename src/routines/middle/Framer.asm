@@ -1,4 +1,5 @@
-Framer:		;Draw a frame and fill it. d0 / d1 = width / height, printx / printy / printm = top left corner
+Framer:								;Draw a frame and fill it. d0 / d1 = width / height, printx / printy /
+									;printm = top left corner
 
 		;   SNES: a d0 x d1 box of FramerMap pieces at printx/printy
 	phx
@@ -57,7 +58,7 @@ Framer:		;Draw a frame and fill it. d0 / d1 = width / height, printx / printy / 
 	inc.w printy
 	plx
 	rtl
-.setter:		;one FramerMap piece (X = piece * 2) at printx/printy, printx + 1
+.setter:							;one FramerMap piece (X = piece * 2) at printx/printy, printx + 1
 	lda.l FramerMap,x
 	clc
 	adc.w Framercset

@@ -1,12 +1,13 @@
-avdgoal:		;Do not skate through the goal: when the path to d0 / d1 crosses the net, aim beside it instead
+avdgoal:							;Do not skate through the goal: when the path to d0 / d1 crosses the net,
+									;aim beside it instead
 	stz.b tmp2
-	lda.w #-258		; goal line at y -258 ($FEFE) and 258 ($102)
+	lda.w #-258						; goal line at y -258 ($FEFE) and 258 ($102)
 	jsl.l .ch1
 	lda.w #258
 	jsl.l .ch1
 	lda.b tmp2
 	bne .rtl
-	lda.w Xpos,x		; not crossing: is the player in front of a net?
+	lda.w Xpos,x					; not crossing: is the player in front of a net?
 	eor.b d0
 	bpl .rtl
 	lda.w Ypos,x
@@ -32,7 +33,8 @@ avdgoal:		;Do not skate through the goal: when the path to d0 / d1 crosses the n
 .x:
 	stz.b d1
 	rtl
-.ch1:		;goal line A: crossed within 40 of the net: d1 = line, d0 = +-60 by Xvel, tmp2 = 1
+.ch1:								;goal line A: crossed within 40 of the net: d1 = line, d0 = +-60 by Xvel,
+									;tmp2 = 1
 	sta.b tmp0
 	lda.b d1
 	sec
@@ -62,7 +64,7 @@ avdgoal:		;Do not skate through the goal: when the path to d0 / d1 crosses the n
 	sta.b d0
 .rtl:
 	rtl
-unused008D:		;unused, zero fill to the end of the bank
+unused008D:							;unused, zero fill to the end of the bank
 	db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00

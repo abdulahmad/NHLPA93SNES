@@ -1,6 +1,7 @@
-checkfornewpen:		;Look for a new penalty call. Stops play at once when the penalty has no minutes or the guilty team has
+checkfornewpen:						;Look for a new penalty call. Stops play at once when the penalty has no
+									;minutes or the guilty team has
 		;   the puck; otherwise it is a delayed call
-	lda.w sfhormode		; not in horizontal mode
+	lda.w sfhormode					; not in horizontal mode
 	beq .go
 	jmp.w .rtl
 .go:
@@ -14,7 +15,7 @@ checkfornewpen:		;Look for a new penalty call. Stops play at once when the penal
 	bne .notcalled
 	jmp.w .rtl
 .notcalled:
-	lda.w gmode		; already called: mark it
+	lda.w gmode						; already called: mark it
 	bit.w #gmpen
 	bne .iscalled
 	dec.b a0
@@ -25,7 +26,7 @@ checkfornewpen:		;Look for a new penalty call. Stops play at once when the penal
 	and.w #$00FF
 	sta.b d0
 	tay
-	lda.w #PenaltyList		; a1 = PenaltyList entry; minutes?
+	lda.w #PenaltyList				; a1 = PenaltyList entry; minutes?
 	sta.b a1
 	lda.w #PenaltyList>>16
 	sta.b a1+2
@@ -36,7 +37,7 @@ checkfornewpen:		;Look for a new penalty call. Stops play at once when the penal
 	lda.b [a1]
 	and.w #$00FF
 	beq .callit
-	lda.w puckc		; no carrier, or the guilty team has the puck... else delayed call
+	lda.w puckc						; no carrier, or the guilty team has the puck... else delayed call
 	bmi .dc
 	sec
 	sbc.w #$0006
@@ -55,7 +56,7 @@ checkfornewpen:		;Look for a new penalty call. Stops play at once when the penal
 	bmi .dc
 .callit:
 	jsl.l Stop4Pen
-.iscalled:		;mark it called (bit 7 of the player byte)
+.iscalled:							;mark it called (bit 7 of the player byte)
 	dec.b a0
 	lda.b (a0)
 	tay
@@ -73,7 +74,7 @@ checkfornewpen:		;Look for a new penalty call. Stops play at once when the penal
 	and.w #$00FF
 	sta.b d0
 	tay
-	lda.w #PenaltyList		; delay byte (+1) * 32
+	lda.w #PenaltyList				; delay byte (+1) * 32
 	sta.b a1
 	lda.w #PenaltyList>>16
 	sta.b a1+2
@@ -99,14 +100,14 @@ checkfornewpen:		;Look for a new penalty call. Stops play at once when the penal
 	jmp.w .next
 .neg:
 	bvc .nx
-.longer:		;Pencntdwn = delay*32 if longer
+.longer:							;Pencntdwn = delay*32 if longer
 	lda.b d1
 	sta.w Pencntdwn
 	jmp.w .next
 .rtl:
 	rtl
-.dc:		;delayed call: PenDelay ref once
-	lda.w #gmpendel		; first delayed call: SetPA PenDelay
+.dc:								;delayed call: PenDelay ref once
+	lda.w #gmpendel					; first delayed call: SetPA PenDelay
 	tsb.w gmode
 	beq .dc2
 	jmp.w .next

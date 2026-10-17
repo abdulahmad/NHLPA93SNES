@@ -1,4 +1,4 @@
-PrintTeamNameAndScore:		;Print team a2's name, then its score as two characters
+PrintTeamNameAndScore:				;Print team a2's name, then its score as two characters
 	jsl.l printteamname
 	lda.w #mesarea
 	sta.b a1
@@ -6,7 +6,7 @@ PrintTeamNameAndScore:		;Print team a2's name, then its score as two characters
 	sta.b a1+2
 	lda.w #4
 	sta.b [a1]
-	lda.w #' '		; blank tens
+	lda.w #' '						; blank tens
 	sta.w mesarea+2
 	ldy.b a2
 	lda.w tmscore,y

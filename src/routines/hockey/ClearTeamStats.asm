@@ -1,5 +1,6 @@
-ClearTeamStats:		;Clear the team stats (but the goalie choice) and both penalty box lists, then set up the teams
-	lda.w tmgoalie		; keep tmgoalie (2 words)
+ClearTeamStats:						;Clear the team stats (but the goalie choice) and both penalty box lists,
+									;then set up the teams
+	lda.w tmgoalie					; keep tmgoalie (2 words)
 	pha
 	lda.w tmgoalie+2
 	pha
@@ -14,7 +15,7 @@ ClearTeamStats:		;Clear the team stats (but the goalie choice) and both penalty 
 	sta.w tmgoalie+2
 	pla
 	sta.w tmgoalie
-	lda.w #$FFFF		; both penalty box lists empty
+	lda.w #$FFFF					; both penalty box lists empty
 	sta.w tmboxlist
 	sta.w tmboxlist+$1A
 	jml.l setteams

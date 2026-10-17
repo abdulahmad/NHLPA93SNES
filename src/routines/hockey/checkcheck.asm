@@ -1,4 +1,4 @@
-checkcheck:		;Two players are in contact: check what happens each way
+checkcheck:							;Two players are in contact: check what happens each way
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -46,8 +46,8 @@ checkcheck:		;Two players are in contact: check what happens each way
 	ldx.b a3
 .rtl:
 	rtl
-.cc:		;X is checking a2
-	ldy.b a2		; a2 holding: holdcheck
+.cc:								;X is checking a2
+	ldy.b a2						; a2 holding: holdcheck
 	lda.w SPA,y
 	cmp.w #SPAHold
 	bne .h2
@@ -60,11 +60,11 @@ checkcheck:		;Two players are in contact: check what happens each way
 	cmp.w #SPAsweepchk
 	bne .burst
 	jml.l Bcheck
-.burst:		;X must be in the burst anim
+.burst:								;X must be in the burst anim
 	lda.w SPA,x
 	cmp.w #SPAburst
 	bne .rtl
-	lda.w gmclock		; clock stopped: fight chance up
+	lda.w gmclock					; clock stopped: fight chance up
 	beq .nofight
 	lda.w #$0100
 	sta.w impact,x
@@ -84,7 +84,7 @@ checkcheck:		;Two players are in contact: check what happens each way
 	sbc.w facedir,x
 	and.w #$0007
 	sta.b d0
-	lda.w attribute,x		; xflip: mirror the direction
+	lda.w attribute,x				; xflip: mirror the direction
 	bit.w #$0800
 	beq .0
 	lda.b d0
@@ -92,11 +92,11 @@ checkcheck:		;Two players are in contact: check what happens each way
 	inc a
 	and.w #$0007
 	sta.b d0
-.0:		;check anim from .list by the direction to a2
+.0:									;check anim from .list by the direction to a2
 	asl.b d0
 	lda.w #.list
 	sta.b a0
-	sta.w pfalock,x		; pfalock
+	sta.w pfalock,x					; pfalock
 	lda.w #.list>>16
 	sta.b a0+2
 	ldy.b d0
@@ -107,8 +107,8 @@ checkcheck:		;Two players are in contact: check what happens each way
 	lda.w position,y
 	bne .pos
 	jmp.w .rtl
-.pos:		;goalie does not fall
-	lda.b d4		; impact under 20: no fall
+.pos:								;goalie does not fall
+	lda.b d4						; impact under 20: no fall
 	sec
 	sbc.w #$0014
 	bmi .neg
@@ -117,7 +117,7 @@ checkcheck:		;Two players are in contact: check what happens each way
 	jmp.w .rtl
 .neg:
 	bvc .ex1
-.fall:		;d0 = (120 (*2 joystick) - weight + weight of a2) / 2 - impact of a2
+.fall:								;d0 = (120 (*2 joystick) - weight + weight of a2) / 2 - impact of a2
 	lda.w #$0078
 	sta.b d0
 	lda.w pflags,x
@@ -136,7 +136,7 @@ checkcheck:		;Two players are in contact: check what happens each way
 	sta.b d0
 	beq .down
 	bmi .down
-	jsl.l randomd0		; random < aggress: down
+	jsl.l randomd0					; random < aggress: down
 	lda.b d0
 	sec
 	sbc.w aggress,x
@@ -147,7 +147,7 @@ checkcheck:		;Two players are in contact: check what happens each way
 .neg1:
 	bvc .down
 .pen:
-	jsl.l checkagr		; checkagr <= 4 and no highlight: PenCharge or PenSlash (d0 = penalty roll)
+	jsl.l checkagr					;checkagr <= 4 and no highlight: PenCharge or PenSlash (d0 = penalty roll)
 	lda.b d0
 	cmp.w #$0005
 	bcc .nohl
@@ -165,7 +165,7 @@ checkcheck:		;Two players are in contact: check what happens each way
 	sta.b d0
 	jmp.w AddPenalty
 .down:
-	jsl.l checkagr		; checkagr <= 3 and no highlight: PenRough or PenCross (d0 = penalty roll)
+	jsl.l checkagr					; checkagr <= 3 and no highlight: PenRough or PenCross (d0 = penalty roll)
 	lda.b d0
 	cmp.w #$0004
 	bcs .dn2
@@ -180,5 +180,5 @@ checkcheck:		;Two players are in contact: check what happens each way
 	jsl.l AddPenalty
 .dn2:
 	jmp.w FallDown
-.list:		;check anim by direction
+.list:								;check anim by direction
 	dw SPAshoulderchkl,SPAshoulderchkr,SPAhipchkr,SPAhipchkr,SPAhipchkr,SPAhipchkl,SPAhipchkl,SPAshoulderchkl

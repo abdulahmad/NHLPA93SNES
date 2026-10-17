@@ -1,4 +1,5 @@
-skateto:		;Skate toward d0 / d1, with a routine in a0 for avoiding others; slow down near the target
+skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; slow down
+									;near the target
 	lda.w position,x
 	beq .tick
 	lda.w pflags,x
@@ -58,7 +59,7 @@ skateto:		;Skate toward d0 / d1, with a routine in a0 for avoiding others; slow 
 	lsr.b mulres+2
 	ror a
 	sta.w Yvel,x
-.tick:		;every 12/60 second
+.tick:								;every 12/60 second
 	lda.w temp2,x
 	sec
 	sbc.b d7
@@ -94,7 +95,7 @@ skateto:		;Skate toward d0 / d1, with a routine in a0 for avoiding others; slow 
 	sbc.w Ypos,x
 	sta.b d1
 	bra .vt
-.lead:		;aim ahead of the velocity
+.lead:								;aim ahead of the velocity
 	lda.w Xvel,x
 	xba
 	and.w #$00FF
@@ -144,7 +145,7 @@ skateto:		;Skate toward d0 / d1, with a routine in a0 for avoiding others; slow 
 	bra .nvt
 .vt:
 	jsl.l vtoa
-.nvt:		;jsr (a0) through jmlvector
+.nvt:								;jsr (a0) through jmlvector
 	lda.b a0
 	sta.w jmlvector+1
 	lda.b a0+1
@@ -193,7 +194,7 @@ skateto:		;Skate toward d0 / d1, with a routine in a0 for avoiding others; slow 
 	lda.w temp2b,x
 	sta.b d0
 	jml.l doplayeracc
-unusedFF88:		;unused, $FF fill to the end of the bank
+unusedFF88:							;unused, $FF fill to the end of the bank
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF

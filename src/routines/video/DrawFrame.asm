@@ -1,4 +1,4 @@
-DrawFrame:		;Draw a sprite frame made of small pieces, as DrawFrameHi
+DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	lda.b farptr+1
 	sta.b sprtileptr+1
 	lda.b farptr
@@ -30,7 +30,7 @@ DrawFrame:		;Draw a sprite frame made of small pieces, as DrawFrameHi
 	jmp.w addframe_end
 .cnt:
 	sta.w sprpieces
-.piece:		;next piece; OAM full (128): done
+.piece:								;next piece; OAM full (128): done
 	lda.b sprcount
 	cmp.w #$0080
 	bne .data
@@ -180,7 +180,7 @@ DrawFrame:		;Draw a sprite frame made of small pieces, as DrawFrameHi
 	lda.b sprslotlife
 	cmp.w #$0005
 	bcs .shorten
-	jml.l addframe_full		; VRAM sprite cache full
+	jml.l addframe_full				; VRAM sprite cache full
 .shorten:
 	dec.b sprslotlife
 	lda.b sprslot
@@ -272,7 +272,7 @@ DrawFrame:		;Draw a sprite frame made of small pieces, as DrawFrameHi
 	rep #$30
 	inc.b sprcount
 	jmp.w .nextpiece
-.himask:		;SattHi masks that clear the x bit 8 of sprite 0-3 in a byte
+.himask:							;SattHi masks that clear the x bit 8 of sprite 0-3 in a byte
 	db $FE,$FB,$EF,$BF
 .big:
 	lda.b sprhflip
@@ -366,7 +366,7 @@ DrawFrame:		;Draw a sprite frame made of small pieces, as DrawFrameHi
 	lda.b sprslotlife
 	cmp.w #$0005
 	bcs .bshorten
-	jml.l addframe_full		; VRAM sprite cache full
+	jml.l addframe_full				; VRAM sprite cache full
 .bshorten:
 	dec.b sprslotlife
 	lda.b sprbigslot

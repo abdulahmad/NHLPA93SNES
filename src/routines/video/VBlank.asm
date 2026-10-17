@@ -1,10 +1,12 @@
-VBlank:		;Main game play vblank: run the transfer list, set the rink scroll and send the sprite table
+VBlank:								;Main game play vblank: run the transfer list, set the rink scroll and
+									;send the sprite table
 	sep #$20
 	lda.b #INIDISP_FBLANK
 	sta.w INIDISP
 	ldx.b DMAListend
 	bra .next
-.dmaloop:		;one DMAList entry: VRAM address, length, source, bank, then start ch7 (word writes to VMDATA)
+.dmaloop:							;one DMAList entry: VRAM address, length, source, bank, then start ch7
+									;(word writes to VMDATA)
 	ldy.w DMAList+dmavram,x
 	sty.w VMADDL
 	ldy.w DMAList+dmalen,x
@@ -17,7 +19,7 @@ VBlank:		;Main game play vblank: run the transfer list, set the rink scroll and 
 	sta.w A1B7
 	lda.b #MDMAEN_CH7
 	sta.w MDMAEN
-.next:		;step back one 7-byte entry; done when below 0
+.next:								;step back one 7-byte entry; done when below 0
 	dex
 	dex
 	dex
@@ -30,19 +32,19 @@ VBlank:		;Main game play vblank: run the transfer list, set the rink scroll and 
 	stz.b DMAListend
 	lda.w Hscroll
 	clc
-	adc.w #$00C0		; BG2 h-scroll = Hscroll + 192
+	adc.w #$00C0					; BG2 h-scroll = Hscroll + 192
 	sep #$20
 	sta.w BG2HOFS
 	xba
 	sta.w BG2HOFS
 	lda.w Vscroll
-	and.b #$07		; fine row
+	and.b #$07						; fine row
 	pha
 	rep #$30
 	lda.w vramrow
 	asl a
 	asl a
-	asl a		; vramrow*8 | (Vscroll&7)
+	asl a							; vramrow*8 | (Vscroll&7)
 	sep #$20
 	ora.b $01,s
 	sta.w BG2VOFS
@@ -50,11 +52,11 @@ VBlank:		;Main game play vblank: run the transfer list, set the rink scroll and 
 	sta.w BG2VOFS
 	pla
 	rep #$30
-	lda.w #DMA_OAM		; DMAP7=$00 (A->B, increment), BBAD7=$04 (OAMDATA)
+	lda.w #DMA_OAM					; DMAP7=$00 (A->B, increment), BBAD7=$04 (OAMDATA)
 	sta.w DMAP7
 	lda.w #Satt
 	sta.w A1T7L
-	lda.w #$0220		; $220 bytes: 128 sprites + high table
+	lda.w #$0220					; $220 bytes: 128 sprites + high table
 	sta.w DAS7L
 	stz.w OAMADDL
 	sep #$20
@@ -63,6 +65,6 @@ VBlank:		;Main game play vblank: run the transfer list, set the rink scroll and 
 	lda.b #MDMAEN_CH7
 	sta.w MDMAEN
 	rep #$30
-	lda.w #vb2		; one shot: back to vb2 next frame
+	lda.w #vb2						; one shot: back to vb2 next frame
 	sta.b vbint
 	jmp.w vb2

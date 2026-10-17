@@ -1,5 +1,5 @@
-faceoffinput:		;Pad input for a player taking a face off
-	txa		; faceoff player only
+faceoffinput:						;Pad input for a player taking a face off
+	txa								; faceoff player only
 	asl a
 	asl a
 	adc.w assnum,x
@@ -21,7 +21,7 @@ faceoffinput:		;Pad input for a player taking a face off
 .2:
 	lda.b d0
 	sta.b [a0]
-	lda.w pf2aip,x		; pf2aip set: already pulling
+	lda.w pf2aip,x					; pf2aip set: already pulling
 	bne .rtl
 	lda.b d1
 	bit.w #bbut

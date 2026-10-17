@@ -1,4 +1,5 @@
-asswingd:		;Assignment: a wing on defense covers his side between the puck and the goal
+asswingd:							;Assignment: a wing on defense covers his side
+									;between the puck and the goal
 	lda.w pfalock,x
 	beq .clk
 	jmp.w .rtl
@@ -33,7 +34,7 @@ asswingd:		;Assignment: a wing on defense covers his side between the puck and t
 	lda.w #$0000
 .store:
 	sta.w temp1,x
-	lda.w puckc		; our team has the puck: awingo
+	lda.w puckc						; our team has the puck: awingo
 	bmi .nodec
 	sec
 	sbc.w #6
@@ -49,7 +50,7 @@ asswingd:		;Assignment: a wing on defense covers his side between the puck and t
 	bmi .nodec
 	jml.l assreplace
 .nodec:
-	lda.w #100		; x 100 (left wing -100)
+	lda.w #100						; x 100 (left wing -100)
 	sta.b d0
 	lda.w position,x
 	cmp.w #5
@@ -59,7 +60,7 @@ asswingd:		;Assignment: a wing on defense covers his side between the puck and t
 .0:
 	lda.w #158
 	sta.b d1
-	lda.w pfgoal,x		; pfgoal: defending the top goal
+	lda.w pfgoal,x					; pfgoal: defending the top goal
 	beq .up
 	lda.b d0
 	eor.w #$FFFF
@@ -70,7 +71,7 @@ asswingd:		;Assignment: a wing on defense covers his side between the puck and t
 	lda.w #-78
 	sta.b d2
 	ldy.b a2
-	lda.w tmflags,y		; offsides: stay at the blue line
+	lda.w tmflags,y					; offsides: stay at the blue line
 	bit.w #tmfoside
 	bne .set
 	lda.b d2
@@ -134,7 +135,7 @@ asswingd:		;Assignment: a wing on defense covers his side between the puck and t
 	lda.b d2
 	sta.b d1
 .go:
-	lda.w #rtss		; a0 = rtss: no avoidance
+	lda.w #rtss						; a0 = rtss: no avoidance
 	sta.b a0
 	lda.w #rtss>>16
 	sta.b a0+2
@@ -146,7 +147,7 @@ asswingd:		;Assignment: a wing on defense covers his side between the puck and t
 	sta.b d0
 .skate:
 	jml.l skateto
-unusedFF89:		;unused, $FF fill to the end of the bank
+unusedFF89:							;unused, $FF fill to the end of the bank
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF

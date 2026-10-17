@@ -1,9 +1,10 @@
-DrawFrameHi:		;Draw a sprite frame at sprx / spry: one sprite per piece, uploading the piece tiles to free video memory
+DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, uploading the
+									;piece tiles to free video memory
 		;   when they are not cached
 	lda.b sprnodraw
 	beq .go
 	jml.l addframe_end
-.go:		;sprtileptr = the set + $200 (tiles)
+.go:								;sprtileptr = the set + $200 (tiles)
 	lda.b farptr+1
 	sta.b sprtileptr+1
 	lda.b farptr
@@ -14,7 +15,7 @@ DrawFrameHi:		;Draw a sprite frame at sprx / spry: one sprite per piece, uploadi
 	beq .fr
 	lda.w #$0040
 	sta.b sprhflip
-.fr:		;first and next piece of the frame: sprpieces = count
+.fr:								;first and next piece of the frame: sprpieces = count
 	lda.b sprframe
 	asl a
 	adc.w #$000A
@@ -30,12 +31,13 @@ DrawFrameHi:		;Draw a sprite frame at sprx / spry: one sprite per piece, uploadi
 	jml.l addframe_end
 .cnt:
 	sta.w sprpieces
-.piece:		;next piece; OAM full (128): done
+.piece:								;next piece; OAM full (128): done
 	lda.b sprcount
 	cmp.w #$0080
 	bne .data
 	jml.l addframe_end
-.data:		;sprox/sproy = piece x/y + sprx/spry, sprtile, sprpal, sprpattr from the 6-byte piece
+.data:								;sprox/sproy = piece x/y + sprx/spry, sprtile, sprpal, sprpattr from the
+									;6-byte piece
 	lda.b sprframe
 	asl a
 	asl a
@@ -78,7 +80,7 @@ DrawFrameHi:		;Draw a sprite frame at sprx / spry: one sprite per piece, uploadi
 	bpl .size
 	lda.w #$0006
 	sta.b sprpal
-.size:		;bit 5 of the attribute: 16 x 16 piece
+.size:								;bit 5 of the attribute: 16 x 16 piece
 	txa
 	and.w #$00C0
 	sta.b sprpattr
@@ -140,12 +142,12 @@ DrawFrameHi:		;Draw a sprite frame at sprx / spry: one sprite per piece, uploadi
 	jmp.w .nextpiece
 .yhiv:
 	bvs .yhiout
-.cache:		;cached and still fresh: reuse its slot
+.cache:								;cached and still fresh: reuse its slot
 	lda.b sprframe
 	clc
 	adc.b sprsetofs
 	cmp.w #$131D
-.hang1:		;frame number out of range: hang
+.hang1:								;frame number out of range: hang
 	bcs .hang1
 	asl a
 	asl a
@@ -155,14 +157,14 @@ DrawFrameHi:		;Draw a sprite frame at sprx / spry: one sprite per piece, uploadi
 	sbc.l sprframetime,x
 	cmp.b sprslotlife
 	bcc .have
-.find:		;find a free 8x8 slot
+.find:								;find a free 8x8 slot
 	lda.b sprslot
 	inc a
 	and.w #$01FF
 	sta.b sprslot
 	cmp.b sprslotend
 	bne .chk
-	jml.l addframe_full		; VRAM sprite cache full
+	jml.l addframe_full				; VRAM sprite cache full
 .chk:
 	asl a
 	tax
@@ -177,7 +179,7 @@ DrawFrameHi:		;Draw a sprite frame at sprx / spry: one sprite per piece, uploadi
 	asl a
 	adc.w #$6000
 	ldx.b DMAListend
-.hang2:		;dma list full: hang
+.hang2:								;dma list full: hang
 	cpx.w #$0578
 	bcs .hang2
 	sta.w DMAList+dmavram,x
@@ -200,7 +202,7 @@ DrawFrameHi:		;Draw a sprite frame at sprx / spry: one sprite per piece, uploadi
 	tax
 	lda.b sprslot
 	sta.l sprframetime+2,x
-.have:		;mark frame and slot used now, write the OAM entry
+.have:								;mark frame and slot used now, write the OAM entry
 	lda.b sprclock
 	sta.l sprframetime,x
 	lda.l sprframetime+2,x
@@ -250,9 +252,9 @@ DrawFrameHi:		;Draw a sprite frame at sprx / spry: one sprite per piece, uploadi
 	rep #$30
 	inc.b sprcount
 	jmp.w .nextpiece
-.himask:		;SattHi masks that clear the x bit 8 of sprite 0-3 in a byte
+.himask:							;SattHi masks that clear the x bit 8 of sprite 0-3 in a byte
 	db $FE,$FB,$EF,$BF
-.big:		;16 x 16 piece
+.big:								;16 x 16 piece
 	lda.b sprhflip
 	beq .bx
 	lda.b sprox
@@ -322,14 +324,15 @@ DrawFrameHi:		;Draw a sprite frame at sprx / spry: one sprite per piece, uploadi
 	cmp.b sprslotlife
 	bcs .bfind
 	jmp.w .bhave
-.bfind:		;find a free 16x16 slot: 4 free 8x8 slots in a 2 x 2 block, not in the last row/column
+.bfind:								;find a free 16x16 slot: 4 free 8x8 slots in a 2 x 2 block, not in the
+									;last row/column
 	lda.b sprbigslot
 	inc a
 	and.w #$01FF
 	sta.b sprbigslot
 	cmp.b sprbigslotend
 	bne .bchk
-	jml.l addframe_full		; VRAM sprite cache full
+	jml.l addframe_full				; VRAM sprite cache full
 .bchk:
 	and.w #$000F
 	cmp.w #$000F
@@ -397,7 +400,7 @@ DrawFrameHi:		;Draw a sprite frame at sprx / spry: one sprite per piece, uploadi
 	tax
 	lda.b sprbigslot
 	sta.l sprframetime+2,x
-.bhave:		;mark the 4 slots, write the OAM entry (size bit set)
+.bhave:								;mark the 4 slots, write the OAM entry (size bit set)
 	lda.b sprclock
 	sta.l sprframetime,x
 	lda.l sprframetime+2,x
@@ -454,12 +457,12 @@ DrawFrameHi:		;Draw a sprite frame at sprx / spry: one sprite per piece, uploadi
 .bnext:
 	rep #$30
 	inc.b sprcount
-.nextpiece:		;next piece
+.nextpiece:							;next piece
 	inc.b sprframe
 	dec.w sprpieces
 	beq .done
 	jmp.w .piece
-.done:		;clear sprhflip, sprvflip, sprflag
+.done:								;clear sprhflip, sprvflip, sprflag
 	stz.b sprhflip
 	stz.b sprvflip
 	stz.b sprflag

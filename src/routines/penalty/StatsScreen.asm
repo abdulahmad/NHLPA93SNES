@@ -1,4 +1,4 @@
-StatsScreen:		;Show the game stats until A is pressed or a minute passes
+StatsScreen:						;Show the game stats until A is pressed or a minute passes
 	jsl.l DisplayStats
 	lda.b vcount
 	pha

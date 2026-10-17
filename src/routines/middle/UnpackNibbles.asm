@@ -1,4 +1,5 @@
-UnpackNibbles:		;Unpack d0 4-bit values at [a0] (high nibble first) into words at nibblebuffer
+UnpackNibbles:						;Unpack d0 4-bit values at [a0] (high nibble first) into words at
+									;nibblebuffer
 	stx.b xsave
 	ldx.w #$0000
 .save:

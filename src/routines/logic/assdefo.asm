@@ -1,4 +1,5 @@
-assdefo:		;Assignment: a defenseman on offense holds the blue line on his side; back to defense when offsides, when
+assdefo:							;Assignment: a defenseman on offense holds the blue line on his side; back
+									;to defense when offsides, when
 		;   the puck goes back past the line or when the other team has it
 	lda.w pfalock,x
 	beq .clk
@@ -34,10 +35,10 @@ assdefo:		;Assignment: a defenseman on offense holds the blue line on his side; 
 	lda.w #$0000
 .store:
 	sta.w temp1,x
-	lda.w #2		; adefd
+	lda.w #2						; adefd
 	sta.b d0
 	ldy.b a2
-	lda.w tmflags,y		; offsides: defend
+	lda.w tmflags,y					; offsides: defend
 	bit.w #tmfoside
 	beq .on
 	jml.l assreplace
@@ -51,7 +52,7 @@ assdefo:		;Assignment: a defenseman on offense holds the blue line on his side; 
 	inc a
 	sta.b d1
 .de1:
-	lda.b d1		; the puck back behind the blue line
+	lda.b d1						; the puck back behind the blue line
 	sec
 	sbc.w #$5D
 	bmi .neg
@@ -61,7 +62,7 @@ assdefo:		;Assignment: a defenseman on offense holds the blue line on his side; 
 .neg:
 	bvc .def
 .pc:
-	lda.w puckc		; the other team has the puck
+	lda.w puckc						; the other team has the puck
 	bmi .nodec
 	sec
 	sbc.w #6
@@ -73,7 +74,7 @@ assdefo:		;Assignment: a defenseman on offense holds the blue line on his side; 
 	bpl .nodec
 	jml.l assreplace
 .nodec:
-	lda.w #EvadePC		; EvadePC avoidance; spot x +-80 by side, y 98 (blue line + 5)
+	lda.w #EvadePC					; EvadePC avoidance; spot x +-80 by side, y 98 (blue line + 5)
 	sta.b a0
 	lda.w #EvadePC>>16
 	sta.b a0+2
@@ -103,7 +104,7 @@ assdefo:		;Assignment: a defenseman on offense holds the blue line on his side; 
 	bra .set
 .rtl:
 	rtl
-.2:		;halfway to the puck
+.2:									;halfway to the puck
 	lda.w puckx
 	pha
 	asl a
@@ -114,7 +115,7 @@ assdefo:		;Assignment: a defenseman on offense holds the blue line on his side; 
 .set:
 	sta.b d0
 	jml.l skateto
-unused008E:		;unused, zero fill to the end of the bank
+unused008E:							;unused, zero fill to the end of the bank
 	db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 	db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00

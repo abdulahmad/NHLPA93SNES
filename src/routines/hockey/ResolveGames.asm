@@ -1,8 +1,9 @@
-ResolveGames:		;Record the played playoff game and the series wins; when the round is over, move on to the next round
+ResolveGames:						;Record the played playoff game and the series wins; when the round is
+									;over, move on to the next round
 	lda.w gamenum
 	asl a
 	sta.b d0
-	stz.b a0		; copy the score of the played game
+	stz.b a0						; copy the score of the played game
 	tay
 	lda.w tmscore
 	sta.w gss1,y
@@ -24,7 +25,7 @@ ResolveGames:		;Record the played playoff game and the series wins; when the rou
 	cmp.w gspobwins,y
 	beq .b1
 	stz.b d3
-	lda.w gsflags,y		; gsflags bit 0 (gsftf): teams swapped
+	lda.w gsflags,y					; gsflags bit 0 (gsftf): teams swapped
 	bit.w #$0001
 	beq .nf
 	lda.w #$0010
@@ -47,7 +48,7 @@ ResolveGames:		;Record the played playoff game and the series wins; when the rou
 	dec.b a0
 	dec.b d1
 	bpl .b0
-	inc.b bosgames		; next game of the series
+	inc.b bosgames					; next game of the series
 	lda.b bosgames
 	cmp.w #7
 	bne .more
@@ -63,7 +64,7 @@ ResolveGames:		;Record the played playoff game and the series wins; when the rou
 	cmp.w gspobwins,y
 	beq .cround
 	jmp.w .rtl
-.cround:		;finish the other series of the round
+.cround:							;finish the other series of the round
 	lda.w gamelevel
 	sec
 	sbc.w #3
@@ -90,7 +91,7 @@ ResolveGames:		;Record the played playoff game and the series wins; when the rou
 	lda.w gspotwins,y
 	inc a
 	sta.w gspotwins,y
-	lda.w #200		; random series result: 50/50 per game
+	lda.w #200						; random series result: 50/50 per game
 	jsl.l randoma
 	lsr a
 	bcc .cr0
@@ -106,7 +107,7 @@ ResolveGames:		;Record the played playoff game and the series wins; when the rou
 	dec.b a0
 	dec.b d1
 	bpl .cr0
-	jsl.l WritePassBits		; sf3alttree: passbits before the rest was resolved
+	jsl.l WritePassBits				; sf3alttree: passbits before the rest was resolved
 	ldy.w #$000E
 .cp:
 	lda.w passbits,y
@@ -141,7 +142,7 @@ ResolveGames:		;Record the played playoff game and the series wins; when the rou
 	dec.b a0
 	dec.b d1
 	bpl .nr0
-	lda.b d2		; WinBits: the winners of level d2
+	lda.b d2						; WinBits: the winners of level d2
 	asl a
 	tax
 	lda.l BitMaskTable,x
@@ -151,12 +152,12 @@ ResolveGames:		;Record the played playoff game and the series wins; when the rou
 	sta.w WinBits
 	lda.b d3
 	sta.b mulb
-	jsl.l mulu16		; 16-bit multiply
+	jsl.l mulu16					; 16-bit multiply
 	tsb.w WinBits
 	inc.w gamelevel
 .rtl:
 	rtl
-.notbos:		;single games
+.notbos:							;single games
 	stz.b d3
 .s0:
 	ldy.b a0
@@ -193,7 +194,7 @@ ResolveGames:		;Record the played playoff game and the series wins; when the rou
 	sta.w WinBits
 	lda.b d3
 	sta.b mulb
-	jsl.l mulu16		; 16-bit multiply
+	jsl.l mulu16					; 16-bit multiply
 	tsb.w WinBits
 	inc.w gamelevel
 	rtl

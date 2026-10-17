@@ -1,4 +1,5 @@
-forceblack:		;Turn the screen black: default interrupt handlers, mark the sprite tile caches stale and empty the transfer list
+forceblack:							;Turn the screen black: default interrupt handlers, mark the sprite tile
+									;caches stale and empty the transfer list
 	phx
 	lda.w #vb2_blank
 	sta.b vbint

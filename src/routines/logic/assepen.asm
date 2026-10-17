@@ -1,4 +1,4 @@
-assepen:		;Assignment: player X leaves the penalty box and comes onto the ice
+assepen:							;Assignment: player X leaves the penalty box and comes onto the ice
 	lda.w pflags,x
 	bit.w #pfna
 	beq .nna
@@ -47,5 +47,5 @@ assepen:		;Assignment: player X leaves the penalty box and comes onto the ice
 	lda.w #$F000
 	sta.w Xvel,x
 	jml.l assexit
-unusedFF87:		;unused, $FF fill to the end of the bank
+unusedFF87:							;unused, $FF fill to the end of the bank
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF

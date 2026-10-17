@@ -1,14 +1,15 @@
-PauseMenu:		;Draw the pause menu and read the pad: up and down move, Start leaves, else run the chosen item.
+PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start leaves,
+									;else run the chosen item.
 		;   A = 0 to leave, 1 to redraw
 	stz.w psitem
 .gj:
 	jsl.l Pmenu
 	jsl.l PauseReadJoy
-	lda.b d1		; Start: leave
+	lda.b d1						; Start: leave
 	bit.w #JOYSTART
 	beq .down
 	jml.l PauseLeave
-.down:		;down
+.down:								;down
 	bit.w #JOYDOWN
 	beq .up
 	inc.w psitem
@@ -17,15 +18,15 @@ PauseMenu:		;Draw the pause menu and read the pad: up and down move, Start leave
 	bne .gj
 	dec.w psitem
 	bra .gj
-.up:		;up
+.up:								;up
 	bit.w #JOYUP
 	beq .item
 	dec.w psitem
 	bpl .gj
 	stz.w psitem
 	bra .gj
-.item:		;go to .jump[psitem] through jmlvector
-	lda.w psitem		; jmlvector = .jump[psitem]
+.item:								;go to .jump[psitem] through jmlvector
+	lda.w psitem					; jmlvector = .jump[psitem]
 	asl a
 	asl a
 	sta.b d0
@@ -40,7 +41,7 @@ PauseMenu:		;Draw the pause menu and read the pad: up and down move, Start leave
 	lda.b [a0],y
 	sta.w jmlvector+2
 	jml.l jmlvector
-.rm:		;Instant Replay (A = ReplayMode)
+.rm:								;Instant Replay (A = ReplayMode)
 	lda.b d1
 	bit.w #cbut
 	beq .gj
@@ -55,10 +56,10 @@ PauseMenu:		;Draw the pause menu and read the pad: up and down move, Start leave
 	jsl.l ReplayMode
 	pla
 	sta.b d7
-.redraw:		;return 1: draw the pause screen again
+.redraw:							;return 1: draw the pause screen again
 	lda.w #$0001
 	rtl
-.sr:		;Stats Report
+.sr:								;Stats Report
 	lda.b d1
 	bit.w #cbut
 	bne .sr1
@@ -67,7 +68,8 @@ PauseMenu:		;Draw the pause menu and read the pad: up and down move, Start leave
 	jsl.l StatsScreen
 	jsl.l StatsReport
 	bra .redraw
-.ros:		;SNES Team Roster: show the roster, then rebuild the game screen (bg registers, palette, small font tiles, SetHor)
+.ros:								;SNES Team Roster: show the roster, then rebuild the game screen (bg
+									;registers, palette, small font tiles, SetHor)
 	lda.b d1
 	bit.w #cbut
 	bne .ros1
@@ -118,7 +120,8 @@ PauseMenu:		;Draw the pause menu and read the pad: up and down move, Start leave
 	sta.b a1+2
 	lda.w #$0064
 	sta.b d0
-	jsl.l RemapTiles		; remap the 4bpp pixels of the unpacked tiles ([a0] data, [a1] table, d0 tiles)
+	jsl.l RemapTiles				;remap the 4bpp pixels of the unpacked tiles ([a0] data, [a1] table, d0
+									;tiles)
 	lda.w #FramerTiles
 	sta.b a0
 	lda.w #FramerTiles>>16
@@ -129,7 +132,8 @@ PauseMenu:		;Draw the pause menu and read the pad: up and down move, Start leave
 	sta.b a1+2
 	lda.w #$0004
 	sta.b d0
-	jsl.l RemapTiles		; remap the 4bpp pixels of the unpacked tiles ([a0] data, [a1] table, d0 tiles)
+	jsl.l RemapTiles				;remap the 4bpp pixels of the unpacked tiles ([a0] data, [a1] table, d0
+									;tiles)
 	lda.b sprclock
 	adc.w #$003C
 	sta.b sprclock
@@ -139,11 +143,11 @@ PauseMenu:		;Draw the pause menu and read the pad: up and down move, Start leave
 	jsl.l SetHor
 	jsl.l setvideo
 	jmp.w .redraw
-.go:		;Goalie: left/right change tmgoalie (0, 1, none), then Setpersonel
+.go:								;Goalie: left/right change tmgoalie (0, 1, none), then Setpersonel
 	jsl.l GetPadTeam
 	jsl.l GoalieCount
 	jsl.l GetPadTeam
-	ldy.b a2		; A or right: next goalie; left: previous; d0 = number of goalies
+	ldy.b a2						; A or right: next goalie; left: previous; d0 = number of goalies
 	lda.b d1
 	bit.w #cbut|JOYRIGHT
 	bne .nextg
@@ -173,5 +177,5 @@ PauseMenu:		;Draw the pause menu and read the pad: up and down move, Start leave
 .firstg:
 	lda.w #$0000
 	bra .set
-.jump:		;Resume Game, Instant Replay, Stats Report, Goalie, Team Roster
+.jump:								;Resume Game, Instant Replay, Stats Report, Goalie, Team Roster
 	dd PauseResume,.rm,.sr,.go,.ros

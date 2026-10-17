@@ -1,4 +1,4 @@
-AdvanceStringPtr:		;a1 = string d0 of the string list [a1]
+AdvanceStringPtr:					;a1 = string d0 of the string list [a1]
 	bra .cnt
 .next:
 	lda.b a1

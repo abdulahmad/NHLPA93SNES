@@ -1,4 +1,5 @@
-prefmes:		;Print the message for penalty d0, or clear it when negative: under the referee on the vertical rink,
+prefmes:							;Print the message for penalty d0, or clear it when negative: under the
+									;referee on the vertical rink,
 		;   one centered line on the horizontal rink
 	stx.b xsave
 	ldx.w #$0000
@@ -27,7 +28,7 @@ prefmes:		;Print the message for penalty d0, or clear it when negative: under th
 	lda.b d0
 	bpl .d0pos
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $BF,$00,$0A
 	lda.w #$000D
 	sta.b d0
@@ -39,7 +40,7 @@ prefmes:		;Print the message for penalty d0, or clear it when negative: under th
 	jmp.w .ex
 .d0pos:
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $BF,$05,$0A
 	ldy.b d0
 	lda.w #PenaltyList
@@ -90,7 +91,7 @@ prefmes:		;Print the message for penalty d0, or clear it when negative: under th
 	lda.b d0
 	bmi .ex
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $BF,$11,$0B
 	lda.w #PenaltyList
 	sta.b a1

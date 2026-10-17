@@ -1,4 +1,4 @@
-divs16:		;Signed 16-bit divide: A = mulb / mula
+divs16:								;Signed 16-bit divide: A = mulb / mula
 	stz.b mulsign
 	lda.b mula
 	bpl .mulapos

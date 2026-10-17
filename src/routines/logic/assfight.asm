@@ -1,9 +1,10 @@
-assfight:		;Assignment: fighting. A computer fighter punches when close; both stay near the fight spot
+assfight:							;Assignment: fighting. A computer fighter punches when close; both stay
+									;near the fight spot
 	lda.w pfalock,x
 	beq .go
 	jmp.w .rts
 .go:
-	lda.w Pencntdwn		; fight over
+	lda.w Pencntdwn					; fight over
 	bpl .chkna
 	jml.l assnothing
 .chkna:
@@ -13,12 +14,12 @@ assfight:		;Assignment: fighting. A computer fighter punches when close; both st
 	and.w #~pfna&$FFFF
 	sta.w pflags,x
 	jsl.l getpde
-	lda.w fightagg,x		; getpde * fightagg / $1000
+	lda.w fightagg,x				; getpde * fightagg / $1000
 	sta.b d1
 	sta.b mula
 	lda.b d0
 	sta.b mulb
-	jsl.l mulu16		; mulu, mulres = mula*mulb
+	jsl.l mulu16					; mulu, mulres = mula*mulb
 	xba
 	and.w #$00FF
 	lsr a
@@ -28,18 +29,18 @@ assfight:		;Assignment: fighting. A computer fighter punches when close; both st
 	cmp.w #$0006
 	bcs .s
 	lda.w #$0005
-.s:		;temp3 = strength (min 5)
+.s:									;temp3 = strength (min 5)
 	sta.w temp3,x
 	stz.w temp2,x
 	stz.w temp2b,x
-	lda.w #$FFFF		; temp4 = banner timer
+	lda.w #$FFFF					; temp4 = banner timer
 	sta.w temp4,x
 	lda.w facedir,x
-	cmp.w #$0002		; one player shows the banner
+	cmp.w #$0002					; one player shows the banner
 	bne .nna
 	lda.w #$005A
 	sta.w temp4,x
-.nna:		;keep the fighter within x -$6F..$6F
+.nna:								;keep the fighter within x -$6F..$6F
 	lda.w Xpos,x
 	sec
 	sbc.w #$006F
@@ -66,7 +67,7 @@ assfight:		;Assignment: fighting. A computer fighter punches when close; both st
 	stz.w Xvel,x
 	lda.w #$FF91
 	sta.w Xpos,x
-.nna2:		;temp4 = banner timer (no banner on the SNES)
+.nna2:								;temp4 = banner timer (no banner on the SNES)
 	lda.w temp4,x
 	sec
 	sbc.b d7
@@ -75,7 +76,7 @@ assfight:		;Assignment: fighting. A computer fighter punches when close; both st
 	bpl .fight
 	jmp.w .rts
 .fight:
-	lda.w impactp,x		; a0 = opponent; xc1 = half way between the fighters
+	lda.w impactp,x					; a0 = opponent; xc1 = half way between the fighters
 	asl a
 	sta.b a0
 	tay
@@ -87,9 +88,9 @@ assfight:		;Assignment: fighting. A computer fighter punches when close; both st
 	ror a
 	sta.w xc1
 	lda.w pflags,x
-	bit.w #pfjoycon		; joystick: no computer punch
+	bit.w #pfjoycon					; joystick: no computer punch
 	bne .j
-	lda.w pf2aip,x		; set pf2aip, test the old value
+	lda.w pf2aip,x					; set pf2aip, test the old value
 	pha
 	lda.w #$0001
 	sta.w pf2aip,x
@@ -126,7 +127,7 @@ assfight:		;Assignment: fighting. A computer fighter punches when close; both st
 	eor.w #$FFFF
 	inc a
 .inrange:
-	cmp.w #$0019		; computer punches only within 25 pixels
+	cmp.w #$0019					; computer punches only within 25 pixels
 	bcs .j
 	lda.w #$0008
 	sta.b d0
@@ -136,7 +137,7 @@ assfight:		;Assignment: fighting. A computer fighter punches when close; both st
 	bcc .p
 	and.w #$0001
 	sta.b d0
-.p:		;choose the punch type from .al
+.p:									;choose the punch type from .al
 	asl.b d0
 	lda.w #.al
 	sta.b a1
@@ -149,14 +150,14 @@ assfight:		;Assignment: fighting. A computer fighter punches when close; both st
 .j:
 	jsl.l chkhit
 	lda.w SPA,x
-	cmp.w #SPAfheld		; held: still pushed
+	cmp.w #SPAfheld					; held: still pushed
 	beq .njc
-	cmp.w #SPAfight		; ready: no push
+	cmp.w #SPAfight					; ready: no push
 	beq .jc
 	lda.w pflags,x
 	bit.w #pfjoycon
 	bne .jc
-.njc:		;push toward the fight spot (xc1+-10)
+.njc:								;push toward the fight spot (xc1+-10)
 	lda.w xc1
 	clc
 	adc.w #$000A
@@ -173,7 +174,7 @@ assfight:		;Assignment: fighting. A computer fighter punches when close; both st
 	sec
 	sbc.w Xpos,x
 	sta.b mula
-	lda.w #$0023		; 35 toward the spot, 5 away from it
+	lda.w #$0023					; 35 toward the spot, 5 away from it
 	sta.b mulb
 	lda.w facedir,x
 	sec
@@ -188,7 +189,7 @@ assfight:		;Assignment: fighting. A computer fighter punches when close; both st
 	clc
 	adc.w Xvel,x
 	sta.w Xvel,x
-.jc:		;Yvel = (yc1-Ypos)*256, +-$1000
+.jc:								;Yvel = (yc1-Ypos)*256, +-$1000
 	lda.w yc1
 	sec
 	sbc.w Ypos,x
@@ -223,5 +224,5 @@ assfight:		;Assignment: fighting. A computer fighter punches when close; both st
 	sta.w Yvel,x
 .rts:
 	rtl
-.al:		;punch animations SPAfhigh, SPAflow, SPAfgrab
+.al:								;punch animations SPAfhigh, SPAflow, SPAfgrab
 	dw SPAfhigh,SPAflow,SPAfgrab

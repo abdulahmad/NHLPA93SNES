@@ -1,7 +1,7 @@
-Setplass:		;Set player X's first assignment from his position
+Setplass:							;Set player X's first assignment from his position
 	lda.w position,x
 	sta.b d0
-	bmi .rtl		; no position: no assignment
+	bmi .rtl						; no position: no assignment
 	lda.w #.alist
 	sta.b a0
 	lda.w #.alist>>16
@@ -13,5 +13,5 @@ Setplass:		;Set player X's first assignment from his position
 	jmp.w assreplace
 .rtl:
 	rtl
-.alist:		;assignment for each position (goalie, LD, RD, LW, C, RW, extra)
+.alist:								;assignment for each position (goalie, LD, RD, LW, C, RW, extra)
 	db agoalie,adefd,adefd,awingd,acenterd,awingd,acenterd

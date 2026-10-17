@@ -1,4 +1,4 @@
-CopyWords:		;Copy d0 bytes from [d2] to [d1], a word at a time
+CopyWords:							;Copy d0 bytes from [d2] to [d1], a word at a time
 	stx.b xsave
 	ldx.w #$0000
 .save:

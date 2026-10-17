@@ -1,4 +1,4 @@
-StartSong6:		;Start the title screen music unless it is already playing
+StartSong6:							;Start the title screen music unless it is already playing
 	lda.w cursong
 	cmp.w #6
 	beq .rtl
@@ -7,7 +7,7 @@ StartSong6:		;Start the title screen music unless it is already playing
 	beq .cmd
 	jsl.l SPCBootUpload
 .cmd:
-	sep #$20		; APUIO0 = 3: play song 6
+	sep #$20						; APUIO0 = 3: play song 6
 	lda.b #$03
 	sta.w APUIO0
 	rep #$30

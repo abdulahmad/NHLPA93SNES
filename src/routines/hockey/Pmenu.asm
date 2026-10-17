@@ -1,6 +1,6 @@
-Pmenu:		;Draw the pause menu items with the current one highlighted
+Pmenu:								;Draw the pause menu items with the current one highlighted
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $BF,$06,$0D
 	stz.b d0
 	lda.w #.mlist
@@ -24,7 +24,7 @@ Pmenu:		;Draw the pause menu items with the current one highlighted
 	lda.w #$0006
 	sta.w printx
 	jsl.l printz
-	dw $0016		; printz inline string: length (counts itself), then control bytes / text
+	dw $0016						; printz inline string: length (counts itself), then control bytes / text
 	db "                    "
 	lda.w #mesarea
 	sta.b a1
@@ -56,7 +56,7 @@ Pmenu:		;Draw the pause menu items with the current one highlighted
 	cmp.w #$0005
 	bne .item
 	rtl
-.goalie:		;item 3: append the name of the goalie on the ice (or NONE)
+.goalie:							;item 3: append the name of the goalie on the ice (or NONE)
 	lda.b d0
 	cmp.w #$0003
 	beq .item3
@@ -122,7 +122,7 @@ Pmenu:		;Draw the pause menu items with the current one highlighted
 	inc.w mesarea
 	inc.w mesarea
 	rtl
-.mlist:		;the pause menu items
+.mlist:								;the pause menu items
 	dw 13
 	db "Resume Game"
 	dw 16
@@ -133,7 +133,7 @@ Pmenu:		;Draw the pause menu items with the current one highlighted
 	db "Goalie - "
 	dw 13
 	db "Team Roster"
-.mlist2:		;SNES: the menu items after the game (Exit Game first)
+.mlist2:							;SNES: the menu items after the game (Exit Game first)
 	dw 11
 	db "Exit Game"
 	dw 16

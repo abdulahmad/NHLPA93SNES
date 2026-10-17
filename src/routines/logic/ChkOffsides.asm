@@ -1,9 +1,10 @@
-ChkOffsides:		;Clear each team's offsides flag once it is back onside; when the puck crosses a blue line into the zone
+ChkOffsides:						;Clear each team's offsides flag once it is back onside; when the puck
+									;crosses a blue line into the zone
 		;   with an attacker already past it, flag that team offsides
 	lda.w gmode
 	bit.w #gmoffs
 	beq .rtl
-	stz.b a1		; a1 = home, a2 = away; then swapped
+	stz.b a1						; a1 = home, a2 = away; then swapped
 	lda.w #$0002
 	sta.b a2
 	jsl.l ClearOffsidesIfAllPlayers
@@ -11,7 +12,7 @@ ChkOffsides:		;Clear each team's offsides flag once it is back onside; when the 
 	lda.w #$0002
 	sta.b a1
 	jsl.l ClearOffsidesIfAllPlayers
-	lda.w #blueline-4		; blueline-4
+	lda.w #blueline-4				; blueline-4
 	sta.b d0
 	sec
 	sbc.w pucky
@@ -21,7 +22,7 @@ ChkOffsides:		;Clear each team's offsides flag once it is back onside; when the 
 	bra .neg
 .neg1:
 	bvs .neg
-.top:		;puck crossed the top line this frame?
+.top:								;puck crossed the top line this frame?
 	lda.w #blueline-4
 	sec
 	sbc.w OldYpos+puckobj
@@ -32,10 +33,10 @@ ChkOffsides:		;Clear each team's offsides flag once it is back onside; when the 
 .neg2:
 	bvc .rtl
 .t:
-	lda.w #blueline-4+$A		; +$A
+	lda.w #blueline-4+$A			; +$A
 	sta.b d0
 	lda.w gmode
-	bit.w #gmdir		; gmdir
+	bit.w #gmdir					; gmdir
 	beq .t0
 	lda.b a2
 	ldy.b a1
@@ -62,7 +63,7 @@ ChkOffsides:		;Clear each team's offsides flag once it is back onside; when the 
 .set0:
 	ldy.b a2
 	lda.w tmflags,y
-	ora.w #tmfoside		; tmfoside
+	ora.w #tmfoside					; tmfoside
 	sta.w tmflags,y
 .rtl:
 	rtl
@@ -72,7 +73,7 @@ ChkOffsides:		;Clear each team's offsides flag once it is back onside; when the 
 	dec.b d2
 	bpl .0
 	rtl
-.neg:		;bottom line
+.neg:								;bottom line
 	lda.b d0
 	eor.w #$FFFF
 	inc a
@@ -96,7 +97,7 @@ ChkOffsides:		;Clear each team's offsides flag once it is back onside; when the 
 .b2:
 	lda.b d0
 	sec
-	sbc.w #$000A		; -$A
+	sbc.w #$000A					; -$A
 	sta.b d0
 	lda.w gmode
 	bit.w #gmdir

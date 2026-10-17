@@ -1,5 +1,5 @@
-ClampNibble:		;Clamp A to 0-15
-	bit.w #$0080		; negative: 0
+ClampNibble:						;Clamp A to 0-15
+	bit.w #$0080					; negative: 0
 	beq .hi
 	lda.w #$0000
 .hi:

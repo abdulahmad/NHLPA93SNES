@@ -1,4 +1,4 @@
-SetPA2:		;Step the referee animation to its next frame and delay
+SetPA2:								;Step the referee animation to its next frame and delay
 	phx
 	stx.b xsave
 	ldx.w #$0000
@@ -20,14 +20,15 @@ SetPA2:		;Step the referee animation to its next frame and delay
 	cpx.w #$0008
 	bne .savea
 	ldx.b xsave
-	lda.w #$0040		; d0 = $40 (clear the ref window) when RefStep is negative
+	lda.w #$0040					; d0 = $40 (clear the ref window) when RefStep is negative
 	sta.b d0
 	lda.w RefStep
 	bmi .pr
 	sta.b d0
 	inc.w RefStep
 	inc.w RefStep
-	lda.w RefPen		; PenaltyList entry of RefPen: its animation offset (+2), then the frame/delay word at RefStep
+	lda.w RefPen					;PenaltyList entry of RefPen: its animation offset (+2), then the
+									;frame/delay word at RefStep
 	sta.b d1
 	tax
 	lda.l PenaltyList,x
@@ -41,13 +42,13 @@ SetPA2:		;Step the referee animation to its next frame and delay
 	lda.l PenaltyList,x
 	sta.b d0
 	bpl .0
-	eor.w #$FFFF		; negative: last pair, RefStep = -1
+	eor.w #$FFFF					; negative: last pair, RefStep = -1
 	inc a
 	sta.b d0
 	lda.w #$FFFF
 	sta.w RefStep
 .0:
-	lda.b d0		; RefCnt = delay * 8, d0 = frame
+	lda.b d0						; RefCnt = delay * 8, d0 = frame
 	and.w #$00FF
 	asl a
 	asl a

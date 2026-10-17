@@ -1,4 +1,4 @@
-linelist:		;The line choice names
+linelist:							;The line choice names
 	dw 5
 	db "Sc1"
 	dw 5

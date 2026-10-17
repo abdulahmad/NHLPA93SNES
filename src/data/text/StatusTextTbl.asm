@@ -1,4 +1,4 @@
-StatusTextTbl:		;AttribStatus strings
+StatusTextTbl:						;AttribStatus strings
 	%String("Ice   ")
 	%String("Bench ")
 	%String("Inj P ")

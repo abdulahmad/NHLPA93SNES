@@ -1,6 +1,7 @@
-InitSortObjects:		;Clear the sorted objects and set up the arrows, the rink scroll objects and the players from their start tables,
+InitSortObjects:					;Clear the sorted objects and set up the arrows, the rink scroll objects
+									;and the players from their start tables,
 		;   then sort them
-	ldx.w #$0000		; SortCords (all fields of the 16 objects)
+	ldx.w #$0000					; SortCords (all fields of the 16 objects)
 .clr:
 	stz.w Xpos,x
 	inx
@@ -94,12 +95,12 @@ InitSortObjects:		;Clear the sorted objects and set up the arrows, the rink scro
 	sta.w pflags,y
 	lda.w #$0000
 	sta.w pfnc,y
-	cpy.w #$001E		; object $1E (puck shadow): pfnc
+	cpy.w #$001E					; object $1E (puck shadow): pfnc
 	bne .goal
 	lda.w #$0001
 	sta.w pfnc,y
 .goal:
-	cpx.w #$006C		; pfgoal for objects 6-11 and 12-15, pfteam $34 for 6-11
+	cpx.w #$006C					; pfgoal for objects 6-11 and 12-15, pfteam $34 for 6-11
 	rol a
 	inc a
 	and.w #$0001

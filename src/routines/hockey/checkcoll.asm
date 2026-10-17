@@ -1,16 +1,17 @@
-checkcoll:		;Move object X to its new x / y (d2 / d3), checking wall and player collisions and keeping the objects sorted
-	stz.b collflag		; collflag = 0
-	lda.w sfhormode		; horizontal: exg d2,d3
+checkcoll:							;Move object X to its new x / y (d2 / d3), checking wall and player
+									;collisions and keeping the objects sorted
+	stz.b collflag					; collflag = 0
+	lda.w sfhormode					; horizontal: exg d2,d3
 	beq .nhor1
 	lda.b d2
 	ldy.b d3
 	sta.b d3
 	sty.b d2
 .nhor1:
-	lda.w pfnc,x		; pfnc: no collision
+	lda.w pfnc,x					; pfnc: no collision
 	beq .go
 	jmp.w .ex
-.go:		;movem d0-d6
+.go:								;movem d0-d6
 	lda.b d6+2
 	pha
 	lda.b d6
@@ -39,7 +40,7 @@ checkcoll:		;Move object X to its new x / y (d2 / d3), checking wall and player 
 	pha
 	lda.b d0
 	pha
-	lda.w Xpos,x		; around the hot spot with the wall
+	lda.w Xpos,x					; around the hot spot with the wall
 	sta.b d2
 	lda.w Ypos,x
 	sta.b d3
@@ -48,10 +49,10 @@ checkcoll:		;Move object X to its new x / y (d2 / d3), checking wall and player 
 	lda.w radiusy,x
 	sta.w wcradiusy
 	jsl.l checkwallcoll
-	lda.w Wallcos,x		; wall hit: done
+	lda.w Wallcos,x					; wall hit: done
 	ora.w Wallsin,x
 	bne .xx
-	cpx.w #$0018		; only players: the end of the stick
+	cpx.w #$0018					; only players: the end of the stick
 	bcs .xx
 	lda.b $01,s
 	sta.b d0
@@ -82,7 +83,7 @@ checkcoll:		;Move object X to its new x / y (d2 / d3), checking wall and player 
 	lda.b $1B,s
 	sta.b d6+2
 	txa
-	jsl.l GetHot		; GetHot
+	jsl.l GetHot					; GetHot
 	lda.w Xpos,x
 	clc
 	adc.b d0
@@ -91,7 +92,7 @@ checkcoll:		;Move object X to its new x / y (d2 / d3), checking wall and player 
 	clc
 	adc.b d1
 	sta.b d3
-	lda.w #$0001		; radius 1
+	lda.w #$0001					; radius 1
 	sta.w wcradiusx
 	sta.w wcradiusy
 	jsl.l checkwallcoll
@@ -124,13 +125,13 @@ checkcoll:		;Move object X to its new x / y (d2 / d3), checking wall and player 
 	sta.b d6
 	pla
 	sta.b d6+2
-	jsl.l checkplcoll		; checkplcoll
+	jsl.l checkplcoll				; checkplcoll
 .ex:
-	lda.b collflag		; collflag: restore the old position
+	lda.b collflag					; collflag: restore the old position
 	beq .sort
 	jmp.w .restoreold
 .sort:
-	lda.w OOlistpos,x		; move up/down OOlist by y
+	lda.w OOlistpos,x				; move up/down OOlist by y
 	sta.b d1
 .2:
 	ldy.b d1

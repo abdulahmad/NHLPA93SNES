@@ -1,4 +1,4 @@
-RemapTiles:		;Copy tiles to video memory with each pixel color remapped through a table
+RemapTiles:							;Copy tiles to video memory with each pixel color remapped through a table
 	lda.w #$000E
 	sta.b tmp2+1
 .tile:

@@ -1,4 +1,5 @@
-AttribStatus:		;Roster column: where the player is (ice, bench, injured) or his penalty time
+AttribStatus:						;Roster column: where the player is (ice, bench, injured) or his penalty
+									;time
 	asl.b d0
 	lda.b a2
 	beq .team
@@ -6,7 +7,7 @@ AttribStatus:		;Roster column: where the player is (ice, bench, injured) or his 
 .team:
 	adc.b d0
 	tay
-	lda.w tmpdst,y		; tmpdst: negative = not of the status
+	lda.w tmpdst,y					; tmpdst: negative = not of the status
 	sta.b d0
 	bpl .pen
 	eor.w #$FFFF
@@ -34,7 +35,7 @@ AttribStatus:		;Roster column: where the player is (ice, bench, injured) or his 
 	sta.b d1
 	and.w #$0FFF
 	sta.b d0
-	jsl.l PushTime		; d0 = time
+	jsl.l PushTime					; d0 = time
 	jsl.l print
 	lda.w #$0004
 	sta.b d0

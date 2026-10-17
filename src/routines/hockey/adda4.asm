@@ -1,4 +1,4 @@
-adda4:		;Move the replay one frame forward
+adda4:								;Move the replay one frame forward
 	stz.b d7
 	lda.w sflags
 	bit.w #sf2drec

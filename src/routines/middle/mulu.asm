@@ -1,5 +1,5 @@
-mulu:		;Unsigned multiply: mulres (32-bit) = mula * mulb
-	lda.b mula		; mula >= $80 needs mulb < $80
+mulu:								;Unsigned multiply: mulres (32-bit) = mula * mulb
+	lda.b mula						; mula >= $80 needs mulb < $80
 	bmi .full
 	cmp.w #$0080
 	bcc .byteb
@@ -25,7 +25,7 @@ mulu:		;Unsigned multiply: mulres (32-bit) = mula * mulb
 	sta.b mulres
 	rtl
 .byteb:
-	lda.b mulb		; mula < $80: byte factor
+	lda.b mulb						; mula < $80: byte factor
 	bmi .full
 	sep #$20
 	sta.w M7A

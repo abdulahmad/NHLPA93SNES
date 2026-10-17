@@ -1,4 +1,5 @@
-GetLowestPen:		;d0 = the power play time left, from the penalty box times. a2 = team on the power play, a3 = the shorthanded team
+GetLowestPen:						;d0 = the power play time left, from the penalty box times. a2 = team on
+									;the power play, a3 = the shorthanded team
 	stz.b d0
 	stz.b d3
 	lda.b a2
@@ -7,7 +8,7 @@ GetLowestPen:		;d0 = the power play time left, from the penalty box times. a2 = 
 .a:
 	sta.b a0
 .top:
-	ldy.b a0		; penalty box list of the power play team ($80 ends)
+	ldy.b a0						; penalty box list of the power play team ($80 ends)
 	inc.b a0
 	lda.w tmboxlist,y
 	and.w #$00FF
@@ -23,7 +24,7 @@ GetLowestPen:		;d0 = the power play time left, from the penalty box times. a2 = 
 	tay
 	lda.w tmpdst,y
 	sta.b d2
-	bit.w #$4000		; tmpdst bit 14: not timed
+	bit.w #$4000					; tmpdst bit 14: not timed
 	bne .top
 	lda.b d2
 	sec
@@ -36,7 +37,7 @@ GetLowestPen:		;d0 = the power play time left, from the penalty box times. a2 = 
 	sta.b d3
 	bra .top
 .t2:
-	ldy.b a3		; shorthanded team
+	ldy.b a3						; shorthanded team
 	lda.w tmap,y
 	cmp.w #6
 	beq .rtl
