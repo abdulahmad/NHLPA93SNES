@@ -1,4 +1,5 @@
-SetScore:		;Play one period of playoff game a0 with random goals; a game tied after three periods goes to overtime
+SetScore:							;Play one period of playoff game a0 with random goals; a game tied after
+									;three periods goes to overtime
 	ldy.b a0
 	lda.w gsper,y
 	cmp.w #4
@@ -27,9 +28,9 @@ SetScore:		;Play one period of playoff game a0 with random goals; a game tied af
 	ldx.b xsave
 	ldy.b a0
 	lda.w gsper,y
-	cmp.w #3		; after period 3
+	cmp.w #3						; after period 3
 	bne .0
-	lda.w #5		; final
+	lda.w #5						; final
 	sta.w gsper,y
 	lda.w gss1,y
 	sec
@@ -41,10 +42,10 @@ SetScore:		;Play one period of playoff game a0 with random goals; a game tied af
 .diff:
 	cmp.w #2
 	bcs .ex
-	lda.w #3		; within one goal: overtime
+	lda.w #3						; within one goal: overtime
 	sta.w gsper,y
 	lda.w gsflags,y
-	ora.w #gsfhl		; gsfhl: show it in the ticker
+	ora.w #gsfhl					; gsfhl: show it in the ticker
 	sta.w gsflags,y
 	bra .ex
 .0:
@@ -92,21 +93,22 @@ SetScore:		;Play one period of playoff game a0 with random goals; a game tied af
 	ldx.b xsave
 .rtl:
 	rtl
-.getscore:		;d0 = scoring team, d1 = other team; nibblebuffer = the .sctab rows of both ScoreOdds nibbles; returns d0 = goals 0-3
+.getscore:							;d0 = scoring team, d1 = other team; nibblebuffer = the .sctab rows of
+									;both ScoreOdds nibbles; returns d0 = goals 0-3
 	asl.b d0
 	asl.b d0
-	lda.w #TeamList		; TeamList entry of team d0
+	lda.w #TeamList					; TeamList entry of team d0
 	sta.b a1
 	lda.w #TeamList>>16
 	sta.b a1+2
 	ldy.b d0
 	lda.b [a1],y
 	sta.b a1
-	ldy.w #ScoutReport		; 8(a1): the ScoreOdds offset, ScoutReport in the record
+	ldy.w #ScoutReport				; 8(a1): the ScoreOdds offset, ScoutReport in the record
 	adc.b [a1],y
 	sta.b a1
 	lda.b [a1]
-	and.w #$0070		; bits 4-6: row of the scoring team
+	and.w #$0070					; bits 4-6: row of the scoring team
 	lsr a
 	adc.w #.sctab
 	sta.b a1
@@ -136,7 +138,7 @@ SetScore:		;Play one period of playoff game a0 with random goals; a game tied af
 	adc.b [a1],y
 	sta.b a1
 	lda.b [a1]
-	and.w #$0007		; bits 0-2: row of the other team
+	and.w #$0007					; bits 0-2: row of the other team
 	asl a
 	asl a
 	asl a
@@ -159,10 +161,10 @@ SetScore:		;Play one period of playoff game a0 with random goals; a game tied af
 	lda.b [a1],y
 	adc.w nibblebuffer+6
 	sta.w nibblebuffer+6
-	lda.w #4		; 4 weights
+	lda.w #4						; 4 weights
 	sta.b d0
 	jml.l WeightedRandomSelect		; d0 weights in nibblebuffer
-.sctab:		;weights for 0, 1, 2, 3 goals by ScoreOdds row
+.sctab:								;weights for 0, 1, 2, 3 goals by ScoreOdds row
 	dw $2B,$1E,$17,$04
 	dw $27,$20,$18,$05
 	dw $23,$21,$1A,$06
@@ -171,7 +173,7 @@ SetScore:		;Play one period of playoff game a0 with random goals; a game tied af
 	dw $16,$25,$1F,$0A
 	dw $13,$26,$1F,$0C
 	dw $0F,$26,$20,$0F
-unusedFF8A:		;unused, $FF fill to the end of the bank
+unusedFF8A:							;unused, $FF fill to the end of the bank
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF

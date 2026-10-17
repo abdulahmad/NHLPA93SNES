@@ -1,19 +1,20 @@
-Start:		;Reset entry and cold start: switch to native mode, clear RAM, set up the interrupt handlers and sprite tile cache,
+Start:								;Reset entry and cold start: switch to native mode, clear RAM, set up the
+									;interrupt handlers and sprite tile cache,
 		;   check the ROM, start the hardware and sound, then go to the title screen
-	sei		; interrupts off
+	sei								; interrupts off
 	clc
-	xce		; native mode
+	xce								; native mode
 	rep #$30
 	lda.w #$1FFF
-	tcs		; stack $1FFF
+	tcs								; stack $1FFF
 	lda.w #$0000
-	tcd		; D = 0
+	tcd								; D = 0
 	sep #$20
 	pha
-	plb		; DB = $00 (low RAM and registers)
+	plb								; DB = $00 (low RAM and registers)
 	rep #$30
 	ldx.w #$0000
-.clrdp:		;clear $0000-$164D (DP and low RAM)
+.clrdp:								;clear $0000-$164D (DP and low RAM)
 	stz.b vcount,x
 	inx
 	inx
@@ -23,22 +24,23 @@ Start:		;Reset entry and cold start: switch to native mode, clear RAM, set up th
 	sta.b vbint
 	lda.w #HBdefault
 	sta.b hbint
-	lda.w #JMLOPCODE		; jml opcode for the jmlvector trampoline
+	lda.w #JMLOPCODE				; jml opcode for the jmlvector trampoline
 	sta.w jmlvector
-	lda.w #$0012		; sprite VRAM slots stay reserved 18 frames
+	lda.w #$0012					; sprite VRAM slots stay reserved 18 frames
 	sta.b sprslotlife
 	lda.b sprclock
 	sec
-	sbc.w #$003C		; 60 frames ago
+	sbc.w #$003C					; 60 frames ago
 	ldx.w #$0000
-.clrcache:		;sprframetime: every frame "sent 60 frames ago" (sprclock-$3C), so every cached frame is stale
+.clrcache:							;sprframetime: every frame "sent 60 frames ago" (sprclock-$3C), so every
+									;cached frame is stale
 	sta.l sprframetime,x
 	inx
 	inx
 	cpx.w #$4C74
 	bne .clrcache
 	ldx.w #$0000
-.clrslots:		;sprslottime ($04AB-$08AA): every VRAM sprite slot free
+.clrslots:							;sprslottime ($04AB-$08AA): every VRAM sprite slot free
 	sta.w sprslottime,x
 	inx
 	inx
@@ -46,10 +48,11 @@ Start:		;Reset entry and cold start: switch to native mode, clear RAM, set up th
 	bne .clrslots
 	lda.w #$0020
 	sta.b sprpriority
-	stz.b tmp0		; sum = 0
+	stz.b tmp0						; sum = 0
 	ldx.w #$0000
-	ldy.w #$0002		; word at +2 of each pointer
-.sumloop:		;sum the word at [ptr]+2 for each long ptr in the table at FrameSetTable (0-terminated, 4 bytes per entry)
+	ldy.w #$0002					; word at +2 of each pointer
+.sumloop:							;sum the word at [ptr]+2 for each long ptr in the table at FrameSetTable
+									;(0-terminated, 4 bytes per entry)
 	lda.l FrameSetTable,x
 	beq .validate
 	sta.b tmp1
@@ -64,23 +67,23 @@ Start:		;Reset entry and cold start: switch to native mode, clear RAM, set up th
 	inx
 	inx
 	bra .sumloop
-.validate:		;anti-tamper: hang forever unless the sum is $131D
+.validate:							;anti-tamper: hang forever unless the sum is $131D
 	lda.b tmp0
 	cmp.w #$131D
 	bne .validate
-	lda.w #$0001		; hold the sound queue while the hardware/sound driver starts
+	lda.w #$0001					; hold the sound queue while the hardware/sound driver starts
 	sta.b sndlock
-	jsl.l InitPPU		; PPU registers off/clear, sound driver start
+	jsl.l InitPPU					; PPU registers off/clear, sound driver start
 	sep #$20
 	cli
-	lda.w RDNMI		; ack a pending NMI
-	lda.b #NMITIMEN_NMI|NMITIMEN_JOY		; NMI on, auto joypad read
+	lda.w RDNMI						; ack a pending NMI
+	lda.b #NMITIMEN_NMI|NMITIMEN_JOY	; NMI on, auto joypad read
 	sta.w NMITIMEN
 	rep #$30
 	jsl.l SPCBootUpload
 	stz.b sndlock
-	stz.b vbactive		; vblank handlers may run
-	jsl.l ResetPassWord		; $1610-$161F = $1E
-	jsl.l DefaultMenus		; initial menu choices at $1600
+	stz.b vbactive					; vblank handlers may run
+	jsl.l ResetPassWord				; $1610-$161F = $1E
+	jsl.l DefaultMenus				; initial menu choices at $1600
 	jsl.l Readjoy12
-	jml.l Opening		; on to the title screen
+	jml.l Opening					; on to the title screen

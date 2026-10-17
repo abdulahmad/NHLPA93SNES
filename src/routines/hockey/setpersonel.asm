@@ -1,4 +1,4 @@
-setpersonel:		;Put team a2's wanted players on the ice, keeping the ones already there
+setpersonel:						;Put team a2's wanted players on the ice, keeping the ones already there
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -25,7 +25,7 @@ setpersonel:		;Put team a2's wanted players on the ice, keeping the ones already
 	lda.w #$0005
 	sta.b d4
 .l0:
-	lda.w #$FFFF		; newpos = newpnum = -1 for the 6 objects
+	lda.w #$FFFF					; newpos = newpnum = -1 for the 6 objects
 	sta.w newpos,x
 	sta.w newpnum,x
 	inx
@@ -36,11 +36,11 @@ setpersonel:		;Put team a2's wanted players on the ice, keeping the ones already
 	jsl.l SetPlList
 	lda.w #$0005
 	sta.b d4
-	lda.w #PlList		; a4 = PlList
+	lda.w #PlList					; a4 = PlList
 	sta.b a4
 	lda.w #PlList>>16
 	sta.b a4+2
-.1:		;wanted players already on the ice keep their object
+.1:									;wanted players already on the ice keep their object
 	ldy.b d4
 	lda.b [a4],y
 	and.w #$00FF
@@ -100,7 +100,7 @@ setpersonel:		;Put team a2's wanted players on the ice, keeping the ones already
 	sta.b a4
 	lda.w #PlList>>16
 	sta.b a4+2
-.3:		;the rest go to objects with no requested player
+.3:									;the rest go to objects with no requested player
 	ldy.b d4
 	lda.b [a4],y
 	and.w #$00FF

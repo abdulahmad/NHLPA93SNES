@@ -1,4 +1,5 @@
-ScoutLabels:		;scouting labels: the rating names of the scouting report; a $FF string ends the list
+ScoutLabels:						;scouting labels: the rating names of the scouting report; a $FF string
+									;ends the list
 	dw 10
 	db "Shooting"
 	dw 9

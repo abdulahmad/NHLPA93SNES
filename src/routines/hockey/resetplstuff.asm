@@ -1,4 +1,4 @@
-resetplstuff:		;Reset the team variables and the players on both teams
+resetplstuff:						;Reset the team variables and the players on both teams
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -44,17 +44,17 @@ resetplstuff:		;Reset the team variables and the players on both teams
 	ldx.b xsave
 	ldx.b a3
 	rtl
-.top:		;team a2
+.top:								;team a2
 	ldy.b a2
 	lda.w tmflags,y
-	and.w #~tmfoside&$FFFF		; clear tmfoside
+	and.w #~tmfoside&$FFFF			; clear tmfoside
 	sta.w tmflags,y
 	lda.w #$0005
 	sta.b d2
 	ldx.w tmsort,y
 	stx.b a3
 .loop:
-	stz.w pf2fight,x		; pf2fight = pf2aip = 0, pflags2 bits cleared
+	stz.w pf2fight,x				; pf2fight = pf2aip = 0, pflags2 bits cleared
 	stz.w pf2aip,x
 	lda.w pflags,x
 	and.w #~(pf2unav|pf2lcm|pf2pen|pf2npc)&$FFFF
@@ -64,10 +64,10 @@ resetplstuff:		;Reset the team variables and the players on both teams
 	lda.w #SPAglide
 	sta.b d1
 	jsl.l SetSPA
-	stz.w impact,x		; impact = 0, nopuck = 0
+	stz.w impact,x					; impact = 0, nopuck = 0
 	stz.w nopuck,x
 	lda.w pflags,x
-	and.w #~(pfdoff|pfjoycon)&$FFFF		; keep pfteam/pfgoal/pfna: clear pfdoff, pfjoycon
+	and.w #~(pfdoff|pfjoycon)&$FFFF	; keep pfteam/pfgoal/pfna: clear pfdoff, pfjoycon
 	sta.w pflags,x
 	stz.w pfnc,x
 	stz.w pfrev,x

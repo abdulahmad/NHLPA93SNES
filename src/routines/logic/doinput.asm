@@ -1,5 +1,6 @@
-doinput:		;Pad input for player X. d0 = pad directions, d1 = new buttons, d4 = controller
-	jsl.l setpads		; setpads; Start: pause
+doinput:							;Pad input for player X. d0 = pad directions, d1 = new buttons, d4 =
+									;controller
+	jsl.l setpads					; setpads; Start: pause
 	lda.b d1
 	bit.w #JOYSTART
 	beq .0
@@ -9,7 +10,7 @@ doinput:		;Pad input for player X. d0 = pad directions, d1 = new buttons, d4 = c
 .pause2:
 	jml.l startpause2
 .0:
-	lda.w sfhormode		; horizontal mode: dpad +90 degrees
+	lda.w sfhormode					; horizontal mode: dpad +90 degrees
 	beq .nhor
 	lda.b d0
 	bit.w #$0008
@@ -19,17 +20,17 @@ doinput:		;Pad input for player X. d0 = pad directions, d1 = new buttons, d4 = c
 	and.w #$0007
 	sta.b d0
 .nhor:
-	lda.w sflags		; faceoff in progress
+	lda.w sflags					; faceoff in progress
 	bit.w #sf2faceoff
 	beq .nofo
 	jmp.w faceoffinput
 .nofo:
-	lda.w pflags,x		; line change interface
+	lda.w pflags,x					; line change interface
 	bit.w #pf2lcm
 	beq .nolcm
 	jml.l lineinput
 .nolcm:
-	bit.w #pfjoycon		; not joystick controlled: exit
+	bit.w #pfjoycon					; not joystick controlled: exit
 	bne .joy
 	jmp.w .rtl
 .joy:
@@ -41,7 +42,7 @@ doinput:		;Pad input for player X. d0 = pad directions, d1 = new buttons, d4 = c
 	beq .nofight
 	jml.l fightinput
 .nofight:
-	lda.w puckc		; carrier?
+	lda.w puckc						; carrier?
 	sta.b d5
 	txa
 	lsr a
@@ -55,7 +56,7 @@ doinput:		;Pad input for player X. d0 = pad directions, d1 = new buttons, d4 = c
 	bit.w #bbut
 	beq .nob
 	jmp.w changeplayer
-.nob:		;goalie cannot check
+.nob:								;goalie cannot check
 	lda.w position,x
 	beq .rtl
 	lda.b d1
@@ -64,8 +65,8 @@ doinput:		;Pad input for player X. d0 = pad directions, d1 = new buttons, d4 = c
 	jmp.w burst
 .acc:
 	jml.l doplayeracc
-.ispc:		;player is the puck carrier
-	jsl.l checkob		; goalie with pf2aip: exit
+.ispc:								;player is the puck carrier
+	jsl.l checkob					; goalie with pf2aip: exit
 	lda.w position,x
 	bne .pc1
 	lda.w pf2aip,x
@@ -83,7 +84,7 @@ doinput:		;Pad input for player X. d0 = pad directions, d1 = new buttons, d4 = c
 	lda.b d1
 	bit.w #bbut
 	bne .setpassmode
-	lda.w sflags		; Y without a faceoff: line change mode
+	lda.w sflags					; Y without a faceoff: line change mode
 	bit.w #sf2faceoff
 	bne .shoot
 	lda.b d1
@@ -99,14 +100,14 @@ doinput:		;Pad input for player X. d0 = pad directions, d1 = new buttons, d4 = c
 .acc2:
 	jml.l doplayeracc
 .lc:
-	lda.w lcplayer		; lcplayer $FFFF -> $FFFE
+	lda.w lcplayer					; lcplayer $FFFF -> $FFFE
 	cmp.w #$FFFF
 	bne .setlc
 	lda.w #$FFFE
 	sta.w lcplayer
 .setlc:
 	jmp.w SetLCmode
-.islocked:		;anim locked: only B (switch player) when not the carrier
+.islocked:							;anim locked: only B (switch player) when not the carrier
 	txa
 	lsr a
 	cmp.w puckc
@@ -117,7 +118,7 @@ doinput:		;Pad input for player X. d0 = pad directions, d1 = new buttons, d4 = c
 	jmp.w changeplayer
 .rtl:
 	rtl
-.setpassmode:		;the goalie keeps the puck behind the net (|x| < 16, |y| $108-$10F)
+.setpassmode:						;the goalie keeps the puck behind the net (|x| < 16, |y| $108-$10F)
 	lda.w position,x
 	bne .set
 	lda.w puckx
@@ -139,7 +140,7 @@ doinput:		;Pad input for player X. d0 = pad directions, d1 = new buttons, d4 = c
 	cmp.w #$0110
 	bcc .rtl2
 .set:
-	lda.w facedir,x		; passdir = facedir; sfspdir
+	lda.w facedir,x					; passdir = facedir; sfspdir
 	and.w #$0007
 	sta.w passdir
 	lda.w #sfspdir

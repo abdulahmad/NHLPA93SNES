@@ -1,9 +1,9 @@
-checkob:		;Show the little warning referee when a teammate is over the blue line
+checkob:							;Show the little warning referee when a teammate is over the blue line
 	lda.w gmode
-	bit.w #gmoffs		; offsides off: nothing to do
+	bit.w #gmoffs					; offsides off: nothing to do
 	bne .offon
 	jmp.w .rts
-.offon:		;movem d0-d1/a0 to the stack
+.offon:								;movem d0-d1/a0 to the stack
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -27,26 +27,26 @@ checkob:		;Show the little warning referee when a teammate is over the blue line
 	lda.w #$0005
 	sta.b d0
 	stz.b a0
-	cpx.w #$000C		; a0 = first object of the own team
+	cpx.w #$000C					; a0 = first object of the own team
 	bcc .0
 	lda.w #$000C
 	sta.b a0
-.0:		;d1 = blue line y ($5C), negated for the bottom goal
-	lda.w #$5C		; blue line y
+.0:									;d1 = blue line y ($5C), negated for the bottom goal
+	lda.w #$5C						; blue line y
 	sta.b d1
 	lda.w pfgoal,x
 	bne .top
 	lda.w #-$5C
 	sta.b d1
 	sec
-	sbc.w pucky		; puck not in this zone: no offside
+	sbc.w pucky						; puck not in this zone: no offside
 	beq .bottom
 	bmi .neg
 	bvs .bottom
 	bra .nob
 .neg:
 	bvs .nob
-.bottom:		;any teammate below the blue line?
+.bottom:							;any teammate below the blue line?
 	ldy.b a0
 	lda.w position,y
 	bmi .bn
@@ -64,13 +64,13 @@ checkob:		;Show the little warning referee when a teammate is over the blue line
 	inc.b a0
 	dec.b d0
 	bpl .bottom
-.nob:		;no player offside: clear the offside signal, ref away
-	lda.w #$0040		; d0 = $40
+.nob:								;no player offside: clear the offside signal, ref away
+	lda.w #$0040					; d0 = $40
 	sta.b d0
 	lda.w #sf2offsig
-	trb.w sflags		; sf2offsig
+	trb.w sflags					; sf2offsig
 	bne .dref
-.ex:		;movem the registers back
+.ex:								;movem the registers back
 	stx.b xsave
 	ldx.w #$0002
 .resta:
@@ -91,14 +91,14 @@ checkob:		;Show the little warning referee when a teammate is over the blue line
 	ldx.b xsave
 .rts:
 	rtl
-.ob:		;offside: set the signal, ref up
-	lda.w #$0006		; d0 = 6
+.ob:								;offside: set the signal, ref up
+	lda.w #$0006					; d0 = 6
 	sta.b d0
 	lda.w #sf2offsig
 	tsb.w sflags
 	bne .ex
 .dref:
-	lda.w RefCnt		; ref idle? then bring him up
+	lda.w RefCnt					; ref idle? then bring him up
 	bpl .ex
 	jsl.l PushRef
 	bra .ex

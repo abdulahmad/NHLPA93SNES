@@ -1,4 +1,4 @@
-ScoutPlayersRun:		;One frame of the two players shown on the scouting report
+ScoutPlayersRun:					;One frame of the two players shown on the scouting report
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -19,7 +19,7 @@ ScoutPlayersRun:		;One frame of the two players shown on the scouting report
 	cpx.w #$001C
 	bne .savea
 	ldx.b xsave
-	lda.w #$0001		; d7 = 1 frame
+	lda.w #$0001					; d7 = 1 frame
 	sta.b d7
 	stz.b a2
 	jsl.l ScoutTeamStep

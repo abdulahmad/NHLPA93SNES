@@ -1,4 +1,4 @@
-SprSort:		;Sort the objects by screen position for drawing
+SprSort:							;Sort the objects by screen position for drawing
 	phx
 	phy
 	stx.b xsave
@@ -12,7 +12,7 @@ SprSort:		;Sort the objects by screen position for drawing
 	bne .save
 	ldx.b xsave
 	ldx.w #$0000
-	lda.w sfhormode		; horizontal mode sorts by x
+	lda.w sfhormode					; horizontal mode sorts by x
 	bne .xlist
 .loop0:
 	lda.w Ypos,x
@@ -64,7 +64,7 @@ SprSort:		;Sort the objects by screen position for drawing
 	inx
 	cpx.w #$000F
 	bne .0
-	lda.b d2		; swapped: sort again
+	lda.b d2						; swapped: sort again
 	bne .loop
 	stx.b xsave
 	ldx.w #$000A

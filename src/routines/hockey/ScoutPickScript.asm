@@ -1,4 +1,4 @@
-ScoutPickScript:		;Pick the scouting report animation of a player's best qualifying rating
+ScoutPickScript:					;Pick the scouting report animation of a player's best qualifying rating
 	lda.b [a1]
 	and.w #$00FF
 	sta.b tmp0

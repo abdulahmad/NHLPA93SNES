@@ -1,4 +1,4 @@
-EraseScoutName:		;Blank the name of the player shown on the scouting report
+EraseScoutName:						;Blank the name of the player shown on the scouting report
 	jsl.l ScoutNamePos
 	lda.w #$000B
 	sta.b d0

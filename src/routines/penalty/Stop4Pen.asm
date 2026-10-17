@@ -1,9 +1,11 @@
-Stop4Pen:		;Stop play for a penalty: stop the clock, set the face off spot from the penalty type and blow the whistle
-	lda.w #$FFFF		; clock already stopped: skip the face off spot
+Stop4Pen:							;Stop play for a penalty: stop the clock, set the face off spot from the
+									;penalty type and blow the whistle
+	lda.w #$FFFF					; clock already stopped: skip the face off spot
 	tsb.w gmclock
 	beq .spot
 	jmp.w .skipfo
-.spot:		;goal: center; OOP: last touch; icing: the end of the icing team (+-600); else the puck
+.spot:								;goal: center; OOP: last touch; icing: the end of the icing team (+-600);
+									;else the puck
 	stz.b d0
 	stz.b d1
 	dec.b a0
@@ -12,19 +14,19 @@ Stop4Pen:		;Stop play for a penalty: stop the clock, set the face off spot from 
 	inc.b a0
 	inc.b a0
 	and.w #$00FF
-	cmp.w #PenGoal		; goal: center ice
+	cmp.w #PenGoal					; goal: center ice
 	beq .noticing
 	ldy.w ltx
 	sty.b d0
 	ldy.w lty
 	sty.b d1
-	cmp.w #PenOOP		; OOP: last touch
+	cmp.w #PenOOP					; OOP: last touch
 	beq .noticing
 	ldy.w puckx
 	sty.b d0
 	ldy.w pucky
 	sty.b d1
-	cmp.w #PenIcing		; icing: +-600 by pfgoal of the icing player
+	cmp.w #PenIcing					; icing: +-600 by pfgoal of the icing player
 	bne .noticing
 	dec.b a0
 	lda.b (a0)
@@ -39,7 +41,7 @@ Stop4Pen:		;Stop play for a penalty: stop the clock, set the face off spot from 
 	lda.w #$FDA8
 	sta.b d1
 .noticing:
-	lda.b d0		; x within +-70; y near the ends: end face off spots (+-206, x +-70)
+	lda.b d0						; x within +-70; y near the ends: end face off spots (+-206, x +-70)
 	sta.b tmp0
 	sec
 	sbc.w #$0046
@@ -108,14 +110,14 @@ Stop4Pen:		;Stop play for a penalty: stop the clock, set the face off spot from 
 	sta.w foy
 	jsl.l limitfo
 .skipfo:
-	lda.b vcount		; sound cut off within 60 frames: reset the queue
+	lda.b vcount					; sound cut off within 60 frames: reset the queue
 	sec
 	sbc.w sfxmutetime
 	cmp.w #$003C
 	bcc .snd
 	jsl.l sndqreset
 .snd:
-	lda.w #SFXwhistle		; whistle, Pencntdwn = 0, gmpen, SetPA PenWhistle
+	lda.w #SFXwhistle				; whistle, Pencntdwn = 0, gmpen, SetPA PenWhistle
 	pha
 	jsl.l sfx
 	stz.w Pencntdwn

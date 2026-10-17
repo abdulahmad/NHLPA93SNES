@@ -1,13 +1,14 @@
-skatetopuck:		;Player X skates to the puck, slowing down near it; may sweep check when the puck comes at him
-	jsl.l skatetopuckinit		; d0/d1 = puck spot
+skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep check when
+									;the puck comes at him
+	jsl.l skatetopuckinit			; d0/d1 = puck spot
 	lda.w temp2,x
 	sec
 	sbc.b d7
 	sta.w temp2,x
 	bmi .aim
 	jmp.w .ex
-.aim:		;every 10 frames: aim at the puck (avoid the goal), maybe sweep check
-	adc.w #$0009		; +10
+.aim:								;every 10 frames: aim at the puck (avoid the goal), maybe sweep check
+	adc.w #$0009					; +10
 	sta.w temp2,x
 	jsl.l avdgoal
 	lda.b d1
@@ -20,7 +21,7 @@ skatetopuck:		;Player X skates to the puck, slowing down near it; may sweep chec
 	eor.w #$FFFF
 	inc a
 	sec
-	sbc.w Xvel+1,x		; - high byte of Xvel
+	sbc.w Xvel+1,x					; - high byte of Xvel
 	and.w #$00FF
 	bit.w #$0080
 	beq .vx
@@ -35,7 +36,7 @@ skatetopuck:		;Player X skates to the puck, slowing down near it; may sweep chec
 	eor.w #$FFFF
 	inc a
 	sec
-	sbc.w Yvel+1,x		; - high byte of Yvel
+	sbc.w Yvel+1,x					; - high byte of Yvel
 	and.w #$00FF
 	bit.w #$0080
 	beq .vy
@@ -50,16 +51,16 @@ skatetopuck:		;Player X skates to the puck, slowing down near it; may sweep chec
 	pla
 	jsl.l vtoa
 	lda.b d0
-	sta.w temp2b,x		; temp2b = direction to the puck
+	sta.w temp2b,x					; temp2b = direction to the puck
 	lda.w position,x
-	beq .ex		; goalie skips the sweep check
+	beq .ex							; goalie skips the sweep check
 	lda.w puckvx
 	sta.b d0
 	lda.w puckvy
 	sta.b d1
 	jsl.l vtoa
 	lda.b d0
-	eor.w #$0004		; puck coming toward the player
+	eor.w #$0004					; puck coming toward the player
 	cmp.w facedir,x
 	beq .ex
 	lda.w pucky
@@ -98,12 +99,12 @@ skatetopuck:		;Player X skates to the puck, slowing down near it; may sweep chec
 	adc.b mulres+2
 	sta.b d0+2
 	lda.b d0
-	cmp.w #$0385		; 30*30
+	cmp.w #$0385					; 30*30
 	lda.b d0+2
 	sbc.w #$0000
 	bcc .ex
 	lda.b d0
-	cmp.w #$05A5		; 38*38
+	cmp.w #$05A5					; 38*38
 	lda.b d0+2
 	sbc.w #$0000
 	bcc Sweepcheck
@@ -131,7 +132,7 @@ skatetopuck:		;Player X skates to the puck, slowing down near it; may sweep chec
 .dy:
 	clc
 	adc.b tmp0
-	cmp.w #$0036		; close to the puck: slow down, Xvel*7/8, Yvel*7/16
+	cmp.w #$0036					; close to the puck: slow down, Xvel*7/8, Yvel*7/16
 	bcs .acc
 	lda.w Xvel,x
 	sta.b mula
@@ -160,4 +161,4 @@ skatetopuck:		;Player X skates to the puck, slowing down near it; may sweep chec
 	ror a
 	sta.w Yvel,x
 .acc:
-	jml.l doplayeracc		; d0 = direction
+	jml.l doplayeracc				; d0 = direction

@@ -1,8 +1,9 @@
-ProcessInputWithRepeat:		;Read pads 1 and 2 with key repeat: a held button repeats after a delay. Used by the pause menu and menus
+ProcessInputWithRepeat:				;Read pads 1 and 2 with key repeat: a held button repeats after a delay.
+									;Used by the pause menu and menus
 	jsl.l nullrtl85
 	lda.b d3
 	beq .rtl
-	lda.b d2		; d2 = changed buttons
+	lda.b d2						; d2 = changed buttons
 	bne .chg
 	dec.w repeatdelay
 	bpl .rtl

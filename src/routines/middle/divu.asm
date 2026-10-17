@@ -1,4 +1,5 @@
-divu:		;Unsigned divide: A = mulb (32-bit) / mula, with the remainder after the quotient
+divu:								;Unsigned divide: A = mulb (32-bit) / mula, with the remainder after the
+									;quotient
 	lda.b mula
 	sta.b mula+2
 	stz.b mula

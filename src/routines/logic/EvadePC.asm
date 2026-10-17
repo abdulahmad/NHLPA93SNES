@@ -1,7 +1,7 @@
-EvadePC:		;Near the puck carrier: d0 = the direction away from him
+EvadePC:							;Near the puck carrier: d0 = the direction away from him
 	lda.w puckc
 	bmi .rtl
-	lda.w Xvel+1,x		; x after one frame, relative to the puck carrier
+	lda.w Xvel+1,x					; x after one frame, relative to the puck carrier
 	sec
 	sbc.w puckvx+1
 	and.w #$00FF

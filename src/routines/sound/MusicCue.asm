@@ -1,4 +1,4 @@
-MusicCue:		;Play music cue A: the sound queue is cleared to just this command
+MusicCue:							;Play music cue A: the sound queue is cleared to just this command
 	pha
 	lda.w #$0001
 	sta.b sndlock

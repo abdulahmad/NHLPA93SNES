@@ -1,4 +1,4 @@
-PauseExit:		;Restore the screen and leave pause mode
+PauseExit:							;Restore the screen and leave pause mode
 	stz.w cuetimer
 	stz.w crowdvol
 	jsl.l forceblack

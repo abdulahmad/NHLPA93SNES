@@ -1,8 +1,8 @@
-SuperMult:		;password bits *= d0
+SuperMult:							;password bits *= d0
 	phx
 	ldx.w #$000E
 .copy:
-	lda.w passbits,x		; copy passbits, clear passbits
+	lda.w passbits,x				; copy passbits, clear passbits
 	sta.b mulres,x
 	stz.w passbits,x
 	dex

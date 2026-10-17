@@ -1,4 +1,5 @@
-changeplayer:		;Switch controller d4 to the teammate nearest the puck, or sweep check if that is already the player
+changeplayer:						;Switch controller d4 to the teammate nearest the puck, or sweep check if
+									;that is already the player
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -19,7 +20,7 @@ changeplayer:		;Switch controller d4 to the teammate nearest the puck, or sweep 
 	cpx.w #$0008
 	bne .savea
 	ldx.b xsave
-	lda.w puckvy		; puck + velocity/256 (lead the puck)
+	lda.w puckvy					; puck + velocity/256 (lead the puck)
 	xba
 	and.w #$00FF
 	bit.w #$0080
@@ -43,12 +44,12 @@ changeplayer:		;Switch controller d4 to the teammate nearest the puck, or sweep 
 	sta.b d2
 	lda.b d4
 	tay
-	eor.w #$0002		; d3 = the other controller
+	eor.w #$0002					; d3 = the other controller
 	sta.b d3
-	lda.w #$FFFF		; d5 = best distance^2
+	lda.w #$FFFF					; d5 = best distance^2
 	sta.b d5+2
 	ldx.w #$0000
-	lda.w cont1team,y		; controller on the home team: players 0-5, else 6-11
+	lda.w cont1team,y				; controller on the home team: players 0-5, else 6-11
 	cmp.w #$0001
 	beq .t1
 	ldx.w #$000C
@@ -58,7 +59,7 @@ changeplayer:		;Switch controller d4 to the teammate nearest the puck, or sweep 
 	lda.w position,x
 	bmi .next
 	beq .next
-	lda.w pflags,x		; pf2unav or pfalock: skip
+	lda.w pflags,x					; pf2unav or pfalock: skip
 	and.w #pf2unav
 	ora.w pfalock,x
 	bne .next
@@ -89,7 +90,7 @@ changeplayer:		;Switch controller d4 to the teammate nearest the puck, or sweep 
 	bcc .next
 	txa
 	lsr a
-	cmp.w c1playernum,y		; the other controller has him
+	cmp.w c1playernum,y				; the other controller has him
 	beq .next
 	sta.b d6
 	lda.b d0
@@ -106,7 +107,7 @@ changeplayer:		;Switch controller d4 to the teammate nearest the puck, or sweep 
 	pla
 	ldy.b d4
 	lda.b d6
-	cmp.w c1playernum,y		; same player: Sweepcheck
+	cmp.w c1playernum,y				; same player: Sweepcheck
 	bne .set
 	jsl.l Sweepcheck
 	bra .ex

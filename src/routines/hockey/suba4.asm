@@ -1,4 +1,4 @@
-suba4:		;Move the replay one frame back
+suba4:								;Move the replay one frame back
 	lda.b a4
 	cmp.w #ReplayBufferStart
 	bne .a4ne

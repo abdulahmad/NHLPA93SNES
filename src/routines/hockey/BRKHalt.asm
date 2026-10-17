@@ -1,2 +1,2 @@
-BRKHalt:		;BRK vector: hang
+BRKHalt:							;BRK vector: hang
 	bra BRKHalt

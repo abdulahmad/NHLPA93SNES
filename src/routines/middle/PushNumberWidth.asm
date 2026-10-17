@@ -1,4 +1,4 @@
-PushNumberWidth:		;a1 = d0 as a d1 digit decimal string, right aligned with leading spaces
+PushNumberWidth:					;a1 = d0 as a d1 digit decimal string, right aligned with leading spaces
 	lda.w #PushWidthBuf
 	sta.b a1
 	lda.w #$0000

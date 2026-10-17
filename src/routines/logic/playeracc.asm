@@ -1,4 +1,5 @@
-playeracc:		;Accelerate player X in direction d2 by his weight and leg strength, up to his top speed; uses energy
+playeracc:							;Accelerate player X in direction d2 by his weight and leg strength, up to
+									;his top speed; uses energy
 	asl.b d2
 	asl.b d2
 	ldx.b d2

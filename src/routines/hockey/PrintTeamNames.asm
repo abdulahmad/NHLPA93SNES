@@ -1,4 +1,4 @@
-PrintTeamNames:		;Print both team names, then set up the teams
+PrintTeamNames:						;Print both team names, then set up the teams
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -19,7 +19,7 @@ PrintTeamNames:		;Print both team names, then set up the teams
 	cpx.w #$000C
 	bne .savea
 	ldx.b xsave
-	lda.w OptPlayMode		; OptPlayMode 0: teams from the options
+	lda.w OptPlayMode				; OptPlayMode 0: teams from the options
 	bne .print
 	lda.w OptTeam1
 	sta.w HomeTeam
@@ -27,17 +27,17 @@ PrintTeamNames:		;Print both team names, then set up the teams
 	sta.w VisTeam
 .print:
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $BE,$02,$01
 	lda.w VisTeam
 	sta.b d1
-	jsl.l DrawTeamBlocks		; print team d1 name
+	jsl.l DrawTeamBlocks			; print team d1 name
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $BE,$15,$01
 	lda.w HomeTeam
 	sta.b d1
-	jsl.l DrawTeamBlocks		; print team d1 name
+	jsl.l DrawTeamBlocks			; print team d1 name
 	jsl.l setteams
 	stx.b xsave
 	ldx.w #$000A

@@ -1,4 +1,4 @@
-clockcont:		;When the clock runs out, freeze the view and end the period
+clockcont:							;When the clock runs out, freeze the view and end the period
 	lda.w gmclock
 	ora.w gameclock
 	bne .rtl

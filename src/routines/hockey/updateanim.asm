@@ -1,11 +1,11 @@
-updateanim:		;Step object X's sprite animation, looping or ending it
-	lda.w SPA,x		; no animation: clear pfalock, pf2aip
+updateanim:							;Step object X's sprite animation, looping or ending it
+	lda.w SPA,x						; no animation: clear pfalock, pf2aip
 	bne .ia
 	stz.w pf2aip,x
 	stz.w pfalock,x
 	rtl
 .ia:
-	clc		; a0 = SPAList + SPA; d1 = attributes (+$10)
+	clc								; a0 = SPAList + SPA; d1 = attributes (+$10)
 	adc.w #SPAList&$FFFF
 	sta.b a0
 	lda.w #SPAList>>16
@@ -15,7 +15,7 @@ updateanim:		;Step object X's sprite animation, looping or ending it
 	sta.b d1
 	lda.w facedir,x
 	sta.b d0
-	lda.w sfhormode		; horizontal rink: players turn 90 degrees
+	lda.w sfhormode					; horizontal rink: players turn 90 degrees
 	beq .nhor
 	cpx.w #$0018
 	bcs .nhor
@@ -25,7 +25,7 @@ updateanim:		;Step object X's sprite animation, looping or ending it
 	and.w #$0007
 	sta.b d0
 .nhor:
-	lda.w attribute,x		; x flip: mirror the direction
+	lda.w attribute,x				; x flip: mirror the direction
 	bit.w #$0800
 	beq .nox
 	lda.b d0
@@ -34,7 +34,7 @@ updateanim:		;Step object X's sprite animation, looping or ending it
 	and.w #$0007
 	sta.b d0
 .nox:
-	lda.b d0		; a0 += direction table entry; d2 = new frame
+	lda.b d0						; a0 += direction table entry; d2 = new frame
 	asl a
 	tay
 	lda.b [a0],y
@@ -44,13 +44,13 @@ updateanim:		;Step object X's sprite animation, looping or ending it
 	sty.b d0
 	lda.b [a0],y
 	sta.b d2
-	lda.w SPAcnt,x		; SPAcnt negative: hold the frame
+	lda.w SPAcnt,x					; SPAcnt negative: hold the frame
 	bmi .1
 	sec
 	sbc.b d7
 	sta.w SPAcnt,x
 	bpl .cframe
-	lda.w SPAnum,x		; next frame (4 bytes); a negative frame ends the list
+	lda.w SPAnum,x					; next frame (4 bytes); a negative frame ends the list
 	clc
 	adc.w #$0004
 	sta.w SPAnum,x
@@ -63,7 +63,7 @@ updateanim:		;Step object X's sprite animation, looping or ending it
 	dey
 	lda.b [a0],y
 	bpl .1
-	stz.b d0		; end: restart, clear pfalock/pf2aip; d1 bit 0 = looper, else SPA = 0
+	stz.b d0						; end: restart, clear pfalock/pf2aip; d1 bit 0 = looper, else SPA = 0
 	stz.w SPAnum,x
 	stz.w pf2aip,x
 	stz.w pfalock,x
@@ -71,7 +71,7 @@ updateanim:		;Step object X's sprite animation, looping or ending it
 	lsr a
 	bcs .1
 	stz.w SPA,x
-.1:		;SPAcnt = |delay|
+.1:									;SPAcnt = |delay|
 	ldy.b d0
 	iny
 	iny
@@ -82,7 +82,7 @@ updateanim:		;Step object X's sprite animation, looping or ending it
 	inc a
 .0:
 	sta.w SPAcnt,x
-.cframe:		;frame = new frame
+.cframe:							;frame = new frame
 	lda.b d2
 	sta.w frame,x
 	rtl

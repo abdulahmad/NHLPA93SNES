@@ -1,4 +1,4 @@
-RemovePlayerFromList:		;Remove entry a0 from a penalty box list by moving the rest down
+RemovePlayerFromList:				;Remove entry a0 from a penalty box list by moving the rest down
 	lda.w #$FFFF
 	sta.b d2
 .loop:

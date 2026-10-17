@@ -1,4 +1,4 @@
-limitfo:		;Keep the face off spot away from the blue line for every called penalty
+limitfo:							;Keep the face off spot away from the blue line for every called penalty
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -48,8 +48,8 @@ limitfo:		;Keep the face off spot away from the blue line for every called penal
 	bpl .restore
 	ldx.b xsave
 	rtl
-.lf:		;a0 = PenBuf entry
-	lda.b [a0]		; player SCnum*2; blue line +-$58 by pfgoal
+.lf:								;a0 = PenBuf entry
+	lda.b [a0]						; player SCnum*2; blue line +-$58 by pfgoal
 	xba
 	and.w #$007F
 	asl a

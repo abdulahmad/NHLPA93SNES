@@ -1,4 +1,5 @@
-VBlank_Cram:		;Vblank: run the transfer list, set the scroll and send the palette, then switch to VBlank_CramOnly
+VBlank_Cram:						;Vblank: run the transfer list, set the scroll and send the palette, then
+									;switch to VBlank_CramOnly
 	sep #$20
 	lda.b #INIDISP_FBLANK
 	sta.w INIDISP
@@ -31,14 +32,14 @@ VBlank_Cram:		;Vblank: run the transfer list, set the scroll and send the palett
 	sep #$20
 	lda.w Hscroll
 	and.b #$07
-	sta.w BG1HOFS		; BG1HOFS = Hscroll&7
+	sta.w BG1HOFS					; BG1HOFS = Hscroll&7
 	stz.w BG1HOFS
 	stz.w BG1VOFS
 	stz.w BG1VOFS
 	rep #$30
 	lda.w #DMA_CGRAM
 	sta.w DMAP7
-	lda.w #palbuffer&$FFFF		; colors 0-127
+	lda.w #palbuffer&$FFFF			; colors 0-127
 	sta.w A1T7L
 	lda.w #$0100
 	sta.w DAS7L
@@ -49,10 +50,10 @@ VBlank_Cram:		;Vblank: run the transfer list, set the scroll and send the palett
 	lda.b #MDMAEN_CH7
 	sta.w MDMAEN
 	rep #$30
-	lda.w #VBlank_CramOnly		; from now on: CGRAM every frame
+	lda.w #VBlank_CramOnly			; from now on: CGRAM every frame
 	sta.b vbint
 	ldx.w #$0012
-.wait:		;short delay before leaving the handler
+.wait:								;short delay before leaving the handler
 	dex
 	bne .wait
 	jmp.w vb2

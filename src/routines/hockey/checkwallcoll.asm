@@ -1,5 +1,5 @@
-checkwallcoll:		;Collision of object X with the corners, the goals and the boards
-	lda.w #$012A		; d3 = $12A - wcradiusy, d2 = $88 - wcradiusx; corner centers 64 in
+checkwallcoll:						;Collision of object X with the corners, the goals and the boards
+	lda.w #$012A					; d3 = $12A - wcradiusy, d2 = $88 - wcradiusx; corner centers 64 in
 	sec
 	sbc.w wcradiusy
 	pha
@@ -50,7 +50,7 @@ checkwallcoll:		;Collision of object X with the corners, the goals and the board
 	bra .circle
 .neg2:
 	bvc .circle
-.goal13:		;goal at the -y end (object 13)
+.goal13:							;goal at the -y end (object 13)
 	lda.w #$001A
 	sta.b a2
 	jsl.l checkgoal
@@ -90,12 +90,12 @@ checkwallcoll:		;Collision of object X with the corners, the goals and the board
 	bra .circle
 .neg5:
 	bvc .circle
-.goal12:		;goal at the +y end (object 12)
+.goal12:							;goal at the +y end (object 12)
 	lda.w #$0018
 	sta.b a2
 	jsl.l checkgoal
 	jmp.w .exit
-.circle:		;distance from the corner center (max+min/4)
+.circle:							;distance from the corner center (max+min/4)
 	lda.b d2
 	sec
 	sbc.b d4
@@ -131,9 +131,9 @@ checkwallcoll:		;Collision of object X with the corners, the goals and the board
 	lsr a
 	adc.b mula
 .dist:
-	cmp.w #$0041		; inside the radius 64 circle: no hit
+	cmp.w #$0041					; inside the radius 64 circle: no hit
 	bcc .exit
-	sta.b d3		; cos = dy*256/r, sin = dx*256/r
+	sta.b d3						; cos = dy*256/r, sin = dx*256/r
 	sta.b mula
 	stz.b mulb
 	stz.b mulb+2
@@ -158,7 +158,7 @@ checkwallcoll:		;Collision of object X with the corners, the goals and the board
 	jsl.l divs
 	sta.b d1
 	jsl.l wallcollb
-.exit:		;no corner hit: the side and end boards
+.exit:								;no corner hit: the side and end boards
 	pla
 	sta.b d2
 	pla
@@ -167,10 +167,10 @@ checkwallcoll:		;Collision of object X with the corners, the goals and the board
 	sta.b d4
 	pla
 	sta.b d5
-	lda.w Wallcos,x		; corner hit: done
+	lda.w Wallcos,x					; corner hit: done
 	ora.w Wallsin,x
 	bne .rtl
-	lda.w #$0100		; side walls: cos $100, sin 0
+	lda.w #$0100					; side walls: cos $100, sin 0
 	sta.b d0
 	stz.b d1
 	lda.b d3

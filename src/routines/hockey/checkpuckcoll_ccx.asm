@@ -1,4 +1,4 @@
-checkpuckcoll_ccx:		;Puck contact with a player's stick, body or the goalie
+checkpuckcoll_ccx:					;Puck contact with a player's stick, body or the goalie
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -9,7 +9,7 @@ checkpuckcoll_ccx:		;Puck contact with a player's stick, body or the goalie
 	cpx.w #$001C
 	bne .save
 	ldx.b xsave
-	lda.b d4		; a2 = object
+	lda.b d4						; a2 = object
 	sta.b a2
 	tay
 	lsr a
@@ -17,23 +17,23 @@ checkpuckcoll_ccx:		;Puck contact with a player's stick, body or the goalie
 	bne .pl
 	jmp.w .exit
 .pl:
-	cmp.w #$000C		; not a player
+	cmp.w #$000C					; not a player
 	bcc .nc
 	jmp.w .exit
 .nc:
-	lda.w pfnc,y		; no collision or nopuck
+	lda.w pfnc,y					; no collision or nopuck
 	ora.w nopuck,y
 	beq .unav
 	jmp.w .exit
 .unav:
 	lda.w pflags,y
-	bit.w #pf2unav		; pf2unav: body only
+	bit.w #pf2unav					; pf2unav: body only
 	beq .z
 	jmp.w .chkbody
 .z:
 	lda.w Zpos+puckobj
 	sec
-	sbc.w #$0005		; puck above 5
+	sbc.w #$0005					; puck above 5
 	beq .zv
 	bmi .neg
 	bvs .zv
@@ -44,7 +44,7 @@ checkpuckcoll_ccx:		;Puck contact with a player's stick, body or the goalie
 .zv:
 	lda.w puckvz
 	sec
-	sbc.w #$0100		; puckvz > $100
+	sbc.w #$0100					; puckvz > $100
 	beq .stick
 	bmi .neg1
 	bvs .stick
@@ -67,7 +67,7 @@ checkpuckcoll_ccx:		;Puck contact with a player's stick, body or the goalie
 	eor.w #$FFFF
 	inc a
 .sx:
-	cmp.w #$000F		; stick: within 14
+	cmp.w #$000F					; stick: within 14
 	bcs .chkbody
 	lda.b d1
 	clc
@@ -98,7 +98,7 @@ checkpuckcoll_ccx:		;Puck contact with a player's stick, body or the goalie
 	lda.b d0+2
 	adc.b mulres+2
 	sta.b d0+2
-	lda.w #$00C4		; cstick^2 ($C4), /4 if the puck is not ready to be caught
+	lda.w #$00C4					; cstick^2 ($C4), /4 if the puck is not ready to be caught
 	sta.b d1
 	lda.w nopuck+puckobj
 	bmi .lo
@@ -125,7 +125,7 @@ checkpuckcoll_ccx:		;Puck contact with a player's stick, body or the goalie
 	eor.w #$FFFF
 	inc a
 .bx:
-	cmp.w #$0009		; body: within 8
+	cmp.w #$0009					; body: within 8
 	bcs .exit
 	lda.w Ypos,y
 	sec
@@ -155,7 +155,7 @@ checkpuckcoll_ccx:		;Puck contact with a player's stick, body or the goalie
 	adc.b mulres+2
 	sta.b d0+2
 	lda.b d0
-	cmp.w #$0041		; cbody^2
+	cmp.w #$0041					; cbody^2
 	lda.b d0+2
 	sbc.w #$0000
 	bcs .exit
@@ -181,7 +181,7 @@ checkpuckcoll_ccx:		;Puck contact with a player's stick, body or the goalie
 	eor.w #$FFFF
 	inc a
 .gx:
-	cmp.w #$000D		; goalie: within 12
+	cmp.w #$000D					; goalie: within 12
 	bcs .exit
 	lda.w Ypos,y
 	sec

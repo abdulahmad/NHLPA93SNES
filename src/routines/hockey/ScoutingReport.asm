@@ -1,4 +1,5 @@
-ScoutingReport:		;The scouting report screen: both teams, their ratings and the scrolling commentary until Start
+ScoutingReport:						;The scouting report screen: both teams, their ratings and the scrolling
+									;commentary until Start
 	jsl.l ClearTeamStats
 	jsl.l forceblack
 	jsl.l InitPPU
@@ -105,7 +106,7 @@ ScoutingReport:		;The scouting report screen: both teams, their ratings and the 
 	cpx.w #$0080
 	bne .framertiles
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $FE,$06,$03
 	lda.w #$0019
 	sta.b d0
@@ -170,19 +171,19 @@ ScoutingReport:		;The scouting report screen: both teams, their ratings and the 
 	cmp.w #$0009
 	bne .ronrow
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $FF,$02,$0D
 	lda.w VisTeam
 	sta.b d1
 	jsl.l DrawTeamBlocks
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $FF,$15,$0D
 	lda.w HomeTeam
 	sta.b d1
 	jsl.l DrawTeamBlocks
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $FF,$11,$0F
 	lda.w #ScoutLabels
 	sta.b a1
@@ -203,7 +204,7 @@ ScoutingReport:		;The scouting report screen: both teams, their ratings and the 
 	bit.w #$0080
 	beq .pl
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $FF,$19,$0F
 	lda.w tmdata
 	sta.b a0
@@ -222,7 +223,7 @@ ScoutingReport:		;The scouting report screen: both teams, their ratings and the 
 	sta.b a2
 	jsl.l ScoutCompare
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $FF,$04,$0F
 	lda.b a0
 	ldx.b a2

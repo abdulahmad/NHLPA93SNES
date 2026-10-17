@@ -1,4 +1,4 @@
-adda43:		;Step a4 to the next replay frame, wrapping around the replay buffer
+adda43:								;Step a4 to the next replay frame, wrapping around the replay buffer
 	lda.b a4
 	clc
 	adc.w #replaysize
@@ -6,7 +6,7 @@ adda43:		;Step a4 to the next replay frame, wrapping around the replay buffer
 	bcc .nc
 	inc.b a4+2
 .nc:
-	cmp.w #ReplayBufferEnd&$FFFF		; past the end of the buffer: wrap
+	cmp.w #ReplayBufferEnd&$FFFF	; past the end of the buffer: wrap
 	bne .rtl
 	lda.b a4+2
 	cmp.w #ReplayBufferEnd>>16

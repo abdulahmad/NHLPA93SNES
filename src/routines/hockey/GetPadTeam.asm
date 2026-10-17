@@ -1,4 +1,4 @@
-GetPadTeam:		;a2 = the team of the controller that paused
+GetPadTeam:							;a2 = the team of the controller that paused
 	stz.b a2
 	lda.w cont1team
 	beq .rtl

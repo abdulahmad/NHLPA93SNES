@@ -1,4 +1,4 @@
-mulu16:		;Unsigned 16-bit multiply: A = mula * mulb
+mulu16:								;Unsigned 16-bit multiply: A = mula * mulb
 	lda.b mula
 	bmi .full
 	cmp.w #$0080

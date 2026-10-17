@@ -1,10 +1,10 @@
-SpriteSet12:		;frame set 12 (includes SPFflip, SPFstumble, SPFhook): frames 532-605
-	dw 74		; frames
-	dw 504		; pieces
-	dw 896		; tiles
+SpriteSet12:						;frame set 12 (includes SPFflip, SPFstumble, SPFhook): frames 532-605
+	dw 74							; frames
+	dw 504							; pieces
+	dw 896							; tiles
 	dw .pieces-SpriteSet12
 	dw .tiles-SpriteSet12
-.frames:		;first piece of each frame (+1 entry for the end)
+.frames:							;first piece of each frame (+1 entry for the end)
 	dw 0,11,28,48,67,80,93,100
 	dw 108,114,119,120,121,122,123,124
 	dw 125,126,127,128,129,130,131,132
@@ -15,10 +15,10 @@ SpriteSet12:		;frame set 12 (includes SPFflip, SPFstumble, SPFhook): frames 532-
 	dw 420,428,435,438,442,445,450,456
 	dw 466,469,473,476,479,482,488,491
 	dw 495,500,504
-.pieces:		;x, y, tile, attributes per piece
+.pieces:							;x, y, tile, attributes per piece
 	incbin "../../../data/Sprites/set12.pieces"
 	assert .tiles-.pieces == 4*504
-.tiles:		;896 4bpp tiles (32 bytes each)
+.tiles:								;896 4bpp tiles (32 bytes each)
 	incbin "../../../data/Sprites/set12.chr"
 SpriteSet12End:
 	assert SpriteSet12End-SpriteSet12 == $880+896*32

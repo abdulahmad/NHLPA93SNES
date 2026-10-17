@@ -1,4 +1,5 @@
-releasepl:		;Player d0's penalty time is up: let him out of the box and put him on the ice
+releasepl:							;Player d0's penalty time is up: let him out of the box and put him on the
+									;ice
 	stx.b xsave
 	ldx.w #$0000
 .save:

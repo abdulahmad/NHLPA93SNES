@@ -1,4 +1,4 @@
-GetRosterEntry:		;a0 = the player data of roster player d0 of team a2
+GetRosterEntry:						;a0 = the player data of roster player d0 of team a2
 	lda.w #TeamList>>16
 	sta.b a0+2
 	ldy.b a2

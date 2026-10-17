@@ -1,4 +1,5 @@
-ResetAndSelectPlayers:		;Clear the human controlled players, then give each human team its player again
+ResetAndSelectPlayers:				;Clear the human controlled players, then give each human team its player
+									;again
 	lda.w #$FFFF
 	sta.w c1playernum
 	sta.w c2playernum

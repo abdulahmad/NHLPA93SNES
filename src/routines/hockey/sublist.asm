@@ -1,11 +1,11 @@
-sublist:		;The substitution lists by position
-	dw .defl-sublist		; goalie
-	dw .defl-sublist		; LD
-	dw .defr-sublist		; RD
-	dw .wingl-sublist		; LW
-	dw .center-sublist		; C
-	dw .wingr-sublist		; RW
-	dw .center-sublist		; extra attacker
+sublist:							;The substitution lists by position
+	dw .defl-sublist				; goalie
+	dw .defl-sublist				; LD
+	dw .defr-sublist				; RD
+	dw .wingl-sublist				; LW
+	dw .center-sublist				; C
+	dw .wingr-sublist				; RW
+	dw .center-sublist				; extra attacker
 .defl:	db 0+1,8+1,16+1,24+1,32+1,40+1,48+1
 	db 0+2,8+2,16+2,24+2,32+2,40+2,48+2
 .defr:	db 0+2,8+2,16+2,24+2,32+2,40+2,48+2

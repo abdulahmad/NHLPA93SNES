@@ -1,4 +1,4 @@
-getpzjoy:		;Read the pad of the controller that paused
+getpzjoy:							;Read the pad of the controller that paused
 	lda.w sflags
 	bit.w #sfpj
 	beq .p1

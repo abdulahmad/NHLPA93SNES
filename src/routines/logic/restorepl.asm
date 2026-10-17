@@ -1,23 +1,24 @@
-restorepl:		;Take the controller off player d1 and give it to player d0; a player in a line change keeps the controller
+restorepl:							;Take the controller off player d1 and give it to player d0; a player in a
+									;line change keeps the controller
 	stz.b a0
 	lda.b d1
 	bmi .spd
-	cmp.w #$000C		; only players 0-11
+	cmp.w #$000C					; only players 0-11
 	bcs .spd
 	asl.b d1
 	ldy.b d1
 	lda.w pflags,y
-	bit.w #pf2lcm		; pf2lcm: he keeps the joystick
+	bit.w #pf2lcm					; pf2lcm: he keeps the joystick
 	beq .rel
 	lsr.b d1
 	lda.b d1
 	sta.b d0
 	rtl
-.rel:		;release the old player: clear pfjoycon, set pfna
-	and.w #~pfjoycon&$FFFF		; clear pfjoycon, set pfna
+.rel:								;release the old player: clear pfjoycon, set pfna
+	and.w #~pfjoycon&$FFFF			; clear pfjoycon, set pfna
 	ora.w #pfna
 	sta.w pflags,y
-.spd:		;set pfjoycon on the new player
+.spd:								;set pfjoycon on the new player
 	lda.b d0
 	bmi .rtl
 	cmp.w #$000C

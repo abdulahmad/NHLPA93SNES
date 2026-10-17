@@ -1,14 +1,14 @@
-updatecrowdf:		;Every game loop: let the crowd level fade and step the crowd animation
+updatecrowdf:						;Every game loop: let the crowd level fade and step the crowd animation
 	lda.b crowdlevel
 	sec
-	sbc.w #$015E		; 350
+	sbc.w #$015E					; 350
 	bmi .neg
 	bvc .loud
 	bra .dec
 .neg:
 	bvc .dec
 .loud:
-	dec.b crowdlevel		; loud crowd calms down faster
+	dec.b crowdlevel				; loud crowd calms down faster
 	dec.b crowdlevel
 	dec.b crowdlevel
 .dec:
@@ -33,18 +33,18 @@ updatecrowdf:		;Every game loop: let the crowd level fade and step the crowd ani
 	sta.b d0
 .1:
 	lda.b d0
-	and.w #$0060		; %01100000
+	and.w #$0060					; %01100000
 	sta.b d0
 	lda.b crowdstep
 	inc a
 	inc a
-	and.w #$001E		; %00011110
+	and.w #$001E					; %00011110
 	sta.b crowdstep
 	clc
 	adc.b d0
 	sta.b d0
 	tay
-	lda.w #cd0		; cd0: frame high byte, time low byte
+	lda.w #cd0						; cd0: frame high byte, time low byte
 	sta.b a0
 	lda.w #cd0>>16
 	sta.b a0+2
@@ -56,19 +56,19 @@ updatecrowdf:		;Every game loop: let the crowd level fade and step the crowd ani
 	lda.b [a0],y
 	and.w #$00FF
 	sta.b d1
-	lda.w seed		; random 0..time
+	lda.w seed						; random 0..time
 	and.b d1
 	sta.b d2
 	clc
 	adc.b d1
 	sta.b d1
 	sta.b crowdcnt
-.cf:		;random extra frame 19-25 when the crowd is loud
+.cf:								;random extra frame 19-25 when the crowd is loud
 	sep #$20
 	stz.b crowdframe
 	rep #$30
 	lda.b crowdlevel
-	cmp.w #$0119		; 280
+	cmp.w #$0119					; 280
 	bcc .rtl
 	lda.w seed
 	and.w #$007F

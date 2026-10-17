@@ -1,5 +1,5 @@
-SuperDiv:		;password bits /= d0, with the remainder in d0
-	phx		; remainder = passbits, divisor = d0 << 128
+SuperDiv:							;password bits /= d0, with the remainder in d0
+	phx								; remainder = passbits, divisor = d0 << 128
 	ldx.w #$000E
 .init:
 	lda.w passbits,x
@@ -21,7 +21,7 @@ SuperDiv:		;password bits /= d0, with the remainder in d0
 	ror.b mula+4
 	ror.b mula+2
 	ror.b mula
-	asl.w passbits		; shift the dividend left
+	asl.w passbits					; shift the dividend left
 	rol.w passbits+2
 	rol.w passbits+4
 	rol.w passbits+6
@@ -29,7 +29,7 @@ SuperDiv:		;password bits /= d0, with the remainder in d0
 	rol.w passbits+10
 	rol.w passbits+12
 	rol.w passbits+14
-	lda.b mulres		; remainder >= divisor: subtract, quotient bit 1
+	lda.b mulres					; remainder >= divisor: subtract, quotient bit 1
 	cmp.b mula
 	lda.b mulres+2
 	sbc.b mula+2

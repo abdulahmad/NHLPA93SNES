@@ -1,4 +1,4 @@
-StartSong1:		;Start the home goal music unless it is already playing
+StartSong1:							;Start the home goal music unless it is already playing
 	lda.w cursong
 	cmp.w #$0001
 	beq .rtl
@@ -9,7 +9,7 @@ StartSong1:		;Start the home goal music unless it is already playing
 	jsl.l SPCGameUpload
 .cmd:
 	lda.w #$0004
-	jsl.l MusicCue		; driver command A (music cue)
+	jsl.l MusicCue					; driver command A (music cue)
 	lda.w #$0001
 	sta.w cursong
 	lda.w #$0240

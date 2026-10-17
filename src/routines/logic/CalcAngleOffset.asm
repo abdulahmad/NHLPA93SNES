@@ -1,4 +1,5 @@
-CalcAngleOffset:		;d4 = the cross product of the goalie vector d0 / d1 and the post vector from the puck, scaled by d2
+CalcAngleOffset:					;d4 = the cross product of the goalie vector d0 / d1 and the post vector
+									;from the puck, scaled by d2
 	lda.b d3
 	sec
 	sbc.w puckx

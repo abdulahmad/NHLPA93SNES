@@ -1,5 +1,5 @@
-CompShoot:		;Computer player X shoots
-	pla		; pop the caller
+CompShoot:							;Computer player X shoots
+	pla								; pop the caller
 	sep #$20
 	pla
 	rep #$30
@@ -27,6 +27,6 @@ CompShoot:		;Computer player X shoots
 	stz.w temp2,x
 	lda.b d1
 	sta.w temp2b,x
-	lda.w #ashoot		; ashoot
+	lda.w #ashoot					; ashoot
 	sta.b d0
 	jmp.w assreplace

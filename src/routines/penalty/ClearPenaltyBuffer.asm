@@ -1,4 +1,4 @@
-ClearPenaltyBuffer:		;Clear the list of called penalties
+ClearPenaltyBuffer:					;Clear the list of called penalties
 	lda.w #$001F
 	sta.b d0
 	lda.w #PenBuf

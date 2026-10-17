@@ -1,4 +1,5 @@
-RestoreReplayFrame:		;Put one recorded replay frame back into the objects, the puck and the screen
+RestoreReplayFrame:					;Put one recorded replay frame back into the
+									;objects, the puck and the screen
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -19,14 +20,14 @@ RestoreReplayFrame:		;Put one recorded replay frame back into the objects, the p
 	cpx.w #$0004
 	bne .savea
 	ldx.b xsave
-	lda.b a4		; a0 = a4 (the record)
+	lda.b a4						; a0 = a4 (the record)
 	sta.b a0
 	lda.b a4+2
 	sta.b a0+2
 	lda.w #$000F
 	sta.b d1
 	ldx.w #$0000
-.top:		;16 objects
+.top:								;16 objects
 	lda.b [a0]
 	and.w #$0FFF
 	bit.w #$0800
@@ -69,7 +70,7 @@ RestoreReplayFrame:		;Put one recorded replay frame back into the objects, the p
 	lda.w #$0005
 	sta.b d2
 	ldx.w #$0000
-.pl:		;6 pairs of players
+.pl:								;6 pairs of players
 	lda.b [a0]
 	inc.b a0
 	and.w #$00FF
@@ -127,7 +128,7 @@ RestoreReplayFrame:		;Put one recorded replay frame back into the objects, the p
 	inc.b a0
 	and.w #$00FF
 	sta.b d7
-	lda.w PadControlBits		; PadControlBits low 12 bits
+	lda.w PadControlBits			; PadControlBits low 12 bits
 	and.w #$F000
 	sta.w PadControlBits
 	lda.b [a0]
@@ -152,7 +153,7 @@ RestoreReplayFrame:		;Put one recorded replay frame back into the objects, the p
 	ora.w #$FF00
 .pb:
 	sta.w PBnum
-	lda.w sflags		; sfscrl: keep Hpos/Vpos
+	lda.w sflags					; sfscrl: keep Hpos/Vpos
 	bit.w #sfscrl
 	bne .x
 	lda.b [a0]

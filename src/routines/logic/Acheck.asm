@@ -1,4 +1,4 @@
-Acheck:		;Player X holds or hooks player a0
+Acheck:								;Player X holds or hooks player a0
 	ldy.b a0
 	lda.w #SPAhook
 	sta.b d1

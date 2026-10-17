@@ -1,4 +1,4 @@
-SPCGameUpload:		;Wait for the sound queue to empty, then upload the in-game sample set
+SPCGameUpload:						;Wait for the sound queue to empty, then upload the in-game sample set
 	phy
 	phx
 	pha
@@ -12,11 +12,11 @@ SPCGameUpload:		;Wait for the sound queue to empty, then upload the in-game samp
 .vblank:
 	cmp.b vcount
 	bne .vblank
-	lda.w #$0001		; sndbank 1, no song
+	lda.w #$0001					; sndbank 1, no song
 	sta.b sndlock
 	sta.w sndbank
 	stz.w cursong
-	lda.w #GameSoundUpload&$FFFF		; sndptr = GameSoundUpload
+	lda.w #GameSoundUpload&$FFFF	; sndptr = GameSoundUpload
 	sta.b sndptr
 	lda.w #(GameSoundUpload>>8)&$FFFF
 	sta.b sndptr+1

@@ -1,4 +1,4 @@
-VBlank_SprPal:		;Vblank: as VBlank, plus the sprite palettes; once, then back to vb2
+VBlank_SprPal:						;Vblank: as VBlank, plus the sprite palettes; once, then back to vb2
 	sep #$20
 	lda.b #INIDISP_FBLANK
 	sta.w INIDISP
@@ -41,14 +41,14 @@ VBlank_SprPal:		;Vblank: as VBlank, plus the sprite palettes; once, then back to
 	lda.b #MDMAEN_CH7
 	sta.w MDMAEN
 	rep #$30
-	lda.w #DMA_CGRAM		; DMAP7=$00, BBAD7=$22 (CGDATA)
+	lda.w #DMA_CGRAM				; DMAP7=$00, BBAD7=$22 (CGDATA)
 	sta.w DMAP7
-	lda.w #(palbuffer+$140)&$FFFF		; color $A0
+	lda.w #(palbuffer+$140)&$FFFF	; color $A0
 	sta.w A1T7L
-	lda.w #$0040		; 32 colors
+	lda.w #$0040					; 32 colors
 	sta.w DAS7L
 	sep #$20
-	lda.b #$A0		; sprite palettes 2-3
+	lda.b #$A0						; sprite palettes 2-3
 	sta.w CGADD
 	lda.b #palbuffer>>16
 	sta.w A1B7

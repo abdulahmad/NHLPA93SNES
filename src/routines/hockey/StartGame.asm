@@ -1,6 +1,6 @@
-StartGame:		;Reset the game state for a new game, then start the first period
+StartGame:							;Reset the game state for a new game, then start the first period
 	stz.w gmode
-	lda.w OptPen		; OptPen 1: offsides on
+	lda.w OptPen					; OptPen 1: offsides on
 	cmp.w #1
 	bne .go
 	lda.w #gmoffs
@@ -13,4 +13,4 @@ StartGame:		;Reset the game state for a new game, then start the first period
 	jsl.l restoreteams
 	jsl.l InitScores
 	jsl.l UpdateScores
-	jml.l StartPer		; on to the period start
+	jml.l StartPer					; on to the period start

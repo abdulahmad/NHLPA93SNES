@@ -1,4 +1,5 @@
-USBoard:		;Update the scoreboard, with the players in the penalty box and their time left
+USBoard:							;Update the scoreboard, with the players in the
+									;penalty box and their time left
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -21,12 +22,12 @@ USBoard:		;Update the scoreboard, with the players in the penalty box and their 
 	ldx.b xsave
 	jsl.l printscores1
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $BF,$14,$08
 	stz.b a2
 	jsl.l .dispen
 	jsl.l printz
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $BF,$05,$08
 	lda.w #$0002
 	sta.b a2
@@ -52,7 +53,7 @@ USBoard:		;Update the scoreboard, with the players in the penalty box and their 
 	ldx.b a3
 .rtl:
 	rtl
-.dispen:		;penalty box list of team a2: timed players first
+.dispen:							;penalty box list of team a2: timed players first
 	lda.b a2
 	beq .noa2
 	lda.w #$001A

@@ -1,4 +1,5 @@
-Bcheck:		;Player a2 body checks a3: a3 falls if he is in front, and a charging penalty may be called on a2
+Bcheck:								;Player a2 body checks a3: a3 falls if he is in front, and a charging
+									;penalty may be called on a2
 	ldy.b a2
 	lda.w pfalock,x
 	beq .pos
@@ -10,7 +11,7 @@ Bcheck:		;Player a2 body checks a3: a3 falls if he is in front, and a charging p
 .fight:
 	lda.w pf2fight,x
 	bne .rtl
-	lda.w OptPen		; penalties off: a2 needs randomd0($10 + aggression - a3 legstr) >= 12
+	lda.w OptPen					; penalties off: a2 needs randomd0($10 + aggression - a3 legstr) >= 12
 	bne .dir
 	lda.w pflags,y
 	bit.w #pfjoycon
@@ -34,7 +35,7 @@ Bcheck:		;Player a2 body checks a3: a3 falls if he is in front, and a charging p
 	sta.b d1
 	jsl.l vtoa
 	ldy.b a2
-	lda.b d0		; within one direction of a2 facing
+	lda.b d0						; within one direction of a2 facing
 	sec
 	sbc.w facedir,y
 	inc a
@@ -45,12 +46,12 @@ Bcheck:		;Player a2 body checks a3: a3 falls if he is in front, and a charging p
 	ldy.b a3
 	stx.b a3
 	sty.b a2
-	jsl.l FallDown		; a3 falls
+	jsl.l FallDown					; a3 falls
 	jsl.l checkagr
 	lda.b d0
 	cmp.w #$0005
 	bcs .swap
-	lda.w #$20		; penalty $20
+	lda.w #$20						; penalty $20
 	sta.b d0
 	jsl.l AddPenalty
 .swap:

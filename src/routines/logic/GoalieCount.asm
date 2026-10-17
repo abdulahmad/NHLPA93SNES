@@ -1,4 +1,4 @@
-GoalieCount:		;d0 = the number of goalies on team a2
+GoalieCount:						;d0 = the number of goalies on team a2
 	lda.b a2
 	tay
 	and.w #$FFFD

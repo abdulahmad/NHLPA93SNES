@@ -1,7 +1,7 @@
-printteamname:		;Print team d3's name, then move down two rows
+printteamname:						;Print team d3's name, then move down two rows
 	lda.w printx
 	pha
-	lda.w tmdata		; tmdata of team d3
+	lda.w tmdata					; tmdata of team d3
 	sta.b a1
 	lda.w #TeamList>>16
 	sta.b a1+2

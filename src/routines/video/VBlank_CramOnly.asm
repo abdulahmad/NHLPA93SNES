@@ -1,4 +1,4 @@
-VBlank_CramOnly:		;Vblank: send the palette every frame
+VBlank_CramOnly:					;Vblank: send the palette every frame
 	sep #$20
 	lda.b #INIDISP_FBLANK
 	sta.w INIDISP

@@ -1,4 +1,4 @@
-randomd0sd0:		;randomd0s with the range in d0
+randomd0sd0:						;randomd0s with the range in d0
 	lda.b d0
 	pha
 	asl.b d0

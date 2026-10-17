@@ -1,4 +1,4 @@
-fightinput:		;Pad input in a fight: move and punch
+fightinput:							;Pad input in a fight: move and punch
 	lda.w temp3,x
 	ora.w Pencntdwn
 	bpl .go

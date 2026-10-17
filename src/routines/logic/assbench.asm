@@ -1,16 +1,17 @@
-assbench:		;Assignment: player X skates to the bench door and leaves; the new player comes on
+assbench:							;Assignment: player X skates to the bench door and leaves; the new player
+									;comes on
 	lda.w pfalock,x
 	beq .na
 	jmp.w .rtl
 .na:
 	lda.w temp1,x
-	cmp.w #100		; temp1 100: at the bench door
+	cmp.w #100						; temp1 100: at the bench door
 	bne .chk
 	jmp.w .done
 .chk:
 	jsl.l check4bench
 	lda.w pflags,x
-	bit.w #pf2pen		; pf2pen: assexit
+	bit.w #pf2pen					; pf2pen: assexit
 	beq .pen
 	jml.l assexit
 .pen:
@@ -21,7 +22,7 @@ assbench:		;Assignment: player X skates to the bench door and leaves; the new pl
 	stz.w temp2,x
 	lda.w #8
 	sta.w temp2b,x
-	lda.w #80		; temp4 = bench y +-80, temp3 = bench x -144
+	lda.w #80						; temp4 = bench y +-80, temp3 = bench x -144
 	sta.b d0
 	lda.w pfteam,x
 	bne .0
@@ -34,7 +35,7 @@ assbench:		;Assignment: player X skates to the bench door and leaves; the new pl
 	sta.w temp3,x
 	stz.w temp1,x
 .nna:
-	lda.w newpnum,x		; same player: just change position
+	lda.w newpnum,x					; same player: just change position
 	cmp.w pnum,x
 	bne .dec
 	jmp.w .nobench
@@ -75,7 +76,7 @@ assbench:		;Assignment: player X skates to the bench door and leaves; the new pl
 .neg:
 	bvs .nd
 .gli0:
-	lda.w #SPAglide		; SPAglide (goalie SPAgready)
+	lda.w #SPAglide					; SPAglide (goalie SPAgready)
 	sta.b d1
 	lda.w position,x
 	bne .gli
@@ -113,7 +114,7 @@ assbench:		;Assignment: player X skates to the bench door and leaves; the new pl
 	sta.w Xvel,x
 	lda.w #2
 	sta.w facedir,x
-	lda.w #SPAwallleft		; SPAwallleft
+	lda.w #SPAwallleft				; SPAwallleft
 	sta.b d1
 	jsl.l SetSPA
 	lda.w #100
@@ -139,7 +140,7 @@ assbench:		;Assignment: player X skates to the bench door and leaves; the new pl
 	clc
 	adc.b d0
 	tay
-	lda.w #TMPDBENCH		; TMPDBENCH: on the bench
+	lda.w #TMPDBENCH				; TMPDBENCH: on the bench
 	sta.w tmpdst,y
 	lda.w newpnum,x
 	sta.b d3
@@ -161,7 +162,7 @@ assbench:		;Assignment: player X skates to the bench door and leaves; the new pl
 	lda.w pflags,x
 	and.w #~pf2unav&$FFFF
 	sta.w pflags,x
-.nobench2:		;position = newpos (Setplass), newpnum/newpos -1
+.nobench2:							;position = newpos (Setplass), newpnum/newpos -1
 	lda.w newpos,x
 	sta.b d0
 	sta.w position,x

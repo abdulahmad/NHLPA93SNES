@@ -1,4 +1,5 @@
-ScoutCompare:		;Print the scouting ratings of team [a0], marking where it has the edge over [a2]
+ScoutCompare:						;Print the scouting ratings of team [a0], marking where it has the edge
+									;over [a2]
 	ldy.w #$0004
 	lda.b [a0],y
 	xba

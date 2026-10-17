@@ -1,4 +1,4 @@
-StartSong2:		;Start the period start music unless it is already playing
+StartSong2:							;Start the period start music unless it is already playing
 	lda.w cursong
 	cmp.w #$0002
 	beq .rtl
@@ -9,7 +9,7 @@ StartSong2:		;Start the period start music unless it is already playing
 	jsl.l SPCGameUpload
 .cmd:
 	lda.w #$0005
-	jsl.l MusicCue		; driver command A (music cue)
+	jsl.l MusicCue					; driver command A (music cue)
 	lda.w #$0002
 	sta.w cursong
 	lda.w #$01CE

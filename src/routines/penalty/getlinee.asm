@@ -1,4 +1,4 @@
-getlinee:		;d0 = the average energy of line d0 of team a2
+getlinee:							;d0 = the average energy of line d0 of team a2
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -22,14 +22,14 @@ getlinee:		;d0 = the average energy of line d0 of team a2
 	ldy.b a2
 	lda.w tmdata,y
 	sta.b a1
-	lda.w #TeamList>>16		; a1 = the team data (bank $83)
+	lda.w #TeamList>>16				; a1 = the team data (bank $83)
 	sta.b a1+2
-	ldy.w #LineSets		; + offset of the line sets
+	ldy.w #LineSets					; + offset of the line sets
 	lda.b [a1],y
 	clc
 	adc.b a1
 	sta.b a1
-	lda.b d0		; line d0: 8 bytes
+	lda.b d0						; line d0: 8 bytes
 	asl a
 	asl a
 	asl a
@@ -37,11 +37,11 @@ getlinee:		;d0 = the average energy of line d0 of team a2
 	sta.b a1
 	stz.b mulb
 	stz.b mula
-	lda.w #priolist		; a0 = priolist
+	lda.w #priolist					; a0 = priolist
 	sta.b a0
 	lda.w #priolist>>16
 	sta.b a0+2
-	ldy.b a2		; tmap: positions - 1
+	ldy.b a2						; tmap: positions - 1
 	lda.w tmap,y
 	sta.b d4
 	bra .next
@@ -50,7 +50,7 @@ getlinee:		;d0 = the average energy of line d0 of team a2
 	lda.b [a0],y
 	and.w #$00FF
 	beq .next
-	tay		; player number
+	tay								; player number
 	lda.b [a1],y
 	and.w #$00FF
 	asl a
@@ -68,7 +68,7 @@ getlinee:		;d0 = the average energy of line d0 of team a2
 .next:
 	dec.b d4
 	bpl .loop
-	jsl.l divu16		; d0 = energy sum / players
+	jsl.l divu16					; d0 = energy sum / players
 	sta.b d0
 	stx.b xsave
 	ldx.w #$0006

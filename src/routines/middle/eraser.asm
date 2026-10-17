@@ -1,4 +1,4 @@
-eraser:		;Fill a d0 by d1 rectangle of the text map at printx / printy with tile d2
+eraser:								;Fill a d0 by d1 rectangle of the text map at printx / printy with tile d2
 	phx
 	lda.b d2
 	clc

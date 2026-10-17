@@ -1,4 +1,4 @@
-ResetPassWord:		;Blank the password
+ResetPassWord:						;Blank the password
 	sep #$30
 	stz.w PassWord
 	ldy.b #$0F

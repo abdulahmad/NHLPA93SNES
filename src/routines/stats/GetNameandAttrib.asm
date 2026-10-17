@@ -1,4 +1,4 @@
-GetNameandAttrib:		;Print player d0's number and name, then the roster column picked by d4
+GetNameandAttrib:					;Print player d0's number and name, then the roster column picked by d4
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -23,7 +23,7 @@ GetNameandAttrib:		;Print player d0's number and name, then the roster column pi
 	jsl.l print
 	lda.w #$001A
 	sta.w printx
-	lda.b d4		; status, energy, handed: no ratings
+	lda.b d4						; status, energy, handed: no ratings
 	cmp.w #$0003
 	bcs .rate
 	jmp.w .jump
@@ -31,7 +31,7 @@ GetNameandAttrib:		;Print player d0's number and name, then the roster column pi
 	ldy.b a2
 	lda.w #TeamList>>16
 	sta.b a0+2
-	lda.w tmdata,y		; team data, player records
+	lda.w tmdata,y					; team data, player records
 	sta.b a0
 	clc
 	ldy.w #Playerdata
@@ -96,11 +96,11 @@ GetNameandAttrib:		;Print player d0's number and name, then the roster column pi
 	sta.b d3
 	clc
 	adc.b d0
-	sta.b d0		; d0 = sum of ratings
+	sta.b d0						; d0 = sum of ratings
 	lda.b d1
 	clc
 	adc.w #$000F
-	sta.b d1		; d1 = 15 * count (max)
+	sta.b d1						; d1 = 15 * count (max)
 .next:
 	dec.b d2
 	bpl .bit
@@ -108,7 +108,7 @@ GetNameandAttrib:		;Print player d0's number and name, then the roster column pi
 	ldy.b d4+2
 	sta.b d4+2
 	sty.b d4
-.jump:		;go to attribjmp[d4] through jmlvector
+.jump:								;go to attribjmp[d4] through jmlvector
 	lda.w #attribjmp
 	sta.b a0
 	lda.w #attribjmp>>16

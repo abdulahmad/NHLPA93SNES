@@ -1,7 +1,8 @@
-puckgoalie:		;The puck hits goalie a2: a save or not, by his save ratings. A hard shot from the blue line area may
+puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. A hard shot
+									;from the blue line area may
 		;   slip through; a slow loose puck is held
 	lda.w gmode
-	bit.w #gmhl		; gmhl
+	bit.w #gmhl						; gmhl
 	beq .go
 	jmp.w .rtl
 .go:
@@ -15,11 +16,11 @@ puckgoalie:		;The puck hits goalie a2: a save or not, by his save ratings. A har
 	bra .side
 .neg:
 	bvs .side
-.low:		;puck region: +2 when low
+.low:								;puck region: +2 when low
 	inc.b d2
 	inc.b d2
 .side:
-	lda.b d0		; direction from the goalie to the puck, relative to facedir
+	lda.b d0						; direction from the goalie to the puck, relative to facedir
 	eor.w #$FFFF
 	inc a
 	sta.b d0
@@ -37,7 +38,7 @@ puckgoalie:		;The puck hits goalie a2: a save or not, by his save ratings. A har
 	and.w #$0003
 	sta.b d1
 	bne .lr
-	lda.w seed		; straight in front or behind: random side
+	lda.w seed						; straight in front or behind: random side
 	sta.b d0
 .lr:
 	lda.b d0
@@ -49,7 +50,7 @@ puckgoalie:		;The puck hits goalie a2: a save or not, by his save ratings. A har
 	adc.b d2
 	asl a
 	sta.b d2
-	lda.w GGSleft,y		; save rating for the region: GGSleft, passacc, spodds, endurance
+	lda.w GGSleft,y					; save rating for the region: GGSleft, passacc, spodds, endurance
 	sta.b d1
 	lda.b d2
 	beq .odds
@@ -65,13 +66,13 @@ puckgoalie:		;The puck hits goalie a2: a save or not, by his save ratings. A har
 	beq .odds
 	lda.w endurance,y
 	sta.b d1
-.odds:		;d1 = save rating + 15
+.odds:								;d1 = save rating + 15
 	lda.b d1
 	clc
 	adc.w #$000F
 	sta.b d1
 	lda.w attribute,y
-	bit.w #$0800		; x flip
+	bit.w #$0800					; x flip
 	beq .noflip
 	lda.b d2
 	eor.w #$0002
@@ -82,10 +83,10 @@ puckgoalie:		;The puck hits goalie a2: a save or not, by his save ratings. A har
 	beq .hard
 	eor.w #$FFFF
 	inc a
-.hard:		;hard shot from the blue line area may slip through
-	cmp.w #$3000		; |puckvy| >= $3000
+.hard:								;hard shot from the blue line area may slip through
+	cmp.w #$3000					; |puckvy| >= $3000
 	bcc .frame
-	lda.w carriedy		; shot taken 80..169 from the goal line: 1 in (182-y) slips through
+	lda.w carriedy					; shot taken 80..169 from the goal line: 1 in (182-y) slips through
 	bit.w #$8000
 	beq .dist
 	eor.w #$FFFF
@@ -103,10 +104,10 @@ puckgoalie:		;The puck hits goalie a2: a save or not, by his save ratings. A har
 	cmp.w #$0003
 	bne .frame
 	jmp.w .rtl
-.frame:		;goalie in the down frames and the puck on the ice: no save
+.frame:								;goalie in the down frames and the puck on the ice: no save
 	lda.w frame,y
 	sec
-	sbc.w #SPFgdive		; goalie dive frames SPFgdive..+15
+	sbc.w #SPFgdive					; goalie dive frames SPFgdive..+15
 	cmp.w #$0010
 	bcs .saved
 	lda.w Zpos+puckobj
@@ -119,9 +120,9 @@ puckgoalie:		;The puck hits goalie a2: a save or not, by his save ratings. A har
 .neg1:
 	bvs .nosave
 .saved:
-	jsl.l ChkShotStat		; ChkShotStat
+	jsl.l ChkShotStat				; ChkShotStat
 	jsl.l a2touchpuck
-	lda.w seed+1		; puck body sound (one of 2)
+	lda.w seed+1					; puck body sound (one of 2)
 	and.w #$0001
 	clc
 	adc.w #SFXpuckbody
@@ -135,7 +136,7 @@ puckgoalie:		;The puck hits goalie a2: a save or not, by his save ratings. A har
 .vy:
 	cmp.w #$3000
 	bcc .nosong
-	lda.w #SFXsavehome		; crowd: home save
+	lda.w #SFXsavehome				; crowd: home save
 	pha
 	ldy.b a2
 	lda.w pfteam,y
@@ -149,22 +150,22 @@ puckgoalie:		;The puck hits goalie a2: a save or not, by his save ratings. A har
 	sta.b d2
 	bpl .carried
 	jmp.w .nopc
-.carried:		;carrier loses the puck
-	lda.w #$FF00		; puckc high byte = $FF: loose
+.carried:							;carrier loses the puck
+	lda.w #$FF00					; puckc high byte = $FF: loose
 	tsb.w puckc
 	asl.b d2
 	lda.b d2
 	sta.b a0
 	tay
-	lda.w #$0014		; old carrier nopuck = 20
+	lda.w #$0014					; old carrier nopuck = 20
 	sta.w nopuck,y
 	tya
 	lsr a
 	sta.w lastplayer
-	lda.w #sfspdir|sfssdir		; clear sfspdir/sfssdir
+	lda.w #sfspdir|sfssdir			; clear sfspdir/sfssdir
 	trb.w sflags
 .bounce:
-	stz.w Zvel,x		; Zvel = 0, nopuck(a2) = 10, temp4(a2) = 4
+	stz.w Zvel,x					; Zvel = 0, nopuck(a2) = 10, temp4(a2) = 4
 	ldy.b a2
 	lda.w #$000A
 	sta.w nopuck,y
@@ -211,12 +212,12 @@ puckgoalie:		;The puck hits goalie a2: a save or not, by his save ratings. A har
 	jmp.w puckflip
 .rtl:
 	rtl
-.nopc:		;loose puck: the goalie holds it if it is slow enough
+.nopc:								;loose puck: the goalie holds it if it is slow enough
 	ldy.b a2
 	lda.w SPA,y
-	cmp.w #SPAgdive		; SPAgdive: always bounce
+	cmp.w #SPAgdive					; SPAgdive: always bounce
 	beq .bounce
-	lda.w #$0002		; catch speed limit = random((2+shotspd)*512) + $C00
+	lda.w #$0002					; catch speed limit = random((2+shotspd)*512) + $C00
 	clc
 	adc.w shotspd,y
 	xba
@@ -271,9 +272,9 @@ puckgoalie:		;The puck hits goalie a2: a save or not, by his save ratings. A har
 .c5:
 	ldy.b a2
 	lda.w pflags,y
-	bit.w #pf2unav		; pf2unav
+	bit.w #pf2unav					; pf2unav
 	beq .hold
 	jmp.w .bounce
 .hold:
 	stz.w Zvel,x
-	jmp.w puckglue		; puckglue: goalie holds the puck
+	jmp.w puckglue					; puckglue: goalie holds the puck

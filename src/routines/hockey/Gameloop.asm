@@ -1,9 +1,10 @@
-Gameloop:		;Main game loop: wait for a frame, run the clock, music and crowd, one frame of game logic, the demo,
+Gameloop:							;Main game loop: wait for a frame, run the clock, music and crowd, one
+									;frame of game logic, the demo,
 		;   a penalty on a goalie carrying the puck far from his net, line changes and pause
-	lda.b vcount		; wait for the next frame
+	lda.b vcount					; wait for the next frame
 	cmp.w oldvcount
 	beq Gameloop
-	tax		; d7 = frames elapsed; the time steps
+	tax								; d7 = frames elapsed; the time steps
 	sec
 	sbc.w oldvcount
 	sta.b d7
@@ -29,7 +30,7 @@ Gameloop:		;Main game loop: wait for a frame, run the clock, music and crowd, on
 	stx.w lastframevc
 	stx.w oldvcount
 	jsl.l ReadPads
-	lda.w sflags		; clock stops in pause and when stopped
+	lda.w sflags					; clock stops in pause and when stopped
 	bit.w #sfpz
 	bne .cue
 	lda.w gmclock
@@ -40,7 +41,7 @@ Gameloop:		;Main game loop: wait for a frame, run the clock, music and crowd, on
 	beq .clk1
 	lda.w gameclock+2
 	sec
-	sbc.w #$0AAA		; clock fraction: one second per $10000
+	sbc.w #$0AAA					; clock fraction: one second per $10000
 	sta.w gameclock+2
 	bcs .clk1
 	dec.w gameclock
@@ -48,7 +49,7 @@ Gameloop:		;Main game loop: wait for a frame, run the clock, music and crowd, on
 	dex
 	bne .clk
 .cue:
-	lda.w cuetimer		; music cue: sounds back near its end
+	lda.w cuetimer					; music cue: sounds back near its end
 	beq .p3
 	ldx.b d7
 .cue1:
@@ -63,7 +64,7 @@ Gameloop:		;Main game loop: wait for a frame, run the clock, music and crowd, on
 	dex
 	bne .cue1
 .p3:
-	lda.w p3cue		; third period cue
+	lda.w p3cue						; third period cue
 	beq .cheer
 	sec
 	sbc.b d7
@@ -72,21 +73,21 @@ Gameloop:		;Main game loop: wait for a frame, run the clock, music and crowd, on
 .p3a:
 	sta.w p3cue
 	bne .cheer
-	lda.w cuetimer		; another cue plays: try next frame
+	lda.w cuetimer					; another cue plays: try next frame
 	beq .p3go
 	inc.w p3cue
 	bra .cheer
 .p3go:
 	jsl.l StartSong3
 .cheer:
-	lda.w cheercnt		; crowd cheers after a goal: every 150 frames
+	lda.w cheercnt					; crowd cheers after a goal: every 150 frames
 	beq .frame
 	lda.b vcount
 	sec
 	sbc.w cheervc
 	cmp.w #150
 	bcc .frame
-	lda.w #SFXcrowdcheer		; SFXcrowdcheer
+	lda.w #SFXcrowdcheer			; SFXcrowdcheer
 	pha
 	jsl.l sfx
 	dec.w cheercnt
@@ -98,7 +99,8 @@ Gameloop:		;Main game loop: wait for a frame, run the clock, music and crowd, on
 	jsl.l DoGameFrame
 	jsl.l demoread
 	bra .gh
-.cheat:		;not reached (the bra above skips it): new pad presses L, A, X in a row set the score of controller 1's team to 9
+.cheat:								;not reached (the bra above skips it): new pad presses L, A, X in a row
+									;set the score of controller 1's team to 9
 	lda.w padnew1
 	beq .gh
 	ldx.w cheatpads+2
@@ -123,8 +125,8 @@ Gameloop:		;Main game loop: wait for a frame, run the clock, music and crowd, on
 	lda.w #9
 	sta.w tmscore,x
 	jsl.l printscores1
-.gh:		;goalie carrying the puck far from his net: penalty 6
-	lda.w position		; goalies on the ice
+.gh:								;goalie carrying the puck far from his net: penalty 6
+	lda.w position					; goalies on the ice
 	ora.w position+2
 	beq .lc
 	lda.w puckc
@@ -139,25 +141,25 @@ Gameloop:		;Main game loop: wait for a frame, run the clock, music and crowd, on
 	eor.w #$FFFF
 	inc a
 .ay:
-	cmp.w #165		; beyond y 165
+	cmp.w #165						; beyond y 165
 	bcs .lc
 	stx.b a3
-	lda.w #6		; penalty 6
+	lda.w #6						; penalty 6
 	sta.b d0
 	jsl.l AddPenalty2
-	lda.w #300		; nopuck 300
+	lda.w #300						; nopuck 300
 	sta.w nopuck,x
 	lda.w #$FFFF
 	sta.w puckc
 .lc:
-	lda.w lcplayer		; a line change player waiting
+	lda.w lcplayer					; a line change player waiting
 	bmi .pause
 	cmp.w puckc
 	beq .pause
 	asl a
 	tax
 	stx.b a3
-	lda.w pflags,x		; pf2lcm off
+	lda.w pflags,x					; pf2lcm off
 	and.w #~pf2lcm&$FFFF
 	sta.w pflags,x
 	stz.b a2
@@ -165,7 +167,7 @@ Gameloop:		;Main game loop: wait for a frame, run the clock, music and crowd, on
 	lda.w #$0002
 	sta.b a2
 	jsl.l lcfound2
-	lda.w #tmflcm		; tmflcm off for both teams
+	lda.w #tmflcm					; tmflcm off for both teams
 	trb.w tmflags
 	trb.w tmflags+2
 	lda.w #$FFFF

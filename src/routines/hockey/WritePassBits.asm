@@ -1,7 +1,8 @@
-WritePassBits:		;Turn the playoff state into the password bits, with a checksum
+WritePassBits:						;Turn the playoff state into the password bits, with a checksum
 	jsl.l ClrPassBits
 	stz.b d7
-	lda.w postarts		; PushBits ranges: postarts 32, bosgames 8, gamelevel 4, potreeteam 16, pojoy 4, WinBits $4000
+	lda.w postarts					;PushBits ranges: postarts 32, bosgames 8, gamelevel 4, potreeteam 16,
+									;pojoy 4, WinBits $4000
 	sta.b d0
 	lda.w #32
 	sta.b d1
@@ -36,7 +37,7 @@ WritePassBits:		;Turn the playoff state into the password bits, with a checksum
 	lda.w #7
 	sta.b d2
 	stz.b a1
-.0:		;the 8 series scores, range 5
+.0:									;the 8 series scores, range 5
 	ldy.b a1
 	lda.w gspotwins,y
 	sta.b d0
@@ -49,14 +50,14 @@ WritePassBits:		;Turn the playoff state into the password bits, with a checksum
 	inc.b a1
 	dec.b d2
 	bpl .0
-	lda.b d7		; checksum
+	lda.b d7						; checksum
 	and.w #$01FF
 	sta.b d0
 	lda.w #512
 	sta.b d1
 	jsl.l PushBits
 	rtl
-.pb:		;d7 += d0, then PushBits
+.pb:								;d7 += d0, then PushBits
 	lda.b d7
 	clc
 	adc.b d0

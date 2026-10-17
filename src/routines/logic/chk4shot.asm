@@ -1,7 +1,8 @@
-chk4shot:		;Computer player X looks for a shot. A penalty killer under pressure in front of his net may clear the puck
+chk4shot:							;Computer player X looks for a shot. A penalty killer under pressure in
+									;front of his net may clear the puck
 	jsl.l chkpk
 	bne .npk
-	lda.w threat		; threat on the puck carrier
+	lda.w threat					; threat on the puck carrier
 	beq .npk
 	lda.w Ypos,x
 	bit.w #$8000
@@ -9,13 +10,13 @@ chk4shot:		;Computer player X looks for a shot. A penalty killer under pressure 
 	eor.w #$FFFF
 	inc a
 .yabs:
-	cmp.w #$00ED		; in front of the net
+	cmp.w #$00ED					; in front of the net
 	bcs .npk
-	lda.w seed		; one time in four: clear the puck
+	lda.w seed						; one time in four: clear the puck
 	and.w #$0003
 	bne .npk
 	jmp.w CompShoot
-.npk:		;d4 = shot odds ($20-spodds)*16
+.npk:								;d4 = shot odds ($20-spodds)*16
 	lda.w #$0020
 	sec
 	sbc.w spodds,x
@@ -60,7 +61,7 @@ chk4shot:		;Computer player X looks for a shot. A penalty killer under pressure 
 	pla
 	sta.b d1
 	lda.b tmp0
-	cmp.w #$2711		; distance^2 > 100*100?
+	cmp.w #$2711					; distance^2 > 100*100?
 	lda.b tmp1
 	sbc.w #$0000
 	bcs .no1
@@ -77,7 +78,8 @@ chk4shot:		;Computer player X looks for a shot. A penalty killer under pressure 
 	bcs .co0
 	lda.w #$000C
 	sta.b a1
-.co0:		;each opponent: a defender in the shot line doubles d4; a busy goalie means shoot now
+.co0:								;each opponent: a defender in the shot line doubles d4; a busy goalie
+									;means shoot now
 	ldy.b a1
 	lda.w position,y
 	beq .gl
@@ -108,7 +110,7 @@ chk4shot:		;Computer player X looks for a shot. A penalty killer under pressure 
 .no1:
 	lda.b d4
 	jsl.l randoma
-	cmp.w #$0009		; no shot if random(d4) > 8
+	cmp.w #$0009					; no shot if random(d4) > 8
 	bcs .rts
 	lda.w pucky
 	sta.b d0
@@ -125,7 +127,7 @@ chk4shot:		;Computer player X looks for a shot. A penalty killer under pressure 
 	sec
 	sbc.b d0
 	bmi .rts
-	lda.w sflags		; sf2offsig: player is offside
+	lda.w sflags					; sf2offsig: player is offside
 	bit.w #sf2offsig
 	bne .rts
 	bra CompShoot

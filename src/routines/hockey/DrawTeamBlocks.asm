@@ -1,8 +1,8 @@
-DrawTeamBlocks:		;Draw team d1's name block at printx / printy
+DrawTeamBlocks:						;Draw team d1's name block at printx / printy
 	lda.b a2
 	pha
 	phx
-	lda.b d1		; 36 bytes per team
+	lda.b d1						; 36 bytes per team
 	sta.b mula
 	lda.w #36
 	sta.b mulb

@@ -1,10 +1,11 @@
-holdcheck:		;a2 holds or hooks X: both slow down, and a holding or hooking penalty may be called
+holdcheck:							;a2 holds or hooks X: both slow down, and a holding or hooking penalty may
+									;be called
 	lda.w pfalock,x
-	ora.w pf2fight,x		; already held, or fighting
+	ora.w pf2fight,x				; already held, or fighting
 	beq .nopf2fight
 	jmp.w .rtl
 .nopf2fight:
-	lda.w position,x		; no hold on a goalie
+	lda.w position,x				; no hold on a goalie
 	bne .position
 	jmp.w .rtl
 .position:
@@ -17,7 +18,7 @@ holdcheck:		;a2 holds or hooks X: both slow down, and a holding or hooking penal
 	sec
 	sbc.w Ypos,y
 	sta.b d1
-	jsl.l vtoa		; direction from a2 to X
+	jsl.l vtoa						; direction from a2 to X
 	ldy.b a2
 	lda.b d0
 	sec
@@ -25,7 +26,7 @@ holdcheck:		;a2 holds or hooks X: both slow down, and a holding or hooking penal
 	inc a
 	and.w #$0007
 	cmp.w #$0003
-	bcc .close		; X must be within 1 direction of where a2 faces
+	bcc .close						; X must be within 1 direction of where a2 faces
 	jmp.w .rtl
 .close:
 	lda.w puckc
@@ -33,7 +34,7 @@ holdcheck:		;a2 holds or hooks X: both slow down, and a holding or hooking penal
 	cmp.b a3
 	bne .nopc
 	lda.w #$0008
-	trb.w sflags		; X has the puck
+	trb.w sflags					; X has the puck
 .nopc:
 	ldy.b a2
 	lda.w Xvel,x
@@ -68,7 +69,7 @@ holdcheck:		;a2 holds or hooks X: both slow down, and a holding or hooking penal
 	lda.w SPA,x
 	cmp.w #SPAHold
 	beq .h2
-	lda.w #SPAhook2		; holding anim after SPAhook
+	lda.w #SPAhook2					; holding anim after SPAhook
 	sta.b d1
 .h2:
 	jsl.l SetSPA
@@ -76,12 +77,12 @@ holdcheck:		;a2 holds or hooks X: both slow down, and a holding or hooking penal
 	lda.b d0
 	cmp.w #$0007
 	bcs .ex
-	lda.w #$0024		; holding penalty
+	lda.w #$0024					; holding penalty
 	sta.b d0
 	lda.w SPA,x
 	cmp.w #SPAHold2
 	beq .pen
-	lda.w #$001E		; hooking penalty
+	lda.w #$001E					; hooking penalty
 	sta.b d0
 .pen:
 	jsl.l AddPenalty

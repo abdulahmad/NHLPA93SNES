@@ -1,5 +1,6 @@
-chk4pass:		;Computer player X looks for a good pass: an onside teammate with no opponent in the lane
-	lda.w threat		; no threat: pass only now and then (spodds)
+chk4pass:							;Computer player X looks for a good pass: an onside teammate with no
+									;opponent in the lane
+	lda.w threat					; no threat: pass only now and then (spodds)
 	bne .dp0
 	lda.w #16
 	clc
@@ -12,14 +13,14 @@ chk4pass:		;Computer player X looks for a good pass: an onside teammate with no 
 	lda.w #6
 	jsl.l randoma
 	sta.b d0
-	cpx.w #12		; team mates of the away team are 6-11
+	cpx.w #12						; team mates of the away team are 6-11
 	bcc .dp1
 	lda.b d0
 	clc
 	adc.w #6
 	sta.b d0
 .dp1:
-	lda.w position,x		; not the goalie: only outside the slot
+	lda.w position,x				; not the goalie: only outside the slot
 	beq .bl
 	lda.w puckx
 	bit.w #$8000
@@ -39,21 +40,21 @@ chk4pass:		;Computer player X looks for a good pass: an onside teammate with no 
 	bcc .bl
 	jmp.w .rtl
 .bl:
-	asl.b d0		; not to himself
+	asl.b d0						; not to himself
 	cpx.b d0
 	bne .b1
 	jmp.w .rtl
 .b1:
 	ldy.b d0
 	sty.b a0
-	lda.w position,y		; not to the goalie or an illegal player
+	lda.w position,y				; not to the goalie or an illegal player
 	bne .b2
 	jmp.w .rtl
 .b2:
 	bpl .b3
 	jmp.w .rtl
 .b3:
-	lda.w pflags,y		; not unavailable or locked
+	lda.w pflags,y					; not unavailable or locked
 	and.w #pf2unav
 	ora.w pfalock,y
 	beq .b4
@@ -74,7 +75,7 @@ chk4pass:		;Computer player X looks for a good pass: an onside teammate with no 
 	inc a
 	sta.b d1
 .f0:
-	lda.w gmode		; offsides: no pass across the blue line
+	lda.w gmode						; offsides: no pass across the blue line
 	bit.w #gmoffs
 	beq .oko
 	lda.b d0
@@ -88,7 +89,7 @@ chk4pass:		;Computer player X looks for a good pass: an onside teammate with no 
 	bpl .oko
 	jmp.w .rtl
 .oko:
-	lda.b d0		; beyond the blue line, or not more than 15 back
+	lda.b d0						; beyond the blue line, or not more than 15 back
 	sec
 	sbc.w #88
 	beq .le
@@ -111,7 +112,7 @@ chk4pass:		;Computer player X looks for a good pass: an onside teammate with no 
 .neg1:
 	bvc .miss
 .ok:
-	lda.w Ypos,y		; passdir, d2 = distance squared
+	lda.w Ypos,y					; passdir, d2 = distance squared
 	sec
 	sbc.w pucky
 	sta.b d1
@@ -139,7 +140,7 @@ chk4pass:		;Computer player X looks for a good pass: an onside teammate with no 
 	lda.b mulres+2
 	adc.b d2+2
 	sta.b d2+2
-	lda.w #5		; the 6 opponents
+	lda.w #5						; the 6 opponents
 	sta.b d3
 	stz.b a1
 	cpx.w #12
@@ -176,7 +177,7 @@ chk4pass:		;Computer player X looks for a good pass: an onside teammate with no 
 	lda.b d2+2
 	sbc.b tmp1
 	bcc .co1
-	jsl.l vtoa		; nearer opponent in the lane: no pass
+	jsl.l vtoa						; nearer opponent in the lane: no pass
 	cmp.w passdir
 	beq .rtl
 .co1:
@@ -184,17 +185,17 @@ chk4pass:		;Computer player X looks for a good pass: an onside teammate with no 
 	inc.b a1
 	dec.b d3
 	bpl .co0
-	jsl.l dopass		; dopass, bank $8F
+	jsl.l dopass					; dopass, bank $8F
 	lda.w position,x
 	beq .rtl
-	pla		; drop the return address (3 bytes): assexit returns for the caller
+	pla								; drop the return address (3 bytes): assexit returns for the caller
 	sep #$20
 	pla
 	rep #$30
 	jml.l assexit
 .rtl:
 	rtl
-unusedFF8C:		;unused, $FF fill to the end of the bank
+unusedFF8C:							;unused, $FF fill to the end of the bank
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF

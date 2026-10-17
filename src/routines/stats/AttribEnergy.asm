@@ -1,4 +1,4 @@
-AttribEnergy:		;Roster column: the player's energy, scaled to at most 100
+AttribEnergy:						;Roster column: the player's energy, scaled to at most 100
 	asl.b d0
 	lda.b a2
 	beq .team
@@ -6,7 +6,7 @@ AttribEnergy:		;Roster column: the player's energy, scaled to at most 100
 .team:
 	adc.b d0
 	tay
-	lda.w tmpde,y		; divu16 by 40
+	lda.w tmpde,y					; divu16 by 40
 	sta.b mulb
 	lda.w #$0028
 	sta.b mula

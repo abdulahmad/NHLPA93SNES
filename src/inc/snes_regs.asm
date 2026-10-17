@@ -194,19 +194,19 @@ A2A7H = $4379
 NLTR7 = $437A
 
 ; Register values (bits and common settings). Equates only.
-INIDISP_FBLANK = $80	; INIDISP bit 7: forced blank (brightness in bits 0-3)
-NMITIMEN_NMI = $80	; NMITIMEN bit 7: vblank NMI on
-NMITIMEN_JOY = $01	; NMITIMEN bit 0: auto joypad read
-MDMAEN_CH0 = $01	; MDMAEN/HDMAEN: one bit per channel
+INIDISP_FBLANK = $80				; INIDISP bit 7: forced blank (brightness in bits 0-3)
+NMITIMEN_NMI = $80					; NMITIMEN bit 7: vblank NMI on
+NMITIMEN_JOY = $01					; NMITIMEN bit 0: auto joypad read
+MDMAEN_CH0 = $01					; MDMAEN/HDMAEN: one bit per channel
 MDMAEN_CH7 = $80
-VMAIN_INCHI = $80	; VMAIN bit 7: step VMADD after the VMDATAH write (word writes)
-BGMODE_1 = $01		; BG mode 1: BG1/BG2 4bpp, BG3 2bpp
-TM_BG1 = $01		; TM/TS layer bits
+VMAIN_INCHI = $80					; VMAIN bit 7: step VMADD after the VMDATAH write (word writes)
+BGMODE_1 = $01						; BG mode 1: BG1/BG2 4bpp, BG3 2bpp
+TM_BG1 = $01						; TM/TS layer bits
 TM_BG2 = $02
 TM_BG3 = $04
 TM_BG4 = $08
 TM_OBJ = $10
 ; DMAPn/BBADn pairs written as one word (low byte DMAPn, high byte BBADn)
-DMA_VRAMWORD = $1801	; DMAP $01 (two registers, A->B, increment), BBAD $18 (VMDATAL/VMDATAH)
-DMA_CGRAM = $2200	; DMAP $00 (one register), BBAD $22 (CGDATA)
-DMA_OAM = $0400		; DMAP $00 (one register), BBAD $04 (OAMDATA)
+DMA_VRAMWORD = $1801				; DMAP $01 (two registers, A->B, increment), BBAD $18 (VMDATAL/VMDATAH)
+DMA_CGRAM = $2200					; DMAP $00 (one register), BBAD $22 (CGDATA)
+DMA_OAM = $0400						; DMAP $00 (one register), BBAD $04 (OAMDATA)

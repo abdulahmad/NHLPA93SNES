@@ -1,4 +1,4 @@
-revplayeracc:		;playeracc for a player skating backwards
+revplayeracc:						;playeracc for a player skating backwards
 	lda.w pfrev,x
 	beq .acc
 	lda.b d2

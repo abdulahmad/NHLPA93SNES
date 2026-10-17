@@ -1,6 +1,7 @@
-FallDown:		;Player a2 falls (or stumbles) from a hit by X: check stats, the fall animation, maybe an injury with a penalty,
+FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the fall
+									;animation, maybe an injury with a penalty,
 		;   and the crowd
-	ldy.b a2		; players only, not fighting
+	ldy.b a2						; players only, not fighting
 	cpy.w #$0018
 	bcc .f1
 	jmp.w .rtl
@@ -8,7 +9,7 @@ FallDown:		;Player a2 falls (or stumbles) from a hit by X: check stats, the fall
 	lda.w pf2fight,y
 	beq .spa
 	jmp.w .rtl
-.spa:		;already in one of the fall anims?
+.spa:								;already in one of the fall anims?
 	lda.w SPA,y
 	cmp.w #SPAinjury1
 	bne .s2
@@ -29,7 +30,8 @@ FallDown:		;Player a2 falls (or stumbles) from a hit by X: check stats, the fall
 	cmp.w #SPAflip
 	bne .s6
 	jmp.w .rtl
-.s6:		;stumble when stickhand (byte $71) >= $C, nopuckb is 0 and impact < $10-$1F
+.s6:								;stumble when stickhand (byte $71) >= $C, nopuckb is 0 and impact <
+									;$10-$1F
 	lda.w #SPAstumble
 	sta.b d1
 	lda.w stickhand,y
@@ -49,14 +51,14 @@ FallDown:		;Player a2 falls (or stumbles) from a hit by X: check stats, the fall
 	bra .fall
 .neg:
 	bvc .fall
-.stumble:		;no second stumble for $3C
+.stumble:							;no second stumble for $3C
 	lda.w #$003C
 	sta.w nopuckb,y
 	jmp.w .set
-.fall:		;no check stats for a goalie hitter
+.fall:								;no check stats for a goalie hitter
 	lda.w position,x
 	beq .nostat
-	stz.b a0		; team checks, player checks, ChkCnt (+3 when fightagg is 0)
+	stz.b a0						; team checks, player checks, ChkCnt (+3 when fightagg is 0)
 	lda.w pfteam,x
 	beq .tm
 	lda.w #$0002
@@ -86,10 +88,10 @@ FallDown:		;Player a2 falls (or stumbles) from a hit by X: check stats, the fall
 	inc.w ChkCnt
 	inc.w ChkCnt
 .nostat:
-	ldy.b a2		; nopuck 120 for a2
+	ldy.b a2						; nopuck 120 for a2
 	lda.w #$0078
 	sta.w nopuck,y
-	lda.w Xpos,x		; direction from a2 to the hitter
+	lda.w Xpos,x					; direction from a2 to the hitter
 	sec
 	sbc.w Xpos,y
 	sta.b d0
@@ -100,7 +102,7 @@ FallDown:		;Player a2 falls (or stumbles) from a hit by X: check stats, the fall
 	jsl.l vtoa
 	lda.w #SPAfallback
 	sta.b d1
-	ldy.b a2		; hit from the front: fall back
+	ldy.b a2						; hit from the front: fall back
 	lda.b d0
 	sec
 	sbc.w facedir,y
@@ -110,7 +112,7 @@ FallDown:		;Player a2 falls (or stumbles) from a hit by X: check stats, the fall
 	bcc .set
 	lda.w #SPAfallfwd
 	sta.b d1
-	lda.w facedir,y		; facedir 0 or 4 and hitter aggress >= 10: third fall
+	lda.w facedir,y					; facedir 0 or 4 and hitter aggress >= 10: third fall
 	and.w #$0003
 	bne .set
 	lda.w aggress,x
@@ -126,23 +128,23 @@ FallDown:		;Player a2 falls (or stumbles) from a hit by X: check stats, the fall
 	bcs .set
 	lda.w #SPAflip
 	sta.b d1
-.set:		;SetSPA d1 for a2
+.set:								;SetSPA d1 for a2
 	ldx.b a2
 	ldy.b a3
 	stx.b a3
 	sty.b a2
-	lda.w #$0001		; pfalock
+	lda.w #$0001					; pfalock
 	sta.w pfalock,x
 	jsl.l SetSPA
 	ldx.b a2
 	ldy.b a3
 	stx.b a3
 	sty.b a2
-	lda.b crowdlevel		; crowd +300
+	lda.b crowdlevel				; crowd +300
 	clc
 	adc.w #$012C
 	sta.b crowdlevel
-	lda.w puckc		; a2 did not have the puck: check sound only
+	lda.w puckc						; a2 did not have the puck: check sound only
 	sta.b d0
 	bpl .pc
 	jmp.w newcheck
@@ -152,10 +154,11 @@ FallDown:		;Player a2 falls (or stumbles) from a hit by X: check stats, the fall
 	cmp.b d0
 	beq .drop
 	jmp.w newcheck
-.drop:		;a2 had the puck: lose it, maybe an injury
+.drop:								;a2 had the puck: lose it, maybe an injury
 	lda.w #$FFFF
 	sta.w puckc
-	lda.w gmode		; injury: no highlight, fall back, facedir 0/4, no penalty, random(160) <= impact, clock running
+	lda.w gmode						;injury: no highlight, fall back, facedir 0/4, no penalty, random(160) <=
+									;impact, clock running
 	bit.w #gmhl
 	bne .snd
 	lda.w SPA,y
@@ -192,10 +195,11 @@ FallDown:		;Player a2 falls (or stumbles) from a hit by X: check stats, the fall
 	ldy.b a3
 	stx.b a3
 	sty.b a2
-	jsl.l setInjuryType		; setInjuryType
+	jsl.l setInjuryType				; setInjuryType
 	lda.w #$0004
 	sta.w InjCntDown
-	lda.w #PenInjury		; PenInjury if the hitter is a goalie or penalties are off, else PenRough2 and Stop4Pen
+	lda.w #PenInjury				;PenInjury if the hitter is a goalie or penalties are off, else PenRough2
+									;and Stop4Pen
 	sta.b d0
 	lda.w position,x
 	bne .g
@@ -210,7 +214,7 @@ FallDown:		;Player a2 falls (or stumbles) from a hit by X: check stats, the fall
 	jsl.l AddPenalty2
 	jmp.w Stop4Pen
 .snd:
-	ldy.b a2		; home player fell: boo, else cheer
+	ldy.b a2						; home player fell: boo, else cheer
 	lda.w #SFXcrowdcheer
 	pha
 	lda.w pfteam,y

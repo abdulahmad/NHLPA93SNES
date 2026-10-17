@@ -1,4 +1,4 @@
-checkgoalp:		;Player X runs into the goal a2
+checkgoalp:							;Player X runs into the goal a2
 	lda.w pflags,x
 	bit.w #pf2npc
 	beq .npc
@@ -14,12 +14,12 @@ checkgoalp:		;Player X runs into the goal a2
 	jmp.w .rtl
 .neg:
 	bvs .ex1
-.pl:		;players only (SCnum <= 11)
+.pl:								;players only (SCnum <= 11)
 	cpx.w #$0017
 	bcc .go
 	jmp.w .rtl
 .go:
-	ldy.b a2		; d0 = -dy, d1 = dx
+	ldy.b a2						; d0 = -dy, d1 = dx
 	lda.b d3
 	pha
 	sec
@@ -46,7 +46,7 @@ checkgoalp:		;Player X runs into the goal a2
 	cmp.w #$0101
 	bcc .inx
 	jmp.w .exit
-.inx:		;(dy*16)^2/$79 + (dx*16)^2/$400 <= $100?
+.inx:								;(dy*16)^2/$79 + (dx*16)^2/$400 <= $100?
 	sta.b d2
 	lda.b d3
 	asl a
@@ -66,7 +66,7 @@ checkgoalp:		;Player X runs into the goal a2
 	sta.b d2
 	pla
 	sta.b d3
-	jsl.l CheckBump		; CheckBump, then wallcoll with the normal (d0,d1)/r
+	jsl.l CheckBump					; CheckBump, then wallcoll with the normal (d0,d1)/r
 	lda.b d3
 	pha
 	lda.b d2

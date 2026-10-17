@@ -1,5 +1,6 @@
-AddPenalty2:		;Call penalty d0 on player X without the checks; used for forced calls like face offs and game over
-	lda.w sfhormode		; horizontal rink: none
+AddPenalty2:						;Call penalty d0 on player X without the checks; used for forced calls
+									;like face offs and game over
+	lda.w sfhormode					; horizontal rink: none
 	beq .go
 	jmp.w .rtl
 .go:
@@ -25,18 +26,18 @@ AddPenalty2:		;Call penalty d0 on player X without the checks; used for forced c
 	ldx.b xsave
 	lda.b d0
 	sec
-	sbc.w #$000E		; goal and up
+	sbc.w #$000E					; goal and up
 	bmi .neg
 	bvc .snd
 	bra .nosnd
 .neg:
 	bvc .nosnd
-.snd:		;goal and up: crowd and a sound
-	lda.b crowdlevel		; crowd +200
+.snd:								;goal and up: crowd and a sound
+	lda.b crowdlevel				; crowd +200
 	clc
 	adc.w #$00C8
 	sta.b crowdlevel
-	lda.w #SFXcrowdboo		; home penalized: boo; visitors: cheer
+	lda.w #SFXcrowdboo				; home penalized: boo; visitors: cheer
 	pha
 	lda.w pfteam,x
 	beq .sfx
@@ -45,13 +46,13 @@ AddPenalty2:		;Call penalty d0 on player X without the checks; used for forced c
 .sfx:
 	jsl.l sfx
 .nosnd:
-	lda.w #PenBuf		; a1 = PenBuf, 32 slots
+	lda.w #PenBuf					; a1 = PenBuf, 32 slots
 	sta.b a1
 	lda.w #PenBuf>>16
 	sta.b a1+2
 	lda.w #$001F
 	sta.b d1
-.find:		;find a free PenBuf slot
+.find:								;find a free PenBuf slot
 	lda.b [a1]
 	inc.b a1
 	inc.b a1
@@ -63,13 +64,13 @@ AddPenalty2:		;Call penalty d0 on player X without the checks; used for forced c
 .put:
 	dec.b a1
 	dec.b a1
-	txa		; store (SCnum << 8) | penalty
+	txa								; store (SCnum << 8) | penalty
 	lsr a
 	xba
 	and.w #$FF00
 	ora.b d0
 	sta.b [a1]
-	lda.w #PenaltyList>>16		; a0 = PenaltyList + [d0]
+	lda.w #PenaltyList>>16			; a0 = PenaltyList + [d0]
 	sta.b a0+2
 	lda.w #PenaltyList
 	sta.b a0
@@ -77,12 +78,12 @@ AddPenalty2:		;Call penalty d0 on player X without the checks; used for forced c
 	clc
 	adc.b [a0],y
 	sta.b a0
-	lda.b [a0]		; penalty minutes
+	lda.b [a0]						; penalty minutes
 	and.w #$00FF
 	beq .noplayer
 	lda.w pflags,x
 	pha
-	ora.w #pf2pen		; pf2pen; already set: drop this one
+	ora.w #pf2pen					; pf2pen; already set: drop this one
 	sta.w pflags,x
 	pla
 	bit.w #pf2pen

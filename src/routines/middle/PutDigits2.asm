@@ -1,5 +1,6 @@
-PutDigits2:		;Write the two digit number d0 as two characters at [a1], blank leading zero
-	lda.w #$2020		; blank, then the tens digit when d0 >= 10
+PutDigits2:							;Write the two digit number d0 as two characters at [a1], blank leading
+									;zero
+	lda.w #$2020					; blank, then the tens digit when d0 >= 10
 	sta.b tmp0
 	lda.b d0
 	and.w #$00FF

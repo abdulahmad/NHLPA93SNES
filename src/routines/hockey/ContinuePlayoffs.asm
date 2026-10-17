@@ -1,4 +1,5 @@
-ContinuePlayoffs:		;Continue the playoffs: read the playoff state back from the password bits and rebuild the tree. Unused
+ContinuePlayoffs:					;Continue the playoffs: read the playoff state back from the password bits
+									;and rebuild the tree. Unused
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -19,7 +20,7 @@ ContinuePlayoffs:		;Continue the playoffs: read the playoff state back from the 
 	cpx.w #$0010
 	bne .savea
 	ldx.b xsave
-	lda.w #passbits		; a3 = passbits
+	lda.w #passbits					; a3 = passbits
 	sta.b a3
 	lda.w #$0000
 	sta.b a3+2
@@ -29,7 +30,7 @@ ContinuePlayoffs:		;Continue the playoffs: read the playoff state back from the 
 	sta.b d0
 	beq .ex
 	jsl.l maketree
-	lda.w #$0007		; menu value from pojoy
+	lda.w #$0007					; menu value from pojoy
 	sec
 	sbc.w pojoy
 	sta.w OptPlayers

@@ -1,4 +1,5 @@
-ClampYPosition:		;d1 = y kept inside the goal lines, measured from goal line d3. d0 = 0 if X has the puck
+ClampYPosition:						;d1 = y kept inside the goal lines, measured from goal line d3. d0 = 0 if
+									;X has the puck
 	lda.w puckc
 	sta.b d2
 	cmp.w SCnum,x

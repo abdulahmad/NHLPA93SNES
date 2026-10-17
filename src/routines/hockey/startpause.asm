@@ -1,4 +1,4 @@
-startpause:		;Start a pause
+startpause:							;Start a pause
 	lda.w #sfpz
 	tsb.w sflags
 	rtl

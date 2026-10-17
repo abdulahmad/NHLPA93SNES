@@ -1,4 +1,4 @@
-GameLabels:		;ticker titles, by OptPlayMode and gamelevel
+GameLabels:							;ticker titles, by OptPlayMode and gamelevel
 	dw 19
 	db "EASN Hockey Night"
 	dw 18

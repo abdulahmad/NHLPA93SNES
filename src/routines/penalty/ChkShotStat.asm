@@ -1,4 +1,4 @@
-ChkShotStat:		;If a shot was taken, add it to the shooting team's shots
+ChkShotStat:						;If a shot was taken, add it to the shooting team's shots
 	lda.w #sf2shot
 	trb.w sflags
 	beq .rtl
@@ -16,7 +16,7 @@ ChkShotStat:		;If a shot was taken, add it to the shooting team's shots
 	lda.w shotplayer
 	asl a
 	tax
-	stx.b a3		; a3 = the shooter
+	stx.b a3						; a3 = the shooter
 	lda.w #$0001
 	sta.b d0
 	lda.w #tmshots

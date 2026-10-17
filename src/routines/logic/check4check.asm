@@ -1,9 +1,9 @@
-check4check:		;Look for a good chance to check an opponent
+check4check:						;Look for a good chance to check an opponent
 	lda.w #$0014
 	sec
 	sbc.w aggress,x
 	sta.b d0
-	lda.w OptPen		; penalties on: half the chance
+	lda.w OptPen					; penalties on: half the chance
 	beq .nopen
 	asl.b d0
 .nopen:
@@ -23,7 +23,7 @@ check4check:		;Look for a good chance to check an opponent
 	bcs .0
 	lda.w #$000C
 	sta.b a0
-.0:		;each opponent within 30 pixels in the facing direction
+.0:									;each opponent within 30 pixels in the facing direction
 	ldy.b a0
 	lda.w position,y
 	beq .next
@@ -55,9 +55,9 @@ check4check:		;Look for a good chance to check an opponent
 	bcs .next
 	jsl.l vtoa
 	lda.b d0
-	cmp.w facedir,x		; opponent in the facing direction
+	cmp.w facedir,x					; opponent in the facing direction
 	bne .next
-	lda.w seed+3		; random: 1 in 4 hold, else check
+	lda.w seed+3					; random: 1 in 4 hold, else check
 	and.w #$0003
 	sta.b d0
 	bne burst

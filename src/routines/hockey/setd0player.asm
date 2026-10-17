@@ -1,4 +1,5 @@
-setd0player:		;Give player d0 to his team's controller, unless a controller already has him
+setd0player:						;Give player d0 to his team's controller, unless a controller already has
+									;him
 	lda.b d0
 	cmp.w c1playernum
 	beq .rtl

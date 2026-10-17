@@ -1,11 +1,11 @@
-dostop:		;Player X stops
+dostop:								;Player X stops
 	lda.w Xvel,x
 	bit.w #$8000
 	beq .xabs
 	eor.w #$FFFF
 	inc a
 .xabs:
-	cmp.w #$1001		; |Xvel| > $1000?
+	cmp.w #$1001					; |Xvel| > $1000?
 	bcs .set
 	lda.w Yvel,x
 	bit.w #$8000
@@ -15,14 +15,14 @@ dostop:		;Player X stops
 .yabs:
 	cmp.w #$1001
 	bcc StopNA
-.set:		;moving fast: glide (skating backwards) or stop animation
-	lda.w #SPAglide		; SPAglide $52C
+.set:								;moving fast: glide (skating backwards) or stop animation
+	lda.w #SPAglide					; SPAglide $52C
 	sta.b d1
-	lda.w pfrev,x		; skating backwards: glide
+	lda.w pfrev,x					; skating backwards: glide
 	bne .setspa
 	txa
 	lsr a
-	cmp.w puckc		; puck carrier: skate stop sound
+	cmp.w puckc						; puck carrier: skate stop sound
 	bne .stopanim
 	lda.w seed+1
 	and.w #$0001
@@ -31,18 +31,19 @@ dostop:		;Player X stops
 	pha
 	jsl.l sfx
 .stopanim:
-	lda.w #SPAstop		; SPAstop $6E6, pf2aip
+	lda.w #SPAstop					; SPAstop $6E6, pf2aip
 	sta.b d1
 	sta.w pf2aip,x
 .setspa:
 	jsl.l SetSPA
-StopNA:		;slow player a3 by 150 on each axis, no animation change. Falls in from dostop, also entered from goalieacc and others
+StopNA:								;slow player a3 by 150 on each axis, no animation change. Falls in from
+									;dostop, also entered from goalieacc and others
 		;   SNES: slow player X by $70*d7 on each axis, no animation change
-	lda.w #$0070		; $70 per frame
+	lda.w #$0070					; $70 per frame
 	sta.b mula
 	lda.b d7
 	sta.b mulb
-	jsl.l mulu16		; mulu, mulres = mula*mulb
+	jsl.l mulu16					; mulu, mulres = mula*mulb
 	lda.w Xvel,x
 	bpl .xp
 	clc

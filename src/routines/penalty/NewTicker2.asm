@@ -1,4 +1,4 @@
-NewTicker2:		;d3 = the next game for the ticker, or negative when none is left
+NewTicker2:							;d3 = the next game for the ticker, or negative when none is left
 	lda.w OptPlayMode
 	beq .rtl
 	lda.w TickerNum

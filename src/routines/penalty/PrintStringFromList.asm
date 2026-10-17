@@ -1,4 +1,4 @@
-PrintStringFromList:		;Print string d0 of the string list [a1]
+PrintStringFromList:				;Print string d0 of the string list [a1]
 	lda.b d0
 	bne .step
 	jml.l print

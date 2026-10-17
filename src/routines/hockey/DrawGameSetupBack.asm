@@ -1,4 +1,4 @@
-DrawGameSetupBack:		;Draw the game setup screen backdrop with the NHLPA logo
+DrawGameSetupBack:					;Draw the game setup screen backdrop with the NHLPA logo
 	lda.w blankchar
 	ldx.w #$07FE
 .clr:
@@ -14,7 +14,7 @@ DrawGameSetupBack:		;Draw the game setup screen backdrop with the NHLPA logo
 	ldx.w #$07FE
 .map:
 	lda.l TestList,x
-	and.w #$DFFF		; priority bit off
+	and.w #$DFFF					; priority bit off
 	sta.l backmap,x
 	dex
 	dex
@@ -22,7 +22,7 @@ DrawGameSetupBack:		;Draw the game setup screen backdrop with the NHLPA logo
 	stz.b textdirtylo
 	lda.w #$03FF
 	sta.b textdirtyhi
-	lda.w #NHLPALogo		; the NHLPA logo (packed)
+	lda.w #NHLPALogo				; the NHLPA logo (packed)
 	sta.b tmp0
 	lda.w #NHLPALogo>>16
 	sta.b tmp1
@@ -37,9 +37,9 @@ DrawGameSetupBack:		;Draw the game setup screen backdrop with the NHLPA logo
 	sta.b mula
 	lda.w #$0008
 	sta.b mulb
-	jsl.l mulu16		; 16-bit multiply
+	jsl.l mulu16					; 16-bit multiply
 	adc.b tmp0
-	asl a		; logo map word + logochars
+	asl a							; logo map word + logochars
 	tax
 	lda.l TestList,x
 	adc.w logochars
@@ -49,7 +49,7 @@ DrawGameSetupBack:		;Draw the game setup screen backdrop with the NHLPA logo
 	asl a
 	asl a
 	asl a
-	asl a		; textmap row y * 32 + x + 12
+	asl a							; textmap row y * 32 + x + 12
 	adc.b tmp0
 	asl a
 	tax

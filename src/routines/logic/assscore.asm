@@ -1,5 +1,5 @@
-assscore:		;Assignment: celebrating a goal; the scorer pumps his arm
-	lda.w Xvel,x		; Xvel, Yvel *= $C0/256
+assscore:							;Assignment: celebrating a goal; the scorer pumps his arm
+	lda.w Xvel,x					; Xvel, Yvel *= $C0/256
 	sta.b mula
 	lda.w #$00C0
 	sta.b mulb
@@ -13,7 +13,7 @@ assscore:		;Assignment: celebrating a goal; the scorer pumps his arm
 	jsl.l muls32
 	lda.b mulres+1
 	sta.w Yvel,x
-	txa		; the carrier drops the puck
+	txa								; the carrier drops the puck
 	lsr a
 	cmp.w puckc
 	bne .al
@@ -25,7 +25,7 @@ assscore:		;Assignment: celebrating a goal; the scorer pumps his arm
 	lda.w pfalock,x
 	bne .rtl
 	lda.w pflags,x
-	bit.w #pfna		; new assignment: spot (+-90, Vpos)
+	bit.w #pfna						; new assignment: spot (+-90, Vpos)
 	beq .nna
 	and.w #~pfna&$FFFF
 	sta.w pflags,x
@@ -51,7 +51,7 @@ assscore:		;Assignment: celebrating a goal; the scorer pumps his arm
 	sta.b d0
 	lda.w temp4,x
 	sta.b d1
-	lda.w temp1,x		; temp1 runs out: celebrate (SPApump for the scorer)
+	lda.w temp1,x					; temp1 runs out: celebrate (SPApump for the scorer)
 	sec
 	sbc.b d7
 	sta.w temp1,x
@@ -67,20 +67,20 @@ assscore:		;Assignment: celebrating a goal; the scorer pumps his arm
 	sta.b d1
 .nopump:
 	jsl.l SetSPA
-.1:		;temp1 = random 120
+.1:									;temp1 = random 120
 	lda.w #120
 	jsl.l randoma
 	sta.w temp1,x
 .rtl:
 	rtl
-.chkcon:		;joystick controlled: stand, else skateto
+.chkcon:							;joystick controlled: stand, else skateto
 	lda.w pflags,x
 	bit.w #pfjoycon
 	bne .rtl2
 	jml.l skateto
 .rtl2:
 	rtl
-unusedFF86:		;unused, $FF fill to the end of the bank
+unusedFF86:							;unused, $FF fill to the end of the bank
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF

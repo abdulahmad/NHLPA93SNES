@@ -1,4 +1,4 @@
-TickerNext:		;Go to the next ticker game
+TickerNext:							;Go to the next ticker game
 	lda.w TickerNum
 	bmi .last
 	ora.w gamenum

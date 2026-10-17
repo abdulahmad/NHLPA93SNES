@@ -1,5 +1,5 @@
-UpdateScores:		;Update the ticker scores of the other playoff games
-	jsl.l GetShifter		; GetShifter: d1 = games - 1
+UpdateScores:						;Update the ticker scores of the other playoff games
+	jsl.l GetShifter				; GetShifter: d1 = games - 1
 	lda.b d1
 	sta.w TickerNum
 	asl a
@@ -9,7 +9,7 @@ UpdateScores:		;Update the ticker scores of the other playoff games
 	cmp.w gamenum
 	beq .next
 	ldy.b a0
-	lda.w gsflags,y		; clear gsfhl; game not over: SetScore
+	lda.w gsflags,y					; clear gsfhl; game not over: SetScore
 	and.w #~gsfhl&$FFFF
 	sta.w gsflags,y
 	bit.w #gsfso

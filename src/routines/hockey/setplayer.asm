@@ -1,7 +1,7 @@
-setplayer:		;Bring roster player d3 onto the ice as object X and set his stats
+setplayer:							;Bring roster player d3 onto the ice as object X and set his stats
 	phx
 	phy
-	lda.w pflags,x		; clear pf2inj
+	lda.w pflags,x					; clear pf2inj
 	and.w #~pf2inj&$FFFF
 	sta.w pflags,x
 	stz.b a0
@@ -12,10 +12,10 @@ setplayer:		;Bring roster player d3 onto the ice as object X and set his stats
 .0:
 	lda.b d3
 	and.w #$00FF
-	sta.w pnum,x		; pnum = d3
+	sta.w pnum,x					; pnum = d3
 	asl a
 	sta.b d3
-	lda.w #aepen		; aepen: from the penalty box
+	lda.w #aepen					; aepen: from the penalty box
 	sta.b d0
 	lda.b a0
 	beq .idx
@@ -26,14 +26,14 @@ setplayer:		;Bring roster player d3 onto the ice as object X and set his stats
 	lda.w tmpdst,y
 	sta.b d1
 	bpl .da
-	lda.w #aeben		; aeben: from the bench
+	lda.w #aeben					; aeben: from the bench
 	sta.b d0
 	lda.b d1
 	cmp.w #TMPDBENCH
 	bne .nda
 .da:
 	jsl.l assinsert
-	stz.w pfalock,x		; pfalock = 0, SPA = 0
+	stz.w pfalock,x					; pfalock = 0, SPA = 0
 	stz.w SPA,x
 .nda:
 	lda.b a0
@@ -43,10 +43,10 @@ setplayer:		;Bring roster player d3 onto the ice as object X and set his stats
 	clc
 	adc.b d3
 	tay
-	lda.w #TMPDICE		; tmpdst = TMPDICE
+	lda.w #TMPDICE					; tmpdst = TMPDICE
 	sta.w tmpdst,y
 	lsr.b d3
-	ldy.b a0		; a0 = team data
+	ldy.b a0						; a0 = team data
 	lda.w tmdata,y
 	sta.b a0
 	lda.w #TeamList>>16
@@ -61,31 +61,31 @@ setplayer:		;Bring roster player d3 onto the ice as object X and set his stats
 	cpx.w #$0004
 	bne .savea
 	ldx.b xsave
-	ldy.w #$0008		; team data + word at +8: bonus bytes
+	ldy.w #$0008					; team data + word at +8: bonus bytes
 	lda.b [a0],y
 	clc
 	adc.b a0
 	sta.b a0
-	stz.w PPBonus		; all four bonuses = 0
+	stz.w PPBonus					; all four bonuses = 0
 	stz.w PKBonus
 	stz.b ThirdPBonus
 	stz.w HmAwBonus
-	lda.w position,x		; goalie: no modifiers
+	lda.w position,x				; goalie: no modifiers
 	bne .mods
 	jmp.w .nomod
 .mods:
 	lda.w sflags
-	bit.w #sf2pwrplay		; sf2pwrplay
+	bit.w #sf2pwrplay				; sf2pwrplay
 	beq .nda3
 	jsl.l chkpk2
 	beq .nda2
-	ldy.w #$0001		; power play: PPBonus = low nibble of byte 1
+	ldy.w #$0001					; power play: PPBonus = low nibble of byte 1
 	lda.b [a0],y
 	and.w #$000F
 	sta.w PPBonus
 	bra .nda3
 .nda2:
-	ldy.w #$0001		; short-handed: PKBonus = -high nibble of byte 1
+	ldy.w #$0001					; short-handed: PKBonus = -high nibble of byte 1
 	lda.b [a0],y
 	lsr a
 	lsr a
@@ -96,7 +96,7 @@ setplayer:		;Bring roster player d3 onto the ice as object X and set his stats
 	inc a
 	sta.w PKBonus
 .nda3:
-	ldy.w #$0002		; HmAwBonus: home = high nibble of byte 2, visitors = -low nibble
+	ldy.w #$0002					; HmAwBonus: home = high nibble of byte 2, visitors = -low nibble
 	lda.b [a0],y
 	and.w #$000F
 	eor.w #$FFFF
@@ -114,7 +114,7 @@ setplayer:		;Bring roster player d3 onto the ice as object X and set his stats
 .tm:
 	lda.b d0
 	sta.w HmAwBonus
-	lda.w gsp		; 3rd period?
+	lda.w gsp						; 3rd period?
 	sec
 	sbc.w #$0002
 	bmi .neg
@@ -130,7 +130,7 @@ setplayer:		;Bring roster player d3 onto the ice as object X and set his stats
 .neg1:
 	bvs .score
 .half:
-	jsl.l GetPeriodTime		; GetPeriodTime
+	jsl.l GetPeriodTime				; GetPeriodTime
 	lsr.b d0
 	lda.b d0
 	sec
@@ -142,7 +142,7 @@ setplayer:		;Bring roster player d3 onto the ice as object X and set his stats
 .neg2:
 	bvs .nomod
 .score:
-	lda.w tmscore		; tied or trailing: ThirdPBonus = 2
+	lda.w tmscore					; tied or trailing: ThirdPBonus = 2
 	sec
 	sbc.w tmscore+2
 	sta.b tmp0
@@ -169,12 +169,12 @@ setplayer:		;Bring roster player d3 onto the ice as object X and set his stats
 	dex
 	bpl .resta
 	ldx.b xsave
-	ldy.w #$0000		; a0 = roster records
+	ldy.w #$0000					; a0 = roster records
 	lda.b [a0],y
 	clc
 	adc.b a0
 	sta.b a0
-.find:		;skip the roster records before player d3
+.find:								;skip the roster records before player d3
 	lda.b [a0]
 	clc
 	adc.b a0
@@ -186,10 +186,10 @@ setplayer:		;Bring roster player d3 onto the ice as object X and set his stats
 	sec
 	sbc.w #$0008
 	sta.b a0
-	lda.b [a0]		; byte 0: rostnum
+	lda.b [a0]						; byte 0: rostnum
 	and.w #$00FF
 	sta.w rostnum,x
-	ldy.w #$0001		; byte 1: weight (high nibble*8), legstr
+	ldy.w #$0001					; byte 1: weight (high nibble*8), legstr
 	lda.b [a0],y
 	and.w #$00F0
 	lsr a
@@ -197,7 +197,7 @@ setplayer:		;Bring roster player d3 onto the ice as object X and set his stats
 	lda.b [a0],y
 	and.w #$000F
 	sta.w legstr,x
-	iny		; byte 2: legspd, aioff
+	iny								; byte 2: legspd, aioff
 	lda.b [a0],y
 	lsr a
 	lsr a
@@ -216,12 +216,12 @@ setplayer:		;Bring roster player d3 onto the ice as object X and set his stats
 	clc
 	adc.b ThirdPBonus
 	jsl.l ClampNibble
-	eor.w #$000F		; frames to skip: (15-n+15)/2
+	eor.w #$000F					; frames to skip: (15-n+15)/2
 	clc
 	adc.w #$000F
 	lsr a
 	sta.w aioff,x
-	iny		; byte 3: aidef, shotspd
+	iny								; byte 3: aidef, shotspd
 	lda.b [a0],y
 	lsr a
 	lsr a
@@ -239,10 +239,10 @@ setplayer:		;Bring roster player d3 onto the ice as object X and set his stats
 	lda.b [a0],y
 	and.w #$000F
 	sta.w shotspd,x
-	lda.w attribute,x		; clear the x flip
+	lda.w attribute,x				; clear the x flip
 	and.w #~attrxflip&$FFFF
 	sta.w attribute,x
-	iny		; byte 4: aggress, handed, fightagg
+	iny								; byte 4: aggress, handed, fightagg
 	lda.b [a0],y
 	lsr a
 	lsr a
@@ -254,7 +254,7 @@ setplayer:		;Bring roster player d3 onto the ice as object X and set his stats
 	jsl.l ClampNibble
 	sta.w aggress,x
 	lda.b [a0],y
-	and.w #$0001		; bit 0 set: left handed
+	and.w #$0001					; bit 0 set: left handed
 	sta.w handed,x
 	bne .ha
 	lda.w attribute,x
@@ -264,7 +264,7 @@ setplayer:		;Bring roster player d3 onto the ice as object X and set his stats
 	lda.b [a0],y
 	and.w #$000E
 	sta.w fightagg,x
-	iny		; byte 5: stickhand, shotacc
+	iny								; byte 5: stickhand, shotacc
 	lda.b [a0],y
 	lsr a
 	lsr a
@@ -289,7 +289,7 @@ setplayer:		;Bring roster player d3 onto the ice as object X and set his stats
 	adc.w HmAwBonus
 	jsl.l ClampNibble
 	sta.w shotacc,x
-	iny		; byte 6: endurance, spodds
+	iny								; byte 6: endurance, spodds
 	lda.b [a0],y
 	lsr a
 	lsr a
@@ -305,7 +305,7 @@ setplayer:		;Bring roster player d3 onto the ice as object X and set his stats
 	adc.b ThirdPBonus
 	jsl.l ClampNibble
 	sta.w spodds,x
-	iny		; byte 7: passacc, GGSleft
+	iny								; byte 7: passacc, GGSleft
 	lda.b [a0],y
 	lsr a
 	lsr a

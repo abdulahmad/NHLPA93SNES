@@ -1,4 +1,4 @@
-PlayerNumName:		;mesarea = the uniform number and name of roster player d0 of team a2
+PlayerNumName:						;mesarea = the uniform number and name of roster player d0 of team a2
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -40,7 +40,7 @@ PlayerNumName:		;mesarea = the uniform number and name of roster player d0 of te
 	cpx.w #$0004
 	bne .pushrec
 	ldx.b xsave
-	lda.w #mesarea		; a3 = mesarea (length 4), a1 = mesarea+2
+	lda.w #mesarea					; a3 = mesarea (length 4), a1 = mesarea+2
 	sta.b a3
 	inc a
 	inc a
@@ -50,16 +50,16 @@ PlayerNumName:		;mesarea = the uniform number and name of roster player d0 of te
 	sta.b a1+2
 	lda.w #$0004
 	sta.b [a3]
-	lda.b a0		; skip the name: the uniform number byte
+	lda.b a0						; skip the name: the uniform number byte
 	clc
 	adc.b [a0]
 	sta.b a0
 	lda.b [a0]
 	and.w #$00FF
 	sta.b d0
-	jsl.l PutDigits2		; two digits, then a blank and the name
+	jsl.l PutDigits2				; two digits, then a blank and the name
 	jsl.l appendz
-	dw $0003		; printz inline string: length (counts itself), then control bytes / text
+	dw $0003						; printz inline string: length (counts itself), then control bytes / text
 	db " "
 	stx.b xsave
 	ldx.w #$0002

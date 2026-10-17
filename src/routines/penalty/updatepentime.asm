@@ -1,4 +1,5 @@
-updatepentime:		;Once a second, count down the penalty box times of both teams and release players whose time is up
+updatepentime:						;Once a second, count down the penalty box times of both teams and release
+									;players whose time is up
 	lda.w #$0020
 	trb.w sflags3
 	lda.w gmclock
@@ -17,7 +18,7 @@ updatepentime:		;Once a second, count down the penalty box times of both teams a
 	jsl.l .team
 	lda.w #$0002
 	sta.b a2
-.team:		;team a2
+.team:								;team a2
 	lda.b a2
 	beq .noa2
 	lda.w #$001A
@@ -80,7 +81,7 @@ updatepentime:		;Once a second, count down the penalty box times of both teams a
 .two:
 	lda.w mesarea+2
 	sta.b d0
-.chk:		;release player d0 when his time is <= 5 (RemovePlayerFromList)
+.chk:								;release player d0 when his time is <= 5 (RemovePlayerFromList)
 	lda.b a2
 	beq .noa23
 	lda.w #$0034

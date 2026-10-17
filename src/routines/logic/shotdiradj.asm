@@ -1,5 +1,6 @@
-shotdiradj:		;Aim a computer shot at the open side when the goalie covers the middle of the net
-	lda.w pflags,x		; joystick player: skip
+shotdiradj:							;Aim a computer shot at the open side when the goalie covers the middle of
+									;the net
+	lda.w pflags,x					; joystick player: skip
 	bit.w #pfjoycon
 	beq .go
 	jmp.w .rtl
@@ -14,7 +15,7 @@ shotdiradj:		;Aim a computer shot at the open side when the goalie covers the mi
 	bne .g
 	lda.w #$000A
 	sta.b a0
-.g:		;find position 0 on the other team
+.g:									;find position 0 on the other team
 	inc.b a0
 	inc.b a0
 	ldy.b a0
@@ -23,7 +24,7 @@ shotdiradj:		;Aim a computer shot at the open side when the goalie covers the mi
 	dec.b d1
 	bpl .g
 	jmp.w .x
-.found:		;goalie x/y + half his velocity - puck; d2 = distance
+.found:								;goalie x/y + half his velocity - puck; d2 = distance
 	lda.w Xvel+1,y
 	and.w #$00FF
 	bit.w #$0080
@@ -80,7 +81,7 @@ shotdiradj:		;Aim a computer shot at the open side when the goalie covers the mi
 	sta.b d0
 	pla
 	sta.b d1
-	lda.w #$0012		; d3/d4 = post x/goal y
+	lda.w #$0012					; d3/d4 = post x/goal y
 	sta.b d3
 	lda.w #$0108
 	sta.b d4
@@ -88,7 +89,7 @@ shotdiradj:		;Aim a computer shot at the open side when the goalie covers the mi
 	bne .l
 	lda.w #$FEF8
 	sta.b d4
-.l:		;posts at x +-18, y +-$108
+.l:									;posts at x +-18, y +-$108
 	lda.b d4
 	pha
 	lda.b d3
@@ -114,7 +115,7 @@ shotdiradj:		;Aim a computer shot at the open side when the goalie covers the mi
 	eor.w #$FFFF
 	inc a
 .abs:
-	cmp.w #$002D		; |angle| < 45: shoot at the open side
+	cmp.w #$002D					; |angle| < 45: shoot at the open side
 	bcs .x
 	lda.w pfgoal,x
 	beq .s

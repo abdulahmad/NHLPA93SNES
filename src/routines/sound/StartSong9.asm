@@ -1,4 +1,4 @@
-StartSong9:		;Start the playoff screen music unless it is already playing
+StartSong9:							;Start the playoff screen music unless it is already playing
 	lda.w cursong
 	cmp.w #9
 	beq .rtl

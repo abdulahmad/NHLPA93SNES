@@ -1,4 +1,4 @@
-mulu32:		;Unsigned 32-bit multiply: mulres = mula * mulb
+mulu32:								;Unsigned 32-bit multiply: mulres = mula * mulb
 	sep #$20
 	lda.b mula
 	sta.w WRMPYA

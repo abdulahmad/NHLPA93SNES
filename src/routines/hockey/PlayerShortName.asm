@@ -1,4 +1,5 @@
-PlayerShortName:		;mesarea = the number, first initial and last name of roster player d0 of team a2
+PlayerShortName:					;mesarea = the number, first initial and last name of roster player d0 of
+									;team a2
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -42,7 +43,7 @@ PlayerShortName:		;mesarea = the number, first initial and last name of roster p
 	ldx.b xsave
 	lda.w #$0000
 	sta.b a1+2
-	lda.w #mesarea+2		; a1 = mesarea+2
+	lda.w #mesarea+2				; a1 = mesarea+2
 	sta.b a1
 	lda.b a0
 	clc
@@ -51,7 +52,7 @@ PlayerShortName:		;mesarea = the number, first initial and last name of roster p
 	lda.b [a0]
 	and.w #$00FF
 	sta.b d0
-	jsl.l PutDigits2		; number
+	jsl.l PutDigits2				; number
 	lda.w #' '
 	sta.b [a1]
 	inc.b a1
@@ -64,7 +65,7 @@ PlayerShortName:		;mesarea = the number, first initial and last name of roster p
 	dex
 	bpl .poprec
 	ldx.b xsave
-	lda.b [a0]		; name length
+	lda.b [a0]						; name length
 	sta.b d0
 	clc
 	adc.b a0
@@ -73,7 +74,7 @@ PlayerShortName:		;mesarea = the number, first initial and last name of roster p
 	sta.b a2+2
 	inc.b a0
 	inc.b a0
-	lda.b [a0]		; first initial
+	lda.b [a0]						; first initial
 	inc.b a0
 	sta.b [a1]
 	inc.b a1
@@ -84,7 +85,7 @@ PlayerShortName:		;mesarea = the number, first initial and last name of roster p
 	sta.b [a1]
 	inc.b a1
 .skipfirst:
-	lda.b [a0]		; skip to the last name
+	lda.b [a0]						; skip to the last name
 	inc.b a0
 	and.w #$00FF
 	cmp.w #' '

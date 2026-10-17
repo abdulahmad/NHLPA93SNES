@@ -1,19 +1,20 @@
-StartHL2:		;Play the highlight of playoff game a0 with its score; Start or A ends it, and a tie gets a random winner
-	lda.w sflags3		; Start pressed before: no more highlights
+StartHL2:							;Play the highlight of playoff game a0 with its score; Start or A ends it,
+									;and a tie gets a random winner
+	lda.w sflags3					; Start pressed before: no more highlights
 	bit.w #sf3sbut
 	beq .go
 	jmp.w .nhl0
 .go:
-	jsl.l .sv		; save the game state
+	jsl.l .sv						; save the game state
 	lda.b d1
 	sta.b d3
-	jsl.l NewTicker3		; the score of the highlight game, bank $8F
+	jsl.l NewTicker3				; the score of the highlight game, bank $8F
 	lda.w sflags3
 	bit.w #sf3sbut
 	beq .show
 	jmp.w .nhl1
 .show:
-	lda.w #$0004		; Framer 24 x 3
+	lda.w #$0004					; Framer 24 x 3
 	sta.w printx
 	lda.w printy
 	sec
@@ -23,16 +24,16 @@ StartHL2:		;Play the highlight of playoff game a0 with its score; Start or A end
 	sta.b d0
 	lda.w #3
 	sta.b d1
-	jsl.l Framer		; d0 x d1
+	jsl.l Framer					; d0 x d1
 	inc.w printx
 	dec.w printy
 	dec.w printy
 	jsl.l printz
-	dw $0016		; printz inline string: length (counts itself), then control bytes / text
+	dw $0016						; printz inline string: length (counts itself), then control bytes / text
 	db "Highlight from game:"
-	lda.w #180		; 180 frames, Start skips
+	lda.w #180						; 180 frames, Start skips
 	sta.b d0
-	jsl.l waitxsr		; wait d0 frames or a button
+	jsl.l waitxsr					; wait d0 frames or a button
 	lda.b d1
 	bit.w #JOYSTART
 	beq .play
@@ -45,7 +46,7 @@ StartHL2:		;Play the highlight of playoff game a0 with its score; Start or A end
 	beq .snd
 	jsl.l SPCGameUpload
 .snd:
-	ldy.b a0		; HomeTeam/VisTeam of game a0
+	ldy.b a0						; HomeTeam/VisTeam of game a0
 	lda.w gst1,y
 	sta.w HomeTeam
 	lda.w gst2,y
@@ -72,7 +73,7 @@ StartHL2:		;Play the highlight of playoff game a0 with its score; Start or A end
 	sta.w c2playernum
 	stz.w cont1team
 	stz.w cont2team
-	lda.w #120		; gameclock = 120 + random 120
+	lda.w #120						; gameclock = 120 + random 120
 	jsl.l randoma
 	adc.w #120
 	sta.w gameclock
@@ -95,7 +96,7 @@ StartHL2:		;Play the highlight of playoff game a0 with its score; Start or A end
 	cpx.w #$0004
 	bne .pushg2
 	ldx.b xsave
-	ldy.b a0		; gsp, scores from the game
+	ldy.b a0						; gsp, scores from the game
 	lda.w gsper,y
 	dec a
 	sta.w gsp
@@ -103,22 +104,22 @@ StartHL2:		;Play the highlight of playoff game a0 with its score; Start or A end
 	sta.w tmscore
 	lda.w gss2,y
 	sta.w tmscore+2
-	lda.w #gmhl		; gmode = gmhl
+	lda.w #gmhl						; gmode = gmhl
 	sta.w gmode
 	stz.w gmclock
-	lda.w gsp		; odd period: gmdir
+	lda.w gsp						; odd period: gmdir
 	lsr a
 	bcc .ndi
 	lda.w #gmdir
 	tsb.w gmode
 .ndi:
 	stz.w sflags3
-	lda.w #sf2drec		; sflags = sf2drec
+	lda.w #sf2drec					; sflags = sf2drec
 	sta.w sflags
 	stz.w sfhormode
 	stz.w glovecords
 	stz.w iflags
-	lda.w #$FFFF		; RefCnt, puckcross times -1
+	lda.w #$FFFF					; RefCnt, puckcross times -1
 	sta.w RefCnt
 	sta.w puckcross+2
 	sta.w puckcross+6
@@ -133,7 +134,7 @@ StartHL2:		;Play the highlight of playoff game a0 with its score; Start or A end
 	sta.b a2
 	jsl.l .setteam
 	jsl.l resetplstuff
-	lda.w #11		; 12 players to their .postab spots
+	lda.w #11						; 12 players to their .postab spots
 	sta.b d0
 	lda.w #.postab
 	sta.b a0
@@ -167,12 +168,12 @@ StartHL2:		;Play the highlight of playoff game a0 with its score; Start or A end
 	dec.b d0
 	bpl .ploop
 	jsl.l SprSort
-	lda.w #180		; 180 frames after the clock stops
+	lda.w #180						; 180 frames after the clock stops
 	pha
 	lda.b vcount
 	sta.w oldvcount
-.0:		;wait for the next frame
-	lda.b vcount		; the frame time steps as the game loop
+.0:									;wait for the next frame
+	lda.b vcount					; the frame time steps as the game loop
 	cmp.w oldvcount
 	beq .0
 	tax
@@ -208,7 +209,7 @@ StartHL2:		;Play the highlight of playoff game a0 with its score; Start or A end
 	bne .frame
 	ldx.b d7
 .clk:
-	lda.w gameclock		; run the clock
+	lda.w gameclock					; run the clock
 	beq .clk1
 	lda.w gameclock+2
 	sec
@@ -233,11 +234,11 @@ StartHL2:		;Play the highlight of playoff game a0 with its score; Start or A end
 	pha
 	bmi .endhl
 .1:
-	jsl.l Readjoy12		; Start or A ends it
+	jsl.l Readjoy12					; Start or A ends it
 	lda.b d1
 	bit.w #JOYSTART|JOYA
 	beq .0
-	lda.w tmscore		; tied: random goal
+	lda.w tmscore					; tied: random goal
 	cmp.w tmscore+2
 	bne .endhl
 	jsl.l random
@@ -295,31 +296,31 @@ StartHL2:		;Play the highlight of playoff game a0 with its score; Start or A end
 	dex
 	bpl .popd1
 	ldx.b xsave
-	ldy.b a0		; back into the game record
+	ldy.b a0						; back into the game record
 	lda.w tmscore
 	sta.w gss1,y
 	lda.w tmscore+2
 	sta.w gss2,y
-	lda.b d1		; Start: skip
+	lda.b d1						; Start: skip
 	bit.w #JOYSTART
 	beq .stats
 	jmp.w .nhl1
 .stats:
 	jsl.l forceblack
-	jsl.l .lo		; restore the game state
+	jsl.l .lo						; restore the game state
 	jsl.l setplayercolors
 	jsl.l SetHor
 	jsl.l setvideo
-	jsl.l printz		; DisplayStats box
-	dw $0005		; printz inline string: length (counts itself), then control bytes / text
+	jsl.l printz					; DisplayStats box
+	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $BF,$05,$0C
 	lda.w #22
 	sta.b d0
 	lda.w #7
 	sta.b d1
-	jsl.l Framer		; d0 x d1
+	jsl.l Framer					; d0 x d1
 	jsl.l printscores1
-	jsl.l Pmenu		; DisplayStats
+	jsl.l Pmenu						; DisplayStats
 	stx.b xsave
 	ldx.w #$001A
 .resta:
@@ -360,21 +361,21 @@ StartHL2:		;Play the highlight of playoff game a0 with its score; Start or A end
 	bne .savea
 	ldx.b xsave
 	ldy.b a0
-	lda.w #4		; gsper 4: tied after the highlight: again
+	lda.w #4						; gsper 4: tied after the highlight: again
 	sta.w gsper,y
 	lda.w gss1,y
 	cmp.w gss2,y
 	bne .won
 	jmp.w StartHL2
 .won:
-	lda.w #5		; gsper 5: final
+	lda.w #5						; gsper 5: final
 	sta.w gsper,y
 	lda.b d1
 	sta.b d3
 	jsl.l NewTicker3
 	lda.w #180
 	sta.b d0
-	jsl.l waitxsr		; wait d0 frames or a button
+	jsl.l waitxsr					; wait d0 frames or a button
 	lda.b d1
 	bit.w #JOYSTART
 	beq .exit
@@ -409,7 +410,8 @@ StartHL2:		;Play the highlight of playoff game a0 with its score; Start or A end
 .nhl0:
 	jsl.l .ranres
 	bra .exit
-.setteam:		;SNES: team a2 for the highlight: energy, setpersonel, forcepldata, no last touches
+.setteam:							;SNES: team a2 for the highlight: energy, setpersonel, forcepldata, no
+									;last touches
 	jsl.l reenergizeteam
 	jsl.l setpersonel
 	jsl.l forcepldata
@@ -419,7 +421,7 @@ StartHL2:		;Play the highlight of playoff game a0 with its score; Start or A end
 	sta.w tmtouch2,y
 	sta.w tmtouch3,y
 	rtl
-.ranres:		;a tie gets a random one-goal winner; gsper 5 (final)
+.ranres:							;a tie gets a random one-goal winner; gsper 5 (final)
 	ldy.b a0
 	lda.w gss1,y
 	cmp.w gss2,y
@@ -439,7 +441,7 @@ StartHL2:		;Play the highlight of playoff game a0 with its score; Start or A end
 	lda.w #5
 	sta.w gsper,y
 	rtl
-.sv:		;save the game state (gmode-1 .. ScoreSumbytes) to hlsavebuf
+.sv:								;save the game state (gmode-1 .. ScoreSumbytes) to hlsavebuf
 	ldx.w #$0000
 .sv1:
 	lda.w gmode-1,x
@@ -455,7 +457,7 @@ StartHL2:		;Play the highlight of playoff game a0 with its score; Start or A end
 	stz.w tmgoalie
 	stz.w tmgoalie+2
 	rtl
-.lo:		;restore the game state from hlsavebuf
+.lo:								;restore the game state from hlsavebuf
 	ldx.w #$0000
 .lo1:
 	lda.l hlsavebuf,x
@@ -469,7 +471,7 @@ StartHL2:		;Play the highlight of playoff game a0 with its score; Start or A end
 	inx
 	sta.w ScoreSumbytes
 	rtl
-.postab:		;x, y start spot by position (0-5 attacking up, 6-11 down)
+.postab:							;x, y start spot by position (0-5 attacking up, 6-11 down)
 	dw 0,-240
 	dw -70,-140
 	dw 20,-110

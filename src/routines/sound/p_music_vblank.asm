@@ -1,11 +1,12 @@
-p_music_vblank:		;Vblank sound handler: every other frame, send the next queued sound command to the sound driver.
+p_music_vblank:						;Vblank sound handler: every other frame, send the next queued sound
+									;command to the sound driver.
 		;   Waits a little after a sample upload
-	lda.w sndsettle		; wait after the sample upload
+	lda.w sndsettle					; wait after the sample upload
 	bne .settle
 	sep #$30
 	lda.b sndlock
 	bne .done
-	lda.b vcount		; every other frame
+	lda.b vcount					; every other frame
 	lsr a
 	bcc .done
 	ldx.b sndqout
@@ -13,7 +14,7 @@ p_music_vblank:		;Vblank sound handler: every other frame, send the next queued 
 	beq .done
 	lda.b sndqueue,x
 	sta.w APUIO0
-	inc.b sndptr		; sndptr (low byte) doubles as the command counter here
+	inc.b sndptr					; sndptr (low byte) doubles as the command counter here
 	lda.b sndptr
 	sta.w APUIO1
 	txa

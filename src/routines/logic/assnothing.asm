@@ -1,4 +1,4 @@
-assnothing:		;A computer player stands still
+assnothing:							;A computer player stands still
 	lda.w pflags,x
 	bit.w #$0008
 	bne .rtl

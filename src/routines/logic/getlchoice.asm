@@ -1,4 +1,5 @@
-getlchoice:		;d0 = the line for line choice d0 of team a2, by the man advantage; -1 = none
+getlchoice:							;d0 = the line for line choice d0 of team a2, by the man advantage; -1 =
+									;none
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -9,7 +10,7 @@ getlchoice:		;d0 = the line for line choice d0 of team a2, by the man advantage;
 	cpx.w #$0008
 	bne .save
 	ldx.b xsave
-	lda.b a2		; d2 = other tmap - our tmap: players short
+	lda.b a2						; d2 = other tmap - our tmap: players short
 	eor.w #2
 	tay
 	lda.w tmap,y
@@ -18,18 +19,18 @@ getlchoice:		;d0 = the line for line choice d0 of team a2, by the man advantage;
 	sbc.w tmap,y
 	sta.b d2
 	beq .1
-	lda.b d0		; penalty killing: +21
+	lda.b d0						; penalty killing: +21
 	clc
 	adc.w #21
 	sta.b d0
 	lda.b d2
 	bmi .1
-	lda.b d0		; power play: +21 more
+	lda.b d0						; power play: +21 more
 	clc
 	adc.w #21
 	sta.b d0
 .1:
-	ldy.b a2		; + 3 * tmline
+	ldy.b a2						; + 3 * tmline
 	lda.w tmline,y
 	sta.b d1
 	lda.b d0
@@ -62,7 +63,7 @@ getlchoice:		;d0 = the line for line choice d0 of team a2, by the man advantage;
 	bpl .restore
 	ldx.b xsave
 	rtl
-.tab:		;line for choice 0-2 by tmline, 3 entries per line (-1 = none)
-	db 0,1,2, 1,2,0, 2,0,1, 0,1,2, 0,1,2, 0,1,2, 0,1,2		; no power play: lines 0-6
-	db 3,4,-1, 3,4,-1, 3,4,-1, 3,4,-1, 4,3,-1, 3,4,-1, 3,4,-1		; penalty killing: lines 0-6
-	db 5,6,-1, 5,6,-1, 5,6,-1, 5,6,-1, 5,6,-1, 5,6,-1, 6,5,-1		; power play: lines 0-6
+.tab:								;line for choice 0-2 by tmline, 3 entries per line (-1 = none)
+	db 0,1,2, 1,2,0, 2,0,1, 0,1,2, 0,1,2, 0,1,2, 0,1,2	; no power play: lines 0-6
+	db 3,4,-1, 3,4,-1, 3,4,-1, 3,4,-1, 4,3,-1, 3,4,-1, 3,4,-1	; penalty killing: lines 0-6
+	db 5,6,-1, 5,6,-1, 5,6,-1, 5,6,-1, 5,6,-1, 5,6,-1, 6,5,-1	; power play: lines 0-6

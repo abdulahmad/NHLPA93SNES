@@ -1,4 +1,5 @@
-PenGoalStuff:		;After a goal on a power play, let the first player out of the box whose penalty is not coincidental.
+PenGoalStuff:						;After a goal on a power play, let the first player out of the box whose
+									;penalty is not coincidental.
 		;   a1 = team scored on, a2 = scoring team
 	stx.b xsave
 	ldx.w #$0000
@@ -22,7 +23,7 @@ PenGoalStuff:		;After a goal on a power play, let the first player out of the bo
 	ldx.b xsave
 	jsl.l ClearPenaltyBuffer
 	ldy.b a2
-	lda.w tmap,y		; tmap(a2) - tmap(a1) > 0?
+	lda.w tmap,y					; tmap(a2) - tmap(a1) > 0?
 	ldy.b a1
 	sec
 	sbc.w tmap,y
@@ -32,13 +33,13 @@ PenGoalStuff:		;After a goal on a power play, let the first player out of the bo
 	bra .ex
 .neg:
 	bvc .ex
-.more:		;scoring team had more players on the ice
+.more:								;scoring team had more players on the ice
 	lda.b a1
 	beq .lst
 	lda.w #$001A
 .lst:
 	sta.b a0
-.loop:		;next player in the box list (negative = end)
+.loop:								;next player in the box list (negative = end)
 	ldy.b a0
 	lda.w tmboxlist,y
 	inc.b a0
@@ -53,10 +54,10 @@ PenGoalStuff:		;After a goal on a power play, let the first player out of the bo
 	clc
 	adc.b d2
 	tay
-	lda.w tmpdst,y		; coincidental penalty: skip
+	lda.w tmpdst,y					; coincidental penalty: skip
 	bit.w #$4000
 	bne .loop
-	lda.w #$0000		; out of the box, one more on the ice, power play goal
+	lda.w #$0000					; out of the box, one more on the ice, power play goal
 	sta.w tmpdst,y
 	jsl.l RemovePlayerFromList
 	ldy.b a1
@@ -68,7 +69,7 @@ PenGoalStuff:		;After a goal on a power play, let the first player out of the bo
 	inc a
 	sta.w tmPwrGoals,y
 	lda.w #tmflcc
-	tsb.w tmflags		; line change box redraw
+	tsb.w tmflags					; line change box redraw
 	tsb.w tmflags+2
 .ex:
 	stx.b xsave

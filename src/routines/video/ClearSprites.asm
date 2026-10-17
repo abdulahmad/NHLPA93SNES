@@ -1,4 +1,4 @@
-ClearSprites:		;Move every sprite off screen and start a new sprite frame
+ClearSprites:						;Move every sprite off screen and start a new sprite frame
 	clc
 	ldx.w #$0000
 	ldy.w #$0008

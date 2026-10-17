@@ -1,4 +1,4 @@
-AvgCline:		;d0 = the average energy of team a2's current line
+AvgCline:							;d0 = the average energy of team a2's current line
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -50,7 +50,7 @@ AvgCline:		;d0 = the average energy of team a2's current line
 	inc.b a0
 	dec.b d2
 	bpl .l0
-	lda.b d1		; players counted
+	lda.b d1						; players counted
 	beq .ex
 	sta.b mula
 	lda.b d0

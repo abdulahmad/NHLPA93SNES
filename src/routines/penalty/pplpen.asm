@@ -1,4 +1,4 @@
-pplpen:		;Print one penalty box line: player number and time left
+pplpen:								;Print one penalty box line: player number and time left
 	lda.w printy
 	cmp.w #$000B
 	bcs USBoard_rtl

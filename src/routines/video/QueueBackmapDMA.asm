@@ -1,4 +1,4 @@
-QueueBackmapDMA:		;Queue the background map for transfer to video memory
+QueueBackmapDMA:					;Queue the background map for transfer to video memory
 	ldy.b DMAListend
 	lda.w #backmap
 	sta.w DMAList,y

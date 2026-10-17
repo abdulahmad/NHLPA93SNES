@@ -1,6 +1,7 @@
-addframe_hi:		;addframe for the high frame numbers: find the frame set and draw it with DrawFrameHi
+addframe_hi:						;addframe for the high frame numbers: find the frame set and draw it with
+									;DrawFrameHi
 	lda.b sprframe
-	cmp.w #SPFcrowd		; 6-byte pieces from SPFcrowd on
+	cmp.w #SPFcrowd					; 6-byte pieces from SPFcrowd on
 	bcs .hi
 	jml.l addframe_end
 .hi:
@@ -9,7 +10,7 @@ addframe_hi:		;addframe for the high frame numbers: find the frame set and draw 
 	ldx.w #$0000
 	ldy.w #$0002
 .find:
-	lda.l FrameSetTable,x		; skip empty table entries
+	lda.l FrameSetTable,x			; skip empty table entries
 	beq .find
 	sta.b farptr
 	lda.l FrameSetTable+1,x

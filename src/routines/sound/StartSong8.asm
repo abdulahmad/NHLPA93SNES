@@ -1,4 +1,4 @@
-StartSong8:		;Start song 8 unless it is already playing. Unused
+StartSong8:							;Start song 8 unless it is already playing. Unused
 	lda.w cursong
 	cmp.w #8
 	beq .rtl

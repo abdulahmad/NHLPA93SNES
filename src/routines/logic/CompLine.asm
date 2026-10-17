@@ -1,4 +1,5 @@
-CompLine:		;The computer team picks a line by the man advantage, the score late in the game and the line energies
+CompLine:							;The computer team picks a line by the man advantage, the score late in
+									;the game and the line energies
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -115,11 +116,11 @@ CompLine:		;The computer team picks a line by the man advantage, the score late 
 	ldy.b a2
 	sta.w tmline,y
 	bra .ex
-.hl1:		;CompLine tables: next line by tmline, score tied (7 words)
+.hl1:								;CompLine tables: next line by tmline, score tied (7 words)
 	dw 0,1,2,0,1,0,1
-.ahead:		;ahead in the third period
+.ahead:								;ahead in the third period
 	dw 2,0,1,2,0,2,0
-.behind:		;behind in the third period
+.behind:							;behind in the third period
 	dw 0,1,0,0,1,0,1
 .away:
 	lda.w #$0002
@@ -161,7 +162,7 @@ CompLine:		;The computer team picks a line by the man advantage, the score late 
 	lda.b [a0]
 	sta.w tmline,y
 	jmp.w .ex
-.al1:		;the lines tried on a power play / penalty kill (3 words each)
+.al1:								;the lines tried on a power play / penalty kill (3 words each)
 	dw 0,1,2
 .ahead2:
 	dw 0,2,1

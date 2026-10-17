@@ -1,4 +1,4 @@
-setpads:		;Store which player a pad marker belongs to, so the graphics can show it
+setpads:							;Store which player a pad marker belongs to, so the graphics can show it
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -9,7 +9,7 @@ setpads:		;Store which player a pad marker belongs to, so the graphics can show 
 	cpx.w #$0008
 	bne .save
 	ldx.b xsave
-	lda.w #$0002		; d0 = (2 + d4) * 2 = nibble shift
+	lda.w #$0002					; d0 = (2 + d4) * 2 = nibble shift
 	clc
 	adc.b d4
 	asl a
@@ -17,7 +17,7 @@ setpads:		;Store which player a pad marker belongs to, so the graphics can show 
 	sta.b tmp0
 	lda.w #$FFF0
 	sta.b d1
-.m1:		;d1 = $FFF0 rotated left by d0
+.m1:								;d1 = $FFF0 rotated left by d0
 	lda.b tmp0
 	beq .and
 	dec.b tmp0
@@ -32,7 +32,7 @@ setpads:		;Store which player a pad marker belongs to, so the graphics can show 
 	sta.w PadControlBits
 	lda.w SCnum,x
 	sta.b d1
-.sh:		;d1 = SCnum << d0
+.sh:								;d1 = SCnum << d0
 	lda.b d0
 	beq .or
 	dec.b d0

@@ -1,16 +1,17 @@
-setffo:		;Update the pads, then draw the objects tied to rink scrolling (the pad labels and gloves)
+setffo:								;Update the pads, then draw the objects tied to rink scrolling (the pad
+									;labels and gloves)
 	jsl.l uppads
 	ldx.w #$0000
 .top:
 	cpx.w #$0006
 	bne .obj
-	jmp.w .next		; pad 3: not drawn
+	jmp.w .next						; pad 3: not drawn
 .obj:
 	lda.w ffox,x
 	sta.b d0
 	lda.w ffoy,x
 	sta.b d1
-	lda.w ffoz,x		; hidden
+	lda.w ffoz,x					; hidden
 	bpl .shown
 	jmp.w .next
 .shown:
@@ -23,7 +24,7 @@ setffo:		;Update the pads, then draw the objects tied to rink scrolling (the pad
 	sta.b spry
 	lda.b d0
 	sta.b sprx
-	lda.w ffoframe,x		; frame, flip bits from ffoattr
+	lda.w ffoframe,x				; frame, flip bits from ffoattr
 	sta.b sprframe
 	lda.b ffoattr,x
 	and.w #$0800
@@ -32,13 +33,13 @@ setffo:		;Update the pads, then draw the objects tied to rink scrolling (the pad
 	and.w #$1000
 	sta.b sprvflip
 	phx
-	jsl.l addframe		; sprframe at sprx/spry
+	jsl.l addframe					; sprframe at sprx/spry
 	plx
-	cpx.w #$0006		; gloves: no label
+	cpx.w #$0006					; gloves: no label
 	bcc .label
 	jmp.w .next
-.label:		;label: two digits (rostnum, $A+ = blank) and a position letter
-	ldy.w #$0000		; mesarea+2 = label tiles, mesarea = count; d0 moves left 4 per digit
+.label:								;label: two digits (rostnum, $A+ = blank) and a position letter
+	ldy.w #$0000					; mesarea+2 = label tiles, mesarea = count; d0 moves left 4 per digit
 	lda.w padcont,x
 	lsr a
 	lsr a
@@ -67,7 +68,7 @@ setffo:		;Update the pads, then draw the objects tied to rink scrolling (the pad
 	dec.b d0
 	dec.b d0
 	dec.b d0
-	lda.w padcont+1,x		; position letter from ButtonLabelCharTable, after a blank
+	lda.w padcont+1,x				; position letter from ButtonLabelCharTable, after a blank
 	and.w #$0007
 	beq .draw
 	adc.w #ButtonLabelCharTable-1
@@ -95,7 +96,7 @@ setffo:		;Update the pads, then draw the objects tied to rink scrolling (the pad
 	and.w #$00FF
 	cmp.w #$00FF
 	beq .sp
-	adc.w #SPFsmallfont		; glyph index plus the label sprites
+	adc.w #SPFsmallfont				; glyph index plus the label sprites
 	sta.b sprframe
 	lda.b d0
 	sta.b sprx
@@ -104,13 +105,13 @@ setffo:		;Update the pads, then draw the objects tied to rink scrolling (the pad
 	adc.w #$000A
 	sta.b spry
 	phx
-	jsl.l addframe		; sprframe at sprx/spry
+	jsl.l addframe					; sprframe at sprx/spry
 	plx
 	inc.b d0
 	inc.b d0
 	inc.b d0
 	inc.b d0
-.sp:		;blank: 4 pixels
+.sp:								;blank: 4 pixels
 	inc.b d0
 	inc.b d0
 	inc.b d0

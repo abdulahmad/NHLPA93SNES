@@ -1,12 +1,12 @@
-SetTeamColors_team:		;Convert one team's colors into the palette buffer
-	ldy.w #$0002		; team data + word at +2: palette
+SetTeamColors_team:					;Convert one team's colors into the palette buffer
+	ldy.w #$0002					; team data + word at +2: palette
 	lda.b [tmp0],y
 	clc
 	adc.b tmp2+1
 	tay
 	lda.w #$0010
 	sta.b tmp2+1
-.col:		;0BGR (4 bits) -> 0BBBBBGGGGGRRRRR
+.col:								;0BGR (4 bits) -> 0BBBBBGGGGGRRRRR
 	lda.b [tmp0],y
 	xba
 	and.w #$000F

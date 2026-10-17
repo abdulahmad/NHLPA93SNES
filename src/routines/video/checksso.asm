@@ -1,5 +1,6 @@
-checksso:		;Draw the arrows that show where the two players are when they are off screen
-	lda.w #2		; player 1: ffo 1, sso 0, SPFarrow
+checksso:							;Draw the arrows that show where the two players are when they are off
+									;screen
+	lda.w #2						; player 1: ffo 1, sso 0, SPFarrow
 	sta.b a0
 	stz.b a3
 	lda.w #SPFarrow
@@ -9,17 +10,17 @@ checksso:		;Draw the arrows that show where the two players are when they are of
 	inc.b a0
 	inc.b a3
 	inc.b a3
-	lda.w #SPFarrow+3		; player 2: SPFarrow+3
+	lda.w #SPFarrow+3				; player 2: SPFarrow+3
 	sta.b d3
 	jsl.l .ca
 .rtl:
 	rtl
-.ca:		;a0 = pad object (ffo index), a3 = sso, d3 = first arrow frame
+.ca:								;a0 = pad object (ffo index), a3 = sso, d3 = first arrow frame
 	ldy.b a0
 	lda.w ffoz,y
 	bmi .rtl
 	ldx.b a3
-	lda.w #$FFFF		; frame -1: no arrow
+	lda.w #$FFFF					; frame -1: no arrow
 	sta.w ssoframe,x
 	lda.w ffox,y
 	sta.b d0
@@ -27,7 +28,7 @@ checksso:		;Draw the arrows that show where the two players are when they are of
 	sta.b d1
 	lda.w sfhormode
 	beq .nhor
-	lda.b d1		; horizontal rink: x = -y, y = x - $C5
+	lda.b d1						; horizontal rink: x = -y, y = x - $C5
 	eor.w #$FFFF
 	inc a
 	sta.b d0
@@ -45,11 +46,11 @@ checksso:		;Draw the arrows that show where the two players are when they are of
 	sec
 	sbc.w Vpos
 	sta.b d1
-.hord:		;d2 = off-screen directions as joystick bits
+.hord:								;d2 = off-screen directions as joystick bits
 	stz.b d2
 	lda.b d0
 	sec
-	sbc.w #116		; right of the screen
+	sbc.w #116						; right of the screen
 	bmi .r0
 	bvc .rb
 	bra .0
@@ -61,7 +62,7 @@ checksso:		;Draw the arrows that show where the two players are when they are of
 .0:
 	lda.b d0
 	sec
-	sbc.w #-116		; left
+	sbc.w #-116						; left
 	beq .lb
 	bmi .neg
 	bvs .lb
@@ -74,7 +75,7 @@ checksso:		;Draw the arrows that show where the two players are when they are of
 .1:
 	lda.b d1
 	sec
-	sbc.w #100		; above
+	sbc.w #100						; above
 	bmi .u0
 	bvc .ub
 	bra .2
@@ -85,7 +86,7 @@ checksso:		;Draw the arrows that show where the two players are when they are of
 .2:
 	lda.b d1
 	sec
-	sbc.w #-100		; below
+	sbc.w #-100						; below
 	beq .db
 	bmi .d0
 	bvs .db
@@ -96,17 +97,17 @@ checksso:		;Draw the arrows that show where the two players are when they are of
 	inc.b d2
 	inc.b d2
 .3:
-	ldx.b d2		; on screen: no arrow
+	ldx.b d2						; on screen: no arrow
 	bne .off
 	jmp.w .rtl
 .off:
-	lda.l jdtab8F,x		; direction 0-7
+	lda.l jdtab8F,x					; direction 0-7
 	and.w #$00FF
 	asl a
 	asl a
 	asl a
 	tax
-	lda.l .tab,x		; .tab: x spot (0 = keep), y spot, frame add, flip bits
+	lda.l .tab,x					; .tab: x spot (0 = keep), y spot, frame add, flip bits
 	beq .4
 	sta.b d0
 .4:
@@ -149,7 +150,8 @@ checksso:		;Draw the arrows that show where the two players are when they are of
 	and.w #$1000
 	sta.b sprvflip
 	jml.l addframe
-.tab:		;x spot, y spot, frame add, flip bits per direction (.xspot 116, .yspot 100)
+.tab:								;x spot, y spot, frame add, flip bits per
+									;direction (.xspot 116, .yspot 100)
 	dw 0,100,0,$0000
 	dw 116,100,1,$0000
 	dw 116,0,2,$0000

@@ -1,5 +1,6 @@
-checkint:		;A goalie and another player collide: the skater falls, and a hard hit may draw an interference penalty
-	lda.b d0+2		; a2 and a3 swapped for the second call
+checkint:							;A goalie and another player collide: the skater falls, and a hard hit may
+									;draw an interference penalty
+	lda.b d0+2						; a2 and a3 swapped for the second call
 	pha
 	lda.b d0
 	pha
@@ -19,13 +20,13 @@ checkint:		;A goalie and another player collide: the skater falls, and a hard hi
 	sta.b d0+2
 .rtl:
 	rtl
-.ci:		;a2 must be a goalie, clock running
+.ci:								;a2 must be a goalie, clock running
 	ldy.b a2
 	lda.w position,y
 	bne .rtl
 	lda.w gmclock
 	bne .rtl
-	lda.w puckc		; a3 has the puck: skip the impact 26 test
+	lda.w puckc						; a3 has the puck: skip the impact 26 test
 	asl a
 	cmp.b a3
 	beq .pc
@@ -38,7 +39,7 @@ checkint:		;A goalie and another player collide: the skater falls, and a hard hi
 	bra .rtl
 .neg:
 	bvc .rtl
-.pc:		;impact of X > 2
+.pc:								;impact of X > 2
 	lda.w impact,x
 	sec
 	sbc.w #$0003
@@ -48,7 +49,7 @@ checkint:		;A goalie and another player collide: the skater falls, and a hard hi
 	bra .rtl
 .neg1:
 	bvc .rtl
-.fall:		;X falls
+.fall:								;X falls
 	ldx.b a2
 	ldy.b a3
 	stx.b a3
@@ -58,7 +59,7 @@ checkint:		;A goalie and another player collide: the skater falls, and a hard hi
 	ldy.b a3
 	stx.b a3
 	sty.b a2
-	lda.w impact,y		; impact of a2 > 31
+	lda.w impact,y					; impact of a2 > 31
 	sec
 	sbc.w #$001F
 	beq .rtl
@@ -67,7 +68,7 @@ checkint:		;A goalie and another player collide: the skater falls, and a hard hi
 	bra .rtl
 .neg2:
 	bvc .rtl
-.pen:		;no double minor; penalty 3 times in (20 - GGSleft)
+.pen:								;no double minor; penalty 3 times in (20 - GGSleft)
 	lda.w pflags,x
 	bit.w #pf2pen
 	bne .rtl
@@ -77,7 +78,7 @@ checkint:		;A goalie and another player collide: the skater falls, and a hard hi
 	jsl.l randoma
 	cmp.w #$0003
 	bcs .rtl
-	lda.w gmode		; not in highlights
+	lda.w gmode						; not in highlights
 	bit.w #gmhl
 	bne .rtl
 	lda.w #PenInt

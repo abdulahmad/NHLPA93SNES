@@ -1,4 +1,5 @@
-GetShifter:		;d1 = the number of games of the playoff round less one, d2 = its first win bit
+GetShifter:							;d1 = the number of games of the playoff round less one, d2 = its first
+									;win bit
 	lda.w #-16
 	sta.b d2
 	lda.w #16

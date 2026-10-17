@@ -1,4 +1,4 @@
-DoHiLights:		;Playoffs: play the highlight of each game of the round that has one
+DoHiLights:							;Playoffs: play the highlight of each game of the round that has one
 	lda.w OptPlayMode
 	beq .rtl
 	jsl.l GetShifter

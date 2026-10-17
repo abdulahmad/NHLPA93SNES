@@ -1,4 +1,4 @@
-showcrowd:		;Draw the crowd and penalty box sprites
+showcrowd:							;Draw the crowd and penalty box sprites
 	stz.b a1
 	lda.w Hpos
 	sta.b d4
@@ -14,7 +14,7 @@ showcrowd:		;Draw the crowd and penalty box sprites
 	stz.b d0
 	lda.w PBnum
 	sta.b d2
-	lda.w #$001A		; frames 26+
+	lda.w #$001A					; frames 26+
 	sta.b d3
 	jsl.l .pb
 	lda.w PBnum
@@ -23,7 +23,7 @@ showcrowd:		;Draw the crowd and penalty box sprites
 	lsr a
 	lsr a
 	sta.b d2
-	lda.w #$001D		; frames 29+
+	lda.w #$001D					; frames 29+
 	sta.b d3
 	jsl.l .pb
 	lda.w sfhormode
@@ -34,7 +34,7 @@ showcrowd:		;Draw the crowd and penalty box sprites
 	lda.b crowdframe+1
 	sta.b d0
 	bra .sc
-.pb:		;d2 = count, d3 = first frame
+.pb:								;d2 = count, d3 = first frame
 	lda.b d2
 	and.w #$000F
 	sta.b d2
@@ -55,8 +55,9 @@ showcrowd:		;Draw the crowd and penalty box sprites
 	bpl .pbt
 .rtl:
 	rtl
-.sc:		;d0 = frame (0 = none): SPFcrowd-1 + d0 (+31 horizontal) at the rink scroll position
-	lda.b d0		; frame byte
+.sc:								;d0 = frame (0 = none): SPFcrowd-1 + d0 (+31 horizontal) at the rink
+									;scroll position
+	lda.b d0						; frame byte
 	and.w #$00FF
 	sta.b d0
 	beq .rtl
@@ -69,13 +70,13 @@ showcrowd:		;Draw the crowd and penalty box sprites
 .chk:
 	lda.b d0
 	clc
-	adc.w #SPFcrowd-1		; local frame 1 is SPFcrowd
+	adc.w #SPFcrowd-1				; local frame 1 is SPFcrowd
 	sta.b sprframe
-	lda.w #$FFC0		; x = $FFC0 - Hpos
+	lda.w #$FFC0					; x = $FFC0 - Hpos
 	sec
 	sbc.b d4
 	sta.b sprx
-	lda.w #$FEFF		; y = Vpos - $101
+	lda.w #$FEFF					; y = Vpos - $101
 	clc
 	adc.b d5
 	sta.b spry

@@ -1,5 +1,5 @@
-noturn0:		;doplayeracc when the wanted direction needs no turn
-	lda.w #$0002		; d4 = 2, 6 skating backwards
+noturn0:							;doplayeracc when the wanted direction needs no turn
+	lda.w #$0002					; d4 = 2, 6 skating backwards
 	sta.b d4
 	lda.w pfrev,x
 	beq .0
@@ -11,7 +11,7 @@ noturn0:		;doplayeracc when the wanted direction needs no turn
 .0:
 	lda.b d0
 	beq .nochg
-	lda.w Xvel,x		; moving: stop if the direction is more than 90 degrees off
+	lda.w Xvel,x					; moving: stop if the direction is more than 90 degrees off
 	sta.b d0
 	lda.w Yvel,x
 	sta.b d1
@@ -28,7 +28,7 @@ noturn0:		;doplayeracc when the wanted direction needs no turn
 	bcs .nostop
 	jml.l dostop
 .nostop:
-	inc.w facedir,x		; turn one step
+	inc.w facedir,x					; turn one step
 	lda.w attribute,x
 	bit.w #$0800
 	beq .nos0
@@ -48,19 +48,19 @@ noturn0:		;doplayeracc when the wanted direction needs no turn
 	sta.b d1
 	jml.l SetSPA
 .nochg:
-	lda.w #SPAskateback		; no change: skate
+	lda.w #SPAskateback				; no change: skate
 	sta.b d1
 	lda.w pfrev,x
 	bne .ns
 	lda.w #SPAskate
 	sta.b d1
-	lda.w pflags,x		; pflags $0004 (pflags2 bit 6): stumble
+	lda.w pflags,x					; pflags $0004 (pflags2 bit 6): stumble
 	bit.w #pf2inj
 	beq .nb6
 	lda.w #SPAstumble
 	sta.b d1
 .nb6:
-	lda.w puckc		; carrier: skate with the puck
+	lda.w puckc						; carrier: skate with the puck
 	sta.b d4
 	cmp.w SCnum,x
 	bne .ns

@@ -1,4 +1,4 @@
-ClrHor:		;Switch back from the horizontal rink to the vertical ice rink
+ClrHor:								;Switch back from the horizontal rink to the vertical ice rink
 	stx.b xsave
 	ldx.w #$0000
 .savea:
@@ -9,14 +9,14 @@ ClrHor:		;Switch back from the horizontal rink to the vertical ice rink
 	cpx.w #$003C
 	bne .savea
 	ldx.b xsave
-	stz.w sfhormode		; vertical
-	lda.w #999		; Oldrow = 999: redraw the rink rows
+	stz.w sfhormode					; vertical
+	lda.w #999						; Oldrow = 999: redraw the rink rows
 	sta.w Oldrow
 	jsl.l SprSort
 	lda.w sflags
-	bit.w #sfpz		; paused: keep the text
+	bit.w #sfpz						; paused: keep the text
 	bne .ex
-	lda.w blankchar		; clear the text map
+	lda.w blankchar					; clear the text map
 	clc
 	adc.w charofs
 	ldx.w #$07FE
@@ -25,7 +25,7 @@ ClrHor:		;Switch back from the horizontal rink to the vertical ice rink
 	dex
 	dex
 	bpl .clr
-	stz.b textdirtylo		; whole text map dirty
+	stz.b textdirtylo				; whole text map dirty
 	lda.w #$03FF
 	sta.b textdirtyhi
 	jsl.l printscores1

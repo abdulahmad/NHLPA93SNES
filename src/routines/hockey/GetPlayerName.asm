@@ -1,4 +1,4 @@
-GetPlayerName:		;mesarea = the number and name of player TempPlOffset
+GetPlayerName:						;mesarea = the number and name of player TempPlOffset
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -20,7 +20,7 @@ GetPlayerName:		;mesarea = the number and name of player TempPlOffset
 	bne .savea2
 	ldx.b xsave
 	stz.b a2
-	lda.w TempPlOffset		; bit 15: away team
+	lda.w TempPlOffset				; bit 15: away team
 	sta.b d0
 	bpl .name
 	and.w #$00FF

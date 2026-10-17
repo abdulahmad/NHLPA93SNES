@@ -1,4 +1,4 @@
-assdopen:		;Assignment: put player X in the penalty box
+assdopen:							;Assignment: put player X in the penalty box
 	lda.w pfalock,x
 	bne .rtl
 	lda.w #$0010

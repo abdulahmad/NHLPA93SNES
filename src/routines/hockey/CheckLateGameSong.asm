@@ -1,2 +1,2 @@
-CheckLateGameSong:		;Late game song check: does nothing
+CheckLateGameSong:					;Late game song check: does nothing
 	rtl

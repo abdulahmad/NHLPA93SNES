@@ -1,14 +1,15 @@
-Goal:		;The puck is in the goal: add the score, sound the siren, log it, update the scoreboard and start the celebration
-	lda.w gmclock		; clock stopped: no goal
+Goal:								;The puck is in the goal: add the score, sound the siren, log it, update
+									;the scoreboard and start the celebration
+	lda.w gmclock					; clock stopped: no goal
 	beq .go
 	jmp.w .rtl
-.go:		;puck must be moving into the net
+.go:								;puck must be moving into the net
 	lda.w pucky
 	eor.w puckvy
 	bpl .in
 	jmp.w .rtl
 .in:
-	jsl.l ChkShotStat		; sound reset, siren, mute other sfx
+	jsl.l ChkShotStat				; sound reset, siren, mute other sfx
 	jsl.l sndqreset
 	lda.w #SFXsiren
 	pha
@@ -16,11 +17,11 @@ Goal:		;The puck is in the goal: add the score, sound the siren, log it, update 
 	lda.b vcount
 	sta.w sfxmutetime
 	jsl.l freezewindow
-	lda.b crowdlevel		; crowd +500
+	lda.b crowdlevel				; crowd +500
 	clc
 	adc.w #$01F4
 	sta.b crowdlevel
-	stz.b a2		; a2 = scoring team (0/2), a1 = other
+	stz.b a2						; a2 = scoring team (0/2), a1 = other
 	lda.w #$0002
 	sta.b a1
 	lda.w Ypos,x
@@ -29,7 +30,7 @@ Goal:		;The puck is in the goal: add the score, sound the siren, log it, update 
 	lda.w #$0002
 	sta.b a2
 .g0:
-	lda.w gmode		; gmdir: swap
+	lda.w gmode						; gmdir: swap
 	bit.w #gmdir
 	beq .g1
 	lda.b a1
@@ -41,7 +42,7 @@ Goal:		;The puck is in the goal: add the score, sound the siren, log it, update 
 	lda.w tmscore,y
 	inc a
 	sta.w tmscore,y
-	lda.w ScoreSumbytes		; ScoreSum full (30 entries): overwrite the last
+	lda.w ScoreSumbytes				; ScoreSum full (30 entries): overwrite the last
 	cmp.w #$00B4
 	bne .sum
 	sec
@@ -57,12 +58,12 @@ Goal:		;The puck is in the goal: add the score, sound the siren, log it, update 
 	lda.w ScoreSumbytes
 	adc.w #$0006
 	sta.w ScoreSumbytes
-	jsl.l GetPeriodTimeRemaining		; entry word 0 = time
+	jsl.l GetPeriodTimeRemaining	; entry word 0 = time
 	lda.b d0
 	sta.b [a0]
 	inc.b a0
 	inc.b a0
-	lda.w #$0002		; byte 2 = 2 + tmap(a2) - tmap(a1), bit 7 = away team scored
+	lda.w #$0002					; byte 2 = 2 + tmap(a2) - tmap(a1), bit 7 = away team scored
 	clc
 	ldy.b a2
 	adc.w tmap,y
@@ -75,13 +76,13 @@ Goal:		;The puck is in the goal: add the score, sound the siren, log it, update 
 .home:
 	sta.b [a0]
 	inc.b a0
-	lda.w tmtouch1,y		; byte 3 = scorer; no assists yet
+	lda.w tmtouch1,y				; byte 3 = scorer; no assists yet
 	sta.b d0
 	sta.b [a0]
 	inc.b a0
 	lda.w #$FFFF
 	sta.b [a0]
-	lda.b a2		; goals +1 for the scorer
+	lda.b a2						; goals +1 for the scorer
 	beq .h1
 	lda.w #$001A
 .h1:
@@ -93,7 +94,7 @@ Goal:		;The puck is in the goal: add the score, sound the siren, log it, update 
 	inc a
 	sta.w tmgoals,y
 	rep #$20
-	ldy.b a2		; assists
+	ldy.b a2						; assists
 	lda.w tmtouch2,y
 	bmi .noast
 	sep #$20
@@ -106,12 +107,12 @@ Goal:		;The puck is in the goal: add the score, sound the siren, log it, update 
 	sta.b [a0]
 	rep #$20
 .noast:
-	jsl.l PenGoalStuff		; PenGoalStuff, printscores1, ascore for the scoring team
+	jsl.l PenGoalStuff				; PenGoalStuff, printscores1, ascore for the scoring team
 	jsl.l printscores1
 	lda.w #ascore
 	sta.b d0
 	jsl.l .setass
-	lda.b a2		; home team within 3 after scoring: goal cue
+	lda.b a2						; home team within 3 after scoring: goal cue
 	bne .nocue
 	lda.w tmscore+2
 	sec
@@ -121,7 +122,7 @@ Goal:		;The puck is in the goal: add the score, sound the siren, log it, update 
 	bcs .nocue
 	inc.w goalcue
 .nocue:
-	stz.b collflag		; puck into the net at (+-6, +-$110), Zvel $600
+	stz.b collflag					; puck into the net at (+-6, +-$110), Zvel $600
 	stz.w puckvx
 	stz.w puckvy
 	lda.w #$0006
@@ -145,19 +146,19 @@ Goal:		;The puck is in the goal: add the score, sound the siren, log it, update 
 	lda.w #$0600
 	sta.w puckvz
 	stz.w Zpos+puckobj
-	lda.w #$FFFF		; puckcross never; pfnc
+	lda.w #$FFFF					; puckcross never; pfnc
 	sta.w puckcross+2
 	sta.w puckcross+6
 	sta.w pfnc+puckobj
 	lda.w #pnothing
 	sta.b d0
 	jsl.l assreplace
-	inx		; shadow: siren anim
+	inx								; shadow: siren anim
 	inx
 	lda.w #SPAsiren
 	sta.b d1
 	jsl.l SetSPA
-	ldy.b a2		; PenGoal for the first object of team a2
+	ldy.b a2						; PenGoal for the first object of team a2
 	ldx.w tmsort,y
 	stx.b a3
 	lda.w #PenGoal
@@ -166,7 +167,8 @@ Goal:		;The puck is in the goal: add the score, sound the siren, log it, update 
 	ldx.w #puckobj
 	stx.b a3
 	rtl
-.setass:		;give each skater of team a2 that is not fighting assignment d0, clear pfnc
+.setass:							;give each skater of team a2 that is not fighting assignment d0, clear
+									;pfnc
 	phx
 	ldy.b a2
 	lda.w tmsort,y

@@ -1,4 +1,5 @@
-checkcx:		;Collision of object X with a nearby object: checks, interference and fights, then the momentum passes between them
+checkcx:							;Collision of object X with a nearby object: checks, interference and
+									;fights, then the momentum passes between them
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -9,7 +10,7 @@ checkcx:		;Collision of object X with a nearby object: checks, interference and 
 	cpx.w #$0018
 	bne .save
 	ldx.b xsave
-	sty.b a2		; a2 = Y; d0/d1 = relative velocity, d2/d3 = relative position
+	sty.b a2						; a2 = Y; d0/d1 = relative velocity, d2/d3 = relative position
 	stz.b evalue
 	lda.w Xvel,x
 	sec
@@ -46,9 +47,9 @@ checkcx:		;Collision of object X with a nearby object: checks, interference and 
 	sta.b d1
 	lda.b d1+2
 	adc.b mulres+2
-	bpl .v1n		; v1n < 0: no collision
+	bpl .v1n						; v1n < 0: no collision
 	jmp.w .exit4
-.v1n:		;V1n = (Vy*Dy + Vx*Dx) / 16
+.v1n:								;V1n = (Vy*Dy + Vx*Dx) / 16
 	lsr a
 	ror.b d1
 	lsr a
@@ -57,7 +58,7 @@ checkcx:		;Collision of object X with a nearby object: checks, interference and 
 	ror.b d1
 	lsr a
 	ror.b d1
-	lda.w pfteam,x		; same team: no impact
+	lda.w pfteam,x					; same team: no impact
 	cmp.w pfteam,y
 	beq .not
 	lda.b d1+1
@@ -67,7 +68,7 @@ checkcx:		;Collision of object X with a nearby object: checks, interference and 
 	bcs .g40
 	lda.w #$0005
 	sta.b d4
-.g40:		;minimum impact 5
+.g40:								;minimum impact 5
 	clc
 	adc.w impact,x
 	sta.w impact,x
@@ -75,7 +76,7 @@ checkcx:		;Collision of object X with a nearby object: checks, interference and 
 	clc
 	adc.b d4
 	sta.w impact,y
-	lda.w pf2fight,y		; impactp = the other (not while fighting)
+	lda.w pf2fight,y				; impactp = the other (not while fighting)
 	bne .if
 	txa
 	lsr a
@@ -86,11 +87,11 @@ checkcx:		;Collision of object X with a nearby object: checks, interference and 
 	tya
 	lsr a
 	sta.w impactp,x
-.if2:		;impact under 20: no check sound
+.if2:								;impact under 20: no check sound
 	lda.b d4
 	cmp.w #$0014
 	bcc .n1
-	lda.w puckc		; check sound only if one of them has the puck
+	lda.w puckc						; check sound only if one of them has the puck
 	cmp.w SCnum,x
 	beq .nc
 	cmp.w SCnum,y
@@ -101,17 +102,17 @@ checkcx:		;Collision of object X with a nearby object: checks, interference and 
 	jsl.l checkint
 	jsl.l checkcheck
 	jsl.l checkfight
-.not:		;same team: no check events
+.not:								;same team: no check events
 	lda.b d1
 	sta.b d4
 	pla
 	sta.b d0
 	pla
 	sta.b d1
-	lda.b collflag		; collflag set by holdcheck / Bcheck: no transfer
+	lda.b collflag					; collflag set by holdcheck / Bcheck: no transfer
 	bpl .tr
 	jmp.w .exit
-.tr:		;V1t = (Vx*Dy - Vy*Dx) / 16
+.tr:								;V1t = (Vx*Dy - Vy*Dx) / 16
 	lda.b d2
 	sta.b mula
 	lda.b d1
@@ -140,7 +141,7 @@ checkcx:		;Collision of object X with a nearby object: checks, interference and 
 	ror.b d0
 	lda.b d0
 	sta.b d5
-	lda.w weight,x		; weights + 140
+	lda.w weight,x					; weights + 140
 	clc
 	adc.w #$008C
 	sta.b d0
@@ -152,7 +153,7 @@ checkcx:		;Collision of object X with a nearby object: checks, interference and 
 	sta.b mula
 	lda.b evalue
 	sta.b mulb
-	jsl.l mulu16		; mulu, A = mula*mulb
+	jsl.l mulu16					; mulu, A = mula*mulb
 	lsr a
 	lsr a
 	lsr a
@@ -185,7 +186,7 @@ checkcx:		;Collision of object X with a nearby object: checks, interference and 
 	bit.w #$0800
 	beq .v2n
 	ora.w #$F000
-.v2n:		;V2n = V1n + V1n*e
+.v2n:								;V2n = V1n + V1n*e
 	clc
 	adc.b d0
 	sta.b d1
@@ -280,7 +281,7 @@ checkcx:		;Collision of object X with a nearby object: checks, interference and 
 	clc
 	adc.w Yvel,y
 	sta.w Yvel,y
-	lda.w #$FFFF		; collflag
+	lda.w #$FFFF					; collflag
 	sta.b collflag
 .exit:
 	stx.b xsave
@@ -293,7 +294,7 @@ checkcx:		;Collision of object X with a nearby object: checks, interference and 
 	bpl .restore
 	ldx.b xsave
 	rtl
-.exit4:		;drop the saved Vx/Vy
+.exit4:								;drop the saved Vx/Vy
 	pla
 	pla
 	bra .exit

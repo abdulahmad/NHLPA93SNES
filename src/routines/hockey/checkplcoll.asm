@@ -1,4 +1,4 @@
-checkplcoll:		;Check object X against the objects near it in y
+checkplcoll:						;Check object X against the objects near it in y
 	lda.w pflags,x
 	bit.w #pf2npc
 	beq .pl
@@ -8,11 +8,11 @@ checkplcoll:		;Check object X against the objects near it in y
 	bcc .go
 	jmp.w .ex
 .go:
-	lda.w OOlistpos,x		; d1 = position of X in OOlist
+	lda.w OOlistpos,x				; d1 = position of X in OOlist
 	sta.b d1
-.0:		;objects higher in the list
+.0:									;objects higher in the list
 	ldy.b d1
-	cpy.w #$000F		; top of the list
+	cpy.w #$000F					; top of the list
 	beq .cl
 	lda.w OOlist+1,y
 	and.w #$00FF
@@ -41,7 +41,7 @@ checkplcoll:		;Check object X against the objects near it in y
 .ux:
 	cmp.w #$000F
 	bcs .unext
-	lda.w pflags,y		; not npc, nc, players only
+	lda.w pflags,y					; not npc, nc, players only
 	and.w #pf2npc
 	ora.w pfnc,y
 	bne .unext
@@ -51,7 +51,7 @@ checkplcoll:		;Check object X against the objects near it in y
 .unext:
 	inc.b d1
 	bra .0
-.cl:		;objects lower in the list
+.cl:								;objects lower in the list
 	lda.w OOlistpos,x
 	beq .ex
 	sta.b d1

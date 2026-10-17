@@ -1,5 +1,5 @@
-setteams:		;Set up both team structures from the home and visiting teams
-	stz.w tmsort		; home: tmsort 0, away: tmsort $0C
+setteams:							;Set up both team structures from the home and visiting teams
+	stz.w tmsort					; home: tmsort 0, away: tmsort $0C
 	lda.w #$000C
 	sta.w tmsort+2
 	lda.w HomeTeam

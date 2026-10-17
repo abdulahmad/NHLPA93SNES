@@ -1,4 +1,5 @@
-projxy:		;Project a rink position (x, y, z) to screen coordinates; off screen when too far away
+projxy:								;Project a rink position (x, y, z) to screen coordinates; off screen when
+									;too far away
 	lda.w sfhormode
 	beq .nhor
 	lda.b d0
@@ -28,12 +29,12 @@ projxy:		;Project a rink position (x, y, z) to screen coordinates; off screen wh
 	eor.w #$FFFF
 	inc a
 .ax:
-	cmp.w #$0091		; |x| > 144: off
+	cmp.w #$0091					; |x| > 144: off
 	bcs .off
 	lda.b d0
 	adc.w #$0080
 	sta.b d0
-	lda.b d2		; d1 += 1.5 * z
+	lda.b d2						; d1 += 1.5 * z
 	asl a
 	clc
 	adc.b d2

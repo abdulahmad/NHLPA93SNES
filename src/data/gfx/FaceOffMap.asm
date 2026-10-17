@@ -1,4 +1,5 @@
-FaceOffMap:		;the 12 x 10 faceoff box map (tiles from FaceOffTiles, attribute $20), copied into textmap by puckfaceoff2
+FaceOffMap:							;the 12 x 10 faceoff box map (tiles from FaceOffTiles, attribute $20),
+									;copied into textmap by puckfaceoff2
 	dw $2000,$2001,$2002,$2003,$2004,$2005,$2006,$2007,$2008,$2009,$200A,$200B
 	dw $200C,$200D,$200E,$200F,$2010,$2011,$2012,$2013,$2014,$2015,$2016,$2017
 	dw $2018,$2019,$201A,$2019,$2019,$2019,$201B,$201C,$2019,$2019,$2019,$201D

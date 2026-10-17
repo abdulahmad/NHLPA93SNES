@@ -1,4 +1,4 @@
-SetHor:		;Switch to the horizontal rink (the scoreboard screen)
+SetHor:								;Switch to the horizontal rink (the scoreboard screen)
 	stx.b xsave
 	ldx.w #$0000
 .save:

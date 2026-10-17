@@ -1,4 +1,4 @@
-forcepldata:		;Face offs: move team a2's players straight to their new positions
+forcepldata:						;Face offs: move team a2's players straight to their new positions
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -26,7 +26,7 @@ forcepldata:		;Face offs: move team a2's players straight to their new positions
 	sta.b d4
 .top:
 	ldx.b a3
-	lda.w newpos,x		; position = newpos (byte)
+	lda.w newpos,x					; position = newpos (byte)
 	and.w #$00FF
 	bit.w #$0080
 	beq .pos
@@ -39,14 +39,14 @@ forcepldata:		;Face offs: move team a2's players straight to their new positions
 	jsl.l Setplass
 	ldx.b a3
 	lda.w position,x
-	cmp.w #$0004		; center
+	cmp.w #$0004					; center
 	bne .notnear
-	lda.w #anearest		; anearest
+	lda.w #anearest					; anearest
 	sta.b d0
 	jsl.l assinsert
 .notnear:
 	ldx.b a3
-	lda.w newpnum,x		; tmpdst of newpnum = TMPDICE: on the ice
+	lda.w newpnum,x					; tmpdst of newpnum = TMPDICE: on the ice
 	and.w #$00FF
 	asl a
 	sta.b d3
@@ -59,10 +59,10 @@ forcepldata:		;Face offs: move team a2's players straight to their new positions
 	lda.w #TMPDICE
 	sta.w tmpdst,y
 	lsr.b d3
-	jsl.l setplayer		; setplayer
+	jsl.l setplayer					; setplayer
 .next:
 	ldx.b a3
-	lda.w #$FFFF		; newpnum = newpos = -1
+	lda.w #$FFFF					; newpnum = newpos = -1
 	sta.w newpnum,x
 	sta.w newpos,x
 	inc.b a3

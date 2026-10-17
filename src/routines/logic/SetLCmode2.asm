@@ -1,15 +1,15 @@
-SetLCmode2:		;Draw the line change box for team a2, one row per line it can change to
+SetLCmode2:							;Draw the line change box for team a2, one row per line it can change to
 	jsl.l setlccords
-	inc.b d0		; box size +1
+	inc.b d0						; box size +1
 	inc.b d1
-	lda.w blankchar		; d2 = blank tile
+	lda.w blankchar					; d2 = blank tile
 	sta.b d2
-	lda.b fobox		; faceoff box up: do not clear
+	lda.b fobox						; faceoff box up: do not clear
 	bne .cords
-	jsl.l eraser		; d0/d1 size, d2 tile
+	jsl.l eraser					; d0/d1 size, d2 tile
 .cords:
 	jsl.l setlccords
-	lda.w printy		; lower half of the screen?
+	lda.w printy					; lower half of the screen?
 	sec
 	sbc.w #$000F
 	bmi .neg
@@ -17,7 +17,7 @@ SetLCmode2:		;Draw the line change box for team a2, one row per line it can chan
 	bra .box
 .neg:
 	bvc .box
-.lower:		;lower box: sf3llcs
+.lower:								;lower box: sf3llcs
 	lda.w #sf3llcs
 	tsb.w sflags3
 	bra .frame
@@ -25,15 +25,15 @@ SetLCmode2:		;Draw the line change box for team a2, one row per line it can chan
 	jsl.l box
 	jsl.l setlccords
 .frame:
-	jsl.l Framer		; d0/d1 size
-	dec.w printy		; printy -= 2, printx += 1
+	jsl.l Framer					; d0/d1 size
+	dec.w printy					; printy -= 2, printx += 1
 	dec.w printy
 	inc.w printx
 	lda.w #$0002
 	sta.b d4
 	lda.w printx
 	pha
-.loop:		;rows 2..0: button letter, line name, energy bar
+.loop:								;rows 2..0: button letter, line name, energy bar
 	lda.b $01,s
 	sta.w printx
 	lda.b d4
@@ -43,15 +43,15 @@ SetLCmode2:		;Draw the line change box for team a2, one row per line it can chan
 	bmi .next
 	ldy.b a2
 	lda.w tmflags,y
-	bit.w #tmflcm		; tmflcm: show every row
+	bit.w #tmflcm					; tmflcm: show every row
 	bne .pr
 	lda.b d4
-	cmp.w tmlcchoice,y		; box being closed: only the chosen row
+	cmp.w tmlcchoice,y				; box being closed: only the chosen row
 	bne .up
 	lda.w tmline,y
 	sta.b d0
 .pr:
-	lda.w #mesarea		; mesarea = 4, button letter
+	lda.w #mesarea					; mesarea = 4, button letter
 	sta.b a1
 	lda.w #mesarea>>16
 	sta.b a1+2
@@ -62,13 +62,13 @@ SetLCmode2:		;Draw the line change box for team a2, one row per line it can chan
 	lda.l .btn,x
 	plx
 	and.w #$00FF
-	ora.w #$2000		; text attribute $20
+	ora.w #$2000					; text attribute $20
 	ldy.w #$0002
 	sta.b [a1],y
 	jsl.l print
 	lda.b d0
 	pha
-	lda.w #linelist		; linelist
+	lda.w #linelist					; linelist
 	sta.b a1
 	lda.w #linelist>>16
 	sta.b a1+2
@@ -86,7 +86,7 @@ SetLCmode2:		;Draw the line change box for team a2, one row per line it can chan
 	adc.w #$0005
 	sta.w printx
 	ldy.b a2
-	lda.w #TeamList>>16		; team name: [tmdata] + its offsets
+	lda.w #TeamList>>16				; team name: [tmdata] + its offsets
 	sta.b a1+2
 	lda.w tmdata,y
 	sta.b a1
@@ -97,5 +97,5 @@ SetLCmode2:		;Draw the line change box for team a2, one row per line it can chan
 	adc.b [a1]
 	sta.b a1
 	jmp.w print
-.btn:		;SNES button letter for lc rows 0-2
+.btn:								;SNES button letter for lc rows 0-2
 	db "YBA"

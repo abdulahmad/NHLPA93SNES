@@ -1,11 +1,12 @@
-chkprogress:		;Move the referee and the game through a penalty: when the stop delay runs out, switch to the horizontal rink
+chkprogress:						;Move the referee and the game through a penalty: when the stop delay runs
+									;out, switch to the horizontal rink
 		;   for the player to go to the box
-	lda.w gmode		; gmpen: ref in progress
+	lda.w gmode						; gmpen: ref in progress
 	bit.w #gmpen
 	bne .pen
 	jmp.w .rtl
 .pen:
-	lda.w Pencntdwn		; Pencntdwn negative: InProgress
+	lda.w Pencntdwn					; Pencntdwn negative: InProgress
 	bpl .cnt
 	jmp.w InProgress
 .cnt:
@@ -15,13 +16,13 @@ chkprogress:		;Move the referee and the game through a penalty: when the stop de
 	bmi .over
 	jmp.w .rtl
 .over:
-	lda.w #gmpendel		; stop delay over: clear gmpendel
+	lda.w #gmpendel					; stop delay over: clear gmpendel
 	trb.w gmode
 	lda.w #PenBuf
 	sta.b a0
 	lda.w #$0000
 	sta.b a0+2
-.find:		; look for any penalty with minutes
+.find:								; look for any penalty with minutes
 	lda.b [a0]
 	inc.b a0
 	inc.b a0
@@ -42,13 +43,13 @@ chkprogress:		;Move the referee and the game through a penalty: when the stop de
 	clc
 	adc.b [a1],y
 	sta.b a1
-	lda.b [a1]		; penalty with minutes?
+	lda.b [a1]						; penalty with minutes?
 	and.w #$00FF
 	beq .find
-	lda.w #sf2drec		; sf2drec, SetHor, load the horizontal ref; the puck does nothing for 120 s
+	lda.w #sf2drec					;sf2drec, SetHor, load the horizontal ref; the puck does nothing for 120 s
 	tsb.w sflags
 	jsl.l SetHor
-	jsl.l NewTicker		; horizontal ref
+	jsl.l NewTicker					; horizontal ref
 	lda.w #$FF00
 	tsb.w puckc
 	ldx.w #puckobj
@@ -58,8 +59,8 @@ chkprogress:		;Move the referee and the game through a penalty: when the stop de
 	jsl.l assinsert
 	lda.w #$1C20
 	ldx.b a3
-	sta.w temp1,x		; temp1 = 120*60
-	lda.w #$FF00		; RefStep negative, RefCnt 0; UpdatePA; RefCnt 50; PushRef 0
+	sta.w temp1,x					; temp1 = 120*60
+	lda.w #$FF00					; RefStep negative, RefCnt 0; UpdatePA; RefCnt 50; PushRef 0
 	tsb.w RefStep
 	stz.w RefCnt
 	jsl.l UpdatePA
