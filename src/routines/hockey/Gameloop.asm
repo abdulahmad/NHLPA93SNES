@@ -165,7 +165,7 @@ Gameloop:		;Main game loop: wait for a frame, run the clock, music and crowd, on
 	lda.w #$0002
 	sta.b a2
 	jsl.l lcfound2
-	lda.w #tmflc		; tmflc off for both teams
+	lda.w #tmflcm		; tmflcm off for both teams
 	trb.w tmflags
 	trb.w tmflags+2
 	lda.w #$FFFF

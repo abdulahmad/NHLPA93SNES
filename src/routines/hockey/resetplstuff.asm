@@ -47,7 +47,7 @@ resetplstuff:		;Reset the team variables and the players on both teams
 .top:		;team a2
 	ldy.b a2
 	lda.w tmflags,y
-	and.w #~tmfoffside&$FFFF		; clear tmfoffside
+	and.w #~tmfoside&$FFFF		; clear tmfoside
 	sta.w tmflags,y
 	lda.w #$0005
 	sta.b d2

@@ -79,7 +79,7 @@ assdefd:		;Assignment: a defenseman on defense stays between the furthest attack
 .pastline:
 	ldy.b a2
 	lda.w tmflags,y
-	bit.w #tmfoffside
+	bit.w #tmfoside
 	bne .de0
 	lda.w puckc
 	sta.b d1

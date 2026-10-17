@@ -43,7 +43,7 @@ SetLCmode2:		;Draw the line change box for team a2, one row per line it can chan
 	bmi .next
 	ldy.b a2
 	lda.w tmflags,y
-	bit.w #tmflc		; tmflc: show every row
+	bit.w #tmflcm		; tmflcm: show every row
 	bne .pr
 	lda.b d4
 	cmp.w tmlcchoice,y		; box being closed: only the chosen row

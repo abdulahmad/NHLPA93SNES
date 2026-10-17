@@ -4,9 +4,9 @@ SetLCmode:		;Open the line change box for player X's team, when line changes are
 	jsl.l loadTeamStruct		; loadTeamStruct: a2 = team of X
 	ldy.b a2
 	lda.w tmflags,y
-	bit.w #tmflc		; tmflc: team already in lc mode
+	bit.w #tmflcm		; tmflcm: team already in lc mode
 	bne .rtl
-	ora.w #tmflc
+	ora.w #tmflcm
 	sta.w tmflags,y
 	lda.w #sfspdir|sfssdir		; clear sfspdir/sfssdir
 	trb.w sflags

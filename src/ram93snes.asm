@@ -432,7 +432,7 @@ gmpen		= $0004	; penalty called, ref in progress
 gmpendel	= $0008	; delayed penalty has been called
 gmhl		= $0010	; hilight mode
 gmoffs		= $0020	; offsides on
-gmendper	= $0040	; end the period at the next faceoff
+gmeog	= $0040	; end the period at the next faceoff
 ; sflags (low byte = sflags, high byte = sflags2)
 sfpz		= $0001	; pause mode
 sfpj		= $0002	; pause started by controller 2
@@ -475,8 +475,8 @@ attryflip	= $1000	; y flip
 tmfmid		= $0002	; nearest player takes the spot between puck and own goal
 tmflcc		= $0001	; line change box needs redrawing
 tmflast		= $0004	; next touch overwrites the last touch only
-tmflc		= $0008	; team in line change mode
-tmfoffside	= $0010	; team offsides
+tmflcm		= $0008	; team in line change mode
+tmfoside	= $0010	; team offsides
 ; joypad
 cbut		= $0080	; shoot / check button in d2
 ; rink

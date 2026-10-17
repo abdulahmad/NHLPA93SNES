@@ -38,7 +38,7 @@ assdefo:		;Assignment: a defenseman on offense holds the blue line on his side; 
 	sta.b d0
 	ldy.b a2
 	lda.w tmflags,y		; offsides: defend
-	bit.w #tmfoffside
+	bit.w #tmfoside
 	beq .on
 	jml.l assreplace
 .on:

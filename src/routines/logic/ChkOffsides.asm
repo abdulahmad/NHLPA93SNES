@@ -62,7 +62,7 @@ ChkOffsides:		;Clear each team's offsides flag once it is back onside; when the 
 .set0:
 	ldy.b a2
 	lda.w tmflags,y
-	ora.w #tmfoffside		; tmfoffside
+	ora.w #tmfoside		; tmfoside
 	sta.w tmflags,y
 .rtl:
 	rtl
@@ -127,7 +127,7 @@ ChkOffsides:		;Clear each team's offsides flag once it is back onside; when the 
 .set2:
 	ldy.b a2
 	lda.w tmflags,y
-	ora.w #tmfoffside
+	ora.w #tmfoside
 	sta.w tmflags,y
 	rtl
 .3:
