@@ -178,7 +178,7 @@ dopass:		;Pass the puck in the pass direction, to the best teammate there if any
 	rol.b mulb+2
 	asl.b mulb
 	rol.b mulb+2
-	lda.w #$0BB8
+	lda.w #runspeed*15
 	sta.b mula
 	jsl.l divs
 	adc.w Yvel,x
@@ -199,7 +199,7 @@ dopass:		;Pass the puck in the pass direction, to the best teammate there if any
 	rol.b mulb+2
 	asl.b mulb
 	rol.b mulb+2
-	lda.w #$0BB8
+	lda.w #runspeed*15
 	sta.b mula
 	jsl.l divs
 	adc.w Xvel,x
