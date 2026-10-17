@@ -9,7 +9,7 @@ ResetBench:		;Empty the penalty boxes and put every player on his own bench
 	lda.w #$0002
 	sta.b a0
 .rb:		;team a0 (0/2), d1 = PBnum step
-	lda.w #$0032		; (MaxRos-1)*2
+	lda.w #(maxros-1)*2		; (MaxRos-1)*2
 	sta.b d0
 .rb1:
 	lda.w PBnum

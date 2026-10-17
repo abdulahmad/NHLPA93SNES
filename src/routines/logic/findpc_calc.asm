@@ -54,7 +54,7 @@ findpc_calc:		;findpc for one goal line
 	adc.w puckx
 	sta.b d0
 	sec
-	sbc.w #$0088		; sideline $88
+	sbc.w #sideline		; sideline $88
 	bmi .neg
 	bvc .o1
 	bra .o1b

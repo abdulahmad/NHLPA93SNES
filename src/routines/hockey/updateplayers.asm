@@ -439,7 +439,7 @@ updateplayers:		;Animation, speed, position, input and assignment for every obje
 .px2:
 	lda.w puckx
 	sec
-	sbc.w #$0088		; x <= $88
+	sbc.w #sideline		; x <= $88
 	beq .py
 	bmi .neg4
 	bvc .px3
@@ -447,7 +447,7 @@ updateplayers:		;Animation, speed, position, input and assignment for every obje
 .neg4:
 	bvc .py
 .px3:
-	lda.w #$0088
+	lda.w #sideline
 	sta.w puckx
 .py:		;puck on the ice within |y| < 318: keep it inside the boards
 	lda.w Zpos+puckobj
