@@ -170,9 +170,9 @@ doshot:		;The stick is at the puck: launch it toward the goal
 	lsr.b d0
 .cp:
 	lda.b d0
-	cmp.w #$0088		; clamp $88
+	cmp.w #sideline		; clamp $88
 	bcc .ar
-	lda.w #$0088
+	lda.w #sideline
 	sta.b d0
 .ar:
 	lda.b d0

@@ -482,6 +482,9 @@ cbut		= $0080	; shoot / check button in d2
 ; rink
 blueline	= $58
 goalline	= $B0	; blueline+goalline = $108
+sideline	= $88	; distance from center to side boards
+; roster
+maxros		= 26	; roster slots per team
 ; assignments
 abench			= $0B
 apuckc			= $10

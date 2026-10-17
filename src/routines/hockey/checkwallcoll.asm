@@ -8,7 +8,7 @@ checkwallcoll:		;Collision of object X with the corners, the goals and the board
 	clc
 	adc.w #$0040
 	sta.b d5
-	lda.w #$0088
+	lda.w #sideline
 	sec
 	sbc.w wcradiusx
 	pha

@@ -25,7 +25,7 @@ assepen:		;Assignment: player X leaves the penalty box and comes onto the ice
 .ypos:
 	lda.b d0
 	sta.w Ypos,x
-	lda.w #$0088
+	lda.w #sideline
 	sta.w Xpos,x
 	lda.w #$0002
 	sta.w facedir,x

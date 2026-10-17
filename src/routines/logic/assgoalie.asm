@@ -310,7 +310,7 @@ assgoalie:		;Assignment: the goalie. Back to the crease, hold or pass the puck (
 	bcc .out2
 	jmp.w .de5
 .out2:
-	lda.w #$0088
+	lda.w #sideline
 	sta.b d0
 	lda.w Xpos,x
 	bmi .outn
