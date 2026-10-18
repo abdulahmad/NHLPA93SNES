@@ -1,5 +1,5 @@
-ScoutScripts:						;The scouting report animation scripts: animation and facing steps
-	dw .s0-ScoutScripts,.s1-ScoutScripts,.s2-ScoutScripts,.s3-ScoutScripts,.s4-ScoutScripts,.s5-ScoutScripts,.s6-ScoutScripts,.s7-ScoutScripts
+RosterAnimScripts:					;The roster animation scripts: animation and facing steps
+	dw .s0-RosterAnimScripts,.s1-RosterAnimScripts,.s2-RosterAnimScripts,.s3-RosterAnimScripts,.s4-RosterAnimScripts,.s5-RosterAnimScripts,.s6-RosterAnimScripts,.s7-RosterAnimScripts
 .s0:	dw SPAgready2,3,SPAgready2,4,SPAgready2,5,SPAgready2,-4,SPAgglover,4,SPAgready2,4,SPAgglovel,4,SPAgready2,4,0
 .s5:	dw SPAgready2,3,SPAgready2,4,SPAgready2,5,SPAgready2,-4,SPAgglovel,4,SPAgready2,4,SPAgready2,4,0
 .s1:	dw SPAskate,3,SPAskate,4,SPAcelebrate,-5,SPAcelebrate,4,SPAglide,4,SPAglide,4,0

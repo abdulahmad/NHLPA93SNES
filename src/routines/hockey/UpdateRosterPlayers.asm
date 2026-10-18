@@ -1,4 +1,4 @@
-ScoutPlayersRun:					;One frame of the two players shown on the scouting report
+UpdateRosterPlayers:				;One frame of the two roster players shown in the team blocks
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -22,11 +22,11 @@ ScoutPlayersRun:					;One frame of the two players shown on the scouting report
 	lda.w #$0001					; d7 = 1 frame
 	sta.b d7
 	stz.b a2
-	jsl.l ScoutTeamStep
+	jsl.l UpdateRosterPlayer
 	lda.w #$0002
 	sta.b a2
-	jsl.l ScoutTeamStep
-	jsl.l DrawScoutPlayers
+	jsl.l UpdateRosterPlayer
+	jsl.l UpdateTeamSprites
 	stx.b xsave
 	ldx.w #$001A
 .resta:

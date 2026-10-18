@@ -160,7 +160,7 @@ $80E35E,setvideo,CODE_80E35E,93G,,video_b80
 $80E3C9,show_rink,CODE_80E3C9,93G,,video_b80
 $80E3E7,checkfo,CODE_80E3E7,93G,,video_b80
 $80E439,setsortcords,CODE_80E439,93G,,video_b80
-$80E495,projxy,CODE_80E495,SNES,,video_b80
+$80E495,find3d,CODE_80E495,93G,,video_b80
 $80E501,setffo,CODE_80E501,93G,,video_b80
 $80E60B,uppads,CODE_80E60B,93G,,video_b80
 $80E6C7,PenaltyManager,CODE_80E6C7,93G,,penalty_b80
@@ -221,13 +221,13 @@ $83FA83,PauseLeave,CODE_83FA83,,,hockey_b83
 $83FA87,Restart,CODE_83FA87,SNES,,hockey_b83
 $83FDFC,assgoalietopuck,CODE_83FDFC,,asstab $F,logic_b83
 $84EA39,PutDigits2,CODE_84EA39,SNES,,middle_b84
-$84EA66,ScoutPlayersRun,CODE_84EA66,SNES,,hockey_b84
-$84EABF,ScoutTeamStep,CODE_84EABF,SNES,,hockey_b84
-$84EC4C,ScoutPlayerExit,CODE_84EC4C,SNES,,hockey_b84
-$84EC5C,ScoutNextPlayer,CODE_84EC5C,SNES,,hockey_b84
-$84ED51,ScoutPickScript,CODE_84ED51,SNES,,hockey_b84
+$84EA66,UpdateRosterPlayers,CODE_84EA66,93G,,hockey_b84
+$84EABF,UpdateRosterPlayer,CODE_84EABF,93G,,hockey_b84
+$84EC4C,SlideOutRosterPlayer,CODE_84EC4C,93G,,hockey_b84
+$84EC5C,SetupNextPlayer,CODE_84EC5C,93G,,hockey_b84
+$84ED51,PickRosterAnim,CODE_84ED51,93G,,hockey_b84
 $84ED96,GetRosterEntry,CODE_84ED96,SNES,,hockey_b84
-$84EEF4,DrawScoutPlayers,CODE_84EEF4,SNES,,hockey_b84
+$84EEF4,UpdateTeamSprites,CODE_84EEF4,93G,,hockey_b84
 $84EF02,DrawScoutPlayer,CODE_84EF02,SNES,,hockey_b84
 $84F532,UpdateScoutingDisplay,CODE_84F532,93G,,hockey_b84
 $84F734,ScrollDisplayUp,CODE_84F734,93G,,hockey_b84
@@ -294,9 +294,9 @@ $89FC0B,StartSong3,CODE_89FC0B,SNES,,sound_b89
 $89FC37,StartSong4,CODE_89FC37,SNES,,sound_b89
 $89FC63,StartSong5,CODE_89FC63,SNES,,sound_b89
 $89FC8F,CopyWords,CODE_89FC8F,SNES,,middle_b89
-$89FCC1,EraseScoutName,CODE_89FCC1,SNES,,hockey_b89
+$89FCC1,ClearRosterName,CODE_89FCC1,93G,,hockey_b89
 $89FCD8,GetPlayerRecord,CODE_89FCD8,SNES,,hockey_b89
-$89FCFD,MesAreaDone,CODE_89FCFD,SNES,,hockey_b89
+$89FCFD,FinalizeTextBuffer,CODE_89FCFD,93G,,hockey_b89
 $89FD0C,StartGame,CODE_89FD0C,93G,from $8B8176,hockey_b89
 $89FD3A,restoreteams,CODE_89FD3A,93G,,hockey_b89
 $89FD6A,EvadePC,CODE_89FD6A,93G,skateto avoidance routine,logic_b89
@@ -382,10 +382,10 @@ $8FD5BF,holdcheck,CODE_8FD5BF,93G,from checkcheck,hockey_b8F
 $8FD68C,PrintStringFromList,CODE_8FD68C,93G,,penalty_b8F
 $8FD69F,Framer,CODE_8FD69F,93G,,middle_b8F
 $8FD75A,assnothing,CODE_8FD75A,93G,,logic_b8F
-$8FD76B,GoalieCount,CODE_8FD76B,SNES,,logic_b8F
+$8FD76B,GetGoalieCount,CODE_8FD76B,93G,,logic_b8F
 $8FD793,AdvanceStringPtr,CODE_8FD793,93G,,penalty_b8F
 $8FD9DF,releasepl,CODE_8FD9DF,93G,,penalty_b8F
-$8FDA75,InitScoutDisplay,CODE_8FDA75,SNES,,hockey_b8F
+$8FDA75,InitScoutingDisplay,CODE_8FDA75,93G,,hockey_b8F
 $8FDA8F,assstanley,CODE_8FDA8F,,asstab 8,logic_b8F
 $8FDAF3,addframe_full,CODE_8FDAF3,SNES,,video_b8F
 $8FDAFC,RemovePlayerFromList,CODE_8FDAFC,93G,,penalty_b8F
@@ -395,10 +395,10 @@ $8FDBF7,UpdateCwdExcite,CODE_8FDBF7,93G,,hockey_b8F
 $8FDBF8,CheckLateGameSong,CODE_8FDBF8,93G,93G renamed from CheckPeriodEnd,hockey_b8F
 $8FDBF9,loadTeamStruct,CODE_8FDBF9,93G,,penalty_b8F
 $8FDC0D,ScoutingReport,CODE_8FDC0D,93G,from Opening4,hockey_b8F
-$8FDED2,ScoutCompare,CODE_8FDED2,SNES,,hockey_b8F
+$8FDED2,PrintScoutRatings,CODE_8FDED2,93G,,hockey_b8F
 $8FE00A,SetupTeamForIntermission,CODE_8FE00A,93G,from Intermission,penalty_b8F
 $8FE04C,ClearSprites,CODE_8FE04C,SNES,,video_b8F
-$8FE0E4,RemapTiles,CODE_8FE0E4,SNES,,video_b8F
+$8FE0E4,remap,CODE_8FE0E4,93G,,video_b8F
 $8FE164,playeracc,CODE_8FE164,93G,"from noturn, fightinput",logic_b8F
 $8FE2F9,ClearPenaltyBuffer,CODE_8FE2F9,93G,,penalty_b8F
 $8FE316,randomd0sd0,CODE_8FE316,93G,,middle_b8F
@@ -409,7 +409,7 @@ $8FE404,forceblack,CODE_8FE404,93G,,middle_b8F
 $8FE43C,passmode,CODE_8FE43C,93G,from joyplayer,logic_b8F
 $8FE458,dopass,CODE_8FE458,93G,,logic_b8F
 $8FE6BD,CompLine,CODE_8FE6BD,93G,from setpersonel,logic_b8F
-$8FE825,TeamRoster,CODE_8FE825,SNES,pause menu,hockey_b8F
+$8FE825,TeamRosterScreen,CODE_8FE825,93G,pause menu,hockey_b8F
 $8FEC68,addframe,CODE_8FEC68,93G,,video_b8F
 $8FECAB,Pmenu,CODE_8FECAB,92G,"from Pausemode, StartHL2",hockey_b8F
 $8FEE4A,GetPadTeam,CODE_8FEE4A,SNES,,hockey_b8F

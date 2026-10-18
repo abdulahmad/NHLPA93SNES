@@ -75,7 +75,7 @@ PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start 
 	bne .ros1
 	jmp.w .gj
 .ros1:
-	jsl.l TeamRoster
+	jsl.l TeamRosterScreen
 	jsl.l sndqreset
 	jsl.l forceblack
 	sep #$20
@@ -120,7 +120,7 @@ PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start 
 	sta.b a1+2
 	lda.w #$0064
 	sta.b d0
-	jsl.l RemapTiles				;remap the 4bpp pixels of the unpacked tiles ([a0] data, [a1] table, d0
+	jsl.l remap						;remap the 4bpp pixels of the unpacked tiles ([a0] data, [a1] table, d0
 									;tiles)
 	lda.w #FramerTiles
 	sta.b a0
@@ -132,7 +132,7 @@ PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start 
 	sta.b a1+2
 	lda.w #$0004
 	sta.b d0
-	jsl.l RemapTiles				;remap the 4bpp pixels of the unpacked tiles ([a0] data, [a1] table, d0
+	jsl.l remap						;remap the 4bpp pixels of the unpacked tiles ([a0] data, [a1] table, d0
 									;tiles)
 	lda.b sprclock
 	adc.w #$003C
@@ -145,7 +145,7 @@ PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start 
 	jmp.w .redraw
 .go:								;Goalie: left/right change tmgoalie (0, 1, none), then Setpersonel
 	jsl.l GetPadTeam
-	jsl.l GoalieCount
+	jsl.l GetGoalieCount
 	jsl.l GetPadTeam
 	ldy.b a2						; A or right: next goalie; left: previous; d0 = number of goalies
 	lda.b d1

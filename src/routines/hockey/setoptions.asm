@@ -121,7 +121,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	sta.b a1+2
 	lda.w #$0064
 	sta.b d0
-	jsl.l RemapTiles
+	jsl.l remap
 	lda.w #FramerTiles
 	sta.b a0
 	lda.w #FramerTiles>>16
@@ -132,7 +132,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	sta.b a1+2
 	lda.w #$0004
 	sta.b d0
-	jsl.l RemapTiles
+	jsl.l remap
 	lda.w #NHLPALogo
 	sta.b tmp0
 	lda.w #NHLPALogo>>16
@@ -211,7 +211,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	sta.w lastframevc
 	sta.w oldvcount
 	jsl.l ClearSprites
-	jsl.l ScoutPlayersRun
+	jsl.l UpdateRosterPlayers
 	jsl.l ReadJoy1
 	jsl.l ProcessInputWithRepeat
 	lda.b d1

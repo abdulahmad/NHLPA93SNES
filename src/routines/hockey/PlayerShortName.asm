@@ -98,7 +98,7 @@ PlayerShortName:					;mesarea = the number, first initial and last name of roste
 	lda.b a0
 	cmp.b a2
 	bne .last
-	jsl.l MesAreaDone
+	jsl.l FinalizeTextBuffer
 	stx.b xsave
 	ldx.w #$0002
 .resta:

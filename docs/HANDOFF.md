@@ -1,8 +1,8 @@
 ## Local names (2026-10-14)
 
-Signed-compare overflow tails (`bmi` / `bvs` / `bvc`) are `.neg`, `.neg1`, `.neg2`, ... in source order. The earlier `.vN` pass is unchanged. `assdefd` had one leftover `.gt1` tail; it is `.neg2`, and the later tails in that routine moved to `.neg3` and `.neg4`. A `bcc` test is not that pattern. Where 93 Genesis already names the label, that name stays (`CompShoot` `.lt`). `holdcheck` has no 93G label on the facing test, so a facing delta under 3 is `.close`. `RemapTiles` has no 93G routine: the pixel bits are `.bit3`..`.bit0` and the video-memory store is `.vram`.
+Signed-compare overflow tails (`bmi` / `bvs` / `bvc`) are `.neg`, `.neg1`, `.neg2`, ... in source order. The earlier `.vN` pass is unchanged. `assdefd` had one leftover `.gt1` tail; it is `.neg2`, and the later tails in that routine moved to `.neg3` and `.neg4`. A `bcc` test is not that pattern. Where 93 Genesis already names the label, that name stays (`CompShoot` `.lt`). `holdcheck` has no 93G label on the facing test, so a facing delta under 3 is `.close`. `remap` has no 93G routine: the pixel bits are `.bit3`..`.bit0` and the video-memory store is `.vram`.
 
-Locals renamed only where 93 Genesis has no such label: `TitleScreen` `.clearvr` (16 video-memory words), `VBjsr` `.rti`, `ScoutTeamStep` `.space`, `updatepentime` `.stay`, `updatepwrplay` `.diff`, `chkprogress` `.over`, `PrintStringFromList` `.step`, `DrawFrame` / `DrawFrameHi` `.nextpiece`, `printbig` `.nextch`, `chk4pass` `.miss` (the 93G `.ok` join stays). Unused labels with no branch were removed from `prefmes` and `passtoa0`.
+Locals renamed only where 93 Genesis has no such label: `TitleScreen` `.clearvr` (16 video-memory words), `VBjsr` `.rti`, `UpdateRosterPlayer` `.space`, `updatepentime` `.stay`, `updatepwrplay` `.diff`, `chkprogress` `.over`, `PrintStringFromList` `.step`, `DrawFrame` / `DrawFrameHi` `.nextpiece`, `printbig` `.nextch`, `chk4pass` `.miss` (the 93G `.ok` join stays). Unused labels with no branch were removed from `prefmes` and `passtoa0`.
 
 Left on their 93 Genesis names: `TryAddPlayerToList` `.no`, `UpdateScoutingDisplay` `.cont`, `checkcoll` `.xx`, `checkwindow` `.ok`, `assbench` / `asspenalty` `.ok`, `assgoalie` `.out`, `chk4shot` `.no1`, `GetNameandAttrib` `.skip`. `.loop`, `.next`, `.done` and `.exit` stay. `.cont1` stays: it is the controller-1 side of `cont1team` / `cont2team`.
 
@@ -69,7 +69,7 @@ Data merges: bank $83 team data (TeamList..playoffseats) is one file `data/teamd
 `data/sound/bootsound.asm` (BootSoundUpload, SPCDriver, BootInstruments, BootSampleDir, BootSamples).
 Module audit: every `routines/<module>/` file checked against 93G (ref93) then 92G; misplaced ones moved (UnpackNibbles,
 WeightedRandomSelect -> middle; DoHiLights, StartHL2, ClearTeamStats, VBjsr -> hockey; updatesound -> video; by judgment HBjsr,
-BRKHalt -> hockey (interrupt vectors beside VBjsr), revplayeracc -> logic (playeracc), TeamRoster, RosterG, RosterGoalies -> stats
+BRKHalt -> hockey (interrupt vectors beside VBjsr), revplayeracc -> logic (playeracc), TeamRosterScreen, RosterG, RosterGoalies -> stats
 (93G TeamRosterScreen/GoalieRowText)). SNES-only routines otherwise stay with the module of their 93G caller/neighbour.
 Cleanup 2026-10-12: `src/ram93s.asm` comments no longer end by repeating the variable name (208 lines; space-joined forms like `68k d0`, `pflags bit pfgoal` and case-different 68k names like `PassBits` kept on purpose). Signed-compare overflow locals in `src/routines/` renamed `.vN` -> `.neg`, `.neg1`, `.neg2`, ... per routine scope (148 labels, 49 files; no `.vN` left).
 Next: the cleanup items below (93G inline comments, generic locals) now work per routine file.

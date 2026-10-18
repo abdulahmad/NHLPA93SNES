@@ -1,4 +1,4 @@
-projxy:								;Project a rink position (x, y, z) to screen coordinates; off screen when
+find3d:								;Project a rink position (x, y, z) to screen coordinates; off screen when
 									;too far away
 	lda.w sfhormode
 	beq .nhor

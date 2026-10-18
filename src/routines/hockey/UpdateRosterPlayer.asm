@@ -1,4 +1,4 @@
-ScoutTeamStep:						;Step team a2's player on the scouting report through his animation, then
+UpdateRosterPlayer:					;Step team a2's roster player through his animation, then
 									;print his number and name
 	ldy.b a2
 	lda.w tmteam,y					; team changed?
@@ -10,7 +10,7 @@ ScoutTeamStep:						;Step team a2's player on the scouting report through his an
 	ldy.b a2
 	lda.w #$0000
 	sta.w tmPwrGoals,y
-	jsl.l ScoutPlayerExit
+	jsl.l SlideOutRosterPlayer
 .cur:
 	ldy.b a2
 	lda.w tmsort,y					; X = a3 = first object of the team
@@ -32,7 +32,7 @@ ScoutTeamStep:						;Step team a2's player on the scouting report through his an
 	bmi .neg
 	bvs .rtl
 .next1:
-	jmp.w ScoutNextPlayer
+	jmp.w SetupNextPlayer
 .neg:
 	bvs .next1
 .rtl:
@@ -46,16 +46,16 @@ ScoutTeamStep:						;Step team a2's player on the scouting report through his an
 	jsl.l updateanim
 	lda.w pf2aip,x					; pf2aip: wait for the step delay
 	beq .step
-	jmp.w ScoutPlayerExit_rtl
+	jmp.w SlideOutRosterPlayer_rtl
 .step:								;next script step
 	ldy.b a2
-	lda.w tmPenmin,y				; a0 = ScoutScripts + offset of the script + step; step += 4
+	lda.w tmPenmin,y				; a0 = RosterAnimScripts + offset of the script + step; step += 4
 	asl a
 	sta.b d0
 	tay
-	lda.w #ScoutScripts>>16
+	lda.w #RosterAnimScripts>>16
 	sta.b a0+2
-	lda.w #ScoutScripts
+	lda.w #RosterAnimScripts
 	sta.b a0
 	clc
 	adc.b [a0],y
@@ -68,7 +68,7 @@ ScoutTeamStep:						;Step team a2's player on the scouting report through his an
 	lda.b [a0]
 	sta.b d1
 	bne .set
-	jmp.w ScoutPlayerExit
+	jmp.w SlideOutRosterPlayer
 .set:
 	jsl.l SetSPA					; SetSPA d1, 9 frames per step, facedir
 	lda.w #$0009
@@ -77,7 +77,7 @@ ScoutTeamStep:						;Step team a2's player on the scouting report through his an
 	lda.b [a0],y
 	sta.w facedir,x
 	bmi .flip
-	jmp.w ScoutPlayerExit_rtl
+	jmp.w SlideOutRosterPlayer_rtl
 .flip:								;negative facedir: first step of a new player, print the name
 	eor.w #$FFFF
 	inc a

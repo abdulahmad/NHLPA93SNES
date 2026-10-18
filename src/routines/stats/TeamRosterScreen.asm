@@ -1,4 +1,4 @@
-TeamRoster:							;Team Roster screen: each line's players and one attribute column. The pad
+TeamRosterScreen:					;Team Roster screen: each line's players and one attribute column. The pad
 									;moves, Y switches team,
 		;   Start leaves
 	jsl.l forceblack
@@ -46,7 +46,7 @@ TeamRoster:							;Team Roster screen: each line's players and one attribute col
 	sta.b a1+2
 	lda.w #$0064
 	sta.b d0
-	jsl.l RemapTiles
+	jsl.l remap
 	ldx.w #$0000
 .framertiles:
 	lda.l FramerTiles,x
@@ -315,7 +315,7 @@ TeamRoster:							;Team Roster screen: each line's players and one attribute col
 	jsl.l printz
 	dw $0018						; printz inline string: length (counts itself), then control bytes / text
 	db $9F,$08,$1A,"Y - Switch Teams",$BF,$00,$0E
-	jsl.l GoalieCount
+	jsl.l GetGoalieCount
 	lda.b d0
 	dec a
 	sta.b d1

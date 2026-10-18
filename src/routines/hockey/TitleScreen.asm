@@ -99,7 +99,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	sta.b a1+2
 	lda.w #$0064
 	sta.b d0
-	jsl.l RemapTiles				; remap the 4bpp pixels ([a0] data, [a1] table, d0 tiles)
+	jsl.l remap						; remap the 4bpp pixels ([a0] data, [a1] table, d0 tiles)
 	jsl.l StartSong6
 	jsl.l printz
 	dw $0005						; printz inline string: length (counts itself), then control bytes / text

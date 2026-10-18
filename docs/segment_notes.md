@@ -43,7 +43,7 @@ doinput, faceoffinput, holdplayer (logic93_1). Starts at checkgoal (boundary mov
 ## bank80_E000 (org $80E0E1)
 
 $80E0E1-$80ED37  ROM $060E1-$06D37: setpads (logic93_1), updateanim, checkwindow (hockey93_02), setvideo, show_rink, checkfo
-(video93_1), setsortcords, setffo, uppads (video93_2) with the SNES projxy, PenaltyManager, chkatop, checkfornewpen, Stop4Pen,
+(video93_1), setsortcords, setffo, uppads (video93_2) with the SNES find3d, PenaltyManager, chkatop, checkfornewpen, Stop4Pen,
 limitfo, chkprogress, InProgress, coinsearch, UpdatePA, SetPA (penalty93_1). Starts at setpads (boundary moved from $80E001),
 ends before the compressed block at $80ED38 (now in bank80_F000).
 
@@ -212,9 +212,9 @@ ending with a carriage return, then the intro lines (~ [ ] { } are filled in by 
 ## bank84_E000 (org $84E949)
 
 $84E949-$84EF3B  ROM $26949-$26F3B: FaceOffMap, then the SNES scouting report extras: PutDigits2, the two showcased
-players who skate in with their number and name (ScoutPlayersRun: one per team, picked from the line sets in ScoutLineOrder,
-animated with the ScoutScripts chosen from their ratings), and the roster helpers. The team stat words are scratch during the
-scouting report: tmshots = team shown, tmPwrGoals = ScoutLineOrder index, tmPwrPlays = roster player, tmPenalties = line slot,
+players who skate in with their number and name (UpdateRosterPlayers: one per team, picked from the line sets in RosterOrderTable,
+animated with the RosterAnimScripts chosen from their ratings), and the roster helpers. The team stat words are scratch during the
+scouting report: tmshots = team shown, tmPwrGoals = RosterOrderTable index, tmPwrPlays = roster player, tmPenalties = line slot,
 tmPenmin = script, tmATOP = script step. Starts after ScoutingReportText (boundary moved), ends before HotList.
 
 ## bank84_F000 (org $84EF3C)
@@ -410,7 +410,7 @@ p_music_vblank (the sound command sender), then RefTilesHor (packed ref window t
 ## bank89_F000 (org $89F00A)
 
 $89F00A-$89FFFF  ROM $4F00A-$4FFFF: the rest of RefTilesHor, RefsMapHor (ref window frames for the horizontal rink), the music cue starters
-StartSong1-5/8/9, CopyWords, EraseScoutName, GetPlayerRecord, MesAreaDone, StartGame and restoreteams (hockey93_01), EvadePC (logic93_3),
+StartSong1-5/8/9, CopyWords, ClearRosterName, GetPlayerRecord, FinalizeTextBuffer, StartGame and restoreteams (hockey93_01), EvadePC (logic93_3),
 asswingd (logic93_2, asstab 3), $FF fill.
 
 ## bank8A_8000 (org $8A8000)
@@ -609,14 +609,14 @@ $8FC005-$8FD004  ROM $7C005-$7D004: SpriteSet1 tiles continued (see bank8F_9000)
 
 ## bank8F_D000 (org $8FD005)
 
-$8FD005-$8FE009  ROM $7D005-$7E009: the last SpriteSet1 tiles, fightinput, holdcheck, PrintStringFromList, Framer, assnothing, GoalieCount,
+$8FD005-$8FE009  ROM $7D005-$7E009: the last SpriteSet1 tiles, fightinput, holdcheck, PrintStringFromList, Framer, assnothing, GetGoalieCount,
 AdvanceStringPtr, the attribute menu tables, releasepl, assstanley, RemovePlayerFromList, asscenterd, loadTeamStruct, ScoutingReport,
 ScoutLabels, PuckcSpots. Ends before SetupTeamForIntermission (boundary moved from $8FE00D).
 
 ## bank8F_E000 (org $8FE00A)
 
-$8FE00A-$8FEE82  ROM $7E00A-$7EE82: SetupTeamForIntermission, ClearSprites, RemapTiles, playeracc (logic93_5), ClearPenaltyBuffer, randomd0s,
-DefaultMenus, checkagr, WeightedRandomSelect, forceblack, passmode/dopass, FrameSetTable, CompLine, TeamRoster, addframe, Pmenu with the
+$8FE00A-$8FEE82  ROM $7E00A-$7EE82: SetupTeamForIntermission, ClearSprites, remap, playeracc (logic93_5), ClearPenaltyBuffer, randomd0s,
+DefaultMenus, checkagr, WeightedRandomSelect, forceblack, passmode/dopass, FrameSetTable, CompLine, TeamRosterScreen, addframe, Pmenu with the
 pause menu lists, GetPadTeam, setpde. Ends before setoptions (boundaries moved from $8FE00E / $8FF002).
 
 ## bank8F_F000 (org $8FEE83)

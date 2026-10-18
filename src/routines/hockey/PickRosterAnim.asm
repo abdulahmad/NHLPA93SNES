@@ -1,4 +1,4 @@
-ScoutPickScript:					;Pick the scouting report animation of a player's best qualifying rating
+PickRosterAnim:						;Pick the roster animation of a player's best qualifying rating
 	lda.b [a1]
 	and.w #$00FF
 	sta.b tmp0
@@ -13,7 +13,7 @@ ScoutPickScript:					;Pick the scouting report animation of a player's best qual
 	bmi .neg
 	bvc .best
 .ex1:
-	jmp.w ScoutPlayerExit_rtl
+	jmp.w SlideOutRosterPlayer_rtl
 .neg:
 	bvc .ex1
 .best:
@@ -23,7 +23,7 @@ ScoutPickScript:					;Pick the scouting report animation of a player's best qual
 	bmi .neg1
 	bvc .z
 .ex2:
-	jmp.w ScoutPlayerExit_rtl
+	jmp.w SlideOutRosterPlayer_rtl
 .neg1:
 	bvc .ex2
 .z:
@@ -31,7 +31,7 @@ ScoutPickScript:					;Pick the scouting report animation of a player's best qual
 	beq .take
 	lda.b tmp0
 	bne .take
-	jmp.w ScoutPlayerExit_rtl
+	jmp.w SlideOutRosterPlayer_rtl
 .take:
 	lda.b d1
 	sta.b d2

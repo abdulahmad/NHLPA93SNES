@@ -1,4 +1,4 @@
-ScoutNextPlayer:					;The next player of team a2 to show on the scouting report, with an
+SetupNextPlayer:					;The next player of team a2 to show in the team block, with an
 									;animation picked from his ratings
 	jsl.l SetTeamColors
 	ldy.b a2
@@ -16,9 +16,9 @@ ScoutNextPlayer:					;The next player of team a2 to show on the scouting report,
 	lda.w tmPwrGoals,y
 	sta.b d0
 	tay
-	lda.w #ScoutLineOrder			; ScoutLineOrder[tmPwrGoals]: $FF restarts the list
+	lda.w #RosterOrderTable			; RosterOrderTable[tmPwrGoals]: $FF restarts the list
 	sta.b a0
-	lda.w #ScoutLineOrder>>16
+	lda.w #RosterOrderTable>>16
 	sta.b a0+2
 	lda.b [a0],y
 	and.w #$00FF
@@ -73,22 +73,22 @@ ScoutNextPlayer:					;The next player of team a2 to show on the scouting report,
 	lda.w attribute,x
 	ora.w #attrxflip
 	sta.w attribute,x
-.rate:								;ScoutPickScript for each of the 14 rating nibbles (ScoutScriptPick,
-									;goalies ScoutScriptPickG)
+.rate:								;PickRosterAnim for each of the 14 rating nibbles (SkaterRosterAnims,
+									;goalies GoalieRosterAnims)
 	inc.b a0
 	lda.w #$0006
 	sta.b d0
 	stz.b d2
-	lda.w #ScoutScriptPick
+	lda.w #SkaterRosterAnims
 	sta.b a1
-	lda.w #ScoutScriptPick>>16
+	lda.w #SkaterRosterAnims>>16
 	sta.b a1+2
 	ldy.b a2
 	lda.w tmPenalties,y
 	and.w #$0007
 	sta.b d3
 	bne .nib
-	lda.w #ScoutScriptPickG
+	lda.w #GoalieRosterAnims
 	sta.b a1
 .nib:
 	lda.b [a0]
@@ -98,12 +98,12 @@ ScoutNextPlayer:					;The next player of team a2 to show on the scouting report,
 	lsr a
 	lsr a
 	sta.b d1
-	jsl.l ScoutPickScript
+	jsl.l PickRosterAnim
 	lda.b [a0]
 	inc.b a0
 	and.w #$000F
 	sta.b d1
-	jsl.l ScoutPickScript
+	jsl.l PickRosterAnim
 	dec.b d0
 	bpl .nib
 	ldy.b a2

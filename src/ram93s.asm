@@ -606,7 +606,7 @@ TMPDBENCH	=	$FFFE				; on the bench
 TMPDOUT		=	$FFFD				; out of the game
 TMPDINJ		=	$1000				; injured: box time with this bit has no penalty
 
-OFFSCREEN	=	$4E20				; projxy: d1 for a point off the screen (20000)
+OFFSCREEN	=	$4E20				; find3d: d1 for a point off the screen (20000)
 ; --- addresses: puck fields (need puckobj above) ---
 puckx	=	Xpos+puckobj
 pucky	=	Ypos+puckobj

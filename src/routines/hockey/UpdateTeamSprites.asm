@@ -1,4 +1,4 @@
-DrawScoutPlayers:					;Draw the two players shown on the scouting report
+UpdateTeamSprites:					;Draw the two roster players shown in the team blocks
 	ldx.w #$0000
 	stx.b a3
 	jsl.l DrawScoutPlayer
