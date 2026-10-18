@@ -55,7 +55,7 @@ and "one segment per commit" belonged to the segment phase; START_HERE.md has th
 
 Bank $8F done (bank8F_8000..bank8F_F000 all MATCH). Every bank segment ($80-$8F) is matched; no segment is left in the queue. <- CURRENT
 
-`ram93snes` is not a queue segment. It has no ROM bytes, so there is nothing to byte-verify, and the queue moves past its row. That does not put RAM off limits. RAM names come from the code segments as they are transcribed, not from a separate first pass: add each one to `src/ram93snes.asm` whenever it fits. Define each name in one place only.
+`ram93s` is not a queue segment. It has no ROM bytes, so there is nothing to byte-verify, and the queue moves past its row. That does not put RAM off limits. RAM names come from the code segments as they are transcribed, not from a separate first pass: add each one to `src/ram93s.asm` whenever it fits. Define each name in one place only.
 
 ## Lineage (read first)
 
@@ -68,7 +68,7 @@ NHLPA Hockey 93 SNES is a hybrid. The SNES port started from NHL92 Genesis (like
 - Reference ROM: `lst/nhlpa93snes.bin` (524288 bytes, sha1 `76a01492cfb656e9fce0094bca356c312adfea0e`). Bytes and branch targets come from it. Do not substitute another ROM.
 - There is no IDA listing. The starting point is the auto-generated `src/bankXX_YYYY.asm` slices (quick recursive-descent pass from the vectors, `tools/disasm65816.py`). Each instruction line carries `; $address: bytes`. Unreached bytes are `db` lines: they are unresolved, not proven data. Do not re-run the generator over a bank once it has been edited.
 - Style / naming source: https://github.com/abdulahmad/NHLPA93Genesis (first), then https://github.com/abdulahmad/NHL92Genesis where 93 lacks the routine.
-- `src/nhlpa93snes.asm` is the full build top level: `inc/snes_regs.asm`, `macros/snes93.mac`, `ram93snes.asm`, then the 16 bank files `banks/bXX_<name>.asm`.
+- `src/nhlpa93snes.asm` is the full build top level: `inc/snes_regs.asm`, `macros/snes93.mac`, `ram93s.asm`, then the 16 bank files `banks/bXX_<name>.asm`.
 
 ## Mapping
 
@@ -92,7 +92,7 @@ Vectors: native COP `$80B4`, BRK `$80B2`, ABORT `$80B4`, NMI `$80B4`, IRQ `$8390
 - A 93G name is the field even when the SNES value differs. The equate gets the SNES value; the comment may record the 68000 value as '93 $xx'.
 - A global label ends local-label scope (asar `.local` labels belong to the previous global). Keep comment lines under 200 characters.
 - Do not delete an asm file. Edit it in place. Split a bank into logical files (e.g. `penalty93s.asm`, `teamdata93s.asm`) only by cutting the text at an instruction/data boundary and adding the include in ROM order in the same session; add the new row to the ROM map.
-- RAM names go in `src/ram93snes.asm` as you transcribe. Do not wait for a RAM pass.
+- RAM names go in `src/ram93s.asm` as you transcribe. Do not wait for a RAM pass.
 
 ## Practical notes (from the sample session)
 
@@ -100,7 +100,7 @@ Vectors: native COP `$80B4`, BRK `$80B2`, ABORT `$80B4`, NMI `$80B4`, IRQ `$8390
 - asar label scope continues across `incsrc`: a `.local` at the top of a slice belongs to the last global in the previous slice. Give it a global name when you work that slice.
 - Code reached only through a RAM vector (`vbint` $14, `hbint` $16, the `lda #addr-1 : pha : rts` dispatch) or a jump table is `db` in the quick pass. To decode it, run the generator into a scratch dir with extra entries and paste only that region: `python3 tools/disasm65816.py lst/nhlpa93snes.bin /tmp/dis --entry 8080CE:16:16` (M:X widths at entry, 8 or 16). Never write its output into `src/` for a bank already edited.
 - asar locals are `.name:` and belong to the last global label; a branch from one global into another's local fails, so a shared tail gets its own global (`vb2_main`).
-- Labels work as 16-bit immediates (`lda.w #vb2`) and DP equates work with `.b` (`sta.b vbint`); asar truncates to the written size. Equates go in `ram93snes.asm` as `name = $xx`.
+- Labels work as 16-bit immediates (`lda.w #vb2`) and DP equates work with `.b` (`sta.b vbint`); asar truncates to the written size. Equates go in `ram93s.asm` as `name = $xx`.
 - The vector table and header ($80FFC0-$80FFFF) are still `db`; when you reach them write `dw VBjsr` etc. and keep MATCH.
 
 ## Naming rules
@@ -131,7 +131,7 @@ The first row that is not matched is the current segment. Code% is the share of 
 | File | Status | Org | End | Code% | Note |
 |---|---|---|---|---|---|
 | bank80_8000 | matched | $808000 | $80910E | 100% | 4367 bytes $808000-$80910E (end moved from $808FFF to the doshot table). Start, VBjsr, vb2*, VBlank* handlers, HBjsr; 93G goalieacc, dostop, StopNA, muls16, getpde, rtss, MaxSpeed, check4bench, checkob, chk4lc, chk4shot, CompShoot, assnearest, check4check, burst, skatetopuck, Sweepcheck, chkpk, chkpk2, assshoot, SetShotMode, ShotMode, doshot, shotsets |
-| ram93snes | skipped | no org (equates only) | - | - | RAM map, not a queue segment |
+| ram93s | skipped | no org (equates only) | - | - | RAM map, not a queue segment |
 | bank80_9000 | matched | $80910F | $80A120 | 100% | 4114 bytes $80910F-$80A120 (end moved to the end of puckglue). 93G asspassrec, assfight (.al), chkhit, CwdFight, FightFall, assfwatch, assfaceoff, assexit, assfaceoffp1, randomd0, pucknorm, findpc, findpc_calc, divs, a2touchpuck, a2offsides, GetHot, puckIChk, ChkOffsides, ClearOffsidesIfAllPlayers, checkpuckcoll, checkpuckcoll_ccx, puckstick, puckglue |
 | bank80_A000 | matched | $80A121 | $80B005 | 100% | 3813 bytes $80A121-$80B005 (start moved by bank80_9000). 93G deflect, setc1player, setc2player, restorepl, makepde, puckbody, puckgoalie, pucknothing, puckfaceoff, SetLCmode, SetLCmode2, ClrHor, puckfaceoff2 (.apl/.ptab), updatefaceoff, Endfaceoff (.ftab), dirtab, random, randoma, changeplayer, vtoa (.dt) |
 | bank80_B000 | matched | $80B006 | $80C18E | 100% | 4489 bytes $80B006-$80C18E (end moved to the end of PenaltyList). 93G SetSPA, ResetBench, forcepldata, Setplass, setplayer, ClampNibble, resetplstuff, assinsert, assreplace, setupice, setplayercolors, SprSort, DoGameFrame, periodicevents, AvgCline, printz, print, updatepwrplay, ChkGoalies, setpersonel, SetPlList, TryAddPlayerToList, ReturnGoalies, CPgoalie, updatecrowdf, PenaltyList; SNES SetTeamColors, divu16, printteamname |
@@ -264,8 +264,8 @@ The first row that is not matched is the current segment. Code% is the share of 
 
 - Setup: quick pass, 16 bank files, full build MATCH (sha1 76a01492...).
 - Queue split into 128 ~4 KB segments (one file per slice). MATCH.
-- Sample (branch sample-bank80): bank80 Start, BRKHalt, VBjsr, vb2_blank, vb2, vb2_main, VBlank, HBjsr, HBdefault named; $80CE-$81C4 decoded from db (vbint targets reached only through `vbint`). RAM $00-$18 named in ram93snes.asm. MATCH.
-- bank80_8000: matched $808000-$80910E (4367 bytes; boundary moved to $80910F so doshot and its shotsets table stay in one file). Decoded the vbint handlers ($81C5-$838F, entries from lda #addr : sta vbint) and the player logic reached through asstab ($8D86A8, 29 long pointers in 93G asstab order). RAM: DP 68k pseudo registers d0-d7/a0-a3, sort-object field arrays (SoA, $20 per field), game/team/option globals, constants section (bit masks, SPA, assignments, sfx) in ram93snes.asm. Calls into later segments and other banks keep their address with the 93G name in the line comment. MATCH.
+- Sample (branch sample-bank80): bank80 Start, BRKHalt, VBjsr, vb2_blank, vb2, vb2_main, VBlank, HBjsr, HBdefault named; $80CE-$81C4 decoded from db (vbint targets reached only through `vbint`). RAM $00-$18 named in ram93s.asm. MATCH.
+- bank80_8000: matched $808000-$80910E (4367 bytes; boundary moved to $80910F so doshot and its shotsets table stay in one file). Decoded the vbint handlers ($81C5-$838F, entries from lda #addr : sta vbint) and the player logic reached through asstab ($8D86A8, 29 long pointers in 93G asstab order). RAM: DP 68k pseudo registers d0-d7/a0-a3, sort-object field arrays (SoA, $20 per field), game/team/option globals, constants section (bit masks, SPA, assignments, sfx) in ram93s.asm. Calls into later segments and other banks keep their address with the 93G name in the line comment. MATCH.
 - bank80_9000: matched $80910F-$80A120 (4114 bytes; start moved from $809000 by bank80_8000, end moved to $80A120 so puckstick/puckglue stay whole). The fight, faceoff and puck logic and the puck/player collision, all decoded from db (entries from asstab). New RAM: object fields frame, Zpos, attribute, oldframe, OldXpos/OldYpos, impactp, temp4/5, SCnum, stickhand, fightagg, handed, Ylist/OOlistpos/OOlist; fight/icing/touch/clock globals; team words; sound queue DP; music cue flags. Locals reached from another global are written Global_local (asar sublabel reference). bank80_8000 regenerated to call the new names (assexit, GetHot, randomd0, divs). MATCH.
 - bank80_A000: matched $80A121-$80B005 (3813 bytes). Puck deflect/body/goalie collisions, controller switching, the faceoff and line change box code, ClrHor, dirtab, random, changeplayer, vtoa. printz ($80B90C) takes an inline string after the jsl (length word counting itself, then control bytes and text): written as dw/db, the quick pass had decoded it as code. Renamed $0154/$0156 Hpos/Hscroll, $08DF/$08E1 Vpos/Vscroll, $049B Oldrow, $049D vramrow (bank80_8000 comments updated). MATCH.
 - bank80_B000: matched $80B006-$80C18E (4489 bytes; PenaltyList moved in from bank80_C000, which now starts at AddPenalty $80C18F). Personnel, setupice, SprSort, game frame, print/printz, power play box, goalie pulls, crowd. PenaltyList written as 93G-style entries (offset table, $ttmm, length-prefixed name, frame/delay words). Inline-string callers found: printz $80B90C, $82FDBF, appendz $82FDD3. New RAM: print state (printm/printa/printfont/printfontset), text vram tile bases, bonuses, crowd, team stats, sndbank. Earlier bank80 slices regenerated to call the new names. MATCH.

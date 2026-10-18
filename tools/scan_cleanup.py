@@ -42,7 +42,7 @@ def hit(kind, f, n, line):
 
 files = sorted(glob.glob(os.path.join(SRC, '**', '*.asm'), recursive=True))
 for f in files:
-    if os.path.basename(f) in ('snes_regs.asm', 'ram93snes.asm'):
+    if os.path.basename(f) in ('snes_regs.asm', 'ram93s.asm'):
         continue
     bank = None
     lines = open(f).read().split('\n')

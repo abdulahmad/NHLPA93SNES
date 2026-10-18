@@ -21,7 +21,7 @@ The SNES port is a hybrid: it began as a port of NHL92 Genesis (likely while NHL
 ## Layout
 
 - `src/nhlpa93snes.asm` top level: includes the 16 bank files `src/banks/bXX_<name>.asm` in order. Each bank file has one `org` and includes its files in exact ROM order: routines in `src/routines/<93G module>/<Routine>.asm` (one per file), data in `src/data/<category>/<Name>.asm`, the header and vectors in `src/header/snes_header.asm`. `docs/file_map.md` lists every file per bank.
-- `src/inc/snes_regs.asm` hardware registers and register values, `src/macros/snes93.mac` macros, `src/ram93snes.asm` RAM names and constants.
+- `src/inc/snes_regs.asm` hardware registers and register values, `src/macros/snes93.mac` macros, `src/ram93s.asm` RAM names and constants.
 - `docs/name_map.csv` the quick-pass names (`CODE_xxxxxx`) of the named routines; `docs/segment_notes.md` the notes of the old ~4 KB slices.
 - `tools/split_routines.py` the tool that split the old module files into this layout; `tools/gen_file_map.py` regenerates `docs/file_map.md`.
 - `tools/scan_cleanup.py` counts raw addresses, generic labels and noise comments left in `src/`.

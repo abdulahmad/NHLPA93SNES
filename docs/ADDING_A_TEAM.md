@@ -1,6 +1,6 @@
 # Adding a team
 
-`NumofTeams` is 26 in `src/ram93snes.asm`: clubs 0-23, AllStarsEast 24, AllStarsWest 25. That file is included before the team data, so the count stays a constant. The stock bytes stay the same while the count is 26.
+`NumofTeams` is 26 in `src/ram93s.asm`: clubs 0-23, AllStarsEast 24, AllStarsWest 25. That file is included before the team data, so the count stays a constant. The stock bytes stay the same while the count is 26.
 
 ## Tables
 

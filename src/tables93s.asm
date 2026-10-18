@@ -1,4 +1,4 @@
-; NHLPA 93 SNES assignment and play-state equates, moved out of ram93snes.asm.
+; NHLPA 93 SNES assignment and play-state equates, moved out of ram93s.asm.
 ; Equates only, no ROM bytes. Named like their 93G module (tables93.asm).
 
 
