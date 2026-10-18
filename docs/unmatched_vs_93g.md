@@ -9,6 +9,18 @@
 
 Source: `nhl-disasm-report` data for 93S (routine groups tree, `cmp.93G` empty) against NHLPA93Genesis `main`, plus 92G for lineage. Confidence: **EXACT** same item (different spelling, or same name hidden from the report), **LIKELY** same job, **POSSIBLE** related but not one to one, **NO MATCH** SNES-only.
 
+> **Second pass.** The LIKELY rows were body checked (`unmatched_vs_93g_likely.md`), the POSSIBLE rows classified
+> (`unmatched_vs_93g_possible.md`) and the name collisions analysed (`unmatched_vs_93g_collisions.md`). Applied (confidence 70% or more):
+> `Restart` -> `Opening2`, `PlayoffScreenOpening4` -> `Opening3`, `PlayerNumName` -> `getname`, `PlayerShortName` -> `FormatPlayerNumInitial`,
+> `PutDigits2` -> `ConvertByteToDigits`, `revplayeracc` -> `noturn`, `GetPadTeam` -> `seta2`, `TickerTeam` -> `PrintGameInfo`,
+> `PrintStringFromList` -> `Fprint_list` (the 92/93G `Fprint` prints a format string), `ScoutNamePos` -> `setoptions_printpos2`,
+> `passbits` -> `pwddatabuffer`. Swaps: `StatsScreen` is now `StatsReport` (the game stats page) and the old 93S `StatsReport`, the tail of
+> `SetHor`, is `SetHor_rink`; `randomd0s` (the A register 0..A-1 variant) is `randomas` and `randomd0sd0` is `randomd0s`.
+> Not applied: the PART rows (confidence 60 or less, they keep their own names), `aggress` / `GGSleft` (93G itself uses `aggress` for both
+> $73 and $75 in code and comments, so the swap needs a decision), `GetRosterEntry` (holder not verified), `SetTeamColors` (the name
+> `setplayercolors` is a different SNES routine that calls it), and the bank copies `jdtab8F` / `dirtab8F` (already `<93G name><bank>`).
+
+
 ## Totals
 
 | kind | EXACT | LIKELY | POSSIBLE | NO MATCH |

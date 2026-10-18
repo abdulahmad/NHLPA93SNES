@@ -1,0 +1,62 @@
+# LIKELY rows, body-checked (93S vs 93G)
+
+Counts: {'NOT': 18, 'SKIPPED': 32, 'PART': 10, 'SAME': 12}
+
+## SAME (rename to the 93G / earliest name)
+
+| 93S | new name | 93G | where | confidence | why |
+|---|---|---|---|---|---|
+| passbits | pwddatabuffer | pwddatabuffer (92 passbits) | hockey93.asm:5898,5919 | medium | Password bits buffer: 92 passbits (rs.l 4, 128 bits), 93G renamed it pwddatabuffer (tpassbits keeps its name). 93S uses the 92 name; same item. Repo rule (earliest game wins) says keep passbits; the 93G-name instruction says rename. Decision needed. |
+| revplayeracc | noturn | noturn | logic93.asm:4691 | high | Tests pfrev, eors the direction with 4 and continues into playeracc; 93G noturn is exactly that (entered from doplayeracc and noturn0, SNES calls it from the same two routines). |
+| PlayerNumName | getname | getname | hockey93.asm:6792 | high | Builds "NN Name" in mesarea for player d0 of team a2: GetPlayerRecord, PutDigits2 (two digits), appendz (blank), appstring. 93G getname does exactly this (GetPlayerNamePointer, ConvertByteToDigits, appendz, appstring). |
+| Restart | Opening2 | Opening2 | hockey93.asm:4021 | high | Both reset the stack and RAM, set the default handlers, call setoptions, then go to the playoff screen / scouting report. 93G Opening2 comment: "reset the stack and clear the variables, then options, playoff screen, scouting report and on to a new game". Called from Opening (title), GameOver and the setup screens; 93G Begin is the power-on cold start and is a different routine (Start in 93S). Note Restart also has hardcoded #$005C / #$15FF where Start uses JMLOPCODE / DPCLEAREND. |
+| PutDigits2 | ConvertByteToDigits | ConvertByteToDigits | hockey93.asm:6917 | high | Two ASCII digits of a BCD byte, leading zero becomes a space (0x20 high digit), written at [a1] and a1 advanced; 93G ConvertByteToDigits does the same with (a1)+. |
+| ScoutNamePos | setoptions_printpos2 | setoptions_printpos2 | hockey93.asm:5568 | high | Sets the print position of the roster player name of team a2 with a printz inline string ($BF,x,y) and a different x for one team. 93G setoptions_printpos2: "set the print position of team a2's player name: x 2 (visitor) or x $1A (home)". Called from ClearRosterName and UpdateRosterPlayer in both. |
+| GetPeriodTime_timetab | GetPeriodTime_timetab | GetPeriodTime .timetab | hockey93.asm:127 | high | Already named in the SNES parent_local style for the 93G local label .timetab (5*60,10*60,20*60,30). No rename needed. |
+| PlayerShortName | FormatPlayerNumInitial | FormatPlayerNumInitial | hockey93.asm:6824 | high | "NN F. Last": number via PutDigits2, first initial, last name, then FinalizeTextBuffer. 93G FormatPlayerNumInitial builds the same string in TextBuffer and ends with FinalizeTextBuffer. Called from ShowGoalBox in both. |
+| TickerTeam | PrintGameInfo | PrintGameInfo | stats93.asm:125 | high | Prints team d0's name (Teamname offset of the TeamList entry) then the score d1 (PushNumber). 93G PrintGameInfo: "print team d0's name at x 6 and score d1 (2 digits) at x $18". SNES x positions differ (screen layout). |
+| PrintStringFromList | Fprint | Fprint (92); 93G variant Fprintsmall | 92G penalty.asm:1598; 93G penalty93.asm:1438 | high | Advances d0 strings through the String list [a1] then calls print. That is 92 Fprint ("advances thru list of strings and prints string number d0"). 93G split it into AdvanceStringPtr + Fprintsmall (printsmall variant). 92 name wins: Fprint. |
+| GetPadTeam | seta2 | seta2 | hockey93.asm:437 | high | a2 = team struct of the controller that paused: sfpj chooses cont2team or cont1team, team 1 stays at the home struct, else the away struct. 93G seta2 "Set a2 to tmstruct of pause joystick". Same logic (SNES a2 is a 0/2 index, 93G an address). |
+| PlayoffScreenOpening4 | Opening3 | Opening3 (+ Opening4) | hockey93.asm:4034 | high | Correction of the earlier EXACT row (Opening4): the SNES routine is "playoff screen, then scouting report" = 93G Opening3 (bsr PlayoffScreen) falling into Opening4 (ScoutingReport) and ChkShortPeriods. Entered from Restart (= Opening2), as in 93G. |
+
+## PART (related, not one to one)
+
+| 93S | suggested | 93G | where | confidence | why |
+|---|---|---|---|---|---|
+| psitem | (keep) | menuitem (92 psitem) | ram93.asm menuitem; 92G hockey.asm:357 | medium | Pause menu selected item. 92 name psitem; 93G generalized it to menuitem (a long: selected item, then first item shown). 93S has the fixed pause menu word, so keep the 92 name. |
+| InitSortObjects | (keep) | defaultsprites + defaultsprites2 (+ SprSort) | hockey93.asm:3728,3771 | medium | 93G splits: defaultsprites sets the sso and ffo lists and allocates VRAM chars, defaultsprites2 clears SortCords and sets the player objects and ends in SprSort. 93S merges them (clear all, load Sso/Ffo init tables, players from SortObjInitTable, then sort) without the VRAM allocation. Keep the name; mention defaultsprites/defaultsprites2 in the comment. |
+| SsoInitTable | defaultsprites_listsso | defaultsprites .listsso | hockey93.asm:3760 | medium | 93G .listsso: 2 sso entries (xcord,ycord,frame,attribute,vram char size, all zero). 93S has 4 entries (two zero + two off-screen arrows at $0040/$FFC0,$FFA4) and no char size, because the SNES has 4 sso objects. Same table role: parent_local name is possible but the contents differ. |
+| FfoInitTable | defaultsprites_listffo | defaultsprites .listffo | hockey93.asm:3764 | medium | 93G .listffo: pads (SPFpad+2, SPFpad, SPFpad+1), SPFreplay entry with attribute $8000, gloves; 93S has the same objects but a "no frame" fourth entry instead of SPFreplay and no vram char size. |
+| DisplayStats_sslist | TeamStatTextTbl_sslist | TeamStatTextTbl | stats93.asm:2003 | low | 93G TeamStatTextTbl holds label + two team struct offsets per row (Score, Shots, Power Play, Penalties, Faceoffs Won, Body Checks, Attack Zone, Passing). 93S list holds only the offset pairs for 4 rows; the labels are elsewhere. Related, not the same table. |
+| DrawFrame | (keep) | SetSframe | video93.asm:319 | medium | Both turn a sprite frame (list of small pieces) into hardware sprite entries and stop when the table is full (128 OAM entries / MaxSprites). 93S builds SNES OAM pieces (flip bits, size, sprcount), 93G builds the VDP sprite table: same role, different hardware format. |
+| ShowRinkRows | (keep) | updatescroll | video93.asm:126 | medium | 93G updatescroll sets Hscroll/Vscroll from Hpos/Vpos and queues the rink map rows on the DMA list when the row changes. 93S splits it: show_rink sets the scroll registers, ShowRinkRows (called from setvideo) queues the rows with the same Oldrow logic. ShowRinkRows is the row half. |
+| Pmenu | (keep) | UpdateMenuSelection (92 .Pmenu) | menu93.asm:67 | medium | 93G UpdateMenuSelection comment says it replaced 92 Pausemode .Pmenu: print the menu items with the current one highlighted. 93S Pmenu is the fixed 92-style pause menu printer (psitem, 5 items, goalie name on item 3). Pmenu is the 92 name; keep. |
+| MusicCue | (keep) | song | middle93.asm:274 | medium | 93G song plays a song number pushed on the stack through play_sfx_or_music_track. 93S MusicCue takes the cue in A and rewrites the SNES sound queue to just that command. Same purpose (start a song) but SNES driver specific; no clean 93G name. |
+| DrawScoutPlayer | AddTeamSpriteFrame | AddTeamSpriteFrame | hockey93.asm:5856 | medium | Inner label of UpdateTeamSprites: addframe for the roster player object at its position. 93G AddTeamSpriteFrame does that (addframe2 for the player) plus a second GameSetupMap frame sprite. The SNES routine only has the player half; the setup-map frame is not drawn here. Same role and same caller (UpdateTeamSprites), so use the 93G name for the label and note the missing half. |
+
+## NOT (keep the 93S name)
+
+| 93S | 93G | confidence | why |
+|---|---|---|---|
+| ffoattr | pads / glovestruct fields | medium | Structure-of-arrays form of the 93G ffo objects: 93S has one word array per field (5 objects), 93G has array-of-structs (pads, glovestruct) addressed with the SortCords field names Xpos/Ypos/Zpos/frame/attribute. No 93G name for the array; keep. |
+| ffoframe | pads / glovestruct fields | medium | Structure-of-arrays form of the 93G ffo objects: 93S has one word array per field (5 objects), 93G has array-of-structs (pads, glovestruct) addressed with the SortCords field names Xpos/Ypos/Zpos/frame/attribute. No 93G name for the array; keep. |
+| ffoxofs | pads / glovestruct fields | medium | Structure-of-arrays form of the 93G ffo objects: 93S has one word array per field (5 objects), 93G has array-of-structs (pads, glovestruct) addressed with the SortCords field names Xpos/Ypos/Zpos/frame/attribute. No 93G name for the array; keep. |
+| ffox | pads / glovestruct fields | medium | Structure-of-arrays form of the 93G ffo objects: 93S has one word array per field (5 objects), 93G has array-of-structs (pads, glovestruct) addressed with the SortCords field names Xpos/Ypos/Zpos/frame/attribute. No 93G name for the array; keep. |
+| ffoy | pads / glovestruct fields | medium | Structure-of-arrays form of the 93G ffo objects: 93S has one word array per field (5 objects), 93G has array-of-structs (pads, glovestruct) addressed with the SortCords field names Xpos/Ypos/Zpos/frame/attribute. No 93G name for the array; keep. |
+| ffoz | pads / glovestruct fields | medium | Structure-of-arrays form of the 93G ffo objects: 93S has one word array per field (5 objects), 93G has array-of-structs (pads, glovestruct) addressed with the SortCords field names Xpos/Ypos/Zpos/frame/attribute. No 93G name for the array; keep. |
+| tmfowon | (none: 93G uses the raw offset) | high | 93G has no name for team struct $E faceoffs won (93G TeamStatTextTbl comment "team struct offset $E"); keep the 93S name. Candidate to add the name to 93G (reverse propagation). |
+| tmtouch1 | (none: 93G uses the raw offset) | high | 93G has no name for team struct $18 last touch; keep the 93S name. Candidate to add the name to 93G (reverse propagation). |
+| tmtouch2 | (none: 93G uses the raw offset) | high | 93G has no name for team struct $1A second last touch; keep the 93S name. Candidate to add the name to 93G (reverse propagation). |
+| tmtouch3 | (none: 93G uses the raw offset) | high | 93G has no name for team struct $1C third last touch; keep the 93S name. Candidate to add the name to 93G (reverse propagation). |
+| tmteam | (none: 93G uses the raw offset) | high | 93G has no name for team struct $28 team number; keep the 93S name. Candidate to add the name to 93G (reverse propagation). |
+| tmnear | (none: 93G uses the raw offset) | high | 93G has no name for team struct $2A nearest distance^2 to the puck; keep the 93S name. Candidate to add the name to 93G (reverse propagation). |
+| tmpasscomp | (none: 93G uses the raw offset) | high | 93G has no name for team struct $12 completed passes (93G TeamStatTextTbl "$14/$12"); keep the 93S name. Candidate to add the name to 93G (reverse propagation). |
+| tmlcchoice | (none: 93G uses the raw offset) | high | 93G has no name for team struct $2E line change row chosen; keep the 93S name. Candidate to add the name to 93G (reverse propagation). |
+| tmgoals | (none: 93G uses the raw offset) | high | 93G has no name for team struct $B4 goals per roster player; keep the 93S name. Candidate to add the name to 93G (reverse propagation). |
+| pchecks | (none: 93G uses the raw offset) | high | 93G has no name for team struct $11C checks per roster player; keep the 93S name. Candidate to add the name to 93G (reverse propagation). |
+| tmboxlist | (none: 93G uses the raw offset) | high | 93G has no name for team struct $9A penalty box list; keep the 93S name. Candidate to add the name to 93G (reverse propagation). |
+| unusedEnergyBar | dobar | medium | 93S routine builds an energy bar string in the message area and is unused; 93G dobar draws the EnergyBarMap tilemap row for the energy level. Different output, keep the name. |
+
+## SKIPPED (proposed 93G name collides with an existing 93S symbol)
+
+padlast1, ssoattr, ssoframe, ssoz, Xfrac, Yfrac, Zfrac, OldXfrac, OldYfrac, OldZfrac, GGSleft, crowdvol, notdemo, SFXsavehome, SFXsaveaway, SFXoverglass, TMPDICE, TMPDBENCH, TMPDOUT, findpc_calc, random, randoma, SetTeamColors, SetTeamColors_team, QueueSound, PauseMenu, Readjoy12, PrintPerLabel, InitTicker, TickerNext, randomd0sd0, sfx8F
