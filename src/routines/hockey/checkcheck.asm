@@ -147,7 +147,8 @@ checkcheck:							;Two players are in contact: check what happens each way
 .neg1:
 	bvc .down
 .pen:
-	jsl.l checkagr					;checkagr <= 4 and no highlight: PenCharging or PenSlashing (d0 = penalty roll)
+	jsl.l checkagr					;checkagr <= 4 and no highlight: PenCharging or PenSlashing (d0 = penalty
+	;roll)
 	lda.b d0
 	cmp.w #$0005
 	bcc .nohl
@@ -165,7 +166,8 @@ checkcheck:							;Two players are in contact: check what happens each way
 	sta.b d0
 	jmp.w AddPenalty
 .down:
-	jsl.l checkagr					; checkagr <= 3 and no highlight: PenRoughing or PenCrossChk (d0 = penalty roll)
+	jsl.l checkagr					;checkagr <= 3 and no highlight: PenRoughing or PenCrossChk (d0 = penalty
+	;roll)
 	lda.b d0
 	cmp.w #$0004
 	bcs .dn2
