@@ -573,14 +573,13 @@ SFXshotwiff		=	$98				; +0-3: missed shot (doshot)
 SFXshotfh		=	$8D				; forehand shot (93 $18)
 SFXshotbh		=	$8E				; backhand shot (93 $14)
 SFXshothard		=	$8F				; shot with passspeed >= $32
-SFXcrowdcheer	=	$8A				; home player won the fight (93 song $B)
+SFXcrowdcheer	=	$8A				; home player won the fight, home goalie save (93 song $B)
 SFXcrowdboo		=	$8B				; visitor won the fight (93 song $C)
 SFXhithigh		=	$92				; SFXhithigh 9
 SFXhitlow		=	$93				; SFXhitlow $A
 SFXpuckbody		=	$90				; +0/1: puck hits a body (93 $24)
-SFXsavehome		=	$8A				; hard shot saved by the home goalie (93 song $B)
-SFXsaveaway		=	$8C				; hard shot saved by the visiting goalie (93 song $D)
-SFXoverglass	=	$8C				; puck over the glass (93 $E)
+SFXoooh2		=	$8C				; hard shot saved by the visiting goalie, an injury (93 $D)
+SFXbglass		=	$8C				; puck over the glass (93 $E)
 SFXpuckwall1	=	$95				; +0-2: puck off the boards by speed (93 $28-$2B)
 SFXpuckpost		=	$94				; puck off the post
 SFXsiren		=	$A0				; goal siren

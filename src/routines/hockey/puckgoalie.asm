@@ -136,12 +136,12 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 .vy:
 	cmp.w #$3000
 	bcc .nosong
-	lda.w #SFXsavehome				; crowd: home save
+	lda.w #SFXcrowdcheer			; crowd: home save
 	pha
 	ldy.b a2
 	lda.w pfteam,y
 	beq .song
-	lda.w #SFXsaveaway
+	lda.w #SFXoooh2
 	sta.b $01,s
 .song:
 	jsl.l sfx
