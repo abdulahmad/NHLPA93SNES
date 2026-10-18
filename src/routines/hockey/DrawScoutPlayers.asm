@@ -18,10 +18,10 @@ DrawScoutPlayer:					;SNES: addframe for object X at (Xpos + OldXpos - 144, Ypos
 	lda.w frame,x
 	sta.b sprframe
 	lda.w attribute,x
-	and.w #$0800
+	and.w #attrxflip
 	sta.b sprhflip
 	lda.w attribute,x
-	and.w #$1000
+	and.w #attryflip
 	sta.b sprvflip
 	lda.w attribute,x
 	lsr a

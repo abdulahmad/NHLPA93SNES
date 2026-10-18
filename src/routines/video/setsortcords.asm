@@ -22,10 +22,10 @@ setsortcords:						;Draw the sorted objects in display order, hiding ones that a
 	sta.w oldframe,x
 	sta.b sprframe
 	lda.w attribute,x
-	and.w #$0800
+	and.w #attrxflip
 	sta.b sprhflip
 	lda.w attribute,x
-	and.w #$1000
+	and.w #attryflip
 	sta.b sprvflip
 	lda.w attribute,x				; attribute bit 0: sprflag
 	lsr a

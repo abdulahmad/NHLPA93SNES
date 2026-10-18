@@ -4,7 +4,7 @@ asseben:							;Assignment: player X comes onto the ice from the bench
 	lda.w pflags,x
 	bit.w #pfna
 	beq .nna
-	and.w #$FFFD
+	and.w #~pfna&$FFFF
 	sta.w pflags,x
 	stz.w Xvel,x
 	stz.w Yvel,x

@@ -72,7 +72,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	adc.w #$000F
 	sta.b d1
 	lda.w attribute,y
-	bit.w #$0800					; x flip
+	bit.w #attrxflip				; x flip
 	beq .noflip
 	lda.b d2
 	eor.w #$0002

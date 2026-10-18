@@ -26,7 +26,7 @@ updateanim:							;Step object X's sprite animation, looping or ending it
 	sta.b d0
 .nhor:
 	lda.w attribute,x				; x flip: mirror the direction
-	bit.w #$0800
+	bit.w #attrxflip
 	beq .nox
 	lda.b d0
 	eor.w #$FFFF

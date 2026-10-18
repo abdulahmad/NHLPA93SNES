@@ -14,7 +14,7 @@ InitScores:							;Playoffs: give the other games of the round random scores so 
 	beq .next
 	ldy.b a0
 	lda.w gsflags,y
-	bit.w #$0004
+	bit.w #gsfso
 	bne .next
 	lda.w #$0000
 	sta.w gsper,y

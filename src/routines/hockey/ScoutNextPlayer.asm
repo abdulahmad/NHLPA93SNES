@@ -3,7 +3,7 @@ ScoutNextPlayer:					;The next player of team a2 to show on the scouting report,
 	jsl.l SetTeamColors
 	ldy.b a2
 	lda.w tmflags,y
-	and.w #$FFFD
+	and.w #~tmfmid&$FFFF
 	sta.w tmflags,y
 	lda.w tmsort,y
 	sta.b a3
@@ -64,14 +64,14 @@ ScoutNextPlayer:					;The next player of team a2 to show on the scouting report,
 	adc.b [a0]
 	sta.b a0
 	lda.w attribute,x				; handedness bit: flip
-	and.w #$F7FF
+	and.w #~attrxflip&$FFFF
 	sta.w attribute,x
 	ldy.w #Playerdata+4
 	lda.b [a0],y
 	lsr a
 	bcs .rate
 	lda.w attribute,x
-	ora.w #$0800
+	ora.w #attrxflip
 	sta.w attribute,x
 .rate:								;ScoutPickScript for each of the 14 rating nibbles (ScoutScriptPick,
 									;goalies ScoutScriptPickG)

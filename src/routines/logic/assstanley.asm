@@ -5,7 +5,7 @@ assstanley:							;Assignment: skate to the side of the screen
 	lda.w pflags,x
 	bit.w #pfna
 	beq .nna
-	and.w #$FFFD
+	and.w #~pfna&$FFFF
 	sta.w pflags,x
 	lda.w #$005A
 	sta.w temp3,x

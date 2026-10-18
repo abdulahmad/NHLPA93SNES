@@ -119,7 +119,7 @@ TeamRoster:							;Team Roster screen: each line's players and one attribute col
 	lda.w cont1team
 	sta.b tmp0
 	lda.w sflags
-	bit.w #$0002
+	bit.w #sfpj
 	beq .cont1
 	lda.w cont2team
 	sta.b tmp0

@@ -13,7 +13,7 @@ ReadPassBits:						;Turn the password bits back into the playoff state; a bad ch
 .0:									;the 8 series scores, range 5
 	ldy.b a1
 	lda.w gsflags,y					; gsftf off
-	and.w #$FFFB
+	and.w #~gsfso&$FFFF
 	sta.w gsflags,y
 	lda.w #5
 	sta.b d0

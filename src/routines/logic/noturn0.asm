@@ -30,7 +30,7 @@ noturn0:							;doplayeracc when the wanted direction needs no turn
 .nostop:
 	inc.w facedir,x					; turn one step
 	lda.w attribute,x
-	bit.w #$0800
+	bit.w #attrxflip
 	beq .nos0
 	dec.w facedir,x
 	dec.w facedir,x

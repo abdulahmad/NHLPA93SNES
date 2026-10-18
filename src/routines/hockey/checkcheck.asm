@@ -85,7 +85,7 @@ checkcheck:							;Two players are in contact: check what happens each way
 	and.w #$0007
 	sta.b d0
 	lda.w attribute,x				; xflip: mirror the direction
-	bit.w #$0800
+	bit.w #attrxflip
 	beq .0
 	lda.b d0
 	eor.w #$FFFF

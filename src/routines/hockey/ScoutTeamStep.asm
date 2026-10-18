@@ -17,7 +17,7 @@ ScoutTeamStep:						;Step team a2's player on the scouting report through his an
 	sta.b a3
 	tax
 	lda.w tmflags,y
-	bit.w #$0002
+	bit.w #tmfmid
 	beq .in
 	inc.w OldZpos,x					; skating out: x += 3
 	inc.w OldZpos,x

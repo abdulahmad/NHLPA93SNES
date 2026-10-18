@@ -26,7 +26,7 @@ clockcont_0:						;End of a period: in the third period the winners celebrate (w
 	tay
 	stz.b d3
 	lda.w gsflags,y
-	bit.w #$0001
+	bit.w #gsftf
 	beq .nf
 	lda.w #gspobwins-gspotwins
 	sta.b d3
@@ -52,7 +52,7 @@ clockcont_0:						;End of a period: in the third period the winners celebrate (w
 	sta.b d2
 .cpu:
 	lda.w pflags,x
-	and.w #$FFF7
+	and.w #~pfjoycon&$FFFF
 	sta.w pflags,x
 	inx
 	inx

@@ -13,9 +13,9 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	beq .notjoy
 	jmp.w .rtl
 .notjoy:
-	bit.w #$0002
+	bit.w #pfna
 	beq .nna
-	and.w #$FFFD
+	and.w #~pfna&$FFFF
 	sta.w pflags,x
 	lda.w #$FFFF					; temp5 = -1: no zone yet
 	sta.w temp5,x

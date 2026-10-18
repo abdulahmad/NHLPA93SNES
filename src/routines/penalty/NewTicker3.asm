@@ -11,7 +11,7 @@ NewTicker3:							;Show the ticker box for game d3: round, period and both teams
 	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $BF,$02,$17
 	lda.w sflags
-	bit.w #$0001
+	bit.w #sfpz
 	bne .pj
 	jsl.l printz
 	dw $0005						; printz inline string: length (counts itself), then control bytes / text

@@ -15,9 +15,9 @@ assdefo:							;Assignment: a defenseman on offense holds the blue line on his s
 	beq .na
 	jmp.w .rtl
 .na:
-	bit.w #$0002
+	bit.w #pfna
 	beq .nna
-	and.w #$FFFD
+	and.w #~pfna&$FFFF
 	sta.w pflags,x
 	stz.w temp1,x
 	stz.w temp2,x

@@ -506,7 +506,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	lsr a
 	sta.b d0
 	lda.w attribute,x
-	bit.w #$0800
+	bit.w #attrxflip
 	beq .noflip
 	lda.b d0
 	eor.w #$0001

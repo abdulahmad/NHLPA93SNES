@@ -3,7 +3,7 @@ GetPadTeam:							;a2 = the team of the controller that paused
 	lda.w cont1team
 	beq .rtl
 	lda.w sflags
-	bit.w #$0002
+	bit.w #sfpj
 	beq .cont1
 	lda.w cont2team
 	bra .gotteam
