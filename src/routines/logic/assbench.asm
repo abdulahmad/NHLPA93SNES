@@ -135,7 +135,7 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 .away:
 	lda.b a0
 	beq .t0
-	lda.w #$34
+	lda.w #maxros*2
 .t0:
 	clc
 	adc.b d0

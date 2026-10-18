@@ -16,7 +16,7 @@ GetPlayerNumInitial:				;a1 = the number, first initial and last name of player 
 	lda.w #$0002
 	sta.b a2
 .home:
-	jsl.l PlayerShortName
+	jsl.l FormatPlayerNumInitial
 	pla
 	sta.b a2
 	pla

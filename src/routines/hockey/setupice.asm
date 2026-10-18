@@ -144,7 +144,7 @@ setupice:							;Set up the rink: the variables, the rink and text graphics, the
 	sta.b a1+2
 	lda.w #$0064
 	sta.b d0
-	jsl.l RemapTiles				; build a sprite frame list ([a0] data, [a1] table, d0 count)
+	jsl.l remap						; build a sprite frame list ([a0] data, [a1] table, d0 count)
 	lda.w #FramerTiles
 	sta.b a0
 	lda.w #FramerTiles>>16
@@ -155,7 +155,7 @@ setupice:							;Set up the rink: the variables, the rink and text graphics, the
 	sta.b a1+2
 	lda.w #$0004
 	sta.b d0
-	jsl.l RemapTiles				; build a sprite frame list ([a0] data, [a1] table, d0 count)
+	jsl.l remap						; build a sprite frame list ([a0] data, [a1] table, d0 count)
 	lda.w #BigFontTiles				; packed big font tiles
 	sta.b tmp0
 	lda.w #BigFontTiles>>16
@@ -170,7 +170,7 @@ setupice:							;Set up the rink: the variables, the rink and text graphics, the
 	sta.b a1+2
 	lda.w #$0090
 	sta.b d0
-	jsl.l RemapTiles				; build a sprite frame list ([a0] data, [a1] table, d0 count)
+	jsl.l remap						; build a sprite frame list ([a0] data, [a1] table, d0 count)
 	lda.w #999						; Oldrow = 999, no pause, Hpos = Vpos = 0
 	sta.w Oldrow
 	lda.w #$0001

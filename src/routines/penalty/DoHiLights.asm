@@ -8,11 +8,11 @@ DoHiLights:							;Playoffs: play the highlight of each game of the round that h
 .top:
 	ldy.b a0
 	lda.w gsflags,y
-	bit.w #$0004
+	bit.w #gsfso
 	bne .next
-	bit.w #$0002
+	bit.w #gsfhl
 	beq .next
-	and.w #$FFFD
+	and.w #~gsfhl&$FFFF
 	sta.w gsflags,y
 	jsl.l SaveRegsStartHL2
 .next:

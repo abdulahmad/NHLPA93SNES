@@ -13,9 +13,9 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	beq .notjoy
 	jmp.w .rtl
 .notjoy:
-	bit.w #$0002
+	bit.w #pfna
 	beq .nna
-	and.w #$FFFD
+	and.w #~pfna&$FFFF
 	sta.w pflags,x
 	lda.w #$FFFF					; temp5 = -1: no zone yet
 	sta.w temp5,x
@@ -37,7 +37,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	lda.w #$0000
 .t1:
 	sta.w temp1,x
-	lda.w #3						; awingd
+	lda.w #awingd					; awingd
 	sta.b d0
 	lda.w puckc						; the other team has the puck
 	bmi .de0
@@ -92,7 +92,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	sta.b d2
 	lda.b d0
 	sec
-	sbc.w #88
+	sbc.w #blueline
 	bmi .neg1
 	bvc .z2
 	bra .de2
@@ -135,7 +135,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	lda.b [a0],y
 	dey
 	dey
-	jsl.l randomd0s
+	jsl.l randomas
 	adc.b [a0],y
 	sta.w temp3,x
 	iny
@@ -147,7 +147,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	lda.b [a0],y
 	dey
 	dey
-	jsl.l randomd0s
+	jsl.l randomas
 	adc.b [a0],y
 	sta.w temp4,x
 .nodec:

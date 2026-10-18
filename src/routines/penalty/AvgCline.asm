@@ -37,7 +37,7 @@ AvgCline:							;d0 = the average energy of team a2's current line
 	sta.b d3
 	lda.b a2
 	beq .idx
-	lda.w #$0034
+	lda.w #maxros*2
 .idx:
 	adc.b d3
 	tay

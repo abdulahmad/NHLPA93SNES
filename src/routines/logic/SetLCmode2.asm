@@ -72,7 +72,7 @@ SetLCmode2:							;Draw the line change box for team a2, one row per line it can
 	sta.b a1
 	lda.w #linelist>>16
 	sta.b a1+2
-	jsl.l PrintStringFromList
+	jsl.l Fprint_list
 	pla
 	sta.b d0
 	jsl.l linebar

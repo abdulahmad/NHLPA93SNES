@@ -11,9 +11,9 @@ asscenterd:							;Assignment: the center on defense, halfway between the puck a
 	beq .nopflags
 	jmp.w .rtl
 .nopflags:
-	bit.w #$0002
+	bit.w #pfna
 	beq .nna
-	and.w #$FFFD
+	and.w #~pfna&$FFFF
 	sta.w pflags,x
 	stz.w temp1,x
 	stz.w temp2,x
@@ -76,7 +76,7 @@ asscenterd:							;Assignment: the center on defense, halfway between the puck a
 .rtl:
 	rtl
 .nopfgoal:
-	lda.w #$0058
+	lda.w #blueline
 	sec
 	sbc.w pucky
 	bmi .neg1

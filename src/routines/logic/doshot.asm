@@ -177,7 +177,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 .ar:
 	lda.b d0
 	pha
-	jsl.l randomd0s
+	jsl.l randomas
 	adc.b $03,s
 	sta.b $03,s
 	lda.b $01,s
@@ -192,7 +192,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	bpl .am
 	lsr.b d0
 .am:
-	jsl.l randomd0sd0				; randomd0s on d0
+	jsl.l randomd0s					; randomas on d0
 	lda.b $05,s
 	adc.b d0
 	sta.b $05,s

@@ -9,7 +9,7 @@ updatepentime:						;Once a second, count down the penalty box times of both tea
 	sbc.b d7
 	sta.w pentimer
 	bpl .rtl
-	adc.w #$0018
+	adc.w #jps
 	sta.w pentimer
 	lda.w #$0020
 	tsb.w sflags3

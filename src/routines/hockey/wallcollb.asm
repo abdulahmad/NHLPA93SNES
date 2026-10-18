@@ -72,7 +72,7 @@ wallcollb:							;Object X hits a wall: the puck may go over the glass and out o
 	jsl.l SetSPA
 	plx
 	stx.b a3
-	lda.w #SFXoverglass				; over the glass sound
+	lda.w #SFXbglass				; over the glass sound
 	pha
 	jsl.l sfx
 	lda.b crowdlevel				; crowd +600

@@ -75,7 +75,7 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	sta.b d2
 	lda.b d0
 	sec
-	sbc.w #$0058
+	sbc.w #blueline
 	bmi .neg2
 	bvc .z2
 	bra .de2
@@ -109,7 +109,7 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	lda.b d2
 	sta.w temp5,x
 	tay
-	lda.w #.dedata					; temp3/temp4 = .dedata spot + randomd0s of the range
+	lda.w #.dedata					; temp3/temp4 = .dedata spot + randomas of the range
 	sta.b a0
 	lda.w #.dedata>>16
 	sta.b a0+2
@@ -118,7 +118,7 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	lda.b [a0],y
 	dey
 	dey
-	jsl.l randomd0s
+	jsl.l randomas
 	adc.b [a0],y
 	sta.w temp3,x
 	iny
@@ -130,7 +130,7 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	lda.b [a0],y
 	dey
 	dey
-	jsl.l randomd0s
+	jsl.l randomas
 	adc.b [a0],y
 	sta.w temp4,x
 .nodec:

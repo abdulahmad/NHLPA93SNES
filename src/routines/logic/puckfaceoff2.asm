@@ -393,7 +393,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	sta.b a1
 	lda.w #linelist>>16
 	sta.b a1+2
-	jsl.l PrintStringFromList
+	jsl.l Fprint_list
 	inc.w printx
 	inc.w printx
 	inc.w printx
@@ -404,7 +404,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	sta.b a1
 	lda.w #linelist>>16
 	sta.b a1+2
-	jsl.l PrintStringFromList
+	jsl.l Fprint_list
 .nol:								;time for the puck drop: 180-299 frames
 	lda.w #$0078
 	jsl.l randoma

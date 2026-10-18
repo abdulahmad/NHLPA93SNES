@@ -26,7 +26,7 @@ ResolveGames:						;Record the played playoff game and the series wins; when the
 	beq .b1
 	stz.b d3
 	lda.w gsflags,y					; gsflags bit 0 (gsftf): teams swapped
-	bit.w #$0001
+	bit.w #gsftf
 	beq .nf
 	lda.w #$0010
 	sta.b d3
@@ -171,7 +171,7 @@ ResolveGames:						;Record the played playoff game and the series wins; when the
 	tsb.b d3
 .s1:
 	lda.w gsflags,y
-	bit.w #$0001
+	bit.w #gsftf
 	beq .s2
 	lda.b d1
 	asl a

@@ -19,7 +19,7 @@ GetNameandAttrib:					;Print player d0's number and name, then the roster column
 	cpx.w #$0008
 	bne .savea
 	ldx.b xsave
-	jsl.l PlayerNumName
+	jsl.l getname
 	jsl.l print
 	lda.w #$001A
 	sta.w printx

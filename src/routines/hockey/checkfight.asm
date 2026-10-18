@@ -102,7 +102,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 .fight:								;clear ChkCnt and the check counts of both teams
 	stz.w ChkCnt
 	lda.w #$0000
-	ldy.w #$0032
+	ldy.w #maxros*2-2
 .clr:
 	sta.w pchecks,y
 	dey
@@ -219,7 +219,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	sta.b d0
 	jsl.l assinsert
 	lda.w attribute,x				; Xvel -$400 facing 2, else flipped and +$400
-	and.w #$F7FF
+	and.w #~attrxflip&$FFFF
 	sta.w attribute,x
 	lda.w #$FC00
 	sta.b d1
@@ -227,7 +227,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	cmp.w #$0002
 	beq .sf2
 	lda.w attribute,x
-	ora.w #$0800
+	ora.w #attrxflip
 	sta.w attribute,x
 	lda.w #$0400
 	sta.b d1

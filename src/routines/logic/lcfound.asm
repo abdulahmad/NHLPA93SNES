@@ -8,13 +8,13 @@ lcfound:							;Change team a2 to the chosen line
 	lda.b d0
 	bmi .rtl
 	lda.w pflags,x
-	and.w #$DFFF
-	ora.w #$0008
+	and.w #~pf2lcm&$FFFF
+	ora.w #pfjoycon
 	sta.w pflags,x
 	jsl.l loadTeamStruct
 	ldy.b a2
 	lda.w tmflags,y
-	and.w #$FFF7
+	and.w #~tmflcm&$FFFF
 	sta.w tmflags,y
 	lda.b d0
 	sta.w tmline,y

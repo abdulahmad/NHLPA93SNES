@@ -157,7 +157,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	sta.b d2
 	lda.b a2
 	beq .tm
-	lda.w #$0034
+	lda.w #maxros*2
 .tm:
 	clc
 	adc.b d0
@@ -171,7 +171,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	sta.w tmpdst,y
 	lda.w #TMPDINJ
 	trb.b d2
-	lda.w #$0034
+	lda.w #(maxros-1)*2+2
 	sta.b d1
 .ctop:								;same time on the other team: coincidental
 	dec.b d1
@@ -179,7 +179,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	bmi .nocoin
 	lda.b a1
 	beq .ct
-	lda.w #$0034
+	lda.w #maxros*2
 .ct:
 	clc
 	adc.b d1
@@ -194,7 +194,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	sta.w tmpdst,y
 	lda.b a2
 	beq .cg
-	lda.w #$0034
+	lda.w #maxros*2
 .cg:
 	clc
 	adc.b d0
@@ -209,7 +209,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	pha
 	lda.b a2
 	beq .bl
-	lda.w #$001A
+	lda.w #maxros
 .bl:
 	sta.b a0
 	lda.w #$0018

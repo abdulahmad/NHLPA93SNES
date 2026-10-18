@@ -7,7 +7,7 @@ Findhittype:						;Swing type of player X for direction d0: forehand or backhand
 	and.w #$0007
 	sta.b d0
 	lda.w attribute,x
-	bit.w #$0800
+	bit.w #attrxflip
 	beq .noattribute
 	phx
 	ldx.b d0

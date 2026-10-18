@@ -83,7 +83,7 @@ ShowGoalBox:						;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the
 	lda.b [a4],y
 	and.w #$00FF
 	sta.b d0
-	jsl.l PlayerShortName
+	jsl.l FormatPlayerNumInitial
 	jsl.l print
 	ldy.w #$0004
 	lda.b [a4],y
@@ -94,7 +94,7 @@ ShowGoalBox:						;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the
 	jsl.l printz
 	dw $0012						; printz inline string: length (counts itself), then control bytes / text
 	db $BF,$0E,$06,"Assist by:",$BF,$0C,$07
-	jsl.l PlayerShortName
+	jsl.l FormatPlayerNumInitial
 	jsl.l print
 	ldy.w #$0005
 	lda.b [a4],y
@@ -105,7 +105,7 @@ ShowGoalBox:						;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the
 	jsl.l printz
 	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $BF,$0C,$08
-	jsl.l PlayerShortName
+	jsl.l FormatPlayerNumInitial
 	jsl.l print
 .ex:
 	stx.b xsave

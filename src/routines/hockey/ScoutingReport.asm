@@ -221,7 +221,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	lda.b [a2],y
 	adc.b a2
 	sta.b a2
-	jsl.l ScoutCompare
+	jsl.l PrintScoutRatings
 	jsl.l printz
 	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $FF,$04,$0F
@@ -229,8 +229,8 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	ldx.b a2
 	sta.b a2
 	stx.b a0
-	jsl.l ScoutCompare
-	jsl.l InitScoutDisplay
+	jsl.l PrintScoutRatings
+	jsl.l InitScoutingDisplay
 	lda.w #$001A
 	sta.b [a0]
 	inc.b a0

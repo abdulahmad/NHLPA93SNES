@@ -1,0 +1,18 @@
+seta2:								;a2 = the team of the controller that paused
+	stz.b a2
+	lda.w cont1team
+	beq .rtl
+	lda.w sflags
+	bit.w #sfpj
+	beq .cont1
+	lda.w cont2team
+	bra .gotteam
+.cont1:
+	lda.w cont1team
+.gotteam:
+	cmp.w #$0001
+	beq .rtl
+	inc.b a2
+	inc.b a2
+.rtl:
+	rtl

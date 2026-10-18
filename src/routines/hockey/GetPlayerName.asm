@@ -28,7 +28,7 @@ GetPlayerName:						;mesarea = the number and name of player TempPlOffset
 	inc.b a2
 	inc.b a2
 .name:
-	jsl.l PlayerNumName
+	jsl.l getname
 	stx.b xsave
 	ldx.w #$0002
 .resta2:

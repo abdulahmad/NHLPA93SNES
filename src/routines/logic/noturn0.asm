@@ -30,7 +30,7 @@ noturn0:							;doplayeracc when the wanted direction needs no turn
 .nostop:
 	inc.w facedir,x					; turn one step
 	lda.w attribute,x
-	bit.w #$0800
+	bit.w #attrxflip
 	beq .nos0
 	dec.w facedir,x
 	dec.w facedir,x
@@ -69,7 +69,7 @@ noturn0:							;doplayeracc when the wanted direction needs no turn
 .ns:
 	lda.w pf2aip,x
 	beq .set
-	jml.l revplayeracc
+	jml.l noturn
 .set:
 	jsl.l SetSPA
-	jml.l revplayeracc
+	jml.l noturn

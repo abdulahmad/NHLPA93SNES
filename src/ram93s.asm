@@ -407,7 +407,7 @@ crowdvol	=	$1646				; crowd noise volume last sent to the sound driver (updateso
 cheatpads	=	$1648				; 3 words: the last three new pad presses (the unreached Gameloop .cheat)
 passbits	=	$1624				;password bits: a 128-bit number, 8 words, low word first (SuperDiv,
 									;PushBits). PassBits
-tpassbits	=	$1634				; 8 words: passbits before all games are resolved (EncodePW, sf3alttree)
+tpassbits	=	$1634				; 8 words: passbits before all games are resolved (EncodePW)
 OptLine		=	$160C				; line changes (0 = on)
 notdemo		=	$160E				;$FFFF once a player set up the game, 0 after the attract demo (FigureJoy:
 									;no controller teams). demoflag role
@@ -541,6 +541,8 @@ goalline	=	$B0					; blueline+goalline = $108
 sideline	=	$88					; distance from center to side boards
 ; roster
 maxros	=	26						; roster slots per team
+; clock
+jps		=	24						; jiffys per second
 ; penalties
 PenEOP			=	$02				; period over
 PenEOG			=	$04				; game over
@@ -571,14 +573,13 @@ SFXshotwiff		=	$98				; +0-3: missed shot (doshot)
 SFXshotfh		=	$8D				; forehand shot (93 $18)
 SFXshotbh		=	$8E				; backhand shot (93 $14)
 SFXshothard		=	$8F				; shot with passspeed >= $32
-SFXcrowdcheer	=	$8A				; home player won the fight (93 song $B)
+SFXcrowdcheer	=	$8A				; home player won the fight, home goalie save (93 song $B)
 SFXcrowdboo		=	$8B				; visitor won the fight (93 song $C)
 SFXhithigh		=	$92				; SFXhithigh 9
 SFXhitlow		=	$93				; SFXhitlow $A
 SFXpuckbody		=	$90				; +0/1: puck hits a body (93 $24)
-SFXsavehome		=	$8A				; hard shot saved by the home goalie (93 song $B)
-SFXsaveaway		=	$8C				; hard shot saved by the visiting goalie (93 song $D)
-SFXoverglass	=	$8C				; puck over the glass (93 $E)
+SFXoooh2		=	$8C				; hard shot saved by the visiting goalie, an injury (93 $D)
+SFXbglass		=	$8C				; puck over the glass (93 $E)
 SFXpuckwall1	=	$95				; +0-2: puck off the boards by speed (93 $28-$2B)
 SFXpuckpost		=	$94				; puck off the post
 SFXsiren		=	$A0				; goal siren
@@ -604,7 +605,7 @@ TMPDBENCH	=	$FFFE				; on the bench
 TMPDOUT		=	$FFFD				; out of the game
 TMPDINJ		=	$1000				; injured: box time with this bit has no penalty
 
-OFFSCREEN	=	$4E20				; projxy: d1 for a point off the screen (20000)
+OFFSCREEN	=	$4E20				; find3d: d1 for a point off the screen (20000)
 ; --- addresses: puck fields (need puckobj above) ---
 puckx	=	Xpos+puckobj
 pucky	=	Ypos+puckobj

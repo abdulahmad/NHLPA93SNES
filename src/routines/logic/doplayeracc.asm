@@ -222,7 +222,7 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	sta.b d1
 .s1:
 	lda.w attribute,x
-	bit.w #$0800
+	bit.w #attrxflip
 	beq .s2
 	lda.b d1
 	eor.w #SPAturnl-SPAturnr
@@ -238,7 +238,7 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	lda.b d3
 	cmp.w #$0003
 	bcc .rtl2
-	jml.l revplayeracc
+	jml.l noturn
 .rtl2:
 	rtl
 .ftab:								;turn rate by the direction difference

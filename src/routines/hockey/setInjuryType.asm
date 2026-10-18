@@ -8,7 +8,7 @@ setInjuryType:						;Player a2 is injured for the period: the crowd reacts, the 
 	clc
 	adc.w #$012C
 	sta.b crowdlevel
-	lda.w #$008C
+	lda.w #SFXoooh2
 	pha
 	jsl.l sfx
 	ldy.b a2

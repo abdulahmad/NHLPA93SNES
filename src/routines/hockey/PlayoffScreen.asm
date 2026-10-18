@@ -65,7 +65,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	sta.b a1+2
 	lda.w #$0064
 	sta.b d0
-	jsl.l RemapTiles				; remap the 4bpp pixels ([a0] data, [a1] table, d0 tiles)
+	jsl.l remap						; remap the 4bpp pixels ([a0] data, [a1] table, d0 tiles)
 	lda.w #SmallFontTiles
 	sta.b tmp0
 	lda.w #SmallFontTiles>>16
@@ -81,7 +81,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	sta.b a1+2
 	lda.w #$0064
 	sta.b d0
-	jsl.l RemapTiles				; remap the 4bpp pixels ([a0] data, [a1] table, d0 tiles)
+	jsl.l remap						; remap the 4bpp pixels ([a0] data, [a1] table, d0 tiles)
 	lda.w #TeamBlocksTiles
 	sta.b tmp0
 	lda.w #TeamBlocksTiles>>16
