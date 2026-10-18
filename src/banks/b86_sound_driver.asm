@@ -4,7 +4,7 @@ if pc() < $868000
 	org $868000
 endif
 incsrc "../data/sound/bootsound.asm"
-incsrc "../routines/middle/DecompressBytecode.asm"
+incsrc "../routines/decompress/DecompressBytecode.asm"
 incsrc "../routines/hockey/RestoreBenchEnergy.asm"
 incsrc "../routines/sound/StartSong6.asm"
 incsrc "../routines/sound/StartSong7.asm"
