@@ -1,4 +1,4 @@
-SPAList:							;sprite animation pointer list
+SPAlist:							;sprite animation pointer list
 	dw 0							; (SPA 0 = no animation)
 SPAgready_table:					;SPAgready frames by direction
 	dw .d0-SPAgready_table			; direction 0
@@ -26,7 +26,7 @@ SPAgready_table:					;SPAgready frames by direction
 	dw SPFgready+12,-10
 .d7:	dw SPFGoalie+21,180,SPFgready+14,10,SPFgready+15,10,SPFgready+14,10,SPFgready+15,10,SPFGoalie+21,180,SPFgready+14,10,SPFgready+15,10
 	dw SPFgready+14,-10
-	assert SPAgready_table-SPAList == SPAgready
+	assert SPAgready_table-SPAlist == SPAgready
 
 SPAgready2_table:					;SPAgready2 frames by direction
 	dw .d0-SPAgready2_table			; direction 0
@@ -46,7 +46,7 @@ SPAgready2_table:					;SPAgready2 frames by direction
 .d5:	dw SPFGoalie+15,-30
 .d6:	dw SPFGoalie+18,-30
 .d7:	dw SPFGoalie+21,-30
-	assert SPAgready2_table-SPAList == SPAgready2
+	assert SPAgready2_table-SPAlist == SPAgready2
 
 SPAgglover_table:					;SPAgglover frames by direction
 	dw .d0-SPAgglover_table			; direction 0
@@ -66,7 +66,7 @@ SPAgglover_table:					;SPAgglover frames by direction
 .d5:	dw SPFGoalie+16,-32
 .d6:	dw SPFGoalie+19,-32
 .d7:	dw SPFGoalie+22,-32
-	assert SPAgglover_table-SPAList == SPAgglover
+	assert SPAgglover_table-SPAlist == SPAgglover
 
 SPAgglovel_table:					;SPAgglovel frames by direction
 	dw .d0-SPAgglovel_table			; direction 0
@@ -86,7 +86,7 @@ SPAgglovel_table:					;SPAgglovel frames by direction
 .d5:	dw SPFGoalie+17,-32
 .d6:	dw SPFGoalie+20,-32
 .d7:	dw SPFGoalie+23,-32
-	assert SPAgglovel_table-SPAList == SPAgglovel
+	assert SPAgglovel_table-SPAlist == SPAgglovel
 
 SPAgstickr_table:					;SPAgstickr frames by direction
 	dw .d0-SPAgstickr_table			; direction 0
@@ -106,7 +106,7 @@ SPAgstickr_table:					;SPAgstickr frames by direction
 .d5:	dw SPFGoalie+74,-32
 .d6:	dw SPFGoalie+76,-32
 .d7:	dw SPFGoalie+78,-32
-	assert SPAgstickr_table-SPAList == SPAgstickr
+	assert SPAgstickr_table-SPAlist == SPAgstickr
 
 SPAgstickl_table:					;SPAgstickl frames by direction
 	dw .d0-SPAgstickl_table			; direction 0
@@ -126,7 +126,7 @@ SPAgstickl_table:					;SPAgstickl frames by direction
 .d5:	dw SPFGoalie+75,-32
 .d6:	dw SPFGoalie+77,-32
 .d7:	dw SPFGoalie+79,-32
-	assert SPAgstickl_table-SPAList == SPAgstickl
+	assert SPAgstickl_table-SPAlist == SPAgstickl
 
 SPAgstackr_table:					;SPAgstackr frames by direction
 	dw .d0-SPAgstackr_table			; direction 0
@@ -146,7 +146,7 @@ SPAgstackr_table:					;SPAgstackr frames by direction
 .d5:	dw SPFGoalie+48,8,SPFGoalie+49,-20
 .d6:	dw SPFGoalie+48,8,SPFGoalie+49,-20
 .d7:	dw SPFGoalie+50,8,SPFGoalie+51,-20
-	assert SPAgstackr_table-SPAList == SPAgstackr
+	assert SPAgstackr_table-SPAlist == SPAgstackr
 
 SPAgstackl_table:					;SPAgstackl frames by direction
 	dw .d0-SPAgstackl_table			; direction 0
@@ -166,7 +166,7 @@ SPAgstackl_table:					;SPAgstackl frames by direction
 .d5:	dw SPFGoalie+60,8,SPFGoalie+61,-20
 .d6:	dw SPFGoalie+60,8,SPFGoalie+61,-20
 .d7:	dw SPFGoalie+62,8,SPFGoalie+63,-20
-	assert SPAgstackl_table-SPAList == SPAgstackl
+	assert SPAgstackl_table-SPAlist == SPAgstackl
 
 SPAgswing_table:					;SPAgswing frames by direction
 	dw .d0-SPAgswing_table			; direction 0
@@ -186,7 +186,7 @@ SPAgswing_table:					;SPAgswing frames by direction
 .d5:	dw SPFGoalie+34,5,SPFGoalie+35,8,SPFGoalie+34,-16
 .d6:	dw SPFGoalie+36,5,SPFGoalie+37,8,SPFGoalie+36,-16
 .d7:	dw SPFGoalie+38,5,SPFGoalie+39,8,SPFGoalie+38,-16
-	assert SPAgswing_table-SPAList == SPAgswing
+	assert SPAgswing_table-SPAlist == SPAgswing
 
 SPAgskate_table:					;SPAgskate frames by direction
 	dw .d0-SPAgskate_table			; direction 0
@@ -206,7 +206,7 @@ SPAgskate_table:					;SPAgskate frames by direction
 .d5:	dw SPFGoalie+100,10,SPFGoalie+101,10,SPFGoalie+102,10,SPFGoalie+103,-15
 .d6:	dw SPFGoalie+104,10,SPFGoalie+105,10,SPFGoalie+106,10,SPFGoalie+107,-15
 .d7:	dw SPFGoalie+108,10,SPFGoalie+109,10,SPFGoalie+110,10,SPFGoalie+111,-15
-	assert SPAgskate_table-SPAList == SPAgskate
+	assert SPAgskate_table-SPAlist == SPAgskate
 
 SPApflip_table:						;SPApflip frames by direction
 	dw .d0-SPApflip_table			; direction 0
@@ -226,7 +226,7 @@ SPApflip_table:						;SPApflip frames by direction
 .d5:	dw SPFpuck+1,-4096
 .d6:	dw SPFpuck+5,-4096
 .d7:	dw SPFpuck+5,-4096
-	assert SPApflip_table-SPAList == SPApflip
+	assert SPApflip_table-SPAlist == SPApflip
 
 SPAglide_table:						;SPAglide frames by direction
 	dw .d0-SPAglide_table			; direction 0
@@ -246,7 +246,7 @@ SPAglide_table:						;SPAglide frames by direction
 .d5:	dw SPFskatewp+25,-8
 .d6:	dw SPFskatewp+30,-8
 .d7:	dw SPFskatewp+35,-8
-	assert SPAglide_table-SPAList == SPAglide
+	assert SPAglide_table-SPAlist == SPAglide
 
 SPAskatewp_table:					;SPAskatewp frames by direction
 	dw .d0-SPAskatewp_table			; direction 0
@@ -266,7 +266,7 @@ SPAskatewp_table:					;SPAskatewp frames by direction
 .d5:	dw SPFskatewp+26,10,SPFskatewp+27,10,SPFskatewp+28,10,SPFskatewp+29,10,SPFskatewp+25,-15
 .d6:	dw SPFskatewp+31,10,SPFskatewp+32,10,SPFskatewp+33,10,SPFskatewp+34,10,SPFskatewp+30,-15
 .d7:	dw SPFskatewp+36,10,SPFskatewp+37,10,SPFskatewp+38,10,SPFskatewp+39,10,SPFskatewp+35,-15
-	assert SPAskatewp_table-SPAList == SPAskatewp
+	assert SPAskatewp_table-SPAlist == SPAskatewp
 
 SPAskate_table:						;SPAskate frames by direction
 	dw .d0-SPAskate_table			; direction 0
@@ -286,7 +286,7 @@ SPAskate_table:						;SPAskate frames by direction
 .d5:	dw SPFskate+26,10,SPFskate+27,10,SPFskate+28,10,SPFskate+29,10,SPFskate+25,-15
 .d6:	dw SPFskate+31,10,SPFskate+32,10,SPFskate+33,10,SPFskate+34,10,SPFskate+30,-15
 .d7:	dw SPFskate+36,10,SPFskate+37,10,SPFskate+38,10,SPFskate+39,10,SPFskate+35,-15
-	assert SPAskate_table-SPAList == SPAskate
+	assert SPAskate_table-SPAlist == SPAskate
 
 SPAturnl_table:						;SPAturnl frames by direction
 	dw .d0-SPAturnl_table			; direction 0
@@ -306,7 +306,7 @@ SPAturnl_table:						;SPAturnl frames by direction
 .d5:	dw SPFturnl+5,-18
 .d6:	dw SPFturnl+6,-18
 .d7:	dw SPFturnl+7,-18
-	assert SPAturnl_table-SPAList == SPAturnl
+	assert SPAturnl_table-SPAlist == SPAturnl
 
 SPAturnr_table:						;SPAturnr frames by direction
 	dw .d0-SPAturnr_table			; direction 0
@@ -326,7 +326,7 @@ SPAturnr_table:						;SPAturnr frames by direction
 .d5:	dw SPFturnr+5,-18
 .d6:	dw SPFturnr+6,-18
 .d7:	dw SPFturnr+7,-18
-	assert SPAturnr_table-SPAList == SPAturnr
+	assert SPAturnr_table-SPAlist == SPAturnr
 
 SPAstop_table:						;SPAstop frames by direction
 	dw .d0-SPAstop_table			; direction 0
@@ -346,7 +346,7 @@ SPAstop_table:						;SPAstop frames by direction
 .d5:	dw SPFstop+10,4,SPFstop+11,-4
 .d6:	dw SPFstop+12,4,SPFstop+13,-4
 .d7:	dw SPFstop+14,4,SPFstop+15,-4
-	assert SPAstop_table-SPAList == SPAstop
+	assert SPAstop_table-SPAlist == SPAstop
 
 SPApassf_table:						;SPApassf frames by direction
 	dw .d0-SPApassf_table			; direction 0
@@ -366,7 +366,7 @@ SPApassf_table:						;SPApassf frames by direction
 .d5:	dw SPFswing+33,4,SPFswing+34,4,SPFswing+35,-20
 .d6:	dw SPFswing+39,4,SPFswing+40,4,SPFswing+41,-20
 .d7:	dw SPFswing+45,4,SPFswing+46,4,SPFswing+47,-20
-	assert SPApassf_table-SPAList == SPApassf
+	assert SPApassf_table-SPAlist == SPApassf
 
 SPApassb_table:						;SPApassb frames by direction
 	dw .d0-SPApassb_table			; direction 0
@@ -386,7 +386,7 @@ SPApassb_table:						;SPApassb frames by direction
 .d5:	dw SPFswing+33,4,SPFswing+32,4,SPFswing+31,-20
 .d6:	dw SPFswing+39,4,SPFswing+38,4,SPFswing+37,-20
 .d7:	dw SPFswing+45,4,SPFswing+44,4,SPFswing+43,-20
-	assert SPApassb_table-SPAList == SPApassb
+	assert SPApassb_table-SPAlist == SPApassb
 
 SPAshotf_table:						;SPAshotf frames by direction
 	dw .d0-SPAshotf_table			; direction 0
@@ -406,7 +406,7 @@ SPAshotf_table:						;SPAshotf frames by direction
 .d5:	dw SPFswing+33,4,SPFswing+32,4,SPFswing+31,4,SPFswing+30,4,SPFswing+32,0,SPFswing+33,0,SPFswing+34,0,SPFswing+35,-20
 .d6:	dw SPFswing+39,4,SPFswing+38,4,SPFswing+37,4,SPFswing+36,4,SPFswing+38,0,SPFswing+39,0,SPFswing+40,0,SPFswing+41,-20
 .d7:	dw SPFswing+45,4,SPFswing+44,4,SPFswing+43,4,SPFswing+42,4,SPFswing+44,0,SPFswing+45,0,SPFswing+46,0,SPFswing+47,-20
-	assert SPAshotf_table-SPAList == SPAshotf
+	assert SPAshotf_table-SPAlist == SPAshotf
 
 SPAshotb_table:						;SPAshotb frames by direction
 	dw .d0-SPAshotb_table			; direction 0
@@ -426,7 +426,7 @@ SPAshotb_table:						;SPAshotb frames by direction
 .d5:	dw SPFswing+33,4,SPFswing+34,4,SPFswing+35,4,SPFswing+35,4,SPFswing+34,0,SPFswing+33,0,SPFswing+32,0,SPFswing+31,-20
 .d6:	dw SPFswing+39,4,SPFswing+40,4,SPFswing+41,4,SPFswing+41,4,SPFswing+40,0,SPFswing+39,0,SPFswing+38,0,SPFswing+37,-20
 .d7:	dw SPFswing+45,4,SPFswing+46,4,SPFswing+47,4,SPFswing+47,4,SPFswing+46,0,SPFswing+45,0,SPFswing+44,0,SPFswing+43,-20
-	assert SPAshotb_table-SPAList == SPAshotb
+	assert SPAshotb_table-SPAlist == SPAshotb
 
 SPAglideback_table:					;SPAglideback frames by direction
 	dw .d0-SPAglideback_table		; direction 0
@@ -446,7 +446,7 @@ SPAglideback_table:					;SPAglideback frames by direction
 .d5:	dw SPFskateb+15,-8
 .d6:	dw SPFskateb+18,-8
 .d7:	dw SPFskateb+21,-8
-	assert SPAglideback_table-SPAList == SPAglideback
+	assert SPAglideback_table-SPAlist == SPAglideback
 
 SPAskateback_table:					;SPAskateback frames by direction
 	dw .d0-SPAskateback_table		; direction 0
@@ -466,7 +466,7 @@ SPAskateback_table:					;SPAskateback frames by direction
 .d5:	dw SPFskateb+15,10,SPFskateb+16,10,SPFskateb+15,10,SPFskateb+17,-10
 .d6:	dw SPFskateb+18,10,SPFskateb+19,10,SPFskateb+18,10,SPFskateb+20,-10
 .d7:	dw SPFskateb+21,10,SPFskateb+22,10,SPFskateb+21,10,SPFskateb+23,-10
-	assert SPAskateback_table-SPAList == SPAskateback
+	assert SPAskateback_table-SPAlist == SPAskateback
 
 SPAsweepchk_table:					;SPAsweepchk frames by direction
 	dw .d0-SPAsweepchk_table		; direction 0
@@ -486,7 +486,7 @@ SPAsweepchk_table:					;SPAsweepchk frames by direction
 .d5:	dw SPFsweep+10,4,SPFsweep+11,8,SPFsweep+10,-4
 .d6:	dw SPFsweep+12,4,SPFsweep+13,8,SPFsweep+12,-4
 .d7:	dw SPFsweep+14,4,SPFsweep+15,8,SPFsweep+14,-4
-	assert SPAsweepchk_table-SPAList == SPAsweepchk
+	assert SPAsweepchk_table-SPAlist == SPAsweepchk
 
 SPAshoulderchkl_table:				;SPAshoulderchkl frames by direction
 	dw .d0-SPAshoulderchkl_table	; direction 0
@@ -506,7 +506,7 @@ SPAshoulderchkl_table:				;SPAshoulderchkl frames by direction
 .d5:	dw SPFshoulderl+5,-24
 .d6:	dw SPFshoulderl+6,-24
 .d7:	dw SPFshoulderl+7,-24
-	assert SPAshoulderchkl_table-SPAList == SPAshoulderchkl
+	assert SPAshoulderchkl_table-SPAlist == SPAshoulderchkl
 
 SPAshoulderchkr_table:				;SPAshoulderchkr frames by direction
 	dw .d0-SPAshoulderchkr_table	; direction 0
@@ -526,7 +526,7 @@ SPAshoulderchkr_table:				;SPAshoulderchkr frames by direction
 .d5:	dw SPFshoulderr+5,-24
 .d6:	dw SPFshoulderr+6,-24
 .d7:	dw SPFshoulderr+7,-24
-	assert SPAshoulderchkr_table-SPAList == SPAshoulderchkr
+	assert SPAshoulderchkr_table-SPAlist == SPAshoulderchkr
 
 SPAhipchkl_table:					;SPAhipchkl frames by direction
 	dw .d0-SPAhipchkl_table			; direction 0
@@ -546,7 +546,7 @@ SPAhipchkl_table:					;SPAhipchkl frames by direction
 .d5:	dw SPFhipl+5,-24
 .d6:	dw SPFhipl+6,-24
 .d7:	dw SPFhipl+7,-24
-	assert SPAhipchkl_table-SPAList == SPAhipchkl
+	assert SPAhipchkl_table-SPAlist == SPAhipchkl
 
 SPAhipchkr_table:					;SPAhipchkr frames by direction
 	dw .d0-SPAhipchkr_table			; direction 0
@@ -566,7 +566,7 @@ SPAhipchkr_table:					;SPAhipchkr frames by direction
 .d5:	dw SPFhipr+5,-24
 .d6:	dw SPFhipr+6,-24
 .d7:	dw SPFhipr+7,-24
-	assert SPAhipchkr_table-SPAList == SPAhipchkr
+	assert SPAhipchkr_table-SPAlist == SPAhipchkr
 
 SPAburst_table:						;SPAburst frames by direction
 	dw .d0-SPAburst_table			; direction 0
@@ -586,7 +586,7 @@ SPAburst_table:						;SPAburst frames by direction
 .d5:	dw SPFskate+25,-24
 .d6:	dw SPFskate+30,-24
 .d7:	dw SPFskate+35,-24
-	assert SPAburst_table-SPAList == SPAburst
+	assert SPAburst_table-SPAlist == SPAburst
 
 SPAHold_table:						;SPAHold frames by direction
 	dw .d0-SPAHold_table			; direction 0
@@ -606,7 +606,7 @@ SPAHold_table:						;SPAHold frames by direction
 .d5:	dw SPFhold+5,-30
 .d6:	dw SPFhold+6,-30
 .d7:	dw SPFhold+7,-30
-	assert SPAHold_table-SPAList == SPAHold
+	assert SPAHold_table-SPAlist == SPAHold
 
 SPAHold2_table:						;SPAHold2 frames by direction
 	dw .d0-SPAHold2_table			; direction 0
@@ -626,7 +626,7 @@ SPAHold2_table:						;SPAHold2 frames by direction
 .d5:	dw SPFhold+5,-30
 .d6:	dw SPFhold+6,-30
 .d7:	dw SPFhold+7,-30
-	assert SPAHold2_table-SPAList == SPAHold2
+	assert SPAHold2_table-SPAlist == SPAHold2
 
 SPAflail_table:						;SPAflail frames by direction
 	dw .d0-SPAflail_table			; direction 0
@@ -646,7 +646,7 @@ SPAflail_table:						;SPAflail frames by direction
 .d5:	dw SPFskate+25,-30
 .d6:	dw SPFskate+30,-30
 .d7:	dw SPFskate+35,-30
-	assert SPAflail_table-SPAList == SPAflail
+	assert SPAflail_table-SPAlist == SPAflail
 
 SPAfallfwd_table:					;SPAfallfwd frames by direction
 	dw .d0-SPAfallfwd_table			; direction 0
@@ -666,7 +666,7 @@ SPAfallfwd_table:					;SPAfallfwd frames by direction
 .d5:	dw SPFfallfwd+20,6,SPFfallfwd+21,6,SPFfallfwd+22,100,SPFfallfwd+23,8,SPFduck+5,-8
 .d6:	dw SPFfallfwd+24,6,SPFfallfwd+25,6,SPFfallfwd+26,100,SPFfallfwd+27,8,SPFduck+6,-8
 .d7:	dw SPFfallfwd+28,6,SPFfallfwd+29,6,SPFfallfwd+30,100,SPFfallfwd+31,8,SPFduck+7,-8
-	assert SPAfallfwd_table-SPAList == SPAfallfwd
+	assert SPAfallfwd_table-SPAlist == SPAfallfwd
 
 SPAfallback_table:					;SPAfallback frames by direction
 	dw .d0-SPAfallback_table		; direction 0
@@ -686,7 +686,7 @@ SPAfallback_table:					;SPAfallback frames by direction
 .d5:	dw SPFfallback+20,6,SPFfallback+21,6,SPFfallback+22,100,SPFfallback+23,8,SPFduck+5,-8
 .d6:	dw SPFfallback+24,6,SPFfallback+25,6,SPFfallback+26,100,SPFfallback+27,8,SPFduck+6,-8
 .d7:	dw SPFfallback+28,6,SPFfallback+29,6,SPFfallback+30,100,SPFfallback+31,8,SPFduck+7,-8
-	assert SPAfallback_table-SPAList == SPAfallback
+	assert SPAfallback_table-SPAlist == SPAfallback
 
 SPAcelebrate_table:					;SPAcelebrate frames by direction
 	dw .d0-SPAcelebrate_table		; direction 0
@@ -706,7 +706,7 @@ SPAcelebrate_table:					;SPAcelebrate frames by direction
 .d5:	dw SPFcelebrate+10,12,SPFcelebrate+11,40,SPFcelebrate+10,-5
 .d6:	dw SPFcelebrate+12,12,SPFcelebrate+13,40,SPFcelebrate+12,-5
 .d7:	dw SPFcelebrate+14,12,SPFcelebrate+15,40,SPFcelebrate+14,-5
-	assert SPAcelebrate_table-SPAList == SPAcelebrate
+	assert SPAcelebrate_table-SPAlist == SPAcelebrate
 
 SPApump_table:						;SPApump frames by direction
 	dw .d0-SPApump_table			; direction 0
@@ -726,7 +726,7 @@ SPApump_table:						;SPApump frames by direction
 .d5:	dw SPFpump+10,8,SPFpump+11,8,SPFpump+10,-8
 .d6:	dw SPFpump+12,8,SPFpump+13,8,SPFpump+12,-8
 .d7:	dw SPFpump+14,8,SPFpump+15,8,SPFpump+14,-8
-	assert SPApump_table-SPAList == SPApump
+	assert SPApump_table-SPAlist == SPApump
 
 SPAfight_table:						;SPAfight frames by direction
 	dw .d0-SPAfight_table			; direction 0
@@ -740,7 +740,7 @@ SPAfight_table:						;SPAfight frames by direction
 	dw 0							; attributes
 .d0:	dw SPFfight,8,SPFfight+1,8,SPFfight+2,8,SPFfight+3,-6
 .d3:	dw SPFfight,8,SPFfight+1,8,SPFfight+2,8,SPFfight+8,-6
-	assert SPAfight_table-SPAList == SPAfight
+	assert SPAfight_table-SPAlist == SPAfight
 
 SPAfgrab_table:						;SPAfgrab frames by direction
 	dw .d0-SPAfgrab_table			; direction 0
@@ -754,7 +754,7 @@ SPAfgrab_table:						;SPAfgrab frames by direction
 	dw 0							; attributes
 .d0:	dw SPFfight+4,28,SPFfight+3,-4
 .d3:	dw SPFfight+9,28,SPFfight+8,-4
-	assert SPAfgrab_table-SPAList == SPAfgrab
+	assert SPAfgrab_table-SPAlist == SPAfgrab
 
 SPAfheld_table:						;SPAfheld frames by direction
 	dw .d0-SPAfheld_table			; direction 0
@@ -768,7 +768,7 @@ SPAfheld_table:						;SPAfheld frames by direction
 	dw 0							; attributes
 .d0:	dw SPFfight+4,30,SPFfight+3,-4
 .d3:	dw SPFfight+9,30,SPFfight+8,-4
-	assert SPAfheld_table-SPAList == SPAfheld
+	assert SPAfheld_table-SPAlist == SPAfheld
 
 SPAfhigh_table:						;SPAfhigh frames by direction
 	dw .d0-SPAfhigh_table			; direction 0
@@ -782,7 +782,7 @@ SPAfhigh_table:						;SPAfhigh frames by direction
 	dw 0							; attributes
 .d0:	dw SPFfight+5,6,SPFfight+6,16,SPFfight+5,4,SPFfight+3,-16
 .d3:	dw SPFfight+10,6,SPFfight+11,16,SPFfight+10,4,SPFfight+8,-16
-	assert SPAfhigh_table-SPAList == SPAfhigh
+	assert SPAfhigh_table-SPAlist == SPAfhigh
 
 SPAflow_table:						;SPAflow frames by direction
 	dw .d0-SPAflow_table			; direction 0
@@ -796,7 +796,7 @@ SPAflow_table:						;SPAflow frames by direction
 	dw 0							; attributes
 .d0:	dw SPFfight+5,6,SPFfight+7,16,SPFfight+5,4,SPFfight+3,-16
 .d3:	dw SPFfight+10,6,SPFfight+12,16,SPFfight+10,4,SPFfight+8,-16
-	assert SPAflow_table-SPAList == SPAflow
+	assert SPAflow_table-SPAlist == SPAflow
 
 SPAfhith_table:						;SPAfhith frames by direction
 	dw .d0-SPAfhith_table			; direction 0
@@ -810,7 +810,7 @@ SPAfhith_table:						;SPAfhith frames by direction
 	dw 0							; attributes
 .d0:	dw SPFfight+14,16,SPFfight+3,-8
 .d3:	dw SPFfight+14,16,SPFfight+8,-8
-	assert SPAfhith_table-SPAList == SPAfhith
+	assert SPAfhith_table-SPAlist == SPAfhith
 
 SPAfhitl_table:						;SPAfhitl frames by direction
 	dw .d0-SPAfhitl_table			; direction 0
@@ -824,7 +824,7 @@ SPAfhitl_table:						;SPAfhitl frames by direction
 	dw 0							; attributes
 .d0:	dw SPFfight+13,16,SPFfight+3,-8
 .d3:	dw SPFfight+13,16,SPFfight+8,-8
-	assert SPAfhitl_table-SPAList == SPAfhitl
+	assert SPAfhitl_table-SPAlist == SPAfhitl
 
 SPAffall_table:						;SPAffall frames by direction
 	dw .d0-SPAffall_table			; direction 0
@@ -837,7 +837,7 @@ SPAffall_table:						;SPAffall frames by direction
 	dw .d0-SPAffall_table			; direction 7
 	dw 0							; attributes
 .d0:	dw SPFfight+14,8,SPFfight+15,8,SPFfight+16,200,SPFfight+16,-2
-	assert SPAffall_table-SPAList == SPAffall
+	assert SPAffall_table-SPAlist == SPAffall
 
 SPAwallright_table:					;SPAwallright frames by direction
 	dw .d0-SPAwallright_table		; direction 0
@@ -852,7 +852,7 @@ SPAwallright_table:					;SPAwallright frames by direction
 .d0:	dw SPFPen+4,8,SPFPen+5,8,SPFPen+6,-8
 .d1:	dw SPFPen,8,SPFPen+1,8,SPFPen+2,8,SPFPen+3,-8
 .d3:	dw SPFPen+3,8,SPFPen+2,8,SPFPen+1,8,SPFPen,-8
-	assert SPAwallright_table-SPAList == SPAwallright
+	assert SPAwallright_table-SPAlist == SPAwallright
 
 SPAwallleft_table:					;SPAwallleft frames by direction
 	dw .d0-SPAwallleft_table		; direction 0
@@ -867,7 +867,7 @@ SPAwallleft_table:					;SPAwallleft frames by direction
 .d0:	dw SPFPen+6,8,SPFPen+5,8,SPFPen+4,-8
 .d1:	dw SPFPen+3,8,SPFPen+2,8,SPFPen+1,8,SPFPen,-8
 .d3:	dw SPFPen,8,SPFPen+1,8,SPFPen+2,8,SPFPen+3,-8
-	assert SPAwallleft_table-SPAList == SPAwallleft
+	assert SPAwallleft_table-SPAlist == SPAwallleft
 
 SPAfaceoff_table:					;SPAfaceoff frames by direction
 	dw .d0-SPAfaceoff_table			; direction 0
@@ -881,7 +881,7 @@ SPAfaceoff_table:					;SPAfaceoff frames by direction
 	dw 0							; attributes
 .d0:	dw SPFskatewp,2,SPFsweep+1,10,SPFsweep,-6
 .d1:	dw SPFskatewp+20,2,SPFsweep+9,10,SPFsweep+8,-6
-	assert SPAfaceoff_table-SPAList == SPAfaceoff
+	assert SPAfaceoff_table-SPAlist == SPAfaceoff
 
 SPAfaceoffr_table:					;SPAfaceoffr frames by direction
 	dw .d0-SPAfaceoffr_table		; direction 0
@@ -895,7 +895,7 @@ SPAfaceoffr_table:					;SPAfaceoffr frames by direction
 	dw 0							; attributes
 .d0:	dw SPFskatewp,-5
 .d1:	dw SPFskatewp+20,-5
-	assert SPAfaceoffr_table-SPAList == SPAfaceoffr
+	assert SPAfaceoffr_table-SPAlist == SPAfaceoffr
 
 SPAsiren_table:						;SPAsiren frames by direction
 	dw .d0-SPAsiren_table			; direction 0
@@ -909,7 +909,7 @@ SPAsiren_table:						;SPAsiren frames by direction
 	dw 1							; attributes: loops
 .d0:	dw SPFSiren,3,SPFSiren+1,3,SPFSiren+2,3,SPFSiren+3,3,SPFSiren+4,3,SPFSiren+5,3,SPFSiren+6,3,SPFSiren+7,3
 	dw SPFSiren+8,3,SPFSiren+9,3,SPFSiren+10,3,SPFSiren+11,3,SPFSiren+12,3,SPFSiren+13,-3
-	assert SPAsiren_table-SPAList == SPAsiren
+	assert SPAsiren_table-SPAlist == SPAsiren
 
 SPAstanley_table:					;SPAstanley frames by direction
 	dw .d0-SPAstanley_table			; direction 0
@@ -929,7 +929,7 @@ SPAstanley_table:					;SPAstanley frames by direction
 .d5:	dw SPFcup+5,-30
 .d6:	dw SPFcup+6,-30
 .d7:	dw SPFcup+7,-30
-	assert SPAstanley_table-SPAList == SPAstanley
+	assert SPAstanley_table-SPAlist == SPAstanley
 
 SPAfinjury_table:					;SPAfinjury frames by direction
 	dw .d0-SPAfinjury_table			; direction 0
@@ -944,7 +944,7 @@ SPAfinjury_table:					;SPAfinjury frames by direction
 .d0:	dw SPFfight+14,8,SPFfight+15,8,SPFfight+16,20,SPFfinjury,8,SPFfinjury+1,8,SPFfinjury+2,8,SPFfinjury+3,10,SPFfinjury+4,10
 	dw SPFfinjury+5,10,SPFfinjury+3,10,SPFfinjury+4,10,SPFfinjury+5,10,SPFfinjury+3,10,SPFfinjury+4,10,SPFfinjury+5,10,SPFfinjury+3,10
 	dw SPFfinjury+4,10,SPFfinjury+5,-400
-	assert SPAfinjury_table-SPAList == SPAfinjury
+	assert SPAfinjury_table-SPAlist == SPAfinjury
 
 SPAflip_table:						;SPAflip frames by direction
 	dw .d0-SPAflip_table			; direction 0
@@ -964,7 +964,7 @@ SPAflip_table:						;SPAflip frames by direction
 .d5:	dw SPFflip+4,6,SPFflip+5,6,SPFflip+6,6,SPFflip+7,6,SPFfallback+22,100,SPFfallback+23,8,SPFduck+5,-8
 .d6:	dw SPFflip+4,6,SPFflip+5,6,SPFflip+6,6,SPFflip+7,6,SPFfallback+26,100,SPFfallback+27,8,SPFduck+6,-8
 .d7:	dw SPFflip,6,SPFflip+1,6,SPFflip+2,6,SPFflip+3,6,SPFfallback+30,100,SPFfallback+31,8,SPFduck+7,-8
-	assert SPAflip_table-SPAList == SPAflip
+	assert SPAflip_table-SPAlist == SPAflip
 
 SPAstumble_table:					;SPAstumble frames by direction
 	dw .d0-SPAstumble_table			; direction 0
@@ -984,7 +984,7 @@ SPAstumble_table:					;SPAstumble frames by direction
 .d5:	dw SPFstumble+15,6,SPFstumble+16,6,SPFstumble+17,8,SPFstumble+16,6,SPFstumble+15,-6
 .d6:	dw SPFstumble+18,6,SPFstumble+19,6,SPFstumble+20,8,SPFstumble+19,6,SPFstumble+18,-6
 .d7:	dw SPFstumble+21,6,SPFstumble+22,6,SPFstumble+23,8,SPFstumble+22,6,SPFstumble+21,-6
-	assert SPAstumble_table-SPAList == SPAstumble
+	assert SPAstumble_table-SPAlist == SPAstumble
 
 SPAhook_table:						;SPAhook frames by direction
 	dw .d0-SPAhook_table			; direction 0
@@ -1004,7 +1004,7 @@ SPAhook_table:						;SPAhook frames by direction
 .d5:	dw SPFhook+10,-30
 .d6:	dw SPFhook+12,-30
 .d7:	dw SPFhook+14,-30
-	assert SPAhook_table-SPAList == SPAhook
+	assert SPAhook_table-SPAlist == SPAhook
 
 SPAhook2_table:						;SPAhook2 frames by direction
 	dw .d0-SPAhook2_table			; direction 0
@@ -1024,7 +1024,7 @@ SPAhook2_table:						;SPAhook2 frames by direction
 .d5:	dw SPFhook+10,9,SPFhook+11,9,SPFhook+10,9,SPFhook+11,-9
 .d6:	dw SPFhook+12,9,SPFhook+13,9,SPFhook+12,9,SPFhook+13,-9
 .d7:	dw SPFhook+14,9,SPFhook+15,9,SPFhook+14,9,SPFhook+15,-9
-	assert SPAhook2_table-SPAList == SPAhook2
+	assert SPAhook2_table-SPAlist == SPAhook2
 
 SPAcatch_table:						;SPAcatch frames by direction
 	dw .d0-SPAcatch_table			; direction 0
@@ -1044,7 +1044,7 @@ SPAcatch_table:						;SPAcatch frames by direction
 .d5:	dw SPFcatch+10,6,SPFcatch+11,-6
 .d6:	dw SPFcatch+12,6,SPFcatch+13,-6
 .d7:	dw SPFcatch+14,6,SPFcatch+15,-6
-	assert SPAcatch_table-SPAList == SPAcatch
+	assert SPAcatch_table-SPAlist == SPAcatch
 
 SPAbglass_table:					;SPAbglass frames by direction
 	dw .d0-SPAbglass_table			; direction 0
@@ -1057,7 +1057,7 @@ SPAbglass_table:					;SPAbglass frames by direction
 	dw .d0-SPAbglass_table			; direction 7
 	dw 0							; attributes
 .d0:	dw SPFbglass,8,SPFbglass+1,8,SPFbglass+2,8,SPFbglass+3,8,SPFbglass+4,-1000
-	assert SPAbglass_table-SPAList == SPAbglass
+	assert SPAbglass_table-SPAlist == SPAbglass
 
 SPAgdive_table:						;SPAgdive frames by direction
 	dw .d0-SPAgdive_table			; direction 0
@@ -1077,7 +1077,7 @@ SPAgdive_table:						;SPAgdive frames by direction
 .d5:	dw SPFgdive+10,8,SPFgdive+11,48,SPFgdive+10,-8
 .d6:	dw SPFgdive+12,8,SPFgdive+13,48,SPFgdive+12,-8
 .d7:	dw SPFgdive+14,8,SPFgdive+15,48,SPFgdive+14,-8
-	assert SPAgdive_table-SPAList == SPAgdive
+	assert SPAgdive_table-SPAlist == SPAgdive
 
 SPAinjury1_table:					;SPAinjury1 frames by direction
 	dw .d0-SPAinjury1_table			; direction 0
@@ -1091,5 +1091,5 @@ SPAinjury1_table:					;SPAinjury1 frames by direction
 	dw 0							; attributes
 .d0:	dw SPFfallback,20,SPFfallback+1,20,SPFfallback+2,1000,SPFfallback+2,-1000
 .d3:	dw SPFfallback+16,20,SPFfallback+17,20,SPFfallback+18,1000,SPFfallback+18,-1000
-	assert SPAinjury1_table-SPAList == SPAinjury1
+	assert SPAinjury1_table-SPAlist == SPAinjury1
 SPAListEnd:							;end of the SPA tables

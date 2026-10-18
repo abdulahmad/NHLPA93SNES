@@ -198,7 +198,8 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	jsl.l setInjuryType				; setInjuryType
 	lda.w #$0004
 	sta.w InjCntDown
-	lda.w #PenInjury				;PenInjury if the hitter is a goalie or penalties are off, else PenRough2
+	lda.w #PenNoText				;PenNoText if the hitter is a goalie or penalties are off, else
+	;PenRoughing2
 									;and Stop4Pen
 	sta.b d0
 	lda.w position,x
@@ -209,7 +210,7 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	bne .rough
 	jmp.w AddPenalty2
 .rough:
-	lda.w #PenRough2
+	lda.w #PenRoughing2
 	sta.b d0
 	jsl.l AddPenalty2
 	jmp.w Stop4Pen

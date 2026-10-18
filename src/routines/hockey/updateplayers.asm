@@ -231,7 +231,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	lda.b d6
 	cmp.w c1playernum				; controller 1 player: doinput
 	bne .t0
-	jsl.l Readjoy1
+	jsl.l ReadJoy1
 	stz.b d4
 	jsl.l doinput
 	bra .t1
@@ -242,7 +242,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 .t0:
 	cmp.w c2playernum
 	bne .t1
-	jsl.l Readjoy2
+	jsl.l ReadJoy2
 	lda.w #$0002
 	sta.b d4
 	jsl.l doinput

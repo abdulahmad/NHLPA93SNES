@@ -51,7 +51,7 @@ doinput:							;Pad input for player X. d0 = pad directions, d1 = new buttons, d
 	lda.b d1
 	bit.w #abut
 	beq .nohold
-	jmp.w holdplayer
+	jmp.w Holdplayer
 .nohold:
 	bit.w #bbut
 	beq .nob

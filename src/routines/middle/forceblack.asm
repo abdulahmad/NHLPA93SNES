@@ -28,6 +28,6 @@ forceblack:							;Turn the screen black: default interrupt handlers, mark the s
 .vb:
 	cmp.b vcount
 	beq .vb
-	stz.b DMAListend
+	stz.b DMAlistend
 	plx
 	rtl

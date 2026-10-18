@@ -1,4 +1,4 @@
-Readjoy2:							;Read pad 2: d0 = direction, d1 = new presses, d2 = changed buttons, d3 =
+ReadJoy2:							;Read pad 2: d0 = direction, d1 = new presses, d2 = changed buttons, d3 =
 									;buttons held
 	phx
 	ldx.w #$0002

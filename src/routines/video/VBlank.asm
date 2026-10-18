@@ -3,7 +3,7 @@ VBlank:								;Main game play vblank: run the transfer list, set the rink scrol
 	sep #$20
 	lda.b #INIDISP_FBLANK
 	sta.w INIDISP
-	ldx.b DMAListend
+	ldx.b DMAlistend
 	bra .next
 .dmaloop:							;one DMAList entry: VRAM address, length, source, bank, then start ch7
 									;(word writes to VMDATA)
@@ -29,7 +29,7 @@ VBlank:								;Main game play vblank: run the transfer list, set the rink scrol
 	dex
 	bpl .dmaloop
 	rep #$30
-	stz.b DMAListend
+	stz.b DMAlistend
 	lda.w Hscroll
 	clc
 	adc.w #$00C0					; BG2 h-scroll = Hscroll + 192

@@ -51,7 +51,7 @@ Bcheck:								;Player a2 body checks a3: a3 falls if he is in front, and a char
 	lda.b d0
 	cmp.w #$0005
 	bcs .swap
-	lda.w #$20						; penalty $20
+	lda.w #PenTripping				; penalty $20
 	sta.b d0
 	jsl.l AddPenalty
 .swap:

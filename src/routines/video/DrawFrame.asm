@@ -197,7 +197,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	asl a
 	asl a
 	adc.w #$6000
-	ldx.b DMAListend
+	ldx.b DMAlistend
 .hang2:
 	cpx.w #$0578
 	bcs .hang2
@@ -213,7 +213,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	sta.w DMAList+dmalen,x
 	txa
 	adc.w #$0007
-	sta.b DMAListend
+	sta.b DMAlistend
 	lda.b sprframe
 	adc.b sprsetofs
 	asl a
@@ -406,7 +406,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	asl a
 	asl a
 	adc.w #$6000
-	ldx.b DMAListend
+	ldx.b DMAlistend
 .bhang2:
 	cpx.w #$0571
 	bcs .bhang2
@@ -428,7 +428,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	sta.w DMAList+dmasize+dmasrc,x
 	txa
 	adc.w #$000E
-	sta.b DMAListend
+	sta.b DMAlistend
 	lda.b sprframe
 	clc
 	adc.b sprsetofs

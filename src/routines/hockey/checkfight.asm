@@ -208,7 +208,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	tya
 	lsr a
 	sta.w impactp,x
-	lda.w #PenFight
+	lda.w #PenFighting
 	sta.b d0
 	jsl.l AddPenalty2
 	txa								; setd0player

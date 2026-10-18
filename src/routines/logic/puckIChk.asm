@@ -1,4 +1,4 @@
-puckIChk:							;Watch for icing: the loose puck crossing the far goal line
+PuckIChk:							;Watch for icing: the loose puck crossing the far goal line
 	lda.w iflags
 	bit.w #ifok						; ifok and not ifcgl, puck loose
 	beq .rtl

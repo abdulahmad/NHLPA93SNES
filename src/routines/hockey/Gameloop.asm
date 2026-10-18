@@ -144,7 +144,7 @@ Gameloop:							;Main game loop: wait for a frame, run the clock, music and crow
 	cmp.w #165						; beyond y 165
 	bcs .lc
 	stx.b a3
-	lda.w #6						; penalty 6
+	lda.w #PenOOP					; penalty 6
 	sta.b d0
 	jsl.l AddPenalty2
 	lda.w #300						; nopuck 300

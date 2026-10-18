@@ -77,12 +77,12 @@ holdcheck:							;a2 holds or hooks X: both slow down, and a holding or hooking 
 	lda.b d0
 	cmp.w #$0007
 	bcs .ex
-	lda.w #$0024					; holding penalty
+	lda.w #PenHolding				; holding penalty
 	sta.b d0
 	lda.w SPA,x
 	cmp.w #SPAHold2
 	beq .pen
-	lda.w #$001E					; hooking penalty
+	lda.w #PenHooking				; hooking penalty
 	sta.b d0
 .pen:
 	jsl.l AddPenalty

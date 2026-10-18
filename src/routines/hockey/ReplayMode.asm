@@ -1,6 +1,6 @@
 ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single frame steps,
 									;with the pad scrolling the view
-	stz.b DMAListend
+	stz.b DMAlistend
 	stz.b crowdlevel
 	lda.w #sf2replay				; sf2replay: replay on
 	tsb.w sflags

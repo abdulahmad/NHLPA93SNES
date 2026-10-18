@@ -1,4 +1,4 @@
-holdplayer:							;Hold button: hook, or with an impact hold the player who last hit X
+Holdplayer:							;Hold button: hook, or with an impact hold the player who last hit X
 	lda.w #SPAhook					; pfalock
 	sta.b d1
 	sta.w pfalock,x

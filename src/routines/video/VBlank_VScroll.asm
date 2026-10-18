@@ -7,7 +7,7 @@ VBlank_VScroll:						;Vblank: set the vertical scroll and run the transfer list;
 	sta.w BG1VOFS
 	lda.b d0+1
 	sta.w BG1VOFS
-	ldx.b DMAListend
+	ldx.b DMAlistend
 	bra .next
 .dmaloop:
 	ldy.w DMAList+dmavram,x
@@ -32,7 +32,7 @@ VBlank_VScroll:						;Vblank: set the vertical scroll and run the transfer list;
 	dex
 	bpl .dmaloop
 	rep #$30
-	stz.b DMAListend
+	stz.b DMAlistend
 	lda.w #vb2
 	sta.b vbint
 	jmp.w vb2

@@ -75,9 +75,9 @@ TeamRoster:							;Team Roster screen: each line's players and one attribute col
 	inx
 	cpx.w #$32A0
 	bne .blocktiles
-	lda.w #EASNMap
+	lda.w #EASNmap
 	sta.b tmp0
-	lda.w #EASNMap>>16
+	lda.w #EASNmap>>16
 	sta.b tmp1
 	jsl.l DecompressBytecode
 	ldx.w #$0000
@@ -193,7 +193,7 @@ TeamRoster:							;Team Roster screen: each line's players and one attribute col
 	sta.w DMAList+dmalen
 	stz.w DMAList+dmavram
 	lda.w #$0007
-	sta.b DMAListend
+	sta.b DMAlistend
 	lda.w #VBlank_List
 	sta.b vbint
 .vbwait:

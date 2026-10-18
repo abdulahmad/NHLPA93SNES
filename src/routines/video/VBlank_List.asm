@@ -2,7 +2,7 @@ VBlank_List:						;Vblank: run the transfer list once, then go back to vb2
 	sep #$20
 	lda.b #INIDISP_FBLANK
 	sta.w INIDISP
-	ldx.b DMAListend
+	ldx.b DMAlistend
 	bra .next
 .dmaloop:
 	ldy.w DMAList+dmavram,x
@@ -27,7 +27,7 @@ VBlank_List:						;Vblank: run the transfer list once, then go back to vb2
 	dex
 	bpl .dmaloop
 	rep #$30
-	stz.b DMAListend
+	stz.b DMAlistend
 	lda.w #vb2
 	sta.b vbint
 	jmp.w vb2
