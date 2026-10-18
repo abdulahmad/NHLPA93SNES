@@ -239,9 +239,9 @@ def sprite_sets():
 
 
 def frame_names():
-    """Global frame number -> SPF name (the frame equates in src/ram93snes.asm)."""
+    """Global frame number -> SPF name (the frame equates in src/ram93s.asm)."""
     names = {}
-    for line in open(os.path.join(SRC, 'ram93snes.asm'), encoding='latin-1'):
+    for line in open(os.path.join(SRC, 'ram93s.asm'), encoding='latin-1'):
         code = line.split(';')[0]
         if code.startswith('SPF') and '=' in code:
             name, val = (s.strip() for s in code.split('='))

@@ -11,7 +11,7 @@ import os, re, sys, glob
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, 'src')
-SKIP = {'nhlpa93snes.asm', 'ram93snes.asm'}
+SKIP = {'nhlpa93snes.asm', 'ram93s.asm'}
 GLOBAL = re.compile(r'^([A-Za-z_][A-Za-z0-9_]*):')
 ORG = re.compile(r'^org \$([0-9A-Fa-f]{6})\s*$')
 MNEM = set('''adc and asl bcc bcs beq bit bmi bne bpl bra brk brl bvc bvs clc cld cli clv cmp cop cpx cpy dec dex dey eor inc inx iny
@@ -173,7 +173,7 @@ def migrate(bank, name):
     newl = 'incsrc "%s"' % bf
     allb = sorted([M[i] for i in bl] + [newl], key=lambda s: s.lower())
     for i in reversed(bl): del M[i]
-    at = max(i for i, l in enumerate(M) if l.startswith('incsrc "ram93snes')) + 1
+    at = max(i for i, l in enumerate(M) if l.startswith('incsrc "ram93s')) + 1
     M[at:at] = allb
     open(mp, 'w').write('\n'.join(M))
     print('\n'.join(incs)); print(len(incs), 'files ->', bf)

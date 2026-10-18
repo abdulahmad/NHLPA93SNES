@@ -6,8 +6,8 @@ lorom
 check bankcross off
 incsrc "inc/snes_regs.asm"
 incsrc "macros/snes93.mac"
-incsrc "ram93snes.asm"
-incsrc "tables93snes.asm"
+incsrc "ram93s.asm"
+incsrc "tables93s.asm"
 incsrc "banks/b80_engine.asm"
 incsrc "banks/b81_sfx.asm"
 incsrc "banks/b82_sfx_rink.asm"

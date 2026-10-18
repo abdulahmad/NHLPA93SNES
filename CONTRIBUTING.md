@@ -34,12 +34,12 @@ A comment-only or rename-only change must not change a single byte. Never commit
 ## 3. Names, not numbers
 
 - A value that 92 (or an earlier game) names must use the name: sizes, counts, bit numbers, flags, penalty and
-  sound numbers, offsets into structures. Define the constant in `src/ram93snes.asm` if it does not exist yet.
+  sound numbers, offsets into structures. Define the constant in `src/ram93s.asm` if it does not exist yet.
 - The address of a labelled table or routine is written as the label, never as a number
   (`#TeamList`, not `#$314`). Offsets inside data are `label-base` expressions, defined or used next to the data
   they point into.
 - When a table has an equate per entry, 92 puts `Name = (*-Table)/4` or `Name equ (*-Table)` before each entry. Do the
-  same unless the constants are needed by code that is assembled separately; then they go in `src/ram93snes.asm`.
+  same unless the constants are needed by code that is assembled separately; then they go in `src/ram93s.asm`.
 - A number is fine when the original code used one (a mask, a coordinate). Say what it is in a comment.
 
 ## 4. Comments: what to write
@@ -76,7 +76,7 @@ A comment-only or rename-only change must not change a single byte. Never commit
 ## 6. Where things go
 
 - `src/nhlpa93snes.asm` includes the bank files `src/banks/bXX_<name>.asm`, and each bank includes its routine files in exact ROM order. A routine lives in its own file under `src/routines/<area>/`, named after the routine.
-- RAM names and constants are in `src/ram93snes.asm`, hardware registers in `src/inc/snes_regs.asm`, macros in `src/macros/`, assets in `data/`.
+- RAM names and constants are in `src/ram93s.asm`, hardware registers in `src/inc/snes_regs.asm`, macros in `src/macros/`, assets in `data/`.
 - Where a routine is the same code as a Genesis routine, use the Genesis name (93 Genesis, then 92) and say so with a `92 <name>` or `93G <name>` note only when the names differ.
 
 ## 7. Commits and pull requests

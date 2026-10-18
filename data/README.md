@@ -52,7 +52,7 @@ The unpacked data holds the map words, then the palette, then the tiles. Offsets
 
 `FrameSetTable` ($8FE67D) lists the 15 frame sets. Each set's header in `src/gfx/sprites_bXX.asm` (`SpriteSetN:`) gives the frame,
 piece and tile counts and the first piece of each frame (`.frames`). `setNN.pieces` holds the pieces and `setNN.chr` the 4bpp tiles.
-Frame numbers (`sprframe`, the `SPF` names in `ram93snes.asm`) run on from set to set, starting at 1 (set 0).
+Frame numbers (`sprframe`, the `SPF` names in `ram93s.asm`) run on from set to set, starting at 1 (set 0).
 
 - Sets 0-13 (frames 1-658, `DrawFrame` $87CE62): 4-byte pieces: x, y (signed bytes), tile, attributes.
 - Set 14 (frames 659-720, `DrawFrameHi` $85FBB9): 6-byte pieces: x, y (signed words), tile, attributes. These are the crowd:

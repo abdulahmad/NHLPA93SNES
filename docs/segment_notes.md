@@ -6,7 +6,7 @@ the 93G module files. Kept for the history; `SEGMENT_AGENT.md` has the per-slice
 ## bank80_8000 (org $808000)
 
 $808000-$80910E  ROM $00000-$0110E: reset, vblank/irq handlers, and the start of the player logic (93G logic93_5 / logic93_1 /
-logic93_3 / logic93_4 routines). The 68k registers of 93G are DP pseudo registers (d0 = $53 ... a3 = $3F, see ram93snes.asm);
+logic93_3 / logic93_4 routines). The 68k registers of 93G are DP pseudo registers (d0 = $53 ... a3 = $3F, see ram93s.asm);
 X = SCnum*2 of the current object (93G a3). Out-of-bank or later-segment calls keep their address with the 93G name in the comment.
 
 ## bank80_9000 (org $80910F)
@@ -112,7 +112,7 @@ $82B86C-$82CD9F  ROM $1386C-$14D9F: SPAList, the animation tables (93G frames93.
 ), ends before the packed rink tiles. SPA (sort object field) is an offset in this table. Each SPA table: 8 words = offset
 of the frame list for each direction (facedir 0-7, from the table start), 1 word of attributes (bit 0 = the animation loops),
 then the frame lists: pairs of (sprite frame, delay in frames); a negative delay marks the last frame (updateanim, bank80_E000).
-Frames are SPF base + n (SNES frame numbering, see ram93snes.asm). Each table is asserted against its SPA constant.
+Frames are SPF base + n (SNES frame numbering, see ram93s.asm). Each table is asserted against its SPA constant.
 
 ## bank82_D000 (org $82CDA0)
 
