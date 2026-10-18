@@ -102,7 +102,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 .fight:								;clear ChkCnt and the check counts of both teams
 	stz.w ChkCnt
 	lda.w #$0000
-	ldy.w #$0032
+	ldy.w #maxros*2-2
 .clr:
 	sta.w pchecks,y
 	dey

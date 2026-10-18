@@ -52,7 +52,7 @@ forcepldata:						;Face offs: move team a2's players straight to their new posit
 	sta.b d3
 	lda.b a2
 	beq .idx
-	lda.w #$0034
+	lda.w #maxros*2
 .idx:
 	adc.b d3
 	tay

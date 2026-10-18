@@ -75,7 +75,7 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	sta.b d2
 	lda.b d0
 	sec
-	sbc.w #$0058
+	sbc.w #blueline
 	bmi .neg2
 	bvc .z2
 	bra .de2

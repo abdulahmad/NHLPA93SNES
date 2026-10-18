@@ -11,7 +11,7 @@ periodicevents:						;Run every game loop; the slower checks once a second
 	sta.w lldisp
 	bpl .rtl
 	clc
-	adc.w #$0018					; +$18 frames
+	adc.w #jps						; +$18 frames
 	sta.w lldisp
 	jsl.l ChkGoalies				; ChkGoalies
 	jsl.l UpdateCwdExcite			; UpdateCwdExcite

@@ -28,14 +28,14 @@ clockcont_0:						;End of a period: in the third period the winners celebrate (w
 	lda.w gsflags,y
 	bit.w #$0001
 	beq .nf
-	lda.w #$0010
+	lda.w #gspobwins-gspotwins
 	sta.b d3
 .nf:
 	lda.w tmscore
 	cmp.w tmscore+2
 	bpl .ns1
 	lda.b d3
-	eor.w #$0010
+	eor.w #gspobwins-gspotwins
 	sta.b d3
 .ns1:
 	lda.b a0

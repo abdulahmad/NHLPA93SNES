@@ -24,7 +24,7 @@ ReadPassBits:						;Turn the password bits back into the playoff state; a bad ch
 	cmp.w #4						; 4 wins: gsftf (series over)
 	bne .nsf0
 	lda.w gsflags,y
-	ora.w #$0004
+	ora.w #gsfso
 	sta.w gsflags,y
 .nsf0:
 	lda.w #5
@@ -36,7 +36,7 @@ ReadPassBits:						;Turn the password bits back into the playoff state; a bad ch
 	cmp.w #4
 	bne .nsf1
 	lda.w gsflags,y
-	ora.w #$0004
+	ora.w #gsfso
 	sta.w gsflags,y
 .nsf1:
 	dec.b a1

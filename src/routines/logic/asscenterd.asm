@@ -76,7 +76,7 @@ asscenterd:							;Assignment: the center on defense, halfway between the puck a
 .rtl:
 	rtl
 .nopfgoal:
-	lda.w #$0058
+	lda.w #blueline
 	sec
 	sbc.w pucky
 	bmi .neg1

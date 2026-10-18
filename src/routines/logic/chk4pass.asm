@@ -80,18 +80,18 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	beq .oko
 	lda.b d0
 	sec
-	sbc.w #88
+	sbc.w #blueline
 	sta.b tmp0
 	lda.b d1
 	sec
-	sbc.w #88
+	sbc.w #blueline
 	eor.b tmp0
 	bpl .oko
 	jmp.w .rtl
 .oko:
 	lda.b d0						; beyond the blue line, or not more than 15 back
 	sec
-	sbc.w #88
+	sbc.w #blueline
 	beq .le
 	bmi .neg
 	bvs .le

@@ -7,7 +7,7 @@ RestoreBenchEnergy:					;Once a second with line changes on, players on the benc
 	lda.w #$0002
 	sta.b a2
 .team:
-	lda.w #$0032
+	lda.w #(maxros-1)*2
 	sta.b d0
 .b0:
 	lda.b a2

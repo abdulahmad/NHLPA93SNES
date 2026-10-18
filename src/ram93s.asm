@@ -541,6 +541,8 @@ goalline	=	$B0					; blueline+goalline = $108
 sideline	=	$88					; distance from center to side boards
 ; roster
 maxros	=	26						; roster slots per team
+; clock
+jps		=	24						; jiffys per second
 ; penalties
 PenEOP			=	$02				; period over
 PenEOG			=	$04				; game over
