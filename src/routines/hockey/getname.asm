@@ -29,7 +29,7 @@ getname:							;mesarea = the uniform number and name of roster player d0 of tea
 	cpx.w #$0004
 	bne .savea
 	ldx.b xsave
-	jsl.l GetPlayerRecord
+	jsl.l GetRosterEntry89
 	stx.b xsave
 	ldx.w #$0000
 .pushrec:

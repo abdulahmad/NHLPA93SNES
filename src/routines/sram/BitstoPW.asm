@@ -1,7 +1,7 @@
 BitstoPW:							;Turn the password bits into the password characters
 	ldx.w #$000F
 .char:
-	lda.w #PWrange					; PassWord[x] = pwddatabuffer mod PWrange
+	lda.w #PWrange					; PassWord[x] = passbits mod PWrange
 	sta.b d0
 	jsl.l SuperDiv
 	sep #$20

@@ -1,13 +1,13 @@
 SuperAdd:							;password bits += d0
 	phx
-	lda.w pwddatabuffer
+	lda.w passbits
 	clc
 	adc.b d0
-	sta.w pwddatabuffer
+	sta.w passbits
 	bcc .ex
 	ldx.w #$0002
 .carry:
-	inc.w pwddatabuffer,x
+	inc.w passbits,x
 	bne .ex
 	inx
 	inx

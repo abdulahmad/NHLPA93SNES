@@ -14,10 +14,10 @@ Source: `nhl-disasm-report` data for 93S (routine groups tree, `cmp.93G` empty) 
 > `Restart` -> `Opening2`, `PlayoffScreenOpening4` -> `Opening3`, `PlayerNumName` -> `getname`, `PlayerShortName` -> `FormatPlayerNumInitial`,
 > `PutDigits2` -> `ConvertByteToDigits`, `revplayeracc` -> `noturn`, `GetPadTeam` -> `seta2`, `TickerTeam` -> `PrintGameInfo`,
 > `PrintStringFromList` -> `Fprint_list` (the 92/93G `Fprint` prints a format string), `ScoutNamePos` -> `setoptions_printpos2`,
-> `passbits` -> `pwddatabuffer`. Swaps: `StatsScreen` is now `StatsReport` (the game stats page) and the old 93S `StatsReport`, the tail of
+> `passbits` stays `passbits` (93G is renamed back to it). Swaps: `StatsScreen` is now `StatsReport` (the game stats page) and the old 93S `StatsReport`, the tail of
 > `SetHor`, is `SetHor_rink`; `randomd0s` (the A register 0..A-1 variant) is `randomas` and `randomd0sd0` is `randomd0s`.
 > Not applied: the PART rows (confidence 60 or less, they keep their own names), `aggress` / `GGSleft` (93G itself uses `aggress` for both
-> $73 and $75 in code and comments, so the swap needs a decision), `GetRosterEntry` (holder not verified), `SetTeamColors` (the name
+> $73 and $75 in code and comments, so the swap needs a decision), `GetRosterEntry` (holder not verified), `setplayercolors_palbuffer` (the name
 > `setplayercolors` is a different SNES routine that calls it), and the bank copies `jdtab8F` / `dirtab8F` (already `<93G name><bank>`).
 
 
@@ -50,7 +50,7 @@ Local labels (`.x`): 408 routines exist in both games; 93S has 3069 local labels
 | dirtab8F | logic | EXACT | dirtab | bank copy of dirtab |
 | DrawScoutPlayers | hockey | EXACT | UpdateTeamSprites | the "scouting report" player animation in 93S is the setoptions roster-player animation of 93G (sprite list for the two roster players); the SNES names and comments say scouting report, which is a different screen (93G ScoutingReport/PrintScoutRatings) |
 | EraseScoutName | hockey | EXACT | ClearRosterName | the "scouting report" player animation in 93S is the setoptions roster-player animation of 93G (erase the 12x2 name area); the SNES names and comments say scouting report, which is a different screen (93G ScoutingReport/PrintScoutRatings) |
-| GetPlayerRecord | hockey | EXACT | GetRosterEntry | a0 = roster record of player d0 of team a2 |
+| GetRosterEntry89 | hockey | EXACT | GetRosterEntry | a0 = roster record of player d0 of team a2 |
 | GoalieCount | logic | EXACT | GetGoalieCount | d0 = goalies on team a2 (93G reads the nibbles of the goalie odds word) |
 | InitScoutDisplay | hockey | EXACT | InitScoutingDisplay | same routine, spelled differently |
 | jdtab8F | middle | EXACT | jdtab | "a copy for checksso" of the direction table in the bank that uses it |
@@ -95,8 +95,8 @@ Local labels (`.x`): 408 routines exist in both games; 93S has 3069 local labels
 | Restart | hockey | LIKELY | Begin | cold start: reset hardware and RAM, defaults, then title = 93G Begin |
 | revplayeracc | logic | LIKELY | noturn (-> playeracc) | 93G noturn "reverse the acc. direction when skating backwards, then falls into playeracc" = revplayeracc |
 | ScoutNamePos | hockey | LIKELY | (inline in ClearRosterName / UpdateRosterPlayer) | the "scouting report" player animation in 93S is the setoptions roster-player animation of 93G (where the name is printed); the SNES names and comments say scouting report, which is a different screen (93G ScoutingReport/PrintScoutRatings) |
-| SetTeamColors | hockey | LIKELY | setplayercolors | converts both teams' colours to the palette buffer (93G setplayercolors "copy in correct color data for each team"); SNES also converts 0BGR->BGR555 |
-| SetTeamColors_team | hockey | LIKELY | setplayercolors (.sp) | one team half of setplayercolors |
+| setplayercolors_palbuffer | hockey | LIKELY | setplayercolors | converts both teams' colours to the palette buffer (93G setplayercolors "copy in correct color data for each team"); SNES also converts 0BGR->BGR555 |
+| setplayercolors_sp | hockey | LIKELY | setplayercolors (.sp) | one team half of setplayercolors |
 | sfx8F | sound | LIKELY | sfx | "queue the sound pushed before the call" = 93G sfx (one word on the stack); the 8F suffix is the bank copy |
 | ShowRinkRows | video | LIKELY | updatescroll | queue the rink map rows brought on screen by the vertical scroll = 93G updatescroll "queue rink map rows on the dma list" |
 | SsoInitTable | video | LIKELY | (inline sso list in defaultsprites) | 93G has the sso start positions as inline data lists in defaultsprites (Xcord/Ycord) |
@@ -144,7 +144,7 @@ Local labels (`.x`): 408 routines exist in both games; 93S has 3069 local labels
 | VBlank_CramOnly | video | POSSIBLE | VBlank | SNES vblank that only sends the palette (93G: cramfade/CopyPaletteToCRAM called from VBlank); 93G has one VBlank plus screen-specific VBlank_Playoff/_StanleyCup/_TitleScreen/_SetOptions |
 | ClearSprites | video | NO MATCH |  | move all OAM entries off screen; 93G rebuilds the sprite table in setvideo/DumpSprites |
 | CopyWords | middle | NO MATCH |  | word copy helper; the 68000 version is a dbf loop inline or DecompressBytecode copy |
-| DecodePW | hockey | NO MATCH |  | password screen code exists in 92G (DecodePW, PWtoBits, GetPassWord, PWprint, ResetPassWord) but 93G has no password screen: GameOver saves to backup RAM (EncodePW/ReadPassBits only keep the bits in pwddatabuffer). Closest 93G: ContinuePlayoffs |
+| DecodePW | hockey | NO MATCH |  | password screen code exists in 92G (DecodePW, PWtoBits, GetPassWord, PWprint, ResetPassWord) but 93G has no password screen: GameOver saves to backup RAM (EncodePW/ReadPassBits only keep the bits in passbits). Closest 93G: ContinuePlayoffs |
 | divs | middle | NO MATCH |  | 65816 software multiply/divide helper; 93G uses the 68000 MULS/MULU/DIVS/DIVU instructions inline |
 | divs16 | middle | NO MATCH |  | 65816 software multiply/divide helper; 93G uses the 68000 MULS/MULU/DIVS/DIVU instructions inline |
 | divu | middle | NO MATCH |  | 65816 software multiply/divide helper; 93G uses the 68000 MULS/MULU/DIVS/DIVU instructions inline |
@@ -208,7 +208,7 @@ Local labels (`.x`): 408 routines exist in both games; 93S has 3069 local labels
 | OldYfrac | ram93s.asm | LIKELY | OldYpos+2 (unnamed in 93G) | 93G sort object coordinates are longs; the SNES splits integer and fraction into two word arrays. 93G reads the fraction as 2(a3)-style offsets without a name |
 | OldZfrac | ram93s.asm | LIKELY | OldZpos+2 (unnamed in 93G) | 93G sort object coordinates are longs; the SNES splits integer and fraction into two word arrays. 93G reads the fraction as 2(a3)-style offsets without a name |
 | padlast1 | ram93s.asm | LIKELY | lj1 / lj2 | "buttons at the last ReadPads" = 93G lj1/lj2 (joystick debounce last state) |
-| passbits | ram93s.asm | LIKELY | pwddatabuffer | playoff password bits (5 words, no checksum in 93G; 128-bit/8 words on 93S) |
+| passbits | ram93s.asm | LIKELY | passbits | playoff password bits (5 words, no checksum in 93G; 128-bit/8 words on 93S) |
 | pchecks | ram93s.asm | LIKELY | team struct $11C(a2) bytes (no name in 93G) | checks per roster player (93G $11C). 93G uses the raw offset; candidate to name it with the SNES name |
 | psitem | ram93s.asm | LIKELY | menuitem | pause menu item (92 psitem); 93G menu state is menuitem/menulist/menudraw |
 | SFXoverglass | ram93s.asm | LIKELY | SFXbglass | same event in 93G: SFXbglass |
@@ -335,7 +335,7 @@ Local labels (`.x`): 408 routines exist in both games; 93S has 3069 local labels
 | mulsign | ram93s.asm | NO MATCH |  | 65816/SNES port scratch, text-layer, DMA-entry or OAM bookkeeping with no Genesis variable |
 | padnew1 | ram93s.asm | NO MATCH |  | newly pressed buttons; 93G ReadJoy returns them in d0/d1 instead of storing them |
 | padvcount | ram93s.asm | NO MATCH |  | SNES reads the pads once per frame; no 93G variable |
-| PassWord | ram93s.asm | NO MATCH |  | 92G PassWord char buffer; 93G dropped the password screen (pwddatabuffer holds only the bits) |
+| PassWord | ram93s.asm | NO MATCH |  | 92G PassWord char buffer; 93G dropped the password screen (passbits holds only the bits) |
 | percue | ram93s.asm | NO MATCH |  | song-trigger bookkeeping of the SNES cue system; 93G triggers songs directly (sf3fosong flag, CheckLateGameSong trigger time) |
 | pspeed | ram93s.asm | NO MATCH |  | SNES only (\|Xvel\|+\|Yvel\| after a burst, read by the hit code) |
 | pwlength | ram93s.asm | NO MATCH |  | password text size constants; 92G has them, 93G has no password text |

@@ -13,11 +13,11 @@ PushBits:							;password bits = password bits * d1 + d0
 	ldx.b d1
 	sta.b d1
 	stx.b d0
-	jsl.l SuperMult					; pwddatabuffer *= d0
+	jsl.l SuperMult					; passbits *= d0
 	stz.b d0+2
 	lda.b d1
 	sta.b d0
-	jsl.l SuperAdd					; pwddatabuffer += d0
+	jsl.l SuperAdd					; passbits += d0
 	stx.b xsave
 	ldx.w #$0006
 .restore:

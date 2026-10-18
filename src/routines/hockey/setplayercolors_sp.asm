@@ -1,4 +1,4 @@
-SetTeamColors_team:					;Convert one team's colors into the palette buffer
+setplayercolors_sp:					;Convert one team's colors into the palette buffer (93G setplayercolors .sp)
 	ldy.w #$0002					; team data + word at +2: palette
 	lda.b [tmp0],y
 	clc

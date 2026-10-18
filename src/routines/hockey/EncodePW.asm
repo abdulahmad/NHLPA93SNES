@@ -34,13 +34,13 @@ EncodePW:							;After a playoff game, work out the winners and the new password
 .nofail:
 	jsl.l WritePassBits
 	jsl.l BitstoPW
-	lda.w sflags3					; sf3alttree: pwddatabuffer before all games were resolved
+	lda.w sflags3					; sf3alttree: passbits before all games were resolved
 	bit.w #sf3alttree
 	beq .tree
 	ldy.w #$000E
 .cp:
 	lda.w tpassbits,y
-	sta.w pwddatabuffer,y
+	sta.w passbits,y
 	dey
 	dey
 	bpl .cp

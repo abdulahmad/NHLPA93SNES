@@ -30,7 +30,7 @@ FormatPlayerNumInitial:				;mesarea = the number, first initial and last name of
 	cpx.w #$0004
 	bne .savea
 	ldx.b xsave
-	jsl.l GetPlayerRecord
+	jsl.l GetRosterEntry89
 	stx.b xsave
 	ldx.w #$0000
 .pushrec:

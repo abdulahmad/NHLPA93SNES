@@ -103,8 +103,8 @@ org `$808000`.
 - `$80B49D` routines/logic/assinsert.asm (also assreplace)
 - `$80B4C1` routines/hockey/setupice.asm
 - `$80B6D5` routines/hockey/setplayercolors.asm
-- `$80B706` routines/hockey/SetTeamColors.asm
-- `$80B72C` routines/hockey/SetTeamColors_team.asm
+- `$80B706` routines/hockey/setplayercolors_palbuffer.asm
+- `$80B72C` routines/hockey/setplayercolors_sp.asm
 - `$80B76B` routines/hockey/nullrtl.asm
 - `$80B76C` routines/hockey/SprSort.asm
 - `$80B7FA` routines/hockey/DoGameFrame.asm
@@ -403,7 +403,7 @@ org `$898000` when `pc()` is below it.
 - `$89FC63` routines/sound/StartSong5.asm
 - `$89FC8F` routines/middle/CopyWords.asm
 - `$89FCC1` routines/hockey/ClearRosterName.asm
-- `$89FCD8` routines/hockey/GetPlayerRecord.asm
+- `$89FCD8` routines/hockey/GetRosterEntry89.asm
 - `$89FCFD` routines/hockey/FinalizeTextBuffer.asm
 - `$89FD0C` routines/hockey/StartGame.asm
 - `$89FD3A` routines/hockey/restoreteams.asm

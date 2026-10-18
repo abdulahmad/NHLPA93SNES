@@ -410,7 +410,7 @@ p_music_vblank (the sound command sender), then RefTilesHor (packed ref window t
 ## bank89_F000 (org $89F00A)
 
 $89F00A-$89FFFF  ROM $4F00A-$4FFFF: the rest of RefTilesHor, RefsMapHor (ref window frames for the horizontal rink), the music cue starters
-StartSong1-5/8/9, CopyWords, ClearRosterName, GetPlayerRecord, FinalizeTextBuffer, StartGame and restoreteams (hockey93_01), EvadePC (logic93_3),
+StartSong1-5/8/9, CopyWords, ClearRosterName, GetRosterEntry89, FinalizeTextBuffer, StartGame and restoreteams (hockey93_01), EvadePC (logic93_3),
 asswingd (logic93_2, asstab 3), $FF fill.
 
 ## bank8A_8000 (org $8A8000)

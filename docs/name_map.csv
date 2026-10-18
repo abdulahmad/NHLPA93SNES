@@ -96,8 +96,8 @@ $80B49D,assinsert,CODE_80B49D,93G,,logic_b80
 $80B4A7,assreplace,CODE_80B4A7,93G,,logic_b80
 $80B4C1,setupice,CODE_80B4C1,93G,,hockey_b80
 $80B6D5,setplayercolors,CODE_80B6D5,93G,,hockey_b80
-$80B706,SetTeamColors,CODE_80B706,,,hockey_b80
-$80B72C,SetTeamColors_team,CODE_80B72C,,,hockey_b80
+$80B706,setplayercolors_palbuffer,CODE_80B706,,,hockey_b80
+$80B72C,setplayercolors_sp,CODE_80B72C,,,hockey_b80
 $80B76B,nullrtl,CODE_80B76B,,,hockey_b80
 $80B76C,SprSort,CODE_80B76C,93G,,hockey_b80
 $80B7FA,DoGameFrame,CODE_80B7FA,93G,,hockey_b80
@@ -295,7 +295,7 @@ $89FC37,StartSong4,CODE_89FC37,SNES,,sound_b89
 $89FC63,StartSong5,CODE_89FC63,SNES,,sound_b89
 $89FC8F,CopyWords,CODE_89FC8F,SNES,,middle_b89
 $89FCC1,ClearRosterName,CODE_89FCC1,93G,,hockey_b89
-$89FCD8,GetPlayerRecord,CODE_89FCD8,SNES,,hockey_b89
+$89FCD8,GetRosterEntry89,CODE_89FCD8,SNES,,hockey_b89
 $89FCFD,FinalizeTextBuffer,CODE_89FCFD,93G,,hockey_b89
 $89FD0C,StartGame,CODE_89FD0C,93G,from $8B8176,hockey_b89
 $89FD3A,restoreteams,CODE_89FD3A,93G,,hockey_b89

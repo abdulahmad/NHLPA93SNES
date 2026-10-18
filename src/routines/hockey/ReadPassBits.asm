@@ -83,7 +83,7 @@ ReadPassBits:						;Turn the password bits back into the playoff state; a bad ch
 	sta.w postarts
 .rtl:
 	rtl
-.sd:								;d0 = pwddatabuffer mod d0 (SuperDiv), added to the checksum d7
+.sd:								;d0 = passbits mod d0 (SuperDiv), added to the checksum d7
 	jsl.l SuperDiv
 	lda.b d7
 	clc

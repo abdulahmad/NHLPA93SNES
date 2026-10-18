@@ -1,6 +1,6 @@
 SetupNextPlayer:					;The next player of team a2 to show in the team block, with an
 									;animation picked from his ratings
-	jsl.l SetTeamColors
+	jsl.l setplayercolors_palbuffer
 	ldy.b a2
 	lda.w tmflags,y
 	and.w #~tmfmid&$FFFF
