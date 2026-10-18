@@ -81,6 +81,6 @@ checkint:							;A goalie and another player collide: the skater falls, and a ha
 	lda.w gmode						; not in highlights
 	bit.w #gmhl
 	bne .rtl
-	lda.w #PenInt
+	lda.w #PenInterference
 	sta.b d0
 	jmp.w AddPenalty

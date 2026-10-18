@@ -101,7 +101,7 @@ clockcont_0:						;End of a period: in the third period the winners celebrate (w
 	sbc.w #$0096
 	sta.w cheervc
 .awaywon:
-	lda.w #$0004
+	lda.w #PenEOG
 	sta.b d0
 	jml.l AddPenalty2
 .notp3:
@@ -111,6 +111,6 @@ clockcont_0:						;End of a period: in the third period the winners celebrate (w
 	lda.w OptPlayMode
 	beq .gameover
 .perover:
-	lda.w #$0002
+	lda.w #PenEOP
 	sta.b d0
 	jml.l AddPenalty2

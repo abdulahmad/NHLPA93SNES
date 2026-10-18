@@ -13,7 +13,7 @@ FightFall:							;Player X lost the fight: the other player gets a fighting pena
 	inc.b a1
 	lda.b [a1]
 	and.w #$00FF
-	cmp.w #PenFight
+	cmp.w #PenFighting
 	bne .loop
 	lda.b [a1]
 	xba
@@ -23,7 +23,7 @@ FightFall:							;Player X lost the fight: the other player gets a fighting pena
 	cmp.w SCnum,y					; penalty of the a0 player?
 	bne .loop
 	sep #$20
-	lda.b #PenFighting				; it becomes PenFighting
+	lda.b #PenFighting2				; it becomes PenFighting2
 	sta.b [a1]
 	rep #$20
 	pla
