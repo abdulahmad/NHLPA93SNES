@@ -1,5 +1,5 @@
 QueueBackmapDMA:					;Queue the background map for transfer to video memory
-	ldy.b DMAListend
+	ldy.b DMAlistend
 	lda.w #backmap
 	sta.w DMAList,y
 	lda.w #backmap>>16
@@ -11,5 +11,5 @@ QueueBackmapDMA:					;Queue the background map for transfer to video memory
 	tya
 	clc
 	adc.w #dmasize
-	sta.b DMAListend
+	sta.b DMAlistend
 	rtl

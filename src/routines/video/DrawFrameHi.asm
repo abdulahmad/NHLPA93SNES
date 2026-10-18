@@ -178,7 +178,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	asl a
 	asl a
 	adc.w #$6000
-	ldx.b DMAListend
+	ldx.b DMAlistend
 .hang2:								;dma list full: hang
 	cpx.w #$0578
 	bcs .hang2
@@ -194,7 +194,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	sta.w DMAList+dmalen,x
 	txa
 	adc.w #$0007
-	sta.b DMAListend
+	sta.b DMAlistend
 	lda.b sprframe
 	adc.b sprsetofs
 	asl a
@@ -369,7 +369,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	asl a
 	asl a
 	adc.w #$6000
-	ldx.b DMAListend
+	ldx.b DMAlistend
 .bhang2:
 	cpx.w #$0571
 	bcs .bhang2
@@ -391,7 +391,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	sta.w DMAList+dmasize+dmasrc,x
 	txa
 	adc.w #$000E
-	sta.b DMAListend
+	sta.b DMAlistend
 	lda.b sprframe
 	clc
 	adc.b sprsetofs

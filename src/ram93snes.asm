@@ -54,7 +54,7 @@ mulres		= $93					; multiply result low word; mulres+2 ($95) = high word (68k sw
 mulneg		= $98					; muls32: count of negative operands
 mulsign		= $81					; divs: count of negative operands
 mulcnt		= $87					; divs: bit loop count (16)
-DMAListend	= $A3					;byte offset of the end of DMAList (7 bytes per entry); VBlank sends and
+DMAlistend	= $A3					;byte offset of the end of DMAList (7 bytes per entry); VBlank sends and
 									;empties it
 sprclock	= $A7					;sprite VRAM tile cache clock: a slot whose sprslottime is older than
 									;sprclock-sprslotlife is free
@@ -414,7 +414,7 @@ sndbank		= $164F					;sound set loaded into the SPC (1 = the in-game sounds); sf
 									;only for it
 cursong		= $1651					;song playing on the SPC (0 = none); set by the song starters in banks
 									;$86/$89
-DMAList		= $1653					;vram dma list (7-byte entries, see dma* offsets), filled up to DMAListend
+DMAList		= $1653					;vram dma list (7-byte entries, see dma* offsets), filled up to DMAlistend
 printfontset	= $1BCB				; tile base of the selected print font (control code)
 charofs		= $1BCD					;added to every text map tile written by the game code ($FF00 at boot, 0
 									;in the game screens)
@@ -442,7 +442,7 @@ palbuffer	= $7E6C74				;CGRAM shadow (256 colors, 512 bytes):
 textmap		= $7E6E74				;text layer tile map buffer (32x32 words);
 	;textdirtylo/hi mark what to send
 backmap		= $7E7674				;second BG map buffer (32x32 words) after textmap: screen backgrounds
-									;(GameSetupMap, Title1Map, EASNMap)
+									;(GameSetUpMap, Title1Map, EASNmap)
 hlsavebuf	= $7E7E74				;StartHL2: the game state (gmode-1 .. ScoreSumbytes) while a highlight
 									;plays. ReplayStart role
 unpackbuf	= $7F0000				;DecompressBytecode output buffer (64K, bank $7F): tiles are copied to
@@ -595,7 +595,7 @@ PenFighting2	= $28					; fighting *
 PenInst		= $2A					; fight instigator
 PenDelay	= $2C					; delayed penalty ref (93 $2C)
 ; animations (offsets into the animation data; value in the comment)
-; SPA values: offsets of the SPAList tables (bank82_C000 asserts each one). named and ordered like the 68000
+; SPA values: offsets of the SPAlist tables (bank82_C000 asserts each one). named and ordered like the 68000
 ; frame tables
 SPAgready	= $0002					; SPAgready $2: goalie ready (loops)
 SPAgready2	= $0134					; SPAgready2 $134
@@ -650,7 +650,7 @@ SPAstanley	= $1124					; SPAstanley $1258
 SPAfinjury	= $1156					; SPAfinjury $10CE: fight injury (fight loser down)
 SPAflip		= $11B0					; SPAflip $1524: third fall animation (flip)
 SPAstumble	= $12A2					; SPAstumble $13A0: stumble instead of a fall
-SPAhook		= $1354					; SPAhook $12DC: hold/hook (holdplayer, Acheck)
+SPAhook		= $1354					; SPAhook $12DC: hold/hook (Holdplayer, Acheck)
 SPAhook2	= $1386					; SPAhook2 $130E
 SPAcatch	= $1418					; SPAcatch $128A: player hit by a slow puck
 SPAbglass	= $146A					; SPAbglass $1232: the puck shadow over the glass

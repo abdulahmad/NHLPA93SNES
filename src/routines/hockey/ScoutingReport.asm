@@ -43,9 +43,9 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	dex
 	dex
 	bpl .clrtext
-	lda.w #EASNMap
+	lda.w #EASNmap
 	sta.b tmp0
-	lda.w #EASNMap>>16
+	lda.w #EASNmap>>16
 	sta.b tmp1
 	jsl.l DecompressBytecode
 	ldx.w #$03FE
@@ -282,7 +282,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	sta.w DMAList+dmalen
 	stz.w DMAList+dmavram
 	lda.w #$0007
-	sta.b DMAListend
+	sta.b DMAlistend
 	lda.w #VBlank_List
 	sta.b vbint
 .vbwait:

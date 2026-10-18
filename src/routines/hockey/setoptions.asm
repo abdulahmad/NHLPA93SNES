@@ -22,7 +22,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	inx
 	cpx.w #$0400
 	bne .clrslottime
-	stz.b DMAListend
+	stz.b DMAlistend
 	sep #$20
 	cli
 	lda.w RDNMI
@@ -67,9 +67,9 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	adc.w #$0035
 	sta.w scorechars
 	jsl.l DrawGameSetupBack
-	lda.w #GameSetupMap
+	lda.w #GameSetUpMap
 	sta.b tmp0
-	lda.w #GameSetupMap>>16
+	lda.w #GameSetUpMap>>16
 	sta.b tmp1
 	jsl.l DecompressBytecode
 	sep #$20
@@ -212,16 +212,16 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	sta.w oldvcount
 	jsl.l ClearSprites
 	jsl.l ScoutPlayersRun
-	jsl.l Readjoy1
+	jsl.l ReadJoy1
 	jsl.l ProcessInputWithRepeat
 	lda.b d1
 	bne .input
-	jsl.l Readjoy2
+	jsl.l ReadJoy2
 	jsl.l ProcessInputWithRepeat
 	lda.b d1
 	bne .input
 	jsl.l QueueTextDMA
-	lda.b DMAListend
+	lda.b DMAlistend
 	bne .dmaqueued
 	jsl.l QueueBackmapDMA
 .dmaqueued:

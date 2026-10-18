@@ -3,10 +3,10 @@ waitxsr:							;Wait d0 frames or until a button in d1 is pressed (used while th
 	lda.b d0
 	pha
 .wait:
-	jsl.l Readjoy1
+	jsl.l ReadJoy1
 	lda.b d1
 	bne .exit
-	jsl.l Readjoy2
+	jsl.l ReadJoy2
 	lda.b d1
 	bne .exit
 	jsl.l setvideo

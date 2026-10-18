@@ -1,5 +1,5 @@
 ShowRinkRows:						;Queue the rink map rows that the vertical scroll brought on screen
-	ldy.b DMAListend
+	ldy.b DMAlistend
 	lda.w Vscroll
 	clc
 	adc.w #$0170
@@ -105,5 +105,5 @@ ShowRinkRows:						;Queue the rink map rows that the vertical scroll brought on 
 	dex
 	bne .rowloop
 .done:
-	sty.b DMAListend
+	sty.b DMAlistend
 	rtl

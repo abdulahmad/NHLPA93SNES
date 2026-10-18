@@ -422,7 +422,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	tay
 	cpy.w #32*2*dmasize				; 32 rows: 2 dma entries each
 	bne .dma
-	sty.b DMAListend
+	sty.b DMAlistend
 	lda.w #VBlank_Cram				; playoff vblank handler
 	sta.b vbint
 .wait:

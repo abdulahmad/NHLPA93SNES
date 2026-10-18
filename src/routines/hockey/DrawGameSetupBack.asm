@@ -6,9 +6,9 @@ DrawGameSetupBack:					;Draw the game setup screen backdrop with the NHLPA logo
 	dex
 	dex
 	bpl .clr
-	lda.w #GameSetupMap
+	lda.w #GameSetUpMap
 	sta.b tmp0
-	lda.w #GameSetupMap>>16
+	lda.w #GameSetUpMap>>16
 	sta.b tmp1
 	jsl.l DecompressBytecode
 	ldx.w #$07FE

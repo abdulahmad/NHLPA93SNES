@@ -1,7 +1,7 @@
 QueueTextDMA:						;Queue the changed part of the text map for transfer to video memory
 	lda.b textdirtylo
 	bmi .rtl
-	ldy.b DMAListend
+	ldy.b DMAlistend
 	sta.w DMAList+dmavram,y
 	asl a
 	adc.w #textmap
@@ -21,6 +21,6 @@ QueueTextDMA:						;Queue the changed part of the text map for transfer to video
 	tya
 	clc
 	adc.w #dmasize
-	sta.b DMAListend
+	sta.b DMAlistend
 .rtl:
 	rtl

@@ -117,7 +117,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	sta.w DMAList+dmalen
 	stz.w DMAList+dmavram
 	lda.w #dmasize
-	sta.b DMAListend
+	sta.b DMAlistend
 	lda.w #VBlank_VScroll			; title vblank handler
 	sta.b vbint
 	lda.w #$0001

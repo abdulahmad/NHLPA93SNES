@@ -67,7 +67,7 @@ pucknorm:							;Assignment: the puck most of the time. Follows the carrier, wat
 	lda.w Yvel,y
 	sta.w puckvy
 .nothandled:
-	jsl.l puckIChk
+	jsl.l PuckIChk
 	jsl.l ChkOffsides
 	lda.w gmclock					; clock stopped
 	bne .z

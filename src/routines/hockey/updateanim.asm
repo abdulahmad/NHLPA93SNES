@@ -5,10 +5,10 @@ updateanim:							;Step object X's sprite animation, looping or ending it
 	stz.w pfalock,x
 	rtl
 .ia:
-	clc								; a0 = SPAList + SPA; d1 = attributes (+$10)
-	adc.w #SPAList&$FFFF
+	clc								; a0 = SPAlist + SPA; d1 = attributes (+$10)
+	adc.w #SPAlist&$FFFF
 	sta.b a0
-	lda.w #SPAList>>16
+	lda.w #SPAlist>>16
 	sta.b a0+2
 	ldy.w #$0010
 	lda.b [a0],y

@@ -2,7 +2,7 @@ VBlank_SprPal:						;Vblank: as VBlank, plus the sprite palettes; once, then bac
 	sep #$20
 	lda.b #INIDISP_FBLANK
 	sta.w INIDISP
-	ldx.b DMAListend
+	ldx.b DMAlistend
 	bra .next
 .dmaloop:
 	ldy.w DMAList+dmavram,x
@@ -27,7 +27,7 @@ VBlank_SprPal:						;Vblank: as VBlank, plus the sprite palettes; once, then bac
 	dex
 	bpl .dmaloop
 	rep #$30
-	stz.b DMAListend
+	stz.b DMAlistend
 	lda.w #DMA_OAM
 	sta.w DMAP7
 	lda.w #Satt

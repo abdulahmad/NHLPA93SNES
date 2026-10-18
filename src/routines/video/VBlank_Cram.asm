@@ -3,7 +3,7 @@ VBlank_Cram:						;Vblank: run the transfer list, set the scroll and send the pa
 	sep #$20
 	lda.b #INIDISP_FBLANK
 	sta.w INIDISP
-	ldx.b DMAListend
+	ldx.b DMAlistend
 	bra .next
 .dmaloop:
 	ldy.w DMAList+dmavram,x
@@ -28,7 +28,7 @@ VBlank_Cram:						;Vblank: run the transfer list, set the scroll and send the pa
 	dex
 	bpl .dmaloop
 	rep #$30
-	stz.b DMAListend
+	stz.b DMAlistend
 	sep #$20
 	lda.w Hscroll
 	and.b #$07

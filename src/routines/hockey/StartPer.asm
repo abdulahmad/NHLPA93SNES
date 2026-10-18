@@ -2,14 +2,14 @@ StartPer:							;Start a period: reset the rink and clock, face off at center ic
 									;the game loop
 	lda.w #$1FFF					; reset the stack
 	tcs
-	jsl.l Readjoy1
-	jsl.l Readjoy2
-	jsl.l Readjoy1
-	jsl.l Readjoy2
-	jsl.l Readjoy1
-	jsl.l Readjoy2
-	jsl.l Readjoy1
-	jsl.l Readjoy2
+	jsl.l ReadJoy1
+	jsl.l ReadJoy2
+	jsl.l ReadJoy1
+	jsl.l ReadJoy2
+	jsl.l ReadJoy1
+	jsl.l ReadJoy2
+	jsl.l ReadJoy1
+	jsl.l ReadJoy2
 	stz.b a2
 	jsl.l reenergizeteam
 	lda.w #$0002

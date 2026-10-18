@@ -2,7 +2,7 @@ demoread:							;In the demo, Start pauses and any other button ends it
 	lda.w cont1team					; a controller team: not a demo
 	ora.w cont2team
 	bne .rtl
-	jsl.l Readjoy1
+	jsl.l ReadJoy1
 	lda.b d1
 	bit.w #JOYSTART					; Start on pad 1: startpause1
 	beq .any1
@@ -10,7 +10,7 @@ demoread:							;In the demo, Start pauses and any other button ends it
 .any1:
 	lda.b d1
 	bne .exit
-	jsl.l Readjoy2
+	jsl.l ReadJoy2
 	lda.b d1
 	bit.w #JOYSTART					; Start on pad 2: startpause2
 	beq .any2
