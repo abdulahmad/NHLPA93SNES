@@ -1,6 +1,6 @@
 ; NHLPA 93 SNES RAM map (WRAM $7E0000-$7FFFFF, low 8K mirrored at $0000-$1FFF in banks $00-$3F/$80-$BF).
-; Not a queue segment: no ROM bytes. Add names freely as segments are transcribed. Define each name once.
-; Prefer the 68000 RAM names when the variable plays the same role.
+; Equates only, no ROM bytes. Prefer the 68000 RAM names for the same role. Define each name once.
+;
 ; Format: Name = $xxxx (asar equate). DP names are < $100 and are written with .b; others with .w / .l.
 ; The constants section at the end holds values (bit masks, animation offsets, sound numbers), not addresses.
 
