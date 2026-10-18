@@ -57,7 +57,7 @@ PickStartingGoalie:					;Pick team a2's starting goalie; computer teams in the l
 	tay
 	lda.b [a0],y
 	sta.b a0
-	ldy.w #ScoreOdds
+	ldy.w #GoalieOdds
 	adc.b [a0],y
 	sta.b a0
 	lda.w #$0004
