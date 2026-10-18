@@ -94,7 +94,7 @@ SetScore:							;Play one period of playoff game a0 with random goals; a game ti
 .rtl:
 	rtl
 .getscore:							;d0 = scoring team, d1 = other team; nibblebuffer = the .sctab rows of
-									;both ScoreOdds nibbles; returns d0 = goals 0-3
+									;both teams' scoring odds rows; returns d0 = goals 0-3
 	asl.b d0
 	asl.b d0
 	lda.w #TeamList					; TeamList entry of team d0
@@ -104,7 +104,7 @@ SetScore:							;Play one period of playoff game a0 with random goals; a game ti
 	ldy.b d0
 	lda.b [a1],y
 	sta.b a1
-	ldy.w #ScoutReport				; 8(a1): the ScoreOdds offset, ScoutReport in the record
+	ldy.w #ScoutReport				; 8(a1): byte 0 of the scouting report holds the scoring odds rows
 	adc.b [a1],y
 	sta.b a1
 	lda.b [a1]
@@ -164,7 +164,7 @@ SetScore:							;Play one period of playoff game a0 with random goals; a game ti
 	lda.w #4						; 4 weights
 	sta.b d0
 	jml.l WeightedRandomSelect		; d0 weights in nibblebuffer
-.sctab:								;weights for 0, 1, 2, 3 goals by ScoreOdds row
+.sctab:								;weights for 0, 1, 2, 3 goals by scoring odds row
 	dw $2B,$1E,$17,$04
 	dw $27,$20,$18,$05
 	dw $23,$21,$1A,$06
