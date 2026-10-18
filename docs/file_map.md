@@ -188,9 +188,9 @@ org `$808000`.
 - `$80F3E8` routines/sound/ReadPads.asm
 - `$80F45B` routines/logic/asspuckc.asm
 - `$80F5EA` routines/hockey/DecodePW.asm
-- `$80F5F2` routines/hockey/PlayoffScreenOpening4.asm
+- `$80F5F2` routines/hockey/Opening3.asm
 - `$80F5FA` routines/hockey/SuperDiv.asm
-- `$80F6A1` routines/middle/randomd0s.asm
+- `$80F6A1` routines/middle/randomas.asm
 - `$80F6AD` routines/logic/assgoalie.asm
 - `$80FCC9` routines/logic/ClampYPosition.asm
 - `$80FD05` routines/logic/AdjustFacingDirection.asm
@@ -232,7 +232,7 @@ org `$82B86C` when `pc()` is below it.
 - `$82FCD4` data/gfx/PixelRemap83.asm
 - `$82FCDB` routines/middle/muls32.asm
 - `$82FD17` routines/video/addframe_hi.asm
-- `$82FD54` routines/logic/revplayeracc.asm
+- `$82FD54` routines/logic/noturn.asm
 - `$82FD64` routines/video/marktexthi.asm
 - `$82FD6B` routines/hockey/ClearTeamStats.asm
 - `$82FD95` routines/penalty/ClearPenaltyMessage.asm
@@ -247,7 +247,7 @@ org `$838000` when `pc()` is below it.
 
 - `$838000` data/teamdata93s.asm (also TeamListEnd, AllStarsEast, AllStarsWest, Boston, Buffalo, Calgary, Chicago, Detroit, Edmonton, Hartford, LosAngeles, LongIsland, Minnesota, Montreal, NewJersey, NewYork, Ottawa, Philadelphia, Pittsburgh, Quebec, SanJose, StLouis, TampaBay, Toronto, Vancouver, Winnipeg, Washington, playoffseats, playoffseatsEnd)
 - `$83C6D8` data/gfx/SmallFontTiles.asm (also SmallFontTilesEnd)
-- `$83CC0C` routines/hockey/PlayerNumName.asm
+- `$83CC0C` routines/hockey/getname.asm
 - `$83CCCB` data/gfx/IceRinkMap.asm (also IceRinkMapEnd)
 - `$83ECAB` data/gfx/HorRinkMap.asm (also HorRinkMapEnd)
 - `$83F72B` data/gfx/RinkPalette.asm
@@ -256,7 +256,7 @@ org `$838000` when `pc()` is below it.
 - `$83FA32` routines/hockey/PauseReadJoy.asm
 - `$83FA79` routines/hockey/PauseResume.asm
 - `$83FA83` routines/hockey/PauseLeave.asm
-- `$83FA87` routines/hockey/Restart.asm
+- `$83FA87` routines/hockey/Opening2.asm
 - `$83FAEC` data/gfx/RefsMap.asm (also RefsMapEnd)
 - `$83FDFC` routines/logic/assgoalietopuck.asm (also unusedFF83)
 
@@ -267,7 +267,7 @@ org `$848000` when `pc()` is below it.
 - `$848000` data/gfx/SpriteSet9.asm (also SpriteSet9End)
 - `$84D630` data/text/ScoutingReportText.asm (also ScoutingReportTextEnd)
 - `$84E949` data/gfx/FaceOffMap.asm
-- `$84EA39` routines/middle/PutDigits2.asm
+- `$84EA39` routines/middle/ConvertByteToDigits.asm
 - `$84EA66` routines/hockey/UpdateRosterPlayers.asm
 - `$84EABF` routines/hockey/UpdateRosterPlayer.asm
 - `$84EC4C` routines/hockey/SlideOutRosterPlayer.asm
@@ -325,7 +325,7 @@ org `$868000` when `pc()` is below it.
 - `$86FC05` routines/sound/StartSong7.asm
 - `$86FC29` routines/hockey/setteams.asm
 - `$86FC53` routines/middle/ProcessInputWithRepeat.asm
-- `$86FC76` routines/hockey/ScoutNamePos.asm
+- `$86FC76` routines/hockey/setoptions_printpos2.asm
 - `$86FC8A` routines/hockey/GetPeriodTimeRemaining.asm
 - `$86FCA1` routines/hockey/GetPeriodTime.asm
 - `$86FCAF` routines/hockey/GetPeriodTime_timetab.asm
@@ -478,7 +478,7 @@ org `$8D8000` when `pc()` is below it.
 org `$8E8000` when `pc()` is below it.
 
 - `$8E8000` routines/hockey/Gameloop.asm
-- `$8E8182` routines/hockey/PlayerShortName.asm
+- `$8E8182` routines/hockey/FormatPlayerNumInitial.asm
 - `$8E826B` routines/logic/assbench.asm
 - `$8E83EB` data/gfx/SpriteSet3.asm (also SpriteSet3End)
 - `$8ED9A7` data/gfx/SpriteSet14.asm (also SpriteSet14End)
@@ -503,7 +503,7 @@ org `$8F8000` when `pc()` is below it.
 - `$8F8682` routines/print/PushNumber.asm
 - `$8F86B6` routines/penalty/Intermission.asm
 - `$8F873F` routines/penalty/InitTicker.asm
-- `$8F8757` routines/penalty/StatsScreen.asm
+- `$8F8757` routines/penalty/StatsReport.asm
 - `$8F877D` routines/penalty/IntermissionTick.asm
 - `$8F87A8` routines/penalty/TickerNext.asm
 - `$8F87C0` routines/video/KillCrowd.asm
@@ -512,7 +512,7 @@ org `$8F8000` when `pc()` is below it.
 - `$8F8858` routines/penalty/NewTicker.asm
 - `$8F8861` routines/penalty/NewTicker2.asm
 - `$8F887A` routines/penalty/NewTicker3.asm
-- `$8F8960` routines/penalty/TickerTeam.asm
+- `$8F8960` routines/penalty/PrintGameInfo.asm
 - `$8F89A3` data/text/GameLabels.asm
 - `$8F8ABC` routines/video/showzam.asm
 - `$8F8AE9` routines/middle/waitxsr.asm
@@ -536,7 +536,7 @@ org `$8F8000` when `pc()` is below it.
 - `$8F9085` data/gfx/SpriteSet1.asm (also SpriteSet1End)
 - `$8FD4F9` routines/logic/fightinput.asm
 - `$8FD5BF` routines/hockey/holdcheck.asm
-- `$8FD68C` routines/penalty/PrintStringFromList.asm
+- `$8FD68C` routines/penalty/Fprint_list.asm
 - `$8FD69F` routines/print/Framer.asm
 - `$8FD75A` routines/logic/assnothing.asm
 - `$8FD76B` routines/logic/GetGoalieCount.asm
@@ -565,7 +565,7 @@ org `$8F8000` when `pc()` is below it.
 - `$8FE164` routines/logic/playeracc.asm
 - `$8FE2D9` routines/logic/dirtab8F.asm
 - `$8FE2F9` routines/penalty/ClearPenaltyBuffer.asm
-- `$8FE316` routines/middle/randomd0sd0.asm
+- `$8FE316` routines/middle/randomd0s.asm
 - `$8FE32B` routines/hockey/DefaultMenus.asm
 - `$8FE369` routines/hockey/checkagr.asm
 - `$8FE3B0` routines/middle/WeightedRandomSelect.asm
@@ -580,14 +580,14 @@ org `$8F8000` when `pc()` is below it.
 - `$8FEBF0` data/text/RosterLineNames.asm
 - `$8FEC68` routines/video/addframe.asm
 - `$8FECAB` routines/hockey/Pmenu.asm
-- `$8FEE4A` routines/hockey/GetPadTeam.asm
+- `$8FEE4A` routines/hockey/seta2.asm
 - `$8FEE6B` routines/hockey/setpde.asm
 - `$8FEE83` routines/hockey/setoptions.asm
 - `$8FF4B8` data/gfx/PixelRemapFramer.asm
 - `$8FF4C8` data/gfx/PixelRemapFont.asm
 - `$8FF4D8` routines/middle/UnpackNibbles.asm
 - `$8FF54E` routines/print/PushNumberWidth.asm
-- `$8FF58D` routines/stats/StatsReport.asm
+- `$8FF58D` routines/stats/SetHor_rink.asm
 - `$8FF603` routines/logic/Findhittype.asm
 - `$8FF63D` routines/penalty/prefmes.asm
 - `$8FF741` routines/hockey/CheckInjury.asm

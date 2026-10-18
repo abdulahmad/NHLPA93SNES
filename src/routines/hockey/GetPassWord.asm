@@ -275,4 +275,4 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 .setup:								;Y: back to the setup screen (new playoffs)
 	lda.w #2
 	sta.w OptPlayMode
-	jml.l Restart					; the setup screens
+	jml.l Opening2					; the setup screens

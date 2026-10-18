@@ -179,9 +179,9 @@ $80F3E1,startpause,CODE_80F3E1,93G,,hockey_b80
 $80F3E8,ReadPads,CODE_80F3E8,SNES,,middle_b80
 $80F45B,asspuckc,CODE_80F45B,,asstab $10,logic_b80
 $80F5EA,DecodePW,CODE_80F5EA,92G,,hockey_b80
-$80F5F2,PlayoffScreenOpening4,CODE_80F5F2,,,hockey_b80
+$80F5F2,Opening3,CODE_80F5F2,,,hockey_b80
 $80F5FA,SuperDiv,CODE_80F5FA,92G,,hockey_b80
-$80F6A1,randomd0s,CODE_80F6A1,93G,,middle_b80
+$80F6A1,randomas,CODE_80F6A1,93G,,middle_b80
 $80F6AD,assgoalie,CODE_80F6AD,,asstab $E,logic_b80
 $80FCC9,ClampYPosition,CODE_80FCC9,93G,,logic_b80
 $80FD05,AdjustFacingDirection,CODE_80FD05,93G,,logic_b80
@@ -204,7 +204,7 @@ $82FC97,SaveRegsStartHL2,CODE_82FC97,SNES,,hockey_b82
 $82FCCD,marktextlo,CODE_82FCCD,SNES,,video_b82
 $82FCDB,muls32,CODE_82FCDB,,,middle_b82
 $82FD17,addframe_hi,CODE_82FD17,SNES,,video_b82
-$82FD54,revplayeracc,CODE_82FD54,SNES,,video_b82
+$82FD54,noturn,CODE_82FD54,93G,,video_b82
 $82FD64,marktexthi,CODE_82FD64,SNES,,video_b82
 $82FD6B,ClearTeamStats,CODE_82FD6B,SNES,,video_b82
 $82FD95,ClearPenaltyMessage,CODE_82FD95,93G,93G renamed from PrintPenaltyMessagesString,penalty_b82
@@ -212,15 +212,15 @@ $82FDB5,startpause2,CODE_82FDB5,93G,,hockey_b82
 $82FDBF,printbigz,CODE_82FDBF,SNES,,middle_b82
 $82FDD3,appendz,CODE_82FDD3,SNES,,middle_b82
 $82FDE7,asscentero,CODE_82FDE7,,asstab 6,logic_b82
-$83CC0C,PlayerNumName,CODE_83CC0C,SNES,,hockey_b83
+$83CC0C,getname,CODE_83CC0C,93G,,hockey_b83
 $83F82B,Pausemode,CODE_83F82B,92G,called from $8E817B,hockey_b83
 $83F891,PauseMenu,CODE_83F891,92G,,hockey_b83
 $83FA32,PauseReadJoy,CODE_83FA32,92G,,hockey_b83
 $83FA79,PauseResume,CODE_83FA79,,,hockey_b83
 $83FA83,PauseLeave,CODE_83FA83,,,hockey_b83
-$83FA87,Restart,CODE_83FA87,SNES,,hockey_b83
+$83FA87,Opening2,CODE_83FA87,93G,,hockey_b83
 $83FDFC,assgoalietopuck,CODE_83FDFC,,asstab $F,logic_b83
-$84EA39,PutDigits2,CODE_84EA39,SNES,,middle_b84
+$84EA39,ConvertByteToDigits,CODE_84EA39,93G,,middle_b84
 $84EA66,UpdateRosterPlayers,CODE_84EA66,93G,,hockey_b84
 $84EABF,UpdateRosterPlayer,CODE_84EABF,93G,,hockey_b84
 $84EC4C,SlideOutRosterPlayer,CODE_84EC4C,93G,,hockey_b84
@@ -254,7 +254,7 @@ $86FBE1,StartSong6,CODE_86FBE1,SNES,,sound_b86
 $86FC05,StartSong7,CODE_86FC05,SNES,,sound_b86
 $86FC29,setteams,CODE_86FC29,93G,,hockey_b86
 $86FC53,ProcessInputWithRepeat,CODE_86FC53,93G,,middle_b86
-$86FC76,ScoutNamePos,CODE_86FC76,SNES,,hockey_b86
+$86FC76,setoptions_printpos2,CODE_86FC76,93G,,hockey_b86
 $86FC8A,GetPeriodTimeRemaining,CODE_86FC8A,93G,,hockey_b86
 $86FCA1,GetPeriodTime,CODE_86FCA1,93G,,hockey_b86
 $86FCB7,lcfound2,CODE_86FCB7,93G,,logic_b86
@@ -307,7 +307,7 @@ $8AFE21,SetScore,CODE_8AFE21,93G,"from UpdateScores $82F9F4, $8F9062",penalty_b8
 $8B8000,NewPO,CODE_8B8000,92G,,hockey_b8B
 $8B807D,FigureJoy,CODE_8B807D,92G,,hockey_b8B
 $8B816A,Opening,CODE_8B816A,92G,"from Start, $80C407",hockey_b8B
-$8B8172,Opening4,CODE_8B8172,92G,"from GameOver, PlayoffScreenOpening4",hockey_b8B
+$8B8172,Opening4,CODE_8B8172,92G,"from GameOver, Opening3",hockey_b8B
 $8B817A,ReadPassBits,CODE_8B817A,92G,,hockey_b8B
 $8B8253,ResolveGames,CODE_8B8253,92G,,hockey_b8B
 $8BFCCE,printbig,CODE_8BFCCE,93G,,middle_b8B
@@ -336,7 +336,7 @@ $8DFCC7,asspenalty,CODE_8DFCC7,,asstab $C,logic_b8D
 $8DFE1B,clrplayer,CODE_8DFE1B,93G,,logic_b8D
 $8DFE36,avdgoal,CODE_8DFE36,93G,"from skateto, $808C45",logic_b8D
 $8E8000,Gameloop,CODE_8E8000,93G,from StartPer,hockey_b8E
-$8E8182,PlayerShortName,CODE_8E8182,SNES,,hockey_b8E
+$8E8182,FormatPlayerNumInitial,CODE_8E8182,93G,,hockey_b8E
 $8E826B,assbench,CODE_8E826B,,asstab $B,logic_b8E
 $8EFE73,assdefo,CODE_8EFE73,,asstab 1,logic_b8E
 $8F8130,unusedEnergyBar,CODE_8F8130,SNES,,gfx/graphics_b8F
@@ -349,7 +349,7 @@ $8F85FA,pplpen,CODE_8F85FA,93G,,penalty_b8F
 $8F8682,PushNumber,CODE_8F8682,93G,was pushnumber (93G PushNumber),middle_b8F
 $8F86B6,Intermission,CODE_8F86B6,93G,from PeriodOver,penalty_b8F
 $8F873F,InitTicker,CODE_8F873F,SNES,,penalty_b8F
-$8F8757,StatsScreen,CODE_8F8757,SNES,pause menu,penalty_b8F
+$8F8757,StatsReport,CODE_8F8757,93G,pause menu,penalty_b8F
 $8F877D,IntermissionTick,CODE_8F877D,SNES,from PauseMenu,penalty_b8F
 $8F87A8,TickerNext,CODE_8F87A8,SNES,,penalty_b8F
 $8F87C0,KillCrowd,CODE_8F87C0,93G,,video_b8F
@@ -358,7 +358,7 @@ $8F87EA,PushTime,CODE_8F87EA,93G,,middle_b8F
 $8F8858,NewTicker,CODE_8F8858,93G,from chkprogress,penalty_b8F
 $8F8861,NewTicker2,CODE_8F8861,93G,,penalty_b8F
 $8F887A,NewTicker3,CODE_8F887A,93G,,penalty_b8F
-$8F8960,TickerTeam,CODE_8F8960,SNES,,penalty_b8F
+$8F8960,PrintGameInfo,CODE_8F8960,93G,,penalty_b8F
 $8F8ABC,showzam,CODE_8F8ABC,93G,from setvideo,video_b8F
 $8F8AE9,waitxsr,CODE_8F8AE9,92G,,middle_b8F
 $8F8B11,clockcont,CODE_8F8B11,93G,from periodicevents,hockey_b8F
@@ -379,7 +379,7 @@ $8F902A,InitScores,CODE_8F902A,93G,from StartGame,penalty_b8F
 $8F9073,ResetPassWord,CODE_8F9073,92G,,hockey_b8F
 $8FD4F9,fightinput,CODE_8FD4F9,93G,from joyplayer,logic_b8F
 $8FD5BF,holdcheck,CODE_8FD5BF,93G,from checkcheck,hockey_b8F
-$8FD68C,PrintStringFromList,CODE_8FD68C,93G,,penalty_b8F
+$8FD68C,Fprint_list,CODE_8FD68C,93G,,penalty_b8F
 $8FD69F,Framer,CODE_8FD69F,93G,,middle_b8F
 $8FD75A,assnothing,CODE_8FD75A,93G,,logic_b8F
 $8FD76B,GetGoalieCount,CODE_8FD76B,93G,,logic_b8F
@@ -401,7 +401,7 @@ $8FE04C,ClearSprites,CODE_8FE04C,SNES,,video_b8F
 $8FE0E4,remap,CODE_8FE0E4,93G,,video_b8F
 $8FE164,playeracc,CODE_8FE164,93G,"from noturn, fightinput",logic_b8F
 $8FE2F9,ClearPenaltyBuffer,CODE_8FE2F9,93G,,penalty_b8F
-$8FE316,randomd0sd0,CODE_8FE316,93G,,middle_b8F
+$8FE316,randomd0s,CODE_8FE316,93G,,middle_b8F
 $8FE32B,DefaultMenus,CODE_8FE32B,93G,from Start,hockey_b8F
 $8FE369,checkagr,CODE_8FE369,93G,,hockey_b8F
 $8FE3B0,WeightedRandomSelect,CODE_8FE3B0,93G,,logic_b8F
@@ -412,12 +412,12 @@ $8FE6BD,CompLine,CODE_8FE6BD,93G,from setpersonel,logic_b8F
 $8FE825,TeamRosterScreen,CODE_8FE825,93G,pause menu,hockey_b8F
 $8FEC68,addframe,CODE_8FEC68,93G,,video_b8F
 $8FECAB,Pmenu,CODE_8FECAB,92G,"from Pausemode, StartHL2",hockey_b8F
-$8FEE4A,GetPadTeam,CODE_8FEE4A,SNES,,hockey_b8F
+$8FEE4A,seta2,CODE_8FEE4A,93G,,hockey_b8F
 $8FEE6B,setpde,CODE_8FEE6B,93G,,hockey_b8F
 $8FEE83,setoptions,CODE_8FEE83,93G,jsl from bank $83,hockey_b8F
 $8FF4D8,UnpackNibbles,CODE_8FF4D8,93G,from bank $86,logic_b8F
 $8FF54E,PushNumberWidth,CODE_8FF54E,93G,,middle_b8F
-$8FF58D,StatsReport,CODE_8FF58D,92G,"from the pause code in bank $83, $8F850B",penalty_b8F
+$8FF58D,SetHor_rink,CODE_8FF58D,92G,"from the pause code in bank $83, $8F850B",penalty_b8F
 $8FF603,Findhittype,CODE_8FF603,93G,from dopass,logic_b8F
 $8FF63D,prefmes,CODE_8FF63D,93G,,penalty_b8F
 $8FF741,CheckInjury,CODE_8FF741,93G,,hockey_b8F

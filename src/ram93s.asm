@@ -405,9 +405,9 @@ OptPen		=	$160A				; penalties (0 = off)
 asv			=	$1644				; scouting text without delays (down pressed)
 crowdvol	=	$1646				; crowd noise volume last sent to the sound driver (updatesound)
 cheatpads	=	$1648				; 3 words: the last three new pad presses (the unreached Gameloop .cheat)
-passbits	=	$1624				;password bits: a 128-bit number, 8 words, low word first (SuperDiv,
+pwddatabuffer	=	$1624			;password bits: a 128-bit number, 8 words, low word first (SuperDiv,
 									;PushBits). PassBits
-tpassbits	=	$1634				; 8 words: passbits before all games are resolved (EncodePW, sf3alttree)
+tpassbits	=	$1634				; 8 words: pwddatabuffer before the games are resolved (EncodePW, sf3alttree)
 OptLine		=	$160C				; line changes (0 = on)
 notdemo		=	$160E				;$FFFF once a player set up the game, 0 after the attract demo (FigureJoy:
 									;no controller teams). demoflag role

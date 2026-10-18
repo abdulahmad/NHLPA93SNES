@@ -1,4 +1,4 @@
-PlayerNumName:						;mesarea = the uniform number and name of roster player d0 of team a2
+getname:							;mesarea = the uniform number and name of roster player d0 of team a2
 	stx.b xsave
 	ldx.w #$0000
 .save:
@@ -57,7 +57,7 @@ PlayerNumName:						;mesarea = the uniform number and name of roster player d0 o
 	lda.b [a0]
 	and.w #$00FF
 	sta.b d0
-	jsl.l PutDigits2				; two digits, then a blank and the name
+	jsl.l ConvertByteToDigits		; two digits, then a blank and the name
 	jsl.l appendz
 	dw $0003						; printz inline string: length (counts itself), then control bytes / text
 	db " "

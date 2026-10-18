@@ -65,8 +65,8 @@ PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start 
 	bne .sr1
 	jmp.w .gj
 .sr1:
-	jsl.l StatsScreen
 	jsl.l StatsReport
+	jsl.l SetHor_rink
 	bra .redraw
 .ros:								;SNES Team Roster: show the roster, then rebuild the game screen (bg
 									;registers, palette, small font tiles, SetHor)
@@ -144,9 +144,9 @@ PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start 
 	jsl.l setvideo
 	jmp.w .redraw
 .go:								;Goalie: left/right change tmgoalie (0, 1, none), then Setpersonel
-	jsl.l GetPadTeam
+	jsl.l seta2
 	jsl.l GetGoalieCount
-	jsl.l GetPadTeam
+	jsl.l seta2
 	ldy.b a2						; A or right: next goalie; left: previous; d0 = number of goalies
 	lda.b d1
 	bit.w #cbut|JOYRIGHT

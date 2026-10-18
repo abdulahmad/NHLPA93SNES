@@ -1,8 +1,13 @@
-randomd0s:							;A = a random number from -A to A-1
-	sta.b tmp0
-	asl a
-	jsl.l randoma
-	sec
-	sbc.b tmp0
+randomd0s:							;randomas with the range in d0
+	lda.b d0
+	pha
+	asl.b d0
+	jsl.l randomd0
+	pla
+	eor.w #$FFFF
+	inc a
+	clc
+	adc.b d0
+	sta.b d0
 	clc
 	rtl

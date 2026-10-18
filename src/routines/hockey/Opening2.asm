@@ -1,4 +1,4 @@
-Restart:							;Restart from scratch: reset the hardware and RAM, set the default
+Opening2:							;Opening2 from scratch: reset the hardware and RAM, set the default
 									;handlers and options, then the playoff screen
 	sei								; interrupts off, native mode
 	clc
@@ -47,4 +47,4 @@ Restart:							;Restart from scratch: reset the hardware and RAM, set the defaul
 	lda.w #HBdefault
 	sta.b hbint
 	jsl.l setoptions
-	jml.l PlayoffScreenOpening4
+	jml.l Opening3

@@ -20,7 +20,7 @@ ContinuePlayoffs:					;Continue the playoffs: read the playoff state back from t
 	cpx.w #$0010
 	bne .savea
 	ldx.b xsave
-	lda.w #passbits					; a3 = passbits
+	lda.w #pwddatabuffer			; a3 = pwddatabuffer
 	sta.b a3
 	lda.w #$0000
 	sta.b a3+2

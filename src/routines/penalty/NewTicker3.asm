@@ -54,7 +54,7 @@ NewTicker3:							;Show the ticker box for game d3: round, period and both teams
 	sta.b a1
 	lda.w #GameLabels>>16
 	sta.b a1+2
-	jsl.l PrintStringFromList
+	jsl.l Fprint_list
 	lda.b $01,s
 	clc
 	adc.w #$0015
@@ -67,7 +67,7 @@ NewTicker3:							;Show the ticker box for game d3: round, period and both teams
 	sta.b a1
 	lda.w #PerLabels>>16
 	sta.b a1+2
-	jsl.l PrintStringFromList
+	jsl.l Fprint_list
 	lda.w #$2000
 	sta.w printa
 	ldy.b a0
@@ -75,12 +75,12 @@ NewTicker3:							;Show the ticker box for game d3: round, period and both teams
 	sta.b d0
 	lda.w gss1,y
 	sta.b d1
-	jsl.l TickerTeam
+	jsl.l PrintGameInfo
 	ldy.b a0
 	lda.w gst2,y
 	sta.b d0
 	lda.w gss2,y
 	sta.b d1
-	jsl.l TickerTeam
+	jsl.l PrintGameInfo
 	pla
 	rtl

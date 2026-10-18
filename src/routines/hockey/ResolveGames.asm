@@ -107,10 +107,10 @@ ResolveGames:						;Record the played playoff game and the series wins; when the
 	dec.b a0
 	dec.b d1
 	bpl .cr0
-	jsl.l WritePassBits				; sf3alttree: passbits before the rest was resolved
+	jsl.l WritePassBits				; sf3alttree: pwddatabuffer before the rest was resolved
 	ldy.w #$000E
 .cp:
-	lda.w passbits,y
+	lda.w pwddatabuffer,y
 	sta.w tpassbits,y
 	dey
 	dey

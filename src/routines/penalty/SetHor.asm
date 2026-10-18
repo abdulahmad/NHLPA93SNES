@@ -41,7 +41,7 @@ SetHor:								;Switch to the horizontal rink (the scoreboard screen)
 	sta.w Oldrow
 	stz.w vramrow
 	jsl.l SprSort
-	jsl.l StatsReport
+	jsl.l SetHor_rink
 	stx.b xsave
 	ldx.w #$001A
 .resta:

@@ -1,10 +1,10 @@
 ClrPassBits:						;Clear the password bits
-	stz.w passbits
-	stz.w passbits+2
-	stz.w passbits+4
-	stz.w passbits+6
-	stz.w passbits+8
-	stz.w passbits+10
-	stz.w passbits+12
-	stz.w passbits+14
+	stz.w pwddatabuffer
+	stz.w pwddatabuffer+2
+	stz.w pwddatabuffer+4
+	stz.w pwddatabuffer+6
+	stz.w pwddatabuffer+8
+	stz.w pwddatabuffer+10
+	stz.w pwddatabuffer+12
+	stz.w pwddatabuffer+14
 	rtl

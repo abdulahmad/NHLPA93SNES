@@ -1,8 +1,8 @@
 SuperDiv:							;password bits /= d0, with the remainder in d0
-	phx								; remainder = passbits, divisor = d0 << 128
+	phx								; remainder = pwddatabuffer, divisor = d0 << 128
 	ldx.w #$000E
 .init:
-	lda.w passbits,x
+	lda.w pwddatabuffer,x
 	sta.b mulres,x
 	stz.b mula,x
 	dex
@@ -21,14 +21,14 @@ SuperDiv:							;password bits /= d0, with the remainder in d0
 	ror.b mula+4
 	ror.b mula+2
 	ror.b mula
-	asl.w passbits					; shift the dividend left
-	rol.w passbits+2
-	rol.w passbits+4
-	rol.w passbits+6
-	rol.w passbits+8
-	rol.w passbits+10
-	rol.w passbits+12
-	rol.w passbits+14
+	asl.w pwddatabuffer				; shift the dividend left
+	rol.w pwddatabuffer+2
+	rol.w pwddatabuffer+4
+	rol.w pwddatabuffer+6
+	rol.w pwddatabuffer+8
+	rol.w pwddatabuffer+10
+	rol.w pwddatabuffer+12
+	rol.w pwddatabuffer+14
 	lda.b mulres					; remainder >= divisor: subtract, quotient bit 1
 	cmp.b mula
 	lda.b mulres+2
@@ -72,7 +72,7 @@ SuperDiv:							;password bits /= d0, with the remainder in d0
 	lda.b mulres+14
 	sbc.b mula+14
 	sta.b mulres+14
-	inc.w passbits
+	inc.w pwddatabuffer
 .next:
 	dex
 	beq .done

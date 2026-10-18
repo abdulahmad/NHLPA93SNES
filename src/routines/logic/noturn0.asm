@@ -69,7 +69,7 @@ noturn0:							;doplayeracc when the wanted direction needs no turn
 .ns:
 	lda.w pf2aip,x
 	beq .set
-	jml.l revplayeracc
+	jml.l noturn
 .set:
 	jsl.l SetSPA
-	jml.l revplayeracc
+	jml.l noturn

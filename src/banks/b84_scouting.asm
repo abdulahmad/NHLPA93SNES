@@ -6,7 +6,7 @@ endif
 incsrc "../data/gfx/SpriteSet9.asm"
 incsrc "../data/text/ScoutingReportText.asm"
 incsrc "../data/gfx/FaceOffMap.asm"
-incsrc "../routines/middle/PutDigits2.asm"
+incsrc "../routines/middle/ConvertByteToDigits.asm"
 incsrc "../routines/hockey/UpdateRosterPlayers.asm"
 incsrc "../routines/hockey/UpdateRosterPlayer.asm"
 incsrc "../routines/hockey/SlideOutRosterPlayer.asm"

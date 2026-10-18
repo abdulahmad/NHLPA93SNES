@@ -1,4 +1,4 @@
-PlayerShortName:					;mesarea = the number, first initial and last name of roster player d0 of
+FormatPlayerNumInitial:				;mesarea = the number, first initial and last name of roster player d0 of
 									;team a2
 	stx.b xsave
 	ldx.w #$0000
@@ -52,7 +52,7 @@ PlayerShortName:					;mesarea = the number, first initial and last name of roste
 	lda.b [a0]
 	and.w #$00FF
 	sta.b d0
-	jsl.l PutDigits2				; number
+	jsl.l ConvertByteToDigits		; number
 	lda.w #' '
 	sta.b [a1]
 	inc.b a1

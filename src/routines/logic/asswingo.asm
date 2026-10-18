@@ -135,7 +135,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	lda.b [a0],y
 	dey
 	dey
-	jsl.l randomd0s
+	jsl.l randomas
 	adc.b [a0],y
 	sta.w temp3,x
 	iny
@@ -147,7 +147,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	lda.b [a0],y
 	dey
 	dey
-	jsl.l randomd0s
+	jsl.l randomas
 	adc.b [a0],y
 	sta.w temp4,x
 .nodec:

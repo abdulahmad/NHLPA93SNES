@@ -62,7 +62,7 @@ Pmenu:								;Draw the pause menu items with the current one highlighted
 	beq .item3
 	jmp.w .rtl
 .item3:
-	jsl.l GetPadTeam
+	jsl.l seta2
 	ldy.b a2
 	lda.w tmgoalie,y
 	bmi .none

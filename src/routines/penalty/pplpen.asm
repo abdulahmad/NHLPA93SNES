@@ -41,7 +41,7 @@ pplpen:								;Print one penalty box line: player number and time left
 	sta.b a1
 	lda.w #mesarea>>16
 	sta.b a1+2
-	jsl.l PutDigits2
+	jsl.l ConvertByteToDigits
 	lda.w #mesarea
 	sta.b a1
 	lda.w #mesarea>>16

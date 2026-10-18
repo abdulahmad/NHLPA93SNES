@@ -86,7 +86,7 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	lda.w tmPwrPlays,y
 	sta.b d0
 	jsl.l GetRosterEntry			; mesarea = number and the first name, centered in 11 columns
-	jsl.l ScoutNamePos
+	jsl.l setoptions_printpos2
 	lda.w printx
 	pha
 	lda.w #mesarea+2
