@@ -1,7 +1,7 @@
 ; NHLPA 93 SNES RAM map (WRAM $7E0000-$7FFFFF, low 8K mirrored at $0000-$1FFF in banks $00-$3F/$80-$BF).
 ; Equates only, no ROM bytes. Prefer the 68000 RAM names for the same role. Define each name once.
-; The team record, assignment and animation / sprite frame equates are in teamdata93snes.asm, tables93snes.asm
-; and frames93snes.asm.
+; Like the 93G module files, data/teamdata93s.asm holds the team record offsets, data/frames93s.asm the animation
+; and sprite frame equates and tables93snes.asm the assignment names.
 ;
 ; Format: Name = $xxxx (asar equate). DP names are < $100 and are written with .b; others with .w / .l.
 ; The constants section at the end holds values (bit masks, animation offsets, sound numbers), not addresses.

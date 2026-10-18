@@ -1,3 +1,12 @@
+; Team record offsets, as in 93G teamdata93.asm
+Playerdata	=	0
+Palettedata	=	2
+Teamname	=	4
+LineSets	=	6
+ScoutReport	=	8
+GoalieOdds	=	10
+NumofTeams	=	26					; clubs 0-23, AllStarsEast 24, AllStarsWest 25
+
 ; ---- TeamList ----
 TeamList:							;long pointer to each team record (TeamList index = team number)
 	dd Boston						; team 0
