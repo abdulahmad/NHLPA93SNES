@@ -5,38 +5,38 @@ checkfornewpen:						;Look for a new penalty call. Stops play at once when the p
 	beq .go
 	jmp.w .rtl
 .go:
-	lda.w #PenBuf
+	lda.w #PenBuf					; penalty buffer
 	sta.b a0
 .next:
-	lda.b (a0)
+	lda.b (a0)						; next buffered penalty
 	inc.b a0
 	inc.b a0
-	tay
+	tay								; zero: end of the buffer
 	bne .notcalled
 	jmp.w .rtl
 .notcalled:
 	lda.w gmode						; already called: mark it
-	bit.w #gmpen
+	bit.w #gmpen					; penalty already stopped play?
 	bne .iscalled
-	dec.b a0
+	dec.b a0						; type byte
 	dec.b a0
 	lda.b (a0)
 	inc.b a0
 	inc.b a0
-	and.w #$00FF
+	and.w #$00FF					; penalty type
 	sta.b d0
 	tay
 	lda.w #Penaltylist				; a1 = Penaltylist entry; minutes?
 	sta.b a1
 	lda.w #Penaltylist>>16
 	sta.b a1+2
-	lda.b [a1],y
+	lda.b [a1],y					; offset of the entry
 	clc
 	adc.b a1
 	sta.b a1
-	lda.b [a1]
+	lda.b [a1]						; minutes
 	and.w #$00FF
-	beq .callit
+	beq .callit						; none: call it now
 	lda.w puckc						; no carrier, or the guilty team has the puck... else delayed call
 	bmi .dc
 	sec
@@ -55,20 +55,20 @@ checkfornewpen:						;Look for a new penalty call. Stops play at once when the p
 	eor.b d0
 	bmi .dc
 .callit:
-	jsl.l Stop4Pen
+	jsl.l Stop4Pen					; stop play
 .iscalled:							;mark it called (bit 7 of the player byte)
-	dec.b a0
+	dec.b a0						; player byte
 	lda.b (a0)
 	tay
-	ora.w #$0080
+	ora.w #$0080					; set the called bit
 	sta.b (a0)
 	inc.b a0
 	tya
-	bit.w #$0080
+	bit.w #$0080					; already called before?
 	bne .next
 	dec.b a0
 	dec.b a0
-	lda.b (a0)
+	lda.b (a0)						; penalty type
 	inc.b a0
 	inc.b a0
 	and.w #$00FF
@@ -78,21 +78,21 @@ checkfornewpen:						;Look for a new penalty call. Stops play at once when the p
 	sta.b a1
 	lda.w #Penaltylist>>16
 	sta.b a1+2
-	lda.b [a1],y
+	lda.b [a1],y					; offset of the entry
 	clc
 	adc.b a1
 	sta.b a1
 	ldy.w #$0001
-	lda.b [a1],y
+	lda.b [a1],y					; delay byte
 	and.w #$00FF
+	asl a							; times 32
 	asl a
 	asl a
 	asl a
 	asl a
-	asl a
-	sta.b d1
+	sta.b d1						; d1 = delay * 32
 	sec
-	sbc.w Pencntdwn
+	sbc.w Pencntdwn					; compare with the countdown
 	beq .nx
 	bmi .neg
 	bvc .longer
@@ -101,8 +101,8 @@ checkfornewpen:						;Look for a new penalty call. Stops play at once when the p
 .neg:
 	bvc .nx
 .longer:							;Pencntdwn = delay*32 if longer
-	lda.b d1
-	sta.w Pencntdwn
+	lda.b d1						; longer: take it
+	sta.w Pencntdwn					; countdown
 	jmp.w .next
 .rtl:
 	rtl
@@ -114,5 +114,5 @@ checkfornewpen:						;Look for a new penalty call. Stops play at once when the p
 .dc2:
 	lda.w #PenDelay
 	sta.b d0
-	jsl.l SetPA
+	jsl.l SetPA						; PenDelay announcement
 	jmp.w .next

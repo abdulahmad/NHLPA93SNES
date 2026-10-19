@@ -3,19 +3,19 @@ InitSortObjects:					;Clear the sorted objects and set up the arrows, the rink s
 		;   then sort them
 	ldx.w #$0000					; SortCords (all fields of the 16 objects)
 .clr:
-	stz.w Xpos,x
+	stz.w Xpos,x					; clear one word at a time
 	inx
 	inx
 	cpx.w #$0840
 	bne .clr
 	ldx.w #$0000
 	ldy.w #$0000
-	lda.w #$0003
-	sta.b d0
+	lda.w #$0003					; 4 sorted objects (count - 1 in d0)
+	sta.b d0						; loop counter
 .sso:
-	lda.w #$FFFF
+	lda.w #$FFFF					; z = -1: not yet sorted
 	sta.w ssoz,y
-	lda.l SsoInitTable,x
+	lda.l SsoInitTable,x			; x, y, frame, attribute come from the init table
 	sta.w ssox,y
 	lda.l SsoInitTable+2,x
 	sta.w ssoy,y
@@ -25,7 +25,7 @@ InitSortObjects:					;Clear the sorted objects and set up the arrows, the rink s
 	sta.w ssoattr,y
 	txa
 	clc
-	adc.w #$0008
+	adc.w #$0008					; next 8 byte entry
 	tax
 	iny
 	iny
@@ -33,10 +33,10 @@ InitSortObjects:					;Clear the sorted objects and set up the arrows, the rink s
 	bpl .sso
 	ldx.w #$0000
 	ldy.w #$0000
-	lda.w #$0004
+	lda.w #$0004					; 5 far-field objects
 	sta.b d0
 .ffo:
-	lda.w #$FFFF
+	lda.w #$FFFF					; xofs = -1: unset
 	sta.w ffoxofs,y
 	lda.l FfoInitTable,x
 	sta.w ffox,y
@@ -48,7 +48,7 @@ InitSortObjects:					;Clear the sorted objects and set up the arrows, the rink s
 	sta.w ffoframe,y
 	lda.l FfoInitTable+8,x
 	sta.w ffoattr,y
-	txa
+	txa								; next 10 byte entry
 	clc
 	adc.w #$000A
 	tax
@@ -56,20 +56,20 @@ InitSortObjects:					;Clear the sorted objects and set up the arrows, the rink s
 	iny
 	dec.b d0
 	bpl .ffo
-	stz.b d6
-	stz.b a1
-	stz.b a2
-	stz.b a3
+	stz.b d6						; object number
+	stz.b a1						; OOlist index
+	stz.b a2						; byte offset into SortObjInitTable
+	stz.b a3						; byte offset into the sort tables
 	stz.b a4
-.obj:
+.obj:								; loop over the 16 sort objects
 	ldx.b a2
 	ldy.b a3
 	lda.b d6
-	sta.w SCnum,y
+	sta.w SCnum,y					; SCnum = object number
 	lda.w #$FFFF
-	sta.w oldframe,y
+	sta.w oldframe,y				; oldframe and pnum = -1
 	sta.w pnum,y
-	lda.l SortObjInitTable,x
+	lda.l SortObjInitTable,x		; position, frame, attribute and radii from the init table
 	sta.w Xpos,y
 	lda.l SortObjInitTable+2,x
 	sta.w Ypos,y
@@ -89,12 +89,12 @@ InitSortObjects:					;Clear the sorted objects and set up the arrows, the rink s
 	asl a
 	tay
 	lda.l SortObjInitTable+14,x
-	sta.w asslist,y
+	sta.w asslist,y					; assist list entry
 	ldy.b a3
 	lda.l SortObjInitTable+16,x
-	sta.w pflags,y
+	sta.w pflags,y					; object flags
 	lda.w #$0000
-	sta.w pfnc,y
+	sta.w pfnc,y					; default function 0
 	cpy.w #$001E					; object $1E (puck shadow): pfnc
 	bne .goal
 	lda.w #$0001
@@ -110,30 +110,30 @@ InitSortObjects:					;Clear the sorted objects and set up the arrows, the rink s
 	cpx.w #$00D8
 	bcs .next
 	lda.w #$0034
-	sta.w pfteam,y
+	sta.w pfteam,y					; pfteam = $34
 .next:
-	inc.b a3
+	inc.b a3						; next sort table slot
 	inc.b a3
 	sep #$20						; 8-bit A
 	lda.b d6
-	asl a
+	asl a							; build the OOlist entry
 	ldy.b a1
 	sta.w OOlist,y
-	inc.b a1
+	inc.b a1						; OOlist index
 	rep #$30						; 16-bit registers
 	lda.b d6
 	ldy.b a4
-	sta.w OOlistpos,y
+	sta.w OOlistpos,y				; OOlistpos[object] = object
 	inc.b a4
 	inc.b a4
 	inc.b d6
 	lda.b a2
 	clc
-	adc.w #$0012
+	adc.w #$0012					; next init table entry
 	sta.b a2
 	lda.b d6
-	cmp.w #$0010
+	cmp.w #$0010					; all 16 objects done?
 	beq .sort
 	jmp.w .obj
 .sort:
-	jml.l SprSort
+	jml.l SprSort					; sort and return

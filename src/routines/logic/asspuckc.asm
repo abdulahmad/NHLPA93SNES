@@ -2,7 +2,7 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 									;and passes, and skates to a good spot
 	txa								; not the carrier: assexit
 	lsr a
-	cmp.w puckc
+	cmp.w puckc						; the puck carrier?
 	beq .nl
 	jmp.w assexit
 .nl:
@@ -27,50 +27,50 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	stz.w temp2,x
 	lda.w #$0008
 	sta.w temp2b,x
-	lda.w seed
+	lda.w seed						; random 0-3
 	and.w #$0003
 	sta.w temp3,x
 .nna:
 	lda.w temp1,x					; every aioff frames: checkob, chk4lc, chk4shot, chk4pass
 	sec
-	sbc.b d7
+	sbc.b d7						; minus the frame count
 	sta.w temp1,x
 	bpl .nodec
-	adc.w aioff,x
+	adc.w aioff,x					; reload from aioff
 	bpl .set
 	lda.w #$0000
 .set:
 	sta.w temp1,x
-	jsl.l checkob
-	jsl.l chk4lc
-	jsl.l chk4shot
-	jsl.l chk4pass
+	jsl.l checkob					; check the other team
+	jsl.l chk4lc					; line change
+	jsl.l chk4shot					; shot
+	jsl.l chk4pass					; pass
 .nodec:								;d0 = 6 + temp3 (random spot), or position when offsides
-	lda.w #$0006
+	lda.w #$0006					; spot index 6
 	clc
 	adc.w temp3,x
 	sta.b d0
-	lda.w #PuckcSpots
+	lda.w #PuckcSpots				; spot table
 	sta.b a0
 	lda.w #PuckcSpots>>16
 	sta.b a0+2
 	lda.w sflags					; sf2offsig: spot by position
 	bit.w #sf2offsig
 	beq .nd1
-	lda.w position,x
+	lda.w position,x				; position index
 	sta.b d0
 .nd1:
 	lda.b d0						; d0/d1 = spot x/y, negated for pfgoal clear
 	asl a
 	asl a
 	tay
-	lda.b [a0],y
+	lda.b [a0],y					; spot x
 	sta.b d0
 	iny
 	iny
-	lda.b [a0],y
+	lda.b [a0],y					; spot y
 	sta.b d1
-	lda.w pfgoal,x
+	lda.w pfgoal,x					; which end
 	bne .nd0
 	lda.b d0
 	eor.w #$FFFF					; negate
@@ -90,22 +90,22 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	rtl
 .chkdir:							;skateto callback. d0 = direction; turn away from an opponent within 20 of
 									;where the puck will be (threat = count)
-	lda.b d0
+	lda.b d0						; direction from skateto
 	and.w #$00FF
 	bit.w #$0080
 	beq .cd
 	ora.w #$FF00
 .cd:
 	sta.b d0						; d2/d3 = puck + velocity
-	lda.w Xvel+1,x
+	lda.w Xvel+1,x					; x velocity high byte
 	and.w #$00FF
 	bit.w #$0080
 	beq .x2
 	ora.w #$FF00
 .x2:
 	clc
-	adc.w puckx
-	sta.b d2
+	adc.w puckx						; plus the puck x
+	sta.b d2						; d2 = future puck x
 	lda.w Yvel+1,x
 	and.w #$00FF
 	bit.w #$0080
@@ -113,10 +113,10 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	ora.w #$FF00
 .y2:
 	clc
-	adc.w pucky
-	sta.b d3
-	stz.w threat
-	lda.w #$0005
+	adc.w pucky						; plus the puck y
+	sta.b d3						; d3 = future puck y
+	stz.w threat					; no threat yet
+	lda.w #$0005					; 6 opponents
 	sta.b d4
 	stz.b a0						; the 6 opponents
 	cpx.w #$000C
@@ -124,7 +124,7 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	lda.w #$000C
 	sta.b a0
 .cd0:
-	ldy.b a0
+	ldy.b a0						; opponent
 	lda.w Xvel+1,y
 	and.w #$00FF
 	bit.w #$0080
@@ -132,15 +132,15 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	ora.w #$FF00
 .cx:
 	clc
-	adc.w Xpos,y
+	adc.w Xpos,y					; plus his x
 	sec
-	sbc.b d2
+	sbc.b d2						; minus the future puck x
 	bit.w #$8000
 	beq .ax
 	eor.w #$FFFF					; negate
 	inc a
 .ax:
-	cmp.w #$0015
+	cmp.w #$0015					; within 20?
 	bcs .next
 	lda.w Yvel+1,y
 	and.w #$00FF
@@ -149,18 +149,18 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	ora.w #$FF00
 .cy:
 	clc
-	adc.w Ypos,y
+	adc.w Ypos,y					; plus his y
 	sec
-	sbc.b d3
+	sbc.b d3						; minus the future puck y
 	bit.w #$8000
 	beq .ay
 	eor.w #$FFFF					; negate
 	inc a
 .ay:
-	cmp.w #$0015
+	cmp.w #$0015					; within 20?
 	bcs .next
 	inc.w threat					; threat +1; facing straight at it: turn one step either way
-	lda.w Xpos,x
+	lda.w Xpos,x					; vector from him to X
 	sec
 	sbc.w Xpos,y
 	sta.b d0
@@ -169,20 +169,20 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	sbc.w Ypos,y
 	sta.b d1
 	jsl.l vtoa						; vector to direction
-	lda.w facedir,x
+	lda.w facedir,x					; X's facing
 	eor.w #$0004
-	cmp.b d0
+	cmp.b d0						; facing straight at him?
 	bne .next
-	lda.w seed+2
-	and.w #$0001
+	lda.w seed+2					; random
+	and.w #$0001					; one step either way
 	clc
 	adc.b d0
-	and.w #$0007
+	and.w #$0007					; new direction
 	sta.b d0
 .next:
+	inc.b a0						; next opponent
 	inc.b a0
-	inc.b a0
-	dec.b d4
+	dec.b d4						; opponents left
 	bmi .rtl2
 	jmp.w .cd0
 .rtl2:

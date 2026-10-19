@@ -3,20 +3,20 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	ldy.b a2
 	lda.w tmteam,y					; team changed?
 	sta.b d0
-	cmp.w tmshots,y
+	cmp.w tmshots,y					; compare with the shown team
 	beq .cur
-	sta.w tmshots,y
-	jsl.l PickStartingGoalie
+	sta.w tmshots,y					; remember the new team
+	jsl.l PickStartingGoalie		; pick the goalie
 	ldy.b a2
 	lda.w #$0000
-	sta.w tmPwrGoals,y
-	jsl.l SlideOutRosterPlayer
+	sta.w tmPwrGoals,y				; restart the roster order
+	jsl.l SlideOutRosterPlayer		; slide the old player out
 .cur:
 	ldy.b a2
 	lda.w tmsort,y					; X = a3 = first object of the team
 	sta.b a3
 	tax
-	lda.w tmflags,y
+	lda.w tmflags,y					; team flags
 	bit.w #tmfmid
 	beq .in
 	inc.w OldZpos,x					; skating out: x += 3
@@ -25,14 +25,14 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	inc.w OldXpos,x
 	inc.w OldXpos,x
 	inc.w OldXpos,x
-	lda.w OldXpos,x
+	lda.w OldXpos,x					; x of the player
 	sec
-	sbc.w #40
+	sbc.w #40						; off screen at 40?
 	beq .rtl
 	bmi .neg
 	bvs .rtl
 .next1:
-	jmp.w SetupNextPlayer
+	jmp.w SetupNextPlayer			; set up the next player
 .neg:
 	bvs .next1
 .rtl:
@@ -40,10 +40,10 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 .in:								;skating in from the left
 	lda.w OldXpos,x					; skating in: x += 1 while negative
 	bpl .anim
-	inc.w OldZpos,x
+	inc.w OldZpos,x					; skate in
 	inc.w OldXpos,x
 .anim:
-	jsl.l updateanim
+	jsl.l updateanim				; update the animation
 	lda.w pf2aip,x					; pf2aip: wait for the step delay
 	beq .step
 	jmp.w SlideOutRosterPlayer_rtl
@@ -53,76 +53,76 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	asl a
 	sta.b d0
 	tay
-	lda.w #RosterAnimScripts>>16
+	lda.w #RosterAnimScripts>>16	; roster scripts bank
 	sta.b a0+2
 	lda.w #RosterAnimScripts
 	sta.b a0
 	clc
-	adc.b [a0],y
+	adc.b [a0],y					; script offset
 	ldy.b a2
-	adc.w tmATOP,y
+	adc.w tmATOP,y					; plus the step
 	sta.b a0
 	lda.w tmATOP,y
-	adc.w #$0004
+	adc.w #$0004					; step += 4
 	sta.w tmATOP,y
-	lda.b [a0]
+	lda.b [a0]						; animation id
 	sta.b d1
-	bne .set
+	bne .set						; zero: end of the script
 	jmp.w SlideOutRosterPlayer
 .set:
 	jsl.l SetSPA					; SetSPA d1, 9 frames per step, facedir
-	lda.w #$0009
+	lda.w #$0009					; 9 frames per step
 	sta.w pf2aip,x
-	ldy.w #$0002
+	ldy.w #$0002					; facing from the script
 	lda.b [a0],y
 	sta.w facedir,x
-	bmi .flip
-	jmp.w SlideOutRosterPlayer_rtl
+	bmi .flip						; negative: first step of a new player
+	jmp.w SlideOutRosterPlayer_rtl	; else done
 .flip:								;negative facedir: first step of a new player, print the name
 	eor.w #$FFFF					; negate
 	inc a
 	sta.w facedir,x
 	ldy.b a2
-	lda.w tmPwrPlays,y
+	lda.w tmPwrPlays,y				; roster slot
 	sta.b d0
 	jsl.l GetRosterEntry			; mesarea = number and the first name, centered in 11 columns
-	jsl.l setoptions_printpos2
+	jsl.l setoptions_printpos2		; print position for the name
 	lda.w printx
-	pha
+	pha								; keep the print x
 	lda.w #mesarea+2
-	sta.b a1
+	sta.b a1						; name buffer
 	lda.w #$0000
 	sta.b a1+2
-	lda.b [a0]
+	lda.b [a0]						; player data offset
 	tay
-	lda.b [a0],y
+	lda.b [a0],y					; number byte
 	and.w #$00FF
 	sta.b d0
+	lsr a							; tens digit
 	lsr a
 	lsr a
 	lsr a
-	lsr a
-	beq .lo
+	beq .lo							; none: skip
 	clc
-	adc.w #$0030
+	adc.w #$0030					; to ASCII
 	sta.b [a1]
 	inc.b a1
 .lo:
-	lda.b d0
+	lda.b d0						; ones digit
 	and.w #$000F
 	clc
-	adc.w #$0030
+	adc.w #$0030					; to ASCII
 	sta.b [a1]
 	inc.b a1
-	lda.w #$0020
+	lda.w #$0020					; space
 	sta.b [a1]
 	inc.b a1
 	ldy.w #$0001
 .first:
-	iny
+	iny								; copy the first name
 	lda.b [a0],y
 	and.w #$00FF
-	cmp.w #$0020
+	cmp.w #$0020					; until the space
 	beq .pr1
 	sta.b [a1]
 	inc.b a1
@@ -131,14 +131,14 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	lda.b a1
 	sec
 	sbc.w #mesarea
-	sta.w mesarea
+	sta.w mesarea					; store the length
 	dec a
 	dec a
 	eor.w #$FFFF					; negate
 	inc a
 	clc
 	adc.w #$000B
-	lsr a
+	lsr a							; center in 11 columns
 	clc
 	adc.w printx
 	sta.w printx
@@ -146,11 +146,11 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	sta.b a1
 	jsl.l print						; print it
 	pla
-	sta.w printx
-	inc.w printy
+	sta.w printx					; restore the print x
+	inc.w printy					; next row
 	lda.b [a0]						; then the last name on the next line
 	sta.b tmp0
-	ldy.w #$0001
+	ldy.w #$0001					; skip the first name
 .space:
 	iny
 	lda.b [a0],y
@@ -163,7 +163,7 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	sta.b a1+2
 .last:
 	iny
-	cpy.b tmp0
+	cpy.b tmp0						; until the end of the entry
 	beq .pr2
 	lda.b [a0],y
 	sta.b [a1]
@@ -180,7 +180,7 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	inc a
 	clc
 	adc.w #$000B
-	lsr a
+	lsr a							; center in 11 columns
 	clc
 	adc.w printx
 	sta.w printx

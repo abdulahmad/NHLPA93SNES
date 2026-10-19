@@ -1,20 +1,20 @@
 updatereplay:						;Save this frame into the replay buffer
-	lda.w gmode
+	lda.w gmode						; game mode
 	bit.w #gmhl						; gmhl: no recording
 	beq .rec
 	jmp.w .rtl
 .rec:
-	lda.w sflags
+	lda.w sflags					; state flags
 	bit.w #sf2drec					; sf2drec: keep overwriting the same frame
 	bne .frame
 	lda.w ReplayBufferPtr			; next record (113 bytes)
-	clc
+	clc								; step the pointer by one record
 	adc.w #$0071
 	sta.w ReplayBufferPtr
 	bcc .wrap
 	inc.w ReplayBufferPtr+2
 .wrap:
-	cmp.w #ReplayBufferEnd&$FFFF
+	cmp.w #ReplayBufferEnd&$FFFF	; end of the buffer reached?
 	bne .frame
 	lda.w ReplayBufferPtr+2
 	cmp.w #ReplayBufferEnd>>16
@@ -26,23 +26,23 @@ updatereplay:						;Save this frame into the replay buffer
 	lda.w #ReplayBufferStart>>16
 	sta.w ReplayBufferPtr+2
 .frame:
-	lda.w ReplayBufferPtr
+	lda.w ReplayBufferPtr			; a0 = current record
 	sta.b a0
 	lda.w ReplayBufferPtr+2
 	sta.b a0+2
-	lda.w #$000F
+	lda.w #$000F					; 16 sort objects
 	sta.b d2
 	ldx.w #$0000
-	ldy.w #$0001
+	ldy.w #$0001					; y = 1: second byte of a word
 .top:								;16 objects: x (12 bits) and y (12 bits), frame and flip bits
-	lda.w #$0000
+	lda.w #$0000					; clear the packed word
 	sta.b [a0]
 	sta.b [a0],y
-	lda.w Xpos,x
+	lda.w Xpos,x					; x position, low 12 bits
 	and.w #$0FFF
 	sta.b [a0]
 	inc.b a0
-	lda.w Ypos,x
+	lda.w Ypos,x					; y position shifted into the upper bits
 	asl a
 	asl a
 	asl a
@@ -51,10 +51,10 @@ updatereplay:						;Save this frame into the replay buffer
 	sta.b [a0]
 	inc.b a0
 	inc.b a0
-	lda.w frame,x
+	lda.w frame,x					; frame, low 14 bits
 	and.w #$3FFF
 	sta.b [a0]
-	lda.w attribute,x
+	lda.w attribute,x				; attribute flip bits
 	and.w #$1800
 	asl a
 	asl a
@@ -63,27 +63,27 @@ updatereplay:						;Save this frame into the replay buffer
 	sta.b [a0]
 	inc.b a0
 	inc.b a0
-	inx
+	inx								; next object
 	inx
 	dec.b d2
 	bpl .top
-	lda.w #$0005
+	lda.w #$0005					; 6 skaters
 	sta.b d2
 	ldx.w #$0000
 .pl:								;6 pairs: rostnum, positions
-	lda.w rostnum,x
+	lda.w rostnum,x					; roster numbers of the pair
 	sta.b [a0]
 	inc.b a0
 	lda.w rostnum+2,x
 	sta.b [a0]
 	inc.b a0
-	lda.w position,x
+	lda.w position,x				; position of the first, low nibble
 	bpl .n0
 	lda.w #$FFFF
 .n0:
 	and.w #$000F
 	sta.b [a0]
-	lda.w position+2,x
+	lda.w position+2,x				; position of the second, high nibble
 	bpl .n1
 	lda.w #$FFFF
 .n1:
@@ -94,7 +94,7 @@ updatereplay:						;Save this frame into the replay buffer
 	ora.b [a0]
 	sta.b [a0]
 	inc.b a0
-	inx
+	inx								; next pair
 	inx
 	inx
 	inx
@@ -102,38 +102,38 @@ updatereplay:						;Save this frame into the replay buffer
 	bpl .pl
 	lda.w Zpos+puckobj				;puck and shadow height, lastsfx, d7, PadControlBits, crowdframe,
 									;glovecords, PBnum, Hpos, Vpos
+	sta.b [a0]						; puck height
+	inc.b a0
+	lda.w Zpos+$1E					; puck shadow height
 	sta.b [a0]
 	inc.b a0
-	lda.w Zpos+$1E
+	lda.w lastsfx					; last sound effect
 	sta.b [a0]
 	inc.b a0
-	lda.w lastsfx
+	stz.w lastsfx					; clear it after recording
+	lda.b d7						; d7 counter
 	sta.b [a0]
 	inc.b a0
-	stz.w lastsfx
-	lda.b d7
-	sta.b [a0]
-	inc.b a0
-	lda.w PadControlBits
-	sta.b [a0]
-	inc.b a0
-	inc.b a0
-	lda.b crowdframe
+	lda.w PadControlBits			; pad control bits
 	sta.b [a0]
 	inc.b a0
 	inc.b a0
-	lda.w glovecords
+	lda.b crowdframe				; crowd animation frame
 	sta.b [a0]
 	inc.b a0
 	inc.b a0
-	lda.w PBnum
-	sta.b [a0]
-	inc.b a0
-	lda.w Hpos
+	lda.w glovecords				; glove coordinates
 	sta.b [a0]
 	inc.b a0
 	inc.b a0
-	lda.w Vpos
+	lda.w PBnum						; player button number
+	sta.b [a0]
+	inc.b a0
+	lda.w Hpos						; horizontal scroll
+	sta.b [a0]
+	inc.b a0
+	inc.b a0
+	lda.w Vpos						; vertical scroll
 	sta.b [a0]
 .rtl:
 	rtl

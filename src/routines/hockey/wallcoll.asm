@@ -1,9 +1,9 @@
 wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a hard hit
 									;makes a sound
 	lda.b d0						; Wallcos/Wallsin
-	sta.w Wallcos,x
+	sta.w Wallcos,x					; Wallcos = cos
 	lda.b d1
-	sta.w Wallsin,x
+	sta.w Wallsin,x					; Wallsin = sin
 	stx.b xsave						; keep X
 	ldx.w #$0000
 .save:								; save d2 and the words after it (4 words)
@@ -19,29 +19,29 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	lda.b d0
 	pha
 	sta.b mulb
-	lda.w Yvel,x
+	lda.w Yvel,x					; Yvel * cos
 	sta.b mula
 	jsl.l muls32					; signed 32-bit multiply
 	sta.b d0
 	lda.b mulres+2
 	sta.b d0+2
-	lda.w Xvel,x
+	lda.w Xvel,x					; Xvel * sin
 	sta.b mula
 	lda.b d1
 	sta.b mulb
 	jsl.l muls32					; signed 32-bit multiply
-	lda.b d0
+	lda.b d0						; Yvel*cos - Xvel*sin
 	sec
 	sbc.b mulres
 	sta.b d0
 	lda.b d0+2
 	sbc.b mulres+2
 	sta.b d0+2
-	lda.b d0+1
+	lda.b d0+1						; high word
 	eor.w #$FFFF					; negate
 	inc a
-	sta.b d2
-	lda.w Xvel,x
+	sta.b d2						; d2 = v1n, speed into the wall
+	lda.w Xvel,x					; Xvel * cos
 	sta.b mula
 	lda.b $01,s
 	sta.b mulb
@@ -49,19 +49,19 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	sta.b d0
 	lda.b mulres+2
 	sta.b d0+2
-	lda.w Yvel,x
+	lda.w Yvel,x					; Yvel * sin
 	sta.b mula
 	lda.b d1
 	sta.b mulb
 	jsl.l muls32					; signed 32-bit multiply
-	adc.b d0
+	adc.b d0						; Xvel*cos + Yvel*sin
 	sta.b d0
 	lda.b d0+2
 	adc.b mulres+2
 	sta.b d0+2
-	lda.b d0+1
-	sta.b d3
-	cpx.w #$001C
+	lda.b d0+1						; high word
+	sta.b d3						; d3 = v1t, speed along the wall
+	cpx.w #$001C					; the puck?
 	beq .puck
 	jmp.w .player
 .puck:
@@ -77,7 +77,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	beq .pn1
 	ora.w #$C000
 .pn1:
-	sta.b d2
+	sta.b d2						; keep it
 	sec
 	sbc.w #$FC00					; hard hit (v1n <= -$400): pop up, flip, sound by speed
 	beq .hard
@@ -91,14 +91,14 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	jsl.l randoma					; random number 0 to A-1
 	eor.w #$FFFF					; negate
 	inc a
-	sta.w puckvz
+	sta.w puckvz					; pop the puck up
 	sta.b d0
-	jsl.l puckflip
-	lda.w #SFXpuckwall1
+	jsl.l puckflip					; flip the puck
+	lda.w #SFXpuckwall1				; wall sound
 	pha
 	lda.b d2
 	sec
-	sbc.w #$EE00
+	sbc.w #$EE00					; faster than -$1200?
 	bmi .neg1
 	bvc .s2
 	bra .snd
@@ -106,11 +106,11 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bvc .snd
 .s2:
 	pla
-	lda.w #SFXpuckwall1+1
+	lda.w #SFXpuckwall1+1			; louder variant 2
 	pha
 	lda.b d2
 	sec
-	sbc.w #$F800
+	sbc.w #$F800					; faster than -$800?
 	bmi .neg2
 	bvc .s3
 	bra .snd
@@ -118,12 +118,12 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bvc .snd
 .s3:
 	pla
-	lda.w #SFXpuckwall1+2
+	lda.w #SFXpuckwall1+2			; variant 3
 	pha
 .snd:
-	jsl.l sfx
+	jsl.l sfx						; play the sound
 .pok:								;reduce the tangent speed of the puck
-	lda.b d3
+	lda.b d3						; tangent speed
 	lsr a
 	lsr a
 	lsr a
@@ -134,21 +134,21 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	beq .t1
 	ora.w #$FC00
 .t1:
-	sta.b d0
+	sta.b d0						; d0 = tangent speed / 64
 	pha
 	asl a
 	pla
 	ror a
-	sta.b d0+2
+	sta.b d0+2						; and half of that
 	lda.b d3
 	sec
 	sbc.b d0
 	sec
 	sbc.b d0+2
-	sta.b d3
-	bra .noadd
+	sta.b d3						; reduce the tangent speed
+	bra .noadd						; rotate back
 .player:
-	lda.b d2
+	lda.b d2						; player: normal speed
 	sec
 	sbc.w #$03E8					; player: v1n > 1000: no collision
 	beq .p1
@@ -169,7 +169,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 .neg4:
 	bvs .nosfx
 .imp:
-	lda.w impact,x
+	lda.w impact,x					; impact
 	sec
 	sbc.w #$000A
 	bmi .neg5
@@ -178,21 +178,21 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 .neg5:
 	bvc .nosfx
 .psnd:
-	lda.w seed+1
+	lda.w seed+1					; random sound variant
 	and.w #$0001
 	clc
-	adc.w #SFXplayerwall
+	adc.w #SFXplayerwall			; player wall sound
 	pha
 	jsl.l sfx
 .nosfx:
-	lda.b d2
+	lda.b d2						; normal speed / 4
 	lsr a
 	lsr a
 	bit.w #$2000
 	beq .n1
 	ora.w #$C000
 .n1:
-	sta.b d2
+	sta.b d2						; keep it
 	sec
 	sbc.w #$FC7C					; v1n >= -900: -1000
 	bmi .neg6
@@ -201,56 +201,56 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 .neg6:
 	bvc .noadd
 .min:
-	lda.w #$FC18
+	lda.w #$FC18					; limit -1000
 	sta.b d2
 .noadd:								;rotate back: new Xvel/Yvel
-	lda.b $01,s
+	lda.b $01,s						; cos
 	sta.b mula
-	lda.b d3
+	lda.b d3						; v1t
 	sta.b mulb
 	jsl.l muls32					; signed 32-bit multiply
-	sta.b tmp0
+	sta.b tmp0						; tmp0 = cos * v1t
 	lda.b mulres+2
 	sta.b tmp1
 	lda.b $03,s
-	sta.b mula
+	sta.b mula						; sin
 	lda.b d2
-	sta.b mulb
+	sta.b mulb						; v1n
 	jsl.l muls32					; signed 32-bit multiply
 	lda.b tmp0
 	sec
-	sbc.b mulres
+	sbc.b mulres					; minus sin * v1n
 	sta.b tmp0
 	lda.b tmp1
 	sbc.b mulres+2
 	sta.b tmp1
 	lda.b tmp0+1
-	sta.w Xvel,x
-	lda.b $03,s
+	sta.w Xvel,x					; new x velocity
+	lda.b $03,s						; sin
 	sta.b mula
-	lda.b d3
+	lda.b d3						; v1t
 	sta.b mulb
 	jsl.l muls32					; signed 32-bit multiply
-	sta.b d3
+	sta.b d3						; sin * v1t
 	lda.b mulres+2
 	sta.b d3+2
 	lda.b $01,s
-	sta.b mula
+	sta.b mula						; cos
 	lda.b d2
-	sta.b mulb
+	sta.b mulb						; v1n
 	jsl.l muls32					; signed 32-bit multiply
-	adc.b d3
+	adc.b d3						; plus cos * v1n
 	sta.b d3
 	lda.b d3+2
 	adc.b mulres+2
 	sta.b d3+2
 	lda.b d3+1
-	sta.w Yvel,x
+	sta.w Yvel,x					; new y velocity
 	lda.w Zvel,x					; moving up: Zvel = 0
 	bmi .nocoll
-	stz.w Zvel,x
+	stz.w Zvel,x					; Zvel = 0
 .nocoll:
-	pla
+	pla								; drop the stacked cos and sin
 	pla
 	stx.b xsave						; keep X
 	ldx.w #$0006

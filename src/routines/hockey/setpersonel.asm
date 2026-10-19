@@ -19,10 +19,10 @@ setpersonel:						;Put team a2's wanted players on the ice, keeping the ones alr
 	cpx.w #$0014
 	bne .savea
 	ldx.b xsave						; restore X
-	ldy.b a2
-	ldx.w tmsort,y
+	ldy.b a2						; team of the list
+	ldx.w tmsort,y					; first object of the team
 	stx.b a3
-	lda.w #$0005
+	lda.w #$0005					; 6 players
 	sta.b d4
 .l0:
 	lda.w #$FFFF					; newpos = newpnum = -1 for the 6 objects
@@ -30,10 +30,10 @@ setpersonel:						;Put team a2's wanted players on the ice, keeping the ones alr
 	sta.w newpnum,x
 	inx
 	inx
-	stx.b a3
+	stx.b a3						; next object
 	dec.b d4
 	bpl .l0
-	jsl.l SetPlList
+	jsl.l SetPlList					; build the wanted player list
 	lda.w #$0005
 	sta.b d4
 	lda.w #PlList					; a4 = PlList
@@ -41,60 +41,60 @@ setpersonel:						;Put team a2's wanted players on the ice, keeping the ones alr
 	lda.w #PlList>>16
 	sta.b a4+2
 .1:									;wanted players already on the ice keep their object
-	ldy.b d4
-	lda.b [a4],y
+	ldy.b d4						; slot
+	lda.b [a4],y					; wanted player number
 	and.w #$00FF
 	sta.b d5
-	beq .next
-	dec.b d5
-	lda.w #$0005
+	beq .next						; none: next
+	dec.b d5						; zero based
+	lda.w #$0005					; search 6 objects
 	sta.b d3
 	ldy.b a2
-	ldx.w tmsort,y
+	ldx.w tmsort,y					; first object of the team
 	dex
 	dex
 .2:
 	inx
 	inx
 	stx.b a3
-	lda.w pnum,x
+	lda.w pnum,x					; player number of the object
 	and.w #$00FF
 	sta.b tmp0
 	lda.b d5
 	and.w #$00FF
-	cmp.b tmp0
-	beq .found
+	cmp.b tmp0						; same player?
+	beq .found						; already on the ice: keep the object
 	dec.b d3
 	bpl .2
 	bra .next
 .found:
-	lda.b d4
+	lda.b d4						; slot
 	clc
-	adc.w #$0006
+	adc.w #$0006					; position entry offset
 	tay
-	lda.b [a4],y
+	lda.b [a4],y					; wanted position
 	and.w #$00FF
 	bit.w #$0080
 	beq .np
 	ora.w #$FF00
 .np:
-	sta.w newpos,x
+	sta.w newpos,x					; new position
 	lda.b d5
 	and.w #$00FF
 	bit.w #$0080
 	beq .npn
 	ora.w #$FF00
 .npn:
-	sta.w newpnum,x
+	sta.w newpnum,x					; new player number
 	ldy.b d4
 	sep #$20						; 8-bit A
 	lda.b #$00
-	sta.b [a4],y
+	sta.b [a4],y					; clear the list entry
 	rep #$20						; 16-bit A
 .next:
-	dec.b d4
+	dec.b d4						; next slot
 	bpl .1
-	lda.w #$0005
+	lda.w #$0005					; second pass
 	sta.b d4
 	lda.w #PlList
 	sta.b a4
@@ -102,61 +102,61 @@ setpersonel:						;Put team a2's wanted players on the ice, keeping the ones alr
 	sta.b a4+2
 .3:									;the rest go to objects with no requested player
 	ldy.b d4
-	lda.b [a4],y
+	lda.b [a4],y					; wanted player number
 	and.w #$00FF
 	sta.b d5
-	beq .next2
-	dec.b d5
+	beq .next2						; none: next
+	dec.b d5						; zero based
 	lda.w #$0005
-	sta.b d3
+	sta.b d3						; search 6 objects
 	ldy.b a2
-	ldx.w tmsort,y
+	ldx.w tmsort,y					; first object of the team
 	dex
 	dex
 .4:
 	inx
 	inx
 	stx.b a3
-	lda.w newpnum,x
+	lda.w newpnum,x					; free object?
 	bit.w #$0080
-	bne .free
+	bne .free						; free: remember it
 	dec.b d3
 	bpl .4
 	bra .chkpos
 .free:
-	stx.b a0
+	stx.b a0						; keep it
 .chkpos:
-	lda.w position,x
+	lda.w position,x				; position
 	bpl .put
 	dec.b d3
 	bpl .4
 .put:
-	lda.b d4
+	lda.b d4						; slot
 	clc
-	adc.w #$0006
+	adc.w #$0006					; position entry offset
 	tay
-	lda.b [a4],y
+	lda.b [a4],y					; wanted position
 	and.w #$00FF
 	bit.w #$0080
 	beq .np2
 	ora.w #$FF00
 .np2:
-	ldy.b a0
-	sta.w newpos,y
+	ldy.b a0						; free object
+	sta.w newpos,y					; new position
 	lda.b d5
 	and.w #$00FF
 	bit.w #$0080
 	beq .npn2
 	ora.w #$FF00
 .npn2:
-	sta.w newpnum,y
+	sta.w newpnum,y					; new player number
 	ldy.b d4
 	sep #$20						; 8-bit A
 	lda.b #$00
-	sta.b [a4],y
+	sta.b [a4],y					; clear the list entry
 	rep #$20						; 16-bit A
 .next2:
-	dec.b d4
+	dec.b d4						; next slot
 	bpl .3
 	stx.b xsave						; keep X
 	ldx.w #$0012
@@ -176,5 +176,5 @@ setpersonel:						;Put team a2's wanted players on the ice, keeping the ones alr
 	dex
 	bpl .restore
 	ldx.b xsave						; restore X
-	ldx.b a3
+	ldx.b a3						; last object of the team
 	rtl
