@@ -1,18 +1,18 @@
 StartSong3:							;Start the third period music unless it is already playing
 	lda.w cursong
-	cmp.w #$0003
+	cmp.w #$0003					; already playing
 	beq .rtl
-	lda.w sndbank
-	cmp.w #$0001
+	lda.w sndbank					; sound bank loaded
+	cmp.w #$0001					; bank 1 is the game bank
 	beq .cmd
-	jsl.l sndqreset
-	jsl.l SPCGameUpload
+	jsl.l sndqreset					; reset the sound queue
+	jsl.l SPCGameUpload				; upload the game sound
 .cmd:
-	lda.w #$0006
+	lda.w #$0006					; music cue number
 	jsl.l MusicCue					; driver command A (music cue)
 	lda.w #$0003
-	sta.w cursong
-	lda.w #$0474
-	sta.w cuetimer
+	sta.w cursong					; remember the song
+	lda.w #$0474					; time until the cue ends
+	sta.w cuetimer					; set the cue timer
 .rtl:
 	rtl

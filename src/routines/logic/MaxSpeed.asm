@@ -1,5 +1,5 @@
 MaxSpeed:							;Top speed (squared) for each leg speed rating
-	dd (20*266)*(20*266)
+	dd (20*266)*(20*266)			; leg rating 0
 	dd (21*266)*(21*266)
 	dd (22*266)*(22*266)
 	dd (23*266)*(23*266)
@@ -13,5 +13,5 @@ MaxSpeed:							;Top speed (squared) for each leg speed rating
 	dd (31*266)*(31*266)
 	dd (32*266)*(32*266)
 	dd (33*266)*(33*266)
-	dd (34*266)*(34*266)
+	dd (34*266)*(34*266)			; leg rating 15
 	dd (35*266)*(35*266)
