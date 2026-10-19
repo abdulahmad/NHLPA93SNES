@@ -185,7 +185,7 @@ org `$808000`.
 - `$80F36E` routines/hockey/replay/adda43.asm
 - `$80F391` routines/logic/lines/setlccords.asm
 - `$80F3E1` routines/hockey/screens/startpause.asm
-- `$80F3E8` routines/sound/ReadPads.asm
+- `$80F3E8` routines/middle/input/ReadPads.asm
 - `$80F45B` routines/logic/assignments/asspuckc.asm
 - `$80F5EA` routines/hockey/password/DecodePW.asm
 - `$80F5F2` routines/hockey/screens/Opening3.asm
@@ -194,7 +194,7 @@ org `$808000`.
 - `$80F6AD` routines/logic/assignments/assgoalie.asm
 - `$80FCC9` routines/logic/skating/ClampYPosition.asm
 - `$80FD05` routines/logic/skating/AdjustFacingDirection.asm
-- `$80FD70` routines/logic/skating/GoalieSaveList.asm
+- `$80FD70` routines/logic/assignments/GoalieSaveList.asm
 - `$80FD7C` routines/logic/puck/shotdiradj.asm
 - `$80FE89` routines/logic/skating/CalcAngleOffset.asm
 - `$80FED1` routines/penalty/energy/reenergizeteam.asm (also unusedFF)
@@ -214,7 +214,7 @@ org `$82B86C` when `pc()` is below it.
 - `$82CDA0` IceRinkTiles (data)
 - `$82F93C` routines/penalty/penalties/SetPA2.asm
 - `$82F9D1` routines/penalty/ticker/UpdateScores.asm
-- `$82FA01` routines/sram/BitstoPW.asm
+- `$82FA01` routines/hockey/password/BitstoPW.asm
 - `$82FA1A` routines/sound/sndqreset.asm
 - `$82FA31` routines/sound/SPCBootUpload.asm
 - `$82FA7A` routines/sound/SPCGameUpload.asm
@@ -267,7 +267,7 @@ org `$848000` when `pc()` is below it.
 - `$848000` SpriteSet9 (data)
 - `$84D630` ScoutingReportText (data)
 - `$84E949` FaceOffMap (data)
-- `$84EA39` routines/middle/util/ConvertByteToDigits.asm
+- `$84EA39` routines/print/ConvertByteToDigits.asm
 - `$84EA66` routines/hockey/teams/UpdateRosterPlayers.asm
 - `$84EABF` routines/hockey/teams/UpdateRosterPlayer.asm
 - `$84EC4C` routines/hockey/teams/SlideOutRosterPlayer.asm
@@ -461,7 +461,7 @@ org `$8D8000` when `pc()` is below it.
 - `$8D8549` routines/penalty/scoreboard/EASNLogo.asm
 - `$8D85A9` routines/hockey/game/PeriodOver.asm
 - `$8D8605` routines/hockey/teams/GetPlayerName.asm
-- `$8D865A` routines/video/crowd/updatesound.asm
+- `$8D865A` routines/sound/updatesound.asm
 - `$8D86A8` routines/tables/asstab.asm
 - `$8D871C` routines/middle/math/mulu16.asm
 - `$8D87B0` routines/logic/puck/puckshadow.asm
@@ -569,7 +569,7 @@ org `$8F8000` when `pc()` is below it.
 - `$8FE32B` routines/hockey/screens/DefaultMenus.asm
 - `$8FE369` routines/penalty/penalties/checkagr.asm
 - `$8FE3B0` routines/middle/util/WeightedRandomSelect.asm
-- `$8FE404` routines/middle/util/forceblack.asm
+- `$8FE404` routines/video/interrupts/forceblack.asm
 - `$8FE43C` routines/logic/controls/passmode.asm
 - `$8FE458` routines/logic/puck/dopass.asm
 - `$8FE67D` data/gfx/FrameSetTable.asm

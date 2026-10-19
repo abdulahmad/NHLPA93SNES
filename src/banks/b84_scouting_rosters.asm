@@ -15,7 +15,7 @@ FaceOffMap:							;the 12 x 10 faceoff box map (tiles from FaceOffTiles, attribu
 									;copied into textmap by puckfaceoff2
 	incbin "../../Extracted/Graphics/FaceOff.smap"
 
-incsrc "../routines/middle/util/ConvertByteToDigits.asm"
+incsrc "../routines/print/ConvertByteToDigits.asm"
 incsrc "../routines/hockey/teams/UpdateRosterPlayers.asm"
 incsrc "../routines/hockey/teams/UpdateRosterPlayer.asm"
 incsrc "../routines/hockey/teams/SlideOutRosterPlayer.asm"
