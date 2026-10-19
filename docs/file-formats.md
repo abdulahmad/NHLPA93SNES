@@ -57,14 +57,22 @@ Genesis and SNES side by side:
 ## Packed streams (`.pak`)
 
 `DecompressBytecode` (`$86FA3E`, `src/routines/decompress/DecompressBytecode.asm`) unpacks a stream to `$7F0000`. It is the same byte
-oriented LZ77 style code as the Genesis one (`src/decompress93.asm` in 93G). Control bytes:
+oriented LZ77 style code as the Genesis one (`src/decompress93.asm` in 93G, where the output goes through a 256 byte ring buffer to VRAM).
+The high nibble of an opcode byte selects the handler:
 
-- `$00-$1F`: copy the next n+1 bytes
-- `$2x`: write n+1 zero bytes
-- `$3x`: write the next byte n+3 times
-- `$40-$7F`, `$8x`, `$9x`, `$Ax`, `$Bx`: copy from earlier output, going up
-- `$C0-$DF`, `$Ex`, `$Fx`: copy from earlier output, going down
-- `$E0 $00`: end of stream
+| Opcode | Does |
+|--------|------|
+| `$00-$1F` | copy the next (opcode & `$1F`) + 1 bytes |
+| `$2x` | write (x + 1) zero bytes |
+| `$3x` | write the next byte (x + 3) times |
+| `$40-$7F` | copy (bits 0-2) + 2 bytes from (bits 3-5) + 1 bytes back |
+| `$8x` | copy x + 3 bytes from the distance in the next byte |
+| `$9x` | count = 5 bits (x and bit 7 of the next byte) + 3, distance = (bits 0-6 of the next byte) + 1 |
+| `$Ax` | count = 6 bits (x and the top 2 bits of the next byte) + 3, distance = (bits 0-5 of the next byte) + 1 |
+| `$Bx` | count = 7 bits (x and the top 3 bits of the next byte) + 3, distance = (bits 0-4 of the next byte) + 1 |
+| `$C0-$DF` | like `$40-$7F`, but the source walks down: count (bits 0-1) + 2, distance (bits 2-4) + 1 |
+| `$Ex` | like `$8x`, source walks down; `$E0 $00` (distance 0) ends the stream |
+| `$Fx` | like `$9x`, source walks down |
 
 `tools/snesgfx.py unpack` is a port of it.
 
@@ -95,7 +103,7 @@ or `.chr` the game sends to VRAM separately; the tile number is relative to wher
 | `BigFont` | 76 words for the top rows, then 76 for the bottom rows (`+$98`); `BigFontIndex` says which characters use them |
 | `SmallFont` | 128 words, one per character of the print font (`SmallFontMap`) |
 | `TeamBlocks` | 9 x 2 words per team, the team name banners (`Teamblocksmap`) |
-| `Arrows` | 23 x 12, the playoff bracket (`PlayoffBracketMap`, tiles in `PlayoffTiles.chr.pak`) |
+| `Arrows` | 276 words (12 wide, 23 high as in the Genesis `Arrows.map.jim`), the playoff bracket (`PlayoffBracketMap`, tiles in `PlayoffTiles.chr.pak`) |
 | `FaceOff` | 12 x 10, the face off box |
 | `Framer` | 3 x 3 pieces of the frame around the screens (tiles in `Framer.chr`) |
 | `EASN` | 7 x 2, the small EASN logo |
@@ -157,6 +165,14 @@ size code, and a separate hot spot table; the SNES game splits its frames over 1
 Two signed bytes per frame, x then y: the position of the stick blade (hot spot) relative to the frame origin, read by `GetHot`. The list has
 549 pairs, for the frames 1 up to the fight injury frames; the injury frames (`SPFfinjury` .. `SPFPen`) are skipped, `GetHot` shifts the frame
 number past them.
+
+## Animations (`src/data/frames93s.asm`)
+
+`SPFxxx` equates give the first frame number of each group of frames (chained: `SPFskate = SPFskatewp+40`). `SPAlist` is the list of
+animation tables, one per animation, in the order of the `SPA` numbers; a `SPA` value is the table's offset from `SPAlist` (each `SPAxxx`
+equate sits above its table, and an assert checks it). A table is eight word offsets (one per facing direction 0-7, relative to the table),
+a flags word (0 or 1: loops), then per direction a list of `frame, time` word pairs; a negative time ends the list. The 93G table has the
+same layout (`src/frames93.asm`).
 
 ## Palettes
 
