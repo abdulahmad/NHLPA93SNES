@@ -3,7 +3,8 @@
 if pc() < $848000
 	org $848000
 endif
-incsrc "../data/gfx/SpriteSet9.asm"
+SpriteSet9:							;frame set 9: frames 406-461
+	incbin "../../Extracted/Graphics/Sprites/Sprites406_461.sanim"
 
 ScoutingReportText:					;scouting report strings (read by UpdateScoutingDisplay)
 	incbin "../../Extracted/Text/ScoutingReportText.bin"
@@ -11,7 +12,7 @@ ScoutingReportTextEnd:				; end of ScoutingReportText
 
 FaceOffMap:							;the 12 x 10 faceoff box map (tiles from FaceOffTiles, attribute $20),
 									;copied into textmap by puckfaceoff2
-	incbin "../../Extracted/Graphics/FaceOff.snesmap"
+	incbin "../../Extracted/Graphics/FaceOff.smap"
 
 incsrc "../routines/middle/ConvertByteToDigits.asm"
 incsrc "../routines/hockey/UpdateRosterPlayers.asm"

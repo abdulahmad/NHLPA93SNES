@@ -1,7 +1,7 @@
 ; Boot SPC upload (sndbank 2): the stream the main CPU sends the SPC700 at start-up. Four blocks, each headed
 ; by its length and APU address: the sound program (SPCDriver), the instrument table, the DSP sample
 ; directory and the BRR samples, then an end block that starts the program at $0400. The program is cut
-; into code and command streams in Extracted/Sound (see src/data/README.md).
+; into code and command streams in Extracted/Sound (see docs/file-formats.md).
 
 BootSoundUpload:					;boot SPC upload: the sound driver and its sample set (sndbank 2)
 	dw SPCDRIVERSIZE, SPCDRIVER		; block 1: the driver code

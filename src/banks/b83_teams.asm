@@ -13,15 +13,15 @@ SmallFontTilesEnd:					; end of SmallFontTiles
 incsrc "../routines/hockey/getname.asm"
 
 IceRinkMap:							;the vertical rink tile map: 48 x 85 words (8160 bytes,
-									;IceRink.snesmap). Rows go to vram as Vpos scrolls (ShowRinkRows)
-	incbin "../../Extracted/Graphics/IceRink.snesmap"
+									;IceRink.smap). Rows go to vram as Vpos scrolls (ShowRinkRows)
+	incbin "../../Extracted/Graphics/IceRink.smap"
 
 HorRinkMap:							;horizontal rink tile map, 48 x 28 words
-	incbin "../../Extracted/Graphics/IceRinkHor.snesmap"
+	incbin "../../Extracted/Graphics/IceRinkHor.smap"
 
-RinkPalette:						;the game palette: 128 colors (Rink.snespal), copied to both
+RinkPalette:						;the game palette: 128 colors (Rink.spal), copied to both
 									;halves of palbuffer by setupice
-	incbin "../../Extracted/Graphics/Pals/Rink.snespal"
+	incbin "../../Extracted/Graphics/Pals/Rink.spal"
 
 incsrc "../routines/hockey/Pausemode.asm"
 incsrc "../routines/hockey/PauseMenu.asm"
@@ -30,8 +30,8 @@ incsrc "../routines/hockey/PauseResume.asm"
 incsrc "../routines/hockey/PauseLeave.asm"
 incsrc "../routines/hockey/Opening2.asm"
 
-RefsMap:							;the ref window frames, 7 frames of 8 x 7 words (Refs.snesmap);
+RefsMap:							;the ref window frames, 7 frames of 8 x 7 words (Refs.smap);
 									;PushRef copies frame d0 (+$70 each)
-	incbin "../../Extracted/Graphics/Refs.snesmap"
+	incbin "../../Extracted/Graphics/Refs.smap"
 
 incsrc "../routines/logic/assgoalietopuck.asm"

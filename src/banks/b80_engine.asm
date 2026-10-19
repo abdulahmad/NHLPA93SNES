@@ -171,10 +171,10 @@ incsrc "../routines/penalty/UpdatePA.asm"
 incsrc "../routines/penalty/SetPA.asm"
 
 RonBarrMap:							;the Ron Barr picture of the scouting report, packed for
-									;DecompressBytecode (RonBarr.map.snesjim, 1590 bytes): unpacked an 8 x 9
+									;DecompressBytecode (RonBarr.map.sjim, 1590 bytes): unpacked an 8 x 9
 									;map, 64 colors at
 		;   +$90, tiles at +$190 (loaded by the scouting report)
-	incbin "../../Extracted/Graphics/RonBarr.map.snesjim"
+	incbin "../../Extracted/Graphics/RonBarr.map.sjim"
 
 incsrc "../routines/hockey/adda43.asm"
 incsrc "../routines/logic/setlccords.asm"

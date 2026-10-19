@@ -6,7 +6,7 @@ endif
 
 BigFontMap:							;bigfont.map: big font tiles of each character: 76 top-row words, then the
 									;76 bottom-row words (+$98); printbig uses BigFontIndex
-	incbin "../../Extracted/Graphics/BigFont.snesmap"
+	incbin "../../Extracted/Graphics/BigFont.smap"
 
 incsrc "../routines/video/unusedEnergyBar.asm"
 incsrc "../routines/tables/linelist.asm"
@@ -14,7 +14,7 @@ incsrc "../data/text/PerLabels.asm"
 
 EASNLogoMap:						;easn.map (small): the 7 x 2 EASN logo tile words for EASNLogo
 									;(unusedchars + n)
-	incbin "../../Extracted/Graphics/EASN.snesmap"
+	incbin "../../Extracted/Graphics/EASN.smap"
 
 incsrc "../data/gfx/BigFontIndex.asm"
 incsrc "../routines/video/showclock.asm"
@@ -56,7 +56,8 @@ incsrc "../routines/video/ShowRinkRows.asm"
 incsrc "../routines/middle/jdtab8F.asm"
 incsrc "../routines/penalty/InitScores.asm"
 incsrc "../routines/hockey/ResetPassWord.asm"
-incsrc "../data/gfx/SpriteSet1.asm"
+SpriteSet1:							;frame set 1 (SPFswing): frames 97-144
+	incbin "../../Extracted/Graphics/Sprites/Sprites097_144.sanim"
 incsrc "../routines/logic/fightinput.asm"
 incsrc "../routines/hockey/holdcheck.asm"
 incsrc "../routines/penalty/Fprint_list.asm"
