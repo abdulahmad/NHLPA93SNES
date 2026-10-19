@@ -638,6 +638,8 @@ printfontset	=	$1BCB			; tile base of the selected print font (control code)
 CC_Font1		=	$FF				; font 1
 CC_Font2		=	$FE				; font 2
 CC_Font1Pri		=	$BF				; font 1, priority set
+CC_Font2Pri		=	$BE				; font 2, priority set
+CC_Font1Pal2Pri	=	$9F				; font 1, palette 2, priority set
 charofs			=	$1BCD			;added to every text map tile written by the game code ($FF00 at boot, 0
 									;in the game screens)
 charofs2		=	$1BCF			;second tile offset: cleared with charofs by the screen setups (the team
