@@ -1,5 +1,5 @@
 puckfaceoff2:						;Assignment: the face off and the setup for play
-	lda.w pflags,x
+	lda.w pflags,x					; new assignment?
 	bit.w #pfna
 	bne .first
 	jmp.w .nna
@@ -37,9 +37,9 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	trb.w sflags
 	lda.w #sf3llcs
 	trb.w sflags3
-	stz.w glovecords
+	stz.w glovecords				; no icing, no lower lc box, glove spots cleared
 	stz.w iflags
-	lda.w #$FFFF
+	lda.w #$FFFF					; -1 marks the ref count, crossings, puck carrier and receiver as none
 	sta.w RefCnt
 	sta.w puckcross+2
 	sta.w puckcross+6
@@ -65,7 +65,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	stz.w Xpos+$18
 	lda.w #$010C
 	sta.w Ypos+$18
-	stz.w Xvel+$1A
+	stz.w Xvel+$1A					; goal net 2 at y -268
 	stz.w Yvel+$1A
 	stz.w Xpos+$1A
 	lda.w #$FEF4
@@ -77,7 +77,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	stz.w attribute+puckobj
 	lda.w #sfslock					; clear sfslock: free up scrolling
 	trb.w sflags
-	lda.w #$0064
+	lda.w #$0064					; 100 scroll steps
 	sta.b d4
 .cw:								;scroll to the faceoff spot
 	jsl.l checkwindow
@@ -99,7 +99,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	lda.b a3
 	pha
 	stz.b a3
-	lda.w #$000B
+	lda.w #$000B					; 12 objects
 	sta.b d2
 .l0:								;each player: assignment and faceoff position
 	ldx.b a3
@@ -108,14 +108,14 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	stz.w Ypos,x
 	stz.w frame,x
 	lda.w position,x
-	sta.b d1
+	sta.b d1						; d1 = position
 	bpl .pos
 	jmp.w .next
 .pos:								; position test: goalies are placed separately
 	beq .goalie1
-	lda.w #afaceoff
+	lda.w #afaceoff					; forwards and defense get the faceoff assignment
 	sta.b d0
-	lda.b d1
+	lda.b d1						; centers take the faceoff
 	cmp.w #$0004
 	bne .l1
 	stz.b a2						; center: team touches = him only
@@ -146,7 +146,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	beq .t0
 	lda.w tmap+2
 	sta.b d4
-.t0:								; negate Y for the other end
+.t0:								; row = (6 - tmap) * 8 in the .apl table
 	lda.b d4
 	eor.w #$FFFF					; negate
 	inc a
@@ -156,16 +156,16 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	asl a
 	asl a
 	sta.b d4
-	lda.w #.apl>>16
+	lda.w #.apl>>16					; .apl row address
 	sta.b a1+2
 	lda.w #.apl
 	clc
 	adc.b d4
 	sta.b a1
 	ldy.b d1
-	lda.b [a1],y
+	lda.b [a1],y					; table entry for the position
 	and.w #$00FF
-	asl a
+	asl a							; entry to a .ptab offset
 	asl a
 	sta.b d4
 	lda.w #.ptab
@@ -173,13 +173,13 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	lda.w #.ptab>>16
 	sta.b a1+2
 	ldy.b d4
-	lda.b [a1],y
+	lda.b [a1],y					; X and Y offsets of the position
 	sta.b d0
 	iny
 	iny
 	lda.b [a1],y
 	sta.b d1
-	lda.w pfgoal,x
+	lda.w pfgoal,x					; mirror for the top goal
 	bne .f0
 	lda.b d0
 	eor.w #$FFFF					; negate
@@ -202,7 +202,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 .neg:								; signed compare: overflow flag corrects the sign
 	bvs .nodef
 .def:								; defender: mirror by the faceoff spot
-	lda.w fox
+	lda.w fox						; defender on the other side of the center line
 	eor.b d0
 	bpl .notmid
 	lda.w foy
@@ -219,7 +219,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	adc.b d1
 	sta.b d1
 .notmid:							; not on the center line: scaled spot offset
-	lda.w fox
+	lda.w fox						; fox / 4 as the X offset
 	lsr a
 	lsr a
 	bit.w #$2000
@@ -232,7 +232,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	sbc.b d3
 	sta.b d0
 .nodef:								; forwards: add the faceoff spot X
-	lda.b d0
+	lda.b d0						; add the faceoff spot
 	clc
 	adc.w fox
 	sta.b d0
@@ -240,22 +240,22 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	clc
 	adc.w foy
 	sta.b d1
-.goalie2:							; goalie: place at the goal
-	lda.b d0
+.goalie2:							; set the position and face the puck
+	lda.b d0						; store X
 	sta.w Xpos,x
 	sec
 	sbc.w puckx
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
-	lda.b d1
+	lda.b d1						; store Y
 	sta.w Ypos,x
 	sec
 	sbc.w pucky
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
-	stz.w Xvel,x
+	stz.w Xvel,x					; stand still
 	stz.w Yvel,x
 	jsl.l vtoa						; face the puck
 	lda.b d0
@@ -281,12 +281,12 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	pla
 	sta.b a3+2
 	ldx.b a3
-	jsl.l ResetAndSelectPlayers
+	jsl.l ResetAndSelectPlayers		; reset the controllers and select players
 	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pri,$00,$00)
 	lda.w #$0036					; 8+46
 	sta.b d0
-	lda.w fox
+	lda.w fox						; puck on the right: drop spot on the right
 	bpl .fok
 	lda.w #$00BE					; (18*8)+46
 	sta.b d0
@@ -303,7 +303,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	sta.w fodropy
 	lda.w #$0003
 	sta.w printy
-	lda.w printy
+	lda.w printy					; box row offset
 	asl a
 	asl a
 	asl a
@@ -336,12 +336,12 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	adc.w printx
 	asl a
 	tax
-	ldy.w #$0000
-	lda.w #$000A
+	ldy.w #$0000					; start of the map
+	lda.w #$000A					; 10 rows
 	sta.b tmp1+1
 	clc
 .row:								;copy the 12x10 FaceOffMap into the text map
-	lda.w #$000C
+	lda.w #$000C					; 12 columns
 	sta.b tmp2+1
 .col:								; copy the faceoff map columns with the tile set added
 	lda.b [tmp0],y
@@ -355,7 +355,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	inx
 	dec.b tmp2+1
 	bne .col
-	txa
+	txa								; next text row
 	clc
 	adc.w #$0028
 	tax
@@ -373,14 +373,14 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	lda.w #$0003
 	sta.b d1
 	jsl.l Framer					; d0/d1 size
-	lda.w tmline
+	lda.w tmline					; line numbers of the two teams
 	sta.b d0
 	lda.w tmline+2
 	sta.b d1
 	lda.w gmode						; gmdir
 	bit.w #gmdir
 	bne .nx
-	lda.w tmline
+	lda.w tmline					; swap the teams if the home team is below
 	sta.b d1
 	lda.w tmline+2
 	sta.b d0
@@ -397,7 +397,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	inc.w printx
 	inc.w printx
 	inc.w printx
-	lda.b d1
+	lda.b d1						; then the visitor line name
 	sta.b d0
 	lda.w #linelist
 	sta.b a1
@@ -405,11 +405,11 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	sta.b a1+2
 	jsl.l Fprint_list
 .nol:								;time for the puck drop: 180-299 frames
-	lda.w #$0078
+	lda.w #$0078					; random puck drop time
 	jsl.l randoma					; random number 0 to A-1
 	adc.w #$00B4
 	sta.b d0
-	ldx.b a3
+	ldx.b a3						; temp1 = frames to the drop
 	sta.w temp1,x
 	lda.w #$0001					; fofdata2: home pull frame 1, away 4, ref 7
 	sta.w fofdata2
