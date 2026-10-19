@@ -12,7 +12,7 @@ suba4:								;Move the replay one frame back
 	sta.b a4						; else the end
 	lda.w #ReplayBufferEnd>>16
 	sta.b a4+2
-.a4ne:
+.a4ne:								; not the same low word
 	lda.b a4						; a4
 	sec
 	sbc.w #replaysize				; one frame back
@@ -24,12 +24,12 @@ suba4:								;Move the replay one frame back
 	cmp.w ReplayBufferPtr			; compare with the pointer
 	beq .a4eq						; equal
 	jml.l RestoreReplayFrame		; restore the frame
-.a4eq:
+.a4eq:								; same bank as the record pointer
 	lda.b a4+2						; high word
 	cmp.w ReplayBufferPtr+2
 	beq .a4eq2						; equal
 	jml.l RestoreReplayFrame		; restore the frame
-.a4eq2:
+.a4eq2:								; undo the move: stay at the record pointer
 	lda.b a4						; undo the move
 	clc
 	adc.w #replaysize
@@ -37,7 +37,7 @@ suba4:								;Move the replay one frame back
 	lda.b a4+2
 	adc.w #$0000					; high word
 	sta.b a4+2
-.end:
+.end:								; show the frame, no extra frames
 	jsl.l RestoreReplayFrame		; restore the frame
 	stz.b d7						; no extra frames
 	rtl

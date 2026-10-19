@@ -6,7 +6,7 @@ puckstick:							;The puck hits player a2's stick
 	bit.w #gmhl						; gmhl: goalie ignores the puck
 	beq .0
 	jmp.w .rtl
-.0:
+.0:									; a2 touched the puck: clear pfdoff
 	lda.w pflags,y					; player flags
 	and.w #~pfdoff&$FFFF			; clear pfdoff
 	sta.w pflags,y
@@ -26,11 +26,11 @@ puckstick:							;The puck hits player a2's stick
 	lda.w pfteam,y					; team of a2
 	beq .t2
 	lda.w #$0001
-.t2:
+.t2:								; different teams? the same team does nothing
 	eor.b tmp0						; different teams?
 	bne .range
 	jmp.w .rtl						; same team: nothing
-.range:
+.range:								; distance squared: 6*6 is the smaller range for stealing
 	lda.b d0						; distance squared
 	cmp.w #$0025					; 6*6: smaller range for stealing
 	lda.b d0+2
@@ -44,7 +44,7 @@ puckstick:							;The puck hits player a2's stick
 	lda.w position,y				; his position
 	bne .rnd
 	jmp.w .rtl
-.rnd:
+.rnd:								; makepde of the carrier's stickhand
 	lda.w stickhand,y				; stickhand of the carrier
 	sta.b d0
 	jsl.l makepde					; makepde
@@ -69,7 +69,7 @@ puckstick:							;The puck hits player a2's stick
 	jsl.l randoma					; random number 0 to A-1
 	cmp.w #$0003					; steal fails
 	bcs .rtl
-.steal:
+.steal:								; steal: nopuck for both players from the scaled stickhand
 	ldy.b a0						; carrier
 	lda.w stickhand,y				; his stickhand
 	sta.b d0
@@ -111,7 +111,7 @@ puckstick:							;The puck hits player a2's stick
 	jmp.w deflect					; deflect
 .rtl:								; return
 	rtl
-.nosteal:
+.nosteal:							; loose puck: position of a2
 	ldy.b a2						; a2
 	lda.w position,y				; position
 	bne .spd

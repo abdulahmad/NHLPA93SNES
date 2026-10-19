@@ -33,13 +33,13 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	eor.b d0
 	bpl .nox
 	stz.b d0						; pushing into the wall in x: cancel x
-.nox:
+.nox:								; y axis wall check
 	lda.w Wallcos,x					; wall normal x
 	beq .noy
 	eor.b d1
 	bmi .noy
 	stz.b d1						; pushing into the wall in y: cancel y
-.noy:
+.noy:								; acceleration factor from weight and leg strength
 	lda.w weight,x					; weight / 16
 	lsr a
 	lsr a
@@ -161,7 +161,7 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	sta.w Xvel,x					; store the new velocity
 	lda.b d1
 	sta.w Yvel,x
-.sube:
+.sube:								; energy only drains when line changes are on
 	lda.w OptLine					; energy only drains when line changes are on
 	bne .rtl
 	lda.w seed						; random value
@@ -180,7 +180,7 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	jmp.w setpde
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .set
-.add:
+.add:								; above $C00: also add the endurance
 	lda.w endurance,x				; above $C00: also add the endurance byte
 	sta.b d2
 	clc

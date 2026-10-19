@@ -7,7 +7,7 @@ StartSong4:							;Start music cue 4 unless it is already playing. Unused
 	beq .cmd
 	jsl.l sndqreset					; reset the sound queue
 	jsl.l SPCGameUpload				; upload the game sound
-.cmd:
+.cmd:								; music cue 7
 	lda.w #$0007					; music cue number
 	jsl.l MusicCue					; driver command A (music cue)
 	lda.w #$0004

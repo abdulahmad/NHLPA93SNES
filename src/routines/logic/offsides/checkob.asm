@@ -97,7 +97,7 @@ checkob:							;Show the little warning referee when a teammate is over the blue
 	lda.w #sf2offsig
 	tsb.w sflags
 	bne .ex
-.dref:
+.dref:								; only when the ref queue is idle (negative)
 	lda.w RefCnt					; ref idle? then bring him up
 	bpl .ex
 	jsl.l PushRef

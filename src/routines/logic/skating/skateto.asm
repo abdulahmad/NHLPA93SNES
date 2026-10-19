@@ -11,7 +11,7 @@ skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; 
 	beq .ax
 	eor.w #$FFFF					; negate
 	inc a
-.ax:
+.ax:								; within $88 of the center?
 	cmp.w #$0088					; within $88 of the center?
 	bcs .tick
 	lda.w Xpos,x					; X's x
@@ -21,7 +21,7 @@ skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; 
 	beq .dx
 	eor.w #$FFFF					; negate
 	inc a
-.dx:
+.dx:								; dx
 	sta.b tmp0						; dx
 	lda.w Ypos,x					; X's y
 	sec
@@ -30,7 +30,7 @@ skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; 
 	beq .dy
 	eor.w #$FFFF					; negate
 	inc a
-.dy:
+.dy:								; less than 55 away?
 	clc								; dx + dy
 	adc.b tmp0
 	cmp.w #55						; less than 55 away?
@@ -66,7 +66,7 @@ skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; 
 	sta.w temp2,x
 	bmi .go							; not due: reuse the last direction
 	jmp.w .ex
-.go:
+.go:								; only execute every 12/60 sec
 	adc.w #11						; only execute every 12/60 sec
 	sta.w temp2,x
 	jsl.l avdgoal					; may change the target to go around the goal
@@ -77,12 +77,12 @@ skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; 
 	beq .near
 	eor.w #$FFFF					; negate
 	inc a
-.near:
+.near:								; near the center: limit 18
 	cmp.w #$0088					; within $88 of the center?
 	bcs .av
 	lda.w #18						; near the center: limit 18
 	sta.b d0+2
-.av:
+.av:								; goal correction applied? then skip the lead
 	lda.b deltax					; goal correction applied?
 	ora.b deltay					; if so skip the lead
 	beq .lead
@@ -102,7 +102,7 @@ skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; 
 	bit.w #$0080
 	beq .lx
 	ora.w #$FF00
-.lx:
+.lx:								; negate x
 	eor.w #$FFFF					; negate
 	inc a
 	clc
@@ -116,7 +116,7 @@ skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; 
 	bit.w #$0080
 	beq .ly
 	ora.w #$FF00
-.ly:
+.ly:								; negate y
 	eor.w #$FFFF					; negate
 	inc a
 	clc
@@ -129,7 +129,7 @@ skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; 
 	beq .cx
 	eor.w #$FFFF					; negate
 	inc a
-.cx:
+.cx:								; within the distance in x?
 	cmp.b d0+2						; within the distance in x?
 	bcs .vt
 	lda.b d1						; remaining dy
@@ -137,13 +137,13 @@ skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; 
 	beq .cy
 	eor.w #$FFFF					; negate
 	inc a
-.cy:
+.cy:								; within the distance in y?
 	cmp.b d0+2						; within the distance in y?
 	bcs .vt
 	lda.w #9						; close enough: no direction
 	sta.b d0
 	bra .nvt						; skip the vector
-.vt:
+.vt:								; d0 = direction 0-7 to the target
 	jsl.l vtoa						; vector to direction
 .nvt:								;jsr (a0) through jmlvector
 	lda.b a0						; caller's avoidance routine
@@ -168,7 +168,7 @@ skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; 
 	sta.b d0
 	lda.w yc1
 	sta.b d1
-.nf:
+.nf:								; d0/d1 = point to face
 	lda.b d0						; point to face
 	sec
 	sbc.w Xpos,x					; minus my x
@@ -190,7 +190,7 @@ skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; 
 	adc.w facedir,x					; new facing
 	and.w #$0007
 	sta.w facedir,x
-.ex:
+.ex:								; d0 = stored direction
 	lda.w temp2b,x					; stored direction
 	sta.b d0
 	jml.l doplayeracc				; accelerate that way

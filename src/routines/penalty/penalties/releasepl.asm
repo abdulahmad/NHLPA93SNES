@@ -24,7 +24,7 @@ releasepl:							;Player d0's penalty time is up: let him out of the box and put
 	ldx.w tmsort,y					; first player of the team
 	dex
 	dex
-.find:
+.find:								; next player: look for a free slot
 	inx								; next player
 	inx
 	lda.w position,x				; position
@@ -47,7 +47,7 @@ releasepl:							;Player d0's penalty time is up: let him out of the box and put
 	lda.w tmgoalie,y				; goalie out
 	bpl .tmgoaliepos
 	inc.b a0						; else the second list
-.tmgoaliepos:
+.tmgoaliepos:						; position for him
 	ldy.b d1						; number of players
 	lda.b [a0],y					; position for him
 	and.w #$00FF

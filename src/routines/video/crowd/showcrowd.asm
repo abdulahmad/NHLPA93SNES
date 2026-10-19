@@ -10,7 +10,7 @@ showcrowd:							;Draw the crowd and penalty box sprites
 	sta.b d4
 	lda.w #$0100					; scroll y for the horizontal rink
 	sta.b d5
-.v:
+.v:									; d4/d5 = x/y of the view
 	stz.b d0						; first penalty box
 	lda.w PBnum						; count of the first box
 	sta.b d2
@@ -42,15 +42,15 @@ showcrowd:							;Draw the crowd and penalty box sprites
 	bcc .pb0
 	lda.w #$0003
 	sta.b d2
-.pb0:
+.pb0:								; next sprite
 	bra .nextpb						; next sprite
-.pbt:
+.pbt:								; frame = first frame + counter
 	lda.b d3						; frame
 	clc
 	adc.b d2
 	sta.b d0						; frame number
 	jsl.l .sc						; draw it
-.nextpb:
+.nextpb:							; frames d3+count .. d3+0
 	dec.b d2						; sprites left
 	bpl .pbt
 .rtl:								; return
@@ -67,7 +67,7 @@ showcrowd:							;Draw the crowd and penalty box sprites
 	clc								; horizontal frames
 	adc.w #31
 	sta.b d0
-.chk:
+.chk:								; local frame 1 is SPFcrowd
 	lda.b d0						; frame
 	clc
 	adc.w #SPFcrowd-1				; local frame 1 is SPFcrowd

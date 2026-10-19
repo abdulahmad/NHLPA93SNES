@@ -17,7 +17,7 @@ updatepwrplay:						;Show the power play box: the time left and the team on the 
 	lda.w #sf2pwrtm					; team flag
 	tsb.w sflags
 	bra .upp
-.t0:
+.t0:								; a2 = shorthanded team 2, a3 = power play team 1
 	ldx.b a2						; home on the power play: swap
 	ldy.b a3
 	stx.b a3
@@ -28,13 +28,13 @@ updatepwrplay:						;Show the power play box: the time left and the team on the 
 	jsl.l updatepwrplay_clr			; clear the box when the team changes
 	lda.w #sf2pwrtm
 	trb.w sflags					; clear the team flag
-.upp:
+.upp:								; power play display on
 	lda.w #sf2pwrplay				; sf2pwrplay; new: tmPwrPlays + 1
 	tsb.w sflags
 	bne .uppt
 	ldx.b a3						; first time: count the power play
 	inc.w tmPwrPlays,x				; new power play for the team
-.uppt:
+.uppt:								; power play marker string at x 1, y $19, then the team
 	jsl.l printz					; print the string that follows
 	dw $0012						; printz inline string: length (counts itself), then control bytes / text
 	db $BF,$01,$19,"   ",$16,$17,$18,$19,$BF,$01,$1A,"   "

@@ -20,7 +20,7 @@ SetLCmode:							;Open the line change box for player X's team, when line change
 	txa								; player number
 	lsr a
 	sta.w lcplayer
-.show:
+.show:								; show the box
 	jmp.w SetLCmode2				; show the box
 .rtl:								; return
 	rtl

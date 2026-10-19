@@ -23,7 +23,7 @@ coinsearch:							;Count team a2's players kept off the ice by penalties (not co
 	cmp.w #$0004					; four minimum
 	beq .nap						; keep it
 	dec.b d1						; one less
-.nap:
+.nap:								; next player
 	dec.b d0						; previous player
 	dec.b d0
 	bpl .top

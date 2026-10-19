@@ -9,7 +9,7 @@ CopyWords:							;Copy d0 bytes from [d2] to [d1], a word at a time
 	cpx.w #$000C
 	bne .save
 	ldx.b xsave						; restore X
-.copy:
+.copy:								; copy a word from [d2] to [d1]
 	lda.b [d2]						; word from [d2]
 	sta.b [d1]						; to [d1]
 	inc.b d1						; next word

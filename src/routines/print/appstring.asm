@@ -3,7 +3,7 @@ appstring:							;Append string [a1] to string [a3]
 	sta.b tmp0
 	lda.b [a3]						; length of the target string
 	sta.b tmp1
-.loop:
+.loop:								; copy loop
 	lda.b tmp0						; source index
 	cmp.b [a1]						; end of the source string
 	beq .done						; done
@@ -14,7 +14,7 @@ appstring:							;Append string [a1] to string [a3]
 	inc.b tmp0						; next source byte
 	inc.b tmp1						; next target position
 	bra .loop
-.done:
+.done:								; new target length
 	lda.b tmp1						; new target length
 	sta.b [a3]
 	rtl

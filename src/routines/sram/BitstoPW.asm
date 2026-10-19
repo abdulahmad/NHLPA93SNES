@@ -1,6 +1,6 @@
 BitstoPW:							;Turn the password bits into the password characters
 	ldx.w #$000F					; 16 characters
-.char:
+.char:								; PassWord[x] = passbits mod PWrange
 	lda.w #PWrange					; PassWord[x] = passbits mod PWrange
 	sta.b d0
 	jsl.l SuperDiv					; divide the bits by it

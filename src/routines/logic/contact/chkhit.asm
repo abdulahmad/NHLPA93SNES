@@ -32,7 +32,7 @@ chkhit:								;In a fight, is player X hit by player a0?
 	beq .dx
 	eor.w #$FFFF					; negate
 	inc a
-.dx:
+.dx:								; within 22 in x?
 	cmp.w #$0017					; within 22 in x
 	bcs .ex
 	lda.w Ypos,x
@@ -42,7 +42,7 @@ chkhit:								;In a fight, is player X hit by player a0?
 	beq .dy
 	eor.w #$FFFF					; negate
 	inc a
-.dy:
+.dy:								; within 8 in y?
 	cmp.w #$0009					; within 8 in y
 	bcs .ex
 	lda.w frame,x
@@ -53,7 +53,7 @@ chkhit:								;In a fight, is player X hit by player a0?
 	cmp.w #SPFfight+6+5
 	bne .2
 	jmp.w .hithigh
-.2:
+.2:									; low punch frames
 	cmp.w #SPFfight+7				; low punch frames
 	bne .3
 	jmp.w .hitlow
@@ -61,7 +61,7 @@ chkhit:								;In a fight, is player X hit by player a0?
 	cmp.w #SPFfight+7+5
 	bne .4
 	jmp.w .hitlow
-.4:
+.4:									; grab frames
 	cmp.w #SPFfight+4				; grab frames
 	beq .grab
 	cmp.w #SPFfight+4+5
@@ -123,7 +123,7 @@ chkhit:								;In a fight, is player X hit by player a0?
 	and.w #$00FF
 	bne .dr0
 	inc a
-.dr0:
+.dr0:								; store glove x then y
 	sta.w glovecords				; glovecords x byte (0 becomes 1)
 	lda.w yc1
 	lsr a

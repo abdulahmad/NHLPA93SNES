@@ -19,7 +19,7 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	clc
 	adc.w #6
 	sta.b d0
-.dp1:
+.dp1:								; from the goalie, or skaters
 	lda.w position,x				; not the goalie: only outside the slot
 	beq .bl
 	lda.w puckx
@@ -39,7 +39,7 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	cmp.w #205
 	bcc .bl
 	jmp.w .rtl
-.bl:
+.bl:								; receiver chosen (d0): validate him
 	asl.b d0						; not to himself
 	cpx.b d0
 	bne .b1
@@ -53,7 +53,7 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 .b2:								; illegal pass target: leave
 	bpl .b3
 	jmp.w .rtl
-.b3:
+.b3:								; not unavailable or locked
 	lda.w pflags,y					; not unavailable or locked
 	and.w #pf2unav
 	ora.w pfalock,y
@@ -74,7 +74,7 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
-.f0:
+.f0:								; offsides on?
 	lda.w gmode						; offsides: no pass across the blue line
 	bit.w #gmoffs
 	beq .oko
@@ -88,7 +88,7 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	eor.b tmp0
 	bpl .oko
 	jmp.w .rtl
-.oko:
+.oko:								; beyond the blue line?
 	lda.b d0						; beyond the blue line, or not more than 15 back
 	sec
 	sbc.w #blueline
@@ -111,7 +111,7 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	jmp.w .rtl
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvc .miss
-.ok:
+.ok:								; receiver accepted: get the pass direction
 	lda.w Ypos,y					; passdir, d2 = distance squared
 	sec
 	sbc.w pucky

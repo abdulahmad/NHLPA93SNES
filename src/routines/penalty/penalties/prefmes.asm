@@ -24,7 +24,7 @@ prefmes:							;Print the message for penalty d0, or clear it when negative: und
 	lda.w sfhormode					; horizontal mode
 	beq .nosfhormode
 	jmp.w .hor						; yes
-.nosfhormode:
+.nosfhormode:						; penalty message?
 	lda.b d0						; penalty number
 	bpl .d0pos						; a penalty
 	jsl.l printz					; clear the message
@@ -37,7 +37,7 @@ prefmes:							;Print the message for penalty d0, or clear it when negative: und
 	sta.b d2
 	jsl.l eraser					; erase
 	jmp.w .ex
-.d0pos:
+.d0pos:								; set the position
 	jsl.l printz					; set the position
 	%StringCp(CC_Font1Pri,$05,$0A)
 	ldy.b d0						; penalty offset
@@ -65,7 +65,7 @@ prefmes:							;Print the message for penalty d0, or clear it when negative: und
 	sta.w printx					; center the text
 	bpl .pos						; not negative
 	stz.w printx					; clamp to 0
-.pos:
+.pos:								; text length
 	lda.b [a1]						; text length
 	sta.b d0						; d0
 	tay
@@ -75,7 +75,7 @@ prefmes:							;Print the message for penalty d0, or clear it when negative: und
 	and.w #$00FF					; zero?
 	bne .nonzero
 	dec.b d0						; one less
-.nonzero:
+.nonzero:							; 3 high
 	lda.w #$0003					; 3 high
 	sta.b d1
 	jsl.l Framer					; draw the frame
@@ -84,7 +84,7 @@ prefmes:							;Print the message for penalty d0, or clear it when negative: und
 	inc.w printx					; inside the frame
 	jsl.l print						; print the text
 	bra .ex
-.hor:
+.hor:								; clear the line first
 	jsl.l ClearPenaltyMessage		; clear the old message
 	lda.b d0						; a penalty?
 	bmi .ex							; no: leave
@@ -109,7 +109,7 @@ prefmes:							;Print the message for penalty d0, or clear it when negative: und
 	sbc.b d0
 	sta.w printx					; center
 	jsl.l print						; print it
-.ex:
+.ex:								; restore and return
 	stx.b xsave						; keep X
 	ldx.w #$0002					; pull a1 back
 .resta1:							; pull a1 and the words after it back

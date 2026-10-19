@@ -35,7 +35,7 @@ ShowInjuryBox:						;The injury box: the injured player and whether he is out fo
 	beq .period
 	jsl.l printz					; print the string that follows
 	%StringCt(CC_Font1Pri,$14,$06,"the game")
-.period:
+.period:							; restore registers
 	stx.b xsave						; keep X
 	ldx.w #$0012
 .resta:								; pull a0 and the words after it back

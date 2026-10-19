@@ -15,7 +15,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	lda.w OptPlayMode				; not in playoff mode: done
 	bne .po
 	jmp.w .rtl
-.po:
+.po:								; blank the screen, BG mode 1
 	jsl.l forceblack				; blank the screen
 	sep #$20						; 8-bit A
 	lda.b #BGMODE_1					; BG mode 1
@@ -140,7 +140,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	bne .other
 	lda.w #$1C00
 	sta.w printa
-.other:
+.other:								; 36 bytes per Teamblocksmap entry
 	lda.w #36						; 36 bytes per Teamblocksmap entry
 	sta.b mulb
 	jsl.l mulu16					; 16-bit multiply
@@ -426,7 +426,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 .wait:								; wait for the next frame
 	cmp.b vbint
 	beq .wait
-.pad:
+.pad:								; read the pads
 	jsl.l ReadPads					; read the pads
 	lda.w padnew1
 	ora.w padnew1+2

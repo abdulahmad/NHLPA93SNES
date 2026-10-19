@@ -6,7 +6,7 @@ check4check:						;Look for a good chance to check an opponent
 	lda.w OptPen					; penalties on: half the chance
 	beq .nopen
 	asl.b d0						; double it
-.nopen:
+.nopen:								; 0 <= d0 < ($14 - aggress) [*2]
 	lda.b d0						; random 0 to d0
 	jsl.l randoma					; random number 0 to A-1
 	cmp.w #$0004					; under 4: check
@@ -15,7 +15,7 @@ check4check:						;Look for a good chance to check an opponent
 	jsl.l randoma					; random number 0 to A-1
 	cmp.w #$0004
 	bcs .rts						; 4 or more: no check
-.go:
+.go:								; 6 opponents
 	lda.w #$0005					; 6 opponents
 	sta.b d2
 	stz.b a0						; first opponent
@@ -39,7 +39,7 @@ check4check:						;Look for a good chance to check an opponent
 	beq .dx
 	eor.w #$FFFF					; negate
 	inc a
-.dx:
+.dx:								; within 30 in x?
 	cmp.w #$001F					; within 30?
 	bcs .next
 	lda.w Ypos,y					; y distance
@@ -50,7 +50,7 @@ check4check:						;Look for a good chance to check an opponent
 	beq .dy
 	eor.w #$FFFF					; negate
 	inc a
-.dy:
+.dy:								; within 30 in y: vector to direction
 	cmp.w #$001F					; within 30?
 	bcs .next
 	jsl.l vtoa						; vector to direction
@@ -62,7 +62,7 @@ check4check:						;Look for a good chance to check an opponent
 	sta.b d0
 	bne burst						; burst
 	jml.l Acheck					; check
-.next:
+.next:								; next opponent
 	inc.b a0						; next opponent
 	inc.b a0
 	dec.b d2						; opponents left

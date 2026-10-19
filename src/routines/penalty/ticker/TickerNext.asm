@@ -3,10 +3,10 @@ TickerNext:							;Go to the next ticker game
 	bmi .last						; none yet
 	ora.w gamenum					; and not the current game
 	bne .new
-.last:
+.last:								; find the next game
 	jsl.l GetShifter				; find the next game
 	lda.b d1
 	sta.w TickerNum					; the ticker game
 	bmi IntermissionTick_rtl		; none left: leave
-.new:
+.new:								; show it
 	jmp.w NewTicker2				; show it

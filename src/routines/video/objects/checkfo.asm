@@ -8,7 +8,7 @@ checkfo:							;Draw the face off sprites
 	lda.w #$0030					; faceoff sprites above the players
 	sta.b sprpriority
 	ldx.w #$0000					; entry 0
-.top:
+.top:								; drop position x
 	lda.w fodropx					; drop position x
 	sta.b sprx
 	lda.w fodropy					; y
@@ -24,7 +24,7 @@ checkfo:							;Draw the face off sprites
 	bne .add						; not the ref
 	lda.w #$8000					; ref flag
 	sta.b sprflag					; sprflag
-.add:
+.add:								; sprframe at sprx/spry
 	phx								; keep the index
 	jsl.l addframe					; sprframe at sprx/spry
 	plx								; restore the index

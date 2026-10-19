@@ -10,7 +10,7 @@ chkatop:							;Once a second, add to the attack zone time of the team with the 
 	bra .1
 .neg:								; signed compare: overflow flag corrects the sign
 	bvs .1
-.lo:
+.lo:								; team 1
 	inc.b d1						; team 1
 	inc.b d1
 	lda.w pucky						; puck y
@@ -28,7 +28,7 @@ chkatop:							;Once a second, add to the attack zone time of the team with the 
 	lda.b d1
 	eor.w #$0002					; swap the teams
 	sta.b d1
-.0:
+.0:									; a2 = team 1; d1 = offset of the credited team
 	ldy.b d1						; team
 	lda.w tmATOP,y					; attack zone time
 	inc a							; one more

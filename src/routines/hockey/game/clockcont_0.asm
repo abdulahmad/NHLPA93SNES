@@ -9,7 +9,7 @@ clockcont_0:						;End of a period: in the third period the winners celebrate (w
 	cmp.w #$0002					; third period or later
 	bcs .p3							; yes
 	jmp.w .notp3					; no
-.p3:
+.p3:								; assignment 7 for team 0
 	lda.w #$0007					; assignment 7
 	sta.b d0
 	ldx.w #$0000					; team 0
@@ -30,14 +30,14 @@ clockcont_0:						;End of a period: in the third period the winners celebrate (w
 	beq .nf
 	lda.w #gspobwins-gspotwins		; offset to the other wins
 	sta.b d3
-.nf:
+.nf:								; d1 = home score - away score
 	lda.w tmscore					; home score
 	cmp.w tmscore+2					; home won?
 	bpl .ns1
 	lda.b d3						; swap
 	eor.w #gspobwins-gspotwins
 	sta.b d3
-.ns1:
+.ns1:								; series offset plus the side
 	lda.b a0						; game offset
 	clc
 	adc.b d3						; plus the side
@@ -45,7 +45,7 @@ clockcont_0:						;End of a period: in the third period the winners celebrate (w
 	lda.w gspotwins,y				; series wins
 	cmp.w #$0003					; three: the cup
 	bne .winners
-.cup:
+.cup:								; assignment 8: 12 players
 	lda.w #$0008					; assignment 8
 	sta.b d0
 	lda.w #$000B					; 12 players
@@ -60,7 +60,7 @@ clockcont_0:						;End of a period: in the third period the winners celebrate (w
 	bpl .cpu
 	ldx.w #$0000					; team 0
 	stx.b a3
-.winners:
+.winners:							; celebrate: 6 players
 	lda.w #$0005					; celebrate: 6 players
 	sta.b d2
 	lda.w tmscore					; scores
@@ -69,7 +69,7 @@ clockcont_0:						;End of a period: in the third period the winners celebrate (w
 	bpl .celeb						; home won
 	ldx.w #$000C					; else team 1
 	stx.b a3
-.celeb:
+.celeb:								; position of the player: none stops
 	lda.w position,x				; position
 	beq .next						; none
 	jsl.l assinsert					; assignment
@@ -81,7 +81,7 @@ clockcont_0:						;End of a period: in the third period the winners celebrate (w
 	stx.b a3
 	dec.b d2						; count down
 	bpl .celeb
-.gameover:
+.gameover:							; clear the penalties, crowd
 	jsl.l ClearPenaltyBuffer		; clear the penalties
 	lda.b crowdlevel				; crowd
 	clc
@@ -100,17 +100,17 @@ clockcont_0:						;End of a period: in the third period the winners celebrate (w
 	sec
 	sbc.w #$0096					; minus 150
 	sta.w cheervc
-.awaywon:
+.awaywon:							; game over penalty
 	lda.w #PenEOG					; game over penalty
 	sta.b d0
 	jml.l AddPenalty2				; call it
-.notp3:
+.notp3:								; overtime?
 	lda.w gsp						; period
 	cmp.w #$0003					; overtime
 	bne .perover
 	lda.w OptPlayMode				; play mode
 	beq .gameover					; regular season: game over
-.perover:
+.perover:							; period over penalty
 	lda.w #PenEOP					; period over penalty
 	sta.b d0
 	jml.l AddPenalty2				; call it

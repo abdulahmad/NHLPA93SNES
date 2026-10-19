@@ -9,7 +9,7 @@ passtoa0:							;Pass the puck to player a0, leading him by his speed
 	bit.w #$2000
 	beq .sx
 	ora.w #$C000
-.sx:
+.sx:								; d5 = passspeed / 4
 	sta.b d5						; d5 = passspeed / 4
 	ldx.b a0						; swap a0 and a3
 	ldy.b a3
@@ -37,7 +37,7 @@ passtoa0:							;Pass the puck to player a0, leading him by his speed
 	bit.w #$2000
 	beq .sy
 	ora.w #$C000
-.sy:
+.sy:								; d3 = y / 4
 	sta.b d3						; d3 = y / 4
 	lda.b d0
 	clc
@@ -51,7 +51,7 @@ passtoa0:							;Pass the puck to player a0, leading him by his speed
 	bit.w #$2000
 	beq .sx2
 	ora.w #$C000
-.sx2:
+.sx2:								; d2 = x / 4
 	sta.b d2						; d2 = x / 4
 	lda.w Yvel,y					; receiver y velocity
 	sta.b mulb
@@ -150,7 +150,7 @@ passtoa0:							;Pass the puck to player a0, leading him by his speed
 	bne .0							; avoid dividing by zero
 	lda.w #$0001
 	sta.b d5
-.0:
+.0:									; d2 = (sqrt(disc) - j) / k = intercept time
 	lda.b d0						; d2 = (sqrt - j) / k: intercept time
 	sta.b d2
 	eor.w #$FFFF					; negate

@@ -9,7 +9,7 @@ printteamname:						;Print team d3's name, then move down two rows
 	beq .name						; yes
 	lda.w tmdata+2					; else the away team
 	sta.b a1
-.name:
+.name:								; team name offset
 	ldy.w #Teamname					; team name offset
 	lda.b [a1],y
 	clc								; name pointer

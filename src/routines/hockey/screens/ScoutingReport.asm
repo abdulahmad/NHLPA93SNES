@@ -59,7 +59,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	lda.w #$1000					; VRAM address $1000
 	sta.w VMADDL
 	ldx.w #$0000
-.easntiles:
+.easntiles:							; EASN tiles to VRAM
 	lda.l TestList+$400,x			; EASN tiles to VRAM
 	sta.w VMDATAL
 	inx
@@ -77,7 +77,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	sta.b tmp1
 	jsl.l DecompressBytecode		; unpack
 	ldx.w #$0000
-.blocktiles:
+.blocktiles:						; team block tiles to VRAM
 	lda.l TestList,x				; team block tiles to VRAM
 	sta.w VMDATAL
 	inx
@@ -90,7 +90,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	sta.b tmp1
 	jsl.l DecompressBytecode		; unpack
 	ldx.w #$0000
-.fonttiles:
+.fonttiles:							; small font tiles to VRAM
 	lda.l TestList,x				; small font tiles to VRAM
 	sta.w VMDATAL
 	inx
@@ -98,7 +98,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	cpx.w #$0C80					; $0C80 bytes
 	bne .fonttiles
 	ldx.w #$0000
-.framertiles:
+.framertiles:						; framer tiles to VRAM
 	lda.l FramerTiles,x				; framer tiles to VRAM
 	sta.w VMDATAL
 	inx
@@ -120,7 +120,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	sep #$20						; 8-bit A
 	stz.w CGADD						; palette from color 0
 	ldx.w #$0000
-.ronpal:
+.ronpal:							; Ron Barr palette to CRAM
 	lda.l TestList+$90,x			; palette bytes in the unpacked data
 	sta.w CGDATA
 	inx
@@ -128,7 +128,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	bne .ronpal
 	rep #$30						; 16-bit registers
 	ldx.w #$0000
-.rontiles:
+.rontiles:							; Ron Barr tiles to VRAM
 	lda.l TestList+$190,x			; Ron Barr tiles to VRAM
 	sta.w VMDATAL
 	inx
@@ -136,7 +136,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	cpx.w #$07A0					; $07A0 bytes
 	bne .rontiles
 	stz.b tmp1						; row counter
-.ronrow:
+.ronrow:							; Ron Barr map row
 	stz.b tmp0						; column counter
 .roncol:							; row column offset
 	lda.b tmp1
@@ -185,7 +185,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	sta.b a1
 	lda.w #ScoutLabels>>16
 	sta.b a1+2
-.pl:
+.pl:								; string length: half of it centers the name
 	lda.b [a1]						; label length
 	lsr a
 	eor.w #$FFFF					; negate
@@ -267,7 +267,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	stz.w asv
 	lda.w #$7FFF
 	sta.w screentimer				; run until Start
-.top:
+.top:								; main loop, once per frame: upload the text map
 	lda.w #textmap					; upload the text map every frame
 	sta.w DMAList
 	lda.w #textmap>>16
@@ -279,7 +279,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	sta.b DMAlistend
 	lda.w #VBlank_List				; wait for the vblank
 	sta.b vbint
-.vbwait:
+.vbwait:							; wait for the next frame
 	cmp.b vbint						; until it changes
 	beq .vbwait
 	jsl.l ReadPads					; read the pads
@@ -291,7 +291,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	beq .upd
 	lda.w #$FFFF
 	sta.w asv
-.upd:
+.upd:								; type the next word if the timer allows
 	jsl.l UpdateScoutingDisplay		; UpdateScoutingDisplay
 	dec.w screentimer				; count down the screen timer
 	bpl .top

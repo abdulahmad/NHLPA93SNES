@@ -5,7 +5,7 @@ divs:								;Signed divide: A = mulb (32-bit) / mula
 	eor.w #$FFFF					; negate it
 	inc a
 	inc.b mulsign					; one negative
-.apos:
+.apos:								; divisor to the high word
 	sta.b mula+2					; divisor to the high word
 	stz.b mula						; low word 0
 	lda.w #$0010					; 16 quotient bits
@@ -20,7 +20,7 @@ divs:								;Signed divide: A = mulb (32-bit) / mula
 	sbc.b mulb+2
 	sta.b mulb+2
 	inc.b mulsign					; one negative
-.loop:
+.loop:								; shift the divisor right
 	lsr.b mula+2					; shift the divisor right
 	ror.b mula
 	asl.b mulres					; shift the quotient
@@ -36,7 +36,7 @@ divs:								;Signed divide: A = mulb (32-bit) / mula
 	sbc.b mula+2
 	sta.b mulb+2
 	inc.b mulres					; set the quotient bit
-.next:
+.next:								; next quotient bit
 	dec.b mulcnt					; next bit
 	bne .loop
 	lsr.b mulsign					; odd count?
@@ -44,7 +44,7 @@ divs:								;Signed divide: A = mulb (32-bit) / mula
 	lda.w #$0000					; negate
 	sbc.b mulres
 	sta.b mulres
-.rtl:
+.rtl:								; quotient
 	lda.b mulres					; quotient
 	clc								; clear carry
 	rtl

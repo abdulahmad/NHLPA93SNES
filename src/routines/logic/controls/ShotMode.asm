@@ -9,7 +9,7 @@ ShotMode:							;Pad input while shooting: aim with the pad and build shot power
 	bne .ss0						; none
 	and.w #$0007					; 0-7
 	sta.w passdir					; pass direction
-.ss0:
+.ss0:								; past full windup: leave
 	lda.w SPAnum,x					; animation frame
 	cmp.w #$0010					; 4*4: past full windup
 	bcs .rts						; full windup: leave

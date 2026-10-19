@@ -4,7 +4,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	bit.w #sf3sbut
 	beq .go
 	jmp.w .nhl0
-.go:
+.go:								; save the game state
 	jsl.l .sv						; save the game state
 	lda.b d1
 	sta.b d3
@@ -13,7 +13,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	bit.w #sf3sbut
 	beq .show
 	jmp.w .nhl1
-.show:
+.show:								; Framer 24 x 3
 	lda.w #$0004					; Framer 24 x 3
 	sta.w printx
 	lda.w printy
@@ -37,14 +37,14 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	bit.w #JOYSTART
 	beq .play
 	jmp.w .nhl1
-.play:
+.play:								; blank the screen and reset the sound queue
 	jsl.l forceblack				; blank the screen
 	jsl.l sndqreset					; reset the sound queue
 	lda.w sndbank
 	cmp.w #$0001
 	beq .snd
 	jsl.l SPCGameUpload
-.snd:
+.snd:								; HomeTeam/VisTeam of game a0
 	ldy.b a0						; HomeTeam/VisTeam of game a0
 	lda.w gst1,y
 	sta.w HomeTeam
@@ -207,7 +207,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	lda.w gmclock
 	bne .frame
 	ldx.b d7
-.clk:
+.clk:								; run the clock
 	lda.w gameclock					; run the clock
 	beq .clk1
 	lda.w gameclock+2
@@ -232,7 +232,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	sbc.b d7
 	pha
 	bmi .endhl
-.1:
+.1:									; check both pads: Start or A ends it
 	jsl.l Readjoy12					; Start or A ends it
 	lda.b d1
 	bit.w #JOYSTART|JOYA
@@ -304,7 +304,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	bit.w #JOYSTART
 	beq .stats
 	jmp.w .nhl1
-.stats:
+.stats:								; blank the screen, restore the game state
 	jsl.l forceblack				; blank the screen
 	jsl.l .lo						; restore the game state
 	jsl.l setplayercolors
@@ -365,7 +365,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	cmp.w gss2,y
 	bne .won
 	jmp.w StartHL2
-.won:
+.won:								; gsper 5: final
 	lda.w #5						; gsper 5: final
 	sta.w gsper,y
 	lda.b d1
@@ -380,7 +380,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 .exit2:								; exit with the button flag set
 	lda.w #sf3sbut
 	tsb.w sflags3
-.exit:
+.exit:								; restore and return
 	stx.b xsave						; keep X
 	ldx.w #$001A
 .resta2:							; pull a0 and the words after it back

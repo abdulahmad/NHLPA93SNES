@@ -15,7 +15,7 @@ GetPlayerNumInitial:				;a1 = the number, first initial and last name of player 
 	sta.b d0
 	lda.w #$0002					; away team
 	sta.b a2
-.home:
+.home:								; format the number and initial
 	jsl.l FormatPlayerNumInitial	; format the text
 	pla								; restore a2
 	sta.b a2

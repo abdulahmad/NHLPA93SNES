@@ -22,7 +22,7 @@ PuckIChk:							;Watch for icing: the loose puck crossing the far goal line
 	bvs .set
 .rtl:								; return
 	rtl
-.0:
+.0:									; ifdir set: compare against the other goal line
 	lda.w #blueline+goalline		; other end
 	sec
 	sbc.w pucky						; minus puck y
@@ -32,7 +32,7 @@ PuckIChk:							;Watch for icing: the loose puck crossing the far goal line
 	bra .rtl
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvs .rtl
-.set:
+.set:								; ifcgl: icing called
 	lda.w #ifcgl					; ifcgl
 	tsb.w iflags					; icing called
 	rtl

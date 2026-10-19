@@ -7,9 +7,9 @@ seta2:								;a2 = the team of the controller that paused
 	beq .cont1						; no: controller 1
 	lda.w cont2team					; controller 2 team
 	bra .gotteam
-.cont1:
+.cont1:								; controller 1 team
 	lda.w cont1team					; controller 1 team
-.gotteam:
+.gotteam:							; team 2: a2 = 2
 	cmp.w #$0001					; team 1
 	beq .rtl						; a2 stays 0
 	inc.b a2						; team 2: a2 = 2

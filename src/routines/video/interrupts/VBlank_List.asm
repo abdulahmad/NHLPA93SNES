@@ -4,7 +4,7 @@ VBlank_List:						;Vblank: run the transfer list once, then go back to vb2
 	sta.w INIDISP
 	ldx.b DMAlistend				; last entry
 	bra .next						; go
-.dmaloop:
+.dmaloop:							; DMA to VRAM, next list entry
 	ldy.w DMAList+dmavram,x			; video address
 	sty.w VMADDL
 	ldy.w DMAList+dmalen,x			; length
@@ -17,7 +17,7 @@ VBlank_List:						;Vblank: run the transfer list once, then go back to vb2
 	sta.w A1B7
 	lda.b #MDMAEN_CH7				; go
 	sta.w MDMAEN
-.next:
+.next:								; next entry (7 bytes)
 	dex								; next entry (7 bytes)
 	dex
 	dex

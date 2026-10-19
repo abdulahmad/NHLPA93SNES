@@ -4,7 +4,7 @@ VBlank_SprPal:						;Vblank: as VBlank, plus the sprite palettes; once, then bac
 	sta.w INIDISP
 	ldx.b DMAlistend				; last entry
 	bra .next
-.dmaloop:
+.dmaloop:							; DMA to VRAM, next list entry
 	ldy.w DMAList+dmavram,x			; video address
 	sty.w VMADDL
 	ldy.w DMAList+dmalen,x			; length

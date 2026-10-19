@@ -3,7 +3,7 @@ updatereplay:						;Save this frame into the replay buffer
 	bit.w #gmhl						; gmhl: no recording
 	beq .rec
 	jmp.w .rtl
-.rec:
+.rec:								; record the objects (92 record)
 	lda.w sflags					; state flags
 	bit.w #sf2drec					; sf2drec: keep overwriting the same frame
 	bne .frame
@@ -13,7 +13,7 @@ updatereplay:						;Save this frame into the replay buffer
 	sta.w ReplayBufferPtr
 	bcc .wrap
 	inc.w ReplayBufferPtr+2
-.wrap:
+.wrap:								; wrap the buffer pointer if at the end
 	cmp.w #ReplayBufferEnd&$FFFF	; end of the buffer reached?
 	bne .frame
 	lda.w ReplayBufferPtr+2
@@ -25,7 +25,7 @@ updatereplay:						;Save this frame into the replay buffer
 	sta.w ReplayBufferPtr
 	lda.w #ReplayBufferStart>>16
 	sta.w ReplayBufferPtr+2
-.frame:
+.frame:								; a0 = current record
 	lda.w ReplayBufferPtr			; a0 = current record
 	sta.b a0
 	lda.w ReplayBufferPtr+2

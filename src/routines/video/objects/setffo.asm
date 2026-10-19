@@ -2,11 +2,11 @@ setffo:								;Update the pads, then draw the objects tied to rink scrolling (t
 									;labels and gloves)
 	jsl.l uppads					; update the pad objects
 	ldx.w #$0000					; object offset
-.top:
+.top:								; per object: a0 = first sprite this object writes
 	cpx.w #$0006					; pad 3 and up?
 	bne .obj
 	jmp.w .next						; pad 3: not drawn
-.obj:
+.obj:								; x and y
 	lda.w ffox,x					; x
 	sta.b d0
 	lda.w ffoy,x					; y
@@ -14,13 +14,13 @@ setffo:								;Update the pads, then draw the objects tied to rink scrolling (t
 	lda.w ffoz,x					; hidden
 	bpl .shown
 	jmp.w .next
-.shown:
+.shown:								; off screen?
 	sta.b d2						; z
 	jsl.l find3d					; 3d to screen position
 	cmp.w #OFFSCREEN				; off screen?
 	bne .add
 	jmp.w .next
-.add:
+.add:								; screen y and x
 	sta.b spry						; screen y
 	lda.b d0						; screen x
 	sta.b sprx						; x
@@ -50,14 +50,14 @@ setffo:								;Update the pads, then draw the objects tied to rink scrolling (t
 	cmp.w #$000A					; digits above 9: skip the label
 	bcc .hi
 	jmp.w .next
-.hi:
+.hi:								; store the digit
 	sta.w mesarea+2,y				; store the digit
 	iny								; next character
 	dec.b d0						; move the label left
 	dec.b d0
 	dec.b d0
 	dec.b d0
-.lo:
+.lo:								; pad label code: low digit
 	lda.w padcont,x					; pad label code
 	and.w #$000F					; low digit
 	cmp.w #$000A					; above 9: skip the label
@@ -85,7 +85,7 @@ setffo:								;Update the pads, then draw the objects tied to rink scrolling (t
 	lda.b [a4]
 	sta.w mesarea+2,y				; then the letter
 	iny
-.draw:
+.draw:								; number of characters
 	sty.w mesarea					; number of characters
 	stz.b d0+2						; character counter
 .ch:								; check whether all are drawn
@@ -118,7 +118,7 @@ setffo:								;Update the pads, then draw the objects tied to rink scrolling (t
 	inc.b d0
 	inc.b d0+2						; next character
 	bra .ch
-.next:
+.next:								; ffosize: next object
 	inx								; next object
 	inx
 	cpx.w #$000A					; all objects done?

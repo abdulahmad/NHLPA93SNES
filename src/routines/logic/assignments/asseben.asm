@@ -31,7 +31,7 @@ asseben:							;Assignment: player X comes onto the ice from the bench
 	jml.l SetSPA					; start it
 .rtl:								; return
 	rtl
-.nna:
+.nna:								; after the wall animation
 	lda.w #$0004					; facing
 	sta.w facedir,x
 	lda.w pflags,x					; flags

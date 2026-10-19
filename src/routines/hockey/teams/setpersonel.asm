@@ -24,7 +24,7 @@ setpersonel:						;Put team a2's wanted players on the ice, keeping the ones alr
 	stx.b a3
 	lda.w #$0005					; 6 players
 	sta.b d4
-.l0:
+.l0:								; clear the request of each of the 6 sort objs
 	lda.w #$FFFF					; newpos = newpnum = -1 for the 6 objects
 	sta.w newpos,x
 	sta.w newpnum,x
@@ -67,7 +67,7 @@ setpersonel:						;Put team a2's wanted players on the ice, keeping the ones alr
 	dec.b d3
 	bpl .2
 	bra .next
-.found:
+.found:								; already on the ice: keep the object
 	lda.b d4						; slot
 	clc
 	adc.w #$0006					; position entry offset
@@ -77,21 +77,21 @@ setpersonel:						;Put team a2's wanted players on the ice, keeping the ones alr
 	bit.w #$0080
 	beq .np
 	ora.w #$FF00
-.np:
+.np:								; set the new position
 	sta.w newpos,x					; new position
 	lda.b d5
 	and.w #$00FF
 	bit.w #$0080
 	beq .npn
 	ora.w #$FF00
-.npn:
+.npn:								; set the new player number
 	sta.w newpnum,x					; new player number
 	ldy.b d4
 	sep #$20						; 8-bit A
 	lda.b #$00
 	sta.b [a4],y					; clear the list entry
 	rep #$20						; 16-bit A
-.next:
+.next:								; next PlList slot
 	dec.b d4						; next slot
 	bpl .1
 	lda.w #$0005					; second pass
@@ -123,14 +123,14 @@ setpersonel:						;Put team a2's wanted players on the ice, keeping the ones alr
 	dec.b d3
 	bpl .4
 	bra .chkpos
-.free:
+.free:								; free object: remember it
 	stx.b a0						; keep it
-.chkpos:
+.chkpos:							; does this obj have a position yet?
 	lda.w position,x				; position
 	bpl .put
 	dec.b d3
 	bpl .4
-.put:
+.put:								; position entry offset
 	lda.b d4						; slot
 	clc
 	adc.w #$0006					; position entry offset
@@ -140,7 +140,7 @@ setpersonel:						;Put team a2's wanted players on the ice, keeping the ones alr
 	bit.w #$0080
 	beq .np2
 	ora.w #$FF00
-.np2:
+.np2:								; set the new position
 	ldy.b a0						; free object
 	sta.w newpos,y					; new position
 	lda.b d5
@@ -148,14 +148,14 @@ setpersonel:						;Put team a2's wanted players on the ice, keeping the ones alr
 	bit.w #$0080
 	beq .npn2
 	ora.w #$FF00
-.npn2:
+.npn2:								; set the new player number
 	sta.w newpnum,y					; new player number
 	ldy.b d4
 	sep #$20						; 8-bit A
 	lda.b #$00
 	sta.b [a4],y					; clear the list entry
 	rep #$20						; 16-bit A
-.next2:
+.next2:								; next PlList slot
 	dec.b d4						; next slot
 	bpl .3
 	stx.b xsave						; keep X

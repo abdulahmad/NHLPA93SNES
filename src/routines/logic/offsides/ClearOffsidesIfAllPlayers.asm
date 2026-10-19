@@ -5,7 +5,7 @@ ClearOffsidesIfAllPlayers:			;Clear team a2's offsides flag once none of its
 	bit.w #tmfoside
 	bne .go							; not flagged
 	jmp.w ChkOffsides_rtl			; nothing to do
-.go:
+.go:								; sorted players of the team
 	lda.w tmsort,y					; sorted players of the team
 	sta.b a0						; a0 = first
 	lda.w #$0005					; six skaters
@@ -33,9 +33,9 @@ ClearOffsidesIfAllPlayers:			;Clear team a2's offsides flag once none of its
 	bvs .more						; still past it
 .rtl:								; far branch to ChkOffsides_rtl
 	jmp.w ChkOffsides_rtl
-.neg:
+.neg:								; still past it?
 	bvs .rtl						; still past it
-.more:
+.more:								; next skater
 	dec.b d1						; next skater
 	bpl .top
 	ldy.b a2						; none past: clear the flag

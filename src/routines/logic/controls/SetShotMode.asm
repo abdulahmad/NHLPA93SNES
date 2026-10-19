@@ -11,7 +11,7 @@ SetShotMode:						;Start a shot by player X: shot mode, aim at the goal, shot an
 	bne .ck0						; bottom end
 	lda.w #$FED8					; top end y
 	sta.b d1
-.ck0:
+.ck0:								; (d0,d1) = vector to the goal -> direction
 	lda.b d0						; dx
 	sec
 	sbc.w Xpos,x

@@ -2,7 +2,7 @@ InitSortObjects:					;Clear the sorted objects and set up the arrows, the rink s
 									;and the players from their start tables,
 		;   then sort them
 	ldx.w #$0000					; SortCords (all fields of the 16 objects)
-.clr:
+.clr:								; clear one word at a time
 	stz.w Xpos,x					; clear one word at a time
 	inx
 	inx
@@ -12,7 +12,7 @@ InitSortObjects:					;Clear the sorted objects and set up the arrows, the rink s
 	ldy.w #$0000
 	lda.w #$0003					; 4 sorted objects (count - 1 in d0)
 	sta.b d0						; loop counter
-.sso:
+.sso:								; x, y, frame, attribute from SsoInitTable
 	lda.w #$FFFF					; z = -1: not yet sorted
 	sta.w ssoz,y
 	lda.l SsoInitTable,x			; x, y, frame, attribute come from the init table
@@ -35,7 +35,7 @@ InitSortObjects:					;Clear the sorted objects and set up the arrows, the rink s
 	ldy.w #$0000
 	lda.w #$0004					; 5 far-field objects
 	sta.b d0
-.ffo:
+.ffo:								; x, y, frame from FfoInitTable
 	lda.w #$FFFF					; xofs = -1: unset
 	sta.w ffoxofs,y
 	lda.l FfoInitTable,x
@@ -99,7 +99,7 @@ InitSortObjects:					;Clear the sorted objects and set up the arrows, the rink s
 	bne .goal
 	lda.w #$0001
 	sta.w pfnc,y
-.goal:
+.goal:								; pfgoal for objects 6-11 and 12-17
 	cpx.w #$006C					; pfgoal for objects 6-11 and 12-15, pfteam $34 for 6-11
 	rol a
 	inc a
@@ -111,7 +111,7 @@ InitSortObjects:					;Clear the sorted objects and set up the arrows, the rink s
 	bcs .next
 	lda.w #$0034
 	sta.w pfteam,y					; pfteam = $34
-.next:
+.next:								; next sort table slot
 	inc.b a3						; next sort table slot
 	inc.b a3
 	sep #$20						; 8-bit A
@@ -135,5 +135,5 @@ InitSortObjects:					;Clear the sorted objects and set up the arrows, the rink s
 	cmp.w #$0010					; all 16 objects done?
 	beq .sort
 	jmp.w .obj
-.sort:
+.sort:								; sort and return
 	jml.l SprSort					; sort and return

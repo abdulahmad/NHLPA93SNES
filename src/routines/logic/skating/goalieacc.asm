@@ -33,7 +33,7 @@ goalieacc:							;The goalie skates in direction d0, turning one step toward it
 	and.w #$0007					; 0-7
 	sta.b d0						; d0 = new direction
 	sta.w facedir,x					; new facing
-.spa:
+.spa:								; goalie skate animation
 	lda.w #SPAgskate				; SPAgskate $3F8
 	sta.b d1						; skating animation
 	jsl.l SetSPA					; start it

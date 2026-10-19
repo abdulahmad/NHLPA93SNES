@@ -6,11 +6,11 @@ GameOver:							;After a game: the password and the playoff screen; on to the us
 	cmp.w #$0001
 	beq .po							; continuing the playoffs: .po
 	jml.l Opening2					; else back to the start
-.po:
+.po:								; playoffs: the user's next game, none left: back to the start
 	lda.w gamenum					; user game number
 	bpl .pw							; none left: back to the start
 	jml.l Opening2
-.pw:
+.pw:								; clear bit 7 (hidden) of the password
 	lda.w PassWord					; clear bit 7 (hidden) of the first two characters
 	and.w #$7F7F
 	sta.w PassWord

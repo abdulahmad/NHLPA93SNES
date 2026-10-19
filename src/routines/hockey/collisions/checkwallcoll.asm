@@ -29,7 +29,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	bra .ctc
 .neg:								; signed compare: overflow flag corrects the sign
 	bvs .ctc
-.negy:
+.negy:								; goal mouth x range: left edge
 	lda.b d2						; goal mouth x range: left edge
 	sec
 	sbc.b d4
@@ -38,7 +38,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	bra .circle
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvc .circle
-.gl1:
+.gl1:								; right edge, negated
 	lda.b d4						; right edge
 	eor.w #$FFFF					; negate
 	inc a
@@ -69,7 +69,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	jmp.w .exit
 .neg3:								; signed compare: overflow flag corrects the sign
 	bvs .exit1
-.c2:
+.c2:								; goal mouth x range: left edge
 	lda.b d2						; goal mouth x range: left edge
 	sec
 	sbc.b d4
@@ -78,7 +78,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	bra .circle
 .neg4:								; signed compare: overflow flag corrects the sign
 	bvc .circle
-.c3:
+.c3:								; right edge, negated
 	lda.b d4						; right edge
 	eor.w #$FFFF					; negate
 	inc a
@@ -107,7 +107,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	beq .dx
 	eor.w #$FFFF					; negate
 	inc a
-.dx:
+.dx:								; absolute dx
 	sta.b mula						; absolute dx
 	lda.b d3
 	sec
@@ -117,7 +117,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	beq .dy
 	eor.w #$FFFF					; negate
 	inc a
-.dy:
+.dy:								; absolute dy
 	sta.b mulb						; absolute dy
 	cmp.b mula
 	bcc .m2
@@ -130,7 +130,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	lsr a
 	lsr a
 	adc.b mula						; max + min / 4: distance
-.dist:
+.dist:								; inside the radius 64 circle?
 	cmp.w #$0041					; inside the radius 64 circle: no hit
 	bcc .exit						; inside the radius: no hit
 	sta.b d3						; cos = dy*256/r, sin = dx*256/r
@@ -142,7 +142,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	bpl .cos
 	lda.w #$FFFF
 	sta.b mulb+3
-.cos:
+.cos:								; d0 = dy * 256 / distance
 	jsl.l divs						; signed divide
 	sta.b d0						; d0 = dy * 256 / distance
 	lda.b d3
@@ -154,7 +154,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	bpl .sin
 	lda.w #$FFFF
 	sta.b mulb+3
-.sin:
+.sin:								; d1 = dx * 256 / distance
 	jsl.l divs						; signed divide
 	sta.b d1						; d1 = dx * 256 / distance
 	jsl.l wallcollb					; wall hit at the corner
@@ -178,11 +178,11 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	sbc.b d5
 	bmi .neg6
 	bvs .s1
-.b1:
+.b1:								; wall hit, high y board
 	jmp.w wallcollb					; wall hit, high y board
 .neg6:								; signed compare: overflow flag corrects the sign
 	bvs .b1
-.s1:
+.s1:								; mirror the normal
 	lda.b d0						; mirror the normal
 	eor.w #$FFFF					; negate
 	inc a
@@ -195,11 +195,11 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	sbc.b d3						; y against the opposite limit
 	bmi .neg7
 	bvs .s2
-.b2:
+.b2:								; wall hit, low y board
 	jmp.w wallcollb					; wall hit, low y board
 .neg7:								; signed compare: overflow flag corrects the sign
 	bvs .b2
-.s2:
+.s2:								; swap cos and sin
 	lda.b d0						; swap cos and sin
 	pha
 	lda.b d1
@@ -211,7 +211,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	sbc.b d4
 	bmi .neg8
 	bvs .s3
-.b3:
+.b3:								; wall hit, x board
 	jmp.w wallcollb					; wall hit, x board
 .neg8:								; signed compare: overflow flag corrects the sign
 	bvs .b3
@@ -228,7 +228,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	sbc.b d2
 	bmi .neg9
 	bvs .rtl
-.b4:
+.b4:								; wall hit, opposite x board
 	jmp.w wallcollb					; wall hit, opposite x board
 .neg9:								; signed compare: overflow flag corrects the sign
 	bvs .b4

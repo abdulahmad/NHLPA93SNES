@@ -31,7 +31,7 @@ assgoalietopuck:					;Assignment: the goalie skates out to a loose puck moving t
 	lda.w puckc						; carried puck: assexit
 	bmi .loose
 	jml.l assexit					; assignment over
-.loose:
+.loose:								; puck moving away from my goal?
 	lda.w puckvy					; puck moving away from my goal: assexit
 	sta.b tmp0
 	lda.w pfgoal,x
@@ -44,7 +44,7 @@ assgoalietopuck:					;Assignment: the goalie skates out to a loose puck moving t
 	lda.b tmp0
 	bpl .near
 	jml.l assexit					; assignment over
-.near:
+.near:								; tmnear of my team >= $E10 and of the other
 	stz.b a1						; tmnear of my team >= $E10 and of the other >= $640
 	lda.w #$0002
 	sta.b a2

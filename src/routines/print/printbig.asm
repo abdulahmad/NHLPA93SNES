@@ -11,12 +11,12 @@ printbig:							;print with the big font (2 by 2 tiles per character)
 	bne .save
 	ldx.b xsave						; restore X
 	ldy.w #$0002					; y = 2: after the length word
-.top:
+.top:								; end of the string?
 	tya								; end of the string?
 	cmp.b [a1]
 	bne .ch
 	jmp.w .done						; done
-.ch:
+.ch:								; d1 = textmap offset (printy * 32 + printx) * 2
 	lda.w printy					; d1 = textmap offset (printy * 32 + printx) * 2
 	asl a
 	asl a
@@ -30,22 +30,22 @@ printbig:							;print with the big font (2 by 2 tiles per character)
 	bit.w #$0080					; bit 7: control code
 	beq .dochar
 	jmp.w .code
-.dochar:
+.dochar:							; no special case for space
 	and.w #$00FF					; character code
 	bne .lc
 	jmp.w .nextch					; zero: skip it
-.lc:
+.lc:								; lower case to upper case
 	cmp.w #'a'						; lower case to upper case
 	bcc .uc
 	cmp.w #'z'+1
 	bcs .uc
 	adc.w #-32						; subtract 32 for the big font
-.uc:
+.uc:								; space: blank
 	sec								; space: blank
 	sbc.w #' '
 	bne .wide
 	jmp.w .blank
-.wide:
+.wide:								; d2 = 1: two columns wide
 	stz.b d2						; d2 = 1: two columns wide
 	inc.b d2
 	tax								; index
@@ -54,13 +54,13 @@ printbig:							;print with the big font (2 by 2 tiles per character)
 	bit.w #$0080
 	beq .w0
 	ora.w #$FF00
-.w0:
+.w0:								; negative: one column wide
 	cmp.w #$0000					; negative: one column wide
 	bpl .w1
 	eor.w #$FFFF					; negate
 	inc a
 	stz.b d2						; d2 = 0
-.w1:
+.w1:								; word offset
 	asl a							; word offset
 	sta.b d0						; keep it
 	tax
@@ -110,12 +110,12 @@ printbig:							;print with the big font (2 by 2 tiles per character)
 	ldx.b d1
 	sta.l textmap+$42,x				; bottom right tile
 	inc.w printx					; extra column
-.next:
+.next:								; next column
 	inc.w printx					; next column
-.nextch:
+.nextch:							; next character
 	iny								; next character
 	jmp.w .top
-.blank:
+.blank:								; blank: big font entry $2C
 	lda.l BigFontMap+$2C			; blank: big font entry $2C on both rows
 	clc
 	adc.w BigFontChars
@@ -184,7 +184,7 @@ printbig:							;print with the big font (2 by 2 tiles per character)
 	sta.w printy					; printy
 	iny
 	jmp.w .top						; continue
-.done:
+.done:								; restore registers
 	stx.b xsave						; keep X
 	ldx.w #$000A
 .restore:							; pull d0 and the words after it back

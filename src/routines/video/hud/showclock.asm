@@ -3,7 +3,7 @@ showclock:							;Draw the game clock (not during a replay)
 	bit.w #sf2replay				; sf2replay
 	beq .nosf2replay
 	jmp.w .rtl
-.nosf2replay:
+.nosf2replay:						; clock text: 7 characters
 	lda.w #$0007					; clock text: 7 characters
 	sta.w mesarea					; mesarea = length 7
 	lda.w #$0020					; space
@@ -16,7 +16,7 @@ showclock:							;Draw the game clock (not during a replay)
 	beq .notens						; zero: keep the blank
 	adc.w #$0030					; ASCII digit
 	sta.w mesarea+2
-.notens:
+.notens:							; 60 s
 	lda.w #60						; 60 s
 	sta.b mula
 	lda.b mulres+2					; remainder seconds
@@ -51,7 +51,7 @@ showclock:							;Draw the game clock (not during a replay)
 	lda.w gsp
 	cmp.w #$0004					; no clock when gsp = 4 (game over)
 	beq .rtl
-.nosfhormode:
+.nosfhormode:						; a1 = the clock text
 	lda.w #mesarea					; a1 = the clock text
 	sta.b a1
 	lda.w #mesarea>>16

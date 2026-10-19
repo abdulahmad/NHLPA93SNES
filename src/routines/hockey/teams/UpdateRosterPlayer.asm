@@ -31,7 +31,7 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	beq .rtl
 	bmi .neg
 	bvs .rtl
-.next1:
+.next1:								; set up the next player
 	jmp.w SetupNextPlayer			; set up the next player
 .neg:								; signed compare: overflow flag corrects the sign
 	bvs .next1
@@ -42,7 +42,7 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	bpl .anim
 	inc.w OldZpos,x					; skate in
 	inc.w OldXpos,x
-.anim:
+.anim:								; advance the player animation
 	jsl.l updateanim				; update the animation
 	lda.w pf2aip,x					; pf2aip: wait for the step delay
 	beq .step
@@ -69,7 +69,7 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	sta.b d1
 	bne .set						; zero: end of the script
 	jmp.w SlideOutRosterPlayer
-.set:
+.set:								; start the next step of the script
 	jsl.l SetSPA					; SetSPA d1, 9 frames per step, facedir
 	lda.w #$0009					; 9 frames per step
 	sta.w pf2aip,x
@@ -107,7 +107,7 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	adc.w #$0030					; to ASCII
 	sta.b [a1]
 	inc.b a1
-.lo:
+.lo:								; ones digit
 	lda.b d0						; ones digit
 	and.w #$000F
 	clc
@@ -118,7 +118,7 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	sta.b [a1]
 	inc.b a1
 	ldy.w #$0001
-.first:
+.first:								; copy the first name
 	iny								; copy the first name
 	lda.b [a0],y
 	and.w #$00FF

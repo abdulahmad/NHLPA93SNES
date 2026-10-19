@@ -1,7 +1,7 @@
 RemovePlayerFromList:				;Remove entry a0 from a penalty box list by moving the rest down
 	lda.w #$FFFF					; d2 = -1
 	sta.b d2
-.loop:
+.loop:								; next entry
 	inc.b d2						; next entry
 	lda.b a0
 	clc

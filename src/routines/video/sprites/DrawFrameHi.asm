@@ -29,7 +29,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	sbc.b sprframe					; piece count
 	bne .cnt
 	jml.l addframe_end				; empty frame: done
-.cnt:
+.cnt:								; pieces left
 	sta.w sprpieces					; pieces left
 .piece:								;next piece; OAM full (128): done
 	lda.b sprcount					; OAM entries used
@@ -88,7 +88,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	and.w #$0020					; bit $20: big (16x16) piece
 	beq .small
 	jmp.w .big
-.small:
+.small:								; small piece: mirror x for a flip
 	lda.b sprhflip					; small piece: mirror x for a flip
 	beq .sx
 	lda.b sprox
@@ -97,7 +97,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	sec
 	sbc.w #$0007					; mirror about the piece width
 	sta.b sprox
-.sx:
+.sx:								; add the frame x
 	lda.b sprx						; add the frame x
 	clc
 	adc.b sprox
@@ -248,7 +248,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	eor.b #$FF
 	ora.w SattHi,x
 	sta.w SattHi,x
-.next:
+.next:								; next OAM entry
 	rep #$30						; 16-bit registers
 	inc.b sprcount					; next OAM entry
 	jmp.w .nextpiece
@@ -263,7 +263,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	sec
 	sbc.w #$000F					; mirror about the piece width
 	sta.b sprox
-.bx:
+.bx:								; add the frame x
 	lda.b sprx						; add the frame x
 	clc
 	adc.b sprox
@@ -308,7 +308,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	jmp.w .nextpiece
 .byhiv:								; signed compare: overflow flag corrects the sign
 	bvs .byhiout
-.bcache:
+.bcache:							; frame number plus set offset
 	lda.b sprframe					; frame number plus set offset
 	clc
 	adc.b sprsetofs
@@ -333,7 +333,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	cmp.b sprbigslotend
 	bne .bchk
 	jml.l addframe_full				; VRAM sprite cache full
-.bchk:
+.bchk:								; skip slots in the last column
 	and.w #$000F					; skip slots in the last column
 	cmp.w #$000F
 	beq .bfind
@@ -454,7 +454,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	eor.b #$FF
 	ora.w SattHi,x
 	sta.w SattHi,x
-.bnext:
+.bnext:								; next OAM entry
 	rep #$30						; 16-bit registers
 	inc.b sprcount					; next OAM entry
 .nextpiece:							;next piece

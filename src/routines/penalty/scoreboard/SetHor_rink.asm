@@ -16,9 +16,9 @@ SetHor_rink:						;Clear the text screen, draw the horizontal rink scoreboard ba
 	lda.w #$001C					; 28 rows
 	sta.b tmp0
 	ldx.w #$0000					; map offset 0
-.row:
+.row:								; 32 words per row
 	ldy.w #$0020					; 32 words per row
-.col:
+.col:								; rink map word
 	lda.l HorRinkMap,x				; rink map word
 	sta.w VMDATAL
 	inx
@@ -38,7 +38,7 @@ SetHor_rink:						;Clear the text screen, draw the horizontal rink scoreboard ba
 	ldx.w #$0000					; map offset 0
 .row2:								; second half of the rink map
 	ldy.w #$0020
-.col2:
+.col2:								; rink map words from + $10
 	lda.l HorRinkMap+$10,x			; rink map words from +$10
 	sta.w VMDATAL
 	inx

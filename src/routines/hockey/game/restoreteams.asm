@@ -9,7 +9,7 @@ restoreteams:						;Put both teams' players on the bench
 	sta.w tmap,y
 	lda.w #$32						; last player
 	sta.b d0
-.0:
+.0:									; all players on the bench: team offset
 	lda.b a2						; team
 	beq .home
 	lda.w #$34						; away team offset

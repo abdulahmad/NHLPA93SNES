@@ -5,7 +5,7 @@ VBlank_Cram:						;Vblank: run the transfer list, set the scroll and send the pa
 	sta.w INIDISP
 	ldx.b DMAlistend				; last entry
 	bra .next						; go
-.dmaloop:
+.dmaloop:							; DMA to VRAM, next list entry
 	ldy.w DMAList+dmavram,x			; video address
 	sty.w VMADDL
 	ldy.w DMAList+dmalen,x			; length

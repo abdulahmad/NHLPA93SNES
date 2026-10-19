@@ -45,7 +45,7 @@ ShowGoalBox:						;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the
 	lda.b [a4],y
 	bmi .frame
 	inc.b d1
-.frame:
+.frame:								; draw the box frame
 	jsl.l Framer					; draw the frame d0 x d1
 	stz.b a2
 	ldy.w #$0002
@@ -104,7 +104,7 @@ ShowGoalBox:						;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the
 	%StringCp(CC_Font1Pri,$0C,$08)
 	jsl.l FormatPlayerNumInitial
 	jsl.l print						; print it
-.ex:
+.ex:								; restore registers
 	stx.b xsave						; keep X
 	ldx.w #$0012
 .resta:								; pull a0 and the words after it back

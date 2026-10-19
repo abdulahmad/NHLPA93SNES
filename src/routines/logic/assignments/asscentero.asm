@@ -3,17 +3,17 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	lda.w pfalock,x					; anim locked: nothing
 	beq .clk
 	jmp.w .rtl
-.clk:
+.clk:								; clock stopped: nothing to do
 	lda.w gmclock					; clock stopped: assnothing
 	beq .go
 	jml.l assnothing
-.go:
+.go:								; bench check
 	jsl.l check4bench				; check for a bench change
 	lda.w pflags,x					; joystick controlled: nothing
 	bit.w #pfjoycon
 	beq .na
 	jmp.w .rtl
-.na:
+.na:								; new assignment: temp5 = -1 (old zone)
 	bit.w #pfna						; new assignment: temp5 = -1 (old zone), temp1 = 0, temp2 = 8
 	beq .nna
 	and.w #~pfna&$FFFF
@@ -24,7 +24,7 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	stz.w temp2,x
 	lda.w #$0008
 	sta.w temp2b,x
-.nna:
+.nna:								; re-think every aidef frames
 	lda.w temp1,x					; every aidef frames
 	sec
 	sbc.b d7
@@ -51,7 +51,7 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	eor.b d1
 	bpl .de0
 	jml.l assreplace				; replace the assignment with d0
-.de0:
+.de0:								; d0 = puck y flipped by pfgoal
 	lda.w pucky						; d0 = pucky toward the attacking end
 	sta.b d0
 	lda.w pfgoal,x
@@ -70,7 +70,7 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	bra .de2
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvc .de2
-.z1:
+.z1:								; zone 8
 	lda.w #$0008					; zone 8
 	sta.b d2
 	lda.b d0
@@ -81,7 +81,7 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	bra .de2
 .neg2:								; signed compare: overflow flag corrects the sign
 	bvc .de2
-.z2:
+.z2:								; team offsides: stay in the middle zone
 	ldy.b a2						; tmflags bit 4: stay in the middle zone
 	lda.w tmflags,y
 	bit.w #tmfoside
@@ -95,17 +95,17 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	bra .de2
 .neg3:								; signed compare: overflow flag corrects the sign
 	bvc .de2
-.z3:
+.z3:								; zone 24
 	lda.w #$0018					; zone 24
 	sta.b d2
-.de2:
+.de2:								; same zone: re-pick at 1 in 128
 	lda.b d2						; same zone: new spot only 1 in 128
 	cmp.w temp5,x					; same zone as last time?
 	bne .de3
 	lda.w seed+2					; random
 	cmp.w #$0200
 	bcs .nodec
-.de3:
+.de3:								; pick target
 	lda.b d2						; remember the zone
 	sta.w temp5,x
 	tay								; zone table
@@ -133,7 +133,7 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	jsl.l randomas					; random number -A to A-1
 	adc.b [a0],y					; plus the zone y
 	sta.w temp4,x					; temp4 = spot y
-.nodec:
+.nodec:								; target from temp3,temp4
 	lda.w temp3,x					; spot x
 	sta.b d0
 	lda.w temp4,x					; spot y
@@ -144,7 +144,7 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
-.0:
+.0:									; skate there avoiding the puck carrier
 	lda.w #EvadePC					; skateto with the EvadePC callback
 	sta.b a0
 	lda.w #EvadePC>>16

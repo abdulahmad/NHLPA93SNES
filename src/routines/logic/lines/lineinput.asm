@@ -7,7 +7,7 @@ lineinput:							;Pad input while the line change box is open: choose a line, or
 	beq .0							; team 0
 	inc.b a2						; team 1: a2 = 2
 	inc.b a2
-.0:
+.0:									; flag to start line change mode
 	ldy.b a2						; team offset
 	lda.w tmflags,y					; tmflags bit 0: start line change mode
 	bit.w #tmflcc					; mode start requested
@@ -16,7 +16,7 @@ lineinput:							;Pad input while the line change box is open: choose a line, or
 	sta.w tmflags,y
 	jsl.l lcfound2					; close the box
 	jsl.l SetLCmode2				; reopen it
-.1:
+.1:									; new presses
 	pla								; presses back
 	sta.b d1
 	stz.b d2
@@ -28,12 +28,12 @@ lineinput:							;Pad input while the line change box is open: choose a line, or
 	bit.w #bbut						; B: choice 1
 	beq .a							; not pressed
 	jml.l lcfound					; d2 = choice
-.a:
+.a:									; choice 2
 	inc.b d2						; choice 2
 	bit.w #JOYA						; A: choice 2
 	beq .dpad						; not pressed
 	jml.l lcfound					; d2 = choice
-.dpad:
+.dpad:								; joystick controlled, not locked?
 	lda.w pflags,x					; joystick controlled, not locked or fighting: skate
 	bit.w #pfjoycon					; joystick controlled
 	beq .x

@@ -326,7 +326,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	stz.b d5
 	lda.w #$0005
 	sta.b d4
-.ii1:
+.ii1:								; step d3 by d2 and wrap into d5 ... d4-1
 	jsl.l .iilimit					; d3 = the new value
 	lda.b d3
 	sta.b [a2],y					; store the new value
@@ -466,7 +466,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	sta.b a1
 	lda.w #.playoffs>>16
 	sta.b a1+2
-.print:
+.print:								; print the option
 	jml.l print						; print it
 .playoffs:							;the Team 1 / Team 2 choice in Cont. Playoffs
 	%String("Playoffs")

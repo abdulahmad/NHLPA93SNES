@@ -24,7 +24,7 @@ mulu:								;Unsigned multiply: mulres (32-bit) = mula * mulb
 	sta.b mulb
 	sta.b mulres
 	rtl
-.byteb:
+.byteb:								; byte factor
 	lda.b mulb						; mula < $80: byte factor
 	bmi .full
 	sep #$20						; 8-bit A
@@ -44,7 +44,7 @@ mulu:								;Unsigned multiply: mulres (32-bit) = mula * mulb
 	sta.b mulb
 	sta.b mulres
 	rtl
-.full:
+.full:								; multiply in hardware
 	sep #$20						; 8-bit A
 	lda.b mula
 	sta.w WRMPYA

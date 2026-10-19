@@ -5,7 +5,7 @@ Holdplayer:							;Hold button: hook, or with an impact hold the player who last
 	lda.w impact,x					; hit by someone
 	bne .imp
 	jmp.w SetSPA					; no: start the hook
-.imp:
+.imp:								; a hit: hold that player
 	lda.w impactp,x					; a0 = d0 = impactp*2
 	asl a							; a hit: hold that player
 	sta.b d0

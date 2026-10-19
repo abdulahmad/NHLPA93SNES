@@ -11,10 +11,10 @@ puckshadow:							;Assignment: the puck shadow follows the puck
 	beq .nhor
 	inc.w Xpos,x					; x + 1
 	rtl
-.nhor:
+.nhor:								; shadow is drawn 1 unit off the puck
 	inc.w Ypos,x					; y + 1
 	rtl
-.none:
+.none:								; nothing to show
 	tay								; frame 0
 	beq .rtl						; nothing to show
 	stz.w Xpos,x					; x = 0

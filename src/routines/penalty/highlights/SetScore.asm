@@ -5,7 +5,7 @@ SetScore:							;Play one period of playoff game a0 with random goals; a game ti
 	cmp.w #4						; period 4 or later: game is over
 	bcc .go
 	jmp.w .rtl
-.go:
+.go:								; save registers
 	stx.b xsave						; keep X
 	ldx.w #$0000
 .save:								; save d0 and the words after it (4 words)
@@ -72,7 +72,7 @@ SetScore:							;Play one period of playoff game a0 with random goals; a game ti
 	clc
 	adc.b d0
 	sta.w gss2,y
-.ex:
+.ex:								; restore and return
 	stx.b xsave						; keep X
 	ldx.w #$0006
 .resta:								; pull a0 and the words after it back

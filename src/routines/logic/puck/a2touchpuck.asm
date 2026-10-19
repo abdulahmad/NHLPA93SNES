@@ -37,7 +37,7 @@ a2touchpuck:						;A player touches the puck: remember the last touches (for ass
 	bne .same
 	lda.w #$FFFF
 	sta.w tmtouch3,y
-.same:
+.same:								; a touch ends the "shot was taken" state
 	lda.w #sf2shot					; sf2shot
 	trb.w sflags
 	jsl.l a2offsides

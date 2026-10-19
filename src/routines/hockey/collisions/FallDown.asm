@@ -5,7 +5,7 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	cpy.w #$0018
 	bcc .f1
 	jmp.w .rtl
-.f1:
+.f1:								; is the other player fighting?
 	lda.w pf2fight,y				; fighting?
 	beq .spa
 	jmp.w .rtl
@@ -87,7 +87,7 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	bne .nostat
 	inc.w ChkCnt
 	inc.w ChkCnt
-.nostat:
+.nostat:							; nopuck = 120
 	ldy.b a2						; nopuck 120 for a2
 	lda.w #$0078					; puck lockout 120
 	sta.w nopuck,y
@@ -123,7 +123,7 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	bra .set
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvc .set
-.f3:
+.f3:								; players only: the flip fall
 	cpx.w #$0018					; players only
 	bcs .set
 	lda.w #SPAflip					; flip
@@ -181,7 +181,7 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	bra .snd
 .neg2:								; signed compare: overflow flag corrects the sign
 	bvs .snd
-.inj:
+.inj:								; clock stopped?
 	lda.w gmclock					; clock stopped?
 	bne .snd
 	ldx.b a2
@@ -205,16 +205,16 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	lda.w position,x				; hitter a goalie?
 	bne .g
 	jmp.w AddPenalty2
-.g:
+.g:									; penalties off?
 	lda.w OptPen					; penalties off?
 	bne .rough
 	jmp.w AddPenalty2
-.rough:
+.rough:								; roughing penalty
 	lda.w #PenRoughing2				; roughing penalty
 	sta.b d0
 	jsl.l AddPenalty2
 	jmp.w Stop4Pen					; stop play
-.snd:
+.snd:								; crowd boos a home player's fall, cheers the other
 	ldy.b a2						; home player fell: boo, else cheer
 	lda.w #SFXcrowdcheer			; cheer
 	pha
@@ -222,7 +222,7 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	bne .3
 	lda.w #SFXcrowdboo				; boo for the home team
 	sta.b $01,s
-.3:
+.3:									; play the crowd sound
 	jsl.l sfx						; play it
 .rtl:								; return
 	rtl

@@ -15,7 +15,7 @@ DoHiLights:							;Playoffs: play the highlight of each game of the round that h
 	and.w #~gsfhl&$FFFF				; clear the flag
 	sta.w gsflags,y
 	jsl.l SaveRegsStartHL2			; play the highlight
-.next:
+.next:								; previous game
 	dec.b a0						; previous game
 	dec.b a0
 	dec.b d1						; until game 0

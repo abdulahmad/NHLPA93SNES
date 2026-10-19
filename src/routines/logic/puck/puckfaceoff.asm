@@ -16,7 +16,7 @@ puckfaceoff:						;Assignment: the start of play. Period end and overtime checks
 	bit.w #gmeog
 	beq .ot
 	jml.l PeriodOver
-.ot:
+.ot:								; overtime and not tied: clock control
 	lda.w gsp						; overtime and not tied: clockcont_0
 	cmp.w #$0003
 	bne .npo
@@ -29,7 +29,7 @@ puckfaceoff:						;Assignment: the start of play. Period end and overtime checks
 	bit.w #gmpendel					; gmpendel: Stop4Pen
 	beq .rg
 	jmp.w Stop4Pen
-.rg:
+.rg:								; computer may put the goalie back / pull it
 	jsl.l ReturnGoalies				; ReturnGoalies
 	lda.w #$FFFF					; temp1/temp2 = -1: no lc box timers
 	sta.w temp1,x
@@ -57,7 +57,7 @@ puckfaceoff:						;Assignment: the start of play. Period end and overtime checks
 	lda.w #sfslock
 	tsb.w sflags
 	jsl.l ClrHor					; back to the vertical rink
-.nohor:
+.nohor:								; offer a line change to each human controlled player
 	lda.w c1playernum				; controller players get the lc box
 	sta.b d0
 	bmi .nlp
@@ -67,7 +67,7 @@ puckfaceoff:						;Assignment: the start of play. Period end and overtime checks
 	sta.b d0
 	bmi .nlp2
 	jsl.l .slc
-.nlp2:
+.nlp2:								; computer line change for the visitors
 	stz.b a1						; a1 = home, a2 = away
 	lda.w #$0002
 	sta.b a2
@@ -115,7 +115,7 @@ puckfaceoff:						;Assignment: the start of play. Period end and overtime checks
 	lsr a
 	sta.w temp4,y
 	bra .slcex
-.t1:
+.t1:								; temp1 = 10*60 (92 5*60)
 	lda.w #$0258					; home: temp1 = 10*60, temp3 = SCnum
 	sta.w temp1,y
 	txa

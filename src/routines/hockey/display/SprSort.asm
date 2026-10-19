@@ -22,17 +22,17 @@ SprSort:							;Sort the objects by screen position for drawing
 	cpx.w #$0020
 	bne .loop0
 	bra .loop						; sorted list ready
-.xlist:
+.xlist:								; sort by x: copy Xpos into Ylist
 	lda.w Xpos,x					; sort by x: copy Xpos into Ylist
 	sta.w Ylist,x					; x of the object
 	inx
 	inx
 	cpx.w #$0020
 	bne .xlist
-.loop:
+.loop:								; one bubble pass over OOlist
 	stz.b d2						; swap count
 	ldx.w #$0000					; list position
-.0:
+.0:									; object above, as an object number *2
 	lda.w OOlist+1,x				; object above
 	and.w #$00FF
 	sta.b d1
@@ -50,7 +50,7 @@ SprSort:							;Sort the objects by screen position for drawing
 	bra .1
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .1
-.swap:
+.swap:								; swap the two list entries
 	lda.w OOlist,x					; swap the two list entries
 	xba
 	sta.w OOlist,x
@@ -60,7 +60,7 @@ SprSort:							;Sort the objects by screen position for drawing
 	ldy.b d0
 	sta.w OOlistpos,y				; new position of the lower one
 	inc.b d2						; count the swap
-.1:
+.1:									; next adjacent pair (15 pairs)
 	inx								; next pair
 	cpx.w #$000F					; 15 pairs
 	bne .0

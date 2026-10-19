@@ -3,18 +3,18 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 	lda.w pfalock,x					; assignment locked?
 	beq .na
 	jmp.w .rtl
-.na:
+.na:								; at the bench door?
 	lda.w temp1,x					; bench door timer
 	cmp.w #100						; temp1 100: at the bench door
 	bne .chk
 	jmp.w .done
-.chk:
+.chk:								; check for a bench change
 	jsl.l check4bench				; check for a bench change
 	lda.w pflags,x					; player flags
 	bit.w #pf2pen					; pf2pen: assexit
 	beq .pen
 	jml.l assexit					; assignment over
-.pen:
+.pen:								; assignment just started?
 	bit.w #pfna						; assignment just started?
 	beq .nna
 	and.w #~pfna&$FFFF
@@ -34,13 +34,13 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 	lda.w #-144
 	sta.w temp3,x					; target x at the bench
 	stz.w temp1,x					; clear the door timer
-.nna:
+.nna:								; same player? just change position
 ;may switch to a position change or reassign to abench
 	lda.w newpnum,x					; same player: just change position
 	cmp.w pnum,x					; same player: only the position changes
 	bne .dec
 	jmp.w .nobench
-.dec:
+.dec:								; count the door timer down
 ;temp1 counts frames; re-check arrival every 8
 	lda.w temp1,x					; count the door timer down
 	sec
@@ -48,7 +48,7 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 	sta.w temp1,x
 	bmi .near						; expired?
 	jmp.w .nodec
-.near:
+.near:								; re-check the arrival
 	lda.w temp1,x					; reload it
 	adc.w #8
 	sta.w temp1,x
@@ -59,11 +59,11 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 	beq .ay
 	eor.w #$FFFF					; negate
 	inc a
-.ay:
+.ay:								; within 40 of the bench y?
 	cmp.w #41						; within 40 of the bench y?
 	bcc .ax
 	jmp.w .nodec
-.ax:
+.ax:								; distance from the bench in x
 	lda.w Xpos,x					; distance from the bench in x
 	sec
 	sbc.w temp3,x
@@ -77,14 +77,14 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 	jmp.w .nodec
 .neg:								; signed compare: overflow flag corrects the sign
 	bvs .nd
-.gli0:
+.gli0:								; glide (goalie: ready) animation
 	lda.w #SPAglide					; SPAglide (goalie SPAgready)
 	sta.b d1
 	lda.w position,x				; goalie?
 	bne .gli
 	lda.w #SPAgready				; goalie ready animation
 	sta.b d1
-.gli:
+.gli:								; start the animation
 	jsl.l SetSPA					; start animation d1
 	lda.w #1						; no collisions while gliding
 	sta.w pfnc,x
@@ -94,7 +94,7 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 	inc a							; turn one step
 	and.w #$0007
 	sta.w facedir,x
-.ok:
+.ok:								; drift left (Xvel -$800)
 	stz.w Yvel,x					; stop moving in y
 	lda.w #$F800					; slide toward the door
 	sta.w Xvel,x
@@ -107,7 +107,7 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 	bra .rtl
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvs .rtl
-.stop:
+.stop:								; stop sliding
 	stz.w Xvel,x					; stop sliding
 	lda.w facedir,x					; facing direction
 	cmp.w #4
@@ -124,7 +124,7 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 	sta.w pfalock,x					; lock the assignment
 .rtl:								; return
 	rtl
-.done:
+.done:								; at the bench door: mark this roster slot on the bench
 	stz.w frame,x					; hide the sprite
 	lda.w pnum,x					; player number
 	asl a
@@ -148,7 +148,7 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 	sta.b d3
 	jsl.l .nobench2					; put the new player in
 	jml.l setplayer					; set up the new player
-.nodec:
+.nodec:								; skate toward bench spot (temp3,temp4), unless already over the wall
 	lda.w pfnc,x					; collisions on: skate
 	bne .rtl
 	lda.w temp3,x					; target x at the bench
@@ -160,7 +160,7 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 	lda.w #EvadePC>>16
 	sta.b a0+2
 	jml.l skateto					; skate to the bench
-.nobench:
+.nobench:							; clear the unavailable flag
 	lda.w pflags,x					; clear the unavailable flag
 	and.w #~pf2unav&$FFFF
 	sta.w pflags,x

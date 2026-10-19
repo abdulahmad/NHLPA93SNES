@@ -34,7 +34,7 @@ ContinuePlayoffs:					;Continue the playoffs: read the playoff state back from t
 	sec
 	sbc.w pojoy
 	sta.w OptPlayers				; number of players
-.ex:
+.ex:								; restore the registers
 	stx.b xsave						; X again
 	ldx.w #$000E
 .resta:								; pull a0 back

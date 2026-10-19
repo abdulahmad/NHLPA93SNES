@@ -3,11 +3,11 @@ assfight:							;Assignment: fighting. A computer fighter punches when close; bo
 	lda.w pfalock,x					; animation locked?
 	beq .go
 	jmp.w .rts
-.go:
+.go:								; fight over?
 	lda.w Pencntdwn					; fight over
 	bpl .chkna
 	jml.l assnothing
-.chkna:
+.chkna:								; new assignment?
 	lda.w pflags,x					; player flags
 	bit.w #pfna
 	beq .nna
@@ -50,11 +50,11 @@ assfight:							;Assignment: fighting. A computer fighter punches when close; bo
 	bra .left
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .left
-.clampr:
+.clampr:							; clamp x at the right limit
 	stz.w Xvel,x					; stop the velocity
 	lda.w #$006F					; clamp x
 	sta.w Xpos,x
-.left:
+.left:								; lower x limit
 	lda.w Xpos,x					; X position
 	sec
 	sbc.w #$FF91					; lower x limit
@@ -63,7 +63,7 @@ assfight:							;Assignment: fighting. A computer fighter punches when close; bo
 	bra .nna2
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvs .nna2
-.clampl:
+.clampl:							; clamp x at the left limit
 	stz.w Xvel,x					; stop the velocity
 	lda.w #$FF91					; clamp x
 	sta.w Xpos,x
@@ -75,7 +75,7 @@ assfight:							;Assignment: fighting. A computer fighter punches when close; bo
 	lda.w temp3,x					; strength
 	bpl .fight						; negative: done
 	jmp.w .rts
-.fight:
+.fight:								; a0 = opponent
 	lda.w impactp,x					; a0 = opponent; xc1 = half way between the fighters
 	asl a
 	sta.b a0						; a0 = opponent offset
@@ -116,7 +116,7 @@ assfight:							;Assignment: fighting. A computer fighter punches when close; bo
 	bit.w #$0080
 	beq .vx2
 	ora.w #$FF00
-.vx2:
+.vx2:								; d1 = his velocity
 	sta.b d1						; d1 = his velocity
 	lda.b d0
 	sec
@@ -126,7 +126,7 @@ assfight:							;Assignment: fighting. A computer fighter punches when close; bo
 	beq .inrange
 	eor.w #$FFFF					; negate
 	inc a
-.inrange:
+.inrange:							; computer punches only within range
 	cmp.w #$0019					; computer punches only within 25 pixels
 	bcs .j
 	lda.w #$0008					; random 0-7
@@ -147,7 +147,7 @@ assfight:							;Assignment: fighting. A computer fighter punches when close; bo
 	lda.b [a1],y					; punch animation
 	sta.b d1
 	jsl.l SetSPA					; start animation d1
-.j:
+.j:									; check whether this punch connected
 	jsl.l chkhit					; check for a hit
 	lda.w SPA,x						; current animation
 	cmp.w #SPAfheld					; held: still pushed
@@ -183,7 +183,7 @@ assfight:							;Assignment: fighting. A computer fighter punches when close; bo
 	bmi .mul
 	lda.w #$0005					; 5 away from it
 	sta.b mulb
-.mul:
+.mul:								; signed multiply
 	jsl.l muls16					; signed multiply
 	sta.b d0
 	clc
@@ -203,7 +203,7 @@ assfight:							;Assignment: fighting. A computer fighter punches when close; bo
 	bra .y2
 .neg2:								; signed compare: overflow flag corrects the sign
 	bvc .y2
-.y1:
+.y1:								; upper clamp done
 	lda.w #$1000					; upper limit
 	sta.b d1
 .y2:								; Y velocity limit
@@ -216,7 +216,7 @@ assfight:							;Assignment: fighting. A computer fighter punches when close; bo
 	bra .sety
 .neg3:								; signed compare: overflow flag corrects the sign
 	bvs .sety
-.y3:
+.y3:								; lower clamp done
 	lda.w #$F000					; lower limit
 	sta.b d1
 .sety:								; store the new Y velocity

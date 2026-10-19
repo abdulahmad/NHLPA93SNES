@@ -56,7 +56,7 @@ CompLine:							;The computer team picks a line by the man advantage, the score 
 	pla
 	ldy.b a2
 	sta.w tmline,y					; store the chosen line
-.ex:
+.ex:								; restore registers and return
 	stx.b xsave						; keep X
 	ldx.w #$0002
 .resta:								; pull a0 and the words after it back
@@ -76,7 +76,7 @@ CompLine:							;The computer team picks a line by the man advantage, the score 
 	bpl .restore
 	ldx.b xsave						; restore X
 	rtl
-.nopwr:
+.nopwr:								; find normal line
 	ldy.b a2						; team a2 is the home team?
 	bne .away
 	lda.w #$0002					; three lines to try
@@ -122,7 +122,7 @@ CompLine:							;The computer team picks a line by the man advantage, the score 
 	dw 2,0,1,2,0,2,0
 .behind:							;behind in the third period
 	dw 0,1,0,0,1,0,1
-.away:
+.away:								; try up to 3 lines in the row order
 	lda.w #$0002					; three lines to try
 	sta.b d1
 	lda.w #.al1						; away line table
@@ -144,7 +144,7 @@ CompLine:							;The computer team picks a line by the man advantage, the score 
 	bpl .a0
 	lda.w #.behind2					; behind table
 	sta.b a0
-.a0:
+.a0:								; next candidate line
 	lda.b [a0]						; next line to try
 	inc.b a0
 	inc.b a0

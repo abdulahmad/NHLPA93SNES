@@ -33,7 +33,7 @@ RestoreReplayFrame:					;Put one recorded replay frame back into the
 	bit.w #$0800					; sign extend
 	beq .p
 	ora.w #$F000
-.p:
+.p:									; Xpos
 	sta.w Xpos,x					; Xpos
 	inc.b a0
 	lda.b [a0]						; y, upper bits
@@ -44,7 +44,7 @@ RestoreReplayFrame:					;Put one recorded replay frame back into the
 	bit.w #$0800					; sign extend
 	beq .p1
 	ora.w #$F000
-.p1:
+.p1:								; store the sign extended y
 	sta.w Ypos,x					; Ypos
 	inc.b a0
 	inc.b a0
@@ -84,7 +84,7 @@ RestoreReplayFrame:					;Put one recorded replay frame back into the
 	cmp.w #$000F					; $F means none
 	bne .n0
 	lda.w #$FFFF
-.n0:
+.n0:								; position of the first player of the pair
 	sta.w position,x				; store it
 	lda.b [a0]						; position of the second
 	lsr a
@@ -95,7 +95,7 @@ RestoreReplayFrame:					;Put one recorded replay frame back into the
 	cmp.w #$000F
 	bne .n1
 	lda.w #$FFFF
-.n1:
+.n1:								; position of the second player
 	sta.w position+2,x				; store it
 	inc.b a0
 	inx
@@ -110,7 +110,7 @@ RestoreReplayFrame:					;Put one recorded replay frame back into the
 	bit.w #$0080
 	beq .pz
 	ora.w #$FF00
-.pz:
+.pz:								; puck shadow height is zero: skip it
 	sta.w Zpos+puckobj				; store it
 	lda.b [a0]						; puck shadow height
 	inc.b a0
@@ -118,7 +118,7 @@ RestoreReplayFrame:					;Put one recorded replay frame back into the
 	bit.w #$0080
 	beq .sz
 	ora.w #$FF00
-.sz:
+.sz:								; no sound effect to restore
 	sta.w Zpos+$1E					; store it
 	lda.b [a0]						; last sound effect
 	inc.b a0
@@ -151,7 +151,7 @@ RestoreReplayFrame:					;Put one recorded replay frame back into the
 	bit.w #$0080
 	beq .pb
 	ora.w #$FF00
-.pb:
+.pb:								; no puck bounce number to restore
 	sta.w PBnum						; store it
 	lda.w sflags					; sfscrl: keep Hpos/Vpos
 	bit.w #sfscrl
@@ -162,7 +162,7 @@ RestoreReplayFrame:					;Put one recorded replay frame back into the
 	sta.w Hpos
 	lda.b [a0]						; vertical scroll
 	sta.w Vpos
-.x:
+.x:									; restore registers
 	stx.b xsave						; keep X
 	ldx.w #$0002
 .resta:								; pull a0 and the words after it back

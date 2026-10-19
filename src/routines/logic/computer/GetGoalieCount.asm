@@ -2,7 +2,7 @@ GetGoalieCount:						;d0 = the number of goalies on team a2
 	lda.b a2						; team offset
 	tay
 	and.w #$FFFD					; must be 0 or 2
-.hang:
+.hang:								; hangs if the team is not found
 	bne .hang						; (hangs otherwise)
 	lda.w #TeamList>>16				; team list bank
 	sta.b tmp1
@@ -15,7 +15,7 @@ GetGoalieCount:						;d0 = the number of goalies on team a2
 	stz.b d0						; count = 0
 	lda.b [tmp0]					; goalie odds bits
 	xba
-.cnt:
+.cnt:								; count the used nibbles
 	inc.b d0						; count the used nibbles
 	asl a
 	asl a

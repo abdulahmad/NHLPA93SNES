@@ -6,7 +6,7 @@ StartSong6:							;Start the title screen music unless it is already playing
 	cmp.w #2						; bank 2 is the game bank
 	beq .cmd
 	jsl.l SPCBootUpload				; else upload it
-.cmd:
+.cmd:								; APUIO0 = 3: play song 6
 	sep #$20						; APUIO0 = 3: play song 6
 	lda.b #$03
 	sta.w APUIO0

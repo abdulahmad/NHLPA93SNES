@@ -23,11 +23,11 @@ checkwindow:						;Move the view so the screen follows the puck
 	bra .ok
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .ok
-.ylmax:
+.ylmax:								; limit yleader to 50
 	lda.w #$0032					; limit 50
 	sta.w yleader
 	bra .ok
-.gd:
+.gd:								; going down: yleader shrinks
 	lda.w yleader					; going down: leader shrinks
 	sec
 	sbc.b impactstep
@@ -40,7 +40,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	bra .ok
 .vl:								; signed compare: overflow flag corrects the sign
 	bvs .ok
-.ylmin:
+.ylmin:								; limit yleader to -50
 	lda.w #$FFCE					; limit -50
 	sta.w yleader
 .ok:								;d2 = Ypos + Yvel/128 + yleader, d3 = Xpos
@@ -65,7 +65,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	lda.w Xpos,x					; object x
 	sta.b d3						; d3 = target x
 	sta.w xc1						; remember it
-.dd:
+.dd:								; |target - Vpos| > 10: scroll
 	lda.b d2						; |target - Vpos| > 10: scroll
 	sec
 	sbc.w Vpos						; distance from the current view
@@ -90,7 +90,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	bra .2
 .neg2:								; signed compare: overflow flag corrects the sign
 	bvs .2
-.yslimd:
+.yslimd:							; limit the y step to -199
 	lda.w #$FF39					; limit -199
 	sta.b d1
 	bra .2
@@ -116,7 +116,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	bra .2
 .neg4:								; signed compare: overflow flag corrects the sign
 	bvc .2
-.yslimu:
+.yslimu:							; limit the y step to $100
 	lda.w #$0100					; limit $100
 	sta.b d1
 .2:									;Vpos += (target - Vpos) / 8 (at least 1)
@@ -130,7 +130,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	bit.w #$1000
 	beq .s2
 	ora.w #$E000					; sign extend
-.s2:
+.s2:								; at least 1
 	cmp.w #$0000					; at least 1
 	bne .neg5
 	inc a
@@ -138,7 +138,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	clc
 	adc.w Vpos
 	sta.w Vpos						; new vertical position
-.2x:
+.2x:								; |target - Hpos| > 40: scroll
 	lda.b d3						; |target - Hpos| > 40: scroll
 	sec
 	sbc.w Hpos						; distance from the current view
@@ -162,7 +162,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	bra .4
 .neg7:								; signed compare: overflow flag corrects the sign
 	bvs .4
-.xslimn:
+.xslimn:							; limit the x step to -60
 	lda.w #$FFC4					; limit -60
 	sta.b d1
 	bra .4
@@ -189,7 +189,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	bra .4
 .neg9:								; signed compare: overflow flag corrects the sign
 	bvc .4
-.xslim:
+.xslim:								; limit the x step to 60
 	lda.w #$003C					; limit 60
 	sta.b d1
 .4:									;Hpos += (target - Hpos) / 8 (at least 1)
@@ -203,7 +203,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	bit.w #$1000
 	beq .s4
 	ora.w #$E000					; sign extend
-.s4:
+.s4:								; at least 1
 	cmp.w #$0000					; at least 1
 	bne .h2
 	inc a

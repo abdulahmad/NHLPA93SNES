@@ -64,19 +64,19 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	cpx.w #$001C					; the puck?
 	beq .puck
 	jmp.w .player
-.puck:
+.puck:								; puck: clear sf2shot, moving away from the wall?
 	lda.w #sf2shot					; puck: clear sf2shot
 	trb.w sflags
 	lda.b d2						; moving away from the wall
 	bmi .pn
 	jmp.w .nocoll
-.pn:
+.pn:								; normal speed / 4
 	lsr a							; normal speed /4
 	lsr a
 	bit.w #$2000
 	beq .pn1
 	ora.w #$C000
-.pn1:
+.pn1:								; hard hit (v1n <= -$400)?
 	sta.b d2						; keep it
 	sec
 	sbc.w #$FC00					; hard hit (v1n <= -$400): pop up, flip, sound by speed
@@ -120,7 +120,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	pla
 	lda.w #SFXpuckwall1+2			; variant 3
 	pha
-.snd:
+.snd:								; play the sound
 	jsl.l sfx						; play the sound
 .pok:								;reduce the tangent speed of the puck
 	lda.b d3						; tangent speed
@@ -133,7 +133,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bit.w #$0200
 	beq .t1
 	ora.w #$FC00
-.t1:
+.t1:								; d0 = tangent speed / 64
 	sta.b d0						; d0 = tangent speed / 64
 	pha
 	asl a
@@ -147,7 +147,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	sbc.b d0+2
 	sta.b d3						; reduce the tangent speed
 	bra .noadd						; rotate back
-.player:
+.player:							; player: v1n > 1000 is no collision
 	lda.b d2						; player: normal speed
 	sec
 	sbc.w #$03E8					; player: v1n > 1000: no collision
@@ -168,7 +168,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bra .nosfx
 .neg4:								; signed compare: overflow flag corrects the sign
 	bvs .nosfx
-.imp:
+.imp:								; impact minus 10
 	lda.w impact,x					; impact
 	sec
 	sbc.w #$000A
@@ -177,21 +177,21 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bra .nosfx
 .neg5:								; signed compare: overflow flag corrects the sign
 	bvc .nosfx
-.psnd:
+.psnd:								; random sound variant
 	lda.w seed+1					; random sound variant
 	and.w #$0001
 	clc
 	adc.w #SFXplayerwall			; player wall sound
 	pha
 	jsl.l sfx
-.nosfx:
+.nosfx:								; reduce the normal speed on a player to 1/4
 	lda.b d2						; normal speed / 4
 	lsr a
 	lsr a
 	bit.w #$2000
 	beq .n1
 	ora.w #$C000
-.n1:
+.n1:								; v1n >= -900, else -1000
 	sta.b d2						; keep it
 	sec
 	sbc.w #$FC7C					; v1n >= -900: -1000
@@ -200,7 +200,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bra .noadd
 .neg6:								; signed compare: overflow flag corrects the sign
 	bvc .noadd
-.min:
+.min:								; limit -1000
 	lda.w #$FC18					; limit -1000
 	sta.b d2
 .noadd:								;rotate back: new Xvel/Yvel
@@ -249,7 +249,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	lda.w Zvel,x					; moving up: Zvel = 0
 	bmi .nocoll
 	stz.w Zvel,x					; Zvel = 0
-.nocoll:
+.nocoll:							; drop the stacked cos and sin
 	pla								; drop the stacked cos and sin
 	pla
 	stx.b xsave						; keep X

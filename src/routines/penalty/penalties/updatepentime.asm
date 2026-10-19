@@ -22,7 +22,7 @@ updatepentime:						;Once a second, count down the penalty box times of both tea
 	lda.b a2
 	beq .noa2						; team 0
 	lda.w #$001A					; team 1 list offset
-.noa2:
+.noa2:								; a0 = list offset
 	sta.b a0						; a0 = list offset
 	lda.w #mesarea					; message buffer
 	sta.b a1
@@ -31,7 +31,7 @@ updatepentime:						;Once a second, count down the penalty box times of both tea
 	lda.w #$0002					; two slots
 	sta.b d1
 	sta.b d3
-.next:
+.next:								; next list entry
 	ldy.b a0						; list byte
 	lda.w tmboxlist,y
 	inc.b a0						; next entry
@@ -60,11 +60,11 @@ updatepentime:						;Once a second, count down the penalty box times of both tea
 	sta.w tmpdst,y
 	bne .stay						; still in the box
 	jsl.l RemovePlayerFromList		; out: remove from the list
-.stay:
+.stay:								; still in the box
 	bra .next						; next entry
 .rtl:								; return
 	rtl
-.done:
+.done:								; first player
 	lda.w mesarea					; first player
 	sta.b d0
 	lda.b d1
@@ -78,7 +78,7 @@ updatepentime:						;Once a second, count down the penalty box times of both tea
 	lda.b d1
 	cmp.w #$FFFF					; none left
 	bne .rtl
-.two:
+.two:								; second player
 	lda.w mesarea+2					; second player
 	sta.b d0
 .chk:								;release player d0 when his time is <= 5 (RemovePlayerFromList)
@@ -98,19 +98,19 @@ updatepentime:						;Once a second, count down the penalty box times of both tea
 	bra .rtl
 .neg:								; signed compare: overflow flag corrects the sign
 	bvs .rtl
-.le5:
+.le5:								; time up: release him
 	lda.w tmpdst,y					; state
 	bne .rtl2						; time left
 	jsl.l releasepl					; release him
 .rtl2:								; return
 	rtl
-.coinpen:
+.coinpen:							; one second less
 	dec a							; one second less
 	sta.w tmpdst,y
 	bit.w #$0800					; coincidental time over
 	bne .coindone					; not yet
 	jmp.w .next						; next
-.coindone:
+.coindone:							; second part over?
 	bit.w #$1000					; second part over
 	bne .clr
 	lda.w #$1000					; state

@@ -9,7 +9,7 @@ VBlank_VScroll:						;Vblank: set the vertical scroll and run the transfer list;
 	sta.w BG1VOFS
 	ldx.b DMAlistend				; last entry
 	bra .next						; go
-.dmaloop:
+.dmaloop:							; DMA to VRAM, next list entry
 	ldy.w DMAList+dmavram,x			; video address
 	sty.w VMADDL
 	ldy.w DMAList+dmalen,x			; length

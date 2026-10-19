@@ -20,7 +20,7 @@ CwdFight:							;The crowd reacts to a punch; the hit player X is pushed back by
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
-.xveladj:
+.xveladj:							; add to the X velocity
 	lda.w Xvel,x					; speed of X
 	clc
 	adc.b d0

@@ -3,7 +3,7 @@ checkgoalp:							;Player X runs into the goal a2
 	bit.w #pf2npc					; no collisions with players?
 	beq .npc
 	jmp.w .rtl
-.npc:
+.npc:								; above $0A: no hit
 	lda.w Zpos,x					; height of the player
 	sec
 	sbc.w #$000A					; above $0A: no hit
@@ -18,7 +18,7 @@ checkgoalp:							;Player X runs into the goal a2
 	cpx.w #$0017					; only players
 	bcc .go
 	jmp.w .rtl
-.go:
+.go:								; d0 = -dy, d1 = dx
 	ldy.b a2						; d0 = -dy, d1 = dx
 	lda.b d3						; keep y
 	pha
@@ -115,7 +115,7 @@ checkgoalp:							;Player X runs into the goal a2
 	jsl.l divs						; signed divide
 	sta.b d1
 	jsl.l wallcoll					; wall collision with the normal
-.exit:
+.exit:								; restore d2 and d3
 	pla								; restore x
 	sta.b d2
 	pla								; restore y

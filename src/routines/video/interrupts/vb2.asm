@@ -8,7 +8,7 @@ vb2_main:							;common vblank tail: vcount, sound tick (p_music_vblank), bright
 	inc.b vcount					; frame counter
 	bne .tick						; carry into the high word
 	inc.b vcount+2
-.tick:
+.tick:								; sound tick
 	jsl.l p_music_vblank			; sound tick
 	stz.b hcount					; clear the IRQ count every frame
 	lda.b fadeout					; fading out
@@ -20,9 +20,9 @@ vb2_main:							;common vblank tail: vcount, sound tick (p_music_vblank), bright
 	bne .fadein						; not this frame
 	dec.b brightness				; darker
 	bra .fadein
-.fadeoutdone:
+.fadeoutdone:						; fade out done
 	stz.b fadeout					; done
-.fadein:
+.fadein:							; 1 = fading in, >1 = delay first
 	lda.b fadein					; fading in
 	beq .exit						; no
 	cmp.w #$0001					; 1 = fading in, >1 = delay first
@@ -35,12 +35,12 @@ vb2_main:							;common vblank tail: vcount, sound tick (p_music_vblank), bright
 	bne .exit						; not this frame
 	inc.b brightness				; brighter
 	bra .exit
-.fadeindelay:
+.fadeindelay:						; count down the delay
 	dec.b fadein					; count down the delay
 	bra .exit
-.fadeindone:
+.fadeindone:						; fade in done
 	stz.b fadein					; done
-.exit:
+.exit:								; restore the registers
 	ply								; restore the registers
 	plx
 	pla

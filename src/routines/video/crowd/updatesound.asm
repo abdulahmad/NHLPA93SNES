@@ -8,9 +8,9 @@ updatesound:						;Move the crowd noise volume toward crowdlevel and send it whe
 	cmp.w #$0CFF					; cap at $CFF
 	bcc .ip
 	lda.w #$0CFF
-.ip:
+.ip:								; max step 40 (d0 = target level, asv = current)
 	sta.b tmp0						; target
-.step:
+.step:								; target minus the current volume
 	lda.b tmp0						; target
 	sec
 	sbc.w asv						; minus the current volume

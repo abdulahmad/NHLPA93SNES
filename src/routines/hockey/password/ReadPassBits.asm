@@ -26,7 +26,7 @@ ReadPassBits:						;Turn the password bits back into the playoff state; a bad ch
 	lda.w gsflags,y
 	ora.w #gsfso					; series over
 	sta.w gsflags,y
-.nsf0:
+.nsf0:								; range 5 wins
 	lda.w #5						; range 5 wins
 	sta.b d0
 	jsl.l .sd
@@ -38,7 +38,7 @@ ReadPassBits:						;Turn the password bits back into the playoff state; a bad ch
 	lda.w gsflags,y
 	ora.w #gsfso					; series over
 	sta.w gsflags,y
-.nsf1:
+.nsf1:								; next series
 	dec.b a1						; next series
 	dec.b a1
 	dec.b d2

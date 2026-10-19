@@ -1,7 +1,7 @@
 SuperMult:							;password bits *= d0
 	phx								; keep X
 	ldx.w #$000E					; 8 words
-.copy:
+.copy:								; copy passbits, clear passbits
 	lda.w passbits,x				; copy passbits, clear passbits
 	sta.b mulres,x
 	stz.w passbits,x
@@ -10,7 +10,7 @@ SuperMult:							;password bits *= d0
 	bpl .copy
 	lda.b d0						; multiplier
 	sta.b mula
-.loop:
+.loop:								; next multiplier bit
 	lsr.b mula						; next multiplier bit
 	bcc .noadd						; clear: no add
 	lda.w passbits					; passbits += shifted copy

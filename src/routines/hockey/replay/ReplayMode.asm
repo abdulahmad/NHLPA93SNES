@@ -148,7 +148,7 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	beq .xabs
 	eor.w #$FFFF					; negate
 	inc a
-.xabs:
+.xabs:								; x step within the screen?
 	cmp.w #$0041					; x step within the screen
 	bcs .nox
 	lda.b d1
@@ -180,7 +180,7 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 .sety:								; store the vertical position
 	lda.b d1
 	sta.w Vpos
-.noy:
+.noy:								; PadControlBits $E000
 	lda.w PadControlBits			; PadControlBits $E000: no player marker
 	and.w #$0FFF
 	ora.w #$E000
@@ -190,14 +190,14 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 .stab:								;x, y scroll step per dpad direction
 	dw 0,1,1,1,1,0,1,-1
 	dw 0,-1,-1,-1,-1,0,-1,1
-.nomans:
+.nomans:							; A: switch the play mode
 	lda.b d1						; A: switch play mode
 	bit.w #JOYA
 	beq .lr
 	lda.w sflags3
 	eor.w #sf3rmplay
 	sta.w sflags3
-.lr:
+.lr:								; L/R: one frame back or on
 	lda.b d1						; L/R: one frame back/on
 	bit.w #JOYL
 	bne .back1
@@ -215,9 +215,9 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	bra .vid
 .back1:								;L: one frame back
 	jsl.l suba4						; one replay frame back
-.show:
+.show:								; sort the sprites, update the video
 	jsl.l SprSort					; sort the sprites
-.vid:
+.vid:								; update the video
 	jsl.l setvideo					; update the video
 	lda.w #$0001
 	sta.b d7
@@ -235,7 +235,7 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 .fwd1:								;R: one frame on
 	jsl.l adda4						; one replay frame on
 	bra .show
-.stepon:
+.stepon:							; one replay frame on
 	jsl.l adda4						; one replay frame on
 	jsl.l SprSort					; sort the sprites
 	jsl.l setvideo					; update the video
@@ -252,15 +252,15 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	beq .nosfx
 	pha
 	jsl.l sfx
-.nosfx:
+.nosfx:								; sort the sprites, update the video; Start: leave
 	jsl.l SprSort					; sort the sprites
 	jsl.l setvideo					; update the video
-.noplay:
+.noplay:							; Start: leave
 	lda.b d1						; Start: leave
 	bit.w #JOYSTART
 	bne .exit
 	jmp.w .top
-.exit:
+.exit:								; blank the screen, release the pads
 	jsl.l forceblack				; blank the screen
 	lda.w #$F000
 	tsb.w PadControlBits

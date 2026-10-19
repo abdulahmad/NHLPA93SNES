@@ -13,7 +13,7 @@ checkagr:							;Penalty roll for player X: small results call a penalty. Joysti
 	bit.w #pfjoycon
 	beq .nojoy						; human controlled
 	asl.b d0						; doubles
-.nojoy:
+.nojoy:								; x distance to the puck
 	lda.w Xpos,x					; x distance
 	sec
 	sbc.w puckx
@@ -21,7 +21,7 @@ checkagr:							;Penalty roll for player X: small results call a penalty. Joysti
 	beq .xpos
 	eor.w #$FFFF					; negate
 	inc a
-.xpos:
+.xpos:								; within 40 in x?
 	cmp.w #$0029					; within 40
 	bcs .far
 	lda.w Ypos,x					; y distance
@@ -31,9 +31,9 @@ checkagr:							;Penalty roll for player X: small results call a penalty. Joysti
 	beq .ypos
 	eor.w #$FFFF					; negate
 	inc a
-.ypos:
+.ypos:								; within 40 in y: near the puck, halve
 	cmp.w #$0029					; within 40
 	bcs .far
 	lsr.b d0						; near the puck: halve
-.far:
+.far:								; random roll of d0
 	jml.l randomd0					; random roll

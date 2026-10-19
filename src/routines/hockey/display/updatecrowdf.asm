@@ -7,7 +7,7 @@ updatecrowdf:						;Every game loop: let the crowd level fade and step the crowd
 	bra .dec
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .dec
-.loud:
+.loud:								; a loud crowd calms down faster
 	dec.b crowdlevel				; loud crowd calms down faster
 	dec.b crowdlevel
 	dec.b crowdlevel

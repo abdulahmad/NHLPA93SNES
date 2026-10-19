@@ -25,7 +25,7 @@ DrawTeamBlocks:						;Draw team d1's name block at printx / printy
 	lda.w #9						; 9 tiles per row
 	sta.b tmp0
 	sta.b tmp1
-.row1:
+.row1:								; first row of the team block
 	lda.b [a2],y					; map tile
 	clc
 	adc.w scorechars				; plus the score font offset
@@ -38,7 +38,7 @@ DrawTeamBlocks:						;Draw team d1's name block at printx / printy
 	inx
 	dec.b tmp0						; row done?
 	bne .row1
-.row2:
+.row2:								; second row of the team block
 	lda.b [a2],y					; map tile
 	clc
 	adc.w scorechars

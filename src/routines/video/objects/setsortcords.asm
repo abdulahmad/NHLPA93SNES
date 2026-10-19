@@ -1,7 +1,7 @@
 setsortcords:						;Draw the sorted objects in display order, hiding ones that are off screen
 	lda.w #OOlist					; a4 = OOlist
 	sta.b a4						; a4 = list
-.top:
+.top:								; next object number from OOlist
 	lda.b (a4)						; object
 	and.w #$00FF					; byte
 	tax								; X = object
@@ -32,9 +32,9 @@ setsortcords:						;Draw the sorted objects in display order, hiding ones that a
 	bcc .add						; bit 0 clear
 	lda.w #$8000
 	sta.b sprflag					; flag
-.add:
+.add:								; sprframe at sprx/spry
 	jsl.l addframe					; sprframe at sprx/spry
-.next:
+.next:								; next entry
 	inc.b a4						; next entry
 	lda.b a4
 	cmp.w #OOlist+$10				; 16 objects

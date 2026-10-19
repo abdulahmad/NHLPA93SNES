@@ -18,7 +18,7 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	sta.b a1
 	lda.w #PasswordText>>16
 	sta.b a1+2
-.textlp:
+.textlp:							; print the text
 	jsl.l print						; print it
 	ldy.w #$0002
 	lda.b [a1],y
@@ -71,14 +71,14 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	jsl.l .setd4					; cursor at character 0, frame around grid character 0
 	jsl.l .setd5
 	jsl.l Framer					; d0 x d1
-.topx:
+.topx:								; print the strings that follow
 	jsl.l printz					; print the string that follows
 	%StringCt(CC_Font1,$02,$13,"D Pad - Select")
 	jsl.l printz					; print the string that follows
 	%StringCt(CC_Font1,$02,$14,"    A - Next")
 	jsl.l printz					; print the string that follows
 	%StringCt(CC_Font1,$02,$15,"    Y - Back")
-.input:
+.input:								; print the string, then the password
 	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1,$02,$10)
 	jsl.l PWprint
@@ -90,7 +90,7 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	jsl.l QueueBackmapDMA
 	lda.w #VBlank_SprPal
 	sta.b vbint
-.pad:
+.pad:								; read the pads
 	jsl.l ReadPads					; read the pads
 	lda.w padnew1
 	ora.w padnew1+2
@@ -240,7 +240,7 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	jsl.l QueueBackmapDMA
 	lda.w #VBlank_SprPal
 	sta.b vbint
-.notok:
+.notok:								; read the pads
 	jsl.l ReadPads					; read the pads
 	lda.w padnew1
 	ora.w padnew1+2

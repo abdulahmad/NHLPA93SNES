@@ -10,6 +10,6 @@ setpde:								;Set the energy of player d1 of team a2 to d0
 	bpl .store						; negative: 0
 	lda.w #$0000
 	sta.b d0
-.store:
+.store:								; store the energy
 	sta.w tmpde,y					; store it
 	rtl

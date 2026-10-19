@@ -14,5 +14,5 @@ SetPA:								;Start the referee animation for penalty d0 and show its message
 	beq .pa2
 	lda.w #$003C					; only $3C frames
 	sta.w penmsgtimer
-.pa2:
+.pa2:								; start the animation
 	jml.l SetPA2					; start the animation

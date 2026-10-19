@@ -8,7 +8,7 @@ Goal:								;The puck is in the goal: add the score, sound the siren, log it, u
 	eor.w puckvy
 	bpl .in
 	jmp.w .rtl
-.in:
+.in:								; sound reset, siren, mute
 	jsl.l ChkShotStat				; sound reset, siren, mute other sfx
 	jsl.l sndqreset					; reset the sound queue
 	lda.w #SFXsiren
@@ -29,7 +29,7 @@ Goal:								;The puck is in the goal: add the score, sound the siren, log it, u
 	stz.b a1
 	lda.w #$0002
 	sta.b a2
-.g0:
+.g0:								; gmdir swaps the ends
 	lda.w gmode						; gmdir: swap
 	bit.w #gmdir
 	beq .g1
@@ -106,7 +106,7 @@ Goal:								;The puck is in the goal: add the score, sound the siren, log it, u
 	sep #$20						; 8-bit A
 	sta.b [a0]
 	rep #$20						; 16-bit A
-.noast:
+.noast:								; PenGoalStuff, redraw the scores
 	jsl.l PenGoalStuff				; PenGoalStuff, printscores1, ascore for the scoring team
 	jsl.l printscores1				; redraw the scores
 	lda.w #ascore
@@ -121,7 +121,7 @@ Goal:								;The puck is in the goal: add the score, sound the siren, log it, u
 	cmp.w #$0003
 	bcs .nocue
 	inc.w goalcue
-.nocue:
+.nocue:								; puck into the net: stop it
 	stz.b collflag					; puck into the net at (+-6, +-$110), Zvel $600
 	stz.w puckvx
 	stz.w puckvy

@@ -26,7 +26,7 @@ UnpackNibbles:						;Unpack d0 4-bit values at [a0] (high nibble first) into wor
 	sta.b a1+2
 	stz.b d2						; nibble counter
 	bra .next						; go
-.loop:
+.loop:								; next nibble (one count per pass)
 	lda.b [a0]						; byte
 	inc.b a0						; next byte
 	and.w #$00FF
@@ -48,7 +48,7 @@ UnpackNibbles:						;Unpack d0 4-bit values at [a0] (high nibble first) into wor
 	sta.b [a1]						; store
 	inc.b a1
 	inc.b a1
-.next:
+.next:								; loop count in d0
 	dec.b d0						; count down
 	bpl .loop
 	stx.b xsave						; X again

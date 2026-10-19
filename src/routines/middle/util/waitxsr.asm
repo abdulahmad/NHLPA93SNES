@@ -2,7 +2,7 @@ waitxsr:							;Wait d0 frames or until a button in d1 is pressed (used while th
 									;crosses)
 	lda.b d0						; frame count
 	pha
-.wait:
+.wait:								; wait for a button press
 	jsl.l ReadJoy1					; pad 1
 	lda.b d1						; buttons
 	bne .exit						; pressed: done

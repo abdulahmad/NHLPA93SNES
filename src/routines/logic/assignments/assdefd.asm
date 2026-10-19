@@ -4,17 +4,17 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	lda.w pfalock,x					; assignment locked?
 	beq .go
 	jmp.w .rtl
-.go:
+.go:								; clock stopped: do nothing
 	lda.w gmclock					; clock stopped: do nothing
 	beq .gm
 	jml.l assnothing
-.gm:
+.gm:								; bench check
 	jsl.l check4bench				; check for a bench change
 	lda.w pflags,x
 	bit.w #pfjoycon					; human controlled player?
 	beq .chk
 	jmp.w .rtl
-.chk:
+.chk:								; assignment just started?
 	bit.w #pfna						; assignment just started?
 	beq .nna
 	and.w #~pfna&$FFFF
@@ -23,7 +23,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	stz.w temp2,x
 	lda.w #8						; temp2b = 8
 	sta.w temp2b,x
-.nna:
+.nna:								; re-think every aidef frames
 	lda.w temp1,x					; countdown timer
 	sec
 	sbc.b d7						; minus the frame count
@@ -49,7 +49,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	bit.w #$0200					; sign extend
 	beq .sx
 	ora.w #$FC00
-.sx:
+.sx:								; d3 = puck y lead
 	sta.b d3						; d3 = puck y lead
 	lda.w pfgoal,x					; team direction
 	bne .de00
@@ -77,7 +77,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	bra .de0
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .de0
-.pastline:
+.pastline:							; team offsides: stay back
 	ldy.b a2						; team of this player
 	lda.w tmflags,y
 	bit.w #tmfoside					; team offsides: stay back
@@ -102,7 +102,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	sta.b d1
 	bmi .de0
 	jml.l assreplace				; replace the assignment with d0
-.de0:
+.de0:								; target x 65
 	lda.w #65						; target x 65
 	sta.w temp3,x
 	lda.w position,x				; position 2 is the right defenseman
@@ -110,7 +110,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	beq .de1
 	lda.w #-65						; left defenseman: x -65
 	sta.w temp3,x
-.de1:
+.de1:								; a0 = first opponent
 	stz.b a0						; a0 = first opposing player
 	cpx.w #12						; X in the second team?
 	bcs .de2
@@ -135,7 +135,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	lda.w Yvel,y					; y velocity
 	bmi .gu2
 	lda.w #$0000
-.gu2:
+.gu2:								; y velocity / 16
 	lsr a							; y velocity / 16
 	lsr a
 	lsr a
@@ -155,10 +155,10 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	bra .gu0
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvs .gu0
-.gu3:
+.gu3:								; new best y
 	lda.b d1						; new best y
 	sta.b d0
-.gu0:
+.gu0:								; next opponent
 	inc.b a0						; next player
 	inc.b a0
 	dec.b d2						; count down
@@ -175,7 +175,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	bra .gu1
 .neg2:								; signed compare: overflow flag corrects the sign
 	bvs .gu1
-.cl1:
+.cl1:								; limit -220
 	lda.w #-220						; limit -220
 	sta.b d0
 .gu1:								; store the target y and continue
@@ -191,7 +191,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	bra .de3
 .rtl:								; return
 	rtl
-.gdwn:
+.gdwn:								; mirror of .gup for the other goal
 	ldy.b a0						; player flags
 	lda.w pflags,y
 	bit.w #pf2unav					; skip unavailable players
@@ -201,7 +201,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	lda.w Yvel,y					; y velocity
 	bpl .gd2
 	lda.w #$0000
-.gd2:
+.gd2:								; Yvel/16 lead
 	lsr a							; y velocity / 16
 	lsr a
 	lsr a
@@ -220,10 +220,10 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	bra .gd0
 .neg3:								; signed compare: overflow flag corrects the sign
 	bvc .gd0
-.gd3:
+.gd3:								; new best y
 	lda.b d1						; new best y
 	sta.b d0
-.gd0:
+.gd0:								; next opponent
 	inc.b a0						; next player
 	inc.b a0
 	dec.b d2						; count down
@@ -239,7 +239,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	bra .gd1
 .neg4:								; signed compare: overflow flag corrects the sign
 	bvc .gd1
-.cl2:
+.cl2:								; limit 220
 	lda.w #220						; limit 220
 	sta.b d0
 .gd1:								; store the target y and continue
@@ -256,7 +256,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	sta.b d1
 	bpl .de3
 	stz.w temp3,x					; opposite sign to puck x: clear temp3
-.de3:
+.de3:								; skate to (temp3,temp4) avoiding the puck carrier
 	lda.w temp3,x					; target x
 	sta.b d0
 	lda.w temp4,x					; target y

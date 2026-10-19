@@ -26,7 +26,7 @@ findpc_calc:						;findpc for one goal line
 	jsl.l divs						; signed divide
 	bpl .time
 	jmp.w .nocross
-.time:
+.time:								; frames until crossing
 	sta.w puckcross+2,y				; frames until crossing
 	lda.w puckvx
 	sta.b mula

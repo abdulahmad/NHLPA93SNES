@@ -11,7 +11,7 @@ DefaultMenus:						;Set the default menu choices at power on
 	sta.b a1+2
 	lda.w #$0006					; 7 words
 	sta.b d0
-.copy:
+.copy:								; copy a word of the menu defaults
 	lda.b [a1]						; copy a word
 	inc.b a1
 	inc.b a1

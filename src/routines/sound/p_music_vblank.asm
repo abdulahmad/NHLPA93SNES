@@ -22,9 +22,9 @@ p_music_vblank:						;Vblank sound handler: every other frame, send the next que
 	inc a
 	and.b #$0F
 	sta.b sndqout					; wrap at 16
-.done:
+.done:								; settling: skip the tick
 	rep #$30						; 16-bit registers
 	rtl
-.settle:
+.settle:							; count the settle delay down
 	dec.w sndsettle					; count down
 	rtl

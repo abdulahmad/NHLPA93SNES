@@ -4,13 +4,13 @@ asscenterd:							;Assignment: the center on defense, halfway between the puck a
 	lda.w gmclock					; clock stopped
 	beq .go
 	jml.l assnothing				; stand still
-.go:
+.go:								; bench check
 	jsl.l check4bench				; bench check
 	lda.w pflags,x					; flags
 	bit.w #pfjoycon					; human
 	beq .nopflags
 	jmp.w .rtl						; leave
-.nopflags:
+.nopflags:							; new assignment?
 	bit.w #pfna						; new assignment?
 	beq .nna
 	and.w #~pfna&$FFFF				; clear the flag
@@ -19,7 +19,7 @@ asscenterd:							;Assignment: the center on defense, halfway between the puck a
 	stz.w temp2,x
 	lda.w #$0008					; temp2b = 8
 	sta.w temp2b,x
-.nna:
+.nna:								; re-think every aidef frames
 	lda.w temp1,x					; timer
 	sec
 	sbc.b d7						; minus d7
@@ -41,7 +41,7 @@ asscenterd:							;Assignment: the center on defense, halfway between the puck a
 	eor.b d1						; same side?
 	bmi .nodec						; no
 	jml.l assreplace				; switch
-.nodec:
+.nodec:								; target x = puck x / 2
 	lda.w puckx						; puck x
 	pha
 	asl a							; /2
@@ -63,7 +63,7 @@ asscenterd:							;Assignment: the center on defense, halfway between the puck a
 	bra .z1
 .neg:								; signed compare: overflow flag corrects the sign
 	bvs .z1
-.half:
+.half:								; halfway to the puck y
 	lda.w #$FF80					; halfway
 	clc
 	adc.w pucky						; plus puck y
@@ -75,7 +75,7 @@ asscenterd:							;Assignment: the center on defense, halfway between the puck a
 	bra .z1							; skate there
 .rtl:								; return
 	rtl
-.nopfgoal:
+.nopfgoal:							; above the blue line?
 	lda.w #blueline					; blue line
 	sec
 	sbc.w pucky						; minus puck y
@@ -93,7 +93,7 @@ asscenterd:							;Assignment: the center on defense, halfway between the puck a
 	pla								; /2
 	ror a
 	sta.b d1
-.z1:
+.z1:								; skate there
 	lda.w #rtss						; no callback
 	sta.b a0
 	lda.w #rtss>>16

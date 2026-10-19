@@ -2,7 +2,7 @@ sroot:								;d0 = the square root of d0
 	stz.b tmp0						; low = 0
 	lda.w #$1000					; high = $1000
 	sta.b tmp1
-.bs:
+.bs:								; d3 = (low+high)/2, carry shifted back in
 	lda.b tmp0						; low + high
 	clc
 	adc.b tmp1
@@ -25,6 +25,6 @@ sroot:								;d0 = the square root of d0
 	lda.b tmp2
 	sta.b tmp0
 	bra .bs
-.done:
+.done:								; d0 = root (shared exit of both methods)
 	sta.b d0						; d0 = root
 	rtl

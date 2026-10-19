@@ -31,7 +31,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	lda.b d1
 	cmp.w #TMPDBENCH
 	bne .nda
-.da:
+.da:								; enter the penalty box / bench exit assignment d0
 	jsl.l assinsert					; insert assignment d0
 	stz.w pfalock,x					; pfalock = 0, SPA = 0
 	stz.w SPA,x
@@ -84,7 +84,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	and.w #$000F
 	sta.w PPBonus
 	bra .nda3
-.nda2:
+.nda2:								; PKBonus path (chkpk2 returned Z)
 	ldy.w #$0001					; short-handed: PKBonus = -high nibble of byte 1
 	lda.b [a0],y
 	lsr a
@@ -95,7 +95,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	eor.w #$FFFF					; negate
 	inc a
 	sta.w PKBonus
-.nda3:
+.nda3:								; home/away bonus from byte 2
 	ldy.w #$0002					; HmAwBonus: home = high nibble of byte 2, visitors = -low nibble
 	lda.b [a0],y
 	and.w #$000F
@@ -129,7 +129,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	bra .score
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvs .score
-.half:
+.half:								; half of the period time
 	jsl.l GetPeriodTime				; GetPeriodTime
 	lsr.b d0
 	lda.b d0
@@ -141,7 +141,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	bra .nomod
 .neg2:								; signed compare: overflow flag corrects the sign
 	bvs .nomod
-.score:
+.score:								; home score minus away score
 	lda.w tmscore					; tied or trailing: ThirdPBonus = 2
 	sec
 	sbc.w tmscore+2
@@ -159,7 +159,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 .close:								; close game: third period bonus
 	lda.w #$0002
 	sta.b ThirdPBonus
-.nomod:
+.nomod:								; restore registers
 	stx.b xsave						; keep X
 	ldx.w #$0002
 .resta:								; pull a0 and the words after it back

@@ -2,7 +2,7 @@ getpde:								;d0 = the energy of player X
 	lda.w pfteam,x					; player team
 	beq .0							; team 0
 	lda.w #$0002					; a2 = 2: away team
-.0:
+.0:									; d1 = pnum * 2, word index into tmpde
 	sta.b a2						; a2 = team offset
 	lda.w pnum,x					; player number
 	and.w #$00FF					; pnum low byte

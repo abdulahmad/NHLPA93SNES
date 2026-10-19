@@ -3,7 +3,7 @@ PauseReadJoy:						;Wait for a new button press; in the demo the pause ends by i
 	bne .force						; done: force Start
 	jsl.l setvideo					; update the video
 	lda.b vcount					; frame counter
-.vb:
+.vb:								; wait for the next frame
 	cmp.b vcount					; wait for the next frame
 	beq .vb
 	jsl.l ReadPads					; ReadPads; ignore L/R
@@ -20,10 +20,10 @@ PauseReadJoy:						;Wait for a new button press; in the demo the pause ends by i
 	bne .chk						; no demo timer
 	dec.b pausetimer				; demo timer counts down
 	bne .chk
-.force:
+.force:								; force Start
 	lda.w #JOYSTART					; force Start
 	tsb.b d1
-.chk:
+.chk:								; any new presses?
 	lda.b d1						; new presses
 	beq PauseReadJoy				; none: wait
 	lda.w #60000					; reset the demo timer

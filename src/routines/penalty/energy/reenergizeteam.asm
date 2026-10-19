@@ -2,7 +2,7 @@ reenergizeteam:						;Give every player of team a2 full energy, and move players
 									;out to the bench
 	lda.w #$0032					; last player
 	sta.b d0
-.top:
+.top:								; away team offset $34
 	lda.b a2						; team
 	beq .tm
 	lda.w #$0034					; away team offset $34
@@ -17,7 +17,7 @@ reenergizeteam:						;Give every player of team a2 full energy, and move players
 	bne .nb
 	lda.w #TMPDBENCH				; back to the bench
 	sta.w tmpdst,y
-.nb:
+.nb:								; next player (counting down)
 	dec.b d0						; previous player
 	dec.b d0
 	bpl .top

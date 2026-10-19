@@ -10,7 +10,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	jmp.w .rtl
 .neg:								; signed compare: overflow flag corrects the sign
 	bvs .ex1
-.z:
+.z:									; the puck only: players use checkgoalp
 	cpx.w #puckobj					; not the puck: checkgoalp
 	beq .puck
 	jmp.w checkgoalp				; else the player version
@@ -33,7 +33,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	jmp.w .rtl
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvs .ex2
-.xl:
+.xl:								; left edge, negated
 	lda.b d4						; left edge
 	eor.w #$FFFF					; negate
 	inc a
@@ -47,7 +47,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	jmp.w .rtl
 .neg2:								; signed compare: overflow flag corrects the sign
 	bvc .ex3
-.yh:
+.yh:								; goal depth 4 plus the radius
 	lda.w #$0004					; goal depth 4
 	clc
 	adc.w wcradiusy					; plus the radius
@@ -65,7 +65,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	jmp.w .rtl
 .neg3:								; signed compare: overflow flag corrects the sign
 	bvs .ex4
-.yl:
+.yl:								; front edge, negated
 	lda.b d5						; front edge
 	eor.w #$FFFF					; negate
 	inc a
@@ -131,7 +131,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	sta.b d1						; d1 = y movement
 	bne .dy							; zero: side entry
 	jmp.w .sideentry
-.dy:
+.dy:								; direction of y: zero is a side entry
 	bmi .0							; which way
 	lda.b d0
 	eor.w #$FFFF					; negate
@@ -170,7 +170,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	beq .m2
 	eor.w #$FFFF					; negate
 	inc a
-.m2:
+.m2:								; compare with the y movement: side entry if smaller
 	cmp.b mula						; compare with the y movement
 	bcc .dv
 	jmp.w .sideentry				; side entry
@@ -212,7 +212,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	eor.b d0
 	bpl .pf
 	jmp.w wallcoll					; bounce off the back
-.pf:
+.pf:								; mirror (negate)
 	lda.b d0						; mirror
 	eor.w #$FFFF					; negate
 	inc a
@@ -289,7 +289,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	beq .dz
 	eor.w #$FFFF					; negate
 	inc a
-.dz:
+.dz:								; store puckvz
 	sta.w puckvz					; store it
 .rtl:								; return
 	rtl
@@ -304,5 +304,5 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	bmi .wc
 	lda.w #$FF00					; other side: -256
 	sta.b d1
-.wc:
+.wc:								; bounce off the wall
 	jmp.w wallcoll					; bounce

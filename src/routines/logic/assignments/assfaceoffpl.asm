@@ -2,7 +2,7 @@ assfaceoffpl:						;Assignment: the players taking the face off
 	lda.w pfalock,x					; locked
 	beq .go							; no
 	jmp.w .rts						; yes: leave
-.go:
+.go:								; is the faceoff over?
 	lda.w sflags					; flags
 	bit.w #sf2faceoff				; faceoff over
 	beq .exit						; over: exit
@@ -13,7 +13,7 @@ assfaceoffpl:						;Assignment: the players taking the face off
 	sta.w pflags,x
 ;first time: clear temp1
 	stz.w temp1,x					; temp1 = 0
-.nna:
+.nna:								; a0 = fofdata2 (home) or +4 (visitor): big faceoff data
 	lda.w #fofdata2					; a0 = fofdata2, +4 for the visitors
 	sta.b a0
 	lda.w #$0000					; bank 0
@@ -22,7 +22,7 @@ assfaceoffpl:						;Assignment: the players taking the face off
 	beq .0							; team 0
 	lda.w #fofdata2+4				; visitors
 	sta.b a0
-.0:
+.0:									; d0 = SPAnum/4 + 1, +3 for right handed: frame code
 	lda.w SPAnum,x					; frame = SPAnum/4 + 1, +3 for a righty
 	lsr a
 	lsr a
@@ -33,7 +33,7 @@ assfaceoffpl:						;Assignment: the players taking the face off
 	inc.b d0
 	inc.b d0
 	inc.b d0
-.lefty:
+.lefty:								; store frame code
 	lda.b d0						; frame
 	sta.b [a0]						; store it
 	lda.w pflags,x					; flags
@@ -59,13 +59,13 @@ assfaceoffpl:						;Assignment: the players taking the face off
 	beq .d							; zero: normal
 	lda.w #SPAfaceoffr				; reverse animation
 	sta.b d1
-.d:
+.d:									; swing animation started
 	lda.w #$0001					; flag
 	sta.w pf2aip,x
 	jmp.w SetSPA					; start it
 .rts:								; return
 	rtl
-.exit:
+.exit:								; nopuck = 20
 	lda.w #$0014					; nopuck = 20
 	sta.w nopuck,x					; no puck for 20 frames
 	jmp.w assexit					; assignment over

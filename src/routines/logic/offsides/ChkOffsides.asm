@@ -32,7 +32,7 @@ ChkOffsides:						;Clear each team's offsides flag once it is back onside; when 
 	bra .rtl
 .neg2:								; signed compare: overflow flag corrects the sign
 	bvc .rtl
-.t:
+.t:									; blue line + $A
 	lda.w #blueline-4+$A			; +$A
 	sta.b d0
 	lda.w gmode
@@ -42,7 +42,7 @@ ChkOffsides:						;Clear each team's offsides flag once it is back onside; when 
 	ldy.b a1
 	sta.b a1
 	sty.b a2
-.t0:
+.t0:								; loop over the 6 players of team a2
 	lda.w #$0005					; check 6 players
 	sta.b d2
 	ldy.b a2
@@ -67,7 +67,7 @@ ChkOffsides:						;Clear each team's offsides flag once it is back onside; when 
 	sta.w tmflags,y
 .rtl:								; return
 	rtl
-.1:
+.1:									; next player
 	inc.b a0						; next player
 	inc.b a0
 	dec.b d2

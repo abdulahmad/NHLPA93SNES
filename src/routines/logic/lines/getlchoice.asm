@@ -51,7 +51,7 @@ getlchoice:							;d0 = the line for line choice d0 of team a2, by the man advan
 	bit.w #$0080
 	beq .sext						; a negative byte: sign extend
 	ora.w #$FF00
-.sext:
+.sext:								; d0 = the line, or -1
 	sta.b d0						; d0 = the line, or -1
 	stx.b xsave						; keep X
 	ldx.w #$0006

@@ -13,7 +13,7 @@ ProcessInputWithRepeat:				;Read pads 1 and 2 with key repeat: a held button rep
 	sta.b d1
 .rtl:								; return
 	rtl
-.chg:
+.chg:								; first repeat delay
 	lda.w #15						; first repeat after 15 frames
 	sta.w repeatdelay
 	rtl

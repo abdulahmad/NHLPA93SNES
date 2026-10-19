@@ -22,7 +22,7 @@ mulu32:								;Unsigned 32-bit multiply: mulres = mula * mulb
 	sep #$20						; 8-bit A
 	bcc .c1							; no carry
 	inc.b mulres+3					; carry
-.c1:
+.c1:								; mulb byte 2
 	lda.b mulb+2					; mulb byte 2
 	sta.w WRMPYB
 	rep #$30						; 16-bit registers
@@ -54,7 +54,7 @@ mulu32:								;Unsigned 32-bit multiply: mulres = mula * mulb
 	sep #$20						; 8-bit A
 	bcc .c2
 	inc.b mulres+3
-.c2:
+.c2:								; mulb byte 1
 	lda.b mulb+1					; mulb byte 1
 	sta.w WRMPYB
 	rep #$30						; 16-bit registers

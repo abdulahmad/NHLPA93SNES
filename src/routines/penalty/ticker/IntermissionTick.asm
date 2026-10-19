@@ -16,6 +16,6 @@ IntermissionTick:					;During the intermission, show the next ticker score from 
 	trb.w sflags3					; clear sflags3 bit 3
 .rtl:								; return
 	rtl
-.wait:
+.wait:								; nothing to report
 	lda.w #$0000					; nothing to report
 	rtl

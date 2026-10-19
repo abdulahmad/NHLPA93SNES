@@ -24,7 +24,7 @@ SetLCmode2:							;Draw the line change box for team a2, one row per line it can
 .box:								; draw the box and frame
 	jsl.l box
 	jsl.l setlccords
-.frame:
+.frame:								; frame the line change box
 	jsl.l Framer					; d0/d1 size
 	dec.w printy					; printy -= 2, printx += 1
 	dec.w printy
@@ -50,7 +50,7 @@ SetLCmode2:							;Draw the line change box for team a2, one row per line it can
 	bne .up
 	lda.w tmline,y
 	sta.b d0
-.pr:
+.pr:								; a1 = message area; row letter string
 	lda.w #mesarea					; mesarea = 4, button letter
 	sta.b a1
 	lda.w #mesarea>>16

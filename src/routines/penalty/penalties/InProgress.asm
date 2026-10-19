@@ -8,7 +8,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	lda.w RefStep
 	bmi .go
 	jmp.w .rtl
-.go:
+.go:								; save registers
 	stx.b xsave						; keep X
 	ldx.w #$0000
 .save:								; save d0 and the words after it (2 words)
@@ -87,7 +87,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	sta.b d2
 	bne .min						; no minutes: no player involved
 	jmp.w .sa2
-.min:
+.min:								; save registers
 	stx.b xsave						; keep X
 	ldx.w #$0000
 .save2:								; save d0 and the words after it (4 words)
@@ -127,7 +127,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	stz.b a1
 	lda.w #$0002
 	sta.b a2
-.sa1:
+.sa1:								; team penalty count
 	ldy.b a2						; tmPenalties +1, tmPenmin += minutes
 	lda.w tmPenalties,y
 	inc a
@@ -255,7 +255,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	jsl.l SetPA
 	jsl.l USBoard
 	bra .ex
-.sa2:
+.sa2:								; no player involved: drop the entry
 	lda.w #$0000					; no minutes: clear it, SetPA
 	sta.b [a0]
 	lda.w sfhormode
@@ -264,7 +264,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 .sa3:								; start the animation
 	jsl.l SetPA
 	bra .ex
-.exit:
+.exit:								; PenBuf empty: recount the players on ice for both teams
 	stz.b a2						; coinsearch for both teams, clear gmpen, the puck: pfaceoff
 	jsl.l coinsearch
 	lda.w #$0002
@@ -277,7 +277,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	lda.w #pfaceoff					; puck goes to the faceoff assignment
 	sta.b d0
 	jsl.l assreplace				; replace the assignment with d0
-.ex:
+.ex:								; restore and return
 	stx.b xsave						; keep X
 	ldx.w #$000E
 .resta:								; pull a0 and the words after it back

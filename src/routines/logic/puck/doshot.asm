@@ -194,7 +194,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	lda.b $05,s
 	bpl .am
 	lsr.b d0
-.am:
+.am:								; y dist += random error
 	jsl.l randomd0s					; randomas on d0
 	lda.b $05,s
 	adc.b d0

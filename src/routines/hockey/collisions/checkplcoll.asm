@@ -3,11 +3,11 @@ checkplcoll:						;Check object X against the objects near it in y
 	bit.w #pf2npc					; object doesn't collide with players?
 	beq .pl
 	jmp.w .ex
-.pl:
+.pl:								; only the first 12 objects (players)
 	cpx.w #$0018					; only the first 12 objects (players)
 	bcc .go
 	jmp.w .ex
-.go:
+.go:								; X's index in the sorted list
 	lda.w OOlistpos,x				; d1 = position of X in OOlist
 	sta.b d1						; X's index in the sorted list
 .0:									;objects higher in the list
@@ -30,7 +30,7 @@ checkplcoll:						;Check object X against the objects near it in y
 	bra .cl
 .neg:								; signed compare: overflow flag corrects the sign
 	bvs .cl
-.uy:
+.uy:								; its x minus the x of X
 	lda.w Xpos,y					; its x
 	sec
 	sbc.b d2						; minus the x of X
@@ -38,7 +38,7 @@ checkplcoll:						;Check object X against the objects near it in y
 	beq .ux
 	eor.w #$FFFF					; negate
 	inc a
-.ux:
+.ux:								; within 15 in x?
 	cmp.w #$000F					; within 15 in x?
 	bcs .unext
 	lda.w pflags,y					; not npc, nc, players only
@@ -48,7 +48,7 @@ checkplcoll:						;Check object X against the objects near it in y
 	cpy.w #$0018
 	bcs .unext
 	jsl.l checkcx					; check the pair
-.unext:
+.unext:								; next object up the list
 	inc.b d1						; next up
 	bra .0
 .cl:								;objects lower in the list
@@ -73,7 +73,7 @@ checkplcoll:						;Check object X against the objects near it in y
 	bra .ex
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvs .ex
-.dy:
+.dy:								; its x minus the x of X
 	lda.w Xpos,y					; its x
 	sec
 	sbc.b d2						; minus the x of X
@@ -81,7 +81,7 @@ checkplcoll:						;Check object X against the objects near it in y
 	beq .dx
 	eor.w #$FFFF					; negate
 	inc a
-.dx:
+.dx:								; within 15 in x?
 	cmp.w #$000F					; within 15 in x?
 	bcs .dnext
 	lda.w pflags,y
@@ -91,7 +91,7 @@ checkplcoll:						;Check object X against the objects near it in y
 	cpy.w #$0018					; players only
 	bcs .dnext
 	jsl.l checkcx					; check the pair
-.dnext:
+.dnext:								; next object down the list
 	dec.b d1						; next down
 	bne .1
 .ex:								; return

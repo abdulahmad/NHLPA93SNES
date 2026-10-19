@@ -17,7 +17,7 @@ AttribStatus:						;Roster column: where the player is (ice, bench, injured) or 
 	lda.w #$0001					; else 1
 	sta.b d0
 	bra .st
-.inj:
+.inj:								; string 3 = Injury G
 	lda.w #$0003					; injured
 	sta.b d0
 .st:								; status text list

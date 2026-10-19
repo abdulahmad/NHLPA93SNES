@@ -57,7 +57,7 @@ dopass:								;Pass the puck in the pass direction, to the best teammate there 
 	bcc .0
 	lda.w #$000C					; second team starts at $0C
 	sta.b a1
-.0:
+.0:									; skip yourself
 	cpx.b a1						; don't pass to yourself
 	bne .1
 	jmp.w .next
@@ -71,7 +71,7 @@ dopass:								;Pass the puck in the pass direction, to the best teammate there 
 	bit.w #pf2unav					; player is unavailable
 	beq .3
 	jmp.w .next
-.3:
+.3:									; candidate y minus puck y
 	lda.w Ypos,y					; candidate y minus puck y
 	sec
 	sbc.w pucky
@@ -100,7 +100,7 @@ dopass:								;Pass the puck in the pass direction, to the best teammate there 
 	bit.w #$0080
 	beq .sx
 	ora.w #$FF00
-.sx:
+.sx:								; angle error scaled
 	asl a							; angle error scaled
 	asl a
 	asl a
@@ -147,13 +147,13 @@ dopass:								;Pass the puck in the pass direction, to the best teammate there 
 	sta.b d4+2
 	lda.b a1						; best teammate so far
 	sta.b a0
-.next:
+.next:								; next teammate
 	inc.b a1						; next teammate
 	inc.b a1
 	dec.b d3
 	bmi .done						; all six checked
 	jmp.w .0
-.done:
+.done:								; a player found?
 	lda.b d4+2						; a player found?
 	bmi .nopp
 	jsl.l passtoa0					; pass to a0
@@ -209,7 +209,7 @@ dopass:								;Pass the puck in the pass direction, to the best teammate there 
 	lda.w #$1000					; random vertical velocity up to $1000
 	jsl.l randoma					; random number 0 to A-1
 	sta.w puckvz					; puck z velocity
-.exit:
+.exit:								; start animation for player passing
 	lda.w position,x				; goalie?
 	bne .notgoalie
 	lda.w pfgoal,x					; which end he defends
@@ -224,7 +224,7 @@ dopass:								;Pass the puck in the pass direction, to the best teammate there 
 	eor.w #$FFFF					; negate
 	inc a
 	sta.w puckvy
-.notgoalie:
+.notgoalie:							; puck velocity -> direction for the animation
 	lda.w puckvx					; puck velocity to direction
 	sta.b d0
 	lda.w puckvy
@@ -240,7 +240,7 @@ dopass:								;Pass the puck in the pass direction, to the best teammate there 
 	beq .e1
 	lda.w #SPApassb					; pass animation backhand
 	sta.b d1
-.e1:
+.e1:								; start the pass animation d1
 	jsl.l SetSPA					; start animation d1
 	lda.w #$0001					; lock the assignment
 	sta.w pfalock,x

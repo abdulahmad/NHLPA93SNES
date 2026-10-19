@@ -18,7 +18,7 @@ faceoffinput:						;Pad input for a player taking a face off
 	sta.b a0
 	lda.w #$0000
 	sta.b a0+2
-.2:
+.2:									; store dpad for faceoff pull
 	lda.b d0						; pad direction
 	sta.b [a0]						; store it
 	lda.w pf2aip,x					; pf2aip set: already pulling
@@ -32,7 +32,7 @@ faceoffinput:						;Pad input for a player taking a face off
 	lda.w #$0001					; set the flag
 	sta.w pf2aip,x
 	jmp.w SetSPA					; start it
-.1:
+.1:									; no bbut: stay in the ready animation
 	lda.w #SPAfaceoffr				; reverse pull
 	sta.b d1
 	jmp.w SetSPA					; start it

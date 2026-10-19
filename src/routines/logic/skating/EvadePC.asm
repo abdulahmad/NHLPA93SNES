@@ -17,7 +17,7 @@ EvadePC:							;Near the puck carrier: d0 = the direction away from him
 	beq .xa
 	eor.w #$FFFF					; absolute value
 	inc a
-.xa:
+.xa:								; 40 or more away: leave
 	cmp.w #41						; 40 or more away: leave
 	bcs .rtl
 	lda.w Yvel+1,x
@@ -36,7 +36,7 @@ EvadePC:							;Near the puck carrier: d0 = the direction away from him
 	beq .ya
 	eor.w #$FFFF					; absolute value
 	inc a
-.ya:
+.ya:								; 40 or more away: leave
 	cmp.w #41						; 40 or more away: leave
 	bcs .rtl
 	lda.w Xpos,x

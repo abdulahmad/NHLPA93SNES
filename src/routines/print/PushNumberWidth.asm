@@ -14,7 +14,7 @@ PushNumberWidth:					;a1 = d0 as a d1 digit decimal string, right aligned with l
 	sta.w PushWidthBuf+6
 	sta.w PushWidthBuf+8
 	lda.b d0						; the number
-.dig:
+.dig:								; next digit: d0 / d2, high digit first
 	sta.b mulb						; dividend
 	lda.w #$000A					; 10
 	sta.b mula

@@ -2,17 +2,17 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	lda.w pfalock,x					; assignment locked?
 	beq .run
 	jmp.w .rtl
-.run:
+.run:								; clock stopped: do nothing
 	lda.w gmclock					; clock stopped: do nothing
 	beq .notclock
 	jml.l assnothing
-.notclock:
+.notclock:							; bench check
 	jsl.l check4bench				; check for a bench change
 	lda.w pflags,x
 	bit.w #pfjoycon					; human controlled player?
 	beq .notjoy
 	jmp.w .rtl
-.notjoy:
+.notjoy:							; assignment just started?
 	bit.w #pfna						; assignment just started?
 	beq .nna
 	and.w #~pfna&$FFFF
@@ -23,7 +23,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	stz.w temp2,x
 	lda.w #$0008
 	sta.w temp2b,x
-.nna:
+.nna:								; re-think every aidef frames
 	lda.w temp1,x					; timer
 	sec
 	sbc.b d7						; minus the frame count
@@ -50,7 +50,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	eor.b d1
 	bpl .de0
 	jml.l assreplace				; replace the assignment with d0
-.de0:
+.de0:								; d0 = puck y, d3 = puck y + lead
 	lda.w pucky						; d3 = pucky + puckvy / 64
 	sta.b d0
 	lda.w puckvy					; puck y velocity
@@ -87,7 +87,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	bra .de2
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .de2
-.z1:
+.z1:								; zone 8: centre
 	lda.w #8						; zone 8: centre
 	sta.b d2
 	lda.b d0
@@ -112,7 +112,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	bra .de2
 .neg2:								; signed compare: overflow flag corrects the sign
 	bvc .de2
-.z3:
+.z3:								; zone 24: past the goal line
 	lda.w #24						; zone 24: past the goal line
 	sta.b d2
 .de2:								; same zone as last time?
@@ -150,7 +150,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	jsl.l randomas					; random number -A to A-1
 	adc.b [a0],y					; plus the zone y
 	sta.w temp4,x					; temp4 = spot y
-.nodec:
+.nodec:								; mirror x by position, y by pfgoal
 	lda.w temp3,x					; spot x
 	sta.b d0
 	lda.w position,x				; position 5: left wing
@@ -160,7 +160,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
-.1:
+.1:									; d1 = target y
 	lda.w temp4,x					; spot y
 	sta.b d1
 	lda.w pfgoal,x					; which end
@@ -173,7 +173,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
-.0:
+.0:									; skate there avoiding the puck carrier
 	lda.w #EvadePC					; avoid the puck carrier (EvadePC)
 	sta.b a0
 	lda.w #EvadePC>>16

@@ -2,18 +2,18 @@ assfwatch:							;Assignment: a player watching a fight skates to a spot near it
 	lda.w pfalock,x					; assignment locked?
 	beq .joy
 	jmp.w .rts
-.joy:
+.joy:								; joystick controlled?
 	lda.w pflags,x					; player flags
 	bit.w #pfjoycon					; joystick controlled
 	beq .na
 	jmp.w .rts
-.na:
+.na:								; new assignment: clear the timer
 	bit.w #pfna						; clear the timer
 	beq .nna
 	and.w #~pfna&$FFFF
 	sta.w pflags,x
 	stz.w temp1,x
-.nna:
+.nna:								; every 60 frames pick a new spot
 	lda.w temp1,x					; timer
 	sec
 	sbc.b d7						; minus the frame count
@@ -50,7 +50,7 @@ assfwatch:							;Assignment: a player watching a fight skates to a spot near it
 	lda.b d0
 	bne .d							; avoid dividing by zero
 	lda.w #$0001
-.d:
+.d:									; restore dx,dy
 	sta.b d2						; d2 = distance
 	pla
 	sta.b d0						; dx
@@ -75,7 +75,7 @@ assfwatch:							;Assignment: a player watching a fight skates to a spot near it
 	bra .x0
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .x0
-.cl1:
+.cl1:								; upper limit
 	lda.b d3						; upper limit
 	sta.b d0
 .x0:								; negate X for the other side
@@ -92,7 +92,7 @@ assfwatch:							;Assignment: a player watching a fight skates to a spot near it
 	bra .x1
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvs .x1
-.cl2:
+.cl2:								; lower limit
 	lda.b d3						; lower limit
 	sta.b d0
 .x1:								; store the spot X
@@ -108,7 +108,7 @@ assfwatch:							;Assignment: a player watching a fight skates to a spot near it
 	jsl.l divs						; signed divide
 	adc.w yc1						; plus the fight y
 	sta.w temp4,x					; spot y
-.go:
+.go:								; skate to the spot
 	lda.w temp3,x					; spot x
 	sta.b d0
 	lda.w temp4,x					; spot y
