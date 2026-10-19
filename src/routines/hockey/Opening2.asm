@@ -14,7 +14,7 @@ Opening2:							;Opening2 from scratch: reset the hardware and RAM, set the defa
 	rep #$30						; 16-bit registers
 	jsl.l InitPPU					; hardware
 	ldx.w #$0000					; clear RAM
-.clr:
+.clr:								; clear the work area
 	stz.b vcount,x
 	inx
 	cpx.w #$15FF
@@ -27,14 +27,14 @@ Opening2:							;Opening2 from scratch: reset the hardware and RAM, set the defa
 	sec
 	sbc.w #$003C
 	ldx.w #$0000					; clear the frame times
-.cache:
+.cache:								; clear the sprite frame cache
 	sta.l sprframetime,x
 	inx
 	inx
 	cpx.w #$4C74
 	bne .cache
 	ldx.w #$0000					; and the slot times
-.cache2:
+.cache2:							; clear the sprite slot cache
 	sta.w sprslottime,x
 	inx
 	inx

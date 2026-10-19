@@ -59,7 +59,7 @@ checkob:							;Show the little warning referee when a teammate is over the blue
 	bra .ob
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvs .ob
-.bn:
+.bn:								; next player
 	inc.b a0
 	inc.b a0
 	dec.b d0
@@ -102,7 +102,7 @@ checkob:							;Show the little warning referee when a teammate is over the blue
 	bpl .ex
 	jsl.l PushRef
 	bra .ex
-.top:
+.top:								; compare the puck Y
 	lda.b d1
 	sec
 	sbc.w pucky
@@ -111,7 +111,7 @@ checkob:							;Show the little warning referee when a teammate is over the blue
 	bra .nob
 .neg2:								; signed compare: overflow flag corrects the sign
 	bvc .nob
-.top1:
+.top1:								; each player of the other team
 	ldy.b a0
 	lda.w position,y
 	bmi .tn
@@ -123,7 +123,7 @@ checkob:							;Show the little warning referee when a teammate is over the blue
 	bra .ob
 .neg3:								; signed compare: overflow flag corrects the sign
 	bvc .ob
-.tn:
+.tn:								; next player
 	inc.b a0
 	inc.b a0
 	dec.b d0

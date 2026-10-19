@@ -37,7 +37,7 @@ checksso:							;Draw the arrows that show where the two players are when they a
 	sbc.w #$C5
 	sta.b d1
 	bra .hord
-.nhor:
+.nhor:								; subtract the horizontal scroll
 	lda.b d0
 	sec								; x minus the scroll x
 	sbc.w Hpos
@@ -59,7 +59,7 @@ checksso:							;Draw the arrows that show where the two players are when they a
 .rb:
 	lda.w #8						; right bit
 	sta.b d2
-.0:
+.0:									; left edge
 	lda.b d0
 	sec								; screen x
 	sbc.w #-116						; left
@@ -72,7 +72,7 @@ checksso:							;Draw the arrows that show where the two players are when they a
 .lb:
 	lda.w #4						; left bit
 	tsb.b d2
-.1:
+.1:									; top edge
 	lda.b d1
 	sec								; screen y
 	sbc.w #100						; above
@@ -83,7 +83,7 @@ checksso:							;Draw the arrows that show where the two players are when they a
 	bvc .2
 .ub:
 	inc.b d2						; up bit
-.2:
+.2:									; bottom edge
 	lda.b d1
 	sec
 	sbc.w #-100						; below

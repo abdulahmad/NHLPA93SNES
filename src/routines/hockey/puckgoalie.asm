@@ -182,7 +182,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	bne .sx
 	lda.b a2						; goalie player number
 	jsl.l GetHot					; hot spot offset
-.sx:
+.sx:								; X velocity, signed low byte
 	lda.b d1
 	and.w #$00FF					; low byte
 	bit.w #$0080
@@ -234,7 +234,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	jmp.w .bounce
 .neg2:								; signed compare: overflow flag corrects the sign
 	bvc .b1
-.c2:
+.c2:								; puck Y relative to the net
 	lda.b d0
 	sec
 	sbc.w puckvy					; minus puck y velocity
@@ -244,7 +244,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	jmp.w .bounce
 .neg3:								; signed compare: overflow flag corrects the sign
 	bvc .b2
-.c3:
+.c3:								; negate the Y distance
 	lda.b d0
 	eor.w #$FFFF					; negate
 	inc a
@@ -258,7 +258,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	jmp.w .bounce
 .neg4:								; signed compare: overflow flag corrects the sign
 	bvs .b3
-.c4:
+.c4:								; puck Y relative to the net
 	lda.b d0
 	sec
 	sbc.w puckvy					; minus puck y velocity

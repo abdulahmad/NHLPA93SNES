@@ -21,7 +21,7 @@ SetInst:							;Start a fight between X and a2 when both are aggressive enough; 
 	lda.w pfteam,y
 	beq .tm
 	lda.w #$001A
-.tm:
+.tm:								; team offset of the player
 	clc
 	adc.w pnum,y
 	tay
@@ -69,7 +69,7 @@ SetInst:							;Start a fight between X and a2 when both are aggressive enough; 
 	beq .1
 	lda.w #$000C					; other team: first slot at $0C
 	sta.b a3
-.1:
+.1:									; skip the player himself
 	ldx.b a3
 	cpx.b a4						; skip X himself
 	beq .next
@@ -86,7 +86,7 @@ SetInst:							;Start a fight between X and a2 when both are aggressive enough; 
 	stx.b a3
 .rtl:								; return
 	rtl
-.next:
+.next:								; next object
 	inc.b a3
 	inc.b a3
 	dec.b d0

@@ -9,7 +9,7 @@ uppads:								;Update the gloves object and the pad objects, and queue new pad 
 	bit.w #$0080
 	beq .gx
 	ora.w #$FF00					; sign extend x
-.gx:
+.gx:								; spot X
 	asl a
 	asl a
 	sta.w ffox,y					; x times 4
@@ -18,7 +18,7 @@ uppads:								;Update the gloves object and the pad objects, and queue new pad 
 	bit.w #$0080
 	beq .gy
 	ora.w #$FF00					; sign extend y
-.gy:
+.gy:								; spot Y
 	asl a
 	asl a
 	sta.w ffoy,y					; y times 4
@@ -35,7 +35,7 @@ uppads:								;Update the gloves object and the pad objects, and queue new pad 
 	stz.b a2
 	lda.w PadControlBits			; four nibbles, one per pad
 	sta.b d3
-.top:
+.top:								; each pad nibble
 	lda.b d3
 	and.w #$000F					; nibble of this pad
 	sta.b d0
@@ -69,10 +69,10 @@ uppads:								;Update the gloves object and the pad objects, and queue new pad 
 	lda.w rostnum,y					; roster number of the player
 	and.w #$00FF
 	tsb.b d1
-.chg:
+.chg:								; store the label code
 	lda.b d1
 	sta.b [a1]						; store the label code
-.next:
+.next:								; next pad
 	lda.b d3						; next nibble
 	lsr a
 	lsr a

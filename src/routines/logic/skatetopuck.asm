@@ -26,7 +26,7 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	bit.w #$0080
 	beq .vx
 	ora.w #$FF00
-.vx:
+.vx:								; add the lead in X
 	clc
 	adc.b $01,s
 	sec
@@ -41,7 +41,7 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	bit.w #$0080
 	beq .vy
 	ora.w #$FF00
-.vy:
+.vy:								; add the lead in Y
 	clc
 	adc.b $03,s
 	sec

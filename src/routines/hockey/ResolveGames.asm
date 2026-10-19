@@ -109,7 +109,7 @@ ResolveGames:						;Record the played playoff game and the series wins; when the
 	bpl .cr0
 	jsl.l WritePassBits				; sf3alttree: passbits before the rest was resolved
 	ldy.w #$000E					; 8 words of passbits
-.cp:
+.cp:								; copy the pass bits of the game
 	lda.w passbits,y
 	sta.w tpassbits,y
 	dey
@@ -124,7 +124,7 @@ ResolveGames:						;Record the played playoff game and the series wins; when the
 	asl a
 	sta.b a0
 	stz.b d3
-.nr0:
+.nr0:								; series won by the first team?
 	ldy.b a0
 	lda.w gspotwins,y				; series won by the first team?
 	cmp.w #$0004
@@ -159,7 +159,7 @@ ResolveGames:						;Record the played playoff game and the series wins; when the
 	rtl
 .notbos:							;single games
 	stz.b d3
-.s0:
+.s0:								; compare the scores of the game
 	ldy.b a0
 	lda.w gss2,y					; visitor score
 	cmp.w gss1,y
@@ -179,7 +179,7 @@ ResolveGames:						;Record the played playoff game and the series wins; when the
 	lda.l BitMaskTable,x
 	eor.b d3						; invert the winner bit
 	sta.b d3
-.s2:
+.s2:								; previous game
 	dec.b a0
 	dec.b a0
 	dec.b d1

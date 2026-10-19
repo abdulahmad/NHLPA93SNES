@@ -29,7 +29,7 @@ Pmenu:								;Draw the pause menu items with the current one highlighted
 	lda.w #mesarea>>16
 	sta.b a1+2
 	ldy.w #$001E					; copy 32 bytes
-.copy:
+.copy:								; copy the entry
 	lda.b [a0],y
 	sta.b [a1],y
 	dey
@@ -74,7 +74,7 @@ Pmenu:								;Draw the pause menu items with the current one highlighted
 	clc
 	adc.b a4
 	sta.b a4
-.findpl:
+.findpl:							; find the selected player
 	dec.b tmp0
 	bmi .gotpl						; count down to the goalie
 	lda.b [a4]
@@ -85,13 +85,13 @@ Pmenu:								;Draw the pause menu items with the current one highlighted
 	bra .findpl
 .gotpl:
 	ldy.w #$0001					; scan for the first space
-.findspace:
+.findspace:							; skip over the number to the name
 	iny
 	lda.b [a4],y
 	and.w #$00FF
 	cmp.w #$0020					; space found?
 	bne .findspace
-.copyname:
+.copyname:							; copy the name
 	iny
 	tya
 	cmp.b [a4]						; end of the entry?
