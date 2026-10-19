@@ -1,6 +1,6 @@
 ; Team data. TeamList points to one record per team, the All-Star teams included. A record holds the
-; players, colours, name, lines, scouting report and scoring odds. The playoff seeds follow; the credits are in
-; text/Credits.asm.
+; players, colours, name, lines, scouting report and scoring odds. The playoff seeds follow; the credits
+; are in text/Credits.asm.
 ;
 ; Record layout (the all-star records come first in the file, then the 24 teams): six word offsets from .0
 ; (Playerdata, Palettedata, Teamname, LineSets, ScoutReport, GoalieOdds), then the palettes, scouting
