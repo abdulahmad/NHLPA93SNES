@@ -3,7 +3,7 @@ ResetPassWord:						;Blank the password
 	stz.w PassWord					; first character 0
 	ldy.b #$0F						; 15 characters
 	lda.b #$1E						; blank character
-.blank:
+.blank:								; blank the password
 	sta.w PassWord,y
 	dey
 	bne .blank						; until all are blank

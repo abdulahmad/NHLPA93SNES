@@ -49,7 +49,7 @@ checkfornewpen:						;Look for a new penalty call. Stops play at once when the p
 	bit.w #$0080
 	beq .pl
 	ora.w #$FF00
-.pl:
+.pl:								; player offset
 	sec
 	sbc.w #$0006
 	eor.b d0
@@ -111,7 +111,7 @@ checkfornewpen:						;Look for a new penalty call. Stops play at once when the p
 	tsb.w gmode
 	beq .dc2
 	jmp.w .next
-.dc2:
+.dc2:								; set the penalty delay
 	lda.w #PenDelay
 	sta.b d0
 	jsl.l SetPA						; PenDelay announcement

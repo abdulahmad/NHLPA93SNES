@@ -31,12 +31,12 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	sta.w temp1,x					; expired: reevaluate
 	bmi .dec
 	jmp.w .nodec
-.dec:
+.dec:								; reload the timer from aidef
 	clc
 	adc.w aidef,x					; reload from aidef
 	bpl .st							; not below zero
 	lda.w #$0000
-.st:
+.st:								; store the re-think timer
 	sta.w temp1,x
 	lda.w puckc						; other team has the puck: acenterd
 	bmi .de0

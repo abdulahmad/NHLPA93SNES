@@ -30,7 +30,7 @@ fightinput:							;Pad input in a fight: move and punch
 	sec
 	sbc.w #$0018
 	sta.b d0
-.0:
+.0:									; distance to the opponent
 	lda.b d0
 	sec
 	sbc.w Xpos,x					; minus the player x
@@ -44,7 +44,7 @@ fightinput:							;Pad input in a fight: move and punch
 	beq .1
 	eor.w #$FFFF					; absolute value
 	inc a
-.1:
+.1:									; use the X speed
 	sta.b d0
 	lda.w Xvel,x					; x speed
 	sta.b mula

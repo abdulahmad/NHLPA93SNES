@@ -53,7 +53,7 @@ setpersonel:						;Put team a2's wanted players on the ice, keeping the ones alr
 	ldx.w tmsort,y					; first object of the team
 	dex
 	dex
-.2:
+.2:									; next object
 	inx
 	inx
 	stx.b a3
@@ -113,7 +113,7 @@ setpersonel:						;Put team a2's wanted players on the ice, keeping the ones alr
 	ldx.w tmsort,y					; first object of the team
 	dex
 	dex
-.4:
+.4:									; next object
 	inx
 	inx
 	stx.b a3

@@ -37,7 +37,7 @@ PenGoalStuff:						;After a goal on a power play, let the first player out of th
 	lda.b a1
 	beq .lst
 	lda.w #$001A
-.lst:
+.lst:								; start of the box list
 	sta.b a0
 .loop:								;next player in the box list (negative = end)
 	ldy.b a0
@@ -50,7 +50,7 @@ PenGoalStuff:						;After a goal on a power play, let the first player out of th
 	lda.b a1
 	beq .tm
 	lda.w #$0034
-.tm:
+.tm:								; team offset
 	clc
 	adc.b d2
 	tay

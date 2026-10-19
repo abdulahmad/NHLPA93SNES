@@ -19,7 +19,7 @@ avdgoal:							;Do not skate through the goal: when the path to d0 / d1 crosses 
 	beq .b
 	eor.w #$FFFF					; negate
 	inc a
-.b:
+.b:									; check against the other line
 	cmp.w #32
 	bcc .x							; within 32 of the +258 line: aim at the center
 	lda.w Ypos,x					; player's y
@@ -29,7 +29,7 @@ avdgoal:							;Do not skate through the goal: when the path to d0 / d1 crosses 
 	beq .c
 	eor.w #$FFFF					; negate
 	inc a
-.c:
+.c:									; check the second line
 	cmp.w #32
 	bcs .rtl						; further than 32 from both lines: leave the target
 .x:

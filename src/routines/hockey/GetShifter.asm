@@ -5,7 +5,7 @@ GetShifter:							;d1 = the number of games of the playoff round less one, d2 = 
 	lda.w #16						; d1 = 16
 	sta.b d1
 	ldy.w gamelevel					; round
-.3:
+.3:									; add the shift
 	lda.b d2
 	clc
 	adc.b d1						; d2 += d1

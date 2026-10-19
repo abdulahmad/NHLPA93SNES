@@ -33,7 +33,7 @@ assdefo:							;Assignment: a defenseman on offense holds the blue line on his s
 	adc.w aioff,x					; reload from aioff
 	bpl .store
 	lda.w #$0000					; not below zero
-.store:
+.store:								; store the re-think timer
 	sta.w temp1,x
 	lda.w #2						; adefd
 	sta.b d0
@@ -42,7 +42,7 @@ assdefo:							;Assignment: a defenseman on offense holds the blue line on his s
 	bit.w #tmfoside
 	beq .on
 	jml.l assreplace				; replace the assignment with d0
-.on:
+.on:								; puck y becomes the target
 	lda.w pucky
 	sta.b d1
 	lda.w pfgoal,x

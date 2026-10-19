@@ -126,7 +126,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	lsr a
 	adc.b mulb						; max + min / 4: distance
 	bra .dist
-.m2:
+.m2:								; scale the wall normal
 	lsr a
 	lsr a
 	adc.b mula						; max + min / 4: distance
@@ -215,7 +215,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	jmp.w wallcollb					; wall hit, x board
 .neg8:								; signed compare: overflow flag corrects the sign
 	bvs .b3
-.s3:
+.s3:								; negate the velocity component
 	lda.b d1
 	eor.w #$FFFF					; negate
 	inc a

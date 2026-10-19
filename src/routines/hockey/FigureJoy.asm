@@ -45,7 +45,7 @@ FigureJoy:							;Set which team each controller plays
 	stz.b d0						; po team is team 1
 	lda.w gst2,y					; opponent
 	sta.w OptTeam2					; OptTeam2
-.itx:
+.itx:								; add the joystick offset
 	lda.b d0
 	clc
 	adc.w pojoy						; plus pojoy

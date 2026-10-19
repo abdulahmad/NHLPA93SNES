@@ -78,7 +78,7 @@ assfwatch:							;Assignment: a player watching a fight skates to a spot near it
 .cl1:
 	lda.b d3						; upper limit
 	sta.b d0
-.x0:
+.x0:								; negate X for the other side
 	lda.b d3
 	eor.w #$FFFF					; negate
 	inc a
@@ -95,7 +95,7 @@ assfwatch:							;Assignment: a player watching a fight skates to a spot near it
 .cl2:
 	lda.b d3						; lower limit
 	sta.b d0
-.x1:
+.x1:								; store the spot X
 	lda.b d0
 	sta.w temp3,x					; store the spot x
 	lda.w #$0050					; 80 pixels

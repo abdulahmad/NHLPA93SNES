@@ -9,7 +9,7 @@ GetRosterEntry:						;a0 = the player data of roster player d0 of team a2
 	adc.b [a0],y
 	sta.b a0						; a0 = start of the player data
 	bra .cnt						; count down
-.next:
+.next:								; add the record length
 	lda.b a0
 	clc
 	adc.b [a0]						; plus the record length

@@ -13,7 +13,7 @@ RestoreBenchEnergy:					;Once a second with line changes on, players on the benc
 	lda.b a2						; team
 	beq .away
 	lda.w #$0034					; away team offset
-.away:
+.away:								; add the away team offset
 	clc
 	adc.b d0
 	tay								; index

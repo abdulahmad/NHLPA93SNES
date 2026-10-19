@@ -7,7 +7,7 @@ TryAddPlayerToList:					;Add roster player d0 to slot d4 of the list of players 
 	lda.b a2						; team
 	beq .idx
 	lda.w #$0034					; away team offset $34
-.idx:
+.idx:								; index the player
 	adc.b d0
 	tay								; index
 	lda.w tmpdst,y					; state

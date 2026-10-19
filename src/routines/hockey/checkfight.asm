@@ -80,7 +80,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	sbc.w ChkCnt					; 40 minus the check count
 	bpl .pos
 	lda.w #$0000					; at least 0
-.pos:
+.pos:								; position difference scaled
 	lsr a
 	lsr a
 	clc
@@ -231,7 +231,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	sta.w attribute,x
 	lda.w #$0400					; $400
 	sta.b d1
-.sf2:
+.sf2:								; store the X velocity
 	lda.b d1
 	sta.w Xvel,x					; x velocity
 	lda.w pflags,x					; unavailable, no player coll; pf2aip; SPAfight

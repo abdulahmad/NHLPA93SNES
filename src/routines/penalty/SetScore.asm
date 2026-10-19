@@ -39,7 +39,7 @@ SetScore:							;Play one period of playoff game a0 with random goals; a game ti
 	beq .diff
 	eor.w #$FFFF					; negate
 	inc a
-.diff:
+.diff:								; goal difference limit
 	cmp.w #2
 	bcs .ex
 	lda.w #3						; within one goal: overtime
@@ -48,7 +48,7 @@ SetScore:							;Play one period of playoff game a0 with random goals; a game ti
 	ora.w #gsfhl					; gsfhl: show it in the ticker
 	sta.w gsflags,y
 	bra .ex
-.0:
+.0:									; increment the period score
 	lda.w gsper,y
 	inc a
 	sta.w gsper,y
