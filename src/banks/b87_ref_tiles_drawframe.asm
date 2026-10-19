@@ -7,10 +7,10 @@ endif
 SpriteSet2:							;frame set 2 (stop and skate backwards): frames 145-184
 	incbin "../../Extracted/Graphics/Sprites/Sprites145_184.sanim"
 
-EASNmap:							;EASN.map.jim: the EASN logo backdrop, packed (decompressor
+ScoutMap:							;EASNBG.map.sjim: the EASN backdrop, packed (decompressor
 									;DecompressBytecode): a 32 x 16 map, then the tiles; unpacked by the
 									;scouting report and team roster screens
-	incbin "../../Extracted/Graphics/EASN.map.sjim"
+	incbin "../../Extracted/Graphics/EASNBG.map.sjim"
 
 FaceOffTiles:						;packed faceoff box tiles (55, FaceOff.map.jim tiles): setupice sends them
 									;to faceoffvrcset

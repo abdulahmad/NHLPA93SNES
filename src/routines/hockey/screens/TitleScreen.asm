@@ -100,7 +100,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	lda.w #$0064
 	sta.b d0
 	jsl.l remap						; remap the 4bpp pixels ([a0] data, [a1] table, d0 tiles)
-	jsl.l StartSong6				; start the title music
+	jsl.l StartSngTitle				; start the title music
 	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pal3,$00,$1C)
 	stz.b d0

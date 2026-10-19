@@ -22,7 +22,7 @@ Rendering needs Pillow (python3 -m pip install pillow); unpack does not.
 
 Examples:
   python tools/snesgfx.py screen Extracted/Graphics/Title1.map.sjim -o title.png
-  python tools/snesgfx.py screen Extracted/Graphics/EASN.map.sjim --width 32 --map-size 0x400 --no-pal -o easn.png
+  python tools/snesgfx.py screen Extracted/Graphics/EASNBG.map.sjim --width 32 --map-size 0x400 --no-pal -o easn.png
   python tools/snesgfx.py tiles Extracted/Graphics/BigFont.chr.pak --columns 16 -o bigfont.png
   python tools/snesgfx.py map Extracted/Graphics/IceRink.smap --tiles Extracted/Graphics/IceRink.chr.pak --width 48 --pal Extracted/Graphics/Pals/Rink.spal -o rink.png
   python tools/snesgfx.py sprites 0 -o set00.png

@@ -212,7 +212,7 @@ identical (ASE, ASW, Boston ... Winnipeg, Washington). Check: in S Winnipeg prec
 | GameSetUpMap | GameSetupMap | `GameSetUpMap` (G); P=L |
 | Framermap (used) / FramerMap (label line 34) | FramerMap | G is inconsistent; keep S |
 | Arrowsmap | PlayoffBracketMap | rename? S content differs (arrow graphics as map); P=L |
-| EASNmap | EASNMap, EASNLogoMap | P=L |
+| ScoutMap | EASNMap, EASNLogoMap | P=L |
 | RefMap2 | RefsMapHor | P=L, different content |
 | SmallFontMap/BigFontMap/RonBarrMap/IceRinkMap/HotList/Credits/GameLabels/PerLabels/linelist/sublist/priolist/asstab/cd0 | same | aligned |
 | TeamList, AllStarsEast, etc., Playerdata... | same | aligned |

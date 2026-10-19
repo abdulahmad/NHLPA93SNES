@@ -1,6 +1,6 @@
-StartSong7:							;Start song 7 unless it is already playing. Unused
+StartSngEOP:						;Start song 7 unless it is already playing. Unused
 	lda.w cursong					; current song
-	cmp.w #7						; already playing
+	cmp.w #SngEOP					; already playing
 	beq .rtl
 	lda.w sndbank					; sound bank loaded
 	cmp.w #2						; bank 2 is the game bank
@@ -11,7 +11,7 @@ StartSong7:							;Start song 7 unless it is already playing. Unused
 	lda.b #$02
 	sta.w APUIO0					; send the command
 	rep #$30						; 16-bit registers
-	lda.w #7
+	lda.w #SngEOP
 	sta.w cursong					; remember the song
 .rtl:								; return
 	rtl

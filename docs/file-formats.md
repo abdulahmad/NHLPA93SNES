@@ -33,8 +33,8 @@ part (`s` for SNES): the SNES files are not the same as the Genesis ones, so the
 |-----------|--------|-------|
 | `.map.sjim` | Packed screen: the same compression as the 93G `.map.jim` (`DecompressBytecode`, see [Packed streams](#packed-streams-pak)), but one stream holding map, palette and tiles, see [Screens](#screens-mapsjim) | `Title1`, `EASN`, `RonBarr`, `GameSetUp`, `NHLPALogo` |
 | `.sanim` | Sprite frame set: header, frame index, pieces, tiles, see [Sprite sets](#sprite-sets-sanim) | `Sprites/Sprites001_096` ... `Sprites/Sprites659_720` |
-| `.smap` | SNES BG map words, not packed, see [Maps](#maps-smap) | `IceRink`, `IceRinkHor`, `Refs`, `RefsHor`, `BigFont`, `SmallFont`, `TeamBlocks`, `Arrows`, `FaceOff`, `Framer`, `EASN` |
-| `.chr.pak` | Packed SNES 4bpp tiles | `IceRink`, `SmallFont`, `BigFont`, `FaceOff`, `Ref`, `RefHor`, `PlayoffTiles` (palette first), `TeamBlocks`, `RinkLogoTiles` |
+| `.smap` | SNES BG map words, not packed, see [Maps](#maps-smap) | `IceRink`, `IceRinkHor`, `Refs`, `Refs2`, `BigFont`, `SmallFont`, `TeamBlocks`, `Arrows`, `FaceOff`, `Framer`, `EASN` |
+| `.chr.pak` | Packed SNES 4bpp tiles | `IceRink`, `SmallFont`, `BigFont`, `FaceOff`, `Ref`, `Ref2`, `PlayoffTiles` (palette first), `TeamBlocks`, `RinkLogoTiles` |
 | `.chr` | SNES 4bpp planar tiles, 32 bytes per 8x8 tile, not packed | `Framer` |
 | `.pal` | Team palette, see [Palettes](#palettes) | `Pals/<team>h`, `Pals/<team>v` (52 files) |
 | `.spal` | Palette of SNES BGR555 words | `Pals/Rink` |
@@ -87,7 +87,7 @@ uses a screen knows them. Offsets:
 | `RonBarr.map.sjim` | 8 x 9 at 0 | 64 colors at $90 | at $190 | Ron Barr picture (93G `RonBarrMap`) |
 | `GameSetUp.map.sjim` | 32 x 32 at 0 | 128 colors at $800 | at $900 | game setup backdrop; `--map-size 0x800 --pal-offset 0x800 --tiles-offset 0x900` |
 | `NHLPALogo.map.sjim` | 8 x 10 at 0 | 128 colors at $A0 | at $1A0 | NHLPA logo; `--width 8 --map-size 0xA0 --pal-offset 0xA0 --tiles-offset 0x1A0` |
-| `EASN.map.sjim` | 32 x 16 at 0 | none | at $400 | EASN logo backdrop (93G `EASN.map.jim`); `--map-size 0x400 --no-pal` |
+| `EASNBG.map.sjim` | 32 x 16 at 0 | none | at $400 | EASN backdrop of the scouting report and team roster screens (93G `EASNBG.map.jim`); `--map-size 0x400 --no-pal` |
 
 ## Maps (`.smap`)
 
@@ -99,7 +99,7 @@ or `.chr` the game sends to VRAM separately; the tile number is relative to wher
 | `IceRink` | 48 x 85 words, the vertical rink (tiles `IceRink.chr.pak`) |
 | `IceRinkHor` | the horizontal rink |
 | `Refs` | 7 ref frames of 8 x 7 |
-| `RefsHor` | 17 ref frames (horizontal) |
+| `Refs2` | 17 ref frames (horizontal) |
 | `BigFont` | 76 words for the top rows, then 76 for the bottom rows (`+$98`); `BigFontIndex` says which characters use them |
 | `SmallFont` | 128 words, one per character of the print font (`SmallFontMap`) |
 | `TeamBlocks` | 9 x 2 words per team, the team name banners (`Teamblocksmap`) |
@@ -255,7 +255,7 @@ How to add a team: [adding-a-team.md](adding-a-team.md).
 - `tools/snesgfx.py` unpacks and renders the graphics (Pillow for the PNG/GIF output):
 
 ```
-python tools/snesgfx.py unpack Extracted/Graphics/EASN.map.sjim -o easn.bin
+python tools/snesgfx.py unpack Extracted/Graphics/EASNBG.map.sjim -o easn.bin
 python tools/snesgfx.py unpack --rom 0x80ED38 -o block.bin       # a packed stream still in nhlpa93retail.sfc
 python tools/snesgfx.py screen Extracted/Graphics/Title1.map.sjim -o title.png
 python tools/snesgfx.py screen Extracted/Graphics/RonBarr.map.sjim --width 8 --map-size 0x90 --pal-offset 0x90 --tiles-offset 0x190 -o ronbarr.png

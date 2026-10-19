@@ -78,7 +78,7 @@ Gameloop:							;Main game loop: wait for a frame, run the clock, music and crow
 	inc.w p3cue
 	bra .cheer
 .p3go:								; start the third period song
-	jsl.l StartSong3
+	jsl.l StartSngLateGame
 .cheer:								; crowd cheer
 	lda.w cheercnt					; crowd cheers after a goal: every 150 frames
 	beq .frame
