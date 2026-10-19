@@ -1,5 +1,5 @@
 ClrPassBits:						;Clear the password bits
-	stz.w passbits
+	stz.w passbits					; 8 words
 	stz.w passbits+2
 	stz.w passbits+4
 	stz.w passbits+6
