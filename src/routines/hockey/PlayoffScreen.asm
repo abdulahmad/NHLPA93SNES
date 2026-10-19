@@ -2,14 +2,14 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 									;right scroll, Start leaves
 	lda.w #6						;tile bases: small font 6, big font +100, score/team blocks +100, NHLPA
 									;logo +405
-	sta.w smallfontchars
+	sta.w smallfontchars			; small font tiles first
 	clc
 	adc.w #100
-	sta.w BigFontChars
+	sta.w BigFontChars				; big font 100 tiles later
 	adc.w #100
-	sta.w scorechars
+	sta.w scorechars				; score and team block tiles
 	adc.w #405
-	sta.w logochars
+	sta.w logochars					; NHLPA logo tiles
 	stz.w charofs
 	stz.w charofs2
 	lda.w OptPlayMode				; not in playoff mode: done
@@ -18,7 +18,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 .po:
 	jsl.l forceblack				; blank the screen
 	sep #$20						; 8-bit A
-	lda.b #BGMODE_1
+	lda.b #BGMODE_1					; BG mode 1
 	sta.w BGMODE
 	lda.b #$01
 	sta.w BG1SC
@@ -27,13 +27,13 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	lda.b #TM_BG1
 	sta.w TM
 	rep #$30						; 16-bit registers
-	lda.w #$1000
+	lda.w #$1000					; VRAM address $1000
 	sta.w VMADDL
 	lda.w #PlayoffTiles				; PlayoffTiles: 128 colours, then 6 tiles
 	sta.b tmp0
 	lda.w #PlayoffTiles>>16
 	sta.b tmp1
-	jsl.l DecompressBytecode
+	jsl.l DecompressBytecode		; unpack the bracket graphics
 	ldx.w #$0000
 .treetiles:							; copy the bracket tiles to VRAM
 	lda.l TestList+$100,x
@@ -54,19 +54,19 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	sta.b tmp0
 	lda.w #SmallFontTiles>>16
 	sta.b tmp1
-	jsl.l DecompressBytecode
+	jsl.l DecompressBytecode		; decompress them
 	lda.w #unpackbuf&$FFFF
 	sta.b a0
 	lda.w #unpackbuf>>16
 	sta.b a0+2
-	lda.w #PixelRemap8F
+	lda.w #PixelRemap8F				; remap table for the first copy
 	sta.b a1
 	lda.w #PixelRemap8F>>16
 	sta.b a1+2
 	lda.w #$0064
 	sta.b d0
 	jsl.l remap						; remap the 4bpp pixels ([a0] data, [a1] table, d0 tiles)
-	lda.w #SmallFontTiles
+	lda.w #SmallFontTiles			; second copy
 	sta.b tmp0
 	lda.w #SmallFontTiles>>16
 	sta.b tmp1
@@ -75,14 +75,14 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	sta.b a0
 	lda.w #unpackbuf>>16
 	sta.b a0+2
-	lda.w #PixelRemap83
+	lda.w #PixelRemap83				; remap table for the second copy
 	sta.b a1
 	lda.w #PixelRemap83>>16
 	sta.b a1+2
 	lda.w #$0064
 	sta.b d0
 	jsl.l remap						; remap the 4bpp pixels ([a0] data, [a1] table, d0 tiles)
-	lda.w #TeamBlocksTiles
+	lda.w #TeamBlocksTiles			; team block tiles
 	sta.b tmp0
 	lda.w #TeamBlocksTiles>>16
 	sta.b tmp1
@@ -110,13 +110,13 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	sta.b a0
 	lda.w #PlayoffTreeSetup>>16
 	sta.b a0+2
-	lda.w gamelevel
+	lda.w gamelevel					; tree setup for this game level
 	asl a
 	tay
 	lda.b [a0],y
 	adc.b a0
 	sta.b a0
-	lda.b [a0]
+	lda.b [a0]						; number of team blocks
 	inc.b a0
 	and.w #$00FF
 	sta.b d4
@@ -160,10 +160,10 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	adc.w printx
 	asl a
 	tax
-	lda.w #9
+	lda.w #9						; 9 words per row
 	sta.b tmp0
 	sta.b tmp1
-.row1:								; first score row of a series box
+.row1:								; top row of the team block
 	lda.b [a2],y
 	clc
 	adc.w scorechars
@@ -176,7 +176,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	inx
 	dec.b tmp0
 	bne .row1
-.row2:								; second score row of a series box
+.row2:								; bottom row of the team block
 	lda.b [a2],y
 	clc
 	adc.w scorechars
@@ -189,11 +189,11 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	inx
 	dec.b tmp1
 	bne .row2
-	dec.b d4
+	dec.b d4						; next team block
 	beq .arrow
 	jmp.w .team
 .arrow:								;DrawTreeArrow: arrow column (23 rows of PlayoffBracketMap) at x; $FF ends
-	lda.b [a0]
+	lda.b [a0]						; next arrow column
 	inc.b a0
 	and.w #$00FF
 	cmp.w #$00FF
@@ -208,7 +208,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	and.w #$00FF
 	asl a
 	tax
-	ldy.w #23
+	ldy.w #23						; 23 rows
 .arrowrow:							; copy an arrow row into the text map
 	lda.b [tmp0]
 	sta.l textmap+$200,x
@@ -232,7 +232,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	asl a
 	asl a
 	sta.b d2+2
-	lda.b [a0]
+	lda.b [a0]						; right scroll limit
 	inc.b a0
 	and.w #$00FF
 	asl a
@@ -245,18 +245,18 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	lda.b bosgames					; single games: no scores
 	cmp.w #7
 	beq .logo
-	lda.b [a0]
+	lda.b [a0]						; number of series scores
 	inc.b a0
 	and.w #$00FF
 	sta.b d4
 	beq .logo
 	stz.b a2
 .score:								; print the series score
-	lda.b [a0]
+	lda.b [a0]						; score X
 	inc.b a0
 	and.w #$00FF
 	sta.w printx
-	lda.b [a0]
+	lda.b [a0]						; score Y
 	inc.b a0
 	and.w #$00FF
 	asl a
@@ -269,12 +269,12 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	lda.w #5						; mesarea "<top team wins>-<bottom team wins>"
 	sta.w mesarea
 	ldx.b a2
-	lda.w gspotwins,x
+	lda.w gspotwins,x				; top team wins
 	adc.w #'0'
 	sta.w mesarea+2
 	lda.w #'-'
 	sta.w mesarea+3
-	lda.w gspobwins,x
+	lda.w gspobwins,x				; bottom team wins
 	adc.w #'0'
 	sta.w mesarea+4
 	jsl.l print						; print it
@@ -283,7 +283,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	dec.b d4
 	bne .score
 .logo:								;the NHLPA logo: palette row 2, tiles at logochars, map at x 60, y 2
-	lda.w #NHLPALogo
+	lda.w #NHLPALogo				; logo graphics
 	sta.b tmp0
 	lda.w #NHLPALogo>>16
 	sta.b tmp1
@@ -314,7 +314,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 .logorow:							; logo rows
 	stz.b tmp0
 .logocol:							; logo columns
-	lda.b tmp1
+	lda.b tmp1						; logo map entry
 	sta.b mula
 	lda.w #8
 	sta.b mulb
@@ -323,7 +323,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	asl a
 	tax
 	lda.l TestList,x
-	adc.w logochars
+	adc.w logochars					; add the logo tile base
 	ora.w #$1800					; palette 6
 	pha
 	lda.b tmp1
@@ -338,7 +338,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	asl a
 	tax
 	pla
-	sta.l textmap+$A78,x
+	sta.l textmap+$A78,x			; store into the text map
 	inc.b tmp0
 	lda.b tmp0
 	cmp.w #8
@@ -377,19 +377,19 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	jsl.l StartSong9				; keep the music going
 .scroll:							;clamp Hscroll, queue the 128-column map window, wait a frame
 	lda.w Hscroll
-	cmp.b d2+2
+	cmp.b d2+2						; clamp to the left limit (d2+2)
 	bcs .min
 	lda.b d2+2
-.min:								; clamp the scroll to the minimum
+.min:								; clamp to the right limit (d0+2)
 	cmp.b d0+2
 	bcc .max
 	lda.b d0+2
-.max:								; clamp the scroll to the maximum
+.max:								; store the clamped scroll
 	sta.w Hscroll
 	lsr a
 	lsr a
 	lsr a
-	asl a
+	asl a							; source column in textmap
 	adc.w #textmap					; source column in textmap
 	sta.b tmp0
 	stz.b tmp1
@@ -420,7 +420,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	tay
 	cpy.w #32*2*dmasize				; 32 rows: 2 dma entries each
 	bne .dma
-	sty.b DMAlistend
+	sty.b DMAlistend				; end of the DMA list
 	lda.w #VBlank_Cram				; playoff vblank handler
 	sta.b vbint
 .wait:								; wait for the next frame
@@ -434,7 +434,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	bne .frame
 	jmp.w .rtl
 .frame:								;colour 1 of palette 7 blends between the .blink colours (30 frame cycle)
-	lda.b vcount
+	lda.b vcount					; once per frame
 	cmp.b d7
 	beq .pad
 	sta.b d7
@@ -450,13 +450,13 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	lda.b mulres+2
 	asl a
 	tax
-	lda.l .blink,x
-	xba
+	lda.l .blink,x					; first blink colour
+	xba								; red channel
 	and.w #$00FF
 	lsr a
 	lsr a
 	sta.b tmp1
-	lda.l .blink+2,x
+	lda.l .blink+2,x				; second blink colour
 	xba
 	and.w #$00FF
 	lsr a
@@ -477,7 +477,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	asl a
 	asl a
 	sta.b tmp2
-	lda.l .blink,x
+	lda.l .blink,x					; green channel
 	lsr a
 	lsr a
 	lsr a
@@ -509,7 +509,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	asl a
 	asl a
 	tsb.b tmp2
-	lda.l .blink,x
+	lda.l .blink,x					; blue channel
 	and.w #$001F
 	sta.b tmp1
 	lda.l .blink+2,x
@@ -526,7 +526,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	adc.b tmp1
 	and.w #$001F
 	ora.b tmp2
-	sta.l palbuffer+$E2
+	sta.l palbuffer+$E2				; write the blended colour
 	lda.w joypad1					; held: left/right scroll
 	ora.w joypad2
 	cmp.w #JOYLEFT
@@ -538,7 +538,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	clc
 	adc.b d3+2
 	sta.w Hscroll
-	cmp.w #$0058
+	cmp.w #$0058					; stop at round columns $58,$B0,$108,$180,$1F8,$250,$2A8
 	beq .stop
 	cmp.w #$00B0
 	beq .stop
@@ -553,13 +553,13 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	cmp.w #$02A8
 	bne .again
 .stop:								;stop at the round columns
-	stz.b d3+2
+	stz.b d3+2						; stop scrolling
 .again:								; far branch to .scroll
 	jmp.w .scroll
 .blink:								;BGR555 colours the user's team block blinks between (white, blue, white)
 	dw $7FFF,$7E10,$7FFF
 .left:								; scroll left
-	lda.w #$FFFF
+	lda.w #$FFFF					; scroll step -1
 	sta.b d3+2
 	jmp.w .move
 .right:								; scroll right
