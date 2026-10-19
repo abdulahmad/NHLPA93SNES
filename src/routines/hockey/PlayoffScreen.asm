@@ -29,7 +29,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	rep #$30						; 16-bit registers
 	lda.w #$1000					; VRAM address $1000
 	sta.w VMADDL
-	lda.w #PlayoffTiles				; PlayoffTiles: 128 colours, then 6 tiles
+	lda.w #PlayoffTiles				; PlayoffTiles: 128 colors, then 6 tiles
 	sta.b tmp0
 	lda.w #PlayoffTiles>>16
 	sta.b tmp1
@@ -433,7 +433,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	cmp.w #JOYSTART
 	bne .frame
 	jmp.w .rtl
-.frame:								;colour 1 of palette 7 blends between the .blink colours (30 frame cycle)
+.frame:								;color 1 of palette 7 blends between the .blink colors (30 frame cycle)
 	lda.b vcount					; once per frame
 	cmp.b d7
 	beq .pad
@@ -450,13 +450,13 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	lda.b mulres+2
 	asl a
 	tax
-	lda.l .blink,x					; first blink colour
+	lda.l .blink,x					; first blink color
 	xba								; red channel
 	and.w #$00FF
 	lsr a
 	lsr a
 	sta.b tmp1
-	lda.l .blink+2,x				; second blink colour
+	lda.l .blink+2,x				; second blink color
 	xba
 	and.w #$00FF
 	lsr a
@@ -526,7 +526,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	adc.b tmp1
 	and.w #$001F
 	ora.b tmp2
-	sta.l palbuffer+$E2				; write the blended colour
+	sta.l palbuffer+$E2				; write the blended color
 	lda.w joypad1					; held: left/right scroll
 	ora.w joypad2
 	cmp.w #JOYLEFT
@@ -556,7 +556,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	stz.b d3+2						; stop scrolling
 .again:								; far branch to .scroll
 	jmp.w .scroll
-.blink:								;BGR555 colours the user's team block blinks between (white, blue, white)
+.blink:								;BGR555 colors the user's team block blinks between (white, blue, white)
 	dw $7FFF,$7E10,$7FFF
 .left:								; scroll left
 	lda.w #$FFFF					; scroll step -1

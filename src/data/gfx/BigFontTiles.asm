@@ -1,4 +1,4 @@
-BigFontTiles:						;BigFont.map.jim tiles: the big font (144 tiles, data/BigFont.chr.pak),
+BigFontTiles:						;the big font tiles (144 tiles, BigFont.chr.pak),
 									;packed; setupice sends them to BigFontChars (PixelRemap8D), printbig
 									;draws them
 	incbin "../../../Extracted/Graphics/BigFont.chr.pak"
