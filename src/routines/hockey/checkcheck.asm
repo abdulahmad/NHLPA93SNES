@@ -78,7 +78,7 @@ checkcheck:							;Two players are in contact: check what happens each way
 	sec
 	sbc.w Ypos,x
 	sta.b d1
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 	lda.b d0
 	sec
 	sbc.w facedir,x
@@ -88,7 +88,7 @@ checkcheck:							;Two players are in contact: check what happens each way
 	bit.w #attrxflip
 	beq .0
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	and.w #$0007
 	sta.b d0
@@ -102,7 +102,7 @@ checkcheck:							;Two players are in contact: check what happens each way
 	ldy.b d0
 	lda.b [a0],y
 	sta.b d1
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 	ldy.b a2
 	lda.w position,y
 	bne .pos

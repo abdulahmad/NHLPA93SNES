@@ -28,7 +28,7 @@ PushRef:							;Draw referee frame d0 in the referee window; frame $40 erases th
 	sta.b mulb
 	lda.w #$70
 	sta.b mula
-	jsl.l mulu16
+	jsl.l mulu16					; A = mula * mulb
 	sta.b d0
 	lda.w #RefsMap
 	sta.b a0
@@ -107,7 +107,7 @@ PushRef:							;Draw referee frame d0 in the referee window; frame $40 erases th
 	lda.w #$000F
 	sta.w printy
 .nosfhormode2:
-	jsl.l eraser
+	jsl.l eraser					; erase d0 x d1 with tile d2
 	lda.w #sf2refref
 	tsb.w sflags
 	lda.w #$FFFF

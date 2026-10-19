@@ -63,7 +63,7 @@ resetplstuff:						;Reset the team variables and the players on both teams
 	bmi .next
 	lda.w #SPAglide
 	sta.b d1
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 	stz.w impact,x					; impact = 0, nopuck = 0
 	stz.w nopuck,x
 	lda.w pflags,x

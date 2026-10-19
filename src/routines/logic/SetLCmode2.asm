@@ -38,7 +38,7 @@ SetLCmode2:							;Draw the line change box for team a2, one row per line it can
 	sta.w printx
 	lda.b d4
 	sta.b d0
-	jsl.l getlchoice
+	jsl.l getlchoice				; line for choice d0
 	lda.b d0
 	bmi .next
 	ldy.b a2

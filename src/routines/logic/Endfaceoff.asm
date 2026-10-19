@@ -28,7 +28,7 @@ Endfaceoff:							;Drop the puck: pick the face off winner and send the puck off
 	beq .f1
 	ora.w #$FF00
 .f1:
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	clc
 	adc.b d2
@@ -44,7 +44,7 @@ Endfaceoff:							;Drop the puck: pick the face off winner and send the puck off
 	adc.b d2
 	sta.b d2
 	lda.w #$0021					; random(33) vs the pull frames: who won
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	cmp.b d2
 	bcs .p1won
 	lda.w #$0004					; visitors won
@@ -69,7 +69,7 @@ Endfaceoff:							;Drop the puck: pick the face off winner and send the puck off
 	bne .nj2
 .nojoy:
 	lda.w #$0005					; random direction -2..2
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	dec a
 	dec a
 	and.w #$0007
@@ -103,7 +103,7 @@ Endfaceoff:							;Drop the puck: pick the face off winner and send the puck off
 	ldx.b a3
 	sta.w Yvel,x
 	lda.w #$0800					; Zvel = random(0..$800)
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	sta.w Zvel,x
 	stz.w Zpos+puckobj
 	stz.w pfnc,x

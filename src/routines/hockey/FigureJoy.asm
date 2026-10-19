@@ -7,7 +7,7 @@ FigureJoy:							;Set which team each controller plays
 	bne .po
 	jmp.w .fjnpo
 .po:
-	jsl.l GetShifter
+	jsl.l GetShifter				; d1 = games - 1
 	lda.w #potree					; d2 = the po team
 	sta.b a0
 	lda.w #$0000

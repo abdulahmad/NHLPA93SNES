@@ -40,7 +40,7 @@ FightFall:							;Player X lost the fight: the other player gets a fighting pena
 	sta.b crowdlevel
 	lda.w #$003C
 	sta.b d0
-	jsl.l randomd0
+	jsl.l randomd0					; random number 0 to d0-1
 	ldy.b a0
 	lda.b d0
 	sec
@@ -59,7 +59,7 @@ FightFall:							;Player X lost the fight: the other player gets a fighting pena
 	sta.w pflags,x
 	lda.w #SPAfinjury
 	sta.b d1
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 	stx.b a2
 	jsl.l setInjuryType				; setInjuryType (bank $8F): d1 = roster offset, bank $8F
 	lda.b a0
@@ -78,7 +78,7 @@ FightFall:							;Player X lost the fight: the other player gets a fighting pena
 .noinj:
 	lda.w #SPAffall
 	sta.b d1
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 	stz.b a2
 	lda.w #SFXcrowdcheer			; home won: cheer
 	pha

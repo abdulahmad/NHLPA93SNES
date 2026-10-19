@@ -40,7 +40,7 @@ GetHot:								;d0 / d1 = the hot spot x / y of object A's current frame
 	bit.w #attryflip				; y flip (clear = negate)
 	bne .noy						; y flip
 	lda.b d1						; negate y
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1						; hot y
 .noy:
@@ -48,7 +48,7 @@ GetHot:								;d0 / d1 = the hot spot x / y of object A's current frame
 	beq .ex							; vertical mode
 	lda.b d0						; rotate by 90 degrees
 	ldy.b d1
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
 	sty.b d0						; swap x and y

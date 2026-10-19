@@ -5,13 +5,13 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	lda.w #16
 	clc
 	adc.w spodds,x
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	cmp.w #9
 	bcc .dp0
 	jmp.w .rtl
 .dp0:
 	lda.w #6
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	sta.b d0
 	cpx.w #12						; team mates of the away team are 6-11
 	bcc .dp1
@@ -25,7 +25,7 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	lda.w puckx
 	bit.w #$8000
 	beq .ax
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .ax:
 	cmp.w #41
@@ -33,7 +33,7 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	lda.w pucky
 	bit.w #$8000
 	beq .ay
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .ay:
 	cmp.w #205
@@ -67,11 +67,11 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	lda.w pfgoal,x
 	bne .f0
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 	lda.b d1
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
 .f0:
@@ -122,19 +122,19 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	sbc.w puckx
 	sta.b d0
 	pha
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 	sta.w passdir
 	pla
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d2
 	lda.b mulres+2
 	sta.b d2+2
 	pla
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	adc.b d2
 	sta.b d2
 	lda.b mulres+2
@@ -159,14 +159,14 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	sta.b d0
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b tmp0
 	lda.b mulres+2
 	sta.b tmp1
 	lda.b d1
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	adc.b tmp0
 	sta.b tmp0
 	lda.b mulres+2
@@ -192,7 +192,7 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	sep #$20						; 8-bit A
 	pla
 	rep #$30						; 16-bit registers
-	jml.l assexit
+	jml.l assexit					; assignment over
 .rtl:
 	rtl
 unusedFF8C:							;unused, $FF fill to the end of the bank

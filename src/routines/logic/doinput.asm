@@ -124,7 +124,7 @@ doinput:							;Pad input for player X. d0 = pad directions, d1 = new buttons, d
 	lda.w puckx
 	bit.w #$8000
 	beq .px
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .px:
 	cmp.w #$0010
@@ -132,7 +132,7 @@ doinput:							;Pad input for player X. d0 = pad directions, d1 = new buttons, d
 	lda.w pucky
 	bit.w #$8000
 	beq .py
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .py:
 	cmp.w #$0108

@@ -1,5 +1,5 @@
 passtoa0:							;Pass the puck to player a0, leading him by his speed
-	jsl.l loadTeamStruct
+	jsl.l loadTeamStruct			; a2 = team of X, a1 = the other
 	lda.b a0
 	lsr a
 	sta.w passReceiverPlayerNum
@@ -17,7 +17,7 @@ passtoa0:							;Pass the puck to player a0, leading him by his speed
 	sty.b a0
 	lda.w #$0013
 	sta.b d0
-	jsl.l assinsert
+	jsl.l assinsert					; insert assignment d0
 	ldx.b a0
 	ldy.b a3
 	stx.b a3
@@ -57,7 +57,7 @@ passtoa0:							;Pass the puck to player a0, leading him by his speed
 	sta.b mulb
 	lda.w #$00F0
 	sta.b mula
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.b mulres+2
 	sta.b d1
 	pha
@@ -65,39 +65,39 @@ passtoa0:							;Pass the puck to player a0, leading him by his speed
 	sta.b mulb
 	lda.w #$00F0
 	sta.b mula
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.b mulres+2
 	sta.b d0
 	pha
 	sta.b mulb
 	lda.b d2
 	sta.b mula
-	jsl.l muls16
+	jsl.l muls16					; signed multiply
 	sta.b d0
 	lda.b d3
 	sta.b mula
 	lda.b d1
 	sta.b mulb
-	jsl.l muls16
+	jsl.l muls16					; signed multiply
 	adc.b d0
 	asl a
 	sta.b d4
 	lda.b $01,s
 	sta.b mula
 	sta.b mulb
-	jsl.l muls16
+	jsl.l muls16					; signed multiply
 	sta.b d0
 	lda.b $03,s
 	sta.b mula
 	sta.b mulb
-	jsl.l muls16
+	jsl.l muls16					; signed multiply
 	sta.b d1
 	lda.b d5
 	sta.b mula
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b mulb
-	jsl.l muls16
+	jsl.l muls16					; signed multiply
 	adc.b d0
 	clc
 	adc.b d1
@@ -105,17 +105,17 @@ passtoa0:							;Pass the puck to player a0, leading him by his speed
 	lda.b d2
 	sta.b mula
 	sta.b mulb
-	jsl.l muls16
+	jsl.l muls16					; signed multiply
 	sta.b d2
 	lda.b d3
 	sta.b mula
 	sta.b mulb
-	jsl.l muls16
+	jsl.l muls16					; signed multiply
 	adc.b d2
 	sta.b mulb
 	lda.b d5
 	sta.b mula
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d3
 	lda.b mulres+2
 	sta.b d3+2
@@ -126,7 +126,7 @@ passtoa0:							;Pass the puck to player a0, leading him by his speed
 	lda.b d4
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sec
 	sbc.b d3
 	sta.b d0
@@ -151,7 +151,7 @@ passtoa0:							;Pass the puck to player a0, leading him by his speed
 .0:
 	lda.b d0
 	sta.b d2
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 	lda.b d2
@@ -204,7 +204,7 @@ passtoa0:							;Pass the puck to player a0, leading him by his speed
 	sta.b d1
 	lda.b d2
 	sta.b mula
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.b mulres+2
 	lsr a
 	lda.b mulres
@@ -228,7 +228,7 @@ passtoa0:							;Pass the puck to player a0, leading him by his speed
 	sta.b mula
 	lda.b d1
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.b mulres+2
 	lsr a
 	lda.b mulres
@@ -252,14 +252,14 @@ passtoa0:							;Pass the puck to player a0, leading him by his speed
 	sta.b mula
 	lda.b d2
 	sta.b mulb
-	jsl.l mulu16
+	jsl.l mulu16					; A = mula * mulb
 	sta.b d2
 	sta.b mula
 	lda.b d0
 	sta.b mulb+2
 	lda.b d0+2
 	sta.b mulb
-	jsl.l divs
+	jsl.l divs						; signed divide
 	sta.b d0
 	sta.w puckvx
 	lda.b d2
@@ -268,7 +268,7 @@ passtoa0:							;Pass the puck to player a0, leading him by his speed
 	sta.b mulb+2
 	lda.b d1+2
 	sta.b mulb
-	jsl.l divs
+	jsl.l divs						; signed divide
 	sta.b d1
 	sta.w puckvy
 	rtl

@@ -36,7 +36,7 @@ checkplcoll:						;Check object X against the objects near it in y
 	sbc.b d2
 	bit.w #$8000
 	beq .ux
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .ux:
 	cmp.w #$000F
@@ -79,7 +79,7 @@ checkplcoll:						;Check object X against the objects near it in y
 	sbc.b d2
 	bit.w #$8000
 	beq .dx
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .dx:
 	cmp.w #$000F

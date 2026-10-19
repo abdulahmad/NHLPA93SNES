@@ -17,7 +17,7 @@ muls16:								;Signed 16-bit multiply: A = mula * mulb
 	jsl.l mulu16					; mulres = mula*mulb
 	lsr.b mula+2					; odd count: negate the result
 	bcc .rtl
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b mula						; result in mula
 	sta.b mulb						; and mulb

@@ -25,7 +25,7 @@ checkgoalp:							;Player X runs into the goal a2
 	sec
 	sbc.w Ypos,y
 	sta.b d3
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 	lda.b d2
@@ -39,7 +39,7 @@ checkgoalp:							;Player X runs into the goal a2
 	asl a
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.w #$0400
 	sta.b mula
 	jsl.l divu
@@ -55,7 +55,7 @@ checkgoalp:							;Player X runs into the goal a2
 	asl a
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.w #$0079
 	sta.b mula
 	jsl.l divu
@@ -77,14 +77,14 @@ checkgoalp:							;Player X runs into the goal a2
 	pha
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d0
 	lda.b mulres+2
 	sta.b d0+2
 	lda.b d1
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	adc.b d0
 	sta.b d0
 	lda.b d0+2
@@ -103,7 +103,7 @@ checkgoalp:							;Player X runs into the goal a2
 	sta.b mulb+1
 	lda.b d0+2
 	sta.b mulb+3
-	jsl.l divs
+	jsl.l divs						; signed divide
 	sta.b d0
 	lda.b d2
 	sta.b mula
@@ -112,7 +112,7 @@ checkgoalp:							;Player X runs into the goal a2
 	sta.b mulb+1
 	lda.b d1+2
 	sta.b mulb+3
-	jsl.l divs
+	jsl.l divs						; signed divide
 	sta.b d1
 	jsl.l wallcoll
 .exit:

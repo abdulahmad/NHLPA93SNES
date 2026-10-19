@@ -4,7 +4,7 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	stz.b crowdlevel
 	lda.w #sf2replay				; sf2replay: replay on
 	tsb.w sflags
-	jsl.l ClrHor
+	jsl.l ClrHor					; back to the vertical rink
 	stz.w VMADDL					; clear the text layer map in vram
 	lda.w #$FFFF
 	sta.b textdirtylo
@@ -106,8 +106,8 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	bra .fwd
 .go:
 	pla
-	jsl.l SprSort
-	jsl.l setvideo
+	jsl.l SprSort					; sort the sprites
+	jsl.l setvideo					; update the video
 	lda.w #sf3rmplay				; play mode off
 	trb.w sflags3
 	lda.w #$0001
@@ -121,7 +121,7 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	lda.b vcount
 	sta.w lastframevc
 	sta.w oldvcount
-	jsl.l ReadPads
+	jsl.l ReadPads					; read the pads
 	lda.w #$0001
 	sta.b d7
 	jsl.l getpzjoy					; d0 = dpad direction (8 = none), d1 = new buttons, d3 = held
@@ -146,7 +146,7 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	sta.b d1
 	bit.w #$8000
 	beq .xabs
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .xabs:
 	cmp.w #$0041					; x step within the screen
@@ -185,7 +185,7 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	and.w #$0FFF
 	ora.w #$E000
 	sta.w PadControlBits
-	jsl.l setvideo
+	jsl.l setvideo					; update the video
 	jmp.w .top
 .stab:								;x, y scroll step per dpad direction
 	dw 0,1,1,1,1,0,1,-1
@@ -207,7 +207,7 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	bit.w #abut
 	beq .step
 	jsl.l suba4						; one replay frame back
-	jsl.l SprSort
+	jsl.l SprSort					; sort the sprites
 	lda.w #VBlank_long
 .wait:
 	cmp.b vbint
@@ -216,9 +216,9 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 .back1:								;L: one frame back
 	jsl.l suba4						; one replay frame back
 .show:
-	jsl.l SprSort
+	jsl.l SprSort					; sort the sprites
 .vid:
-	jsl.l setvideo
+	jsl.l setvideo					; update the video
 	lda.w #$0001
 	sta.b d7
 	lda.w #sf3rmplay
@@ -237,8 +237,8 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	bra .show
 .stepon:
 	jsl.l adda4						; one replay frame on
-	jsl.l SprSort
-	jsl.l setvideo
+	jsl.l SprSort					; sort the sprites
+	jsl.l setvideo					; update the video
 	asl.b d7
 	lda.w #sf3rmplay
 	trb.w sflags3
@@ -253,15 +253,15 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	pha
 	jsl.l sfx
 .nosfx:
-	jsl.l SprSort
-	jsl.l setvideo
+	jsl.l SprSort					; sort the sprites
+	jsl.l setvideo					; update the video
 .noplay:
 	lda.b d1						; Start: leave
 	bit.w #JOYSTART
 	bne .exit
 	jmp.w .top
 .exit:
-	jsl.l forceblack
+	jsl.l forceblack				; blank the screen
 	lda.w #$F000
 	tsb.w PadControlBits
 	lda.w #sfscrl
@@ -271,15 +271,15 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	lda.w ReplayBufferPtr+2
 	sta.b a4+2
 	jsl.l RestoreReplayFrame
-	jsl.l SprSort
+	jsl.l SprSort					; sort the sprites
 	pla
 	sta.w Hpos
 	pla
 	sta.w Vpos
 	lda.w #sf2replay
 	trb.w sflags
-	jsl.l SetHor
-	jsl.l setvideo
+	jsl.l SetHor					; switch to the horizontal rink
+	jsl.l setvideo					; update the video
 	stz.b textdirtylo
 	lda.w #$03FF
 	sta.b textdirtyhi

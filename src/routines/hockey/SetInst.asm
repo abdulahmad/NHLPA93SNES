@@ -32,7 +32,7 @@ SetInst:							;Start a fight between X and a2 when both are aggressive enough; 
 	ora.w #$FF00
 .cnt:
 	asl a
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	clc
 	adc.w #$0010

@@ -58,7 +58,7 @@ holdcheck:							;a2 holds or hooks X: both slow down, and a holding or hooking 
 	lda.w #SPAflail
 	sta.b d1
 	sta.w pfalock,x
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 	ldx.b a2
 	ldy.b a3
 	stx.b a3
@@ -72,7 +72,7 @@ holdcheck:							;a2 holds or hooks X: both slow down, and a holding or hooking 
 	lda.w #SPAhook2					; holding anim after SPAhook
 	sta.b d1
 .h2:
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 	jsl.l checkagr
 	lda.b d0
 	cmp.w #$0007

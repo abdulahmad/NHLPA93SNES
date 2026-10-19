@@ -57,7 +57,7 @@ printbig:							;print with the big font (2 by 2 tiles per character)
 .w0:
 	cmp.w #$0000
 	bpl .w1
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	stz.b d2
 .w1:
@@ -137,7 +137,7 @@ printbig:							;print with the big font (2 by 2 tiles per character)
 	sta.b textdirtyhi
 	bra .next
 .code:								;control byte -$ab, x, y: attribute b, map a
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	pha
 	and.w #$0030					; palette bits

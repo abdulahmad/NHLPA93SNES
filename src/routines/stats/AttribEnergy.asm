@@ -10,7 +10,7 @@ AttribEnergy:						;Roster column: the player's energy, scaled to at most 100
 	sta.b mulb						; energy
 	lda.w #$0028
 	sta.b mula
-	jsl.l divu16
+	jsl.l divu16					; mulb / mula
 	cmp.w #$0065					; capped at 100
 	bcc .cap
 	lda.w #$0064					; 100

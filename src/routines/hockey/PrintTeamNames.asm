@@ -36,7 +36,7 @@ PrintTeamNames:						;Print both team names, then set up the teams
 	lda.w HomeTeam
 	sta.b d1
 	jsl.l DrawTeamBlocks			; print team d1 name
-	jsl.l setteams
+	jsl.l setteams					; set up the teams
 	stx.b xsave						; keep X
 	ldx.w #$000A
 .resta:								; pull a0 and the words after it back

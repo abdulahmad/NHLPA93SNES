@@ -167,7 +167,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	bne .next
 	lda.w position,x
 	beq .next
-	jsl.l assinsert
+	jsl.l assinsert					; insert assignment d0
 .next:
 	inx
 	inx
@@ -178,7 +178,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	sta.w pf2fight+puckobj
 	lda.w #pnothing
 	sta.b d0
-	jsl.l assinsert
+	jsl.l assinsert					; insert assignment d0
 	lda.w #$FFFF
 	sta.b collflag
 .ex:
@@ -217,7 +217,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	jsl.l setd0player
 	lda.w #afight
 	sta.b d0
-	jsl.l assinsert
+	jsl.l assinsert					; insert assignment d0
 	lda.w attribute,x				; Xvel -$400 facing 2, else flipped and +$400
 	and.w #~attrxflip&$FFFF
 	sta.w attribute,x

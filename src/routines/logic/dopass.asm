@@ -80,7 +80,7 @@ dopass:								;Pass the puck in the pass direction, to the best teammate there 
 	sbc.w puckx
 	sta.b d0
 	pha
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 	pla
 	sta.b d1
 	pla
@@ -104,7 +104,7 @@ dopass:								;Pass the puck in the pass direction, to the best teammate there 
 	asl a
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d0
 	cmp.w #$0001
 	lda.b mulres+2
@@ -114,14 +114,14 @@ dopass:								;Pass the puck in the pass direction, to the best teammate there 
 	lda.b d1
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d1
 	lda.b mulres+2
 	sta.b d1+2
 	lda.b d2
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	adc.b d1
 	sta.b d2
 	lda.b mulres+2
@@ -168,7 +168,7 @@ dopass:								;Pass the puck in the pass direction, to the best teammate there 
 	sta.b mulb
 	lda.w passspeed
 	sta.b mula
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	stz.b mulb
 	lda.b mulres
 	sta.b mulb+1
@@ -180,7 +180,7 @@ dopass:								;Pass the puck in the pass direction, to the best teammate there 
 	rol.b mulb+2
 	lda.w #runspeed*15
 	sta.b mula
-	jsl.l divs
+	jsl.l divs						; signed divide
 	adc.w Yvel,x
 	sta.w puckvy
 	dec.b a0
@@ -189,7 +189,7 @@ dopass:								;Pass the puck in the pass direction, to the best teammate there 
 	sta.b mulb
 	lda.w passspeed
 	sta.b mula
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	stz.b mulb
 	lda.b mulres
 	sta.b mulb+1
@@ -201,11 +201,11 @@ dopass:								;Pass the puck in the pass direction, to the best teammate there 
 	rol.b mulb+2
 	lda.w #runspeed*15
 	sta.b mula
-	jsl.l divs
+	jsl.l divs						; signed divide
 	adc.w Xvel,x
 	sta.w puckvx
 	lda.w #$1000
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	sta.w puckvz
 .exit:
 	lda.w position,x
@@ -219,7 +219,7 @@ dopass:								;Pass the puck in the pass direction, to the best teammate there 
 	lda.w puckvy
 	bmi .notgoalie
 .nvy:
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.w puckvy
 .notgoalie:
@@ -227,7 +227,7 @@ dopass:								;Pass the puck in the pass direction, to the best teammate there 
 	sta.b d0
 	lda.w puckvy
 	sta.b d1
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 	lda.w #SPAgswing
 	sta.b d1
 	lda.w position,x
@@ -239,7 +239,7 @@ dopass:								;Pass the puck in the pass direction, to the best teammate there 
 	lda.w #SPApassb
 	sta.b d1
 .e1:
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 	lda.w #$0001
 	sta.w pfalock,x
 	stx.b xsave						; keep X

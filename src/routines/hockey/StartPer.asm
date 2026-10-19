@@ -3,13 +3,13 @@ StartPer:							;Start a period: reset the rink and clock, face off at center ic
 	lda.w #$1FFF					; reset the stack
 	tcs								; stack
 	jsl.l ReadJoy1					; read the pads
-	jsl.l ReadJoy2
-	jsl.l ReadJoy1
-	jsl.l ReadJoy2
-	jsl.l ReadJoy1
-	jsl.l ReadJoy2
-	jsl.l ReadJoy1
-	jsl.l ReadJoy2
+	jsl.l ReadJoy2					; read pad 2
+	jsl.l ReadJoy1					; read pad 1
+	jsl.l ReadJoy2					; read pad 2
+	jsl.l ReadJoy1					; read pad 1
+	jsl.l ReadJoy2					; read pad 2
+	jsl.l ReadJoy1					; read pad 1
+	jsl.l ReadJoy2					; read pad 2
 	stz.b a2						; team 0
 	jsl.l reenergizeteam			; full energy
 	lda.w #$0002					; team 1
@@ -39,8 +39,8 @@ StartPer:							;Start a period: reset the rink and clock, face off at center ic
 	sta.b mula
 	lda.w #12
 	sta.b mulb
-	jsl.l mulu16
-	jsl.l randoma
+	jsl.l mulu16					; A = mula * mulb
+	jsl.l randoma					; random number 0 to A-1
 	inc a
 	sta.w p3cue
 .p3:

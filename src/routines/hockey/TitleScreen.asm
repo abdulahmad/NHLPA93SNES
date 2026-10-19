@@ -5,7 +5,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	sta.w smallfontchars
 	stz.w charofs
 	stz.w charofs2
-	jsl.l forceblack
+	jsl.l forceblack				; blank the screen
 	jsl.l InitPPU					; PPU registers off/clear
 	sep #$20						; 8-bit A
 	cli
@@ -206,7 +206,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 .wait:
 	cmp.b vbint
 	beq .wait
-	jsl.l ReadPads
+	jsl.l ReadPads					; read the pads
 	lda.b d3
 	cmp.w #$00FE					; $FE: no Start (copyright page)
 	bne .nopause
@@ -232,7 +232,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	adc.w #180
 	sta.b d2
 .top6:
-	jsl.l ReadPads
+	jsl.l ReadPads					; read the pads
 	lda.b d3
 	cmp.w #$00FE
 	bne .top6s

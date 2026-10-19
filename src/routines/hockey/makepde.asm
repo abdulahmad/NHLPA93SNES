@@ -46,7 +46,7 @@ makepde:							;d0 = rating A scaled by player a0's energy
 	sta.b mula
 	lda.b d0
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	asl a							; *16, high word: *energy/$1000
 	rol.b mulres+2
 	asl a

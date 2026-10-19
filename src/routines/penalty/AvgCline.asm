@@ -55,7 +55,7 @@ AvgCline:							;d0 = the average energy of team a2's current line
 	sta.b mula
 	lda.b d0
 	sta.b mulb
-	jsl.l divu16
+	jsl.l divu16					; mulb / mula
 	sta.b d0
 .ex:
 	stx.b xsave						; keep X

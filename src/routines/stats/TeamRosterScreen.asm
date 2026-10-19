@@ -1,7 +1,7 @@
 TeamRosterScreen:					;Team Roster screen: each line's players and one attribute column. The pad
 									;moves, Y switches team,
 		;   Start leaves
-	jsl.l forceblack
+	jsl.l forceblack				; blank the screen
 	sep #$20						; 8-bit A
 	stz.w BG1HOFS
 	stz.w BG1HOFS
@@ -143,7 +143,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	sta.b d0
 	lda.w #$0006
 	sta.b d1
-	jsl.l Framer
+	jsl.l Framer					; draw the frame d0 x d1
 	lda.w blankchar
 	clc
 	adc.w charofs
@@ -171,14 +171,14 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	sta.b d0
 	lda.w #$0003
 	sta.b d1
-	jsl.l Framer
+	jsl.l Framer					; draw the frame d0 x d1
 	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font2Pri,$10,$08)
 	lda.w #$000F
 	sta.b d0
 	lda.w #$0003
 	sta.b d1
-	jsl.l Framer
+	jsl.l Framer					; draw the frame d0 x d1
 	jsl.l .show
 .loop:
 	lda.w #textmap
@@ -195,7 +195,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 .vbwait:
 	cmp.b vbint
 	beq .vbwait
-	jsl.l ReadPads
+	jsl.l ReadPads					; read the pads
 	jsl.l getpzjoy
 	jsl.l ProcessInputWithRepeat
 	lda.b d1
@@ -305,7 +305,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	sta.b d1
 	lda.w blankchar
 	sta.b d2
-	jsl.l eraser
+	jsl.l eraser					; erase d0 x d1 with tile d2
 	jsl.l printz					; print the string that follows
 	%StringCtc(CC_Font1Pal2Pri,$08,$1A,"Y - Switch Teams",CC_Font1Pri,$00,$0E)
 	jsl.l GetGoalieCount

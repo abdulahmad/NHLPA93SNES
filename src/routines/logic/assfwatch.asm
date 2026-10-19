@@ -33,14 +33,14 @@ assfwatch:							;Assignment: a player watching a fight skates to a spot near it
 	pha
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d0
 	lda.b mulres+2
 	sta.b d0+2
 	lda.b $03,s
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	adc.b d0
 	sta.b d0
 	lda.b mulres+2
@@ -59,10 +59,10 @@ assfwatch:							;Assignment: a player watching a fight skates to a spot near it
 	sta.b d1
 	lda.w #$0050					; 80 pixels from the fight
 	sta.b mula
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.b d2
 	sta.b mula
-	jsl.l divs
+	jsl.l divs						; signed divide
 	adc.w xc1
 	sta.b d0
 	lda.w #$007E					; x within +-$7E
@@ -80,7 +80,7 @@ assfwatch:							;Assignment: a player watching a fight skates to a spot near it
 	sta.b d0
 .x0:
 	lda.b d3
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d3
 	lda.b d0
@@ -102,10 +102,10 @@ assfwatch:							;Assignment: a player watching a fight skates to a spot near it
 	sta.b mula
 	lda.b d1
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.b d2
 	sta.b mula
-	jsl.l divs
+	jsl.l divs						; signed divide
 	adc.w yc1
 	sta.w temp4,x
 .go:

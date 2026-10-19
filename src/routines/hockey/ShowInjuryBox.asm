@@ -26,7 +26,7 @@ ShowInjuryBox:						;The injury box: the injured player and whether he is out fo
 	sta.b d0
 	lda.w #$0005
 	sta.b d1
-	jsl.l Framer
+	jsl.l Framer					; draw the frame d0 x d1
 	jsl.l printz					; print the string that follows
 	%StringCtctc(CC_Font1Pri,$0C,$04,"Injury to:",CC_Font1Pri,$0C,$06,"Out for period",CC_Font1Pri,$0C,$05)
 	jsl.l GetPlayerNumInitial

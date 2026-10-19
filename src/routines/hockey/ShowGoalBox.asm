@@ -46,7 +46,7 @@ ShowGoalBox:						;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the
 	bmi .frame
 	inc.b d1
 .frame:
-	jsl.l Framer
+	jsl.l Framer					; draw the frame d0 x d1
 	stz.b a2
 	ldy.w #$0002
 	lda.b [a4],y

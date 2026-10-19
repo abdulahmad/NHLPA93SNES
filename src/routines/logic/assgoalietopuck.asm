@@ -4,7 +4,7 @@ assgoalietopuck:					;Assignment: the goalie skates out to a loose puck moving t
 	and.w #pfjoycon
 	ora.w gmclock
 	beq .ai
-	jml.l assexit
+	jml.l assexit					; assignment over
 .ai:
 	jsl.l check4bench
 	lda.w pflags,x
@@ -30,20 +30,20 @@ assgoalietopuck:					;Assignment: the goalie skates out to a loose puck moving t
 	sta.w temp1,x
 	lda.w puckc						; carried puck: assexit
 	bmi .loose
-	jml.l assexit
+	jml.l assexit					; assignment over
 .loose:
 	lda.w puckvy					; puck moving away from my goal: assexit
 	sta.b tmp0
 	lda.w pfgoal,x
 	beq .dir
 	lda.b tmp0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b tmp0
 .dir:
 	lda.b tmp0
 	bpl .near
-	jml.l assexit
+	jml.l assexit					; assignment over
 .near:
 	stz.b a1						; tmnear of my team >= $E10 and of the other >= $640
 	lda.w #$0002
@@ -60,7 +60,7 @@ assgoalietopuck:					;Assignment: the goalie skates out to a loose puck moving t
 	lda.w tmnear+4,y
 	sbc.w #$0000
 	bcs .other
-	jml.l assexit
+	jml.l assexit					; assignment over
 .other:
 	ldy.b a2
 	lda.w tmnear,y
@@ -68,7 +68,7 @@ assgoalietopuck:					;Assignment: the goalie skates out to a loose puck moving t
 	lda.w tmnear+4,y
 	sbc.w #$0000
 	bcs .go
-	jml.l assexit
+	jml.l assexit					; assignment over
 .go:								;skatetopuck
 	jml.l skatetopuck
 unusedFF83:							;unused, $FF fill to the end of the bank

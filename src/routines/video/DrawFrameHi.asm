@@ -92,7 +92,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	lda.b sprhflip
 	beq .sx
 	lda.b sprox
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sec
 	sbc.w #$0007
@@ -258,7 +258,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	lda.b sprhflip
 	beq .bx
 	lda.b sprox
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sec
 	sbc.w #$000F

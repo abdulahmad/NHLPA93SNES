@@ -6,7 +6,7 @@ DrawTeamBlocks:						;Draw team d1's name block at printx / printy
 	sta.b mula
 	lda.w #36
 	sta.b mulb
-	jsl.l mulu16
+	jsl.l mulu16					; A = mula * mulb
 	tay
 	lda.w #Teamblocksmap
 	sta.b a2

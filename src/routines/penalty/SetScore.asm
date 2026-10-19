@@ -37,7 +37,7 @@ SetScore:							;Play one period of playoff game a0 with random goals; a game ti
 	sbc.w gss2,y
 	bit.w #$8000
 	beq .diff
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .diff:
 	cmp.w #2

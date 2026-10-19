@@ -30,7 +30,7 @@ Pausemode:							;Pause mode: save the screen, stop the sound, show the pause me
 	lda.w #$0007
 	sta.b d1
 	jsl.l Framer					; d0 x d1
-	jsl.l printscores1
+	jsl.l printscores1				; redraw the scores
 	jsl.l PauseMenu					; nonzero: draw again
 	bne .top
 	jml.l PauseExit					; resume

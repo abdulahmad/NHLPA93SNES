@@ -29,7 +29,7 @@ Gameloop:							;Main game loop: wait for a frame, run the clock, music and crow
 	sta.b d7x1024
 	stx.w lastframevc
 	stx.w oldvcount
-	jsl.l ReadPads
+	jsl.l ReadPads					; read the pads
 	lda.w sflags					; clock stops in pause and when stopped
 	bit.w #sfpz
 	bne .cue
@@ -58,7 +58,7 @@ Gameloop:							;Main game loop: wait for a frame, run the clock, music and crow
 	beq .p3
 	cmp.w #2
 	bne .cue2
-	jsl.l sndqreset
+	jsl.l sndqreset					; reset the sound queue
 	bra .p3
 .cue2:
 	dex
@@ -124,7 +124,7 @@ Gameloop:							;Main game loop: wait for a frame, run the clock, music and crow
 	tax
 	lda.w #9
 	sta.w tmscore,x
-	jsl.l printscores1
+	jsl.l printscores1				; redraw the scores
 .gh:								;goalie carrying the puck far from his net: penalty 6
 	lda.w position					; goalies on the ice
 	ora.w position+2
@@ -138,7 +138,7 @@ Gameloop:							;Main game loop: wait for a frame, run the clock, music and crow
 	lda.w pucky
 	bit.w #$8000
 	beq .ay
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .ay:
 	cmp.w #165						; beyond y 165

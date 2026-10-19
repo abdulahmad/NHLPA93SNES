@@ -21,7 +21,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	sta.b mulb
 	lda.w Yvel,x
 	sta.b mula
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d0
 	lda.b mulres+2
 	sta.b d0+2
@@ -29,7 +29,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	sta.b mula
 	lda.b d1
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.b d0
 	sec
 	sbc.b mulres
@@ -38,14 +38,14 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	sbc.b mulres+2
 	sta.b d0+2
 	lda.b d0+1
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d2
 	lda.w Xvel,x
 	sta.b mula
 	lda.b $01,s
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d0
 	lda.b mulres+2
 	sta.b d0+2
@@ -53,7 +53,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	sta.b mula
 	lda.b d1
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	adc.b d0
 	sta.b d0
 	lda.b d0+2
@@ -88,8 +88,8 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bvs .pok
 .hard:
 	lda.w #$0800
-	jsl.l randoma
-	eor.w #$FFFF
+	jsl.l randoma					; random number 0 to A-1
+	eor.w #$FFFF					; negate
 	inc a
 	sta.w puckvz
 	sta.b d0
@@ -208,7 +208,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	sta.b mula
 	lda.b d3
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b tmp0
 	lda.b mulres+2
 	sta.b tmp1
@@ -216,7 +216,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	sta.b mula
 	lda.b d2
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.b tmp0
 	sec
 	sbc.b mulres
@@ -230,7 +230,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	sta.b mula
 	lda.b d3
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d3
 	lda.b mulres+2
 	sta.b d3+2
@@ -238,7 +238,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	sta.b mula
 	lda.b d2
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	adc.b d3
 	sta.b d3
 	lda.b d3+2

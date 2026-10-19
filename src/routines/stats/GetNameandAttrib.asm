@@ -71,7 +71,7 @@ GetNameandAttrib:					;Print player d0's number and name, then the roster column
 	bcc .next
 	lda.b d2
 	lsr a
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	dec a
 	clc

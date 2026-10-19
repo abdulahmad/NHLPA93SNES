@@ -7,7 +7,7 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	sta.b mula
 	lda.b d7
 	sta.b mulb
-	jsl.l muls16
+	jsl.l muls16					; signed multiply
 	lsr a
 	lsr a
 	bit.w #$2000
@@ -19,7 +19,7 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	sta.b mula
 	lda.b d7
 	sta.b mulb
-	jsl.l muls16
+	jsl.l muls16					; signed multiply
 	lsr a
 	lsr a
 	bit.w #$2000
@@ -45,7 +45,7 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	lsr a
 	lsr a
 	lsr a
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	clc
 	adc.w #$0020
@@ -66,7 +66,7 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	sta.b mula
 	lda.b d0
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lsr.b mulres+2
 	ror a
 	lsr.b mulres+2
@@ -80,12 +80,12 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	sta.b mula
 	lda.b d7
 	sta.b mulb
-	jsl.l muls16
+	jsl.l muls16					; signed multiply
 	adc.w Xvel,x
 	sta.b d0
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d2
 	lda.b mulres+2
 	sta.b d2+2
@@ -93,7 +93,7 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	sta.b mula
 	lda.b d1
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lsr.b mulres+2
 	ror a
 	lsr.b mulres+2
@@ -107,12 +107,12 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	sta.b mula
 	lda.b d7
 	sta.b mulb
-	jsl.l muls16
+	jsl.l muls16					; signed multiply
 	adc.w Yvel,x
 	sta.b d1
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	adc.b d2
 	sta.b d3
 	lda.b mulres+2
@@ -130,7 +130,7 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	clc
 	adc.w #$0800
 	sta.b mulb
-	jsl.l mulu
+	jsl.l mulu						; mulres = mula * mulb
 	asl a
 	rol.b mulres+2
 	asl a

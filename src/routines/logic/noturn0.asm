@@ -15,7 +15,7 @@ noturn0:							;doplayeracc when the wanted direction needs no turn
 	sta.b d0
 	lda.w Yvel,x
 	sta.b d1
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 	bit.w #$0008
 	bne .nostop
 	sec
@@ -42,11 +42,11 @@ noturn0:							;doplayeracc when the wanted direction needs no turn
 	sta.b d1
 	lda.w pfrev,x
 	bne .gback
-	jml.l SetSPA
+	jml.l SetSPA					; start animation d1
 .gback:
 	lda.w #SPAglideback
 	sta.b d1
-	jml.l SetSPA
+	jml.l SetSPA					; start animation d1
 .nochg:
 	lda.w #SPAskateback				; no change: skate
 	sta.b d1
@@ -71,5 +71,5 @@ noturn0:							;doplayeracc when the wanted direction needs no turn
 	beq .set
 	jml.l noturn
 .set:
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 	jml.l noturn

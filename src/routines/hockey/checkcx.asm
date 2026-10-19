@@ -34,7 +34,7 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	pha
 	lda.b d0
 	pha
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d1
 	lda.b mulres+2
 	sta.b d1+2
@@ -42,7 +42,7 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	sta.b mula
 	lda.b d0
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	adc.b d1
 	sta.b d1
 	lda.b d1+2
@@ -117,7 +117,7 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	sta.b mula
 	lda.b d1
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d1
 	lda.b mulres+2
 	sta.b d1+2
@@ -125,7 +125,7 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	sta.b mula
 	lda.b d0
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sec
 	sbc.b d1
 	sta.b d0
@@ -169,16 +169,16 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	sta.b mulb
 	lda.b d4
 	sta.b mula
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.b d1
 	sta.b mula
-	jsl.l divs
+	jsl.l divs						; signed divide
 	sta.b d0
 	lda.b evalue
 	sta.b mulb
 	lda.b d4
 	sta.b mula
-	jsl.l muls16
+	jsl.l muls16					; signed multiply
 	lsr a
 	lsr a
 	lsr a
@@ -194,7 +194,7 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	sta.b mula
 	lda.b d3
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b tmp0
 	lda.b mulres+2
 	sta.b tmp1
@@ -202,7 +202,7 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	sta.b mula
 	lda.b d2
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	adc.b tmp0
 	sta.b tmp0
 	lda.b tmp1
@@ -223,7 +223,7 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	sta.b mula
 	lda.b d2
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b tmp0
 	lda.b mulres+2
 	sta.b tmp1
@@ -231,7 +231,7 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	sta.b mula
 	lda.b d3
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sec
 	sbc.b tmp0
 	sta.b tmp0
@@ -253,7 +253,7 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	sta.b mula
 	lda.b d2
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lsr.b mulres+2
 	ror a
 	lsr.b mulres+2
@@ -269,7 +269,7 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	sta.b mula
 	lda.b d3
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lsr.b mulres+2
 	ror a
 	lsr.b mulres+2

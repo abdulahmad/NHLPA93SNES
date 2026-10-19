@@ -3,14 +3,14 @@ assscore:							;Assignment: celebrating a goal; the scorer pumps his arm
 	sta.b mula
 	lda.w #$00C0
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.b mulres+1
 	sta.w Xvel,x
 	lda.w Yvel,x
 	sta.b mula
 	lda.w #$00C0
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.b mulres+1
 	sta.w Yvel,x
 	txa								; the carrier drops the puck
@@ -66,10 +66,10 @@ assscore:							;Assignment: celebrating a goal; the scorer pumps his arm
 	lda.w #SPApump
 	sta.b d1
 .nopump:
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 .1:									;temp1 = random 120
 	lda.w #120
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	sta.w temp1,x
 .rtl:
 	rtl

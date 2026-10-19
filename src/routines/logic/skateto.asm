@@ -9,7 +9,7 @@ skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; 
 	lda.b d0
 	bit.w #$8000
 	beq .ax
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .ax:
 	cmp.w #$0088
@@ -19,7 +19,7 @@ skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; 
 	sbc.b d0
 	bit.w #$8000
 	beq .dx
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .dx:
 	sta.b tmp0
@@ -28,7 +28,7 @@ skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; 
 	sbc.b d1
 	bit.w #$8000
 	beq .dy
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .dy:
 	clc
@@ -39,7 +39,7 @@ skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; 
 	sta.b mula
 	lda.w #7
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lsr.b mulres+2
 	ror a
 	lsr.b mulres+2
@@ -51,7 +51,7 @@ skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; 
 	sta.b mula
 	lda.w #7
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lsr.b mulres+2
 	ror a
 	lsr.b mulres+2
@@ -75,7 +75,7 @@ skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; 
 	lda.b d0
 	bit.w #$8000
 	beq .near
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .near:
 	cmp.w #$0088
@@ -103,7 +103,7 @@ skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; 
 	beq .lx
 	ora.w #$FF00
 .lx:
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	clc
 	adc.b d0
@@ -117,7 +117,7 @@ skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; 
 	beq .ly
 	ora.w #$FF00
 .ly:
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	clc
 	adc.b d1
@@ -127,7 +127,7 @@ skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; 
 	lda.b d0
 	bit.w #$8000
 	beq .cx
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .cx:
 	cmp.b d0+2
@@ -135,7 +135,7 @@ skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; 
 	lda.b d1
 	bit.w #$8000
 	beq .cy
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .cy:
 	cmp.b d0+2
@@ -144,7 +144,7 @@ skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; 
 	sta.b d0
 	bra .nvt
 .vt:
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 .nvt:								;jsr (a0) through jmlvector
 	lda.b a0
 	sta.w jmlvector+1
@@ -177,11 +177,11 @@ skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; 
 	sec
 	sbc.w Ypos,x
 	sta.b d1
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 	sec
 	sbc.w facedir,x
 	beq .ex
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	and.w #$0004
 	lsr a

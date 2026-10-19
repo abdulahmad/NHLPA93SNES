@@ -68,7 +68,7 @@ changeplayer:						;Switch controller d4 to the teammate nearest the puck, or sw
 	sbc.w Xpos,x
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d0
 	lda.b mulres+2
 	sta.b d0+2
@@ -77,7 +77,7 @@ changeplayer:						;Switch controller d4 to the teammate nearest the puck, or sw
 	sbc.w Ypos,x
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	adc.b d0
 	sta.b d0
 	lda.b mulres+2

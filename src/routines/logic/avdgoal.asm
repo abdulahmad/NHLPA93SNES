@@ -17,7 +17,7 @@ avdgoal:							;Do not skate through the goal: when the path to d0 / d1 crosses 
 	sbc.w #258
 	bit.w #$8000
 	beq .b
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .b:
 	cmp.w #32
@@ -27,7 +27,7 @@ avdgoal:							;Do not skate through the goal: when the path to d0 / d1 crosses 
 	sbc.w #-258						; distance to the -258 goal line
 	bit.w #$8000
 	beq .c
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .c:
 	cmp.w #32
@@ -50,7 +50,7 @@ avdgoal:							;Do not skate through the goal: when the path to d0 / d1 crosses 
 	lda.w Xpos,x					; player's x
 	bit.w #$8000
 	beq .ax
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .ax:								; |x| computed
 	cmp.w #40						; more than 40 from the center: the path passes the net

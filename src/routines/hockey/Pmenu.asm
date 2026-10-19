@@ -38,7 +38,7 @@ Pmenu:								;Draw the pause menu items with the current one highlighted
 	jsl.l .goalie
 	lda.b [a1]
 	lsr a
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	clc
 	adc.w #$0011

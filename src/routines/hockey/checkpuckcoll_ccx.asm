@@ -64,7 +64,7 @@ checkpuckcoll_ccx:					;Puck contact with a player's stick, body or the goalie
 	sta.b d0
 	bit.w #$8000
 	beq .sx
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .sx:
 	cmp.w #$000F					; stick: within 14
@@ -77,7 +77,7 @@ checkpuckcoll_ccx:					;Puck contact with a player's stick, body or the goalie
 	sta.b d1
 	bit.w #$8000
 	beq .sy
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .sy:
 	cmp.w #$000F
@@ -85,14 +85,14 @@ checkpuckcoll_ccx:					;Puck contact with a player's stick, body or the goalie
 	lda.b d0						; square dx (signed 32-bit result in mulres)
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d0
 	lda.b mulres+2
 	sta.b d0+2
 	lda.b d1						; square dy
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	adc.b d0
 	sta.b d0
 	lda.b d0+2
@@ -122,7 +122,7 @@ checkpuckcoll_ccx:					;Puck contact with a player's stick, body or the goalie
 	sta.b d0
 	bit.w #$8000
 	beq .bx
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .bx:
 	cmp.w #$0009					; body: within 8
@@ -133,7 +133,7 @@ checkpuckcoll_ccx:					;Puck contact with a player's stick, body or the goalie
 	sta.b d1
 	bit.w #$8000
 	beq .by
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .by:
 	cmp.w #$0009
@@ -141,14 +141,14 @@ checkpuckcoll_ccx:					;Puck contact with a player's stick, body or the goalie
 	lda.b d0						; dist squared of the body
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d0
 	lda.b mulres+2
 	sta.b d0+2
 	lda.b d1
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	adc.b d0
 	sta.b d0
 	lda.b d0+2
@@ -178,7 +178,7 @@ checkpuckcoll_ccx:					;Puck contact with a player's stick, body or the goalie
 	sta.b d0
 	bit.w #$8000
 	beq .gx
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .gx:
 	cmp.w #$000D					; goalie: within 12
@@ -189,7 +189,7 @@ checkpuckcoll_ccx:					;Puck contact with a player's stick, body or the goalie
 	sta.b d1
 	bit.w #$8000
 	beq .gy
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .gy:
 	cmp.w #$000D

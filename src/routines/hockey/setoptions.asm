@@ -159,7 +159,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	inx
 	cpx.w #$32A0
 	bne .blocktiles
-	jsl.l ReadPads
+	jsl.l ReadPads					; read the pads
 	jsl.l Readjoy12
 	lda.w #$0000
 	sta.b sprpriority
@@ -190,7 +190,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	stz.b d0
 	jsl.l .nms
 	jsl.l .ps
-	jsl.l ReadPads
+	jsl.l ReadPads					; read the pads
 	jsl.l StartSong6
 	lda.w #$0001
 	sta.b fadein
@@ -205,17 +205,17 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	lda.b vbint
 	cmp.w #VBlank_SprPal			; VBlank_SprPal not run yet?
 	beq .frame
-	jsl.l ReadPads
+	jsl.l ReadPads					; read the pads
 	lda.b vcount
 	sta.w lastframevc
 	sta.w oldvcount
 	jsl.l ClearSprites
 	jsl.l UpdateRosterPlayers
-	jsl.l ReadJoy1
+	jsl.l ReadJoy1					; read pad 1
 	jsl.l ProcessInputWithRepeat
 	lda.b d1
 	bne .input
-	jsl.l ReadJoy2
+	jsl.l ReadJoy2					; read pad 2
 	jsl.l ProcessInputWithRepeat
 	lda.b d1
 	bne .input
@@ -229,12 +229,12 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	dec.b d6
 	bpl .frame
 	lda.w #NumofTeams				; demo: random teams, both computer
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	sta.w OptTeam1
 	sta.w HomeTeam
 .team2:
 	lda.w #NumofTeams
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	cmp.w OptTeam1
 	beq .team2
 	sta.w OptTeam2
@@ -404,7 +404,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	sta.b d1
 	lda.w blankchar
 	sta.b d2
-	jsl.l eraser
+	jsl.l eraser					; erase d0 x d1 with tile d2
 	dec.w printy
 	lda.w #$0011
 	sta.w printx
@@ -518,7 +518,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	jsl.l .setrect
 	lda.w blankchar
 	sta.b d2
-	jsl.l eraser
+	jsl.l eraser					; erase d0 x d1 with tile d2
 	lda.b d7
 	sta.b d3
 	jsl.l .setrect

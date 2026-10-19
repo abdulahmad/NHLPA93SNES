@@ -1,7 +1,7 @@
 ScoutingReport:						;The scouting report screen: both teams, their ratings and the scrolling
 									;commentary until Start
 	jsl.l ClearTeamStats
-	jsl.l forceblack
+	jsl.l forceblack				; blank the screen
 	jsl.l InitPPU
 	sep #$20						; 8-bit A
 	cli
@@ -111,7 +111,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	sta.b d0
 	lda.w #$0009
 	sta.b d1
-	jsl.l Framer
+	jsl.l Framer					; draw the frame d0 x d1
 	lda.w #RonBarrMap
 	sta.b tmp0
 	lda.w #RonBarrMap>>16
@@ -143,7 +143,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	sta.b mula
 	lda.w #$0008
 	sta.b mulb
-	jsl.l mulu16
+	jsl.l mulu16					; A = mula * mulb
 	adc.b tmp0
 	asl a
 	tax
@@ -188,7 +188,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 .pl:
 	lda.b [a1]
 	lsr a
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	clc
 	adc.w #$0011
@@ -282,7 +282,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 .vbwait:
 	cmp.b vbint
 	beq .vbwait
-	jsl.l ReadPads
+	jsl.l ReadPads					; read the pads
 	lda.w padnew1
 	ora.w padnew1+2
 	bit.w #$1000

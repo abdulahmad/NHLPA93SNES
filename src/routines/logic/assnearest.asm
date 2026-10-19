@@ -151,14 +151,14 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	lda.b d0
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d0
 	lda.b mulres+2
 	sta.b d0+2
 	lda.b d1
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	adc.b d0
 	sta.b d0
 	lda.b mulres+2
@@ -206,7 +206,7 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	sta.w pflags,x
 	lda.w #anearest					; anearest
 	sta.b d0
-	jsl.l assinsert
+	jsl.l assinsert					; insert assignment d0
 	ldx.b a1						; exg back
 	ldy.b a3
 	stx.b a3
@@ -251,7 +251,7 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	asl.b d0
 	bra .shl
 .rnd:
-	jsl.l randomd0
+	jsl.l randomd0					; random number 0 to d0-1
 	lda.b d0
 	cmp.w #$0002
 	bcs .nodec
@@ -293,11 +293,11 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	pha
 	lda.b d0
 	pha
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 	lda.b d1
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	clc
 	adc.w #$00F4					; own goal mouth y $F4

@@ -17,7 +17,7 @@ CwdFight:							;The crowd reacts to a punch; the hit player X is pushed back by
 	cmp.w #$0002					; push the other way when facing right
 	bne .xveladj
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 .xveladj:

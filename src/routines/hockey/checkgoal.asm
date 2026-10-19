@@ -35,7 +35,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	bvs .ex2
 .xl:
 	lda.b d4
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d4
 	lda.b d2
@@ -67,7 +67,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	bvs .ex4
 .yl:
 	lda.b d5
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d5
 	lda.b d3
@@ -109,7 +109,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	lda.w pfgoal,y
 	bne .an
 	lda.b d1
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
 .an:
@@ -134,11 +134,11 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 .dy:
 	bmi .0
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 	lda.b d5
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d5
 .0:									;d5 = dy at entry; d2 -= dx*dy/vy: x where the puck crossed the goal line
@@ -157,18 +157,18 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	lda.b d3+1
 	sta.b d3
 	sta.b mula
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.b d1						; |d5*d3| < |d1|? else side entry
 	bit.w #$8000
 	beq .m1
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .m1:
 	sta.b mula
 	lda.b mulres+2
 	bit.w #$8000
 	beq .m2
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .m2:
 	cmp.b mula
@@ -193,7 +193,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	bvc .se1
 .xl2:
 	lda.b d4
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d4
 	lda.b d2
@@ -214,7 +214,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	jmp.w wallcoll
 .pf:
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 	lda.w pfgoal+puckobj			; own goal by the carrier: wallcoll
@@ -239,7 +239,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	bvs .deflectsf
 .ml:
 	lda.b d4
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d4
 	lda.b d2
@@ -261,24 +261,24 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	adc.w #$012C
 	sta.b crowdlevel
 	lda.w #$1000					; random Yvel away from the goal, Xvel/Zvel +-$1000
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	sta.b d0
 	lda.w pucky
 	bmi .df0
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 .df0:
 	lda.b d0
 	sta.w puckvy
 	lda.w #$2000
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	sec
 	sbc.w #$1000
 	sta.w puckvx
 	lda.w #$2000
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	sec
 	sbc.w #$1000
 	sta.w puckvz
@@ -287,7 +287,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	lda.w puckvz
 	bit.w #$8000
 	beq .dz
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .dz:
 	sta.w puckvz

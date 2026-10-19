@@ -232,7 +232,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	sta.b a0+2
 	lda.w #apenalty
 	sta.b d0
-	jsl.l assreplace
+	jsl.l assreplace				; replace the assignment with d0
 	stx.b xsave						; keep X
 	ldx.w #$000E
 .resta2:							; pull a1 and the words after it back
@@ -276,7 +276,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	stx.b a3
 	lda.w #pfaceoff
 	sta.b d0
-	jsl.l assreplace
+	jsl.l assreplace				; replace the assignment with d0
 .ex:
 	stx.b xsave						; keep X
 	ldx.w #$000E

@@ -99,7 +99,7 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	sec
 	sbc.w Ypos,y
 	sta.b d1
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 	lda.w #SPAfallback
 	sta.b d1
 	ldy.b a2						; hit from the front: fall back
@@ -135,7 +135,7 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	sty.b a2
 	lda.w #$0001					; pfalock
 	sta.w pfalock,x
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 	ldx.b a2
 	ldy.b a3
 	stx.b a3
@@ -171,7 +171,7 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	bit.w #pf2pen
 	bne .snd
 	lda.w #$00A0
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	ldy.b a2
 	sec
 	sbc.w impact,y
@@ -190,7 +190,7 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	sty.b a2
 	lda.w #SPAinjury1
 	sta.b d1
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 	ldx.b a2
 	ldy.b a3
 	stx.b a3

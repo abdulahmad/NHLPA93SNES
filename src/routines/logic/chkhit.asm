@@ -30,7 +30,7 @@ chkhit:								;In a fight, is player X hit by player a0?
 	sbc.w Xpos,y
 	bit.w #$8000
 	beq .dx
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .dx:
 	cmp.w #$0017					; within 22 in x
@@ -40,7 +40,7 @@ chkhit:								;In a fight, is player X hit by player a0?
 	sbc.w Ypos,y
 	bit.w #$8000
 	beq .dy
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .dy:
 	cmp.w #$0009					; within 8 in y
@@ -140,7 +140,7 @@ chkhit:								;In a fight, is player X hit by player a0?
 	lda.w #SPAfheld
 	sta.b d1
 	sta.w pf2aip,x
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 	jmp.w .ex
 .hithigh:
 	ldx.b a0
@@ -154,7 +154,7 @@ chkhit:								;In a fight, is player X hit by player a0?
 	bmi FightFall
 	lda.w #SPAfhith
 	sta.b d1
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 	lda.w #SFXhithigh
 	pha
 	jsl.l sfx
@@ -171,7 +171,7 @@ chkhit:								;In a fight, is player X hit by player a0?
 	bmi FightFall
 	lda.w #SPAfhitl
 	sta.b d1
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 	lda.w #SFXhitlow
 	pha
 	jsl.l sfx

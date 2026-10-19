@@ -17,7 +17,7 @@ updatefaceoff:						;Step the puck drop animation; at its end erase the face off
 	bvs .rtl
 .set:
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	clc
 	adc.w #$000A

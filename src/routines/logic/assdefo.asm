@@ -41,14 +41,14 @@ assdefo:							;Assignment: a defenseman on offense holds the blue line on his s
 	lda.w tmflags,y					; offsides: defend
 	bit.w #tmfoside
 	beq .on
-	jml.l assreplace
+	jml.l assreplace				; replace the assignment with d0
 .on:
 	lda.w pucky
 	sta.b d1
 	lda.w pfgoal,x
 	bne .de1
 	lda.b d1
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
 .de1:
@@ -58,7 +58,7 @@ assdefo:							;Assignment: a defenseman on offense holds the blue line on his s
 	bmi .neg
 	bvc .pc
 .def:
-	jml.l assreplace
+	jml.l assreplace				; replace the assignment with d0
 .neg:
 	bvc .def
 .pc:
@@ -72,7 +72,7 @@ assdefo:							;Assignment: a defenseman on offense holds the blue line on his s
 	sbc.w #12
 	eor.b d1
 	bpl .nodec
-	jml.l assreplace
+	jml.l assreplace				; replace the assignment with d0
 .nodec:
 	lda.w #EvadePC					; EvadePC avoidance; spot x +-80 by side, y 98 (blue line + 5)
 	sta.b a0
@@ -91,7 +91,7 @@ assdefo:							;Assignment: a defenseman on offense holds the blue line on his s
 	lda.w pfgoal,x
 	bne .0
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 	lda.w #-98

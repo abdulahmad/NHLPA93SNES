@@ -50,7 +50,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	trb.w sflags
 	lda.w #sf2faceoff|sf2drec
 	tsb.w sflags
-	jsl.l ClrHor
+	jsl.l ClrHor					; back to the vertical rink
 	stz.w Vpos						; Vpos = Hpos = 0
 	stz.w Hpos
 	lda.w fox						; puck to the faceoff spot, stopped
@@ -87,11 +87,11 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	sta.w yleader
 	jsl.l ResetBench				; ResetBench
 	stz.b a2
-	jsl.l setpersonel
+	jsl.l setpersonel				; update the players on the ice
 	jsl.l forcepldata
 	inc.b a2
 	inc.b a2
-	jsl.l setpersonel
+	jsl.l setpersonel				; update the players on the ice
 	jsl.l forcepldata
 	jsl.l resetplstuff				; resetplstuff
 	lda.b a3+2						; push a3
@@ -137,7 +137,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	lda.w #afaceoffpl				; afaceoffpl
 	sta.b d0
 .l1:
-	jsl.l assinsert
+	jsl.l assinsert					; insert assignment d0
 .goalie1:
 	lda.w tmap						; d4 = (6-tmap)*8: .apl row
 	sta.b d4
@@ -148,7 +148,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	sta.b d4
 .t0:
 	lda.b d4
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	clc
 	adc.w #$0006
@@ -182,11 +182,11 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	lda.w pfgoal,x
 	bne .f0
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 	lda.b d1
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
 .f0:
@@ -213,7 +213,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	beq .mid
 	ora.w #$E000
 .mid:
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	clc
 	adc.b d1
@@ -245,14 +245,14 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	sta.w Xpos,x
 	sec
 	sbc.w puckx
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 	lda.b d1
 	sta.w Ypos,x
 	sec
 	sbc.w pucky
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
 	stz.w Xvel,x
@@ -267,7 +267,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	stz.w SPA,x
 	lda.w #SPAglide
 	sta.b d1
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 .next:
 	inc.b a3
 	inc.b a3
@@ -406,7 +406,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	jsl.l Fprint_list
 .nol:								;time for the puck drop: 180-299 frames
 	lda.w #$0078
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	adc.w #$00B4
 	sta.b d0
 	ldx.b a3

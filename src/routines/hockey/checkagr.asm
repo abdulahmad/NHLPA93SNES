@@ -19,7 +19,7 @@ checkagr:							;Penalty roll for player X: small results call a penalty. Joysti
 	sbc.w puckx
 	bit.w #$8000					; absolute value
 	beq .xpos
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .xpos:
 	cmp.w #$0029					; within 40
@@ -29,7 +29,7 @@ checkagr:							;Penalty roll for player X: small results call a penalty. Joysti
 	sbc.w pucky
 	bit.w #$8000					; absolute value
 	beq .ypos
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .ypos:
 	cmp.w #$0029					; within 40

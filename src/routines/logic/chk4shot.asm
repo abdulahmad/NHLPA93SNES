@@ -7,7 +7,7 @@ chk4shot:							;Computer player X looks for a shot. A penalty killer under pres
 	lda.w Ypos,x
 	bit.w #$8000
 	beq .yabs
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .yabs:
 	cmp.w #$00ED					; in front of the net
@@ -38,19 +38,19 @@ chk4shot:							;Computer player X looks for a shot. A penalty killer under pres
 	sta.b d1
 	pha
 	lda.w puckx
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b mula
 	sta.b mulb
 	pha
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d0
 	lda.b mulres+2
 	sta.b d0+2
 	lda.b d1
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	adc.b d0
 	sta.b tmp0
 	lda.b mulres+2
@@ -69,7 +69,7 @@ chk4shot:							;Computer player X looks for a shot. A penalty killer under pres
 	lsr.b d4
 	lsr.b d4
 	lsr.b d4
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 	sta.b d5
 	lda.w #$0005
 	sta.b d3
@@ -91,7 +91,7 @@ chk4shot:							;Computer player X looks for a shot. A penalty killer under pres
 	sec
 	sbc.w pucky
 	sta.b d1
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 	cmp.b d5
 	bne .co1
 	asl.b d4
@@ -109,7 +109,7 @@ chk4shot:							;Computer player X looks for a shot. A penalty killer under pres
 	bpl .co0
 .no1:
 	lda.b d4
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	cmp.w #$0009					; no shot if random(d4) > 8
 	bcs .rts
 	lda.w pucky
@@ -117,7 +117,7 @@ chk4shot:							;Computer player X looks for a shot. A penalty killer under pres
 	lda.w pfgoal,x
 	bne .ds0
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 .ds0:

@@ -32,7 +32,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	cmp.w #TMPDBENCH
 	bne .nda
 .da:
-	jsl.l assinsert
+	jsl.l assinsert					; insert assignment d0
 	stz.w pfalock,x					; pfalock = 0, SPA = 0
 	stz.w SPA,x
 .nda:
@@ -92,14 +92,14 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	lsr a
 	lsr a
 	and.w #$000F
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.w PKBonus
 .nda3:
 	ldy.w #$0002					; HmAwBonus: home = high nibble of byte 2, visitors = -low nibble
 	lda.b [a0],y
 	and.w #$000F
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 	lda.w pfteam,x
@@ -150,7 +150,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	lda.w pfteam,x
 	beq .side
 	lda.b tmp0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b tmp0
 .side:

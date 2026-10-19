@@ -75,7 +75,7 @@ ChkOffsides:						;Clear each team's offsides flag once it is back onside; when 
 	rtl
 .neg:								;bottom line
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 	sec

@@ -115,7 +115,7 @@ Stop4Pen:							;Stop play for a penalty: stop the clock, set the face off spot 
 	sbc.w sfxmutetime
 	cmp.w #$003C
 	bcc .snd
-	jsl.l sndqreset
+	jsl.l sndqreset					; reset the sound queue
 .snd:
 	lda.w #SFXwhistle				; whistle, Pencntdwn = 0, gmpen, SetPA PenWhistle
 	pha

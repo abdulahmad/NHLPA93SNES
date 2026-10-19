@@ -43,7 +43,7 @@ forcepldata:						;Face offs: move team a2's players straight to their new posit
 	bne .notnear
 	lda.w #anearest					; anearest
 	sta.b d0
-	jsl.l assinsert
+	jsl.l assinsert					; insert assignment d0
 .notnear:
 	ldx.b a3
 	lda.w newpnum,x					; tmpdst of newpnum = TMPDICE: on the ice

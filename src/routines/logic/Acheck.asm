@@ -20,4 +20,4 @@ Acheck:								;Player X holds or hooks player a0
 	lda.w #SPAHold					; else hold
 	sta.b d1
 .set:
-	jml.l SetSPA
+	jml.l SetSPA					; start animation d1

@@ -8,7 +8,7 @@ PushNumber:							;a1 = d0 as a decimal string, no leading zeros
 	sta.b mulb						; divide by 10
 	lda.w #$000A
 	sta.b mula
-	jsl.l divu16
+	jsl.l divu16					; mulb / mula
 	dec.b a1						; one character back
 	sep #$20						; 8-bit A
 	lda.b mulres+2

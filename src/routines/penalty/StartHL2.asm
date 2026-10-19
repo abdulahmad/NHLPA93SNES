@@ -38,8 +38,8 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	beq .play
 	jmp.w .nhl1
 .play:
-	jsl.l forceblack
-	jsl.l sndqreset
+	jsl.l forceblack				; blank the screen
+	jsl.l sndqreset					; reset the sound queue
 	lda.w sndbank
 	cmp.w #$0001
 	beq .snd
@@ -61,7 +61,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	bne .pushg
 	ldx.b xsave						; restore X
 	jsl.l ClearTeamStats
-	jsl.l restoreteams
+	jsl.l restoreteams				; restore the teams
 	stz.b a2
 	jsl.l reenergizeteam
 	lda.w #$0002
@@ -73,7 +73,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	stz.w cont1team
 	stz.w cont2team
 	lda.w #120						; gameclock = 120 + random 120
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	adc.w #120
 	sta.w gameclock
 	stx.b xsave						; keep X
@@ -123,7 +123,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	sta.w puckcross+2
 	sta.w puckcross+6
 	jsl.l setupice
-	jsl.l ClrHor
+	jsl.l ClrHor					; back to the vertical rink
 	stz.w Vpos
 	stz.w Hpos
 	jsl.l ResetBench
@@ -166,7 +166,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	inc.b a1
 	dec.b d0
 	bpl .ploop
-	jsl.l SprSort
+	jsl.l SprSort					; sort the sprites
 	lda.w #180						; 180 frames after the clock stops
 	pha
 	lda.b vcount
@@ -200,7 +200,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	sta.b d7x1024
 	stx.w lastframevc
 	stx.w oldvcount
-	jsl.l ReadPads
+	jsl.l ReadPads					; read the pads
 	lda.w sflags
 	bit.w #sfpz
 	bne .frame
@@ -240,7 +240,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	lda.w tmscore					; tied: random goal
 	cmp.w tmscore+2
 	bne .endhl
-	jsl.l random
+	jsl.l random					; random number
 	and.w #$0002
 	tax
 	inc.w tmscore,x
@@ -276,7 +276,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	bne .pusha0
 	ldx.b xsave						; restore X
 	jsl.l KillCrowd
-	jsl.l sndqreset
+	jsl.l sndqreset					; reset the sound queue
 	stx.b xsave						; keep X
 	ldx.w #$0002
 .popa0:								; pull a0 and the words after it back
@@ -305,11 +305,11 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	beq .stats
 	jmp.w .nhl1
 .stats:
-	jsl.l forceblack
+	jsl.l forceblack				; blank the screen
 	jsl.l .lo						; restore the game state
 	jsl.l setplayercolors
-	jsl.l SetHor
-	jsl.l setvideo
+	jsl.l SetHor					; switch to the horizontal rink
+	jsl.l setvideo					; update the video
 	jsl.l printz					; DisplayStats box
 	%StringCp(CC_Font1Pri,$05,$0C)
 	lda.w #22
@@ -317,7 +317,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	lda.w #7
 	sta.b d1
 	jsl.l Framer					; d0 x d1
-	jsl.l printscores1
+	jsl.l printscores1				; redraw the scores
 	jsl.l Pmenu						; DisplayStats
 	stx.b xsave						; keep X
 	ldx.w #$001A
@@ -411,7 +411,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 .setteam:							;team a2 for the highlight: energy, setpersonel, forcepldata, no
 									;last touches
 	jsl.l reenergizeteam
-	jsl.l setpersonel
+	jsl.l setpersonel				; update the players on the ice
 	jsl.l forcepldata
 	ldy.b a2
 	lda.w #$FFFF
@@ -425,7 +425,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	cmp.w gss2,y
 	bne .rr0
 	lda.w #2
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	ldy.b a0
 	pha
 	clc

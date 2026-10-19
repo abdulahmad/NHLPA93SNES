@@ -20,7 +20,7 @@ CheckBump:							;Goalie X pushed against the net with the puck near: if he is m
 	sbc.w Ypos,y
 	bit.w #$8000
 	beq .dy
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .dy:
 	cmp.w #$0029
@@ -31,7 +31,7 @@ CheckBump:							;Goalie X pushed against the net with the puck near: if he is m
 	sta.b d1
 	bit.w #$8000
 	beq .vy
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .vy:
 	cmp.w #$2001
@@ -39,7 +39,7 @@ CheckBump:							;Goalie X pushed against the net with the puck near: if he is m
 	lda.b d0
 	bit.w #$8000
 	beq .vx
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .vx:
 	cmp.w #$2001

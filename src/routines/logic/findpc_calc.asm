@@ -23,7 +23,7 @@ findpc_calc:						;findpc for one goal line
 	ora.w #$F000
 .hi:
 	sta.b mulb+2
-	jsl.l divs
+	jsl.l divs						; signed divide
 	bpl .time
 	jmp.w .nocross
 .time:
@@ -36,21 +36,21 @@ findpc_calc:						;findpc for one goal line
 	lda.w puckvy
 	bit.w #$8000
 	beq .vy
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .vy:
 	sta.b mula
 	lda.b mulres+2
 	bit.w #$8000
 	beq .ov
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .ov:
 	cmp.b mula
 	bcs .nocross
 	lda.w puckvy
 	sta.b mula
-	jsl.l divs
+	jsl.l divs						; signed divide
 	adc.w puckx
 	sta.b d0
 	sec

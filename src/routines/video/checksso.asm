@@ -29,7 +29,7 @@ checksso:							;Draw the arrows that show where the two players are when they a
 	lda.w sfhormode
 	beq .nhor
 	lda.b d1						; horizontal rink: x = -y, y = x - $C5
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 	lda.w ffox,y
@@ -121,7 +121,7 @@ checksso:							;Draw the arrows that show where the two players are when they a
 	sta.b d1
 .5:
 	lda.b d1
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	clc
 	adc.w #$00F0

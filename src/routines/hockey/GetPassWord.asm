@@ -4,7 +4,7 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	trb.w PassWord
 	jsl.l Readjoy12
 	jsl.l DrawGameSetupBack
-	jsl.l ReadPads
+	jsl.l ReadPads					; read the pads
 	jsl.l Readjoy12
 	jsl.l ClearSprites				; clear the sprite table
 	jsl.l printz					; print the string that follows
@@ -91,7 +91,7 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	lda.w #VBlank_SprPal
 	sta.b vbint
 .pad:
-	jsl.l ReadPads
+	jsl.l ReadPads					; read the pads
 	lda.w padnew1
 	ora.w padnew1+2
 	beq .pad
@@ -241,7 +241,7 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	lda.w #VBlank_SprPal
 	sta.b vbint
 .notok:
-	jsl.l ReadPads
+	jsl.l ReadPads					; read the pads
 	lda.w padnew1
 	ora.w padnew1+2
 	beq .notok

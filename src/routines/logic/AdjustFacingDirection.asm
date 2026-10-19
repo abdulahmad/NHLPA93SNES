@@ -8,7 +8,7 @@ AdjustFacingDirection:				;Turn goalie X's facing one step toward d0, not past t
 	bne .turn
 	jmp.w assgoalie_rtl
 .turn:
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	and.w #$0004
 	lsr a
@@ -39,7 +39,7 @@ AdjustFacingDirection:				;Turn goalie X's facing one step toward d0, not past t
 	bcs .set
 .neg:
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 	clc

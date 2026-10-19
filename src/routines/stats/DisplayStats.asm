@@ -10,7 +10,7 @@ DisplayStats:						;The STATS page of the pause menu: shots, power play, penalti
 	sta.b d1
 	lda.w smallfontchars
 	sta.b d2
-	jsl.l eraser
+	jsl.l eraser					; erase d0 x d1 with tile d2
 	jsl.l printz					; print the string that follows
 	%StringCt(CC_Font1Pri,$0D,$06,"      ")
 	jsl.l printz					; print the string that follows
@@ -81,7 +81,7 @@ DisplayStats:						;The STATS page of the pause menu: shots, power play, penalti
 	lda.b [a1]
 	inc a
 	lsr a
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	clc
 	adc.w printx
@@ -99,7 +99,7 @@ DisplayStats:						;The STATS page of the pause menu: shots, power play, penalti
 	lda.b [a1]
 	inc a
 	lsr a
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	clc
 	adc.w printx

@@ -21,7 +21,7 @@ Bcheck:								;Player a2 body checks a3: a3 falls if he is in front, and a char
 	adc.w aggress,y
 	sec
 	sbc.w legstr,x
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	cmp.w #12
 	bcc .rtl
 .dir:
@@ -33,7 +33,7 @@ Bcheck:								;Player a2 body checks a3: a3 falls if he is in front, and a char
 	sec
 	sbc.w Ypos,y
 	sta.b d1
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 	ldy.b a2
 	lda.b d0						; within one direction of a2 facing
 	sec

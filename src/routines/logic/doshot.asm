@@ -47,7 +47,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	lda.w passspeed
 	lsr a
 	lsr a
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	clc
 	adc.w passspeed
@@ -113,14 +113,14 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	pha
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d0
 	lda.b mulres+2
 	sta.b d0+2
 	lda.b d1
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	adc.b d0
 	sta.b d0
 	lda.b mulres+2
@@ -141,7 +141,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	bcs .notperf
 	lda.w #$0010
 	adc.w shotacc,x
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	cmp.w #$000F					; chance of a perfect shot
 	bcs .perf
 .notperf:							;aim error from passspeed, shotacc and distance
@@ -177,7 +177,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 .ar:
 	lda.b d0
 	pha
-	jsl.l randomas
+	jsl.l randomas					; random number -A to A-1
 	adc.b $03,s
 	sta.b $03,s
 	lda.b $01,s
@@ -198,7 +198,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	sta.b $05,s
 	pla
 	lsr a
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	adc.b $05,s
 	sta.b $05,s
 .perf:								;puckvx/puckvy = passspeed*$44*dx/d3 and dy/d3; puckvz from the height
@@ -206,26 +206,26 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	sta.b mulb
 	lda.w #$0044					; 1024/15
 	sta.b mula
-	jsl.l muls16
+	jsl.l muls16					; signed multiply
 	pla
 	sta.b mula
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.b d3
 	sta.b mula
-	jsl.l divs
+	jsl.l divs						; signed divide
 	asl a
 	sta.w puckvx
 	lda.w passspeed
 	sta.b mulb
 	lda.w #$0044
 	sta.b mula
-	jsl.l muls16
+	jsl.l muls16					; signed multiply
 	pla
 	sta.b mula
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.b d3
 	sta.b mula
-	jsl.l divs
+	jsl.l divs						; signed divide
 	asl a
 	sta.w puckvy
 	pla
@@ -291,7 +291,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	eor.w puckvy
 	bpl .rtl
 	lda.w puckvy
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.w puckvy
 .rtl:

@@ -16,7 +16,7 @@ setffo:								;Update the pads, then draw the objects tied to rink scrolling (t
 	jmp.w .next
 .shown:
 	sta.b d2
-	jsl.l find3d
+	jsl.l find3d					; 3d to screen position
 	cmp.w #OFFSCREEN
 	bne .add
 	jmp.w .next

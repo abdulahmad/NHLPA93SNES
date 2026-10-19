@@ -16,7 +16,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	bne .po
 	jmp.w .rtl
 .po:
-	jsl.l forceblack
+	jsl.l forceblack				; blank the screen
 	sep #$20						; 8-bit A
 	lda.b #BGMODE_1
 	sta.w BGMODE
@@ -427,7 +427,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	cmp.b vbint
 	beq .wait
 .pad:
-	jsl.l ReadPads
+	jsl.l ReadPads					; read the pads
 	lda.w padnew1
 	ora.w padnew1+2
 	cmp.w #JOYSTART
@@ -441,12 +441,12 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	sta.b mulb						; vcount mod 30, then the half
 	lda.w #30
 	sta.b mula
-	jsl.l divu16
+	jsl.l divu16					; mulb / mula
 	lda.b mulres+2
 	sta.b tmp0
 	lda.w #2
 	sta.b mula
-	jsl.l divu16
+	jsl.l divu16					; mulb / mula
 	lda.b mulres+2
 	asl a
 	tax
@@ -466,10 +466,10 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	sta.b mula
 	lda.b tmp0
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.w #30
 	sta.b mula
-	jsl.l divs
+	jsl.l divs						; signed divide
 	adc.b tmp1
 	and.w #$001F
 	xba
@@ -497,10 +497,10 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	sta.b mula
 	lda.b tmp0
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.w #30
 	sta.b mula
-	jsl.l divs
+	jsl.l divs						; signed divide
 	adc.b tmp1
 	and.w #$001F
 	asl a
@@ -519,10 +519,10 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	sta.b mula
 	lda.b tmp0
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.w #30
 	sta.b mula
-	jsl.l divs
+	jsl.l divs						; signed divide
 	adc.b tmp1
 	and.w #$001F
 	ora.b tmp2

@@ -21,7 +21,7 @@ CPgoalie:							;Should the computer pull its goalie? In the last minute of the 
 	lda.w pfgoal,y					; own half of the faceoff/puck
 	bne .0
 	lda.b d1
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
 .0:

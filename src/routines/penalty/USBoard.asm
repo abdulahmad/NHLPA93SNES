@@ -20,7 +20,7 @@ USBoard:							;Update the scoreboard, with the players in the
 	cpx.w #$0010
 	bne .savea
 	ldx.b xsave						; restore X
-	jsl.l printscores1
+	jsl.l printscores1				; redraw the scores
 	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pri,$14,$08)
 	stz.b a2
