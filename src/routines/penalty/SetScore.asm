@@ -2,7 +2,7 @@ SetScore:							;Play one period of playoff game a0 with random goals; a game ti
 									;three periods goes to overtime
 	ldy.b a0
 	lda.w gsper,y
-	cmp.w #4
+	cmp.w #4						; period 4 or later: game is over
 	bcc .go
 	jmp.w .rtl
 .go:
@@ -27,12 +27,12 @@ SetScore:							;Play one period of playoff game a0 with random goals; a game ti
 	bne .savea
 	ldx.b xsave						; restore X
 	ldy.b a0
-	lda.w gsper,y
+	lda.w gsper,y					; current period of the game
 	cmp.w #3						; after period 3
 	bne .0
 	lda.w #5						; final
 	sta.w gsper,y
-	lda.w gss1,y
+	lda.w gss1,y					; score difference
 	sec
 	sbc.w gss2,y
 	bit.w #$8000
@@ -52,23 +52,23 @@ SetScore:							;Play one period of playoff game a0 with random goals; a game ti
 	lda.w gsper,y
 	inc a
 	sta.w gsper,y
-	lda.w gst1,y
+	lda.w gst1,y					; team 1 and team 2 of the series game
 	sta.b d0
 	lda.w gst2,y
 	sta.b d1
-	jsl.l .getscore
+	jsl.l .getscore					; goals for team 1
 	ldy.b a0
-	lda.w gss1,y
+	lda.w gss1,y					; add to score 1
 	clc
 	adc.b d0
 	sta.w gss1,y
-	lda.w gst2,y
+	lda.w gst2,y					; swap the teams
 	sta.b d0
 	lda.w gst1,y
 	sta.b d1
-	jsl.l .getscore
+	jsl.l .getscore					; goals for team 2
 	ldy.b a0
-	lda.w gss2,y
+	lda.w gss2,y					; add to score 2
 	clc
 	adc.b d0
 	sta.w gss2,y
@@ -95,7 +95,7 @@ SetScore:							;Play one period of playoff game a0 with random goals; a game ti
 	rtl
 .getscore:							;d0 = scoring team, d1 = other team; nibblebuffer = the .sctab rows of
 									;both teams' scoring odds rows; returns d0 = goals 0-3
-	asl.b d0
+	asl.b d0						; team index to a word offset
 	asl.b d0
 	lda.w #TeamList					; TeamList entry of team d0
 	sta.b a1
@@ -115,7 +115,7 @@ SetScore:							;Play one period of playoff game a0 with random goals; a game ti
 	lda.w #.sctab>>16
 	sta.b a1+2
 	lda.b [a1]
-	sta.w nibblebuffer
+	sta.w nibblebuffer				; copy its 4 weights
 	ldy.w #$0002
 	lda.b [a1],y
 	sta.w nibblebuffer+2
@@ -127,7 +127,7 @@ SetScore:							;Play one period of playoff game a0 with random goals; a game ti
 	sta.w nibblebuffer+6
 	asl.b d1
 	asl.b d1
-	lda.w #TeamList
+	lda.w #TeamList					; same for the other team
 	sta.b a1
 	lda.w #TeamList>>16
 	sta.b a1+2
@@ -146,7 +146,7 @@ SetScore:							;Play one period of playoff game a0 with random goals; a game ti
 	sta.b a1
 	lda.w #.sctab>>16
 	sta.b a1+2
-	lda.b [a1]
+	lda.b [a1]						; add the weights
 	adc.w nibblebuffer
 	sta.w nibblebuffer
 	ldy.w #$0002
