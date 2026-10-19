@@ -1,4 +1,4 @@
-; Bank $8F: frontend. Files in ROM order (docs/file_map.md).
+; Bank $8F: frontend. Files in ROM order (docs/file-map.md).
 
 if pc() < $8F8000
 	org $8F8000

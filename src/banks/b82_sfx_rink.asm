@@ -1,4 +1,4 @@
-; Bank $82: sfx rink. Files in ROM order (docs/file_map.md).
+; Bank $82: sfx rink. Files in ROM order (docs/file-map.md).
 
 if pc() < $82B86C
 	org $82B86C

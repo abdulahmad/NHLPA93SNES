@@ -1,4 +1,4 @@
-; Bank $88: title playoffs. Files in ROM order (docs/file_map.md).
+; Bank $88: title playoffs. Files in ROM order (docs/file-map.md).
 
 if pc() < $888000
 	org $888000

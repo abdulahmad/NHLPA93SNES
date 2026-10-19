@@ -1,4 +1,4 @@
-; Bank $85: title gfx. Files in ROM order (docs/file_map.md).
+; Bank $85: title gfx. Files in ROM order (docs/file-map.md).
 
 if pc() < $858000
 	org $858000

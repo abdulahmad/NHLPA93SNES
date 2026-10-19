@@ -1,4 +1,4 @@
-; Bank $87: player sprites. Files in ROM order (docs/file_map.md).
+; Bank $87: player sprites. Files in ROM order (docs/file-map.md).
 
 if pc() < $878000
 	org $878000

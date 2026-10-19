@@ -1,4 +1,4 @@
-; Bank $81: sfx. Files in ROM order (docs/file_map.md).
+; Bank $81: sfx. Files in ROM order (docs/file-map.md).
 
 if pc() < $818000
 	org $818000

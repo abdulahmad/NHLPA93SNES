@@ -26,7 +26,7 @@ A comment-only or rename-only change must not change a single byte. Never commit
 - Never reuse a name for a different item. If a new name is needed, pick a descriptive one.
 - Local labels (`.0`, `.loop`, `.next`, `.done`, `.exit`) follow 92: a short word where the branch has a clear
   meaning, a number for trivial jumps, and the parent routine's local names when the routine matches it.
-- Record every rename in the name history file (`docs/name_map.csv`) using its existing columns. Do not leave
+- Record every rename in the name history file (`docs/history/name_map.csv`: old,new,source). Do not leave
   `(was X)` or other history in comments.
 - A routine that is the same code as a 92 routine but has another name here gets a `92 <name>` note in its
   comment. A routine that only exists in this game says so ("new in 93").

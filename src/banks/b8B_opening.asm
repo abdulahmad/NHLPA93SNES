@@ -1,4 +1,4 @@
-; Bank $8B: opening. Files in ROM order (docs/file_map.md).
+; Bank $8B: opening. Files in ROM order (docs/file-map.md).
 
 if pc() < $8B8000
 	org $8B8000

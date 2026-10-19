@@ -148,7 +148,7 @@ def migrate(bank, name):
                 incs.append(rel)
     bf = 'banks/%s.asm' % name
     os.makedirs(os.path.join(SRC, 'banks'), exist_ok=True)
-    out = ['; Bank $%02X: %s. Files in ROM order (docs/file_map.md).' % (bank, name.split('_', 1)[1].replace('_', ' ')),
+    out = ['; Bank $%02X: %s. Files in ROM order (docs/file-map.md).' % (bank, name.split('_', 1)[1].replace('_', ' ')),
            '', 'org $%06X' % first] + ['incsrc "../%s"' % r for r in incs]
     open(os.path.join(SRC, bf), 'w').write('\n'.join(out) + '\n')
     # remove the blocks from the old files

@@ -1,4 +1,4 @@
-; Bank $80: engine. Files in ROM order (docs/file_map.md).
+; Bank $80: engine. Files in ROM order (docs/file-map.md).
 
 org $808000
 incsrc "../routines/main/Start.asm"
