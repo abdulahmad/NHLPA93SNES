@@ -17,7 +17,8 @@ of the same names, so the SNES files get their own extensions, except the team p
 | `.pal` | Team palette, 16 colours per row, 93G colour words `0000 BBBB GGGG RRRR`, high byte first (same bytes as the 93G `.pal` files), which `SetTeamColors` ($80B706) converts to BGR555 | `Pals/<team>h`, `Pals/<team>v` |
 | `.snespal` | Palette of SNES BGR555 words | `Pals/Rink` |
 | `.brr` | SPC700 BRR sound samples (the sample block of an SPC upload stream) | `bootsamples`, `gamesamples` |
-| `.spc700` | SPC700 sound driver code, uploaded to APU $0400 | `driver` |
+| `.spc700` | SPC700 sound driver code and tables only, uploaded to APU $0400 (the first $AA5 bytes of the driver block) | `driver` |
+| `_cmdstream.bin` | N-SPC command streams of the sound program, named like the 93G `fmtune_*_cmdstream` / `sfx_*_cmdstream` files. `fmtune_<song>`: the song's order list, its channel set and its channel streams, joined in address order (the pieces are scattered through the driver block, see `SPCDriver` in `src/data/sound/bootsound.asm`). `sfx_<name>`: one sound effect program. `sfx_table.bin`: the effect program pointers and voices | `fmtune_playoff`, `fmtune_title`, `fmtune_goal`, ... , `sfx_whistle`, ... |
 | `.bin` | Tables or text with their own format, described where they are included | `HotList` (the 549 hot spot pairs), `Text/ScoutingReportText` |
 
 Genesis vs SNES, for comparison:

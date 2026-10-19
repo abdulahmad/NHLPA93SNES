@@ -266,7 +266,7 @@ org `$848000` when `pc()` is below it.
 
 - `$848000` data/gfx/SpriteSet9.asm (also SpriteSet9End)
 - `$84D630` data/text/ScoutingReportText.asm (also ScoutingReportTextEnd)
-- `$84E949` data/gfx/FaceOffMap.asm
+- `$84E949` data/gfx/FaceOffMap.asm (also FaceOffMapEnd)
 - `$84EA39` routines/middle/ConvertByteToDigits.asm
 - `$84EA66` routines/hockey/UpdateRosterPlayers.asm
 - `$84EABF` routines/hockey/UpdateRosterPlayer.asm
@@ -318,7 +318,7 @@ org `$858000` when `pc()` is below it.
 
 org `$868000` when `pc()` is below it.
 
-- `$868000` data/sound/bootsound.asm (also SPCDriver, SPCDriverEnd, BootInstruments, BootInstrumentsEnd, BootSampleDir, BootSampleDirEnd, BootSamples, BootSamplesEnd)
+- `$868000` data/sound/bootsound.asm (also SPCDriver, SPCCode, fmtune_playoff_order, fmtune_title_order, fmtune_unused2_order, fmtune_goal_order, fmtune_periodstart_order, fmtune_lategame_order, fmtune_unused7_order, fmtune_midperiod_order, fmtune_unused9_order, fmtune_playoff_set, fmtune_title_set, fmtune_unused2_set, fmtune_goal_set, fmtune_periodstart_set, fmtune_lategame_set, fmtune_unused7_set, fmtune_midperiod_set, fmtune_unused9_set, fmtune_playoff_stream, fmtune_unused2_stream, fmtune_unused9_stream, fmtune_title_stream, fmtune_goal_stream, fmtune_lategame_stream, fmtune_periodstart_stream, fmtune_unused7_stream, fmtune_midperiod_stream, fmtune_title_stream2, fmtune_unused2_stream2, fmtune_unused9_stream2, fmtune_goal_stream2, fmtune_midperiod_stream2, fmtune_unused7_stream2, fmtune_periodstart_stream2, fmtune_lategame_stream2, fmtune_goal_stream3, fmtune_title_stream3, fmtune_playoff_stream2, fmtune_unused2_stream3, sfx_table, sfx_a1, sfx_siren, sfx_crowd0, sfx_crowd1, sfx_crowd2, sfx_crowd3, sfx_crowd4, sfx_crowd5, sfx_crowd6, sfx_crowd7, sfx_crowdoff, sfx_check1, sfx_check2, sfx_playerwall, sfx_playerwall2, sfx_shothard, sfx_puckwall1, sfx_puckwall2, sfx_puckwall3, sfx_hithigh, sfx_hitlow, sfx_shotfh, sfx_shotbh, sfx_puckpost, sfx_stop1, sfx_stop2, sfx_shotwiff2, sfx_shotwiff1, sfx_shotwiff4, sfx_shotwiff3, sfx_crowdboo, sfx_oooh2, sfx_crowdcheer, sfx_whistle, SPCDriverEnd, BootInstruments, BootInstrumentsEnd, BootSampleDir, BootSampleDirEnd, BootSamples, BootSamplesEnd)
 - `$86FA3E` routines/decompress/DecompressBytecode.asm
 - `$86FB96` routines/hockey/RestoreBenchEnergy.asm
 - `$86FBE1` routines/sound/StartSong6.asm
@@ -354,14 +354,14 @@ org `$878000` when `pc()` is below it.
 org `$888000` when `pc()` is below it.
 
 - `$888000` data/gfx/GameSetupMap.asm (also GameSetupMapEnd)
-- `$88822F` data/gfx/SmallFontMap.asm
+- `$88822F` data/gfx/SmallFontMap.asm (also SmallFontMapEnd)
 - `$88832F` routines/middle/mulu32.asm
 - `$888405` routines/penalty/getlinee.asm
 - `$8884A9` routines/hockey/WritePassBits.asm
 - `$888548` routines/logic/noturn0.asm
 - `$8885F7` routines/hockey/PWprint.asm
 - `$88868D` routines/hockey/EncodePW.asm
-- `$88871C` data/gfx/FramerMap.asm
+- `$88871C` data/gfx/FramerMap.asm (also FramerMapEnd)
 - `$88872E` data/gfx/FramerTiles.asm
 - `$8887AE` routines/video/showcrowd.asm
 - `$888853` routines/hockey/SuperMult.asm
@@ -415,7 +415,7 @@ org `$898000` when `pc()` is below it.
 org `$8A8000` when `pc()` is below it.
 
 - `$8A8000` data/gfx/SpriteSet12.asm (also SpriteSet12End)
-- `$8AF880` data/gfx/PlayoffBracketMap.asm
+- `$8AF880` data/gfx/PlayoffBracketMap.asm (also PlayoffBracketMapEnd)
 - `$8AFAA8` data/text/Credits.asm
 - `$8AFD0C` routines/logic/lineinput.asm
 - `$8AFD6D` routines/logic/getlchoice.asm
@@ -488,11 +488,11 @@ org `$8E8000` when `pc()` is below it.
 
 org `$8F8000` when `pc()` is below it.
 
-- `$8F8000` data/gfx/BigFontMap.asm
+- `$8F8000` data/gfx/BigFontMap.asm (also BigFontMapEnd)
 - `$8F8130` routines/video/unusedEnergyBar.asm
 - `$8F8213` routines/tables/linelist.asm
 - `$8F8236` data/text/PerLabels.asm
-- `$8F824D` data/gfx/EASNLogoMap.asm
+- `$8F824D` data/gfx/EASNLogoMap.asm (also EASNLogoMapEnd)
 - `$8F8269` data/gfx/BigFontIndex.asm
 - `$8F82A4` routines/video/showclock.asm
 - `$8F833F` routines/logic/asseben.asm
@@ -503,7 +503,7 @@ org `$8F8000` when `pc()` is below it.
 - `$8F8682` routines/print/PushNumber.asm
 - `$8F86B6` routines/penalty/Intermission.asm
 - `$8F873F` routines/penalty/InitTicker.asm
-- `$8F8757` routines/penalty/StatsReport.asm
+- `$8F8757` routines/stats/StatsReport.asm
 - `$8F877D` routines/penalty/IntermissionTick.asm
 - `$8F87A8` routines/penalty/TickerNext.asm
 - `$8F87C0` routines/video/KillCrowd.asm
@@ -587,7 +587,7 @@ org `$8F8000` when `pc()` is below it.
 - `$8FF4C8` data/gfx/PixelRemapFont.asm
 - `$8FF4D8` routines/middle/UnpackNibbles.asm
 - `$8FF54E` routines/print/PushNumberWidth.asm
-- `$8FF58D` routines/stats/SetHor_rink.asm
+- `$8FF58D` routines/penalty/SetHor_rink.asm
 - `$8FF603` routines/logic/Findhittype.asm
 - `$8FF63D` routines/penalty/prefmes.asm
 - `$8FF741` routines/hockey/CheckInjury.asm
