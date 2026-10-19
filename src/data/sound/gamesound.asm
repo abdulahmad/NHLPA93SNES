@@ -1,9 +1,10 @@
-; ---- GameSoundUpload ----
+; In-game SPC upload: the sample directory and BRR samples that replace the boot set when a game starts
+; (setupice sends it). The sound program stays loaded from the boot upload.
+
 GameSoundUpload:					;in-game sample set for the SPC700 sound driver (the boot stream at
 									;BootSoundUpload carries the driver itself)
 	dw GameSampleDirEnd-GameSampleDir, SPCSAMPLEDIR	; block 1: 76 bytes to APU $2C00
 
-; ---- GameSampleDir ----
 GameSampleDir:						;DSP sample directory: per sample the APU address of its start and of its
 									;loop point
 	dw SPCSAMPLES+$0000,SPCSAMPLES+$001B	; sample $00: start, loop (offsets in gamesamples.brr)
@@ -28,7 +29,6 @@ GameSampleDir:						;DSP sample directory: per sample the APU address of its sta
 GameSampleDirEnd:
 	dw GAMESAMPLESIZE, SPCSAMPLES	; block 2: the BRR samples to APU $2C50
 
-; ---- GameSamples ----
 GameSamples:						;BRR samples (9-byte blocks)
 	incbin "../../../Extracted/Sound/gamesamples.brr"
 GameSamplesEnd:

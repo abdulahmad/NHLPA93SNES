@@ -1,3 +1,7 @@
+; The penalties. Penaltylist holds one word per penalty number (the number is the word offset): the offset of
+; that penalty's data, which follows the list: the slow-down time and minutes, the text and the animation delays.
+; The Pen* equates are in ram93s.asm.
+
 Penaltylist:						;The penalties, by penalty number
 	dw $0000						; 0
 	dw PenDataEOP-Penaltylist		; $02 period over
