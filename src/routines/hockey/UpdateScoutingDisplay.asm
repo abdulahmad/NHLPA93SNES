@@ -3,7 +3,7 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 		;   filling in team and goalie names
 	lda.w ScoutingReportTimer		; text finished ($7FFF)
 	sec
-	sbc.w #$1000
+	sbc.w #$1000					; $1000 and above: text finished
 	beq .tm
 	bmi .neg
 	bvs .tm
@@ -13,36 +13,36 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 .tm:
 	lda.w asv						; asv: no delay
 	bmi .go
-	dec.w ScoutingReportTimer
+	dec.w ScoutingReportTimer		; count the timer down
 	bpl .rtl
 .go:
-	lda.w #ScoutingReportText
+	lda.w #ScoutingReportText		; commentary text
 	sta.b a1
 	lda.w #ScoutingReportText>>16
 	sta.b a1+2
-	lda.w PlayerScrollCtr
+	lda.w PlayerScrollCtr			; position in the text, -1: next paragraph
 	sta.b d0
 	bpl .cont
 	stz.w DispAttribCtr				;next paragraph number from TestList; -1: stop typing, leave the screen in
 									;480 frames
-	ldy.w SelectedPlayerIdx
+	ldy.w SelectedPlayerIdx			; paragraph number index
 	inc.w SelectedPlayerIdx
 	inc.w SelectedPlayerIdx
 	lda.w #$0000
 	sta.b a0
 	lda.w #TestList>>16
 	sta.b a0+2
-	lda.b [a0],y
+	lda.b [a0],y					; next paragraph number
 	sta.b d0
-	bpl .para
-	lda.w #$7FFF
+	bpl .para						; negative: end of the commentary
+	lda.w #$7FFF					; stop typing
 	sta.w ScoutingReportTimer
-	lda.w #$01E0
+	lda.w #$01E0					; leave the screen after 480 frames
 	sta.w screentimer
 .rtl:
 	rtl
 .para:								;blank line between paragraphs
-	jsl.l ScrollDisplayUp
+	jsl.l ScrollDisplayUp			; blank line between paragraphs
 	lda.b a1
 	sta.b a2
 	lda.b a1+2
@@ -52,17 +52,17 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	lda.b [a2]
 	inc.b a2
 	and.w #$00FF
-	cmp.w #$000D
+	cmp.w #$000D					; end of line?
 	bne .find
 .cnt:
-	dec.b d0
+	dec.b d0						; paragraph lines left
 	bpl .find
-	lda.b a2
+	lda.b a2						; text offset of the paragraph
 	sec
 	sbc.b a1
 	sta.b d0
 .cont:
-	lda.b a1
+	lda.b a1						; text base plus offset
 	clc
 	adc.b d0
 	sta.b a2
@@ -70,55 +70,55 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	sta.b a2+2
 	lda.w #$000A					; 10 frames per word
 	sta.w ScoutingReportTimer
-	lda.w DispAttribCtr
+	lda.w DispAttribCtr				; column
 	sta.b d0
 	lda.b [a2]
 	and.w #$00FF
-	cmp.w #'~'
+	cmp.w #'~'						; ~: home team
 	bne .c2
 	jmp.w .under
 .c2:
-	cmp.w #'{'
+	cmp.w #'{'						; {: home team name
 	bne .c3
 	jmp.w .home
 .c3:
-	cmp.w #'}'
+	cmp.w #'}'						; }: away team name
 	bne .c4
 	jmp.w .away
 .c4:
-	cmp.w #'['
+	cmp.w #'['						; [: home goalie
 	bne .c5
 	jmp.w .hmtm
 .c5:
-	cmp.w #']'
+	cmp.w #']'						; ]: away goalie
 	bne .word
 	jmp.w .awtm
 .word:								;copy the word and its trailing spaces to mesarea+2
-	lda.w #$FFFF
+	lda.w #$FFFF					; word position valid
 	sta.w PlayerScrollCtr
-	lda.w #mesarea+2
+	lda.w #mesarea+2				; name buffer
 	sta.b a0
 	lda.w #$0000
 	sta.b a0+2
-	stz.b d1
+	stz.b d1						; word length
 .wd:
 	lda.b [a2]
 	and.w #$00FF
-	cmp.w #$000D
+	cmp.w #$000D					; end of line?
 	beq .eol
-	inc.b d0
+	inc.b d0						; count the column
 .copy:
 	sep #$20						; 8-bit A
 	lda.b [a2]
-	sta.b [a0]
+	sta.b [a0]						; copy a character
 	rep #$30						; 16-bit registers
 	inc.b a0
-	inc.b d1
+	inc.b d1						; next buffer position
 	lda.b [a2]
 	and.w #$00FF
-	cmp.w #','
+	cmp.w #','						; comma?
 	beq .pause
-	cmp.w #'.'
+	cmp.w #'.'						; period?
 	bne .nopause
 .pause:								;40 more frames after punctuation
 	lda.w ScoutingReportTimer
@@ -126,26 +126,26 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	adc.w #$0028
 	sta.w ScoutingReportTimer
 .nopause:
-	lda.b [a2]
+	lda.b [a2]						; next character
 	inc.b a2
 	and.w #$00FF
-	cmp.w #' '
+	cmp.w #' '						; space?
 	bne .wd
 	lda.b [a2]
 	and.w #$00FF
-	cmp.w #' '
+	cmp.w #' '						; trailing spaces too
 	beq .copy
-	dec.b d0
+	dec.b d0						; back one column
 	lda.b a2
 	sec
 	sbc.b a1
 	sta.b a2
-	sta.w PlayerScrollCtr
+	sta.w PlayerScrollCtr			; remember the position
 .eol:								;make a String at mesarea
-	lda.b d1
+	lda.b d1						; length
 	inc a
 	inc a
-	sta.w mesarea
+	sta.w mesarea					; buffer length
 	lda.w #mesarea
 	sta.b a1
 	lda.w #$0000
@@ -153,64 +153,64 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 .print:								;past column 20: ScrollDisplayUp
 	lda.b d0
 	sec
-	sbc.w #$0014
+	sbc.w #$0014					; 20 columns
 	beq .noscr
 	bmi .neg1
 	bvs .noscr
 .scr:
-	jsl.l ScrollDisplayUp
+	jsl.l ScrollDisplayUp			; scroll up
 	bra .noscr
 .neg1:
 	bvs .scr
 .noscr:
 	jsl.l printz					; print at column + DispAttribCtr, line + VertLineScrolling
 	%StringCp(CC_Font1,$0A,$04)
-	lda.w DispAttribCtr
+	lda.w DispAttribCtr				; column
 	clc
 	adc.w printx
 	sta.w printx
-	lda.w VertLineScrolling
+	lda.w VertLineScrolling			; line scroll
 	clc
 	adc.w printy
 	sta.w printy
 	jsl.l print						; print it
-	lda.w DispAttribCtr
+	lda.w DispAttribCtr				; advance the column
 	clc
 	adc.b d1
 	sta.w DispAttribCtr
 	rtl
 .awtm:								;away goalie
-	lda.w #$0002
+	lda.w #$0002					; away goalie, team 2
 	sta.b a1
 	bra .team
 .hmtm:								;home goalie
-	stz.b a1
+	stz.b a1						; home goalie, team 1
 .team:
 	ldy.b a1
-	lda.w tmgoalie,y
+	lda.w tmgoalie,y				; his player number
 	sta.b d1
-	lda.w tmdata,y
+	lda.w tmdata,y					; team data
 	sta.b a1
 	lda.w #TeamList>>16
 	sta.b a1+2
-	ldy.w #Playerdata
+	ldy.w #Playerdata				; player data offset
 	lda.b a1
 	clc
 	adc.b [a1],y
 	sta.b a1
 	bra .pn
-.pl:
+.pl:								; next player
 	lda.b a1
 	clc
-	adc.b [a1]
-	adc.w #$0008
+	adc.b [a1]						; skip the player
+	adc.w #$0008					; plus the fixed part
 	sta.b a1
 .pn:
 	dec.b d1
 	bpl .pl
 	bra .name
 .away:								;away team name
-	lda.w tmdata+2
+	lda.w tmdata+2					; team data
 	sta.b a1
 	lda.w #TeamList>>16
 	sta.b a1+2
@@ -224,7 +224,7 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	cmp.w #AllStarsWest
 	bne .ar
 .mtl:
-	lda.w #Montreal
+	lda.w #Montreal					; Montreal for the All-Star teams
 .ar:
 	sta.b a1
 	bra .tname
@@ -234,16 +234,16 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	lda.w #TeamList>>16
 	sta.b a1+2
 .tname:
-	ldy.w #Teamname
+	ldy.w #Teamname					; team name offset
 	lda.b a1
 	clc
 	adc.b [a1],y
 	sta.b a1
 .name:
-	inc.w PlayerScrollCtr
+	inc.w PlayerScrollCtr			; next character position
 	lda.b d0
 	clc
-	adc.b [a1]
+	adc.b [a1]						; plus the name length
 	dec a
 	sta.b d0
 	lda.b [a1]
@@ -253,8 +253,8 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	sta.b d1
 	lda.b [a1],y
 	and.w #$00FF
-	beq .pad
+	beq .pad						; trailing zero?
 	jmp.w .print
 .pad:
-	dec.b d1
+	dec.b d1						; drop it
 	jmp.w .print
