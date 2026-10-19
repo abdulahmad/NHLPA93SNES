@@ -3,39 +3,4 @@
 if pc() < $818000
 	org $818000
 endif
-
-; In-game SPC upload: the sample directory and BRR samples that replace the boot set when a game starts
-; (setupice sends it). The sound program stays loaded from the boot upload.
-
-GameSoundUpload:					;in-game sample set for the SPC700 sound driver (the boot stream at
-									;BootSoundUpload carries the driver itself)
-	dw GameSampleDirEnd-GameSampleDir, SPCSAMPLEDIR	; block 1: 76 bytes to APU $2C00
-
-GameSampleDir:						;DSP sample directory: per sample the APU address of its start and of its
-									;loop point
-	dw SPCSAMPLES+$0000,SPCSAMPLES+$001B	; sample $00: start, loop (offsets in gamesamples.brr)
-	dw SPCSAMPLES+$002D,SPCSAMPLES+$3B8E	; sample $01: start, loop (offsets in gamesamples.brr)
-	dw SPCSAMPLES+$3B8E,SPCSAMPLES+$43F5	; sample $02: start, loop (offsets in gamesamples.brr)
-	dw SPCSAMPLES+$43F5,SPCSAMPLES+$4DB2	; sample $03: start, loop (offsets in gamesamples.brr)
-	dw SPCSAMPLES+$4DB2,SPCSAMPLES+$62F7	; sample $04: start, loop (offsets in gamesamples.brr)
-	dw SPCSAMPLES+$62F7,SPCSAMPLES+$6A3E	; sample $05: start, loop (offsets in gamesamples.brr)
-	dw SPCSAMPLES+$6A3E,SPCSAMPLES+$72C9	; sample $06: start, loop (offsets in gamesamples.brr)
-	dw SPCSAMPLES+$72C9,SPCSAMPLES+$7B42	; sample $07: start, loop (offsets in gamesamples.brr)
-	dw SPCSAMPLES+$7B42,SPCSAMPLES+$9051	; sample $08: start, loop (offsets in gamesamples.brr)
-	dw SPCSAMPLES+$9051,SPCSAMPLES+$99B4	; sample $09: start, loop (offsets in gamesamples.brr)
-	dw SPCSAMPLES+$99B4,SPCSAMPLES+$9C8D	; sample $0A: start, loop (offsets in gamesamples.brr)
-	dw SPCSAMPLES+$9C8D,SPCSAMPLES+$9E58	; sample $0B: start, loop (offsets in gamesamples.brr)
-	dw SPCSAMPLES+$9E58,SPCSAMPLES+$A03E	; sample $0C: start, loop (offsets in gamesamples.brr)
-	dw SPCSAMPLES+$A03E,SPCSAMPLES+$A47F	; sample $0D: start, loop (offsets in gamesamples.brr)
-	dw SPCSAMPLES+$A47F,SPCSAMPLES+$ADBE	; sample $0E: start, loop (offsets in gamesamples.brr)
-	dw SPCSAMPLES+$ADBE,SPCSAMPLES+$ADD9	; sample $0F: start, loop (offsets in gamesamples.brr)
-	dw SPCSAMPLES+$AE9F,SPCSAMPLES+$AF1D	; sample $10: start, loop (offsets in gamesamples.brr)
-	dw SPCSAMPLES+$AF80,SPCSAMPLES+$AFDA	; sample $11: start, loop (offsets in gamesamples.brr)
-	dw SPCSAMPLES+$B034,SPCSAMPLES+$B814	; sample $12: start, loop (offsets in gamesamples.brr)
-GameSampleDirEnd:					; end of GameSampleDir
-	dw GAMESAMPLESIZE, SPCSAMPLES	; block 2: the BRR samples to APU $2C50
-
-GameSamples:						;BRR samples (9-byte blocks)
-	incbin "../../Extracted/Sound/gamesamples.brr"
-GameSamplesEnd:						; end of GameSamples
-	dw $0000, SPCRESUME				; end block: length 0, start the driver at $0800
+incsrc "../data/sound/gamesound.asm"

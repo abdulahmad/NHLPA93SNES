@@ -6,7 +6,7 @@ Formats (see src/data/README.md):
   *.chr       SNES 4bpp planar tiles, 32 bytes per 8x8 tile
   *.snesmap   SNES BG map words: vflip 15, hflip 14, priority 13, palette 12-10, tile 9-0
   *.snespal   SNES palette, BGR555 words (16 colours per palette row); the team *.pal files hold 93G words (see team_colours)
-  *.pieces    sprite frame pieces (Extracted/Graphics/Sprites/setNN, with setNN.chr; the frame tables are read from the SpriteSetN: headers in src/banks/*.asm)
+  *.pieces    sprite frame pieces (Extracted/Graphics/Sprites/setNN, with setNN.chr; the frame tables are read from the SpriteSetN: headers in src/data/gfx/SpriteSet*.asm)
 
 Commands:
   unpack IN [-o OUT]                  unpack a .pak file (or --rom ADDR: a packed stream in nhlpa93retail.sfc)
@@ -212,10 +212,10 @@ def asm_words(line):
 
 
 def sprite_sets():
-    """The 15 frame sets of FrameSetTable ($8FE67D), read from their `SpriteSetN:` headers in src/banks/*.asm: number, first global frame
+    """The 15 frame sets of FrameSetTable ($8FE67D), read from their `SpriteSetN:` headers in src/data/gfx/SpriteSet*.asm: number, first global frame
     (sprframe; frame 0 is no frame), piece start of each frame (+1 for the end), piece and tile counts, piece size."""
     lines = {}
-    for name in sorted(os.path.join('banks', n) for n in os.listdir(os.path.join(SRC, 'banks'))):
+    for name in sorted(os.path.join(d, n) for d in ('banks', os.path.join('data', 'gfx')) for n in os.listdir(os.path.join(SRC, d))):
         for i, line in enumerate(open(os.path.join(SRC, name), encoding='latin-1')):
             if line.startswith('SpriteSet') and ':' in line:
                 label = line.split(':')[0]
