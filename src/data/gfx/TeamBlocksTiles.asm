@@ -2,5 +2,5 @@ TeamBlocksTiles:					;TeamBlocks.map.jim tiles: 405 team name banner tiles, pack
 									;unpacked); sent to vram by PlayoffScreen, the scouting report and
 									;setoptions
 	incbin "../../../Extracted/Graphics/TeamBlocks.chr.pak"
-TeamBlocksTilesEnd:
+TeamBlocksTilesEnd:					; end of TeamBlocksTiles
 	assert TeamBlocksTilesEnd-TeamBlocksTiles == $20E3

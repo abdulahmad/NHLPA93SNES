@@ -23,5 +23,5 @@ SpriteSet0:							;frame set 0 (SPFskatewp, SPFskate, SPFturnl, SPFturnr): frame
 	assert .tiles-.pieces == 4*445
 .tiles:								;896 4bpp tiles (32 bytes each)
 	incbin "../../../Extracted/Graphics/Sprites/set00.chr"
-SpriteSet0End:
+SpriteSet0End:						; end of SpriteSet0
 	assert SpriteSet0End-SpriteSet0 == $7C0+896*32

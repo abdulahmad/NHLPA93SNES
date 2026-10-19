@@ -13,5 +13,5 @@ SpriteSet6:							;frame set 6 (duck and hold): frames 337-352
 	assert .tiles-.pieces == 4*110
 .tiles:								;256 4bpp tiles (32 bytes each)
 	incbin "../../../Extracted/Graphics/Sprites/set06.chr"
-SpriteSet6End:
+SpriteSet6End:						; end of SpriteSet6
 	assert SpriteSet6End-SpriteSet6 == $1E4+256*32

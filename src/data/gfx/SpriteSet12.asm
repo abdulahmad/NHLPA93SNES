@@ -20,5 +20,5 @@ SpriteSet12:						;frame set 12 (includes SPFflip, SPFstumble, SPFhook): frames 
 	assert .tiles-.pieces == 4*504
 .tiles:								;896 4bpp tiles (32 bytes each)
 	incbin "../../../Extracted/Graphics/Sprites/set12.chr"
-SpriteSet12End:
+SpriteSet12End:						; end of SpriteSet12
 	assert SpriteSet12End-SpriteSet12 == $880+896*32

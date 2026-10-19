@@ -162,7 +162,7 @@ sfx_crowdcheer:						;sound effect program, cue $8A
 	incbin "../../../Extracted/Sound/sfx_crowdcheer_cmdstream.bin"
 sfx_whistle:						;sound effect program, cue $89
 	incbin "../../../Extracted/Sound/sfx_whistle_cmdstream.bin"
-SPCDriverEnd:
+SPCDriverEnd:						; end of SPCDriver
 	assert SPCDriverEnd-SPCDriver == SPCDRIVERSIZE
 	dw BootInstrumentsEnd-BootInstruments, SPCINSTR	; block 2: the instrument table
 
@@ -197,7 +197,7 @@ BootInstruments:					;29 instruments: sample number, ADSR1, ADSR2, GAIN, then 2 
 	db $10, $8F,$E0,$B8, $0A,$F0	; instrument $1A
 	db $11, $8F,$E0,$B8, $09,$F0	; instrument $1B
 	db $12, $8F,$E0,$B8, $07,$A0	; instrument $1C
-BootInstrumentsEnd:
+BootInstrumentsEnd:					; end of BootInstruments
 	dw BootSampleDirEnd-BootSampleDir, SPCSAMPLEDIR	; block 3: the sample directory
 
 BootSampleDir:						;DSP sample directory: per sample the APU address of its start and of its
@@ -211,11 +211,11 @@ BootSampleDir:						;DSP sample directory: per sample the APU address of its sta
 	dw SPCBOOTSAMPLES+$4530,SPCBOOTSAMPLES+$455D	; sample $06: start, loop (offsets in bootsamples.brr)
 	dw SPCBOOTSAMPLES+$456F,SPCBOOTSAMPLES+$4968	; sample $07: start, loop (offsets in bootsamples.brr)
 	dw SPCBOOTSAMPLES+$49A7,SPCBOOTSAMPLES+$5271	; sample $08: start, loop (offsets in bootsamples.brr)
-BootSampleDirEnd:
+BootSampleDirEnd:					; end of BootSampleDir
 	dw BOOTSAMPLESIZE, SPCBOOTSAMPLES	; block 4: the BRR samples
 
 BootSamples:						;BRR samples of the boot set (9-byte blocks)
 	incbin "../../../Extracted/Sound/bootsamples.brr"
-BootSamplesEnd:
+BootSamplesEnd:						; end of BootSamples
 	assert BootSamplesEnd-BootSamples == BOOTSAMPLESIZE
 	dw $0000, SPCDRIVER				; end block: length 0, start the driver at $0400

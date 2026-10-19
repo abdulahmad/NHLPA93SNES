@@ -18,5 +18,5 @@ SpriteSet10:						;frame set 10: frames 462-517
 	assert .tiles-.pieces == 4*388
 .tiles:								;768 4bpp tiles (32 bytes each)
 	incbin "../../../Extracted/Graphics/Sprites/set10.chr"
-SpriteSet10End:
+SpriteSet10End:						; end of SpriteSet10
 	assert SpriteSet10End-SpriteSet10 == $68C+768*32

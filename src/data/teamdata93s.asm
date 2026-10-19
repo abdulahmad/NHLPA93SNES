@@ -35,7 +35,7 @@ TeamList:							;table of long pointers to the team records, indexed by team num
 	dd AllStarsEast					; team 24
 	dd AllStarsWest					; team 25
 	assert (TeamListEnd-TeamList)/4 == NumofTeams
-TeamListEnd:
+TeamListEnd:						; end of the team list
 
 Playerdata	=	0					;record offset of the word offset to the player data (.pld)
 Palettedata	=	2					;record offset of the word offset to the palettes (.pad)
@@ -53,7 +53,7 @@ AllStarsEast:						;team 24
 	dw .ls-.0						; LineSets
 	dw .sr-.0						; ScoutReport
 	dw .godds-.0					; GoalieOdds
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/ASEh.pal"	; home colours (SNES BGR555, 16 colours)
 	incbin "../../Extracted/Graphics/Pals/ASEv.pal"	; visitor colours
 .sr:	%hex2($7020,$00D6,$9999,$9099)	; qreb,hvxx,skpd,cfgo
@@ -91,23 +91,23 @@ AllStarsEast:						;team 24
 	%Player("Eric Desjardins", $287D,$AADA,$B2D4,$F4A5)
 	%Player("Scott Stevens", $049D,$ADFA,$F7AA,$F4DB)
 	dw 2							; end of the player list (empty name)
-.tn:	%String("All Stars East")
-.ta:	%String("ASE")
+.tn:	%String("All Stars East")	; team name
+.ta:	%String("ASE")				; team abbreviation
 
 
 AllStarsWest:						;team 25
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/ASWh.pal"
 	incbin "../../Extracted/Graphics/Pals/ASWv.pal"
-.sr:	%hex2($7020,$00C7,$9999,$9099)
-.godds:	db 173,224
-.ls:
+.sr:	%hex2($7020,$00C7,$9999,$9099)	; scouting report ratings
+.godds:	db 173,224					; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,17,16,12,04,09,05,00
 	db 01,18,19,13,05,10,04,00
 	db 01,20,21,14,06,11,04,00
@@ -115,7 +115,7 @@ AllStarsWest:						;team 25
 	db 01,19,22,13,04,11,05,00
 	db 01,17,20,14,07,15,08,00
 	db 01,22,18,15,08,14,07,00
-.pld:
+.pld:								; players
 	%Player("Ed Belfour", $305F,$AFFF,$0100,$FFFF)
 	%Player("Kirk McLean", $016D,$AFFD,$0100,$DDFF)
 	%Player("Tim Cheveldae", $325D,$ADDD,$0100,$DADD)
@@ -139,23 +139,23 @@ AllStarsWest:						;team 25
 	%Player("Larry Robinson", $19A9,$6396,$A396,$9397)
 	%Player("Dave Ellett", $047B,$B82E,$95B5,$E5B8)
 	dw 2
-.tn:	%String("All Stars West")
-.ta:	%String("ASW")
+.tn:	%String("All Stars West")	; team name
+.ta:	%String("ASW")				; team abbreviation
 
 
 Boston:								;team 0
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/BOSh.pal"
 	incbin "../../Extracted/Graphics/Pals/BOSv.pal"
-.sr:	%hex2($3311,$21E6,$6766,$6756)
-.godds:	db 197,34
-.ls:
+.sr:	%hex2($3311,$21E6,$6766,$6756)	; scouting report ratings
+.godds:	db 197,34					; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,19,20,16,05,14,06,00
 	db 01,21,22,17,06,11,05,00
 	db 01,23,24,15,07,12,05,00
@@ -163,7 +163,7 @@ Boston:								;team 0
 	db 01,21,22,15,16,11,05,00
 	db 01,19,20,11,12,15,07,00
 	db 01,21,22,15,07,11,12,00
-.pld:
+.pld:								; players
 	%Player("Andy Moog", $353C,$9ACC,$0100,$C9C9)
 	%Player("Daniel Berthiaume", $3116,$9AA6,$0100,$6966)
 	%Player("Matt Delguidice", $3333,$9AA3,$0000,$0300)
@@ -189,23 +189,23 @@ Boston:								;team 0
 	%Player("Jim Wiemer", $3686,$33C3,$6B63,$966B)
 	%Player("Bob Beers", $2279,$9306,$7230,$9305)
 	dw 2
-.tn:	%String("Boston")
-.ta:	%String("BOS")
+.tn:	%String("Boston")			; team name
+.ta:	%String("BOS")				; team abbreviation
 
 
 Buffalo:							;team 1
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/BUFh.pal"
 	incbin "../../Extracted/Graphics/Pals/BUFv.pal"
-.sr:	%hex2($5522,$22D8,$2442,$3933)
-.godds:	db 101,80
-.ls:
+.sr:	%hex2($5522,$22D8,$2442,$3933)	; scouting report ratings
+.godds:	db 101,80					; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,20,18,13,06,09,04,00
 	db 01,17,21,14,04,10,06,00
 	db 01,19,23,15,05,08,06,00
@@ -213,7 +213,7 @@ Buffalo:							;team 1
 	db 01,23,21,14,04,10,06,00
 	db 01,17,21,06,08,14,05,00
 	db 01,23,20,14,05,06,08,00
-.pld:
+.pld:								; players
 	%Player("Daren Puppa", $3188,$8AA8,$0000,$5588)
 	%Player("Clint Malarchuk", $3058,$8AA8,$0100,$8885)
 	%Player("Tom Draper", $3552,$8AA0,$0100,$2220)
@@ -239,23 +239,23 @@ Buffalo:							;team 1
 	%Player("Grant Ledyard", $037B,$885B,$8B52,$E287)
 	%Player("Randy Hillier", $2365,$2002,$5A20,$2B5D)
 	dw 2
-.tn:	%String("Buffalo")
-.ta:	%String("BUF")
+.tn:	%String("Buffalo")			; team name
+.ta:	%String("BUF")				; team abbreviation
 
 
 Calgary:							;team 2
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/CGYh.pal"
 	incbin "../../Extracted/Graphics/Pals/CGYv.pal"
-.sr:	%hex2($6622,$11D8,$4334,$4823)
-.godds:	db 196,0
-.ls:
+.sr:	%hex2($6622,$11D8,$4334,$4823)	; scouting report ratings
+.godds:	db 196,0					; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,19,17,14,03,10,06,00
 	db 01,18,21,13,06,11,03,00
 	db 01,16,20,15,04,09,03,00
@@ -263,7 +263,7 @@ Calgary:							;team 2
 	db 01,18,21,06,05,11,03,00
 	db 01,17,16,04,07,13,09,00
 	db 01,19,20,13,09,04,07,00
-.pld:
+.pld:								; players
 	%Player("Mike Vernon", $3038,$8AAB,$0100,$BB88)
 	%Player("Jeff Reese", $3535,$8AA5,$0100,$5588)
 	%Player("Theoren Fleury", $142E,$EB8B,$C4BB,$B88D)
@@ -288,23 +288,23 @@ Calgary:							;team 2
 	%Player("Alexnder Godynyuk", $2185,$8525,$9B55,$222D)
 	%Player("Neil Sheehy", $1595,$2225,$8A22,$282D)
 	dw 2
-.tn:	%String("Calgary")
-.ta:	%String("CGY")
+.tn:	%String("Calgary")			; team name
+.ta:	%String("CGY")				; team abbreviation
 
 
 Chicago:							;team 3
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/CHIh.pal"
 	incbin "../../Extracted/Graphics/Pals/CHIv.pal"
-.sr:	%hex2($3000,$21D7,$7777,$9888)
-.godds:	db 164,49
-.ls:
+.sr:	%hex2($3000,$21D7,$7777,$9888)	; scouting report ratings
+.godds:	db 164,49					; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,18,19,14,05,09,07,00
 	db 01,20,22,16,07,11,05,00
 	db 01,21,23,13,06,10,05,00
@@ -312,7 +312,7 @@ Chicago:							;team 3
 	db 01,21,22,07,10,11,05,00
 	db 01,21,22,07,10,06,09,00
 	db 01,18,19,06,09,07,10,00
-.pld:
+.pld:								; players
 	%Player("Ed Belfour", $305F,$AFFF,$0100,$FFFF)
 	%Player("Dominik Hasek", $313A,$AAA7,$0100,$7AAA)
 	%Player("Jim Waite", $295A,$AAA7,$0100,$77AA)
@@ -338,23 +338,23 @@ Chicago:							;team 3
 	%Player("Rod Buskas", $2584,$4144,$5A41,$A44D)
 	%Player("Igor Kravchuk", $037D,$AA4A,$81D4,$74A4)
 	dw 2
-.tn:	%String("Chicago")
-.ta:	%String("CHI")
+.tn:	%String("Chicago")			; team name
+.ta:	%String("CHI")				; team abbreviation
 
 
 Detroit:							;team 4
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/DETh.pal"
 	incbin "../../Extracted/Graphics/Pals/DETv.pal"
-.sr:	%hex2($6111,$00D7,$8879,$7878)
-.godds:	db 226,16
-.ls:
+.sr:	%hex2($6111,$00D7,$8879,$7878)	; scouting report ratings
+.godds:	db 226,16					; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,17,20,13,06,08,04,00
 	db 01,18,22,14,04,07,06,00
 	db 01,19,21,15,05,09,06,00
@@ -362,7 +362,7 @@ Detroit:							;team 4
 	db 01,21,18,15,05,09,06,00
 	db 01,20,18,06,07,13,04,00
 	db 01,17,19,13,04,06,07,00
-.pld:
+.pld:								; players
 	%Player("Tim Cheveldae", $325D,$ADDD,$0100,$DADD)
 	%Player("Greg Millen", $3447,$AAA4,$0000,$7774)
 	%Player("Vincent Riendeau", $375A,$AAA7,$0100,$A77A)
@@ -387,23 +387,23 @@ Detroit:							;team 4
 	%Player("Brad Marsh", $20A4,$74D4,$A547,$A47A)
 	%Player("Bobby Dollas", $0897,$A4D1,$231A,$7F17)
 	dw 2
-.tn:	%String("Detroit")
-.ta:	%String("DET")
+.tn:	%String("Detroit")			; team name
+.ta:	%String("DET")				; team abbreviation
 
 
 Edmonton:							;team 5
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/EDMh.pal"
 	incbin "../../Extracted/Graphics/Pals/EDMv.pal"
-.sr:	%hex2($6512,$11C7,$6535,$4534)
-.godds:	db 214,34
-.ls:
+.sr:	%hex2($6512,$11C7,$6535,$4534)	; scouting report ratings
+.godds:	db 214,34					; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,22,17,10,07,08,15,00
 	db 01,19,20,11,15,06,07,00
 	db 01,18,21,16,05,09,07,00
@@ -411,7 +411,7 @@ Edmonton:							;team 5
 	db 01,19,20,16,05,09,07,00
 	db 01,22,18,16,05,12,08,00
 	db 01,19,20,12,08,16,05,00
-.pld:
+.pld:								; players
 	%Player("Bill Ranford", $303C,$9CFC,$0100,$CCFC)
 	%Player("Ron Tugnutt", $3216,$9AA3,$0100,$3336)
 	%Player("Peter Ing", $0136,$9AA3,$0100,$6969)
@@ -436,23 +436,23 @@ Edmonton:							;team 5
 	%Player("Kevin Lowe", $046C,$9369,$A1C3,$C39D)
 	%Player("Craig Muni", $2873,$33C3,$C533,$6667)
 	dw 2
-.tn:	%String("Edmonton")
-.ta:	%String("EDM")
+.tn:	%String("Edmonton")			; team name
+.ta:	%String("EDM")				; team abbreviation
 
 
 Hartford:							;team 6
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/HFDh.pal"
 	incbin "../../Extracted/Graphics/Pals/HFDv.pal"
-.sr:	%hex2($1402,$00F6,$2222,$1342)
-.godds:	db 146,0
-.ls:
+.sr:	%hex2($1402,$00F6,$2222,$1342)	; scouting report ratings
+.godds:	db 146,0					; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,18,22,11,03,08,04,00
 	db 01,19,21,12,04,09,03,00
 	db 01,20,23,13,05,10,03,00
@@ -460,7 +460,7 @@ Hartford:							;team 6
 	db 01,20,18,12,05,09,11,00
 	db 01,18,20,13,12,04,09,00
 	db 01,19,23,04,09,12,13,00
-.pld:
+.pld:								; players
 	%Player("Kay Whitmore", $3545,$8AA5,$0100,$5858)
 	%Player("Frank Petrangelo", $4055,$8AA8,$0100,$5555)
 	%Player("John Cullen", $1158,$8B28,$32EB,$B5BB)
@@ -485,23 +485,23 @@ Hartford:							;team 6
 	%Player("Adam Burt", $0668,$852B,$8385,$B288)
 	%Player("Doug Houda", $2762,$2255,$0225,$852B)
 	dw 2
-.tn:	%String("Hartford")
-.ta:	%String("HFD")
+.tn:	%String("Hartford")			; team name
+.ta:	%String("HFD")				; team abbreviation
 
 
 LosAngeles:							;team 8
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/LAh.pal"
 	incbin "../../Extracted/Graphics/Pals/LAv.pal"
-.sr:	%hex2($4410,$10D8,$5664,$6535)
-.godds:	db 198,16
-.ls:
+.sr:	%hex2($4410,$10D8,$5664,$6535)	; scouting report ratings
+.godds:	db 198,16					; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,19,20,11,05,10,04,00
 	db 01,18,21,12,04,09,05,00
 	db 01,17,22,13,06,08,05,00
@@ -509,7 +509,7 @@ LosAngeles:							;team 8
 	db 01,17,18,12,04,09,05,00
 	db 01,17,18,12,06,13,04,00
 	db 01,19,20,13,04,12,06,00
-.pld:
+.pld:								; players
 	%Player("Kelly Hrudey", $3259,$9AAC,$0100,$6669)
 	%Player("Steve Weeks", $0133,$9AA3,$0100,$6633)
 	%Player("David Goverde", $4380,$9AA3,$0000,$0330)
@@ -535,23 +535,23 @@ LosAngeles:							;team 8
 	%Player("Tim Watters", $0556,$6363,$7360,$636D)
 	%Player("Brent Thompson", $5643,$3333,$6530,$633D)
 	dw 2
-.tn:	%String("Los Angeles")
-.ta:	%String("LA")
+.tn:	%String("Los Angeles")		; team name
+.ta:	%String("LA")				; team abbreviation
 
 
 LongIsland:							;team 7
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/LIh.pal"
 	incbin "../../Extracted/Graphics/Pals/LIv.pal"
-.sr:	%hex2($5522,$01E7,$5455,$5234)
-.godds:	db 102,0
-.ls:
+.sr:	%hex2($5522,$01E7,$5455,$5234)	; scouting report ratings
+.godds:	db 102,0					; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,20,17,13,04,12,03,00
 	db 01,18,19,14,03,11,04,00
 	db 01,21,23,15,06,10,04,00
@@ -559,7 +559,7 @@ LongIsland:							;team 7
 	db 01,23,18,13,06,03,14,00
 	db 01,17,19,16,07,08,11,00
 	db 01,20,22,08,11,16,07,00
-.pld:
+.pld:								; players
 	%Player("Glenn Healy", $3546,$9AA6,$0100,$3636)
 	%Player("Mark Fitzpatrik", $3063,$9AA3,$0100,$3366)
 	%Player("Ray Ferraro", $2056,$9CCC,$65CF,$C698)
@@ -584,23 +584,23 @@ LongIsland:							;team 7
 	%Player("Wayne McBean", $0663,$33F6,$6363,$6C65)
 	%Player("Scott Lachance", $0776,$66F3,$6163,$6332)
 	dw 2
-.tn:	%String("Long Island")
-.ta:	%String("LI")
+.tn:	%String("Long Island")		; team name
+.ta:	%String("LI")				; team abbreviation
 
 
 Minnesota:							;team 9
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/MINh.pal"
 	incbin "../../Extracted/Graphics/Pals/MINv.pal"
-.sr:	%hex2($1301,$11F6,$1232,$1652)
-.godds:	db 166,0
-.ls:
+.sr:	%hex2($1301,$11F6,$1232,$1652)	; scouting report ratings
+.godds:	db 166,0					; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,18,21,14,04,10,03,00
 	db 01,20,22,16,03,11,04,00
 	db 01,19,23,15,05,09,04,00
@@ -608,7 +608,7 @@ Minnesota:							;team 9
 	db 01,20,18,05,04,09,03,00
 	db 01,21,18,15,04,14,07,00
 	db 01,20,23,14,07,15,04,00
-.pld:
+.pld:								; players
 	%Player("Jon Casey", $301B,$8BA8,$0100,$558B)
 	%Player("Darcy Wakaluk", $3555,$8AA8,$0100,$5585)
 	%Player("Dave Gagner", $1555,$5B58,$8588,$B85A)
@@ -633,23 +633,23 @@ Minnesota:							;team 9
 	%Player("David Shaw", $2685,$5225,$8452,$555A)
 	%Player("Derian Hatcher", $2888,$55B5,$6558,$B82D)
 	dw 2
-.tn:	%String("Minnesota")
-.ta:	%String("MIN")
+.tn:	%String("Minnesota")		; team name
+.ta:	%String("MIN")				; team abbreviation
 
 
 Montreal:							;team 10
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/MTLh.pal"
 	incbin "../../Extracted/Graphics/Pals/MTLv.pal"
-.sr:	%hex2($3011,$22E7,$7888,$8499)
-.godds:	db 210,32
-.ls:
+.sr:	%hex2($3011,$22E7,$7888,$8499)	; scouting report ratings
+.godds:	db 210,32					; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,20,18,14,05,13,04,00
 	db 01,21,23,16,04,10,05,00
 	db 01,19,22,15,06,11,05,00
@@ -657,7 +657,7 @@ Montreal:							;team 10
 	db 01,21,23,17,05,09,14,00
 	db 01,19,23,16,08,14,05,00
 	db 01,20,18,14,05,16,08,00
-.pld:
+.pld:								; players
 	%Player("Patrick Roy", $335F,$AFFF,$0100,$FFFF)
 	%Player("Roland Melanson", $0157,$AAA7,$0100,$4477)
 	%Player("Andre Racicot", $4031,$AAA1,$0100,$1111)
@@ -683,23 +683,23 @@ Montreal:							;team 10
 	%Player("Kevin Haller", $1457,$7774,$8747,$F478)
 	%Player("Patrice Brisebois", $434A,$A7DA,$A674,$7475)
 	dw 2
-.tn:	%String("Montreal")
-.ta:	%String("MTL")
+.tn:	%String("Montreal")			; team name
+.ta:	%String("MTL")				; team abbreviation
 
 
 NewJersey:							;team 11
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/NJh.pal"
 	incbin "../../Extracted/Graphics/Pals/NJv.pal"
-.sr:	%hex2($5200,$11F6,$8668,$6467)
-.godds:	db 165,0
-.ls:
+.sr:	%hex2($5200,$11F6,$8668,$6467)	; scouting report ratings
+.godds:	db 165,0					; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,22,23,14,03,08,04,00
 	db 01,20,21,13,04,09,03,00
 	db 01,18,19,12,05,10,03,00
@@ -707,7 +707,7 @@ NewJersey:							;team 11
 	db 01,21,22,14,04,09,03,00
 	db 01,23,19,12,11,05,10,00
 	db 01,21,22,05,10,12,11,00
-.pld:
+.pld:								; players
 	%Player("Chris Terreri", $311D,$AAAA,$0100,$AAAA)
 	%Player("Craig Billington", $013A,$AAA4,$0100,$7777)
 	%Player("Kevin Todd", $144A,$DDA7,$B57D,$D7A5)
@@ -732,23 +732,23 @@ NewJersey:							;team 11
 	%Player("Slava Fetisov", $02AD,$77DD,$B5D4,$F1D8)
 	%Player("Scott Stevens", $049D,$ADFA,$F7AA,$F4DB)
 	dw 2
-.tn:	%String("New Jersey")
-.ta:	%String("NJ")
+.tn:	%String("New Jersey")		; team name
+.ta:	%String("NJ")				; team abbreviation
 
 
 NewYork:							;team 12
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/NYh.pal"
 	incbin "../../Extracted/Graphics/Pals/NYv.pal"
-.sr:	%hex2($7120,$20F8,$7989,$7789)
-.godds:	db 152,0
-.ls:
+.sr:	%hex2($7120,$20F8,$7989,$7789)	; scouting report ratings
+.godds:	db 152,0					; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,18,20,15,03,09,05,00
 	db 01,21,24,16,05,08,03,00
 	db 01,19,22,17,04,12,03,00
@@ -756,7 +756,7 @@ NewYork:							;team 12
 	db 01,21,24,16,04,08,03,00
 	db 01,19,21,03,07,04,11,00
 	db 01,18,20,04,11,03,07,00
-.pld:
+.pld:								; players
 	%Player("John Vanbiesbrk", $344A,$ADAA,$0100,$ADAD)
 	%Player("Mike Richter", $355D,$ADDD,$0100,$DDDD)
 	%Player("Mark Messier", $118F,$DFFA,$F3FD,$F4F9)
@@ -783,23 +783,23 @@ NewYork:							;team 12
 	%Player("Per Djoos", $4447,$A7D7,$8074,$D176)
 	%Player("Normand Rochefort", $0597,$7114,$B171,$7A49)
 	dw 2
-.tn:	%String("New York")
-.ta:	%String("NY")
+.tn:	%String("New York")			; team name
+.ta:	%String("NY")				; team abbreviation
 
 
 Ottawa:								;team 13
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/OTWh.pal"
 	incbin "../../Extracted/Graphics/Pals/OTWv.pal"
-.sr:	%hex2($0702,$02A6,$1111,$1411)
-.godds:	db 96,0
-.ls:
+.sr:	%hex2($0702,$02A6,$1111,$1411)	; scouting report ratings
+.godds:	db 96,0						; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,12,13,10,07,02,03,00
 	db 01,14,15,08,03,06,10,00
 	db 01,16,17,09,04,05,10,00
@@ -807,7 +807,7 @@ Ottawa:								;team 13
 	db 01,17,14,07,10,02,03,00
 	db 01,12,13,10,02,08,09,00
 	db 01,17,16,08,09,10,02,00
-.pld:
+.pld:								; players
 	%Player("Peter Sidorkwicz", $3055,$8AA5,$0100,$5555)
 	%Player("Mark Lamb", $075C,$C996,$9196,$6397)
 	%Player("Mark Freer", $3756,$6393,$736C,$6963)
@@ -826,23 +826,23 @@ Ottawa:								;team 13
 	%Player("Darren Rumble", $3470,$0020,$2100,$220A)
 	%Player("Brad Miller", $44A2,$5255,$8D22,$855F)
 	dw 2
-.tn:	%String("Ottawa")
-.ta:	%String("OTW")
+.tn:	%String("Ottawa")			; team name
+.ta:	%String("OTW")				; team abbreviation
 
 
 Philadelphia:						;team 14
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/PHIh.pal"
 	incbin "../../Extracted/Graphics/Pals/PHIv.pal"
-.sr:	%hex2($2201,$22E8,$3443,$2353)
-.godds:	db 147,0
-.ls:
+.sr:	%hex2($2201,$22E8,$3443,$2353)	; scouting report ratings
+.godds:	db 147,0					; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,17,18,13,03,09,04,00
 	db 01,21,23,15,04,10,03,00
 	db 01,19,20,16,05,11,03,00
@@ -850,7 +850,7 @@ Philadelphia:						;team 14
 	db 01,21,18,13,03,09,04,00
 	db 01,17,23,04,09,03,05,00
 	db 01,21,20,03,05,04,09,00
-.pld:
+.pld:								; players
 	%Player("Ron Hextall", $2769,$9AA9,$0100,$CC99)
 	%Player("Dominic Roussel", $3353,$9AA3,$0100,$3366)
 	%Player("Rod Brindamour", $177C,$9C6C,$75CC,$F9C9)
@@ -876,23 +876,23 @@ Philadelphia:						;team 14
 	%Player("Mark Howe", $0259,$99FC,$71C9,$F3C3)
 	%Player("Corey Foster", $4470,$0603,$1133,$6C36)
 	dw 2
-.tn:	%String("Philadelphia")
-.ta:	%String("PHI")
+.tn:	%String("Philadelphia")		; team name
+.ta:	%String("PHI")				; team abbreviation
 
 
 Pittsburgh:							;team 15
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/PITh.pal"
 	incbin "../../Extracted/Graphics/Pals/PITv.pal"
-.sr:	%hex2($7621,$10E7,$5566,$5725)
-.godds:	db 182,0
-.ls:
+.sr:	%hex2($7621,$10E7,$5566,$5725)	; scouting report ratings
+.godds:	db 182,0					; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,18,17,13,04,09,03,00
 	db 01,19,23,14,03,10,04,00
 	db 01,20,21,15,05,08,04,00
@@ -900,7 +900,7 @@ Pittsburgh:							;team 15
 	db 01,21,18,03,10,09,04,00
 	db 01,17,22,14,03,05,08,00
 	db 01,18,20,05,08,14,03,00
-.pld:
+.pld:								; players
 	%Player("Tom Barrasso", $358C,$9AC9,$0000,$99C9)
 	%Player("Ken Wregget", $3166,$9AA6,$0100,$9696)
 	%Player("Ron Francis", $107C,$9C6C,$93CC,$F6C3)
@@ -925,23 +925,23 @@ Pittsburgh:							;team 15
 	%Player("Grant Jennings", $0376,$6396,$A769,$663C)
 	%Player("Jim Paek", $0266,$9393,$6333,$6366)
 	dw 2
-.tn:	%String("Pittsburgh")
-.ta:	%String("PIT")
+.tn:	%String("Pittsburgh")		; team name
+.ta:	%String("PIT")				; team abbreviation
 
 
 Quebec:								;team 16
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/QUEh.pal"
 	incbin "../../Extracted/Graphics/Pals/QUEv.pal"
-.sr:	%hex2($2602,$22E8,$3212,$1321)
-.godds:	db 84,32
-.ls:
+.sr:	%hex2($2602,$22E8,$3212,$1321)	; scouting report ratings
+.godds:	db 84,32					; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,20,19,17,05,10,04,00
 	db 01,18,24,14,04,08,05,00
 	db 01,21,22,16,07,09,05,00
@@ -949,7 +949,7 @@ Quebec:								;team 16
 	db 01,22,24,14,04,08,09,00
 	db 01,20,24,16,04,14,05,00
 	db 01,21,18,14,05,16,04,00
-.pld:
+.pld:								; players
 	%Player("Jacques Cloutier", $3232,$8AA2,$0100,$2225)
 	%Player("Stephane Fiset", $3142,$8AA0,$0100,$2200)
 	%Player("John Tanner", $3450,$8AA0,$0100,$0000)
@@ -976,23 +976,23 @@ Quebec:								;team 16
 	%Player("Curtis Leschyshyn", $0788,$B505,$8355,$E289)
 	%Player("Dan Lambert", $5042,$2822,$015B,$5256)
 	dw 2
-.tn:	%String("Quebec")
-.ta:	%String("QUE")
+.tn:	%String("Quebec")			; team name
+.ta:	%String("QUE")				; team abbreviation
 
 
 SanJose:							;team 17
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/SJh.pal"
 	incbin "../../Extracted/Graphics/Pals/SJv.pal"
-.sr:	%hex2($0702,$12E6,$2111,$3211)
-.godds:	db 133,34
-.ls:
+.sr:	%hex2($0702,$12E6,$2111,$3211)	; scouting report ratings
+.godds:	db 133,34					; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,24,20,16,09,11,12,00
 	db 01,23,21,17,08,12,09,00
 	db 01,19,22,15,07,13,09,00
@@ -1000,7 +1000,7 @@ SanJose:							;team 17
 	db 01,22,23,07,12,11,09,00
 	db 01,20,23,07,12,16,09,00
 	db 01,24,21,16,09,07,12,00
-.pld:
+.pld:								; players
 	%Player("Jeff Hackett", $3042,$8AA2,$0100,$2225)
 	%Player("Jarmo Myllys", $3525,$8AA2,$0100,$5528)
 	%Player("Arturs Irbe", $3245,$8AA8,$0100,$8855)
@@ -1026,23 +1026,23 @@ SanJose:							;team 17
 	%Player("Jay More", $0468,$550B,$8485,$E28C)
 	%Player("Doug Wilson", $245B,$880F,$81B5,$E5B3)
 	dw 2
-.tn:	%String("San Jose")
-.ta:	%String("SJ")
+.tn:	%String("San Jose")			; team name
+.ta:	%String("SJ")				; team abbreviation
 
 
 StLouis:							;team 18
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/STLh.pal"
 	incbin "../../Extracted/Graphics/Pals/STLv.pal"
-.sr:	%hex2($4210,$21D8,$4364,$4564)
-.godds:	db 194,32
-.ls:
+.sr:	%hex2($4210,$21D8,$4364,$4564)	; scouting report ratings
+.godds:	db 194,32					; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,22,17,14,04,10,06,00
 	db 01,18,20,15,06,08,04,00
 	db 01,19,21,13,07,09,04,00
@@ -1050,7 +1050,7 @@ StLouis:							;team 18
 	db 01,21,20,07,04,09,08,00
 	db 01,22,20,07,09,13,05,00
 	db 01,21,19,13,05,07,09,00
-.pld:
+.pld:								; players
 	%Player("Curtis Joseph", $315C,$9CCC,$0100,$99CC)
 	%Player("Guy Hebert", $4050,$9AA0,$0100,$0000)
 	%Player("Pat Jablonski", $0143,$9AA0,$0000,$3333)
@@ -1076,23 +1076,23 @@ StLouis:							;team 18
 	%Player("Lee Norwood", $2076,$66C3,$7763,$636C)
 	%Player("Rob Robinson", $4493,$6033,$6160,$6933)
 	dw 2
-.tn:	%String("St. Louis")
-.ta:	%String("STL")
+.tn:	%String("St. Louis")		; team name
+.ta:	%String("STL")				; team abbreviation
 
 
 TampaBay:							;team 19
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/TBYh.pal"
 	incbin "../../Extracted/Graphics/Pals/TBYv.pal"
-.sr:	%hex2($0702,$02A7,$2111,$1411)
-.godds:	db 48,0
-.ls:
+.sr:	%hex2($0702,$02A7,$2111,$1411)	; scouting report ratings
+.godds:	db 48,0						; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,13,12,09,02,06,03,00
 	db 01,14,15,10,03,07,02,00
 	db 01,16,17,11,04,08,02,00
@@ -1100,7 +1100,7 @@ TampaBay:							;team 19
 	db 01,15,13,11,04,07,02,00
 	db 01,14,13,10,03,11,05,00
 	db 01,16,18,11,05,10,03,00
-.pld:
+.pld:								; players
 	%Player("Wendell Young", $0159,$9AA9,$0100,$9699)
 	%Player("Anatoli Semenov", $196C,$9CCC,$71CC,$C9C4)
 	%Player("Rob Dimaio", $1846,$9303,$1269,$9F05)
@@ -1120,23 +1120,23 @@ TampaBay:							;team 19
 	%Player("Jeff Bloemberg", $3870,$0020,$2000,$222A)
 	%Player("Shawn Chambers", $2570,$0000,$2100,$220A)
 	dw 2
-.tn:	%String("Tampa Bay")
-.ta:	%String("TBY")
+.tn:	%String("Tampa Bay")		; team name
+.ta:	%String("TBY")				; team abbreviation
 
 
 Toronto:							;team 20
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/TORh.pal"
 	incbin "../../Extracted/Graphics/Pals/TORv.pal"
-.sr:	%hex2($1411,$12E8,$2123,$3232)
-.godds:	db 211,0
-.ls:
+.sr:	%hex2($1411,$12E8,$2123,$3232)	; scouting report ratings
+.godds:	db 211,0					; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,17,19,13,03,06,05,00
 	db 01,20,21,10,05,08,03,00
 	db 01,18,22,14,04,07,03,00
@@ -1144,7 +1144,7 @@ Toronto:							;team 20
 	db 01,18,22,05,07,06,13,00
 	db 01,19,21,12,04,10,03,00
 	db 01,18,17,10,03,12,04,00
-.pld:
+.pld:								; players
 	%Player("Grant Fuhr", $315E,$8EEE,$0000,$BBEE)
 	%Player("Rick Wamsley", $3055,$8AA5,$0100,$5555)
 	%Player("Doug Gilmour", $933E,$8BB8,$B1BB,$E2B8)
@@ -1170,23 +1170,23 @@ Toronto:							;team 20
 	%Player("Bob Halkidis", $3372,$2222,$2725,$582B)
 	%Player("Dimitri Mironov", $1568,$5208,$218B,$55B0)
 	dw 2
-.tn:	%String("Toronto")
-.ta:	%String("TOR")
+.tn:	%String("Toronto")			; team name
+.ta:	%String("TOR")				; team abbreviation
 
 
 Vancouver:							;team 21
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/VANh.pal"
 	incbin "../../Extracted/Graphics/Pals/VANv.pal"
-.sr:	%hex2($4111,$10E8,$6877,$7577)
-.godds:	db 211,0
-.ls:
+.sr:	%hex2($4111,$10E8,$6877,$7577)	; scouting report ratings
+.godds:	db 211,0					; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,18,19,13,03,09,05,00
 	db 01,17,21,12,05,11,03,00
 	db 01,20,22,16,04,10,03,00
@@ -1194,7 +1194,7 @@ Vancouver:							;team 21
 	db 01,22,17,12,05,11,04,00
 	db 01,19,22,06,07,12,05,00
 	db 01,17,18,12,05,06,07,00
-.pld:
+.pld:								; players
 	%Player("Kirk McLean", $016D,$AFFD,$0100,$DDFF)
 	%Player("Troy Gamble", $3567,$AAA7,$0100,$77AA)
 	%Player("Cliff Ronning", $074F,$FDD7,$81DA,$AAD4)
@@ -1220,23 +1220,23 @@ Vancouver:							;team 21
 	%Player("Randy Gregg", $2494,$4444,$5144,$744A)
 	%Player("Adrien Plavsic", $0667,$7AD7,$A374,$7177)
 	dw 2
-.tn:	%String("Vancouver")
-.ta:	%String("VAN")
+.tn:	%String("Vancouver")		; team name
+.ta:	%String("VAN")				; team abbreviation
 
 
 Winnipeg:							;team 23
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/WPGh.pal"
 	incbin "../../Extracted/Graphics/Pals/WPGv.pal"
-.sr:	%hex2($2020,$10E7,$4555,$2185)
-.godds:	db 149,48
-.ls:
+.sr:	%hex2($2020,$10E7,$4555,$2185)	; scouting report ratings
+.godds:	db 149,48					; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,20,21,17,07,10,04,00
 	db 01,18,24,14,04,11,07,00
 	db 01,22,23,15,05,09,07,00
@@ -1244,7 +1244,7 @@ Winnipeg:							;team 23
 	db 01,22,18,14,04,12,11,00
 	db 01,20,23,15,04,14,05,00
 	db 01,22,18,14,05,15,04,00
-.pld:
+.pld:								; players
 	%Player("Bob Essensa", $352F,$9CCF,$0100,$CCCC)
 	%Player("Steph Beauregard", $3056,$9AA6,$0000,$3666)
 	%Player("Rick Tabaracci", $3156,$9AA3,$0100,$3366)
@@ -1270,23 +1270,23 @@ Winnipeg:							;team 23
 	%Player("Shawn Cronin", $4480,$0030,$7D00,$C60F)
 	%Player("Mario Marois", $3363,$3333,$6463,$9969)
 	dw 2
-.tn:	%String("Winnipeg")
-.ta:	%String("WPG")
+.tn:	%String("Winnipeg")			; team name
+.ta:	%String("WPG")				; team abbreviation
 
 
 Washington:							;team 22
-.0:	dw .pld-.0
+.0:	dw .pld-.0						; start of the team record: offsets of its parts
 	dw .pad-.0
 	dw .tn-.0
 	dw .ls-.0
 	dw .sr-.0
 	dw .godds-.0
-.pad:
+.pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/WSHh.pal"
 	incbin "../../Extracted/Graphics/Pals/WSHv.pal"
-.sr:	%hex2($7320,$00E7,$9697,$8458)
-.godds:	db 164,32
-.ls:
+.sr:	%hex2($7320,$00E7,$9697,$8458)	; scouting report ratings
+.godds:	db 164,32					; goalie scoring odds
+.ls:								; line sets: 7 lines of 8 bytes
 	db 01,19,20,12,05,08,04,00
 	db 01,18,24,15,04,11,05,00
 	db 01,21,22,14,06,10,05,00
@@ -1294,7 +1294,7 @@ Washington:							;team 22
 	db 01,21,20,06,05,08,04,00
 	db 01,21,24,12,05,06,07,00
 	db 01,18,19,06,07,12,05,00
-.pld:
+.pld:								; players
 	%Player("Don Beaupre", $3337,$AAAA,$0100,$AAAA)
 	%Player("Mike Liut", $0167,$AAA7,$0100,$A77A)
 	%Player("Jim Hrivnak", $3954,$AAA4,$0100,$1144)
@@ -1320,8 +1320,8 @@ Washington:							;team 22
 	%Player("Ken Sabourin", $0284,$4141,$1111,$771B)
 	%Player("Brad Schlegel", $285A,$7147,$7071,$D770)
 	dw 2
-.tn:	%String("Washington")
-.ta:	%String("WSH")
+.tn:	%String("Washington")		; team name
+.ta:	%String("WSH")				; team abbreviation
 
 
 playoffseats:						;34 playoff trees, 16 team numbers each (maketree)
@@ -1359,5 +1359,5 @@ playoffseats:						;34 playoff trees, 16 team numbers each (maketree)
 	db 3,9,4,18, 21,5,8,23, 10,1,0,6, 12,15,22,11	; tree 31
 	db 3,19,4,9, 21,23,8,5, 10,13,0,1, 12,11,22,15	; tree 32
 	db 3,18,4,19, 21,23,8,5, 10,6,0,13, 12,11,22,15	; tree 33
-playoffseatsEnd:
+playoffseatsEnd:					; end of the playoff seats
 	assert (playoffseatsEnd-playoffseats)/16 == 34
