@@ -264,7 +264,7 @@ org `$838000` when `pc()` is below it.
 
 org `$848000` when `pc()` is below it.
 
-- `$848000` data/gfx/SpriteSet9.asm (also SpriteSet9End)
+- `$848000` SpriteSet9 (data)
 - `$84D630` ScoutingReportText (data)
 - `$84E949` FaceOffMap (data)
 - `$84EA39` routines/middle/ConvertByteToDigits.asm
@@ -305,7 +305,7 @@ org `$848000` when `pc()` is below it.
 
 org `$858000` when `pc()` is below it.
 
-- `$858000` data/gfx/SpriteSet4.asm (also SpriteSet4End)
+- `$858000` SpriteSet4 (data)
 - `$85D5A4` routines/hockey/GetShifter.asm
 - `$85D5C0` Title1Map (data)
 - `$85FBB9` routines/video/DrawFrameHi.asm
@@ -337,13 +337,13 @@ org `$868000` when `pc()` is below it.
 
 org `$878000` when `pc()` is below it.
 
-- `$878000` data/gfx/SpriteSet2.asm (also SpriteSet2End)
+- `$878000` SpriteSet2 (data)
 - `$87C3A0` EASNmap (data)
 - `$87C6B4` FaceOffTiles (data)
 - `$87CABA` Teamblocksmap (data)
 - `$87CE62` routines/video/DrawFrame.asm
 - `$87D1FE` routines/video/addframe_end.asm
-- `$87D205` data/gfx/SpriteSet6.asm (also SpriteSet6End)
+- `$87D205` SpriteSet6 (data)
 - `$87F3E9` routines/hockey/RestoreReplayFrame.asm
 - `$87F55A` data/gfx/PixelRemap87.asm
 - `$87F55E` RefTiles (data)
@@ -354,7 +354,6 @@ org `$878000` when `pc()` is below it.
 org `$888000` when `pc()` is below it.
 
 - `$888000` GameSetUpMap (data)
-- `$88822F` GameSetupMapEnd (data)
 - `$88822F` SmallFontMap (data)
 - `$88832F` routines/middle/mulu32.asm
 - `$888405` routines/penalty/getlinee.asm
@@ -368,9 +367,9 @@ org `$888000` when `pc()` is below it.
 - `$888853` routines/hockey/SuperMult.asm
 - `$8888C3` routines/hockey/DrawGameSetupBack.asm
 - `$888942` routines/middle/mulu.asm
-- `$888A0F` data/gfx/SpriteSet8.asm (also SpriteSet8End)
+- `$888A0F` SpriteSet8 (data)
 - `$889B73` TeamBlocksTiles (data)
-- `$88BC56` data/gfx/SpriteSet7.asm (also SpriteSet7End)
+- `$88BC56` SpriteSet7 (data)
 - `$88EF9C` routines/hockey/GetPassWord.asm
 - `$88F28F` data/text/PasswordText.asm
 - `$88F2B0` routines/hockey/TitleScreen.asm
@@ -385,9 +384,9 @@ org `$888000` when `pc()` is below it.
 
 org `$898000` when `pc()` is below it.
 
-- `$898000` data/gfx/SpriteSet11.asm (also SpriteSet11End)
+- `$898000` SpriteSet11 (data)
 - `$8990F0` routines/hockey/ReplayMode.asm
-- `$899383` data/gfx/SpriteSet13.asm (also SpriteSet13End)
+- `$899383` SpriteSet13 (data)
 - `$89E95D` routines/penalty/printscores1.asm
 - `$89EAB1` routines/penalty/PrintPerLabel.asm
 - `$89EAD7` routines/penalty/PrintTeamNameAndScore.asm
@@ -415,7 +414,7 @@ org `$898000` when `pc()` is below it.
 
 org `$8A8000` when `pc()` is below it.
 
-- `$8A8000` data/gfx/SpriteSet12.asm (also SpriteSet12End)
+- `$8A8000` SpriteSet12 (data)
 - `$8AF880` PlayoffBracketMap (data)
 - `$8AFAA8` data/text/Credits.asm
 - `$8AFD0C` routines/logic/lineinput.asm
@@ -432,7 +431,7 @@ org `$8B8000` when `pc()` is below it.
 - `$8B8172` routines/hockey/Opening4.asm
 - `$8B817A` routines/hockey/ReadPassBits.asm
 - `$8B8253` routines/hockey/ResolveGames.asm
-- `$8B83EE` data/gfx/SpriteSet5.asm (also SpriteSet5End)
+- `$8B83EE` SpriteSet5 (data)
 - `$8BFCCE` routines/print/printbig.asm
 - `$8BFE47` routines/logic/asswingo.asm
 - `$8BFFCC` routines/video/showref.asm
@@ -443,7 +442,7 @@ org `$8B8000` when `pc()` is below it.
 org `$8C8000` when `pc()` is below it.
 
 - `$8C8000` NHLPALogo (data)
-- `$8C845A` data/gfx/SpriteSet0.asm (also SpriteSet0End)
+- `$8C845A` SpriteSet0 (data)
 - `$8CFC1A` routines/video/checksso.asm
 - `$8CFD83` routines/logic/chk4pass.asm (also unusedFF8C)
 
@@ -467,7 +466,7 @@ org `$8D8000` when `pc()` is below it.
 - `$8D871C` routines/middle/mulu16.asm
 - `$8D87B0` routines/logic/puckshadow.asm
 - `$8D87FB` routines/hockey/setd0player.asm
-- `$8D883C` data/gfx/SpriteSet10.asm (also SpriteSet10End)
+- `$8D883C` SpriteSet10 (data)
 - `$8DEEC8` BigFontTiles (data)
 - `$8DF888` routines/penalty/StartHL2.asm
 - `$8DFCC7` routines/logic/asspenalty.asm
@@ -481,8 +480,8 @@ org `$8E8000` when `pc()` is below it.
 - `$8E8000` routines/hockey/Gameloop.asm
 - `$8E8182` routines/hockey/FormatPlayerNumInitial.asm
 - `$8E826B` routines/logic/assbench.asm
-- `$8E83EB` data/gfx/SpriteSet3.asm (also SpriteSet3End)
-- `$8ED9A7` data/gfx/SpriteSet14.asm (also SpriteSet14End)
+- `$8E83EB` SpriteSet3 (data)
+- `$8ED9A7` SpriteSet14 (data)
 - `$8EFE73` routines/logic/assdefo.asm (also unused008E)
 
 ## src/banks/b8F_frontend.asm
@@ -534,7 +533,7 @@ org `$8F8000` when `pc()` is below it.
 - `$8F901A` routines/middle/jdtab8F.asm
 - `$8F902A` routines/penalty/InitScores.asm
 - `$8F9073` routines/hockey/ResetPassWord.asm
-- `$8F9085` data/gfx/SpriteSet1.asm (also SpriteSet1End)
+- `$8F9085` SpriteSet1 (data)
 - `$8FD4F9` routines/logic/fightinput.asm
 - `$8FD5BF` routines/hockey/holdcheck.asm
 - `$8FD68C` routines/penalty/Fprint_list.asm

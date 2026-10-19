@@ -9,13 +9,13 @@ of the same names, so the SNES files get their own extensions, except the team p
 
 | Extension | Format | Files |
 |-----------|--------|-------|
-| `.map.snesjim` | SNES flavour of the 93G jim screen container: the same compression (`DecompressBytecode`, see Packed streams), but one stream of map, palette and tiles (see Screens below) | `Title1`, `EASN`, `RonBarr`, `GameSetUp`, `NHLPALogo` |
+| `.map.sjim` | SNES flavour of the 93G jim screen container: the same compression (`DecompressBytecode`, see Packed streams), but one stream of map, palette and tiles (see Screens below) | `Title1`, `EASN`, `RonBarr`, `GameSetUp`, `NHLPALogo` |
 | `.chr.pak` | Packed SNES 4bpp tiles | `IceRink`, `SmallFont`, `BigFont`, `FaceOff`, `Ref`, `RefHor`, `PlayoffTiles` (palette first), `TeamBlocks`, `RinkLogoTiles` |
 | `.chr` | SNES 4bpp planar tiles, 32 bytes per 8x8 tile, not packed | `Sprites/setNN.chr`, `Framer` |
 | `.pieces` | Sprite frame pieces (see Sprites below) | `Sprites/setNN.pieces` |
-| `.snesmap` | SNES BG map words, not packed: vflip 15, hflip 14, priority 13, palette 12-10, tile 9-0 | `IceRink` (48 x 85), `IceRinkHor`, `Refs` (7 ref frames of 8 x 7), `RefsHor` (17 frames), `BigFont` (76 + 76 words), `SmallFont` (128 words), `TeamBlocks` (9 x 2 per team), `Arrows` (23 x 12, `PlayoffBracketMap`), `FaceOff` (12 x 10), `Framer` (3 x 3 pieces), `EASN` (7 x 2, the small logo) |
+| `.smap` | SNES BG map words, not packed: vflip 15, hflip 14, priority 13, palette 12-10, tile 9-0 | `IceRink` (48 x 85), `IceRinkHor`, `Refs` (7 ref frames of 8 x 7), `RefsHor` (17 frames), `BigFont` (76 + 76 words), `SmallFont` (128 words), `TeamBlocks` (9 x 2 per team), `Arrows` (23 x 12, `PlayoffBracketMap`), `FaceOff` (12 x 10), `Framer` (3 x 3 pieces), `EASN` (7 x 2, the small logo) |
 | `.pal` | Team palette, 16 colors per row, 93G color words `0000 BBBB GGGG RRRR`, high byte first (same bytes as the 93G `.pal` files), which `SetTeamColors` ($80B706) converts to BGR555 | `Pals/<team>h`, `Pals/<team>v` |
-| `.snespal` | Palette of SNES BGR555 words | `Pals/Rink` |
+| `.spal` | Palette of SNES BGR555 words | `Pals/Rink` |
 | `.brr` | SPC700 BRR sound samples (the sample block of an SPC upload stream) | `bootsamples`, `gamesamples` |
 | `.spc700` | SPC700 sound driver code and tables only, uploaded to APU $0400 (the first $AA5 bytes of the driver block) | `driver` |
 | `_cmdstream.bin` | N-SPC command streams of the sound program, named like the 93G `fmtune_*_cmdstream` / `sfx_*_cmdstream` files. `fmtune_<song>`: the song's order list, its channel set and its channel streams, joined in address order (the pieces are scattered through the driver block, see `SPCDriver` in `src/data/sound/bootsound.asm`). `sfx_<name>`: one sound effect program. `sfx_table.bin`: the effect program pointers and voices | `fmtune_playoff`, `fmtune_title`, `fmtune_goal`, ... , `sfx_whistle`, ... |
@@ -41,17 +41,17 @@ Genesis vs SNES, for comparison:
 - `$C0-$DF`, `$Ex`, `$Fx`: copy from earlier output, going down
 - `$E0 $00`: end of stream
 
-## Screens (`.map.snesjim`)
+## Screens (`.map.sjim`)
 
 The unpacked data holds the map words, then the palette, then the tiles. Offsets:
 
 | File | Map | Palette | Tiles | Notes |
 |------|-----|---------|-------|-------|
-| `Title1.map.snesjim` | 32 x 28 at 0 | at $700 | at $800 | title screen (93G `Title1.map.jim`) |
-| `RonBarr.map.snesjim` | 8 x 9 at 0 | 64 colors at $90 | at $190 | Ron Barr picture (93G `RonBarrMap`) |
-| `GameSetUp.map.snesjim` | 32 x 32 at 0 | 128 colors at $800 | at $900 | game setup backdrop; `--map-size 0x800 --pal-offset 0x800 --tiles-offset 0x900` |
-| `NHLPALogo.map.snesjim` | 8 x 10 at 0 | 128 colors at $A0 | at $1A0 | NHLPA logo; `--width 8 --map-size 0xA0 --pal-offset 0xA0 --tiles-offset 0x1A0` |
-| `EASN.map.snesjim` | 32 x 16 at 0 | none | at $400 | EASN logo backdrop (93G `EASN.map.jim`); `--map-size 0x400 --no-pal` |
+| `Title1.map.sjim` | 32 x 28 at 0 | at $700 | at $800 | title screen (93G `Title1.map.jim`) |
+| `RonBarr.map.sjim` | 8 x 9 at 0 | 64 colors at $90 | at $190 | Ron Barr picture (93G `RonBarrMap`) |
+| `GameSetUp.map.sjim` | 32 x 32 at 0 | 128 colors at $800 | at $900 | game setup backdrop; `--map-size 0x800 --pal-offset 0x800 --tiles-offset 0x900` |
+| `NHLPALogo.map.sjim` | 8 x 10 at 0 | 128 colors at $A0 | at $1A0 | NHLPA logo; `--width 8 --map-size 0xA0 --pal-offset 0xA0 --tiles-offset 0x1A0` |
+| `EASN.map.sjim` | 32 x 16 at 0 | none | at $400 | EASN logo backdrop (93G `EASN.map.jim`); `--map-size 0x400 --no-pal` |
 
 ## Sprites (`Extracted/Graphics/Sprites/setNN`)
 
@@ -61,7 +61,7 @@ Frame numbers (`sprframe`, the `SPF` names in `ram93s.asm`) run on from set to s
 
 - Sets 0-13 (frames 1-658, `DrawFrame` $87CE62): 4-byte pieces: x, y (signed bytes), tile, attributes.
 - Set 14 (frames 659-720, `DrawFrameHi` $85FBB9): 6-byte pieces: x, y (signed words), tile, attributes. These are the crowd:
-  659-689 for the vertical rink, at `IceRink.snesmap` pixel positions, and 690-720 for the horizontal rink.
+  659-689 for the vertical rink, at `IceRink.smap` pixel positions, and 690-720 for the horizontal rink.
 - Attributes: tile bits 8-9 (bits 0-1), palette (bits 2-4), 16 x 16 (bit 5: tiles t, t+1 over t+16, t+17), hflip (6), vflip (7).
   Palette 2 is the home team colors; `sprflag` $8000 moves it to palette 3, the visitor colors.
 - The first piece is on top (OAM order).
@@ -72,12 +72,12 @@ This script unpacks and renders the assets above, for checking a guess about wha
 (`python -m pip install pillow`); `unpack` does not.
 
 ```
-python tools/snesgfx.py unpack Extracted/Graphics/EASN.map.snesjim -o easn.bin
+python tools/snesgfx.py unpack Extracted/Graphics/EASN.map.sjim -o easn.bin
 python tools/snesgfx.py unpack --rom 0x80ED38 -o block.bin       # a packed stream still in nhlpa93retail.sfc
-python tools/snesgfx.py screen Extracted/Graphics/Title1.map.snesjim -o title.png
-python tools/snesgfx.py screen Extracted/Graphics/RonBarr.map.snesjim --width 8 --map-size 0x90 --pal-offset 0x90 --tiles-offset 0x190 -o ronbarr.png
+python tools/snesgfx.py screen Extracted/Graphics/Title1.map.sjim -o title.png
+python tools/snesgfx.py screen Extracted/Graphics/RonBarr.map.sjim --width 8 --map-size 0x90 --pal-offset 0x90 --tiles-offset 0x190 -o ronbarr.png
 python tools/snesgfx.py tiles Extracted/Graphics/BigFont.chr.pak --columns 16 -o bigfont.png
-python tools/snesgfx.py map Extracted/Graphics/IceRink.snesmap --tiles Extracted/Graphics/IceRink.chr.pak --width 48 --pal Extracted/Graphics/Pals/Rink.snespal -o rink.png
+python tools/snesgfx.py map Extracted/Graphics/IceRink.smap --tiles Extracted/Graphics/IceRink.chr.pak --width 48 --pal Extracted/Graphics/Pals/Rink.spal -o rink.png
 python tools/snesgfx.py sprites 0 -o set00.png                     # frame set 0, labelled with frame numbers and SPF names
 python tools/snesgfx.py sprites all -o sprites.png                 # sprites00.png .. sprites14.png
 python tools/snesgfx.py sprites --frames 406-461 --team MTL --visitor -o goalie.png

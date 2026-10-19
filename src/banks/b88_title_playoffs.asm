@@ -6,11 +6,11 @@ endif
 
 GameSetUpMap:						;the game setup screen backdrop (two team boxes, options box),
 									;packed: 32 x 32 map, 128 colors at $800, 18 tiles at $900
-	incbin "../../Extracted/Graphics/GameSetUp.map.snesjim"
+	incbin "../../Extracted/Graphics/GameSetUp.map.sjim"
 
 SmallFontMap:						;print character (0-127) -> small font tile (+ flip bits), added to
 									;smallfontchars by print
-	incbin "../../Extracted/Graphics/SmallFont.snesmap"
+	incbin "../../Extracted/Graphics/SmallFont.smap"
 
 incsrc "../routines/middle/mulu32.asm"
 incsrc "../routines/penalty/getlinee.asm"
@@ -21,7 +21,7 @@ incsrc "../routines/hockey/EncodePW.asm"
 
 FramerMap:							;Framer.map.jim: the 3 x 3 box pieces (corner, edge, side, centre) from
 									;the 4 FramerTiles with flips (Framer_piece)
-	incbin "../../Extracted/Graphics/Framer.snesmap"
+	incbin "../../Extracted/Graphics/Framer.smap"
 
 FramerTiles:						;the 4 Framer box tiles (4bpp, Framer.chr): sent to vram by
 									;ScoutingReport; setupice remaps them with PixelRemap87
@@ -31,14 +31,16 @@ incsrc "../routines/video/showcrowd.asm"
 incsrc "../routines/hockey/SuperMult.asm"
 incsrc "../routines/hockey/DrawGameSetupBack.asm"
 incsrc "../routines/middle/mulu.asm"
-incsrc "../data/gfx/SpriteSet8.asm"
+SpriteSet8:							;frame set 8 (arrows, pads, puck and goal): frames 384-405
+	incbin "../../Extracted/Graphics/Sprites/Sprites08.sanim"
 
 TeamBlocksTiles:					;TeamBlocks.map.jim tiles: 405 team name banner tiles, packed ($32A0 bytes
 									;unpacked); sent to vram by PlayoffScreen, the scouting report and
 									;setoptions
 	incbin "../../Extracted/Graphics/TeamBlocks.chr.pak"
 
-incsrc "../data/gfx/SpriteSet7.asm"
+SpriteSet7:							;frame set 7 (gloves, fight, injury and penalty box): frames 353-383
+	incbin "../../Extracted/Graphics/Sprites/Sprites07.sanim"
 incsrc "../routines/hockey/GetPassWord.asm"
 incsrc "../data/text/PasswordText.asm"
 incsrc "../routines/hockey/TitleScreen.asm"

@@ -4,34 +4,34 @@
 Formats (see src/data/README.md):
   *.pak       packed stream for the game's decompressor at $86FA3E (DecompressBytecode)
   *.chr       SNES 4bpp planar tiles, 32 bytes per 8x8 tile
-  *.snesmap   SNES BG map words: vflip 15, hflip 14, priority 13, palette 12-10, tile 9-0
-  *.snespal   SNES palette, BGR555 words (16 colours per palette row); the team *.pal files hold 93G words (see team_colours)
-  *.pieces    sprite frame pieces (Extracted/Graphics/Sprites/setNN, with setNN.chr; the frame tables are read from the SpriteSetN: headers in src/data/gfx/SpriteSet*.asm)
+  *.smap      SNES BG map words: vflip 15, hflip 14, priority 13, palette 12-10, tile 9-0
+  *.spal      SNES palette, BGR555 words (16 colours per palette row); the team *.pal files hold 93G words (see team_colours)
+  *.sanim     sprite frame set: header, first piece of each frame, pieces, tiles (Extracted/Graphics/Sprites/SpritesNN.sanim)
 
 Commands:
   unpack IN [-o OUT]                  unpack a .pak file (or --rom ADDR: a packed stream in nhlpa93retail.sfc)
   tiles IN [-o PNG]                   tile sheet of a .chr / unpacked file (--offset, --count, --columns)
   map MAP --tiles CHR [-o PNG]        render a map with its tiles (--width in tiles, --map-offset, --tiles-offset)
-  screen IN.map.snesjim [-o PNG]          unpack a packed screen and render it (--map-size, --pal-offset, --tiles-offset)
+  screen IN.map.sjim [-o PNG]         unpack a packed screen and render it (--map-size, --pal-offset, --tiles-offset)
   sprites SET|all [-o PNG|GIF]        sprite frames of a frame set (0-14) as a labelled sheet, or a .gif animation
                                       (--frames 406-461 picks global frame numbers, --team BOS, --visitor, --rink)
 
-Sprites use the game palette (Rink.snespal) with sprite rows 2/3 from the --team home/visitor colours.
-Palettes for tiles/map/screen: --pal FILE[:OFFSET] (a .snespal or any file with BGR555 words), else grey levels.
+Sprites use the game palette (Rink.spal) with sprite rows 2/3 from the --team home/visitor colours.
+Palettes for tiles/map/screen: --pal FILE[:OFFSET] (a .spal or any file with BGR555 words), else grey levels.
 Rendering needs Pillow (python3 -m pip install pillow); unpack does not.
 
 Examples:
-  python tools/snesgfx.py screen Extracted/Graphics/Title1.map.snesjim -o title.png
-  python tools/snesgfx.py screen Extracted/Graphics/EASN.map.snesjim --width 32 --map-size 0x400 --no-pal -o easn.png
+  python tools/snesgfx.py screen Extracted/Graphics/Title1.map.sjim -o title.png
+  python tools/snesgfx.py screen Extracted/Graphics/EASN.map.sjim --width 32 --map-size 0x400 --no-pal -o easn.png
   python tools/snesgfx.py tiles Extracted/Graphics/BigFont.chr.pak --columns 16 -o bigfont.png
-  python tools/snesgfx.py map Extracted/Graphics/IceRink.snesmap --tiles Extracted/Graphics/IceRink.chr.pak --width 48 --pal Extracted/Graphics/Pals/Rink.snespal -o rink.png
+  python tools/snesgfx.py map Extracted/Graphics/IceRink.smap --tiles Extracted/Graphics/IceRink.chr.pak --width 48 --pal Extracted/Graphics/Pals/Rink.spal -o rink.png
   python tools/snesgfx.py sprites 0 -o set00.png
   python tools/snesgfx.py sprites --frames 406-461 --team MTL --visitor -o goalie.png
   python tools/snesgfx.py sprites --frames 41-48 -o skate.gif
   python tools/snesgfx.py sprites --frames 659-689 --rink -o crowd.gif
 """
 import argparse
-import os
+import os, struct
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -192,8 +192,8 @@ def team_colours(path):
 
 
 def sprite_palette(team, visitor_team=None):
-    """The 128 sprite colours: Rink.snespal with sprite rows 2 (home) and 3 (visitor) from the team colours (setplayercolors)."""
-    cols = palette(os.path.join(PALS, 'Rink.snespal'))[:128]
+    """The 128 sprite colours: Rink.spal with sprite rows 2 (home) and 3 (visitor) from the team colours (setplayercolors)."""
+    cols = palette(os.path.join(PALS, 'Rink.spal'))[:128]
     if team:
         cols[32:48] = team_colours(os.path.join(PALS, team + 'h.pal'))
         cols[48:64] = team_colours(os.path.join(PALS, (visitor_team or team) + 'v.pal'))
@@ -211,29 +211,26 @@ def asm_words(line):
         return None
 
 
+def read_sanim(n):
+    """Sprites%02d.sanim: header (frames, pieces, tiles, offset of the pieces, offset of the tiles, all words), the first piece
+    of each frame (+1 for the end), the pieces, then the 4bpp tiles. Returns the set dict, its pieces and its tiles."""
+    d = open(os.path.join(SPRITES, 'Sprites%02d.sanim' % n), 'rb').read()
+    frames, pieces, tiles, poff, toff = struct.unpack_from('<5H', d, 0)
+    starts = list(struct.unpack_from('<%dH' % (frames + 1), d, 10))
+    size = (toff - poff) // pieces
+    st = dict(n=n, frames=frames, starts=starts, pieces=pieces, tiles=tiles, size=size)
+    return st, d[poff:toff], d[toff:toff + tiles * 32]
+
+
 def sprite_sets():
-    """The 15 frame sets of FrameSetTable ($8FE67D), read from their `SpriteSetN:` headers in src/data/gfx/SpriteSet*.asm: number, first global frame
-    (sprframe; frame 0 is no frame), piece start of each frame (+1 for the end), piece and tile counts, piece size."""
-    lines = {}
-    for name in sorted(os.path.join(d, n) for d in ('banks', os.path.join('data', 'gfx')) for n in os.listdir(os.path.join(SRC, d))):
-        for i, line in enumerate(open(os.path.join(SRC, name), encoding='latin-1')):
-            if line.startswith('SpriteSet') and ':' in line:
-                label = line.split(':')[0]
-                if label[9:].isdigit():
-                    lines[int(label[9:])] = (name, i)
+    """The 15 frame sets of FrameSetTable ($8FE67D), read from Extracted/Graphics/Sprites/Sprites00-14.sanim: number, first global
+    frame (sprframe; frame 0 is no frame), piece start of each frame (+1 for the end), piece and tile counts, piece size."""
     sets, base = [], 1
-    for n in range(len(lines)):
-        name, start = lines[n]
-        src = open(os.path.join(SRC, name), encoding='latin-1').read().splitlines()[start:]
-        frames, pieces, tiles = (asm_words(src[k])[0] for k in (1, 2, 3))
-        starts = []
-        k = next(i for i, l in enumerate(src) if l.startswith('.frames:')) + 1
-        while len(starts) < frames + 1:
-            starts += asm_words(src[k]) or []
-            k += 1
-        size = os.path.getsize(os.path.join(SPRITES, 'set%02d.pieces' % n)) // pieces
-        sets.append(dict(n=n, base=base, frames=frames, starts=starts, pieces=pieces, tiles=tiles, size=size))
-        base += frames
+    for n in range(15):
+        st = read_sanim(n)[0]
+        st['base'] = base
+        sets.append(st)
+        base += st['frames']
     return sets
 
 
@@ -313,13 +310,12 @@ def cmd_sprites(a):
         bg = cols[0] + (255,)
     back = None
     if a.rink:      # the crowd frames (659-689) are pieces of the vertical rink map, with the frame origin at its top left
-        back = render_map(open(os.path.join(ROOT, 'Extracted', 'Graphics', 'IceRink.snesmap'), 'rb').read(),
+        back = render_map(open(os.path.join(ROOT, 'Extracted', 'Graphics', 'IceRink.smap'), 'rb').read(),
                           maybe_unpack(os.path.join(ROOT, 'Extracted', 'Graphics', 'IceRink.chr.pak')), cols, 48, 85, 1).convert('RGBA')
     cols = [c + (255,) for c in cols]
     frames = []     # (global frame, pieces, tiles)
     for st in chosen:
-        tiles = open(os.path.join(SPRITES, 'set%02d.chr' % st['n']), 'rb').read()
-        pieces = open(os.path.join(SPRITES, 'set%02d.pieces' % st['n']), 'rb').read()
+        _, pieces, tiles = read_sanim(st['n'])
         for i in range(st['frames']):
             g = st['base'] + i
             if want is None or g in want:

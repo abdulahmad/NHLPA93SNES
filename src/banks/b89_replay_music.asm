@@ -3,9 +3,11 @@
 if pc() < $898000
 	org $898000
 endif
-incsrc "../data/gfx/SpriteSet11.asm"
+SpriteSet11:						;frame set 11 (goal siren): frames 518-531
+	incbin "../../Extracted/Graphics/Sprites/Sprites11.sanim"
 incsrc "../routines/hockey/ReplayMode.asm"
-incsrc "../data/gfx/SpriteSet13.asm"
+SpriteSet13:						;frame set 13 (goalie catch, glass and save): frames 606-658
+	incbin "../../Extracted/Graphics/Sprites/Sprites13.sanim"
 incsrc "../routines/penalty/printscores1.asm"
 incsrc "../routines/penalty/PrintPerLabel.asm"
 incsrc "../routines/penalty/PrintTeamNameAndScore.asm"
@@ -17,8 +19,8 @@ RefTilesHor:						;packed ref window tiles for the horizontal rink (104 tiles,
 	incbin "../../Extracted/Graphics/RefHor.chr.pak"
 
 RefsMapHor:							;ref window frames for the horizontal rink, 17 frames of 8 x 7 words
-									;(RefsHor.snesmap); PushRef uses it when sfhormode
-	incbin "../../Extracted/Graphics/RefsHor.snesmap"
+									;(RefsHor.smap); PushRef uses it when sfhormode
+	incbin "../../Extracted/Graphics/RefsHor.smap"
 
 incsrc "../routines/sound/StartSong8.asm"
 incsrc "../routines/sound/StartSong9.asm"

@@ -3,11 +3,12 @@
 if pc() < $858000
 	org $858000
 endif
-incsrc "../data/gfx/SpriteSet4.asm"
+SpriteSet4:							;frame set 4 (hip, shoulder and sweep checks): frames 225-272
+	incbin "../../Extracted/Graphics/Sprites/Sprites04.sanim"
 incsrc "../routines/hockey/GetShifter.asm"
 
 Title1Map:							;the title screen backdrop, packed (map, palette, tiles)
-	incbin "../../Extracted/Graphics/Title1.map.snesjim"
+	incbin "../../Extracted/Graphics/Title1.map.sjim"
 
 incsrc "../routines/video/DrawFrameHi.asm"
 incsrc "../routines/hockey/getpzjoy.asm"

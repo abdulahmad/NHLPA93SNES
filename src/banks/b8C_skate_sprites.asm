@@ -4,10 +4,11 @@ if pc() < $8C8000
 	org $8C8000
 endif
 
-NHLPALogo:							;the NHLPA logo, packed (NHLPALogo.map.snesjim): 8 x 10 map, 128
+NHLPALogo:							;the NHLPA logo, packed (NHLPALogo.map.sjim): 8 x 10 map, 128
 									;colors at $A0, 53 tiles at $1A0; game setup and playoff screens
-	incbin "../../Extracted/Graphics/NHLPALogo.map.snesjim"
+	incbin "../../Extracted/Graphics/NHLPALogo.map.sjim"
 
-incsrc "../data/gfx/SpriteSet0.asm"
+SpriteSet0:							;frame set 0 (SPFskatewp, SPFskate, SPFturnl, SPFturnr): frames 1-96
+	incbin "../../Extracted/Graphics/Sprites/Sprites00.sanim"
 incsrc "../routines/video/checksso.asm"
 incsrc "../routines/logic/chk4pass.asm"

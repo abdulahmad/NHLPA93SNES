@@ -15,7 +15,7 @@ case "$last" in
   *) echo "retail: FAILED"; echo "$r"; fail=1 ;;
 esac
 if [ $fail = 0 ]; then
-  node tools/extractAssets93s.js nhlpa93retail.sfc --check | tail -1 | grep -q "^158 of 158" || { echo "assets: Extracted/ differs from the ROM"; fail=1; }
+  node tools/extractAssets93s.js nhlpa93retail.sfc --check >/dev/null || { echo "assets: Extracted/ differs from the ROM"; fail=1; }
   python3 tools/check_comments.py | tail -1 | grep -q "comment layout OK" || { echo "comments: layout check failed"; python3 tools/check_comments.py | tail -5; fail=1; }
 fi
 if [ "$fail" = 1 ]; then
