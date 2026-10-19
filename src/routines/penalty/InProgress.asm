@@ -4,7 +4,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	lda.w RefCnt					; animation in progress: exit
 	bmi .step
 	jmp.w .rtl
-.step:
+.step:								; only act when RefStep is set
 	lda.w RefStep
 	bmi .go
 	jmp.w .rtl
@@ -29,7 +29,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	cpx.w #$0010
 	bne .savea
 	ldx.b xsave						; restore X
-.top:
+.top:								; walk the penalty buffer from the start
 	lda.w #$0000
 	sta.b a0+2
 	lda.w #PenBuf
@@ -65,7 +65,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	lda.w position,y
 	bmi .clr
 	jmp.w .ex
-.clr:
+.clr:								; clear the entry
 	lda.w #$0000
 	sta.b [a0]
 	jmp.w .ex
@@ -144,7 +144,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	bit.w #$0080
 	beq .pn
 	ora.w #$FF00
-.pn:
+.pn:								; player number to a table offset
 	asl a
 	sta.b d0
 	lda.w #$003C					; d2 = minutes*60 | $2000
@@ -158,7 +158,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	lda.b a2
 	beq .tm
 	lda.w #maxros*2
-.tm:
+.tm:								; add the team offset
 	clc
 	adc.b d0
 	tay
@@ -166,7 +166,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	bmi .st
 	and.w #TMPDINJ
 	tsb.b d2
-.st:
+.st:								; store the penalty time for the player
 	lda.b d2
 	sta.w tmpdst,y
 	lda.w #TMPDINJ
@@ -180,7 +180,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	lda.b a1
 	beq .ct
 	lda.w #maxros*2
-.ct:
+.ct:								; add the count offset
 	clc
 	adc.b d1
 	tay
@@ -195,7 +195,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	lda.b a2
 	beq .cg
 	lda.w #maxros*2
-.cg:
+.cg:								; add the goalie offset
 	clc
 	adc.b d0
 	tay
@@ -210,11 +210,11 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	lda.b a2
 	beq .bl
 	lda.w #maxros
-.bl:
+.bl:								; clear the box list entry
 	sta.b a0
 	lda.w #$0018
 	sta.b d1
-.pl:
+.pl:								; find the player in the box list
 	ldy.b a0
 	inc.b a0
 	lda.w tmboxlist,y
@@ -222,7 +222,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	bne .put
 	dec.b d1
 	bpl .pl
-.put:
+.put:								; put the player into the box list
 	lda.b d0
 	ora.w #$FF00
 	sta.w tmboxlist,y
@@ -261,7 +261,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	lda.w sfhormode
 	beq .sa3
 	jmp.w .top
-.sa3:
+.sa3:								; start the animation
 	jsl.l SetPA
 	bra .ex
 .exit:

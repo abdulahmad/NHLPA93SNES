@@ -9,7 +9,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	beq .0
 	inc.b a0
 	inc.b a0
-.0:
+.0:									; store the player number
 	lda.b d3
 	and.w #$00FF
 	sta.w pnum,x					; pnum = d3
@@ -20,7 +20,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	lda.b a0
 	beq .idx
 	lda.w #$0034
-.idx:
+.idx:								; index the player data
 	adc.b d3
 	tay
 	lda.w tmpdst,y
@@ -35,11 +35,11 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	jsl.l assinsert					; insert assignment d0
 	stz.w pfalock,x					; pfalock = 0, SPA = 0
 	stz.w SPA,x
-.nda:
+.nda:								; player data offset
 	lda.b a0
 	beq .nda1
 	lda.w #$0034
-.nda1:
+.nda1:								; add the player number
 	clc
 	adc.b d3
 	tay
@@ -73,7 +73,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	lda.w position,x				; goalie: no modifiers
 	bne .mods
 	jmp.w .nomod
-.mods:
+.mods:								; power play modifiers
 	lda.w sflags
 	bit.w #sf2pwrplay				; sf2pwrplay
 	beq .nda3
@@ -111,7 +111,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	lsr a
 	and.w #$000F
 	sta.b d0
-.tm:
+.tm:								; home/away bonus
 	lda.b d0
 	sta.w HmAwBonus
 	lda.w gsp						; 3rd period?
@@ -122,7 +122,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	bra .nomod
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .nomod
-.p3:
+.p3:								; period compare
 	beq .half
 	bmi .neg1
 	bvs .half
@@ -153,10 +153,10 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b tmp0
-.side:
+.side:								; trailing team gets a bonus
 	lda.b tmp0
 	bpl .nomod
-.close:
+.close:								; close game: third period bonus
 	lda.w #$0002
 	sta.b ThirdPBonus
 .nomod:
@@ -260,7 +260,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	lda.w attribute,x
 	ora.w #attrxflip
 	sta.w attribute,x
-.ha:
+.ha:								; fight aggression from the player data
 	lda.b [a0],y
 	and.w #$000E
 	sta.w fightagg,x
