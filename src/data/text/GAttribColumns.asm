@@ -1,4 +1,4 @@
-GAttribColumns:						;SNES: goalie attribute menu
+GAttribColumns:						;goalie attribute menu
 	dw 15
 	db "   Status   ]"
 	dw $0000,$0000					; bit mask, rating column

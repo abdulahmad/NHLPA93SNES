@@ -1,4 +1,4 @@
-RosterLineNames:					;SNES: the Team Roster line names (15-byte strings)
+RosterLineNames:					;the Team Roster line names (15-byte strings)
 	dw 15
 	db "  Goalies   }"
 	dw 15

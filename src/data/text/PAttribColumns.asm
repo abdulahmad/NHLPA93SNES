@@ -1,4 +1,4 @@
-PAttribColumns:						;SNES: player attribute menu (ShowGoalBox): 15-byte item strings, the
+PAttribColumns:						;player attribute menu (ShowGoalBox): 15-byte item strings, the
 									;rating bit mask and column, $FFFF ends
 	dw 15
 	db "   Status   ]"

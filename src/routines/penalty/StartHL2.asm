@@ -410,7 +410,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 .nhl0:
 	jsl.l .ranres
 	bra .exit
-.setteam:							;SNES: team a2 for the highlight: energy, setpersonel, forcepldata, no
+.setteam:							;team a2 for the highlight: energy, setpersonel, forcepldata, no
 									;last touches
 	jsl.l reenergizeteam
 	jsl.l setpersonel

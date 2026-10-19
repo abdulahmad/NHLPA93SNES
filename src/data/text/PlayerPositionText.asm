@@ -1,4 +1,4 @@
-PlayerPositionText:					;SNES: position names LD, RD, LW, C, RW
+PlayerPositionText:					;position names LD, RD, LW, C, RW
 	dw 4
 	db "LD"
 	dw 4

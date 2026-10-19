@@ -133,7 +133,7 @@ Pmenu:								;Draw the pause menu items with the current one highlighted
 	db "Goalie - "
 	dw 13
 	db "Team Roster"
-.mlist2:							;SNES: the menu items after the game (Exit Game first)
+.mlist2:							;the menu items after the game (Exit Game first)
 	dw 11
 	db "Exit Game"
 	dw 16

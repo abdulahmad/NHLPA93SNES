@@ -1,4 +1,4 @@
-FrameSetTable:						;SNES: long pointers to the 15 sprite frame sets (addframe), then a 0
+FrameSetTable:						;long pointers to the 15 sprite frame sets (addframe), then a 0
 									;entry
 	dd SpriteSet0
 	dd SpriteSet1
