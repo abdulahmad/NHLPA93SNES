@@ -1,4 +1,4 @@
-; Bank $84: scouting. Files in ROM order (docs/file_map.md).
+; Bank $84: scouting. Files in ROM order (docs/file-map.md).
 
 if pc() < $848000
 	org $848000

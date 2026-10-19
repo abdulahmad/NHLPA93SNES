@@ -1,4 +1,4 @@
-; Bank $83: teams. Files in ROM order (docs/file_map.md).
+; Bank $83: teams. Files in ROM order (docs/file-map.md).
 
 if pc() < $838000
 	org $838000

@@ -1,7 +1,6 @@
 Pmenu:								;Draw the pause menu items with the current one highlighted
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$06,$0D
+	%StringCp(CC_Font1Pri,$06,$0D)
 	stz.b d0
 	lda.w #.mlist
 	sta.b a0
@@ -24,8 +23,7 @@ Pmenu:								;Draw the pause menu items with the current one highlighted
 	lda.w #$0006
 	sta.w printx
 	jsl.l printz
-	dw $0016						; printz inline string: length (counts itself), then control bytes / text
-	db "                    "
+	%String("                    ")
 	lda.w #mesarea
 	sta.b a1
 	lda.w #mesarea>>16
@@ -123,24 +121,14 @@ Pmenu:								;Draw the pause menu items with the current one highlighted
 	inc.w mesarea
 	rtl
 .mlist:								;the pause menu items
-	dw 13
-	db "Resume Game"
-	dw 16
-	db "Instant Replay"
-	dw 14
-	db "Stats Report"
-	dw 11
-	db "Goalie - "
-	dw 13
-	db "Team Roster"
-.mlist2:							;SNES: the menu items after the game (Exit Game first)
-	dw 11
-	db "Exit Game"
-	dw 16
-	db "Instant Replay"
-	dw 14
-	db "Stats Report"
-	dw 11
-	db "Goalie - "
-	dw 13
-	db "Team Roster"
+	%String("Resume Game")
+	%String("Instant Replay")
+	%String("Stats Report")
+	%String("Goalie - ")
+	%String("Team Roster")
+.mlist2:							;the menu items after the game (Exit Game first)
+	%String("Exit Game")
+	%String("Instant Replay")
+	%String("Stats Report")
+	%String("Goalie - ")
+	%String("Team Roster")

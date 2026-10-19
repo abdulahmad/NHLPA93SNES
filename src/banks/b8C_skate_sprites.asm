@@ -1,4 +1,4 @@
-; Bank $8C: skate sprites (frame set 0) and the NHLPA logo. Files in ROM order (docs/file_map.md).
+; Bank $8C: skate sprites (frame set 0) and the NHLPA logo. Files in ROM order (docs/file-map.md).
 
 if pc() < $8C8000
 	org $8C8000

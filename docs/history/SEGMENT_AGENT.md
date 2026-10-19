@@ -42,12 +42,12 @@ Rules for adding or splitting routines:
 - Unused padding/filler goes with the routine before it, or in a clearly named file.
 - Bank $90 (`src/banks/b90_expanded.asm`) is included last and writes no bytes in the stock build. Keep each routine inside one bank: a 65816 instruction that straddles a 32 KB bank does not run. Adding a team is `docs/ADDING_A_TEAM.md`.
 - Leave `check bankcross off` (asar 1.91 deprecates it, and the in-game sample incbin crosses from bank $81 into $82). Do not switch it to `bankcheck half` or `bankcheck full`.
-- Build MATCH, then `python3 tools/gen_file_map.py` to refresh `docs/file_map.md`.
+- Build MATCH, then `python3 tools/gen_file_map.py` to refresh `docs/file-map.md`.
 
 ## Layout note (cleanup pass)
 
 The 128 `src/bankXX_YYYY.asm` slices named below no longer exist: after every slice was matched they were regrouped into the 93G
-module files (`src/hockey_b80.asm`, `src/logic_b80.asm`, ..., `src/gfx/sprites_b84.asm`; see `docs/file_map.md`). The ROM map and the
+module files (`src/hockey_b80.asm`, `src/logic_b80.asm`, ..., `src/gfx/sprites_b84.asm`; see `docs/file-map.md`). The ROM map and the
 History keep the slice names as a record. The slice header notes are in `docs/segment_notes.md`. The rule "do not delete an asm file"
 and "one segment per commit" belonged to the segment phase; START_HERE.md has the cleanup loop.
 

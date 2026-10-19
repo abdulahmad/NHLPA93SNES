@@ -38,7 +38,7 @@ order, nothing else. Bank $90 (`b90_expanded.asm`) is included last and writes n
 `docs/ADDING_A_TEAM.md`. Code is one routine per file in `src/routines/<93G module>/<Routine>.asm` (`hockey`, `logic`, `middle`, `penalty`,
 `video`, `stats`, `sound`, `main`); a routine that falls through into the next keeps both in one file, named after the first. Small
 tables a module uses stay in its routines folder. Non-code data is in `src/data/<category>/<Name>.asm` (`sound`, `gfx`, `frames`,
-`teams`, `text`). The SNES header and vectors are `src/header/snes_header.asm`. `docs/file_map.md` lists every bank's files with
+`teams`, `text`). The SNES header and vectors are `src/header/snes_header.asm`. `docs/file-map.md` lists every bank's files with
 their addresses (`python3 tools/gen_file_map.py` regenerates it); `docs/name_map.csv` maps the quick-pass `CODE_xxxxxx` names.
 
 ## 4. Work loop: cleanup
@@ -50,7 +50,7 @@ their addresses (`python3 tools/gen_file_map.py` regenerates it); `docs/name_map
    Keep operand sizes explicit (`lda.b name` / `lda.w name` / `lda.l name`, `lda.w #label>>16`) so asar emits the same bytes.
 5. Adding a routine (splitting one out, or naming code that was data): put it in a new file `src/routines/<module>/<Routine>.asm`
    (data: `src/data/<category>/<Name>.asm`) and add its `incsrc` line to the bank file at its exact ROM position. Never add an `org`
-   to a routine file. Run `python3 tools/gen_file_map.py` to update `docs/file_map.md`.
+   to a routine file. Run `python3 tools/gen_file_map.py` to update `docs/file-map.md`.
 6. Commit with a clear message, push, and update the `Cleanup progress` section of `docs/HANDOFF.md` before you stop.
 
 ## 5. When stuck

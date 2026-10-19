@@ -102,8 +102,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	jsl.l remap						; remap the 4bpp pixels ([a0] data, [a1] table, d0 tiles)
 	jsl.l StartSong6
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $CF,$00,$1C
+	%StringCp(CC_Font1Pal3,$00,$1C)
 	stz.b d0
 	lda.w #Credits					; a0 = the credits text
 	sta.b a0

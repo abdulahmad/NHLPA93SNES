@@ -1,4 +1,4 @@
-; Bank $8D: fonts. Files in ROM order (docs/file_map.md).
+; Bank $8D: fonts. Files in ROM order (docs/file-map.md).
 
 if pc() < $8D8000
 	org $8D8000

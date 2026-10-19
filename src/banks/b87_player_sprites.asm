@@ -1,4 +1,4 @@
-; Bank $87: player sprites. Files in ROM order (docs/file_map.md).
+; Bank $87: player sprites. Files in ROM order (docs/file-map.md).
 
 if pc() < $878000
 	org $878000
@@ -6,7 +6,7 @@ endif
 incsrc "../data/gfx/SpriteSet2.asm"
 incsrc "../data/gfx/EASNMap.asm"
 incsrc "../data/gfx/FaceOffTiles.asm"
-incsrc "../data/gfx/TeamBlocksMap.asm"
+incsrc "../data/gfx/Teamblocksmap.asm"
 incsrc "../routines/video/DrawFrame.asm"
 incsrc "../routines/video/addframe_end.asm"
 incsrc "../data/gfx/SpriteSet6.asm"

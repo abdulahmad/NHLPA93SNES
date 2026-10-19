@@ -1,8 +1,11 @@
-; ---- BootSoundUpload ----
+; Boot SPC upload (sndbank 2): the stream the main CPU sends the SPC700 at start-up. Four blocks, each headed
+; by its length and APU address: the sound program (SPCDriver), the instrument table, the DSP sample
+; directory and the BRR samples, then an end block that starts the program at $0400. The program is cut
+; into code and command streams in Extracted/Sound (see src/data/README.md).
+
 BootSoundUpload:					;boot SPC upload: the sound driver and its sample set (sndbank 2)
 	dw SPCDRIVERSIZE, SPCDRIVER		; block 1: the driver code
 
-; ---- SPCDriver ----
 SPCDriver:							;SPC700 sound program, loaded at APU $0400: the N-SPC sequencer code and
 									;tables, then the songs (order lists, channel sets, command streams) and
 									;the sound effect programs (steps $80 note, $81 repeat, $82 pitch sweep,
@@ -163,7 +166,6 @@ SPCDriverEnd:
 	assert SPCDriverEnd-SPCDriver == SPCDRIVERSIZE
 	dw BootInstrumentsEnd-BootInstruments, SPCINSTR	; block 2: the instrument table
 
-; ---- BootInstruments ----
 BootInstruments:					;29 instruments: sample number, ADSR1, ADSR2, GAIN, then 2 pitch bytes
 									;(SNES DSP values)
 	db $00, $8F,$E0,$B8, $07,$A0	; instrument $00
@@ -198,7 +200,6 @@ BootInstruments:					;29 instruments: sample number, ADSR1, ADSR2, GAIN, then 2 
 BootInstrumentsEnd:
 	dw BootSampleDirEnd-BootSampleDir, SPCSAMPLEDIR	; block 3: the sample directory
 
-; ---- BootSampleDir ----
 BootSampleDir:						;DSP sample directory: per sample the APU address of its start and of its
 									;loop point
 	dw SPCBOOTSAMPLES+$0000,SPCBOOTSAMPLES+$0DD1	; sample $00: start, loop (offsets in bootsamples.brr)
@@ -213,7 +214,6 @@ BootSampleDir:						;DSP sample directory: per sample the APU address of its sta
 BootSampleDirEnd:
 	dw BOOTSAMPLESIZE, SPCBOOTSAMPLES	; block 4: the BRR samples
 
-; ---- BootSamples ----
 BootSamples:						;BRR samples of the boot set (9-byte blocks)
 	incbin "../../../Extracted/Sound/bootsamples.brr"
 BootSamplesEnd:

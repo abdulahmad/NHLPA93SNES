@@ -4,7 +4,7 @@ assinsert:							;Give player X assignment d0 on top of the current one
 	and.w #$0007
 	sta.w assnum,x
 assreplace:							;replace current assignment on player a3. d0 = assignment
-		;   SNES: replace the current assignment of player X with d0
+		;   replace the current assignment of player X with d0
 	lda.w pflags,x
 	ora.w #pfna						; pfna
 	sta.w pflags,x

@@ -8,9 +8,9 @@ DrawTeamBlocks:						;Draw team d1's name block at printx / printy
 	sta.b mulb
 	jsl.l mulu16
 	tay
-	lda.w #TeamBlocksMap
+	lda.w #Teamblocksmap
 	sta.b a2
-	lda.w #TeamBlocksMap>>16
+	lda.w #Teamblocksmap>>16
 	sta.b a2+2
 	lda.w printy
 	asl a

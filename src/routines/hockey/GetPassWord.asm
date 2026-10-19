@@ -8,8 +8,7 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	jsl.l Readjoy12
 	jsl.l ClearSprites				; clear the sprite table
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $FE,$01,$12
+	%StringCp(CC_Font2,$01,$12)
 	lda.w #17
 	sta.b d0
 	lda.w #5
@@ -74,18 +73,14 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	jsl.l Framer					; d0 x d1
 .topx:
 	jsl.l printz
-	dw $0013						; printz inline string: length (counts itself), then control bytes / text
-	db $FF,$02,$13,"D Pad - Select"
+	%StringCt(CC_Font1,$02,$13,"D Pad - Select")
 	jsl.l printz
-	dw $0011						; printz inline string: length (counts itself), then control bytes / text
-	db $FF,$02,$14,"    A - Next"
+	%StringCt(CC_Font1,$02,$14,"    A - Next")
 	jsl.l printz
-	dw $0011						; printz inline string: length (counts itself), then control bytes / text
-	db $FF,$02,$15,"    Y - Back"
+	%StringCt(CC_Font1,$02,$15,"    Y - Back")
 .input:
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $FF,$02,$10
+	%StringCp(CC_Font1,$02,$10)
 	jsl.l PWprint
 	lda.w #VBlank_SprPal
 .wait:								;wait for the next vblank
@@ -197,20 +192,17 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	jmp.w .input
 .setd4:								;print the " < " cursor under password character d4
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $FE,$01,$11
+	%StringCp(CC_Font2,$01,$11)
 	lda.w printx
 	clc
 	adc.b d4
 	sta.w printx
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db " < "
+	%String(" < ")
 	rtl
 .setd5:								;printx/printy and d0 = d1 = 3: frame around grid character d5
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $FE,$14,$0D
+	%StringCp(CC_Font2,$14,$0D)
 	lda.b d5
 	sta.b mulb
 	lda.w #6
@@ -235,14 +227,11 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	lda.w postarts					; no error: exit
 	bpl .rtl
 	jsl.l printz
-	dw $0013						; printz inline string: length (counts itself), then control bytes / text
-	db $FF,$02,$13,"Bad Password  "
+	%StringCt(CC_Font1,$02,$13,"Bad Password  ")
 	jsl.l printz
-	dw $0013						; printz inline string: length (counts itself), then control bytes / text
-	db $FF,$02,$14,"A - Retry     "
+	%StringCt(CC_Font1,$02,$14,"A - Retry     ")
 	jsl.l printz
-	dw $0014						; printz inline string: length (counts itself), then control bytes / text
-	db $FF,$02,$15,"Y - Exit Screen"
+	%StringCt(CC_Font1,$02,$15,"Y - Exit Screen")
 	lda.w #VBlank_SprPal
 .wait2:
 	cmp.b vbint
@@ -262,8 +251,7 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	bit.w #JOYA						; A: retry
 	beq .notok
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $FF,$01,$12
+	%StringCp(CC_Font1,$01,$12)
 	lda.w #17
 	sta.b d0
 	lda.w #5

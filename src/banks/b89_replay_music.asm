@@ -1,4 +1,4 @@
-; Bank $89: replay music. Files in ROM order (docs/file_map.md).
+; Bank $89: replay music. Files in ROM order (docs/file-map.md).
 
 if pc() < $898000
 	org $898000

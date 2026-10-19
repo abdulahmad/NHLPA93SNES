@@ -22,11 +22,9 @@ Pausemode:							;Pause mode: save the screen, stop the sound, show the pause me
 	jsl.l KillCrowd
 .top:								;draw the pause screen
 	jsl.l printbigz					; big PAUSE title and the menu frame (22 x 7)
-	dw $000A						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$0B,$02,"PAUSE"
+	%StringCt(CC_Font1Pri,$0B,$02,"PAUSE")
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$05,$0C
+	%StringCp(CC_Font1Pri,$05,$0C)
 	lda.w #$0016
 	sta.b d0
 	lda.w #$0007

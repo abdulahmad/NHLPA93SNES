@@ -43,8 +43,7 @@ Intermission:						;Between periods: the pause menu screen with the scores of th
 	dey
 	bpl .clr
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$05,$0C
+	%StringCp(CC_Font1Pri,$05,$0C)
 	lda.w #$0016
 	sta.b d0
 	lda.w #$0007

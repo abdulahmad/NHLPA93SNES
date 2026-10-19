@@ -6,7 +6,6 @@
 ; (Playerdata, Palettedata, Teamname, LineSets, ScoutReport, GoalieOdds), then the palettes, scouting
 ; ratings, scoring odds, line sets (7 lines of 8 bytes), players, team name and abbreviation.
 
-; ---- TeamList ----
 TeamList:							;table of long pointers to the team records, indexed by team number
 									;(HomeTeam/VisTeam); the 2 all-star teams are last
 	dd Boston						; team 0
@@ -47,7 +46,6 @@ GoalieOdds	=	10					;record offset of the word offset to the starting goalie wei
 NumofTeams	=	26					;number of teams in TeamList (26)
 
 
-; ---- AllStarsEast ----
 AllStarsEast:						;team 24
 .0:	dw .pld-.0						; Playerdata
 	dw .pad-.0						; Palettedata
@@ -97,7 +95,6 @@ AllStarsEast:						;team 24
 .ta:	%String("ASE")
 
 
-; ---- AllStarsWest ----
 AllStarsWest:						;team 25
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -146,7 +143,6 @@ AllStarsWest:						;team 25
 .ta:	%String("ASW")
 
 
-; ---- Boston ----
 Boston:								;team 0
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -197,7 +193,6 @@ Boston:								;team 0
 .ta:	%String("BOS")
 
 
-; ---- Buffalo ----
 Buffalo:							;team 1
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -248,7 +243,6 @@ Buffalo:							;team 1
 .ta:	%String("BUF")
 
 
-; ---- Calgary ----
 Calgary:							;team 2
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -298,7 +292,6 @@ Calgary:							;team 2
 .ta:	%String("CGY")
 
 
-; ---- Chicago ----
 Chicago:							;team 3
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -349,7 +342,6 @@ Chicago:							;team 3
 .ta:	%String("CHI")
 
 
-; ---- Detroit ----
 Detroit:							;team 4
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -399,7 +391,6 @@ Detroit:							;team 4
 .ta:	%String("DET")
 
 
-; ---- Edmonton ----
 Edmonton:							;team 5
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -449,7 +440,6 @@ Edmonton:							;team 5
 .ta:	%String("EDM")
 
 
-; ---- Hartford ----
 Hartford:							;team 6
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -499,7 +489,6 @@ Hartford:							;team 6
 .ta:	%String("HFD")
 
 
-; ---- LosAngeles ----
 LosAngeles:							;team 8
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -550,7 +539,6 @@ LosAngeles:							;team 8
 .ta:	%String("LA")
 
 
-; ---- LongIsland ----
 LongIsland:							;team 7
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -600,7 +588,6 @@ LongIsland:							;team 7
 .ta:	%String("LI")
 
 
-; ---- Minnesota ----
 Minnesota:							;team 9
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -650,7 +637,6 @@ Minnesota:							;team 9
 .ta:	%String("MIN")
 
 
-; ---- Montreal ----
 Montreal:							;team 10
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -701,7 +687,6 @@ Montreal:							;team 10
 .ta:	%String("MTL")
 
 
-; ---- NewJersey ----
 NewJersey:							;team 11
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -751,7 +736,6 @@ NewJersey:							;team 11
 .ta:	%String("NJ")
 
 
-; ---- NewYork ----
 NewYork:							;team 12
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -803,7 +787,6 @@ NewYork:							;team 12
 .ta:	%String("NY")
 
 
-; ---- Ottawa ----
 Ottawa:								;team 13
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -847,7 +830,6 @@ Ottawa:								;team 13
 .ta:	%String("OTW")
 
 
-; ---- Philadelphia ----
 Philadelphia:						;team 14
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -898,7 +880,6 @@ Philadelphia:						;team 14
 .ta:	%String("PHI")
 
 
-; ---- Pittsburgh ----
 Pittsburgh:							;team 15
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -948,7 +929,6 @@ Pittsburgh:							;team 15
 .ta:	%String("PIT")
 
 
-; ---- Quebec ----
 Quebec:								;team 16
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -1000,7 +980,6 @@ Quebec:								;team 16
 .ta:	%String("QUE")
 
 
-; ---- SanJose ----
 SanJose:							;team 17
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -1051,7 +1030,6 @@ SanJose:							;team 17
 .ta:	%String("SJ")
 
 
-; ---- StLouis ----
 StLouis:							;team 18
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -1102,7 +1080,6 @@ StLouis:							;team 18
 .ta:	%String("STL")
 
 
-; ---- TampaBay ----
 TampaBay:							;team 19
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -1147,7 +1124,6 @@ TampaBay:							;team 19
 .ta:	%String("TBY")
 
 
-; ---- Toronto ----
 Toronto:							;team 20
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -1198,7 +1174,6 @@ Toronto:							;team 20
 .ta:	%String("TOR")
 
 
-; ---- Vancouver ----
 Vancouver:							;team 21
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -1249,7 +1224,6 @@ Vancouver:							;team 21
 .ta:	%String("VAN")
 
 
-; ---- Winnipeg ----
 Winnipeg:							;team 23
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -1300,7 +1274,6 @@ Winnipeg:							;team 23
 .ta:	%String("WPG")
 
 
-; ---- Washington ----
 Washington:							;team 22
 .0:	dw .pld-.0
 	dw .pad-.0
@@ -1351,7 +1324,6 @@ Washington:							;team 22
 .ta:	%String("WSH")
 
 
-; ---- playoffseats ----
 playoffseats:						;34 playoff trees, 16 team numbers each (maketree)
 	db 15,22,11,12, 1,0,6,10, 5,8,23,21, 9,4,18,3	; tree 0
 	db 11,22,15,12, 6,0,1,10, 23,8,5,21, 18,4,9,3	; tree 1

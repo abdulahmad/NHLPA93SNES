@@ -85,7 +85,7 @@ def parse_s(path):
     return rs,hdr,lines
 # lookup tables
 extra={}  # 93S name -> 93G name from docs
-for f in glob.glob(S+'/docs/unmatched_vs_93g*.md'):
+for f in glob.glob(S+'/docs/history/unmatched_vs_93g*.md'):
     for l in open(f,encoding='utf-8'):
         if l.startswith('|'):
             c=[x.strip() for x in l.strip().strip('|').split('|')]

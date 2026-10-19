@@ -1,38 +1,26 @@
-AttribMenuGoalie:					;SNES: goalie attribute menu
-	dw 15
-	db "   Status   ]"
+GAttribColumns:						;goalie attribute menu
+	%String("   Status   ]")
 	dw $0000,$0000					; bit mask, rating column
-	dw 15
-	db "[  Overall  ]"
+	%String("[  Overall  ]")
 	dw $1B0F,$000A					; bit mask, rating column
-	dw 15
-	db "[  Agility  ]"
+	%String("[  Agility  ]")
 	dw $1000,$000A					; bit mask, rating column
-	dw 15
-	db "[   Speed   ]"
+	%String("[   Speed   ]")
 	dw $0800,$000A					; bit mask, rating column
-	dw 15
-	db "[Glove Hand ]"
+	%String("[Glove Hand ]")
 	dw $0040,$0004					; bit mask, rating column
-	dw 15
-	db "[Def. Aware.]"
+	%String("[Def. Aware.]")
 	dw $0200,$000A					; bit mask, rating column
-	dw 15
-	db "[Puck Cont. ]"
+	%String("[Puck Cont. ]")
 	dw $0100,$000A					; bit mask, rating column
-	dw 15
-	db "[Stick Right]"
+	%String("[Stick Right]")
 	dw $0008,$000A					; bit mask, rating column
-	dw 15
-	db "[Stick Left ]"
+	%String("[Stick Left ]")
 	dw $0004,$000A					; bit mask, rating column
-	dw 15
-	db "[Glove Right]"
+	%String("[Glove Right]")
 	dw $0002,$000A					; bit mask, rating column
-	dw 15
-	db "[Glove Left ]"
+	%String("[Glove Left ]")
 	dw $0001,$000A					; bit mask, rating column
-	dw 15
-	db "[   Weight   "
+	%String("[   Weight   ")
 	dw $2000,$0006					; bit mask, rating column
 	dw $FFFF						; end

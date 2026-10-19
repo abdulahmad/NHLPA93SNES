@@ -53,8 +53,7 @@ updatepwrplay:						;Show the power play box: the time left and the team on the 
 	lda.w #$0002
 	sta.b [a3]
 	jsl.l appendz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$01,$19
+	%StringCp(CC_Font1Pri,$01,$19)
 	lda.b a0
 	ldy.w #$0004
 	clc

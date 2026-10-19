@@ -1,4 +1,4 @@
-; Bank $86: sound driver. Files in ROM order (docs/file_map.md).
+; Bank $86: sound driver. Files in ROM order (docs/file-map.md).
 
 if pc() < $868000
 	org $868000

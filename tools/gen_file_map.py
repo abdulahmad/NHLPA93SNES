@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regenerate docs/file_map.md from src/banks/*.asm and output/nhlpa93snes.sym (run ./build.sh first)."""
+"""Regenerate docs/file-map.md from src/banks/*.asm and output/nhlpa93snes.sym (run ./build.sh first)."""
 import os, re, glob
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, 'src')
@@ -39,4 +39,4 @@ for b in sorted(glob.glob(os.path.join(SRC, 'banks', '*.asm'))):
     if files == 0:
         out.append('No bytes in the stock build.')
     out.append('')
-open(os.path.join(ROOT, 'docs', 'file_map.md'), 'w').write('\n'.join(out))
+open(os.path.join(ROOT, 'docs', 'file-map.md'), 'w').write('\n'.join(out))

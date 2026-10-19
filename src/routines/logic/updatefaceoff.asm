@@ -27,8 +27,7 @@ updatefaceoff:						;Step the puck drop animation; at its end erase the face off
 	rtl
 .erase:
 	jsl.l printz					; erase the faceoff box
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$00,$00
+	%StringCp(CC_Font1Pri,$00,$00)
 	lda.w fodropx
 	sec
 	sbc.w #$002E

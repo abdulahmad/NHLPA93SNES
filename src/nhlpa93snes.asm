@@ -1,12 +1,11 @@
 ; NHLPA Hockey '93 (SNES) - top level: macros, hardware registers and RAM names, then one file per bank in ROM
-; order (docs/file_map.md). LoROM + FastROM (map mode $30), 4 Mbit, 16 banks mapped at $80-$8F.
+; order (docs/file-map.md). LoROM + FastROM (map mode $30), 4 Mbit, 16 banks mapped at $80-$8F.
 ; Bank $90 is included last. The stock build writes no bytes there.
 asar 1.91
 lorom
 check bankcross off
 incsrc "macros/snes93.mac"
 incsrc "ram93s.asm"
-incsrc "tables93s.asm"
 incsrc "banks/b80_engine.asm"
 incsrc "banks/b81_sfx.asm"
 incsrc "banks/b82_sfx_rink.asm"

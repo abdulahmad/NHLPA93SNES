@@ -1,4 +1,4 @@
-; Bank $8F: frontend. Files in ROM order (docs/file_map.md).
+; Bank $8F: frontend. Files in ROM order (docs/file-map.md).
 
 if pc() < $8F8000
 	org $8F8000
@@ -56,9 +56,9 @@ incsrc "../routines/print/Framer.asm"
 incsrc "../routines/logic/assnothing.asm"
 incsrc "../routines/logic/GetGoalieCount.asm"
 incsrc "../routines/penalty/AdvanceStringPtr.asm"
-incsrc "../data/text/AttribMenuSkater.asm"
-incsrc "../data/text/AttribMenuGoalie.asm"
-incsrc "../data/text/PositionNames.asm"
+incsrc "../data/text/PAttribColumns.asm"
+incsrc "../data/text/GAttribColumns.asm"
+incsrc "../data/text/PlayerPositionText.asm"
 incsrc "../routines/penalty/releasepl.asm"
 incsrc "../routines/hockey/InitScoutingDisplay.asm"
 incsrc "../routines/logic/assstanley.asm"

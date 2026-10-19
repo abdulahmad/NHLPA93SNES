@@ -33,14 +33,14 @@ Still open: `.go`, `.set`, `.clr`, `.hi`, `.lo`, `.x` and `.add` (read each one;
 
 ## Expanded banks and the team count (2026-10-14)
 
-The stock image still matches (`76a01492cfb656e9fce0094bca356c312adfea0e`). No team was added. How to add one is `docs/ADDING_A_TEAM.md`.
+The stock image still matches (`76a01492cfb656e9fce0094bca356c312adfea0e`). No team was added. How to add one is `docs/adding-a-team.md`.
 
 - `check bankcross` stays off. Turning it on fails the stock assemble: asar 1.91 warns `Wfeature_deprecated` (`check bankcross on` is the old name of `bankcheck on`, and it points at `bankcheck full` or `bankcheck half`) and then errors `Ebank_border_crossed` on the in-game sample `incbin` in `src/data/sound/gamesound.asm`. That stream runs from bank $81 into $82, and `b82` starts where it ends. No other stock bank crosses. `bankcheck half` and `bankcheck full` were not tried; the cross is the sample data, so the check stays off.
 - `src/header/snes_header.asm` keeps size `$09`, complement `$B75A`, checksum `$48A5`. `build.sh` and `build.ps1` still pass `--fix-checksum=off`, then run `python3 tools/patchheader.py` on `output/nhlpa93snes.sfc`. On the retail image the patch writes nothing. On a larger image it pads with `$00` to the next SNES size (`$0A` = 1MB, `$0B` = 2MB, `$0C` = 4MB), stores the checksum and its complement little-endian, and checks that the finished file sums to that word. A complement pair always adds `$01FE`. Cartridge type stays ROM only. SRAM size stays 0. There is no cart save RAM. Running the patch on `lst/nhlpa93snes.bin` leaves `$48A5` and `$B75A`.
-- Each bank file after `$80` orgs only when `pc()` has not already reached that address. On the stock tree the PC arrives exactly there, so the org is skipped. Bank `$80` stays an unconditional org. `src/banks/b90_expanded.asm` is included last and writes no bytes in the stock build. `tools/gen_file_map.py` reads the guarded org; `docs/file_map.md` was regenerated.
+- Each bank file after `$80` orgs only when `pc()` has not already reached that address. On the stock tree the PC arrives exactly there, so the org is skipped. Bank `$80` stays an unconditional org. `src/banks/b90_expanded.asm` is included last and writes no bytes in the stock build. `tools/gen_file_map.py` reads the guarded org; `docs/file-map.md` was regenerated.
 - `NumofTeams` stays 26 (clubs 0-23, AllStarsEast 24, AllStarsWest 25). TeamList, TeamBlocksMap and playoffseats (34 trees, left alone) are asserted. The two demo `randoma` ranges and the Team 1 and Team 2 counts in `setoptions` `.pslim` use `NumofTeams`. Playoff Team 1 stays `lda.w #$0018`. `NewPO` stays `cmp.w #24`.
 
-Next: a new team follows `docs/ADDING_A_TEAM.md`. Bank `$83`'s `$FF` fill is 354 bytes (`unusedFF83`); a record does not fit, so it is assembled in bank `$90` and TeamList points at it. Bank `$87` ends with 9 bytes of `$FF`, so a TeamBlocksMap row needs `assepen` and its fill moved to bank `$90`. `DrawFrame` and `addframe_end` stay together. The `FrameSetTable` header sum checked at startup is `$131D`; leave the sprite-set headers alone.
+Next: a new team follows `docs/adding-a-team.md`. Bank `$83`'s `$FF` fill is 354 bytes (`unusedFF83`); a record does not fit, so it is assembled in bank `$90` and TeamList points at it. Bank `$87` ends with 9 bytes of `$FF`, so a TeamBlocksMap row needs `assepen` and its fill moved to bank `$90`. `DrawFrame` and `addframe_end` stay together. The `FrameSetTable` header sum checked at startup is `$131D`; leave the sprite-set headers alone.
 
 ## Animation and sprite-frame immediates (2026-10-13)
 
@@ -81,7 +81,7 @@ Moving to the bank/routine layout: `src/banks/bXX_<name>.asm` (one per bank: `or
 Done: all 16 banks migrated, every step MATCH. Bank files: b80_engine, b81_sfx, b82_sfx_rink, b83_teams, b84_scouting, b85_title_gfx,
 b86_sound_driver, b87_player_sprites, b88_title_playoffs, b89_replay_music, b8A_playoffbracket_credits, b8B_opening, b8C_skate_sprites,
 b8D_fonts, b8E_gameloop, b8F_frontend. The old `src/<module>_bXX.asm`, `src/frames.asm`, `src/main.asm` and `src/gfx/` are gone.
-Rules for new routines: SEGMENT_AGENT.md Layout note. Judgment calls: small tables of code modules stay in `routines/<module>/`
+Rules for new routines: docs/history/SEGMENT_AGENT.md Layout note. Judgment calls: small tables of code modules stay in `routines/<module>/`
 (e.g. jdtab, dirtab, PenaltyList, linelist); text tables (GameLabels, PerLabels, ScoutLabels, PositionNames, RosterLineNames,
 AttribMenuSkater/Goalie) moved to `data/text/`; the sprite animation list and tables (SPAList and every SPA*_table) are one file, `data/frames93s.asm`; `unusedFFxx` fills merged
 into the routine before; `XxxEnd` end labels stay in their table's file; GameSamples (bank $81) runs into $82, so b82 starts at $82B86C.
@@ -117,7 +117,7 @@ Branch `cursor/source-cleanup-fbaa`. Every commit builds MATCH. Counts come from
 - Task 1 (names for addresses): done. ROM pointer immediates and bank bytes use labels (`#label`, `#label>>16`, `#label&$FFFF`), `jml jmlvector`/`jml Opening2`, `unpackbuf` ($7F0000), `mesarea` pointers, team record offsets (Playerdata..ScoreOdds), all 8 DMA channels and register value constants in the hardware section of `src/ram93s.asm`. HotList's last 428 bytes are a packed tile stream: `RinkLogoTiles`. `ScoutPicMap` is the 93G `FaceOffMap`.
 - Task 2 (generic names): done. `;auto: CODE_xxxxxx` traces moved to `docs/name_map.csv`; the 442 `.lN` locals renamed by use; far trampolines named.
 - Task 3 (Genesis comments): header comments of 290 routines with a 93G/92G counterpart brought over (93G text first, `SNES:` line after). Every routine has a header comment. Inline 93G comments are not copied (not done).
-- Task 4 (file layout): done. The `bankXX_YYYY` slices are regrouped into 93G module files, one file per module per bank: `src/main.asm`, `src/frames.asm`, `src/{hockey,logic,middle,penalty,video,stats,sound,teamdata}_bXX.asm`, and graphics/sprite data in `src/gfx/{graphics,sprites}_bXX.asm`. Each file keeps the original `org` per block (247 blocks), so every byte stays at its address. `src/nhlpa93snes.asm` includes them all. The file-by-block list is in `docs/file_map.md`, the old slice header notes are in `docs/segment_notes.md`, and the `file` column of `docs/name_map.csv` gives the new file. Committed one bank per commit ($81 and $82 together because the GameSamples unit spans both).
+- Task 4 (file layout): done. The `bankXX_YYYY` slices are regrouped into 93G module files, one file per module per bank: `src/main.asm`, `src/frames.asm`, `src/{hockey,logic,middle,penalty,video,stats,sound,teamdata}_bXX.asm`, and graphics/sprite data in `src/gfx/{graphics,sprites}_bXX.asm`. Each file keeps the original `org` per block (247 blocks), so every byte stays at its address. `src/nhlpa93snes.asm` includes them all. The file-by-block list is in `docs/file-map.md`, the old slice header notes are in `docs/segment_notes.md`, and the `file` column of `docs/name_map.csv` gives the new file. Committed one bank per commit ($81 and $82 together because the GameSamples unit spans both).
 - Task 5 (final scan, `tools/scan_cleanup.py`, 92 files):
 
   | count | before (main) | now |
@@ -140,7 +140,7 @@ Left as is (with reason):
 What's next:
 - Copy the important 93G inline comments, matching them instruction by instruction.
 - Rename the remaining generic locals (`.go`, `.set`, `.clr`, `.hi`, `.lo`, `.x`, `.add`, ...) by reading the code. The `.zero` / `.skip` / `.lt` / signed-compare pass is in the 2026-10-14 local-names note.
-- Split the larger `hockey_bXX`/`logic_bXX` files further once more routines are identified, and keep `docs/file_map.md` in step with them.
+- Split the larger `hockey_bXX`/`logic_bXX` files further once more routines are identified, and keep `docs/file-map.md` in step with them.
 
 ## Routine header rewrite (2026-10-12)
 Each `src/routines/<module>/*.asm` opens with one plain-English header comment on the label line (93G file header style):

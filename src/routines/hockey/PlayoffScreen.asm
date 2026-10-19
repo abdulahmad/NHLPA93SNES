@@ -141,13 +141,13 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	lda.w #$1C00
 	sta.w printa
 .other:
-	lda.w #36						; 36 bytes per TeamBlocksMap entry
+	lda.w #36						; 36 bytes per Teamblocksmap entry
 	sta.b mulb
 	jsl.l mulu16					; 16-bit multiply
 	tay
-	lda.w #TeamBlocksMap
+	lda.w #Teamblocksmap
 	sta.b a2
-	lda.w #TeamBlocksMap>>16
+	lda.w #Teamblocksmap>>16
 	sta.b a2+2
 	lda.w printy					; textmap offset (y * 128 + x) * 2
 	asl a
@@ -241,8 +241,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	sta.b d0+2
 	stz.b d3+2
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $EF,$00,$00
+	%StringCp(CC_Font1Pal1,$00,$00)
 	lda.b bosgames					; single games: no scores
 	cmp.w #7
 	beq .logo
@@ -350,8 +349,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	bne .logorow
 	jsl.l ClearSprites				; clear the sprite table
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $EF,"8d"
+	%StringBt(CC_Font1Pal1,"8d")
 	jsl.l PWprint
 	lda.w #$0180					; start in the middle
 	sta.w Hscroll

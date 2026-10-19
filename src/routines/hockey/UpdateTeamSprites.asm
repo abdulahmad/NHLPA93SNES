@@ -4,7 +4,7 @@ UpdateTeamSprites:					;Draw the two roster players shown in the team blocks
 	jsl.l DrawScoutPlayer
 	ldx.w #$000C
 	stx.b a3
-DrawScoutPlayer:					;SNES: addframe for object X at (Xpos + OldXpos - 144, Ypos - 128)
+DrawScoutPlayer:					;addframe for object X at (Xpos + OldXpos - 144, Ypos - 128)
 	lda.w Xpos,x
 	clc
 	adc.w OldXpos,x

@@ -66,7 +66,7 @@ org `$808000`.
 - `$8099C7` routines/logic/a2touchpuck.asm
 - `$809AA8` routines/logic/a2offsides.asm
 - `$809B0A` routines/logic/GetHot.asm
-- `$809B7A` routines/logic/puckIChk.asm
+- `$809B7A` routines/logic/PuckIChk.asm
 - `$809BC3` routines/logic/ChkOffsides.asm
 - `$809CC2` routines/logic/ClearOffsidesIfAllPlayers.asm
 - `$809D17` routines/hockey/checkpuckcoll.asm
@@ -123,15 +123,15 @@ org `$808000`.
 - `$80BE47` routines/logic/ReturnGoalies.asm (also ReturnGoalies_r)
 - `$80BE89` routines/logic/CPgoalie.asm
 - `$80BED1` routines/hockey/updatecrowdf.asm
-- `$80BF6A` routines/tables/PenaltyList.asm (also PenDataEOP, PenDataEOG, PenDataGoal, PenDataNoText, PenDataice, PenDataoffsides, PenDataGhold, PenDatadelay, PenDatawhistle, PenDatacharge, PenDataslash, PenDatatrip, PenDatarough2, PenDatarough, PenDatahook, PenDatacross, PenDataint, PenDataHold, PenDatafight, PenDatafight2, PenDataInst)
+- `$80BF6A` routines/tables/Penaltylist.asm (also PenDataEOP, PenDataEOG, PenDataGoal, PenDataNoText, PenDataice, PenDataoffsides, PenDataGhold, PenDatadelay, PenDatawhistle, PenDatacharge, PenDataslash, PenDatatrip, PenDatarough2, PenDatarough, PenDatahook, PenDatacross, PenDataint, PenDataHold, PenDatafight, PenDatafight2, PenDataInst)
 - `$80C18F` routines/penalty/AddPenalty.asm
 - `$80C1B0` routines/penalty/AddPenalty2.asm
 - `$80C278` routines/hockey/freezewindow.asm
 - `$80C28B` routines/middle/sfx.asm
 - `$80C2B4` routines/hockey/updatereplay.asm
 - `$80C3D4` routines/hockey/demoread.asm
-- `$80C40B` routines/middle/Readjoy1.asm
-- `$80C429` routines/middle/Readjoy2.asm
+- `$80C40B` routines/middle/ReadJoy1.asm
+- `$80C429` routines/middle/ReadJoy2.asm
 - `$80C447` routines/middle/ReadJoy.asm
 - `$80C45D` routines/middle/jdtab.asm
 - `$80C46D` routines/hockey/updateplayers.asm
@@ -159,7 +159,7 @@ org `$808000`.
 - `$80DE89` routines/hockey/SetInst.asm
 - `$80DF3F` routines/logic/doinput.asm
 - `$80E073` routines/logic/faceoffinput.asm
-- `$80E0C5` routines/logic/holdplayer.asm
+- `$80E0C5` routines/logic/Holdplayer.asm
 - `$80E0E1` routines/logic/setpads.asm
 - `$80E13E` routines/hockey/updateanim.asm
 - `$80E1E8` routines/hockey/checkwindow.asm
@@ -340,7 +340,7 @@ org `$878000` when `pc()` is below it.
 - `$878000` data/gfx/SpriteSet2.asm (also SpriteSet2End)
 - `$87C3A0` data/gfx/EASNMap.asm
 - `$87C6B4` data/gfx/FaceOffTiles.asm
-- `$87CABA` data/gfx/TeamBlocksMap.asm (also TeamBlocksMapEnd)
+- `$87CABA` data/gfx/Teamblocksmap.asm (also TeamblocksmapEnd)
 - `$87CE62` routines/video/DrawFrame.asm
 - `$87D1FE` routines/video/addframe_end.asm
 - `$87D205` data/gfx/SpriteSet6.asm (also SpriteSet6End)
@@ -353,7 +353,7 @@ org `$878000` when `pc()` is below it.
 
 org `$888000` when `pc()` is below it.
 
-- `$888000` data/gfx/GameSetupMap.asm (also GameSetupMapEnd)
+- `$888000` data/gfx/GameSetUpMap.asm (also GameSetupMapEnd)
 - `$88822F` data/gfx/SmallFontMap.asm (also SmallFontMapEnd)
 - `$88832F` routines/middle/mulu32.asm
 - `$888405` routines/penalty/getlinee.asm
@@ -541,9 +541,9 @@ org `$8F8000` when `pc()` is below it.
 - `$8FD75A` routines/logic/assnothing.asm
 - `$8FD76B` routines/logic/GetGoalieCount.asm
 - `$8FD793` routines/penalty/AdvanceStringPtr.asm
-- `$8FD7A1` data/text/AttribMenuSkater.asm
-- `$8FD8E6` data/text/AttribMenuGoalie.asm
-- `$8FD9CC` data/text/PositionNames.asm
+- `$8FD7A1` data/text/PAttribColumns.asm
+- `$8FD8E6` data/text/GAttribColumns.asm
+- `$8FD9CC` data/text/PlayerPositionText.asm
 - `$8FD9DF` routines/penalty/releasepl.asm
 - `$8FDA75` routines/hockey/InitScoutingDisplay.asm
 - `$8FDA8F` routines/logic/assstanley.asm

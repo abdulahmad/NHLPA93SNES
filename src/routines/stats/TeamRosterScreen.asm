@@ -138,8 +138,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	stz.w DispAttribCtr
 .redraw:
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $FE,$03,$01
+	%StringCp(CC_Font2,$03,$01)
 	lda.w #$001A
 	sta.b d0
 	lda.w #$0006
@@ -155,8 +154,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	dex
 	bpl .clrtext
 	jsl.l printbigz
-	dw $0014						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$05,$04,"Team  Roster",$BF,$0B,$01
+	%StringCtc(CC_Font1Pri,$05,$04,"Team  Roster",CC_Font1Pri,$0B,$01)
 	lda.w HomeTeam
 	sta.b d1
 	lda.b a2
@@ -168,16 +166,14 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	sta.b d0
 	jsl.l DrawTeamBlocks
 	jsl.l printz
-	dw $0017						; printz inline string: length (counts itself), then control bytes / text
-	db $9F,$08,$0C,"Player",$9F,$18,$0C,"Rating",$BE,$01,$08
+	%StringCtctc(CC_Font1Pal2Pri,$08,$0C,"Player",CC_Font1Pal2Pri,$18,$0C,"Rating",CC_Font2Pri,$01,$08)
 	lda.w #$000F
 	sta.b d0
 	lda.w #$0003
 	sta.b d1
 	jsl.l Framer
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BE,$10,$08
+	%StringCp(CC_Font2Pri,$10,$08)
 	lda.w #$000F
 	sta.b d0
 	lda.w #$0003
@@ -251,8 +247,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	jmp.w .redraw
 .show:								;print the selected line and attribute column
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $9F,$02,$09
+	%StringCp(CC_Font1Pal2Pri,$02,$09)
 	lda.w SelectedPlayerIdx
 	sta.b d0
 	lda.w #RosterLineNames
@@ -266,17 +261,17 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	lda.w #$0009
 	sta.w printy
 .top:
-	lda.w #AttribMenuSkater
+	lda.w #PAttribColumns
 	sta.b a1
-	lda.w #AttribMenuSkater>>16
+	lda.w #PAttribColumns>>16
 	sta.b a1+2
 	lda.w DispAttribCtr
 	sta.b d0
 	lda.w SelectedPlayerIdx
 	bne .2
-	lda.w #AttribMenuGoalie
+	lda.w #GAttribColumns
 	sta.b a1
-	lda.w #AttribMenuGoalie>>16
+	lda.w #GAttribColumns>>16
 	sta.b a1+2
 	bra .2
 .next:
@@ -303,8 +298,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	lda.b [a1],y
 	sta.b d4
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$00,$0D
+	%StringCp(CC_Font1Pri,$00,$0D)
 	lda.w #$0020
 	sta.b d0
 	lda.w #$0013
@@ -313,8 +307,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	sta.b d2
 	jsl.l eraser
 	jsl.l printz
-	dw $0018						; printz inline string: length (counts itself), then control bytes / text
-	db $9F,$08,$1A,"Y - Switch Teams",$BF,$00,$0E
+	%StringCtc(CC_Font1Pal2Pri,$08,$1A,"Y - Switch Teams",CC_Font1Pri,$00,$0E)
 	jsl.l GetGoalieCount
 	lda.b d0
 	dec a
@@ -346,9 +339,9 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	sec
 	adc.b d0
 	sta.b a3
-	lda.w #PositionNames
+	lda.w #PlayerPositionText
 	sta.b a4+4
-	lda.w #PositionNames>>16
+	lda.w #PlayerPositionText>>16
 	sta.b a4+6
 	lda.w #$0004
 	sta.b d1

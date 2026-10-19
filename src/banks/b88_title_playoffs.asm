@@ -1,9 +1,9 @@
-; Bank $88: title playoffs. Files in ROM order (docs/file_map.md).
+; Bank $88: title playoffs. Files in ROM order (docs/file-map.md).
 
 if pc() < $888000
 	org $888000
 endif
-incsrc "../data/gfx/GameSetupMap.asm"
+incsrc "../data/gfx/GameSetUpMap.asm"
 incsrc "../data/gfx/SmallFontMap.asm"
 incsrc "../routines/middle/mulu32.asm"
 incsrc "../routines/penalty/getlinee.asm"

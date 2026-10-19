@@ -3,7 +3,7 @@
 ; Equates only, no ROM bytes. Hardware registers first, then work RAM, then constants. Prefer the 68000 RAM
 ; names for the same role. Define each name once.
 ; Like the 93G module files, data/teamdata93s.asm holds the team record offsets, data/frames93s.asm
-; the animation and sprite frame equates and tables93s.asm the assignment names.
+; the animation and sprite frame equates and routines/tables/asstab.asm the assignment names.
 ;
 ; Format: Name = $xxxx (asar equate). DP names are < $100 and are written with .b; others with .w / .l.
 ; The constants section at the end holds values (bit masks, animation offsets, sound numbers), not addresses.
@@ -633,6 +633,15 @@ cursong			=	$1651			;song playing on the SPC (0 = none); set by the song starter
 									;$86/$89
 DMAList			=	$1653			;vram dma list (7-byte entries, see dma* offsets), filled up to DMAlistend
 printfontset	=	$1BCB			; tile base of the selected print font (control code)
+; print control codes: a byte with bit 7 set picks palette, priority and font (font 1-3 also picks the map)
+; for the text after it; x and y follow. The byte is -(priority << 6 | palette << 4 | font).
+CC_Font1		=	$FF				; font 1
+CC_Font2		=	$FE				; font 2
+CC_Font1Pri		=	$BF				; font 1, priority set
+CC_Font2Pri		=	$BE				; font 2, priority set
+CC_Font1Pal1	=	$EF				; font 1, palette 1
+CC_Font1Pal3	=	$CF				; font 1, palette 3
+CC_Font1Pal2Pri	=	$9F				; font 1, palette 2, priority set
 charofs			=	$1BCD			;added to every text map tile written by the game code ($FF00 at boot, 0
 									;in the game screens)
 charofs2		=	$1BCF			;second tile offset: cleared with charofs by the screen setups (the team
@@ -758,30 +767,6 @@ sideline	=	$88					; distance from center to side boards
 maxros	=	26						; roster slots per team
 ; clock
 jps		=	24						; jiffys per second
-; penalties
-PenEOP			=	$02				; period over
-PenEOG			=	$04				; game over
-PenOOP			=	$06				;face off / out of play (penalty 6): puck still too long, puck over the
-									;glass
-PenGhold		=	$08				; goalie held the puck / bump
-PenWhistle		=	$0A				; whistle
-PenIcing		=	$0C
-PenGoal			=	$0E				; goal
-PenOffsides		=	$10
-PenRoughing2	=	$12				; roughing with slow down time $A
-PenNoText		=	$14				; injury stop, no text
-PenCharging		=	$16				; charging
-PenSlashing		=	$18				; slashing
-PenRoughing		=	$1A				; roughing
-PenCrossChk		=	$1C				; cross check
-PenHooking		=	$1E				; hooking
-PenTripping		=	$20				; tripping
-PenInterference	=	$22				; interference
-PenHolding		=	$24				; holding
-PenFighting		=	$26				; fighting, also the penalty byte of a fight in the list (93 $26)
-PenFighting2	=	$28				; fighting *
-PenInst			=	$2A				; fight instigator
-PenDelay		=	$2C				; delayed penalty ref (93 $2C)
 ; sounds (sfx numbers)
 SFXstop			=	$9C				; +0/1: skate stop (dostop, controlled player)
 SFXshotwiff		=	$98				; +0-3: missed shot (doshot)
