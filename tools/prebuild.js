@@ -6,7 +6,7 @@
 
 const GAME = "NHLPA Hockey '93 (Super Nintendo)";
 const EXTRACTOR = 'tools/extractAssets93s.js';
-const ROM = { label: "NHLPA Hockey '93 SNES retail (USA)", file: 'lst/nhlpa93snes.bin',
+const ROM = { label: "NHLPA Hockey '93 SNES retail (USA)", file: 'nhlpa93retail.sfc',
               sha1: '76a01492cfb656e9fce0094bca356c312adfea0e', size: 0x80000 };
 // ---------------------------------------------------------------------------------------------
 const fs = require('fs');

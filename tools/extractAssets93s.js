@@ -3,8 +3,8 @@
 // teamdata93s.asm, packed graphics and maps in data/gfx, sprite sets, text, sound blocks) into Extracted/<Graphics|Sound|Text>/
 // (the folders of the NHLPA 93 Genesis project). Extracted/ is not committed. tools/prebuild.js runs this when Extracted/
 // is missing or stale; this script writes Extracted/.extract-complete.json last. src/data/README.md describes the formats.
-// Usage: node tools/extractAssets93s.js lst/nhlpa93snes.bin           (write every asset and the marker)
-//        node tools/extractAssets93s.js lst/nhlpa93snes.bin --check   (compare Extracted/ with the ROM, exit 1 on a difference)
+// Usage: node tools/extractAssets93s.js nhlpa93retail.sfc           (write every asset and the marker)
+//        node tools/extractAssets93s.js nhlpa93retail.sfc --check   (compare Extracted/ with the ROM, exit 1 on a difference)
 // Each entry: file name below Extracted/, first ROM address, end address (exclusive), as SNES LoROM/FastROM addresses
 // ($80:8000 is the start of the file). An entry with `pieces` is one file made of several ranges in ROM order.
 const fs = require('fs');
@@ -191,7 +191,7 @@ if (!romFile) {
 const rom = fs.readFileSync(romFile);
 const romSha1 = sha1Of(rom);
 if (romSha1 !== ROM_SHA1) {
-    console.error(`Unknown ROM: SHA-1 ${romSha1}, ${rom.length} bytes. Expected ${ROM_SHA1} (lst/nhlpa93snes.bin).`);
+    console.error(`Unknown ROM: SHA-1 ${romSha1}, ${rom.length} bytes. Expected ${ROM_SHA1} (nhlpa93retail.sfc).`);
     process.exit(1);
 }
 console.log('ROM: NHLPA Hockey \'93 SNES retail (USA)');

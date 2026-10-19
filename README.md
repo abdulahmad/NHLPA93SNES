@@ -12,7 +12,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for how changes are made (names, comments
 
 **AI agent: start with [docs/history/START_HERE.md](docs/history/START_HERE.md).**
 
-Bitwise rebuild of NHLPA Hockey '93 for the Super Nintendo, assembled with asar. The full build is byte-identical to `lst/nhlpa93snes.bin` (sha1 `76a01492cfb656e9fce0094bca356c312adfea0e`). Every bank is disassembled and named; the source is laid out like the NHLPA 93 Genesis source (one file per bank, one file per routine, routine folders named after the 93G modules).
+Bitwise rebuild of NHLPA Hockey '93 for the Super Nintendo, assembled with asar. The full build is byte-identical to `nhlpa93retail.sfc` (sha1 `76a01492cfb656e9fce0094bca356c312adfea0e`). Every bank is disassembled and named; the source is laid out like the NHLPA 93 Genesis source (one file per bank, one file per routine, routine folders named after the 93G modules).
 
 ## Lineage
 
@@ -25,7 +25,6 @@ The SNES port is a hybrid: it began as a port of NHL92 Genesis (likely while NHL
 - `docs/history/symbol_map.csv` the address table (quick-pass names `CODE_xxxxxx` of the named routines), `docs/history/name_map.csv` the rename log (old,new,source), `docs/history/segment_notes.md` the notes of the old ~4 KB slices.
 - `tools/split_routines.py` the tool that split the old module files into this layout; `tools/gen_file_map.py` regenerates `docs/file-map.md`.
 - `tools/scan_cleanup.py` counts raw addresses, generic labels and noise comments left in `src/`.
-- `lst/nhlpa93snes.bin` reference ROM (committed, as NHL94Genesis does).
 - `tools/disasm65816.py` the quick-pass generator (recursive descent from the vectors, REP/SEP/PHP/PLP M/X tracking). Setup only; it wrote the old `bankXX_YYYY` slices.
 - `Extracted/` the incbin assets, extracted from the ROM by `tools/extractAssets93s.js` (run by `tools/prebuild.js` on every build; not committed; folders Graphics, Sound, Text as in 93G); `src/data/README.md` describes the file formats (`.map.snesjim`, `.chr.pak`, `.snesmap`, `.pal`, ...).
 - `tools/snesgfx.py` unpacks the packed streams (a port of `DecompressBytecode`) and renders tiles, maps and screens to PNG.
@@ -37,23 +36,23 @@ The SNES port is a hybrid: it began as a port of NHL92 Genesis (likely while NHL
 
 2. Install asar 1.91 into `tools/bin` with `sh tools/setup.sh` (Linux/macOS; needs git, cmake and a C++ compiler) or `tools\setup.ps1` (Windows). An asar 1.91 on PATH also works.
 
-3. The reference ROM is `lst/nhlpa93snes.bin` (committed, as in NHL94Genesis). The build refuses any other file at that path.
+3. Copy the NHLPA Hockey 93 Super Nintendo retail ROM into the `NHLPA93SNES` folder as `nhlpa93retail.sfc` (no copier header). It is not in the repo (gitignored); the build refuses any other file at that name.
 
     | ROM | File name | SHA-1 | Size |
     | --- | --- | --- | --- |
-    | NHLPA Hockey '93 SNES retail (USA) | `lst/nhlpa93snes.bin` | `76a01492cfb656e9fce0094bca356c312adfea0e` | 524288 bytes |
+    | NHLPA Hockey '93 SNES retail (USA) | `nhlpa93retail.sfc` | `76a01492cfb656e9fce0094bca356c312adfea0e` | 524288 bytes |
 
 4. Run `npm run build:retail` (or `node tools/build.js retail`). It prints one line per step, with a short note under it and the result under that:
 
     1. **prebuild**: check the ROM and extract graphics, sound and text assets into `Extracted/` (when it is missing or stale).
     2. **assemble**: asar turns `src/nhlpa93snes.asm` into the ROM image.
     3. **header**: pad the image and store the checksum if the ROM grew (`tools/patchHeader.js`; the stock image is left as it is).
-    4. **verify**: compare byte for byte with `lst/nhlpa93snes.bin`.
+    4. **verify**: compare byte for byte with `nhlpa93retail.sfc`.
 
     The built ROM is `output/retail/nhlpa93snes.sfc`; `output/retail/obj/` holds asar's log and its symbol file (`nhlpa93snes.sym`, read by `tools/gen_file_map.py` and `tools/scan_cleanup.py`).
 
 Other scripts:
-- `npm run assets`: ROM check and asset extraction only (`npm run extractassets` runs the extractor directly; `node tools/extractAssets93s.js lst/nhlpa93snes.bin --check` compares `Extracted/` with the ROM)
+- `npm run assets`: ROM check and asset extraction only (`npm run extractassets` runs the extractor directly; `node tools/extractAssets93s.js nhlpa93retail.sfc --check` compares `Extracted/` with the ROM)
 - `npm run clean`: delete `output/` and `Extracted/` (re-extracted by the next build)
 - `tools/verify_all.sh`: extracts fresh, builds, and runs the asset and comment checks, printing ALL MATCH
 - Add `--verbose` to `node tools/build.js ...` for the full tool output; `--no-color` (or `NO_COLOR`) turns the colors off

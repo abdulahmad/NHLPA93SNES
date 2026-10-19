@@ -9,7 +9,7 @@ Formats (see src/data/README.md):
   *.pieces    sprite frame pieces (Extracted/Graphics/Sprites/setNN, with setNN.chr; the frame tables are read from src/data/gfx/SpriteSet*.asm)
 
 Commands:
-  unpack IN [-o OUT]                  unpack a .pak file (or --rom ADDR: a packed stream in lst/nhlpa93snes.bin)
+  unpack IN [-o OUT]                  unpack a .pak file (or --rom ADDR: a packed stream in nhlpa93retail.sfc)
   tiles IN [-o PNG]                   tile sheet of a .chr / unpacked file (--offset, --count, --columns)
   map MAP --tiles CHR [-o PNG]        render a map with its tiles (--width in tiles, --map-offset, --tiles-offset)
   screen IN.map.snesjim [-o PNG]          unpack a packed screen and render it (--map-size, --pal-offset, --tiles-offset)
@@ -35,7 +35,7 @@ import os
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ROM = os.path.join(ROOT, 'lst', 'nhlpa93snes.bin')
+ROM = os.path.join(ROOT, 'nhlpa93retail.sfc')
 
 
 def lorom_offset(addr):

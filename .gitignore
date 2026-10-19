@@ -2,6 +2,9 @@ output/
 Extracted/
 *.log
 __pycache__/
-# nhl*.bin  (reference ROM is committed in lst/, as NHL94Genesis)
+# ROM dumps (not distributed; see README for file names and SHA-1)
+nhl*.sfc
+nhl*.smc
+nhl*.bin
 tools/bin/
 node_modules/

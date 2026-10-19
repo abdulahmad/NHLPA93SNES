@@ -13,7 +13,7 @@ The code, data and bytes must not change unless the change is the point of the P
 tools/verify_all.sh -q
 ```
 
-It extracts the assets fresh, builds with `node tools/build.js retail` (asar assembles `src/nhlpa93snes.asm`, the verify step must print `MATCH` against `lst/nhlpa93snes.bin`), checks the assets against the ROM and runs the comment check. `npm run build:retail` alone is enough while editing.
+It extracts the assets fresh, builds with `node tools/build.js retail` (asar assembles `src/nhlpa93snes.asm`, the verify step must print `MATCH` against `nhlpa93retail.sfc`), checks the assets against the ROM and runs the comment check. `npm run build:retail` alone is enough while editing.
 
 A comment-only or rename-only change must not change a single byte. Never commit ROMs, `Extracted/` or
 `output/`.

@@ -1,7 +1,7 @@
 # Extracted/ (binary assets)
 
 The `src/**/*.asm` files `incbin` binary assets from `Extracted/{Graphics,Sound,Text}/`, the folder layout of the NHLPA 93 Genesis
-project. `Extracted/` is not committed. `tools/extractAssets93s.js` writes it from `lst/nhlpa93snes.bin` (158 assets, each an exact ROM range),
+project. `Extracted/` is not committed. `tools/extractAssets93s.js` writes it from `nhlpa93retail.sfc` (158 assets, each an exact ROM range),
 `tools/prebuild.js` checks the ROM SHA-1 and runs the extraction when `Extracted/` is missing or stale, and `tools/build.js`
 runs `prebuild.js` first, so the build stays byte-identical. This file lives next to the sources that include the assets.
 The file extension gives the format. The SNES formats are not the same as the Genesis (93G/94G) `.map.jim` / `.pal` / `.tiles` files
@@ -73,7 +73,7 @@ This script unpacks and renders the assets above, for checking a guess about wha
 
 ```
 python tools/snesgfx.py unpack Extracted/Graphics/EASN.map.snesjim -o easn.bin
-python tools/snesgfx.py unpack --rom 0x80ED38 -o block.bin       # a packed stream still in lst/nhlpa93snes.bin
+python tools/snesgfx.py unpack --rom 0x80ED38 -o block.bin       # a packed stream still in nhlpa93retail.sfc
 python tools/snesgfx.py screen Extracted/Graphics/Title1.map.snesjim -o title.png
 python tools/snesgfx.py screen Extracted/Graphics/RonBarr.map.snesjim --width 8 --map-size 0x90 --pal-offset 0x90 --tiles-offset 0x190 -o ronbarr.png
 python tools/snesgfx.py tiles Extracted/Graphics/BigFont.chr.pak --columns 16 -o bigfont.png

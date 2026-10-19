@@ -51,7 +51,7 @@ Bank $80 keeps an unconditional `org`. Each bank file after it orgs only when `p
 
 `src/header/snes_header.asm` keeps size byte `$09`, complement `$B75A`, checksum `$48A5`. `tools/build.js` assembles with `--fix-checksum=off`, then runs `tools/patchHeader.js` on the image (`output/retail/nhlpa93snes.sfc`).
 
-On the retail image the patch writes nothing, so `npm run build:retail` still matches. Running it on `lst/nhlpa93snes.bin` leaves `$48A5` and `$B75A`.
+On the retail image the patch writes nothing, so `npm run build:retail` still matches. Running it on `nhlpa93retail.sfc` leaves `$48A5` and `$B75A`.
 
 On a larger image the patch pads with `$00` to the next SNES size, sets the size byte, and stores the checksum and its complement, little-endian. It checks that the finished file sums to the word it stored.
 
