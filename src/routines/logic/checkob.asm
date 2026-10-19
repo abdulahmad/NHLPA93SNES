@@ -4,26 +4,26 @@ checkob:							;Show the little warning referee when a teammate is over the blue
 	bne .offon
 	jmp.w .rts
 .offon:								;movem d0-d1/a0 to the stack
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.save:
+.save:								; save d0 and the words after it (4 words)
 	lda.b d0,x
 	pha
 	inx
 	inx
 	cpx.w #$0008
 	bne .save
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.savea:
+.savea:								; save a0 and the words after it (2 words)
 	lda.b a0,x
 	pha
 	inx
 	inx
 	cpx.w #$0004
 	bne .savea
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	lda.w #$0005
 	sta.b d0
 	stz.b a0
@@ -71,24 +71,24 @@ checkob:							;Show the little warning referee when a teammate is over the blue
 	trb.w sflags					; sf2offsig
 	bne .dref
 .ex:								;movem the registers back
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0002
-.resta:
+.resta:								; pull a0 and the words after it back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .resta
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0006
-.restore:
+.restore:							; pull d0 and the words after it back
 	pla
 	sta.b d0,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 .rts:
 	rtl
 .ob:								;offside: set the signal, ref up

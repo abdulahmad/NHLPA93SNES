@@ -1,5 +1,5 @@
 doshot:								;The stick is at the puck: launch it toward the goal
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
 .save:								;movem d0-d7/a0-a3 to the stack
 	lda.b d0,x
@@ -8,17 +8,17 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	inx
 	cpx.w #$0020
 	bne .save
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.savea:
+.savea:								; save a0 and the words after it (8 words)
 	lda.b a0,x
 	pha
 	inx
 	inx
 	cpx.w #$0010
 	bne .savea
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	jsl.l shotdiradj
 	lda.w seed						; sound: wiff (one of 4)
 	and.w #$0003
@@ -259,24 +259,24 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	sta.w puckvz
 .ex:								;play the sound, movem the registers back
 	jsl.l sfx
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$000E
-.resta:
+.resta:								; pull a0 and the words after it back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .resta
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$001E
-.restore:
+.restore:							; pull d0 and the words after it back
 	pla
 	sta.b d0,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	ldx.b a3
 	lda.w #blueline+goalline		; puckvy sign toward the shooting goal
 	sta.b tmp0

@@ -48,12 +48,12 @@ pplpen:								;Print one penalty box line: player number and time left
 	sta.b a1+2
 	lda.w #$0004
 	sta.b [a1]
-	jsl.l print
+	jsl.l print						; print it
 	lda.b d2
 	sta.b d0
 	jsl.l PushTime
 	inc.w printx
-	jsl.l print
+	jsl.l print						; print it
 	pla
 	sta.w printx
 	inc.w printy

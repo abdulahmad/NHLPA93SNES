@@ -1,6 +1,6 @@
 makepde:							;d0 = rating A scaled by player a0's energy
 	pha
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
 .save:								;movem d1/a2-a3
 	lda.b d1,x
@@ -9,38 +9,38 @@ makepde:							;d0 = rating A scaled by player a0's energy
 	inx
 	cpx.w #$0004
 	bne .save
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.savea:
+.savea:								; save a2 and the words after it (4 words)
 	lda.b a2,x
 	pha
 	inx
 	inx
 	cpx.w #$0008
 	bne .savea
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	ldx.b a0						; a3 = a0 for getpde
 	stx.b a3
 	jsl.l getpde
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0006
-.resta:
+.resta:								; pull a2 and the words after it back
 	pla
 	sta.b a2,x
 	dex
 	dex
 	bpl .resta
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0002
-.restore:
+.restore:							; pull d1 and the words after it back
 	pla
 	sta.b d1,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	ldx.b a3
 	pla
 	sta.b mula

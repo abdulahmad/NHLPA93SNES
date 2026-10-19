@@ -189,9 +189,9 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	lda.w position,x
 	beq .rtl
 	pla								; drop the return address (3 bytes): assexit returns for the caller
-	sep #$20
+	sep #$20						; 8-bit A
 	pla
-	rep #$30
+	rep #$30						; 16-bit registers
 	jml.l assexit
 .rtl:
 	rtl

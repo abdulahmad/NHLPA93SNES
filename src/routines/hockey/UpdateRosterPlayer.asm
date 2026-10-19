@@ -144,7 +144,7 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	sta.w printx
 	lda.w #mesarea
 	sta.b a1
-	jsl.l print
+	jsl.l print						; print it
 	pla
 	sta.w printx
 	inc.w printy
@@ -186,4 +186,4 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	sta.w printx
 	lda.w #mesarea
 	sta.b a1
-	jml.l print
+	jml.l print						; print it

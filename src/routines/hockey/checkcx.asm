@@ -1,15 +1,15 @@
 checkcx:							;Collision of object X with a nearby object: checks, interference and
 									;fights, then the momentum passes between them
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.save:
+.save:								; save d0 and the words after it (12 words)
 	lda.b d0,x
 	pha
 	inx
 	inx
 	cpx.w #$0018
 	bne .save
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	sty.b a2						; a2 = Y; d0/d1 = relative velocity, d2/d3 = relative position
 	stz.b evalue
 	lda.w Xvel,x
@@ -284,15 +284,15 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	lda.w #$FFFF					; collflag
 	sta.b collflag
 .exit:
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0016
-.restore:
+.restore:							; pull d0 and the words after it back
 	pla
 	sta.b d0,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	rtl
 .exit4:								;drop the saved Vx/Vy
 	pla

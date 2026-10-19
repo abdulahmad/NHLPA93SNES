@@ -6,26 +6,26 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 .first:								;first time: set up the faceoff
 	and.w #~pfna&$FFFF
 	sta.w pflags,x
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.save:
+.save:								; save d0 and the words after it (16 words)
 	lda.b d0,x
 	pha
 	inx
 	inx
 	cpx.w #$0020
 	bne .save
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.savea:
+.savea:								; save a0 and the words after it (14 words)
 	lda.b a0,x
 	pha
 	inx
 	inx
 	cpx.w #$001C
 	bne .savea
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	lda.b crowdlevel				; limit crowd level
 	cmp.w #$0258
 	bcc .ntm
@@ -282,7 +282,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	sta.b a3+2
 	ldx.b a3
 	jsl.l ResetAndSelectPlayers
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pri,$00,$00)
 	lda.w #$0036					; 8+46
 	sta.b d0
@@ -433,24 +433,24 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	lda.w #$FFFF					; fodir1/fodir2 = none
 	sta.w fodir1
 	sta.w fodir2
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$001A
-.resta:
+.resta:								; pull a0 and the words after it back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .resta
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$001E
-.restore:
+.restore:							; pull d0 and the words after it back
 	pla
 	sta.b d0,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	ldx.b a3
 	rtl
 .nna:								;count down to the drop; then Endfaceoff

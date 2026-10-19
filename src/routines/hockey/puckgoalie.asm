@@ -203,12 +203,12 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	inc a
 	sta.b d1
 .0:
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.b d0
 	sta.w Xvel+1,x
 	lda.b d1
 	sta.w Yvel+1,x
-	rep #$20
+	rep #$20						; 16-bit A
 	jmp.w puckflip
 .rtl:
 	rtl

@@ -7,7 +7,7 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	jsl.l ReadPads
 	jsl.l Readjoy12
 	jsl.l ClearSprites				; clear the sprite table
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font2,$01,$12)
 	lda.w #17
 	sta.b d0
@@ -19,7 +19,7 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	lda.w #PasswordText>>16
 	sta.b a1+2
 .textlp:
-	jsl.l print
+	jsl.l print						; print it
 	ldy.w #$0002
 	lda.b [a1],y
 	and.w #$00FF
@@ -57,7 +57,7 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	sta.b a1
 	lda.w #$0000
 	sta.b a1+2
-	jsl.l print
+	jsl.l print						; print it
 	inc.w printy
 	inc.w printy
 	lda.w printx
@@ -72,14 +72,14 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	jsl.l .setd5
 	jsl.l Framer					; d0 x d1
 .topx:
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCt(CC_Font1,$02,$13,"D Pad - Select")
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCt(CC_Font1,$02,$14,"    A - Next")
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCt(CC_Font1,$02,$15,"    Y - Back")
 .input:
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1,$02,$10)
 	jsl.l PWprint
 	lda.w #VBlank_SprPal
@@ -188,20 +188,20 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	sep #$20						; PassWord[d4] = d5
 	lda.b d5
 	sta.b [a0],y
-	rep #$30
+	rep #$30						; 16-bit registers
 	jmp.w .input
 .setd4:								;print the " < " cursor under password character d4
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font2,$01,$11)
 	lda.w printx
 	clc
 	adc.b d4
 	sta.w printx
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%String(" < ")
 	rtl
 .setd5:								;printx/printy and d0 = d1 = 3: frame around grid character d5
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font2,$14,$0D)
 	lda.b d5
 	sta.b mulb
@@ -226,11 +226,11 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	jsl.l DecodePW
 	lda.w postarts					; no error: exit
 	bpl .rtl
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCt(CC_Font1,$02,$13,"Bad Password  ")
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCt(CC_Font1,$02,$14,"A - Retry     ")
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCt(CC_Font1,$02,$15,"Y - Exit Screen")
 	lda.w #VBlank_SprPal
 .wait2:
@@ -250,7 +250,7 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	bne .setup
 	bit.w #JOYA						; A: retry
 	beq .notok
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1,$01,$12)
 	lda.w #17
 	sta.b d0

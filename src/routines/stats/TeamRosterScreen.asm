@@ -2,7 +2,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 									;moves, Y switches team,
 		;   Start leaves
 	jsl.l forceblack
-	sep #$20
+	sep #$20						; 8-bit A
 	stz.w BG1HOFS
 	stz.w BG1HOFS
 	stz.w BG1VOFS
@@ -19,7 +19,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	sta.w BG12NBA
 	lda.b #TM_BG1|TM_BG2
 	sta.w TM
-	rep #$30
+	rep #$30						; 16-bit registers
 	lda.w #$FD00
 	sta.w charofs
 	sta.w charofs2
@@ -105,7 +105,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	lda.w #RonBarrMap>>16
 	sta.b tmp1
 	jsl.l DecompressBytecode
-	sep #$20
+	sep #$20						; 8-bit A
 	stz.w CGADD
 	ldx.w #$0000
 .ronpal:
@@ -114,7 +114,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	inx
 	cpx.w #$0080
 	bne .ronpal
-	rep #$30
+	rep #$30						; 16-bit registers
 	stz.b a2
 	lda.w cont1team
 	sta.b tmp0
@@ -137,7 +137,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	sta.w SelectedPlayerIdx
 	stz.w DispAttribCtr
 .redraw:
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font2,$03,$01)
 	lda.w #$001A
 	sta.b d0
@@ -165,14 +165,14 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 .home:
 	sta.b d0
 	jsl.l DrawTeamBlocks
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCtctc(CC_Font1Pal2Pri,$08,$0C,"Player",CC_Font1Pal2Pri,$18,$0C,"Rating",CC_Font2Pri,$01,$08)
 	lda.w #$000F
 	sta.b d0
 	lda.w #$0003
 	sta.b d1
 	jsl.l Framer
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font2Pri,$10,$08)
 	lda.w #$000F
 	sta.b d0
@@ -246,7 +246,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	sta.b a2
 	jmp.w .redraw
 .show:								;print the selected line and attribute column
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pal2Pri,$02,$09)
 	lda.w SelectedPlayerIdx
 	sta.b d0
@@ -255,7 +255,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	lda.w #RosterLineNames>>16
 	sta.b a1+2
 	jsl.l AdvanceStringPtr
-	jsl.l print
+	jsl.l print						; print it
 	lda.w #$0011
 	sta.w printx
 	lda.w #$0009
@@ -291,13 +291,13 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	dec.w DispAttribCtr
 	bra .top
 .found:
-	jsl.l print
+	jsl.l print						; print it
 	lda.b [a1]
 	sta.b d4+2
 	ldy.w #$0002
 	lda.b [a1],y
 	sta.b d4
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pri,$00,$0D)
 	lda.w #$0020
 	sta.b d0
@@ -306,7 +306,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	lda.w blankchar
 	sta.b d2
 	jsl.l eraser
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCtc(CC_Font1Pal2Pri,$08,$1A,"Y - Switch Teams",CC_Font1Pri,$00,$0E)
 	jsl.l GetGoalieCount
 	lda.b d0
@@ -363,7 +363,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	sta.b a1
 	lda.b a4+6
 	sta.b a1+2
-	jsl.l print
+	jsl.l print						; print it
 	lda.b a1
 	sta.b a4+4
 	lda.b a1+2

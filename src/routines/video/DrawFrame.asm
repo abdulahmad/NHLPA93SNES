@@ -241,14 +241,14 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	lda.b sprtile
 	sta.w Satt+2,x
 	xba
-	sep #$20
+	sep #$20						; 8-bit A
 	ora.b sprpal
 	ora.b sprpriority
 	ora.b sprpattr
 	eor.b sprhflip
 	eor.b sprvflip
 	sta.w Satt+3,x
-	rep #$30
+	rep #$30						; 16-bit registers
 	lda.b sprcount
 	and.w #$0003
 	tax
@@ -258,7 +258,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	lsr a
 	lsr a
 	tax
-	sep #$20
+	sep #$20						; 8-bit A
 	tya
 	and.w SattHi,x
 	sta.w SattHi,x
@@ -269,7 +269,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	ora.w SattHi,x
 	sta.w SattHi,x
 .next:
-	rep #$30
+	rep #$30						; 16-bit registers
 	inc.b sprcount
 	jmp.w .nextpiece
 .himask:							;SattHi masks that clear the x bit 8 of sprite 0-3 in a byte
@@ -460,14 +460,14 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	lda.b sprtile
 	sta.w Satt+2,x
 	xba
-	sep #$20
+	sep #$20						; 8-bit A
 	ora.b sprpal
 	ora.b sprpriority
 	ora.b sprpattr
 	eor.b sprhflip
 	eor.b sprvflip
 	sta.w Satt+3,x
-	rep #$30
+	rep #$30						; 16-bit registers
 	lda.b sprcount
 	and.w #$0003
 	tax
@@ -477,7 +477,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	lsr a
 	lsr a
 	tax
-	sep #$20
+	sep #$20						; 8-bit A
 	tya
 	and.w SattHi,x
 	sta.w SattHi,x
@@ -493,7 +493,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	ora.w SattHi,x
 	sta.w SattHi,x
 .bnext:
-	rep #$30
+	rep #$30						; 16-bit registers
 	inc.b sprcount
 .nextpiece:
 	inc.b sprframe

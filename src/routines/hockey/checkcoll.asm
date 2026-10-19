@@ -155,13 +155,13 @@ checkcoll:							;Move object X to its new x / y (d2 / d3), checking wall and pl
 	lda.w OOlistpos,y
 	dec a
 	sta.w OOlistpos,y
-	sep #$30
+	sep #$30						; 8-bit registers
 	ldy.b d1
 	lda.b d4
 	sta.w OOlist,y
 	txa
 	sta.w OOlist+1,y
-	rep #$30
+	rep #$30						; 16-bit registers
 	inc.b d1
 	bra .2
 .cl2:
@@ -187,13 +187,13 @@ checkcoll:							;Move object X to its new x / y (d2 / d3), checking wall and pl
 	lda.w OOlistpos,y
 	inc a
 	sta.w OOlistpos,y
-	sep #$30
+	sep #$30						; 8-bit registers
 	ldy.b d1
 	lda.b d4
 	sta.w OOlist,y
 	txa
 	sta.w OOlist-1,y
-	rep #$30
+	rep #$30						; 16-bit registers
 	dec.b d1
 	bne .3
 .ex2:

@@ -4,7 +4,7 @@ ChkShotStat:						;If a shot was taken, add it to the shooting team's shots
 	beq .rtl						; no shot
 	stx.b xsave						; keep X
 	ldx.w #$0000					; save d0 through d3
-.save:
+.save:								; save d0 and the words after it (4 words)
 	lda.b d0,x
 	pha
 	inx
@@ -24,9 +24,9 @@ ChkShotStat:						;If a shot was taken, add it to the shooting team's shots
 	jsl.l addteamstat				; to the team stat
 	plx								; restore X
 	stx.b a3						; X again
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0006					; pull them back
-.restore:
+.restore:							; pull d0 and the words after it back
 	pla
 	sta.b d0,x
 	dex

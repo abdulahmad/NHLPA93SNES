@@ -1,6 +1,6 @@
 releasepl:							;Player d0's penalty time is up: let him out of the box and put him on the
 									;ice
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
 .save:								; save d0 through d7
 	lda.b d0,x

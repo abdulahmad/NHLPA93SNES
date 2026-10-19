@@ -51,16 +51,16 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	sta.b a0
 	lda.w #TeamList>>16
 	sta.b a0+2
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.savea:
+.savea:								; save a0 and the words after it (2 words)
 	lda.b a0,x
 	pha
 	inx
 	inx
 	cpx.w #$0004
 	bne .savea
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	ldy.w #$0008					; team data + word at +8: bonus bytes
 	lda.b [a0],y
 	clc
@@ -160,15 +160,15 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	lda.w #$0002
 	sta.b ThirdPBonus
 .nomod:
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0002
-.resta:
+.resta:								; pull a0 and the words after it back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .resta
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	ldy.w #$0000					; a0 = roster records
 	lda.b [a0],y
 	clc

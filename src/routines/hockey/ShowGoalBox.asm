@@ -1,24 +1,24 @@
 ShowGoalBox:						;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the assists
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.save:
+.save:								; save d0 and the words after it (6 words)
 	lda.b d0,x
 	pha
 	inx
 	inx
 	cpx.w #$000C
 	bne .save
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.savea:
+.savea:								; save a0 and the words after it (10 words)
 	lda.b a0,x
 	pha
 	inx
 	inx
 	cpx.w #$0014
 	bne .savea
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	stz.b a2
 	jsl.l lcfound2
 	inc.b a2
@@ -30,7 +30,7 @@ ShowGoalBox:						;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the
 	clc
 	adc.w ScoreSumbytes
 	sta.b a4
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pri,$0B,$02)
 	lda.w #$0013
 	sta.b d0
@@ -83,45 +83,45 @@ ShowGoalBox:						;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the
 	and.w #$00FF
 	sta.b d0
 	jsl.l FormatPlayerNumInitial
-	jsl.l print
+	jsl.l print						; print it
 	ldy.w #$0004
 	lda.b [a4],y
 	and.w #$00FF
 	sta.b d0
 	bit.w #$0080
 	bne .ex
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCtc(CC_Font1Pri,$0E,$06,"Assist by:",CC_Font1Pri,$0C,$07)
 	jsl.l FormatPlayerNumInitial
-	jsl.l print
+	jsl.l print						; print it
 	ldy.w #$0005
 	lda.b [a4],y
 	and.w #$00FF
 	sta.b d0
 	bit.w #$0080
 	bne .ex
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pri,$0C,$08)
 	jsl.l FormatPlayerNumInitial
-	jsl.l print
+	jsl.l print						; print it
 .ex:
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0012
-.resta:
+.resta:								; pull a0 and the words after it back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .resta
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$000A
-.restore:
+.restore:							; pull d0 and the words after it back
 	pla
 	sta.b d0,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	ldx.b a3
 	rtl

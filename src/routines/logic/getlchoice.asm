@@ -9,7 +9,7 @@ getlchoice:							;d0 = the line for line choice d0 of team a2, by the man advan
 	inx
 	cpx.w #$0008
 	bne .save
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	lda.b a2						; d2 = other tmap - our tmap: players short
 	eor.w #2						; the other team's slot
 	tay
@@ -53,15 +53,15 @@ getlchoice:							;d0 = the line for line choice d0 of team a2, by the man advan
 	ora.w #$FF00
 .sext:
 	sta.b d0						; d0 = the line, or -1
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0006
-.restore:
+.restore:							; pull d1 and the words after it back
 	pla
 	sta.b d1,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	rtl
 .tab:								;line for choice 0-2 by tmline, 3 entries per line (-1 = none)
 	db 0,1,2, 1,2,0, 2,0,1, 0,1,2, 0,1,2, 0,1,2, 0,1,2	; no power play: lines 0-6

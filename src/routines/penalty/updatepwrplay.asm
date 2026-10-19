@@ -35,12 +35,12 @@ updatepwrplay:						;Show the power play box: the time left and the team on the 
 	ldx.b a3
 	inc.w tmPwrPlays,x
 .uppt:
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	dw $0012						; printz inline string: length (counts itself), then control bytes / text
 	db $BF,$01,$19,"   ",$16,$17,$18,$19,$BF,$01,$1A,"   "
 	jsl.l GetLowestPen
 	jsl.l PushTime
-	jsl.l print
+	jsl.l print						; print it
 	ldx.b a3
 	lda.w tmdata,x					; team name (bank $83)
 	sta.b a0

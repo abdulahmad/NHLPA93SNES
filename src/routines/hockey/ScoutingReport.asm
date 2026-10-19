@@ -3,7 +3,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	jsl.l ClearTeamStats
 	jsl.l forceblack
 	jsl.l InitPPU
-	sep #$20
+	sep #$20						; 8-bit A
 	cli
 	lda.w RDNMI
 	lda.b #NMITIMEN_NMI|NMITIMEN_JOY
@@ -20,7 +20,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	sta.w BG12NBA
 	lda.b #TM_BG1|TM_BG2
 	sta.w TM
-	rep #$30
+	rep #$30						; 16-bit registers
 	stz.w tmgoalie
 	stz.w tmgoalie+2
 	lda.w #$0025
@@ -105,7 +105,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	inx
 	cpx.w #$0080
 	bne .framertiles
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font2,$06,$03)
 	lda.w #$0019
 	sta.b d0
@@ -117,7 +117,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	lda.w #RonBarrMap>>16
 	sta.b tmp1
 	jsl.l DecompressBytecode
-	sep #$20
+	sep #$20						; 8-bit A
 	stz.w CGADD
 	ldx.w #$0000
 .ronpal:
@@ -126,7 +126,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	inx
 	cpx.w #$0080
 	bne .ronpal
-	rep #$30
+	rep #$30						; 16-bit registers
 	ldx.w #$0000
 .rontiles:
 	lda.l TestList+$190,x
@@ -169,17 +169,17 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	lda.b tmp1
 	cmp.w #$0009
 	bne .ronrow
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1,$02,$0D)
 	lda.w VisTeam
 	sta.b d1
 	jsl.l DrawTeamBlocks
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1,$15,$0D)
 	lda.w HomeTeam
 	sta.b d1
 	jsl.l DrawTeamBlocks
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1,$11,$0F)
 	lda.w #ScoutLabels
 	sta.b a1
@@ -193,13 +193,13 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	clc
 	adc.w #$0011
 	sta.w printx
-	jsl.l print
+	jsl.l print						; print it
 	inc.w printy
 	ldy.w #$0002
 	lda.b [a1],y
 	bit.w #$0080
 	beq .pl
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1,$19,$0F)
 	lda.w tmdata
 	sta.b a0
@@ -217,7 +217,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	adc.b a2
 	sta.b a2
 	jsl.l PrintScoutRatings
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1,$04,$0F)
 	lda.b a0
 	ldx.b a2

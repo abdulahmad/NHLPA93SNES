@@ -4,15 +4,15 @@ Start:								;Reset entry and cold start: switch to native mode, clear RAM, set
 	sei								; interrupts off
 	clc
 	xce								; native mode
-	rep #$30
+	rep #$30						; 16-bit registers
 	lda.w #$1FFF
 	tcs								; stack $1FFF
 	lda.w #$0000
 	tcd								; D = 0
-	sep #$20
+	sep #$20						; 8-bit A
 	pha
 	plb								; DB = $00 (low RAM and registers)
-	rep #$30
+	rep #$30						; 16-bit registers
 	ldx.w #$0000
 .clrdp:								;clear $0000-$164D (DP and low RAM)
 	stz.b vcount,x
@@ -74,12 +74,12 @@ Start:								;Reset entry and cold start: switch to native mode, clear RAM, set
 	lda.w #$0001					; hold the sound queue while the hardware/sound driver starts
 	sta.b sndlock
 	jsl.l InitPPU					; PPU registers off/clear, sound driver start
-	sep #$20
+	sep #$20						; 8-bit A
 	cli
 	lda.w RDNMI						; ack a pending NMI
 	lda.b #NMITIMEN_NMI|NMITIMEN_JOY	; NMI on, auto joypad read
 	sta.w NMITIMEN
-	rep #$30
+	rep #$30						; 16-bit registers
 	jsl.l SPCBootUpload
 	stz.b sndlock
 	stz.b vbactive					; vblank handlers may run

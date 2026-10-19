@@ -1,5 +1,5 @@
 chkhit:								;In a fight, is player X hit by player a0?
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
 .save:								;movem d0/a0-a3 to the stack
 	lda.b d0,x
@@ -8,17 +8,17 @@ chkhit:								;In a fight, is player X hit by player a0?
 	inx
 	cpx.w #$0004
 	bne .save
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.savea:
+.savea:								; save a0 and the words after it (8 words)
 	lda.b a0,x
 	pha
 	inx
 	inx
 	cpx.w #$0010
 	bne .savea
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	ldy.b a0						; Y = opponent
 	lda.w frame,x
 	cmp.w oldframe,x				; same frame as last time: nothing new
@@ -67,24 +67,24 @@ chkhit:								;In a fight, is player X hit by player a0?
 	cmp.w #SPFfight+4+5
 	beq .grab
 .ex:								;movem the registers back (global: CwdFight/FightFall paths jump here)
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$000E
-.resta:
+.resta:								; pull a0 and the words after it back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .resta
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0002
-.restore:
+.restore:							; pull d0 and the words after it back
 	pla
 	sta.b d0,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	ldx.b a3						; X = a3 again
 	rtl
 .dropped:							;gloves dropped, glovecords from xc1/yc1 (x clamped +-90)
@@ -128,9 +128,9 @@ chkhit:								;In a fight, is player X hit by player a0?
 	lda.w yc1
 	lsr a
 	lsr a
-	sep #$20
+	sep #$20						; 8-bit A
 	sta.w glovecords+1				; glovecords y byte
-	rep #$30
+	rep #$30						; 16-bit registers
 	bra .ex
 .grab:								;exg a0,a3: the opponent is held
 	ldx.b a0

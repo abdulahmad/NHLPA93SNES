@@ -7,7 +7,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	stz.w charofs2
 	jsl.l forceblack
 	jsl.l InitPPU					; PPU registers off/clear
-	sep #$20
+	sep #$20						; 8-bit A
 	cli
 	lda.w RDNMI
 	lda.b #NMITIMEN_NMI|NMITIMEN_JOY
@@ -24,7 +24,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	sta.w BG12NBA
 	lda.b #TM_BG1|TM_BG2
 	sta.w TM
-	rep #$30
+	rep #$30						; 16-bit registers
 	lda.w blankchar
 	ldx.w #$07FE
 .clr:
@@ -69,7 +69,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	inx
 	cpx.w #$3300
 	bne .tiles
-	sep #$20
+	sep #$20						; 8-bit A
 	stz.w CGADD
 	ldx.w #$0000
 .pal:
@@ -78,7 +78,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	inx
 	cpx.w #$0100
 	bne .pal
-	rep #$30
+	rep #$30						; 16-bit registers
 	ldx.w #$0010
 .clearvr:
 	stz.w VMDATAL
@@ -101,7 +101,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	sta.b d0
 	jsl.l remap						; remap the 4bpp pixels ([a0] data, [a1] table, d0 tiles)
 	jsl.l StartSong6
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pal3,$00,$1C)
 	stz.b d0
 	lda.w #Credits					; a0 = the credits text
@@ -146,7 +146,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	sta.b a1
 	lda.w #CreditsBlank>>16
 	sta.b a1+2
-	jsl.l print
+	jsl.l print						; print it
 	dex
 	bpl .erase
 	lda.b $01,s
@@ -161,7 +161,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	sta.b a1
 	lda.b a0+2
 	sta.b a1+2
-	jsl.l print
+	jsl.l print						; print it
 	lda.w printy
 	inc a
 	and.w #$001F

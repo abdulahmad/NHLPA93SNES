@@ -1,16 +1,16 @@
 CheckBump:							;Goalie X pushed against the net with the puck near: if he is moving fast,
 									;bump the net, stop him and
 		;   call a goalie holding penalty
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.save:
+.save:								; save d0 and the words after it (4 words)
 	lda.b d0,x
 	pha
 	inx
 	inx
 	cpx.w #$0008
 	bne .save
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	lda.w seed						; 1 in 32 frames
 	and.w #$001F
 	bne .ex
@@ -45,15 +45,15 @@ CheckBump:							;Goalie X pushed against the net with the puck near: if he is m
 	cmp.w #$2001
 	bcs .bb
 .ex:
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0006
-.restore:
+.restore:							; pull d0 and the words after it back
 	pla
 	sta.b d0,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 .rtl:
 	rtl
 .bb:								;drop the saved d0-d3 and the jsl return: return to the caller of
@@ -63,9 +63,9 @@ CheckBump:							;Goalie X pushed against the net with the puck near: if he is m
 	pla
 	pla
 	pla
-	sep #$20
+	sep #$20						; 8-bit A
 	pla
-	rep #$30
+	rep #$30						; 16-bit registers
 	lda.b d0						; net Xvel/Yvel = speed / 4; player stops
 	lsr a
 	lsr a

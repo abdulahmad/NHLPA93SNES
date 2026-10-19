@@ -176,15 +176,15 @@ passtoa0:							;Pass the puck to player a0, leading him by his speed
 	sta.b d2
 .2:
 	lda.b d2
-	sep #$20
+	sep #$20						; 8-bit A
 	sta.w puckvz+1
-	rep #$30
+	rep #$30						; 16-bit registers
 	cmp.w #$000C
 	bcc .3
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.b #$0C
 	sta.w puckvz+1
-	rep #$30
+	rep #$30						; 16-bit registers
 .3:
 	ldy.b a0
 	lda.b d2

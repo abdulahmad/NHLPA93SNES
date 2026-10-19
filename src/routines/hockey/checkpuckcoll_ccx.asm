@@ -161,7 +161,7 @@ checkpuckcoll_ccx:					;Puck contact with a player's stick, body or the goalie
 	bcs .exit						; dist^2 greater than 64: no contact
 	jsl.l puckbody
 .exit:								; restore the registers and return
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$001A
 .restore:							; pull d0 through a3 back from the stack
 	pla
@@ -169,7 +169,7 @@ checkpuckcoll_ccx:					;Puck contact with a player's stick, body or the goalie
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	rtl
 .chkgoalie:							; goalie: test a box around the puck
 	lda.w Xpos,y					; goalie x

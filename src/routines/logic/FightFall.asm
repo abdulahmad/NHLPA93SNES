@@ -22,10 +22,10 @@ FightFall:							;Player X lost the fight: the other player gets a fighting pena
 	ldy.b a0
 	cmp.w SCnum,y					; penalty of the a0 player?
 	bne .loop
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.b #PenFighting2				; it becomes PenFighting2
 	sta.b [a1]
-	rep #$20
+	rep #$20						; 16-bit A
 	pla
 	sta.b a1
 	pla

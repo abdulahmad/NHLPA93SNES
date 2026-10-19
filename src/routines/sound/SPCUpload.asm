@@ -1,7 +1,7 @@
 SPCUpload:							;Send an upload stream (blocks of length, address and data) to the sound
 									;processor's boot loader, with NMI off
 	stz.w cursong
-	sep #$20
+	sep #$20						; 8-bit A
 	stz.w NMITIMEN					; NMI off; vbactive; queue empty; APUIO0 = $F8
 	lda.b #$01
 	sta.b vbactive
@@ -10,7 +10,7 @@ SPCUpload:							;Send an upload stream (blocks of length, address and data) to 
 	stz.b sndqout
 	lda.b #$F8
 	sta.w APUIO0
-	rep #$30
+	rep #$30						; 16-bit registers
 	ldy.w #$0000
 	lda.w #$BBAA
 	jmp.w .ready
@@ -20,7 +20,7 @@ SPCUpload:							;Send an upload stream (blocks of length, address and data) to 
 	lda.w #$00CC
 	bra .header
 .next:								;next block: first data byte
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.b [sndptr],y
 	iny
 	bpl .first
@@ -48,9 +48,9 @@ SPCUpload:							;Send an upload stream (blocks of length, address and data) to 
 	inc a
 	jmp.w .send
 .send:								;APUIO0 = index, APUIO1 = data byte
-	rep #$30
+	rep #$30						; 16-bit registers
 	sta.w APUIO0
-	sep #$20
+	sep #$20						; 8-bit A
 	dex
 	bne .byte
 	jmp.w .endblk
@@ -64,9 +64,9 @@ SPCUpload:							;Send an upload stream (blocks of length, address and data) to 
 	jmp.w .header
 .header:							;block header: X = length, APUIO2/3 = APU address; APUIO1 = 1 for a data
 									;block, 0 to jump
-	sep #$20
+	sep #$20						; 8-bit A
 	pha
-	rep #$30
+	rep #$30						; 16-bit registers
 	lda.b [sndptr],y
 	tax
 	iny
@@ -87,7 +87,7 @@ SPCUpload:							;Send an upload stream (blocks of length, address and data) to 
 	tay
 	inc.b sndptr+2
 .more:
-	sep #$20
+	sep #$20						; 8-bit A
 	cpx.w #$0001					; APUIO1 = 1 if more data (length > 0)
 	lda.b #$00
 	rol a
@@ -102,7 +102,7 @@ SPCUpload:							;Send an upload stream (blocks of length, address and data) to 
 	bvc .done						; V set: more blocks
 	jmp.w .next
 .done:								;last block (length 0): the driver runs
-	rep #$30
+	rep #$30						; 16-bit registers
 	stz.w APUIO0
 	stz.b vbactive
 	rtl

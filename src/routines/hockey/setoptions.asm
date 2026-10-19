@@ -23,18 +23,18 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	cpx.w #$0400
 	bne .clrslottime
 	stz.b DMAlistend
-	sep #$20
+	sep #$20						; 8-bit A
 	cli
 	lda.w RDNMI
 	lda.b #NMITIMEN_NMI|NMITIMEN_JOY
 	sta.w NMITIMEN
-	rep #$30
+	rep #$30						; 16-bit registers
 	lda.b vcount
 .vwait:
 	cmp.b vcount
 	beq .vwait
 	jsl.l InitPPU
-	sep #$20
+	sep #$20						; 8-bit A
 	cli
 	lda.w RDNMI
 	lda.b #NMITIMEN_NMI|NMITIMEN_JOY
@@ -51,7 +51,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	sta.w BG12NBA
 	lda.b #TM_BG1|TM_BG2|TM_OBJ
 	sta.w TM
-	rep #$30
+	rep #$30						; 16-bit registers
 	stz.w printfontset
 	stz.w charofs
 	stz.w charofs2
@@ -72,7 +72,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	lda.w #GameSetUpMap>>16
 	sta.b tmp1
 	jsl.l DecompressBytecode
-	sep #$20
+	sep #$20						; 8-bit A
 	stz.w CGADD
 	ldx.w #$0000
 .setuppal:
@@ -90,7 +90,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	inx
 	cpx.w #$0100
 	bne .rinkpal
-	rep #$30
+	rep #$30						; 16-bit registers
 	lda.w #$1000
 	sta.w VMADDL
 	ldx.w #$0000
@@ -163,7 +163,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	jsl.l Readjoy12
 	lda.w #$0000
 	sta.b sprpriority
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font2,$00,$00)
 	jsl.l InitSortObjects
 	lda.w #$0028
@@ -174,7 +174,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	lda.w #.text>>16
 	sta.b a1+2
 .textlp:							;print the .text lines until a 0 byte
-	jsl.l print
+	jsl.l print						; print it
 	ldy.w #$0002
 	lda.b [a1],y
 	and.w #$00FF
@@ -392,7 +392,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	jml.l PrintTeamNames
 .psd:								;print the choice of line d7 at x $11 (14 chars erased first): string d3
 									;of its .pl list; the team lines print the team name (.psdtp)
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font2Pri,$11,$0D)
 	lda.w printy
 	clc
@@ -436,7 +436,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	sta.b a0
 	dec.b d3
 	bpl .psd3
-	jml.l print
+	jml.l print						; print it
 .psdtp:								;team line: the name of team d3 from its bank $83 team record, or
 									;.playoffs in Cont. Playoffs
 	ldy.b d7
@@ -467,7 +467,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	lda.w #.playoffs>>16
 	sta.b a1+2
 .print:
-	jml.l print
+	jml.l print						; print it
 .playoffs:							;the Team 1 / Team 2 choice in Cont. Playoffs
 	%String("Playoffs")
 .nms:								;move to line d7 + d0 (0..$C), skipping the lines fixed in this mode
@@ -525,7 +525,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	jml.l Framer
 .setrect:							;printx $10, printy $C + d3, frame size d0 x d1 = $10 x 3 (5 tall for Team
 									;1 in the playoff modes)
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1,$10,$0C)
 	lda.w printy
 	clc

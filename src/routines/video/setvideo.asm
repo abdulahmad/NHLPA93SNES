@@ -12,9 +12,9 @@ setvideo:							;Once per game frame, when vblank is idle: build the sprite tabl
 	inc.b fadein					; fade in counter
 .go:								;clear the sprite table
 	jsl.l ClearSprites				; clear the sprite table (all sprites off screen)
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000					; save a0 through the 29 words after it
-.savea:
+.savea:								; save a0 and the words after it (30 words)
 	lda.b a0,x
 	pha
 	inx

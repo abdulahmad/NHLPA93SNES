@@ -42,7 +42,7 @@ SetHor:								;Switch to the horizontal rink (the scoreboard screen)
 	stz.w vramrow					; vram row = 0
 	jsl.l SprSort					; sort the sprites
 	jsl.l SetHor_rink				; set up the horizontal rink
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$001A					
 .resta:								; pull a0 and the 13 words after it back
 	pla
@@ -59,6 +59,6 @@ SetHor:								;Switch to the horizontal rink (the scoreboard screen)
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	ldx.b a3						; X = a3
 	rtl

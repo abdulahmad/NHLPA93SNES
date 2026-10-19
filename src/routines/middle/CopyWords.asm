@@ -27,5 +27,5 @@ CopyWords:							;Copy d0 bytes from [d2] to [d1], a word at a time
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	rtl

@@ -26,7 +26,7 @@ setupice:							;Set up the rink: the variables, the rink and text graphics, the
 	sta.w charofs
 	stz.w charofs+2
 	jsl.l InitPPU					; PPU init: PPU registers off/clear, sound driver start
-	sep #$20
+	sep #$20						; 8-bit A
 	cli
 	lda.w RDNMI
 	lda.b #NMITIMEN_NMI|NMITIMEN_JOY	; NMI on, auto joypad read
@@ -43,7 +43,7 @@ setupice:							;Set up the rink: the variables, the rink and text graphics, the
 	sta.w BG12NBA
 	lda.b #TM_BG1|TM_BG2|TM_OBJ		; TM: BG1, BG2, sprites
 	sta.w TM
-	rep #$30
+	rep #$30						; 16-bit registers
 	ldx.w #$00FE
 .pal:								;rink palette to both halves of palbuffer
 	lda.l RinkPalette,x

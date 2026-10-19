@@ -65,7 +65,7 @@ SetLCmode2:							;Draw the line change box for team a2, one row per line it can
 	ora.w #$2000					; text attribute $20
 	ldy.w #$0002
 	sta.b [a1],y
-	jsl.l print
+	jsl.l print						; print it
 	lda.b d0
 	pha
 	lda.w #linelist					; linelist

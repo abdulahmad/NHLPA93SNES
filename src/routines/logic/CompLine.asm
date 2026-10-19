@@ -1,25 +1,25 @@
 CompLine:							;The computer team picks a line by the man advantage, the score late in
 									;the game and the line energies
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.save:
+.save:								; save d0 and the words after it (6 words)
 	lda.b d0,x
 	pha
 	inx
 	inx
 	cpx.w #$000C
 	bne .save
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.savea:
+.savea:								; save a0 and the words after it (2 words)
 	lda.b a0,x
 	pha
 	inx
 	inx
 	cpx.w #$0004
 	bne .savea
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	lda.w #$0003
 	sta.b d0
 	ldy.b a2
@@ -57,24 +57,24 @@ CompLine:							;The computer team picks a line by the man advantage, the score 
 	ldy.b a2
 	sta.w tmline,y
 .ex:
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0002
-.resta:
+.resta:								; pull a0 and the words after it back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .resta
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$000A
-.restore:
+.restore:							; pull d0 and the words after it back
 	pla
 	sta.b d0,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	rtl
 .nopwr:
 	ldy.b a2

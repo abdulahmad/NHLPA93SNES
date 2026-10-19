@@ -2,7 +2,7 @@ remap:								;Copy tiles to video memory with each pixel color remapped through
 	lda.w #$000E					; start at row 14 of the tile
 	sta.b tmp2+1
 .tile:								; next row pair
-	rep #$30
+	rep #$30						; 16-bit registers
 	ldy.b tmp2+1					; row offset
 	lda.b [a0],y					; bitplanes 0-1
 	sta.b tmp0

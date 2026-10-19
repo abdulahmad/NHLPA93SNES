@@ -1,8 +1,8 @@
 ContinuePlayoffs:					;Continue the playoffs: read the playoff state back from the password bits
 									;and rebuild the tree. Unused
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000					; save d0 through d7
-.save:
+.save:								; save d0 and the words after it (16 words)
 	lda.b d0,x
 	pha
 	inx
@@ -10,16 +10,16 @@ ContinuePlayoffs:					;Continue the playoffs: read the playoff state back from t
 	cpx.w #$0020
 	bne .save						; restore X
 	ldx.b xsave						; X again
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000					; save a0 through a3
-.savea:
+.savea:								; save a0 and the words after it (8 words)
 	lda.b a0,x
 	pha
 	inx
 	inx
 	cpx.w #$0010
 	bne .savea						; restore X
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	lda.w #passbits					; a3 = passbits
 	sta.b a3
 	lda.w #$0000

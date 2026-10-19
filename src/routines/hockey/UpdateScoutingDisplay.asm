@@ -108,10 +108,10 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	beq .eol
 	inc.b d0
 .copy:
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.b [a2]
 	sta.b [a0]
-	rep #$30
+	rep #$30						; 16-bit registers
 	inc.b a0
 	inc.b d1
 	lda.b [a2]
@@ -173,7 +173,7 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	clc
 	adc.w printy
 	sta.w printy
-	jsl.l print
+	jsl.l print						; print it
 	lda.w DispAttribCtr
 	clc
 	adc.b d1

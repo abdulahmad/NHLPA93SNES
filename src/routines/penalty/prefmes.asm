@@ -3,7 +3,7 @@ prefmes:							;Print the message for penalty d0, or clear it when negative: und
 		;   one centered line on the horizontal rink
 	stx.b xsave						; save d0 through d5
 	ldx.w #$0000
-.save:
+.save:								; save d0 and the words after it (6 words)
 	lda.b d0,x
 	pha
 	inx
@@ -112,7 +112,7 @@ prefmes:							;Print the message for penalty d0, or clear it when negative: und
 .ex:
 	stx.b xsave						; keep X
 	ldx.w #$0002					; pull a1 back
-.resta1:
+.resta1:							; pull a1 and the words after it back
 	pla
 	sta.b a1,x
 	dex

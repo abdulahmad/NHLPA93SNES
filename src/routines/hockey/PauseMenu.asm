@@ -78,7 +78,7 @@ PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start 
 	jsl.l TeamRosterScreen
 	jsl.l sndqreset
 	jsl.l forceblack
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.b #$00
 	sta.w BG1SC
 	lda.b #$05
@@ -95,7 +95,7 @@ PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start 
 	inx
 	cpx.w #$0080
 	bne .pal
-	rep #$30
+	rep #$30						; 16-bit registers
 	lda.w #$FF00
 	sta.w charofs
 	stz.w charofs+2

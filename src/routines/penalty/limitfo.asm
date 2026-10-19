@@ -1,24 +1,24 @@
 limitfo:							;Keep the face off spot away from the blue line for every called penalty
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.save:
+.save:								; save d0 and the words after it (4 words)
 	lda.b d0,x
 	pha
 	inx
 	inx
 	cpx.w #$0008
 	bne .save
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.savea:
+.savea:								; save a0 and the words after it (4 words)
 	lda.b a0,x
 	pha
 	inx
 	inx
 	cpx.w #$0008
 	bne .savea
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	lda.w #PenBuf
 	sta.b a0
 	lda.w #$0000
@@ -29,24 +29,24 @@ limitfo:							;Keep the face off spot away from the blue line for every called 
 	inc.b a0
 	lda.b [a0]
 	bne .loop
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0006
-.resta:
+.resta:								; pull a0 and the words after it back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .resta
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0006
-.restore:
+.restore:							; pull d0 and the words after it back
 	pla
 	sta.b d0,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	rtl
 .lf:								;a0 = PenBuf entry
 	lda.b [a0]						; player SCnum*2; blue line +-$58 by pfgoal

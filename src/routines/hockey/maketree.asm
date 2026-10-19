@@ -1,25 +1,25 @@
 maketree:							;Build the playoff tree from the seeds and the series wins, then set the
 									;controllers
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.save:
+.save:								; save d0 and the words after it (10 words)
 	lda.b d0,x
 	pha
 	inx
 	inx
 	cpx.w #$0014
 	bne .save
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.savea:
+.savea:								; save a0 and the words after it (8 words)
 	lda.b a0,x
 	pha
 	inx
 	inx
 	cpx.w #$0010
 	bne .savea
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	lda.w postarts					; a1 = playoffseats + 16 * postarts
 	asl a
 	asl a
@@ -55,10 +55,10 @@ maketree:							;Build the playoff tree from the seeds and the series wins, then
 	and.w #$0001
 	sta.b d1
 	tay
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.b [a0],y
 	sta.b [a1]
-	rep #$20
+	rep #$20						; 16-bit A
 	inc.b a1
 	inc.b a0
 	inc.b a0
@@ -90,24 +90,24 @@ maketree:							;Build the playoff tree from the seeds and the series wins, then
 	bpl .2
 	jsl.l FigureJoy
 .nogames:
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$000E
-.resta:
+.resta:								; pull a0 and the words after it back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .resta
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0012
-.restore:
+.restore:							; pull d0 and the words after it back
 	pla
 	sta.b d0,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	ldx.b a3
 	rtl
 .sett:								;series games 2, 3, 5 in tree order, the others flipped (gsftf)

@@ -4,7 +4,7 @@ vb2:								;Vblank for palette fades only: set the brightness, no transfers
 	sta.w INIDISP					; to the screen
 vb2_main:							;common vblank tail: vcount, sound tick (p_music_vblank), brightness fades
 									;(cramfade), rti
-	rep #$30
+	rep #$30						; 16-bit registers
 	inc.b vcount					; frame counter
 	bne .tick						; carry into the high word
 	inc.b vcount+2

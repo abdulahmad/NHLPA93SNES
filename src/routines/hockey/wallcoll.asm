@@ -4,16 +4,16 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	sta.w Wallcos,x
 	lda.b d1
 	sta.w Wallsin,x
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.save:
+.save:								; save d2 and the words after it (4 words)
 	lda.b d2,x
 	pha
 	inx
 	inx
 	cpx.w #$0008
 	bne .save
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	lda.b d1						;v1n = (Yvel*cos - Xvel*sin)/256, negated; v1t = (Xvel*cos + Yvel*sin)/256
 	pha
 	lda.b d0
@@ -252,13 +252,13 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 .nocoll:
 	pla
 	pla
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0006
-.restore:
+.restore:							; pull d2 and the words after it back
 	pla
 	sta.b d2,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	rtl

@@ -2,7 +2,7 @@ CompShoot:							;Computer player X shoots
 	pla								; pop the caller
 	sep #$20						; 8-bit A
 	pla
-	rep #$30
+	rep #$30						; 16-bit registers
 	lda.w pucky						; puck y
 	sta.b d0
 	lda.w pfgoal,x					; goal end

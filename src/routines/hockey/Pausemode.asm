@@ -23,7 +23,7 @@ Pausemode:							;Pause mode: save the screen, stop the sound, show the pause me
 .top:								;draw the pause screen
 	jsl.l printbigz					; big PAUSE title and the menu frame (22 x 7)
 	%StringCt(CC_Font1Pri,$0B,$02,"PAUSE")
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pri,$05,$0C)
 	lda.w #$0016
 	sta.b d0

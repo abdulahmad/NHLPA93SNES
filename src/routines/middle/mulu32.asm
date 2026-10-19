@@ -5,33 +5,33 @@ mulu32:								;Unsigned 32-bit multiply: mulres = mula * mulb
 	lda.b mulb						; mulb low byte
 	sta.w WRMPYB
 	rep #$30						; 16-bit
-	rep #$30
+	rep #$30						; 16-bit registers
 	clc
 	lda.w RDMPYL					; product
 	sta.b mulres					; mulres low
 	stz.b mulres+2					; high word 0
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.b mulb+1					; mulb byte 1
 	sta.w WRMPYB
-	rep #$30
-	rep #$30
+	rep #$30						; 16-bit registers
+	rep #$30						; 16-bit registers
 	clc
 	lda.w RDMPYL					; product
 	adc.b mulres+1					; add
 	sta.b mulres+1
-	sep #$20
+	sep #$20						; 8-bit A
 	bcc .c1							; no carry
 	inc.b mulres+3					; carry
 .c1:
 	lda.b mulb+2					; mulb byte 2
 	sta.w WRMPYB
-	rep #$30
-	rep #$30
+	rep #$30						; 16-bit registers
+	rep #$30						; 16-bit registers
 	clc
 	lda.w RDMPYL					; product
 	adc.b mulres+2					; add
 	sta.b mulres+2
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.b mulb+3					; mulb byte 3
 	sta.w WRMPYB
 	clc
@@ -45,25 +45,25 @@ mulu32:								;Unsigned 32-bit multiply: mulres = mula * mulb
 	sta.w WRMPYA
 	lda.b mulb						; times mulb byte 0
 	sta.w WRMPYB
-	rep #$30
-	rep #$30
+	rep #$30						; 16-bit registers
+	rep #$30						; 16-bit registers
 	clc
 	lda.w RDMPYL					; product
 	adc.b mulres+1					; add
 	sta.b mulres+1
-	sep #$20
+	sep #$20						; 8-bit A
 	bcc .c2
 	inc.b mulres+3
 .c2:
 	lda.b mulb+1					; mulb byte 1
 	sta.w WRMPYB
-	rep #$30
-	rep #$30
+	rep #$30						; 16-bit registers
+	rep #$30						; 16-bit registers
 	clc
 	lda.w RDMPYL					; product
 	adc.b mulres+2					; add
 	sta.b mulres+2
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.b mulb+2					; mulb byte 2
 	sta.w WRMPYB
 	clc
@@ -77,13 +77,13 @@ mulu32:								;Unsigned 32-bit multiply: mulres = mula * mulb
 	sta.w WRMPYA
 	lda.b mulb						; times mulb byte 0
 	sta.w WRMPYB
-	rep #$30
-	rep #$30
+	rep #$30						; 16-bit registers
+	rep #$30						; 16-bit registers
 	clc
 	lda.w RDMPYL					; product
 	adc.b mulres+2					; add
 	sta.b mulres+2
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.b mulb+1					; mulb byte 1
 	sta.w WRMPYB
 	clc

@@ -47,7 +47,7 @@ puckbody:							;The puck hits player a2: a fast high puck knocks him down, a sl
 	sta.w Xvel+1,x
 	lda.b d1
 	sta.w Yvel+1,x
-	rep #$30
+	rep #$30						; 16-bit registers
 	jsl.l puckflip					; puckflip
 	lda.w Zpos,x
 	sec

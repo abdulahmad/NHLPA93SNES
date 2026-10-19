@@ -1,6 +1,6 @@
 VBlank:								;Main game play vblank: run the transfer list, set the rink scroll and
 									;send the sprite table
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.b #INIDISP_FBLANK
 	sta.w INIDISP
 	ldx.b DMAlistend
@@ -28,30 +28,30 @@ VBlank:								;Main game play vblank: run the transfer list, set the rink scrol
 	dex
 	dex
 	bpl .dmaloop
-	rep #$30
+	rep #$30						; 16-bit registers
 	stz.b DMAlistend
 	lda.w Hscroll
 	clc
 	adc.w #$00C0					; BG2 h-scroll = Hscroll + 192
-	sep #$20
+	sep #$20						; 8-bit A
 	sta.w BG2HOFS
 	xba
 	sta.w BG2HOFS
 	lda.w Vscroll
 	and.b #$07						; fine row
 	pha
-	rep #$30
+	rep #$30						; 16-bit registers
 	lda.w vramrow
 	asl a
 	asl a
 	asl a							; vramrow*8 | (Vscroll&7)
-	sep #$20
+	sep #$20						; 8-bit A
 	ora.b $01,s
 	sta.w BG2VOFS
 	xba
 	sta.w BG2VOFS
 	pla
-	rep #$30
+	rep #$30						; 16-bit registers
 	lda.w #DMA_OAM					; DMAP7=$00 (A->B, increment), BBAD7=$04 (OAMDATA)
 	sta.w DMAP7
 	lda.w #Satt
@@ -59,12 +59,12 @@ VBlank:								;Main game play vblank: run the transfer list, set the rink scrol
 	lda.w #$0220					; $220 bytes: 128 sprites + high table
 	sta.w DAS7L
 	stz.w OAMADDL
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.b #$00
 	sta.w A1B7
 	lda.b #MDMAEN_CH7
 	sta.w MDMAEN
-	rep #$30
+	rep #$30						; 16-bit registers
 	lda.w #vb2						; one shot: back to vb2 next frame
 	sta.b vbint
 	jmp.w vb2

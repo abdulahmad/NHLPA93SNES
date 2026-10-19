@@ -8,7 +8,7 @@ ClrHor:								;Switch back from the horizontal rink to the vertical ice rink
 	inx
 	cpx.w #$003C
 	bne .savea
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	stz.w sfhormode					; vertical
 	lda.w #999						; Oldrow = 999: redraw the rink rows
 	sta.w Oldrow

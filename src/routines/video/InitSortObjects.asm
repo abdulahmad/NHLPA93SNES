@@ -114,13 +114,13 @@ InitSortObjects:					;Clear the sorted objects and set up the arrows, the rink s
 .next:
 	inc.b a3
 	inc.b a3
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.b d6
 	asl a
 	ldy.b a1
 	sta.w OOlist,y
 	inc.b a1
-	rep #$30
+	rep #$30						; 16-bit registers
 	lda.b d6
 	ldy.b a4
 	sta.w OOlistpos,y

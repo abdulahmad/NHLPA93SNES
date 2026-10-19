@@ -1,24 +1,24 @@
 unusedEnergyBar:					;Build an energy bar of d0 in the message area without printing it. Unused
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.save:
+.save:								; save d0 and the words after it (8 words)
 	lda.b d0,x
 	pha
 	inx
 	inx
 	cpx.w #$0010
 	bne .save
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.savea:
+.savea:								; save a1 and the words after it (2 words)
 	lda.b a1,x
 	pha
 	inx
 	inx
 	cpx.w #$0004
 	bne .savea
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	lda.w #$2000
 	sta.w printa
 	lda.b d0
@@ -84,33 +84,33 @@ unusedEnergyBar:					;Build an energy bar of d0 in the message area without prin
 	sta.b a1
 	lda.w #mesarea>>16
 	sta.b a1+2
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.w mesarea+5
 	ldy.w mesarea+2
 	sta.w mesarea+2
 	sty.w mesarea+5
-	rep #$30
+	rep #$30						; 16-bit registers
 	lda.w mesarea+3
 	xba
 	sta.w mesarea+3
 	lda.w #$4000
 	trb.w printa
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0002
-.resta:
+.resta:								; pull a1 and the words after it back
 	pla
 	sta.b a1,x
 	dex
 	dex
 	bpl .resta
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$000E
-.restore:
+.restore:							; pull d0 and the words after it back
 	pla
 	sta.b d0,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	rtl

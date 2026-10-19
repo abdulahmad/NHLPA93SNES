@@ -1,14 +1,14 @@
 PushBits:							;password bits = password bits * d1 + d0
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000					; save d0 through d3
-.save:
+.save:								; save d0 and the words after it (4 words)
 	lda.b d0,x
 	pha
 	inx
 	inx
 	cpx.w #$0008
 	bne .save
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	lda.b d0						; d0 <-> d1
 	ldx.b d1
 	sta.b d1
@@ -26,5 +26,5 @@ PushBits:							;password bits = password bits * d1 + d0
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	rtl

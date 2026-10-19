@@ -12,7 +12,7 @@ NewTicker3:							;Show the ticker box for game d3: round, period and both teams
 	lda.w sflags					; pause screen flag
 	bit.w #sfpz
 	bne .pj							; pause screen: one position code is enough
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pri,$02,$17)	; print the position code again
 .pj:
 	lda.w sfhormode					; horizontal rink mode

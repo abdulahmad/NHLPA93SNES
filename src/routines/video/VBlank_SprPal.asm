@@ -35,7 +35,7 @@ VBlank_SprPal:						;Vblank: as VBlank, plus the sprite palettes; once, then bac
 	lda.w #$0220					; $220 bytes
 	sta.w DAS7L
 	stz.w OAMADDL					; OAM address 0
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.b #$00
 	sta.w A1B7
 	lda.b #MDMAEN_CH7				; go
@@ -47,14 +47,14 @@ VBlank_SprPal:						;Vblank: as VBlank, plus the sprite palettes; once, then bac
 	sta.w A1T7L
 	lda.w #$0040					; 32 colors
 	sta.w DAS7L
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.b #$A0						; sprite palettes 2-3
 	sta.w CGADD
 	lda.b #palbuffer>>16			; bank
 	sta.w A1B7
 	lda.b #MDMAEN_CH7				; go
 	sta.w MDMAEN
-	rep #$30
+	rep #$30						; 16-bit registers
 	lda.w #vb2						; back to vb2 next frame
 	sta.b vbint
 	jmp.w vb2

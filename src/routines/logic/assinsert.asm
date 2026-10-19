@@ -13,8 +13,8 @@ assreplace:							;replace current assignment on player a3. d0 = assignment
 	asl a
 	adc.w assnum,x
 	tay
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.b d0						; the assignment
 	sta.w asslist,y					; store it
-	rep #$30
+	rep #$30						; 16-bit registers
 	rtl

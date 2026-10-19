@@ -9,11 +9,11 @@ setplayercolors:					;Set both teams' colors and send the palette
 	sta.w A1T7L						; source palbuffer
 	lda.w #$0200
 	sta.w DAS7L						; $200 bytes
-	sep #$20
+	sep #$20						; 8-bit A
 	stz.w CGADD						; CGRAM address 0
 	lda.b #palbuffer>>16
 	sta.w A1B7
 	lda.b #MDMAEN_CH7
 	sta.w MDMAEN					; go
-	rep #$30
+	rep #$30						; 16-bit registers
 	rtl

@@ -78,11 +78,11 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	clc
 	adc.b d0
 	tay
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.w pchecks,y
 	inc a
 	sta.w pchecks,y
-	rep #$20
+	rep #$20						; 16-bit A
 	lda.w fightagg,x
 	bne .nostat
 	inc.w ChkCnt

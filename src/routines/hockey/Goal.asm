@@ -89,23 +89,23 @@ Goal:								;The puck is in the goal: add the score, sound the siren, log it, u
 	clc
 	adc.b d0
 	tay
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.w tmgoals,y
 	inc a
 	sta.w tmgoals,y
-	rep #$20
+	rep #$20						; 16-bit A
 	ldy.b a2						; assists
 	lda.w tmtouch2,y
 	bmi .noast
-	sep #$20
+	sep #$20						; 8-bit A
 	sta.b [a0]
-	rep #$20
+	rep #$20						; 16-bit A
 	inc.b a0
 	lda.w tmtouch3,y
 	bmi .noast
-	sep #$20
+	sep #$20						; 8-bit A
 	sta.b [a0]
-	rep #$20
+	rep #$20						; 16-bit A
 .noast:
 	jsl.l PenGoalStuff				; PenGoalStuff, printscores1, ascore for the scoring team
 	jsl.l printscores1
