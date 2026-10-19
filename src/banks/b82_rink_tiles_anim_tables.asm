@@ -11,7 +11,7 @@ IceRinkTiles:						;packed rink tiles
 
 incsrc "../routines/penalty/penalties/SetPA2.asm"
 incsrc "../routines/penalty/ticker/UpdateScores.asm"
-incsrc "../routines/sram/BitstoPW.asm"
+incsrc "../routines/hockey/password/BitstoPW.asm"
 incsrc "../routines/sound/sndqreset.asm"
 incsrc "../routines/sound/SPCBootUpload.asm"
 incsrc "../routines/sound/SPCGameUpload.asm"
