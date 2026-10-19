@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""snesgfx.py - unpack and view the NHLPA Hockey '93 (SNES) graphics assets in data/.
+"""snesgfx.py - unpack and view the NHLPA Hockey '93 (SNES) graphics assets in Extracted/ (tools/extract.py).
 
-Formats (see data/README.md):
-  *.pak       packed stream for the game's decompressor at $86FA3E (DecompressGraphics)
+Formats (see src/data/README.md):
+  *.pak       packed stream for the game's decompressor at $86FA3E (DecompressBytecode)
   *.chr       SNES 4bpp planar tiles, 32 bytes per 8x8 tile
   *.snesmap   SNES BG map words: vflip 15, hflip 14, priority 13, palette 12-10, tile 9-0
-  *.snespal   SNES palette, BGR555 words (16 colours per palette row); the team files hold 93G words (see team_colours)
+  *.snespal   SNES palette, BGR555 words (16 colours per palette row); the team *.pal files hold 93G words (see team_colours)
   *.pieces    sprite frame pieces (Extracted/Graphics/Sprites/setNN, with setNN.chr; the frame tables are read from src/data/gfx/SpriteSet*.asm)
 
 Commands:
@@ -44,7 +44,7 @@ def lorom_offset(addr):
 
 
 def unpack(data, start=0):
-    """Emulate DecompressGraphics ($86FA3E). Return (output bytes, packed length).
+    """Emulate DecompressBytecode ($86FA3E). Return (output bytes, packed length).
 
     Control byte c:
       $00-$1F  copy the next (c & $1F) + 1 bytes
@@ -185,7 +185,7 @@ def snes_rgb(v):
 
 
 def team_colours(path):
-    """16 colours of a team .snespal: 93G words 0000 BBBB GGGG RRRR, high byte first (SetTeamColors $80B706 shifts each up 1 bit)."""
+    """16 colours of a team .pal: 93G words 0000 BBBB GGGG RRRR, high byte first (SetTeamColors $80B706 shifts each up 1 bit)."""
     data = open(path, 'rb').read()
     return [snes_rgb((v & 0xF) << 1 | (v >> 4 & 0xF) << 6 | (v >> 8 & 0xF) << 11)
             for v in (data[i] << 8 | data[i + 1] for i in range(0, 32, 2))]

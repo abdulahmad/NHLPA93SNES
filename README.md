@@ -28,7 +28,7 @@ The SNES port is a hybrid: it began as a port of NHL92 Genesis (likely while NHL
 - `lst/nhlpa93snes.bin` reference ROM (committed, as NHL94Genesis does).
 - `tools/disasm65816.py` the quick-pass generator (recursive descent from the vectors, REP/SEP/PHP/PLP M/X tracking). Setup only; it wrote the old `bankXX_YYYY` slices.
 - `Extracted/` the incbin assets, extracted from the ROM by `tools/extract.py` (run by `tools/prebuild.py` on every build; not committed; folders Graphics, Sound, Text as in 93G); `src/data/README.md` describes the file formats (`.map.snesjim`, `.chr.pak`, `.snesmap`, `.pal`, ...).
-- `tools/snesgfx.py` unpacks the packed streams (a port of `DecompressGraphics`) and renders tiles, maps and screens to PNG.
+- `tools/snesgfx.py` unpacks the packed streams (a port of `DecompressBytecode`) and renders tiles, maps and screens to PNG.
 - `SEGMENT_AGENT.md` rules and the per-slice history, `PROMPT.md` the per-segment prompt (segment phase, finished), `docs/HANDOFF.md` setup notes and the cleanup progress.
 
 ## Build
