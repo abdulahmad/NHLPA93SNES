@@ -2,6 +2,7 @@ clrplayer:							;Take the controller off player X
 	lda.w pflags,x
 	bit.w #pfjoycon					; controlled?
 	beq asspenalty_rtl				; no: nothing to do
+;d4 = controller that holds this player (0 or 2); pick a new player for it
 	stz.b d4						; d4 = 0: controller 1
 	txa
 	lsr a							; player number

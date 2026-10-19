@@ -53,6 +53,7 @@ burst:								;Check button: a speed burst in the facing direction, which costs 
 	clc								; plus |Yvel|
 	adc.b tmp0
 	sta.w pspeed,x					; |Xvel|+|Yvel|
+;burst animation locks the controls until done
 	lda.w #SPAburst					; SPAburst $C7E, pfalock
 	sta.b d1
 	sta.w pfalock,x					; lock the animation

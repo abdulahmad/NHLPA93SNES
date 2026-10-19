@@ -92,6 +92,8 @@ passtoa0:							;Pass the puck to player a0, leading him by his speed
 	sta.b mulb
 	jsl.l muls16					; signed multiply
 	sta.b d1
+;solve the intercept of the puck (speed passspeed/4) with the receiver moving at constant velocity:
+;quadratic in time, j = velocity . displacement*2, k = |v|^2 - speed^2
 	lda.b d5
 	sta.b mula
 	eor.w #$FFFF					; negate

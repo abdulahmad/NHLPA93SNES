@@ -13,6 +13,7 @@ ShotMode:							;Pad input while shooting: aim with the pad and build shot power
 	lda.w SPAnum,x					; animation frame
 	cmp.w #$0010					; 4*4: past full windup
 	bcs .rts						; full windup: leave
+;wind-up: shot power grows by elapsed frames
 	lda.w passspeed					; shot speed
 	clc
 	adc.b d7

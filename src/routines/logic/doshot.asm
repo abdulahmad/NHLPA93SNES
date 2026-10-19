@@ -31,6 +31,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	txa
 	lsr a
 	sta.w shotplayer
+;did the shooter still have the puck?
 	cmp.w puckc						; wiffed shot
 	beq .hit
 	jmp.w .ex
@@ -80,6 +81,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	txa
 	lsr a
 	sta.w lastplayer
+;d1 = target goal y; (d0,d2) = x and z offsets for this direction from shotsets
 	lda.w #blueline+goalline
 	sta.b d1
 	lda.w pfgoal,x
@@ -109,6 +111,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	sbc.w pucky
 	sta.b d1
 	pha
+;d3 = distance to the target point
 	lda.b d0
 	pha
 	sta.b mula

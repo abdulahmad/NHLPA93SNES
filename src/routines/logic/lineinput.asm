@@ -1,6 +1,7 @@
 lineinput:							;Pad input while the line change box is open: choose a line, or skate
 	lda.b d1						; keep the presses
 	pha
+;a2 = own team struct (0 or 2)
 	stz.b a2						; team 0
 	lda.w pfteam,x					; a2 = the team of player X
 	beq .0							; team 0
