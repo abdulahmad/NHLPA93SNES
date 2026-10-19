@@ -2,7 +2,7 @@ NewPO:								;Start new playoffs with the same team 1 and build the tree
 	lda.w #32						; d0 = random 0-31
 	sta.b d0
 	jsl.l randomd0					; random seat
-.top:
+.top:								; next tree number (wraps at 32)
 	lda.b d0						; next seat
 	inc a
 	and.w #$001F					; 0-31
@@ -23,7 +23,7 @@ NewPO:								;Start new playoffs with the same team 1 and build the tree
 	bcc .loop
 	lda.w #23
 	sta.b d2
-.loop:
+.loop:								; find team 1 in this tree
 	lda.b [a0]						; seat team
 	inc.b a0						; next seat
 	and.w #$00FF					; byte
@@ -32,7 +32,7 @@ NewPO:								;Start new playoffs with the same team 1 and build the tree
 	dec.b d1						; next
 	bpl .loop						; more
 	bra .top						; not in the seat: next seat
-.found:
+.found:								; potree team = slot of OptTeam1
 	lda.b d1						; potreeteam = slot of OptTeam1
 	eor.w #$000F					; slot
 	sta.b d1						; reverse
@@ -49,12 +49,12 @@ NewPO:								;Start new playoffs with the same team 1 and build the tree
 	lda.w #7						; 8 series
 	sta.b d0
 	ldx.w #$0000					; X = 0
-.cg:
+.cg:								; clear the series wins of the game
 	stz.w gspotwins,x				; home wins
 	stz.w gspobwins,x				; visitor wins
 	inx								; next series
 	inx
 	dec.b d0						; count down
 	bpl .cg
-.tree:
+.tree:								; build the tree
 	jml.l maketree					; build the tree

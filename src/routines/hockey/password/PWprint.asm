@@ -3,7 +3,7 @@ PWprint:							;Print the password, unless it is hidden
 	bit.w #$0080
 	beq .show
 	jmp.w .rtl
-.show:
+.show:								; keep X and save the registers
 	stx.b xsave						; keep X
 	ldx.w #$0000
 .save:								; save d0 and the words after it (4 words)

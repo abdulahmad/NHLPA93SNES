@@ -12,27 +12,27 @@ PickRosterAnim:						;Pick the roster animation of a player's best qualifying ra
 	sbc.b tmp0						; minus the minimum
 	bmi .neg						; below it
 	bvc .best
-.ex1:
+.ex1:								; not eligible: leave
 	jmp.w SlideOutRosterPlayer_rtl	; not eligible
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .ex1
-.best:
+.best:								; better than the best so far
 	lda.b d1						; best so far
 	sec
 	sbc.b d2						; minus the previous best
 	bmi .neg1						; worse
 	bvc .z
-.ex2:
+.ex2:								; not eligible: leave
 	jmp.w SlideOutRosterPlayer_rtl	; not eligible
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvc .ex2
-.z:
+.z:									; is there a previous best?
 	lda.b d2						; previous best
 	beq .take						; none
 	lda.b tmp0
 	bne .take						; minimum zero
 	jmp.w SlideOutRosterPlayer_rtl	; skip it
-.take:
+.take:								; take it as the best
 	lda.b d1						; take it
 	sta.b d2
 	ldy.b a2						; team

@@ -18,7 +18,7 @@ puckglue:							;Player a2 takes the puck
 	stz.b a1						; a1 = 0
 	lda.w #$0002
 	sta.b a0						; a0 = 2
-.tm:
+.tm:								; other team loses its touch
 	ldy.b a0						; other team
 	lda.w #$FFFF					; no touches
 	sta.w tmtouch2,y				; other team loses its touches
@@ -37,7 +37,7 @@ puckglue:							;Player a2 takes the puck
 	clc								; crowd noise
 	adc.w #$00C8
 	sta.b crowdlevel
-.snd:
+.snd:								; d0 = the player number
 	lda.b a2						; player
 	lsr a							; number
 	sta.b d0						; d0
@@ -47,7 +47,7 @@ puckglue:							;Player a2 takes the puck
 	lda.w tmpasscomp,y				; passes completed
 	inc a							; one more
 	sta.w tmpasscomp,y
-.nrec:
+.nrec:								; no pass pending any more
 	lda.w #$FFFF					; none
 	sta.w passReceiverPlayerNum		; no receiver now
 	lda.w #sfspdir|sfssdir			; clear sfspdir/sfssdir
@@ -56,7 +56,7 @@ puckglue:							;Player a2 takes the puck
 	lda.w position,y				; position
 	beq .goalie						; goalie
 	jml.l setd0player				; give him to the controller
-.goalie:
+.goalie:							; goalie: count a shot, puck lockout 140
 	jsl.l ChkShotStat				; ChkShotStat (goalie made a save)
 	ldy.b a2						; player
 	lda.w #$008C					; temp5 = 140, count down for the faceoff
@@ -65,7 +65,7 @@ puckglue:							;Player a2 takes the puck
 	cmp.w #SPAgdive
 	beq .gdive						; diving: short
 	jml.l setd0player				; give him to the controller
-.gdive:
+.gdive:								; diving goalie: 5 frames
 	lda.w #$0005					; 5 frames
 	sta.w temp5,y
 	jml.l setd0player

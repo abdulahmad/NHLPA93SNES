@@ -21,7 +21,7 @@ assscore:							;Assignment: celebrating a goal; the scorer pumps his arm
 	sta.w puckc
 	lda.w #1800						; lockout 1800
 	sta.w nopuck,x
-.al:
+.al:								; animation locked?
 	lda.w pfalock,x					; animation locked?
 	bne .rtl
 	lda.w pflags,x					; player flags
@@ -39,10 +39,10 @@ assscore:							;Assignment: celebrating a goal; the scorer pumps his arm
 	bpl .0
 	lda.w #-90						; left side: -90
 	sta.w temp3,x
-.0:
+.0:									; y target is the scroll y
 	lda.w Vpos						; y target is the scroll y
 	sta.w temp4,x
-.nna:
+.nna:								; target in d0/d1, timer temp1
 	lda.w #rtss						; avoidance routine
 	sta.b a0
 	lda.w #rtss>>16
@@ -65,7 +65,7 @@ assscore:							;Assignment: celebrating a goal; the scorer pumps his arm
 	bne .nopump
 	lda.w #SPApump					; pump animation
 	sta.b d1
-.nopump:
+.nopump:							; start celebrate/pump animation
 	jsl.l SetSPA					; start animation d1
 .1:									;temp1 = random 120
 	lda.w #120

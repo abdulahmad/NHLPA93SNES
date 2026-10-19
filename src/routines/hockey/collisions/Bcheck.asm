@@ -4,11 +4,11 @@ Bcheck:								;Player a2 body checks a3: a3 falls if he is in front, and a char
 	lda.w pfalock,x					; animation locked?
 	beq .pos
 	jmp.w .rtl
-.pos:
+.pos:								; position of X: goalies can't be checked
 	lda.w position,x				; position
 	bne .fight						; goalies can't be checked
 	jmp.w .rtl
-.fight:
+.fight:								; fighting? then the penalties option
 	lda.w pf2fight,x				; fighting?
 	bne .rtl
 	lda.w OptPen					; penalties off: a2 needs randomd0($10 + aggression - a3 legstr) >= 12
@@ -24,7 +24,7 @@ Bcheck:								;Player a2 body checks a3: a3 falls if he is in front, and a char
 	jsl.l randoma					; random number 0 to A-1
 	cmp.w #12
 	bcc .rtl
-.dir:
+.dir:								; direction test: x of X minus the checker's x
 	lda.w Xpos,x					; x of X
 	sec
 	sbc.w Xpos,y					; minus the checker's x
@@ -54,7 +54,7 @@ Bcheck:								;Player a2 body checks a3: a3 falls if he is in front, and a char
 	lda.w #PenTripping				; penalty $20
 	sta.b d0
 	jsl.l AddPenalty				; call it
-.swap:
+.swap:								; swap X and the checker back
 	ldx.b a2						; swap back
 	ldy.b a3
 	stx.b a3

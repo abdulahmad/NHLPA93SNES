@@ -7,7 +7,7 @@ StartSong5:							;Start the mid-period music unless it is already playing
 	beq .cmd
 	jsl.l sndqreset					; reset the sound queue
 	jsl.l SPCGameUpload				; upload the game sound
-.cmd:
+.cmd:								; music cue 8
 	lda.w #$0008					; music cue number
 	jsl.l MusicCue					; driver command A (music cue)
 	lda.w #$0005

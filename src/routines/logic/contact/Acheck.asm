@@ -15,9 +15,9 @@ Acheck:								;Player X holds or hooks player a0
 	eor.w #$FFFF					; negate for the other end
 	inc a
 	sta.b d0
-.0:
+.0:									; a0 is ahead (toward the goal being attacked)
 	bmi .set						; negative: keep the hook
 	lda.w #SPAHold					; else hold
 	sta.b d1
-.set:
+.set:								; start hook/hold animation
 	jml.l SetSPA					; start animation d1

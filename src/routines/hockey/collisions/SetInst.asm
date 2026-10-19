@@ -15,7 +15,7 @@ SetInst:							;Start a fight between X and a2 when both are aggressive enough; 
 	jmp.w checkfight_rtl
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .ex1
-.r2:
+.r2:								; d1 = $10 - 2 * the checks of a2
 	lda.w pnum,y					; d1 = $10 - 2 * a2 checks
 	sta.b d1
 	lda.w pfteam,y
@@ -30,7 +30,7 @@ SetInst:							;Start a fight between X and a2 when both are aggressive enough; 
 	bit.w #$0080
 	beq .cnt
 	ora.w #$FF00
-.cnt:
+.cnt:								; times 2 (sign-extended)
 	asl a							; sign-extended, times 2
 	eor.w #$FFFF					; negate
 	inc a
@@ -47,7 +47,7 @@ SetInst:							;Start a fight between X and a2 when both are aggressive enough; 
 	jmp.w checkfight_rtl
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvs .ex2
-.set:
+.set:								; flag both players as fighting
 	lda.w #$0001					; flag both players as fighting
 	sta.w pf2fight,x				; pf2fight of X
 	sta.w pf2fight,y				; pf2fight of the opponent
@@ -60,7 +60,7 @@ SetInst:							;Start a fight between X and a2 when both are aggressive enough; 
 	beq .chk
 	cmp.w #SPAshoulderchkr
 	bne .rtl
-.chk:
+.chk:								; check the 6 teammates
 	stx.b a4						; keep X
 	lda.w #$0005					; check 6 teammates
 	sta.b d0

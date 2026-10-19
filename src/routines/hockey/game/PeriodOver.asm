@@ -15,13 +15,13 @@ PeriodOver:							;End of a period: the next period, overtime for a tied playoff
 	bne .ot							; keep overtime
 	lda.w #$0004					; regular season: game over
 	sta.w gsp
-.ot:
+.ot:								; tied: overtime
 	lda.w tmscore					; tied: overtime
 	cmp.w tmscore+2					; scores equal
 	beq .next						; not tied: game over
 	lda.w #$0004					; game over
 	sta.w gsp
-.next:
+.next:								; period length, horizontal rink, update the video
 	jsl.l ResetClock				; period length
 	jsl.l SetHor					; horizontal rink
 	jsl.l setvideo					; update the video
@@ -31,5 +31,5 @@ PeriodOver:							;End of a period: the next period, overtime for a tied playoff
 	cmp.w #$0004					; period 4 means game over
 	bne .per
 	jml.l GameOver					; end of the game
-.per:
+.per:								; start the next period
 	jmp.w StartPer					; start the next period

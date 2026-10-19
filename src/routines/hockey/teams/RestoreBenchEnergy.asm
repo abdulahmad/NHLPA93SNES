@@ -6,10 +6,10 @@ RestoreBenchEnergy:					;Once a second with line changes on, players on the benc
 	jsl.l .team
 	lda.w #$0002
 	sta.b a2
-.team:
+.team:								; last player
 	lda.w #(maxros-1)*2				; last player
 	sta.b d0
-.b0:
+.b0:								; on bench?
 	lda.b a2						; team
 	beq .away
 	lda.w #$0034					; away team offset
@@ -31,10 +31,10 @@ RestoreBenchEnergy:					;Once a second with line changes on, players on the benc
 	bra .next
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .next
-.max:
+.max:								; clamp the energy to the maximum
 	lda.w #$1000					; clamp
 	sta.w tmpde,y
-.next:
+.next:								; next roster slot
 	dec.b d0						; previous player
 	dec.b d0
 	bpl .b0

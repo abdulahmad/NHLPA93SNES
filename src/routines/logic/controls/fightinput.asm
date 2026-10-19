@@ -3,12 +3,12 @@ fightinput:							;Pad input in a fight: move and punch
 	ora.w Pencntdwn					; or the penalty countdown
 	bpl .go							; neither running
 	jmp.w .rtl						; else leave
-.go:
+.go:								; already fighting?
 	lda.w SPA,x						; animation
 	cmp.w #SPAfight					; already fighting
 	bne .input						; no
 	jmp.w .rtl						; leave
-.input:
+.input:								; skate with the dpad while fighting
 	lda.b d1						; keep the presses
 	pha
 ;skate with the dpad (unless no direction) while fighting
@@ -19,7 +19,7 @@ fightinput:							;Pad input in a fight: move and punch
 	and.w #$0007					; 0-7
 	sta.b d2
 	jsl.l playeracc					; skate that way
-.noa:
+.noa:								; keep the players face to face and in range of xc1
 ;keep the fighter face to face and near the fight scroll x (xc1): brake Xvel when it points away
 	lda.w xc1						; view x
 	clc
@@ -61,7 +61,7 @@ fightinput:							;Pad input in a fight: move and punch
 	sec
 	sbc.b d0						; minus it
 	sta.w Xvel,x
-.ind:
+.ind:								; d1 = new button presses again
 	pla								; presses back
 	sta.b d1
 	lda.w pf2aip,x					; already punching
@@ -75,21 +75,21 @@ fightinput:							;Pad input in a fight: move and punch
 	bit.w #$0080					; button
 	beq .p2
 	jml.l SetSPA					; start it
-.p2:
+.p2:								; low punch
 	lda.w #SPAflow					; low punch
 	sta.b d1
 	lda.b d2
 	bit.w #$8000					; button
 	beq .p3
 	jml.l SetSPA					; start it
-.p3:
+.p3:								; grab
 	lda.w #SPAfgrab					; grab
 	sta.b d1
 	lda.b d2
 	bit.w #$4000					; button
 	beq .nopunch
 	jml.l SetSPA					; start it
-.nopunch:
+.nopunch:							; no punch
 	stz.w pf2aip,x					; no punch
 .rtl:								; return
 	rtl

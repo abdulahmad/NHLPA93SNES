@@ -16,7 +16,7 @@ ReadPads:							;Once per frame, read the four pads: buttons held, new presses a
 	sta.w joypad3
 	lda.w JOY4L						; pad 4
 	sta.w joypad4
-.new:
+.new:								; new presses = changed and down
 	lda.w joypad1					; new presses = changed and down
 	eor.w padlast1					; last pad state
 	and.w joypad1					; down

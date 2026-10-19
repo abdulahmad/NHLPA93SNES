@@ -5,7 +5,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	bit.w #gmhl						; gmhl
 	beq .go
 	jmp.w .rtl
-.go:
+.go:								; region 0: puck height
 	stz.b d2						; region 0
 	lda.w Zpos+puckobj				; puck height
 	sec
@@ -19,7 +19,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 .low:								;puck region: +2 when low
 	inc.b d2
 	inc.b d2
-.side:
+.side:								; direction from the goalie to the puck, negated
 	lda.b d0						; direction from the goalie to the puck, relative to facedir
 	eor.w #$FFFF					; negate
 	inc a
@@ -44,7 +44,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	bne .lr
 	lda.w seed						; straight in front or behind: random side
 	sta.b d0
-.lr:
+.lr:								; side bit
 	lda.b d0						; side bit
 	and.w #$0004
 	lsr a
@@ -81,7 +81,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	lda.b d2						; mirror the side
 	eor.w #$0002
 	sta.b d2
-.noflip:
+.noflip:							; absolute value of the puck y velocity
 	lda.w puckvy					; puck y velocity
 	bit.w #$8000					; absolute value
 	beq .hard
@@ -95,7 +95,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	beq .dist
 	eor.w #$FFFF					; negate
 	inc a
-.dist:
+.dist:								; within 80..169?
 	cmp.w #$0050					; within 80..169?
 	bcc .frame
 	cmp.w #$00AA
@@ -123,7 +123,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	jmp.w .rtl
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvs .nosave
-.saved:
+.saved:								; save: count the shot, the goalie touches the puck
 	jsl.l ChkShotStat				; ChkShotStat
 	jsl.l a2touchpuck				; goalie touches the puck
 	lda.w seed+1					; puck body sound (one of 2)
@@ -137,7 +137,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	beq .vy
 	eor.w #$FFFF					; negate
 	inc a
-.vy:
+.vy:								; hard shot?
 	cmp.w #$3000					; hard shot?
 	bcc .nosong
 	lda.w #SFXcrowdcheer			; crowd: home save
@@ -147,9 +147,9 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	beq .song
 	lda.w #SFXoooh2					; home goalie: sound
 	sta.b $01,s
-.song:
+.song:								; play the crowd sound
 	jsl.l sfx						; play it
-.nosong:
+.nosong:							; who has the puck?
 	lda.w puckc						; carrier
 	sta.b d2
 	bpl .carried					; loose puck
@@ -168,7 +168,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	sta.w lastplayer				; lastplayer
 	lda.w #sfspdir|sfssdir			; clear sfspdir/sfssdir
 	trb.w sflags
-.bounce:
+.bounce:							; the puck rebounds off the goalie: Zvel = 0, nopuck(a2) = 10
 	stz.w Zvel,x					; Zvel = 0, nopuck(a2) = 10, temp4(a2) = 4
 	ldy.b a2
 	lda.w #$000A					; nopuck 10 for the goalie
@@ -192,12 +192,12 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	bit.w #$0080
 	beq .sy
 	ora.w #$FF00
-.sy:
+.sy:								; sign extend
 	sta.b d1						; sign extend
 	lda.b d1
 	beq .away						; zero: away
 	inc.b d1
-.away:
+.away:								; goalie y velocity against the direction; zero: away
 	ldy.b a2						; goalie
 	lda.w Yvel,y					; goalie y velocity
 	eor.b d1						; compared with the direction
@@ -206,7 +206,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
-.0:
+.0:									; puck velocity from the vector away from the goalie
 	sep #$20						; 8-bit A
 	lda.b d0						; x velocity high byte
 	sta.w Xvel+1,x
@@ -273,12 +273,12 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	jmp.w .bounce
 .neg5:								; signed compare: overflow flag corrects the sign
 	bvs .b4
-.c5:
+.c5:								; is the goalie unavailable (pf2unav)?
 	ldy.b a2						; goalie
 	lda.w pflags,y					; flags
 	bit.w #pf2unav					; pf2unav
 	beq .hold
 	jmp.w .bounce
-.hold:
+.hold:								; the goalie holds the puck: Zvel = 0, puckglue
 	stz.w Zvel,x					; Zvel = 0
 	jmp.w puckglue					; puckglue: goalie holds the puck

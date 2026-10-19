@@ -8,7 +8,7 @@ noturn0:							;doplayeracc when the wanted direction needs no turn
 	lda.b d0
 	eor.w #$0008					; flip the direction
 	sta.b d0
-.0:
+.0:									; straight ahead?
 	lda.b d0						; direction
 	beq .nochg
 	lda.w Xvel,x					; moving: stop if the direction is more than 90 degrees off
@@ -27,14 +27,14 @@ noturn0:							;doplayeracc when the wanted direction needs no turn
 	cmp.w #$0004					; 90 degrees or more off?
 	bcs .nostop
 	jml.l dostop					; stop
-.nostop:
+.nostop:							; turn one step (the way depends on attribute bit 3)
 	inc.w facedir,x					; turn one step
 	lda.w attribute,x				; attribute
 	bit.w #attrxflip
 	beq .nos0
 	dec.w facedir,x					; flipped: turn back
 	dec.w facedir,x
-.nos0:
+.nos0:								; wrap facing to 0-7
 	lda.w facedir,x					; facing
 	and.w #$0007
 	sta.w facedir,x
@@ -43,11 +43,11 @@ noturn0:							;doplayeracc when the wanted direction needs no turn
 	lda.w pfrev,x					; backwards?
 	bne .gback
 	jml.l SetSPA					; start animation d1
-.gback:
+.gback:								; glide backwards
 	lda.w #SPAglideback				; glide back
 	sta.b d1
 	jml.l SetSPA					; start animation d1
-.nochg:
+.nochg:								; pick the skating animation
 	lda.w #SPAskateback				; no change: skate
 	sta.b d1
 	lda.w pfrev,x					; backwards?
@@ -59,17 +59,17 @@ noturn0:							;doplayeracc when the wanted direction needs no turn
 	beq .nb6
 	lda.w #SPAstumble				; stumble
 	sta.b d1
-.nb6:
+.nb6:								; puck carrier check
 	lda.w puckc						; carrier: skate with the puck
 	sta.b d4
 	cmp.w SCnum,x					; is X the carrier?
 	bne .ns
 	lda.w #SPAskatewp				; skate with the puck
 	sta.b d1
-.ns:
+.ns:								; set the animation unless one is in progress
 	lda.w pf2aip,x					; animation in progress?
 	beq .set
 	jml.l noturn					; keep it
-.set:
+.set:								; start the animation and accelerate
 	jsl.l SetSPA					; start animation d1
 	jml.l noturn					; accelerate

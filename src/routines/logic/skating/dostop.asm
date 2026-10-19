@@ -4,7 +4,7 @@ dostop:								;Player X stops
 	beq .xabs
 	eor.w #$FFFF					; negate
 	inc a
-.xabs:
+.xabs:								; |Xvel| > $1000?
 	cmp.w #$1001					; |Xvel| > $1000?
 	bcs .set
 	lda.w Yvel,x
@@ -30,11 +30,11 @@ dostop:								;Player X stops
 	adc.w #SFXstop
 	pha
 	jsl.l sfx
-.stopanim:
+.stopanim:							; stop animation
 	lda.w #SPAstop					; SPAstop $6E6, pf2aip
 	sta.b d1
 	sta.w pf2aip,x
-.setspa:
+.setspa:							; start the stop animation
 	jsl.l SetSPA					; start animation d1
 StopNA:								;slow player a3 by 150 on each axis, no animation change. Falls in from
 									;dostop, also entered from goalieacc and others

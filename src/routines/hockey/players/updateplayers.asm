@@ -51,7 +51,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	lda.w position,x				; not on the ice
 	bpl .onice
 	jmp.w .nf1
-.onice:
+.onice:								; updateanim; nopuck counts down
 	jsl.l updateanim				; updateanim
 	lda.w nopuck,x					; nopuck, nopuckb count down
 	sec
@@ -86,7 +86,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	cmp.w #SPAinjury1				; SPAinjury1: no movement
 	bne .slow
 	jmp.w .done
-.slow:
+.slow:								; on the ice: decelerate
 	lda.w Zpos,x					; on the ice: decelerate
 	bne .x2
 	ldx.b d7
@@ -139,7 +139,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	beq .x3
 	lsr.b mulb
 	lsr.b mulb
-.x3:
+.x3:								; move in y
 	jsl.l muls32					; signed 32-bit multiply
 	adc.w Xfrac,x
 	sta.w Xfrac,x
@@ -165,7 +165,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	beq .y3
 	lsr.b mulb
 	lsr.b mulb
-.y3:
+.y3:								; z axis
 	jsl.l muls32					; signed 32-bit multiply
 	adc.w Yfrac,x
 	sta.w Yfrac,x
@@ -256,7 +256,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	tay
 	lda.w asslist,y					; current assignment
 	and.w #$00FF
-.hang2:
+.hang2:								; bad assignment: hang
 	cmp.w #$001D					; bad assignment: hang
 	bcs .hang2
 	asl a
@@ -297,7 +297,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	beq .ax
 	eor.w #$FFFF					; negate
 	inc a
-.ax:
+.ax:								; |x| < 25?
 	cmp.w #$0019					; |x| < 25
 	bcs .nf
 	lda.w Ypos,x
@@ -324,7 +324,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	beq .gl
 	eor.w #$FFFF					; negate
 	inc a
-.gl:
+.gl:								; 259 <= |y| < 279?
 	cmp.w #$0103					; 259 <= |y| < 279
 	bcc .nf
 	cmp.w #$0117

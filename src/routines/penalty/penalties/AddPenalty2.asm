@@ -3,7 +3,7 @@ AddPenalty2:						;Call penalty d0 on player X without the checks; used for forc
 	lda.w sfhormode					; horizontal rink: none
 	beq .go
 	jmp.w .rtl
-.go:
+.go:								; save registers
 	stx.b xsave						; keep X
 	ldx.w #$0000
 .save:								; save d1 and the words after it (2 words)
@@ -45,7 +45,7 @@ AddPenalty2:						;Call penalty d0 on player X without the checks; used for forc
 	sta.b $01,s
 .sfx:								; play the penalty sound
 	jsl.l sfx
-.nosnd:
+.nosnd:								; a1 = PenBuf: 2 bytes per entry (penalty, player)
 	lda.w #PenBuf					; a1 = PenBuf, 32 slots
 	sta.b a1
 	lda.w #PenBuf>>16
@@ -90,7 +90,7 @@ AddPenalty2:						;Call penalty d0 on player X without the checks; used for forc
 	beq .noplayer
 	lda.w #$0000
 	sta.b [a1]
-.noplayer:
+.noplayer:							; buffer full or done: restore and return
 	stx.b xsave						; keep X
 	ldx.w #$0006
 .resta:								; pull a0 and the words after it back

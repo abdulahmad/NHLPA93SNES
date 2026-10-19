@@ -48,7 +48,7 @@ Gameloop:							;Main game loop: wait for a frame, run the clock, music and crow
 .clk1:								; next frame tick
 	dex
 	bne .clk
-.cue:
+.cue:								; music cue: sounds back next
 	lda.w cuetimer					; music cue: sounds back near its end
 	beq .p3
 	ldx.b d7
@@ -140,7 +140,7 @@ Gameloop:							;Main game loop: wait for a frame, run the clock, music and crow
 	beq .ay
 	eor.w #$FFFF					; negate
 	inc a
-.ay:
+.ay:								; beyond y 165?
 	cmp.w #165						; beyond y 165
 	bcs .lc
 	stx.b a3
@@ -151,7 +151,7 @@ Gameloop:							;Main game loop: wait for a frame, run the clock, music and crow
 	sta.w nopuck,x
 	lda.w #$FFFF
 	sta.w puckc
-.lc:
+.lc:								; a line change player waiting?
 	lda.w lcplayer					; a line change player waiting
 	bmi .pause
 	cmp.w puckc

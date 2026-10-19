@@ -5,7 +5,7 @@ adda43:								;Step a4 to the next replay frame, wrapping around the replay buf
 	sta.b a4
 	bcc .nc							; carry into the bank
 	inc.b a4+2
-.nc:
+.nc:								; no wrap: carry into the bank
 	cmp.w #ReplayBufferEnd&$FFFF	; past the end of the buffer: wrap
 	bne .rtl						; not the end of the buffer
 	lda.b a4+2

@@ -13,13 +13,13 @@ assstanley:							;Assignment: skate to the side of the screen
 	bpl .0							; right half
 	lda.w #$FFA6					; left: target -$5A
 	sta.w temp3,x
-.0:
+.0:									; temp4 = y from Vpos
 	lda.w Vpos						; camera y
 	sta.w temp4,x					; target y
 	lda.w #SPAstanley				; Stanley Cup animation
 	sta.b d1
 	jsl.l SetSPA					; start it
-.nna:
+.nna:								; face and accelerate toward the target
 	lda.w temp3,x					; target x
 	sec
 	sbc.w Xpos,x					; minus x

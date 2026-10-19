@@ -17,6 +17,6 @@ sfx8F:								;Queue the sound number pushed before the call, unless sound effec
 	jsl.l QueueSound				; queue it
 .ret:								; far branch to jmlvector
 	jml.l jmlvector
-.muted:
+.muted:								; muted: drop the sound
 	pla								; drop the pushed sound
 	bra .ret

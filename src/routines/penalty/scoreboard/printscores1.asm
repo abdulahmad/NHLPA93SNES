@@ -24,7 +24,7 @@ printscores1:						;Draw the scoreboard: the period and score boxes on the verti
 	lda.w sfhormode					; horizontal rink
 	beq .v
 	jmp.w .sbscreen
-.v:
+.v:									; print the visitors
 	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pri,$00,$17)
 	lda.w #9
@@ -83,7 +83,7 @@ printscores1:						;Draw the scoreboard: the period and score boxes on the verti
 	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pri,$0F,$1A)
 	jsl.l nullrtl89
-.ex:
+.ex:								; restore and return
 	stx.b xsave						; keep X
 	ldx.w #$000E
 .resta:								; pull a0 and the words after it back
@@ -104,7 +104,7 @@ printscores1:						;Draw the scoreboard: the period and score boxes on the verti
 	ldx.b xsave						; restore X
 	ldx.b a3
 	rtl
-.sbscreen:
+.sbscreen:							; horizontal rink: score board screen
 	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pri,$0E,$05)
 	jsl.l PrintPerLabel

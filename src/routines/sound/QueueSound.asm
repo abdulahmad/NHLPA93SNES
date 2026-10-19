@@ -13,7 +13,7 @@ QueueSound:							;Queue sound A for the sound driver. Dropped while a music cue
 	cmp.w #$00A2					; sound numbers $A2 and up are boot sounds
 	bcs .put
 	jsl.l SPCGameUpload				; upload the game sounds
-.put:
+.put:								; queue the sound
 	ldx.b sndqin					; sndqueue[sndqin] = A, sndqin = (sndqin + 2) & 15
 	pla								; sound back
 	sta.b sndqueue,x				; queue it

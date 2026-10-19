@@ -57,7 +57,7 @@ AvgCline:							;d0 = the average energy of team a2's current line
 	sta.b mulb
 	jsl.l divu16					; mulb / mula
 	sta.b d0
-.ex:
+.ex:								; restore and return
 	stx.b xsave						; keep X
 	ldx.w #$0002
 .resta:								; pull a0 and the words after it back

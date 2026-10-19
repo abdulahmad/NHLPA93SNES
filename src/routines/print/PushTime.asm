@@ -42,7 +42,7 @@ PushTime:							;a1 = the time d0 (seconds) as a minutes:seconds string
 	adc.b #$30						; ASCII
 	sta.b [a1]
 	rep #$30						; 16-bit registers
-.noz:
+.noz:								; d0 = end address of the string
 	dec.b a1						; room for the length word
 	dec.b a1
 	lda.w #$01AF					; end of the buffer

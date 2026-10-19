@@ -3,7 +3,7 @@ EncodePW:							;After a playoff game, work out the winners and the new password
 	lda.w OptPlayMode				; play mode
 	bne .po							; playoffs
 	jmp.w .rtl						; regular season: nothing to do
-.po:
+.po:								; continue the playoffs: work out the winners
 	lda.w #$0001					; continue the playoffs
 	sta.w OptPlayMode
 	jsl.l ResolveGames				; work out the winners
@@ -19,7 +19,7 @@ EncodePW:							;After a playoff game, work out the winners and the new password
 	bmi .neg						; one player or two on one team
 	bvc .two
 	bra .userfailed					; failed
-.neg:
+.neg:								; two players, first round: switch
 	bvc .userfailed					; failed
 .two:								;two players, first round: switch to the other team
 	lda.w gamelevel					; first round
@@ -31,7 +31,7 @@ EncodePW:							;After a playoff game, work out the winners and the new password
 	lda.w pojoy
 	eor.w #$0001
 	sta.w pojoy						; swap the joystick too
-.nofail:
+.nofail:							; password bits, then to characters
 	jsl.l WritePassBits				; password bits
 	jsl.l BitstoPW					; to characters
 	lda.w sflags3					; sf3alttree: passbits before all games were resolved
@@ -45,11 +45,11 @@ EncodePW:							;After a playoff game, work out the winners and the new password
 	dey
 	bpl .cp
 	jsl.l ReadPassBits				; read the bits back
-.tree:
+.tree:								; build the tree, reset the password
 	jml.l maketree					; build the tree
-.userwon:
+.userwon:							; the user won: reset the password
 	jsl.l ResetPassWord				; reset the password
-.userfailed:
+.userfailed:						; failed: PassWord bit 7 set (no password)
 	lda.w #$0080					; PassWord bit 7: no password
 	tsb.w PassWord					; set the bit
 	lda.w #$0002

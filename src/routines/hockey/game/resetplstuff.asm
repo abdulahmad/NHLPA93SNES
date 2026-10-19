@@ -53,7 +53,7 @@ resetplstuff:						;Reset the team variables and the players on both teams
 	sta.b d2
 	ldx.w tmsort,y
 	stx.b a3
-.loop:
+.loop:								; pf2fight = pf2aip = 0, pflags
 	stz.w pf2fight,x				; pf2fight = pf2aip = 0, pflags2 bits cleared
 	stz.w pf2aip,x
 	lda.w pflags,x

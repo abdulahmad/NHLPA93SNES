@@ -5,7 +5,7 @@ ClearTeamStats:						;Clear the team stats (but the goalie choice) and both pena
 	lda.w tmgoalie+2
 	pha
 	ldx.w #$0000					; stats area $1CC bytes
-.clr:
+.clr:								; clear a word
 	stz.w tmshots,x					; clear a word
 	inx
 	inx

@@ -27,7 +27,7 @@ GetPlayerName:						;mesarea = the number and name of player TempPlOffset
 	sta.b d0
 	inc.b a2						; away: a2 = 2
 	inc.b a2
-.name:
+.name:								; get the name text
 	jsl.l getname					; name text
 	stx.b xsave						; X again
 	ldx.w #$0002

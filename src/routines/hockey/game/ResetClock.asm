@@ -9,12 +9,12 @@ ResetClock:							;Set the period length and stop the clock; regular season over
 	bra .set
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .set
-.overtime:
+.overtime:							; playoff mode? else regular season overtime: 600
 	lda.w OptPlayMode				; playoff mode
 	bne .set						; yes: normal
 	lda.w #600						; regular season overtime: 600 seconds
 	sta.b d0
-.set:
+.set:								; gameclock = PerTimeTotal = d0
 	lda.b d0						; gameclock = PerTimeTotal = d0, gmclock
 	sta.w gameclock
 	sta.w PerTimeTotal

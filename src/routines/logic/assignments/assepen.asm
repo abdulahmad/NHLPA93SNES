@@ -9,7 +9,7 @@ assepen:							;Assignment: player X leaves the penalty box and comes onto the i
 	lda.w pfteam,x
 	beq .1							; team 0
 	ldy.w #$0001					; 1 for team 1
-.1:
+.1:									; players in penalty box
 	sty.b d0						; d0 = step
 	lda.w PBnum						; box count
 	sec
@@ -23,7 +23,7 @@ assepen:							;Assignment: player X leaves the penalty box and comes onto the i
 	bne .ypos						; team 0: y = 60
 	lda.w #-60						; else y = -60
 	sta.b d0
-.ypos:
+.ypos:								; y of the box slot
 	lda.b d0						; y
 	sta.w Ypos,x
 	lda.w #sideline					; x = the sideline
@@ -35,7 +35,7 @@ assepen:							;Assignment: player X leaves the penalty box and comes onto the i
 	sta.b d1
 	jsl.l SetSPA					; start it
 	jml.l SprSort					; sort the sprites
-.nna:
+.nna:								; out: face left, skate left (Xvel -$1000), clear the request
 	lda.w #$0004					; facing
 	sta.w facedir,x
 	lda.w #$FFFF					; no request

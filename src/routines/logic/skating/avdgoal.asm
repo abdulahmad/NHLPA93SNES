@@ -32,7 +32,7 @@ avdgoal:							;Do not skate through the goal: when the path to d0 / d1 crosses 
 .c:									; check the second line
 	cmp.w #32
 	bcs .rtl						; further than 32 from both lines: leave the target
-.x:
+.x:									; aim along the center line (y = 0)
 	stz.b d1						; aim along the center line (y = 0)
 	rtl
 .ch1:								;goal line A: crossed within 40 of the net: d1 = line, d0 = +-60 by Xvel,

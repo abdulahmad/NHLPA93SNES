@@ -66,7 +66,7 @@ checkpuckcoll_ccx:					;Puck contact with a player's stick, body or the goalie
 	beq .sx
 	eor.w #$FFFF					; negate
 	inc a
-.sx:
+.sx:								; stick: within 14 in x
 	cmp.w #$000F					; stick: within 14
 	bcs .chkbody					; more than 14 away in x: stick missed
 	lda.b d1						; stick y offset
@@ -124,7 +124,7 @@ checkpuckcoll_ccx:					;Puck contact with a player's stick, body or the goalie
 	beq .bx
 	eor.w #$FFFF					; negate
 	inc a
-.bx:
+.bx:								; body: within 8 in x
 	cmp.w #$0009					; body: within 8
 	bcs .exit						; more than 8 away in x: no contact
 	lda.w Ypos,y					; body y
@@ -180,7 +180,7 @@ checkpuckcoll_ccx:					;Puck contact with a player's stick, body or the goalie
 	beq .gx
 	eor.w #$FFFF					; negate
 	inc a
-.gx:
+.gx:								; goalie: within 12 in x
 	cmp.w #$000D					; goalie: within 12
 	bcs .exit						; more than 12 away in x: no contact
 	lda.w Ypos,y					; goalie y

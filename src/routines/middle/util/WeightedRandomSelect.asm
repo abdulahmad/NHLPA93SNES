@@ -13,20 +13,20 @@ WeightedRandomSelect:				;d0 = a random index from 0 to d0-1, weighted by the wo
 	sta.b a1+2
 	stz.b d1						; sum = 0
 	bra .next						; go
-.sum:
+.sum:								; add the next weight
 	lda.b d1						; sum
 	clc
 	adc.b [a1]						; plus the weight
 	sta.b d1
 	inc.b a1						; next weight
 	inc.b a1
-.next:
+.next:								; loop over the weights
 	dec.b d0						; count down
 	bpl .sum
 	lda.b d1						; sum
 	sta.b d0						; random limit
 	jsl.l randomd0					; 0 to sum-1
-.find:
+.find:								; walk back from the last weight
 	dec.b a1						; back one weight
 	dec.b a1
 	lda.b d0						; random

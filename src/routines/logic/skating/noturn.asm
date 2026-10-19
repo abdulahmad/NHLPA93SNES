@@ -4,5 +4,5 @@ noturn:								;playeracc for a player skating backwards
 	lda.b d2
 	eor.w #$0004					; turn the direction by half
 	sta.b d2
-.acc:
+.acc:								; not reversed: keep d2
 	jml.l playeracc					; continue in playeracc

@@ -5,7 +5,7 @@ StartGame:							;Reset the game state for a new game, then start the first peri
 	bne .go
 	lda.w #gmoffs
 	tsb.w gmode
-.go:
+.go:								; clear the team stats, score sum bytes, period 0
 	jsl.l ClearTeamStats			; clear the team stats
 	stz.w ScoreSumbytes				; score sum bytes
 	stz.w gsp						; period 0

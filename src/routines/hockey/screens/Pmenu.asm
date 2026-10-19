@@ -11,7 +11,7 @@ Pmenu:								;Draw the pause menu items with the current one highlighted
 	bne .item
 	lda.w #.mlist2
 	sta.b a0
-.item:
+.item:								; print a menu item
 	lda.w #$2400					; normal item palette
 	sta.w printa
 	lda.b d0
@@ -19,7 +19,7 @@ Pmenu:								;Draw the pause menu items with the current one highlighted
 	bne .nohilite
 	lda.w #$2000					; highlighted palette
 	sta.w printa
-.nohilite:
+.nohilite:							; not highlighted: normal column
 	lda.w #$0006					; x column 6
 	sta.w printx
 	jsl.l printz					; print the string that follows
@@ -59,7 +59,7 @@ Pmenu:								;Draw the pause menu items with the current one highlighted
 	cmp.w #$0003
 	beq .item3
 	jmp.w .rtl
-.item3:
+.item3:								; find the goalie of the team
 	jsl.l seta2						; find the team on the ice
 	ldy.b a2
 	lda.w tmgoalie,y				; goalie of the team
@@ -83,7 +83,7 @@ Pmenu:								;Draw the pause menu items with the current one highlighted
 	adc.w #$0008					; each entry has 8 more bytes
 	sta.b a4
 	bra .findpl
-.gotpl:
+.gotpl:								; found the player: skip the number to the name
 	ldy.w #$0001					; scan for the first space
 .findspace:							; skip over the number to the name
 	iny
@@ -105,7 +105,7 @@ Pmenu:								;Draw the pause menu items with the current one highlighted
 	bra .copyname
 .rtl:								; return
 	rtl
-.none:
+.none:								; no goalie: append NONE
 	ldy.w mesarea					; no goalie: append NONE
 	lda.w #$004E
 	sta.w mesarea,y

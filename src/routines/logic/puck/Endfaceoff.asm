@@ -27,7 +27,7 @@ Endfaceoff:							;Drop the puck: pick the face off winner and send the puck off
 	bit.w #$0080
 	beq .f1
 	ora.w #$FF00
-.f1:
+.f1:								; negate
 	eor.w #$FFFF					; negate
 	inc a
 	clc
@@ -67,7 +67,7 @@ Endfaceoff:							;Drop the puck: pick the face off winner and send the puck off
 	lda.w seed						; joystick direction 3 in 4
 	and.w #$0003
 	bne .nj2
-.nojoy:
+.nojoy:								; no direction (or 1 in 4): random 0-4
 	lda.w #$0005					; random direction -2..2
 	jsl.l randoma					; random number 0 to A-1
 	dec a

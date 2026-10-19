@@ -9,7 +9,7 @@ chk4shot:							;Computer player X looks for a shot. A penalty killer under pres
 	beq .yabs
 	eor.w #$FFFF					; negate
 	inc a
-.yabs:
+.yabs:								; in front of the net?
 	cmp.w #$00ED					; in front of the net
 	bcs .npk
 	lda.w seed						; one time in four: clear the puck
@@ -31,7 +31,7 @@ chk4shot:							;Computer player X looks for a shot. A penalty killer under pres
 	bne .c0
 	lda.w #-(blueline+goalline)
 	sta.b d1
-.c0:
+.c0:								; d1 = y distance to the goal line, d0 = x distance
 	lda.b d1						; d1 = goal distance in Y
 	sec
 	sbc.w pucky
@@ -96,13 +96,13 @@ chk4shot:							;Computer player X looks for a shot. A penalty killer under pres
 	bne .co1
 	asl.b d4
 	bra .co1
-.gl:
+.gl:								; goalie busy, shoot now
 	lda.w pf2aip,y					; goalie flagged (pf2aip): shoot now
 	beq .co1
 	stz.b d3						; stop checking
 	lda.w #$0001
 	sta.b d4
-.co1:
+.co1:								; next opponent
 	inc.b a1						; next opponent
 	inc.b a1
 	dec.b d3

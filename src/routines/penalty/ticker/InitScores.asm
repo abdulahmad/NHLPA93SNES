@@ -8,7 +8,7 @@ InitScores:							;Playoffs: give the other games of the round random scores so 
 	lda.b d1
 	asl a
 	sta.b a0
-.top:
+.top:								; per game
 	lda.b d1						; the user game
 	cmp.w gamenum
 	beq .next						; skip it
@@ -22,12 +22,12 @@ InitScores:							;Playoffs: give the other games of the round random scores so 
 	sta.b d0						; d0 = 3
 	jsl.l randomd0					; random score count
 	bra .1
-.0:
+.0:									; one period of scoring
 	jsl.l SetScore					; add a goal
-.1:
+.1:									; repeat for each period
 	dec.b d0						; count down
 	bpl .0
-.next:
+.next:								; previous game
 	dec.b a0						; previous game
 	dec.b a0
 	dec.b d1

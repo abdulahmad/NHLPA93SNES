@@ -28,5 +28,5 @@ DrawScoutPlayer:					;addframe for object X at (Xpos + OldXpos - 144, Ypos - 128
 	bcc .add
 	lda.w #$8000					; flag
 	sta.b sprflag
-.add:
+.add:								; draw it (addframe)
 	jml.l addframe					; draw it

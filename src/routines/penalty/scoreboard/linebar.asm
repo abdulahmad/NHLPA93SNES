@@ -8,7 +8,7 @@ linebar:							;Draw the energy bar of line d0
 	cmp.w #$1000					; cap
 	bcc .max
 	lda.w #$1000					; at $1000
-.max:
+.max:								; clamp the energy at $2F
 	sta.b d0						; energy
 	sta.b mula
 	lda.w #$002F					; $2F

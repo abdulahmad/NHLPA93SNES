@@ -9,12 +9,12 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	beq .vf
 	lda.w #$0040
 	sta.b sprhflip
-.vf:
+.vf:								; vertical flip: OAM bit $80
 	lda.b sprvflip					; vertical flip: OAM bit $80
 	beq .fr
 	lda.w #$0080
 	sta.b sprvflip
-.fr:
+.fr:								; first piece of this frame
 	lda.b sprframe					; first piece of this frame
 	asl a
 	adc.w #$000A
@@ -28,14 +28,14 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	sbc.b sprframe					; piece count
 	bne .cnt
 	jmp.w addframe_end				; empty frame: done
-.cnt:
+.cnt:								; pieces left
 	sta.w sprpieces					; pieces left
 .piece:								;next piece; OAM full (128): done
 	lda.b sprcount					; OAM entries used
 	cmp.w #$0080
 	bne .data
 	jmp.w addframe_end
-.data:
+.data:								; piece record, 4 bytes each
 	lda.b sprframe					; piece record, 4 bytes each
 	asl a
 	asl a
@@ -90,14 +90,14 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	and.w #$0020					; bit $20: big (16x16) piece
 	beq .small
 	jmp.w .big
-.small:
+.small:								; small piece: mirror x for a flip
 	lda.b sprhflip					; small piece: mirror x for a flip
 	beq .sx
 	lda.w #$FFF9
 	sec
 	sbc.b sprox
 	sta.b sprox
-.sx:
+.sx:								; add the frame x
 	lda.b sprx						; add the frame x
 	clc
 	adc.b sprox
@@ -110,7 +110,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	jmp.w .nextpiece
 .xlov:								; signed compare: overflow flag corrects the sign
 	bvc .xloout
-.xhi:
+.xhi:								; off screen to the right?
 	lda.b sprox						; off screen to the right?
 	sec
 	sbc.w #$00FF
@@ -121,14 +121,14 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	jmp.w .nextpiece
 .xhiv:								; signed compare: overflow flag corrects the sign
 	bvs .xhiout
-.sy:
+.sy:								; mirror y for a flip
 	lda.b sprvflip					; mirror y for a flip
 	beq .ylo
 	lda.w #$FFF9
 	sec
 	sbc.b sproy
 	sta.b sproy
-.ylo:
+.ylo:								; add the frame y
 	lda.b spry						; add the frame y
 	clc
 	adc.b sproy
@@ -141,7 +141,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	jmp.w .nextpiece
 .ylov:								; signed compare: overflow flag corrects the sign
 	bvc .yloout
-.yhi:
+.yhi:								; off screen below?
 	lda.b sproy						; off screen below?
 	sec
 	sbc.w #$00DF
@@ -152,7 +152,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	jmp.w .nextpiece
 .yhiv:								; signed compare: overflow flag corrects the sign
 	bvs .yhiout
-.cache:
+.cache:								; frame number plus set offset
 	lda.b sprframe					; frame number plus set offset
 	clc
 	adc.b sprsetofs
@@ -170,7 +170,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	lda.b sprnodraw					; no new draws allowed
 	beq .find
 	jmp.w addframe_end
-.find:
+.find:								; next cache slot
 	lda.b sprslot					; next cache slot
 	inc a
 	and.w #$01FF
@@ -181,7 +181,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	cmp.w #$0005
 	bcs .shorten
 	jml.l addframe_full				; VRAM sprite cache full
-.shorten:
+.shorten:							; keep slots for less time
 	dec.b sprslotlife				; keep slots for less time
 	lda.b sprslot
 .chk:								; look for a free sprite slot older than the current frame
@@ -198,7 +198,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	asl a
 	adc.w #$6000					; VRAM address of the slot
 	ldx.b DMAlistend				; append a DMA list entry
-.hang2:
+.hang2:								; DMA list full: hang
 	cpx.w #$0578					; DMA list full: hang
 	bcs .hang2
 	sta.w DMAList+dmavram,x
@@ -268,20 +268,20 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	eor.b #$FF
 	ora.w SattHi,x
 	sta.w SattHi,x
-.next:
+.next:								; next OAM entry
 	rep #$30						; 16-bit registers
 	inc.b sprcount
 	jmp.w .nextpiece
 .himask:							;SattHi masks that clear the x bit 8 of sprite 0-3 in a byte
 	db $FE,$FB,$EF,$BF
-.big:
+.big:								; big piece: mirror x for a flip
 	lda.b sprhflip					; big piece: mirror x for a flip
 	beq .bx
 	lda.w #$FFF1
 	sec
 	sbc.b sprox
 	sta.b sprox
-.bx:
+.bx:								; add the frame x
 	lda.b sprx						; add the frame x
 	clc
 	adc.b sprox
@@ -294,7 +294,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	jmp.w .nextpiece
 .bxlov:								; signed compare: overflow flag corrects the sign
 	bvc .bxloout
-.bxhi:
+.bxhi:								; off screen to the right?
 	lda.b sprox						; off screen to the right?
 	sec
 	sbc.w #$00FF
@@ -305,14 +305,14 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	jmp.w .nextpiece
 .bxhiv:								; signed compare: overflow flag corrects the sign
 	bvs .bxhiout
-.by:
+.by:								; mirror y for a flip
 	lda.b sprvflip					; mirror y for a flip
 	beq .bylo
 	lda.w #$FFF1
 	sec
 	sbc.b sproy
 	sta.b sproy
-.bylo:
+.bylo:								; add the frame y
 	lda.b spry						; add the frame y
 	clc
 	adc.b sproy
@@ -325,7 +325,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	jmp.w .nextpiece
 .bylov:								; signed compare: overflow flag corrects the sign
 	bvc .byloout
-.byhi:
+.byhi:								; off screen below?
 	lda.b sproy						; off screen below?
 	sec
 	sbc.w #$00DF
@@ -336,7 +336,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	jmp.w .nextpiece
 .byhiv:								; signed compare: overflow flag corrects the sign
 	bvs .byhiout
-.bcache:
+.bcache:							; frame number plus set offset
 	lda.b sprframe					; frame number plus set offset
 	clc
 	adc.b sprsetofs
@@ -352,11 +352,11 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	cmp.b sprslotlife
 	bcs .bnodraw
 	jmp.w .bhave
-.bnodraw:
+.bnodraw:							; no new draws allowed
 	lda.b sprnodraw					; no new draws allowed
 	beq .bfind
 	jmp.w addframe_end
-.bfind:
+.bfind:								; next big cache slot
 	lda.b sprbigslot				; next big cache slot
 	inc a
 	and.w #$01FF
@@ -407,7 +407,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	asl a
 	adc.w #$6000
 	ldx.b DMAlistend				; append two DMA list entries
-.bhang2:
+.bhang2:							; DMA list full: hang
 	cpx.w #$0571					; DMA list full: hang
 	bcs .bhang2
 	sta.w DMAList+dmavram,x
@@ -492,10 +492,10 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	eor.b #$FF
 	ora.w SattHi,x
 	sta.w SattHi,x
-.bnext:
+.bnext:								; next OAM entry and piece
 	rep #$30						; 16-bit registers
 	inc.b sprcount					; next OAM entry
-.nextpiece:
+.nextpiece:							; next piece
 	inc.b sprframe					; next piece
 	dec.w sprpieces					; pieces left
 	beq addframe_end

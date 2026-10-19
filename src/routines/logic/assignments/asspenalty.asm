@@ -3,7 +3,7 @@ asspenalty:							;Assignment: player X skates to the penalty box, glides in and
 	lda.w pfalock,x					; assignment locked?
 	beq .na
 	jmp.w .rtl
-.na:
+.na:								; new assignment?
 	lda.w pflags,x					; new assignment
 	bit.w #pfna
 	beq .nna
@@ -40,7 +40,7 @@ asspenalty:							;Assignment: player X skates to the penalty box, glides in and
 	bcc .1
 	lda.w #2						; at most 2
 	sta.b d1
-.1:
+.1:									; slot number + 3
 	inc.b d1						; plus 3
 	inc.b d1
 	inc.b d1
@@ -59,7 +59,7 @@ asspenalty:							;Assignment: player X skates to the penalty box, glides in and
 	sta.w pflags,x
 	stz.w Wallcos,x					; clear the wall normal
 	stz.w Wallsin,x
-.nna:
+.nna:								; near the box door
 	lda.w Ypos,x					; player y
 	sec
 	sbc.w temp4,x					; minus the box y
@@ -67,11 +67,11 @@ asspenalty:							;Assignment: player X skates to the penalty box, glides in and
 	beq .ay
 	eor.w #$FFFF					; negate
 	inc a
-.ay:
+.ay:								; within 13 of the box y?
 	cmp.w #13						; within 13 of the box y?
 	bcc .in
 	jmp.w .st
-.in:
+.in:								; distance from the box in x
 	lda.w Xpos,x					; player x
 	sec
 	sbc.w temp3,x					; minus the box x
@@ -84,7 +84,7 @@ asspenalty:							;Assignment: player X skates to the penalty box, glides in and
 	jmp.w .st
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .st0
-.near:
+.near:								; wait out temp1 in steps of 8
 ;wait out temp1 in steps of 8
 	lda.w temp1,x					; timer
 	sec
@@ -92,7 +92,7 @@ asspenalty:							;Assignment: player X skates to the penalty box, glides in and
 	sta.w temp1,x
 	bmi .step
 	jmp.w .rtl
-.step:
+.step:								; reload the timer
 	adc.w #8						; reload it
 	sta.w temp1,x
 ;glide in, turn toward the wall (facedir 6 or 2 by handedness)
@@ -106,14 +106,14 @@ asspenalty:							;Assignment: player X skates to the penalty box, glides in and
 	beq .left						; left handed?
 	lda.w #2
 	sta.b d2
-.left:
+.left:								; turn one step toward d2
 	lda.w facedir,x					; facing direction
 	cmp.b d2						; there yet?
 	beq .ok
 	inc a							; turn one step
 	and.w #$0007
 	sta.w facedir,x
-.ok:
+.ok:								; skate right
 	stz.w Yvel,x					; stop in y
 	lda.w #$1000					; slide in x
 	sta.w Xvel,x
@@ -125,7 +125,7 @@ asspenalty:							;Assignment: player X skates to the penalty box, glides in and
 	bra .rtl
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvc .rtl
-.stop:
+.stop:								; facing the right way?
 	stz.w Xvel,x					; stop sliding
 	lda.w facedir,x					; facing the right way?
 	cmp.b d2

@@ -13,7 +13,7 @@ assfaceoff:							;Assignment: players wait until the face off is over.
 	stz.b sndqin					; queue in
 	stz.b sndqout					; queue out
 	jsl.l StartSong1				; home goal music cue
-.per:
+.per:								; period start music cue?
 	lda.w percue					; period start music cue
 	beq .mid						; no cue
 	stz.w percue					; clear it
@@ -22,7 +22,7 @@ assfaceoff:							;Assignment: players wait until the face off is over.
 	stz.b sndqin
 	stz.b sndqout
 	jsl.l StartSong2				; period start music cue
-.mid:
+.mid:								; no cue playing: check the game clock
 	lda.w cuetimer					; no cue playing, clock >= 60 and past midpercue: mid-period cue
 	bne .rts						; a cue is playing
 	lda.w gameclock					; game clock

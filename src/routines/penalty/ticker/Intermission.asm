@@ -22,7 +22,7 @@ Intermission:						;Between periods: the pause menu screen with the scores of th
 	cmp.w #$0004
 	beq .ss
 	bra .ss							; both branches go to .ss
-.ss:
+.ss:								; d0 = period (+5 in playoffs) * 4
 	lda.w #$0708					; pause timer = $708 frames
 	sta.b pausetimer
 	lda.w #$0001

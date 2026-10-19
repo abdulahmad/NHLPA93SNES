@@ -81,7 +81,7 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	txa								; the other player is impactp
 	lsr a
 	sta.w impactp,y
-.if:
+.if:								; X not fighting: is Y X's impact partner?
 	lda.w pf2fight,x				; X not fighting
 	bne .if2
 	tya								; Y is impactp of X
@@ -96,9 +96,9 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	beq .nc
 	cmp.w SCnum,y					; Y holds the puck?
 	bne .n1
-.nc:
+.nc:								; start the check sound
 	jsl.l newcheck					; new check
-.n1:
+.n1:								; interference, check and fight tests
 	jsl.l checkint					; interference
 	jsl.l checkcheck				; check
 	jsl.l checkfight				; fight
@@ -283,7 +283,7 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	sta.w Yvel,y					; new Yvel of Y
 	lda.w #$FFFF					; collflag
 	sta.b collflag					; set collflag
-.exit:
+.exit:								; restore the registers
 	stx.b xsave						; keep X
 	ldx.w #$0016
 .restore:							; pull d0 and the words after it back

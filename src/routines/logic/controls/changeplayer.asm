@@ -54,9 +54,9 @@ changeplayer:						;Switch controller d4 to the teammate nearest the puck, or sw
 	cmp.w #$0001
 	beq .t1
 	ldx.w #$000C					; second team starts at $0C
-.t1:
+.t1:								; a1 = c1playernum/c2playernum
 	ldy.b d3						; other controller
-.top:
+.top:								; skip goalie, unavailable and animation-locked players
 	lda.w position,x				; position
 	bmi .next						; skip empty slots
 	beq .next						; skip goalies
@@ -112,15 +112,15 @@ changeplayer:						;Switch controller d4 to the teammate nearest the puck, or sw
 	bne .set
 	jsl.l Sweepcheck				; sweep check
 	bra .ex
-.set:
+.set:								; new player in d0
 	sta.b d0						; new player in d0
 	lda.b d4
 	bne .c2
 	jsl.l setc1player				; controller 1 gets the player
 	bra .ex
-.c2:
+.c2:								; controller 2 gets the player
 	jsl.l setc2player				; controller 2 gets the player
-.ex:
+.ex:								; restore registers
 	stx.b xsave						; keep X
 	ldx.w #$0006
 .resta:								; pull a0 and the words after it back

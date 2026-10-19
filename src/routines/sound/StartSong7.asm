@@ -6,7 +6,7 @@ StartSong7:							;Start song 7 unless it is already playing. Unused
 	cmp.w #2						; bank 2 is the game bank
 	beq .cmd
 	jsl.l SPCBootUpload				; else upload it
-.cmd:
+.cmd:								; APUIO0 = 2: play song 7
 	sep #$20						; 8-bit A
 	lda.b #$02
 	sta.w APUIO0					; send the command

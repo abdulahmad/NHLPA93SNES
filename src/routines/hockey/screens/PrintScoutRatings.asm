@@ -11,9 +11,9 @@ PrintScoutRatings:					;Print the scouting ratings of team [a0], marking where i
 	sta.b d5
 	lda.w #$0007					; 8 ratings
 	sta.b d6
-.rating:
+.rating:							; next rating, 4 bits each
 	ldy.w #$0004					; 4 bits per rating
-.shift:
+.shift:								; shift the rating out of d5
 	asl.b d5						; rotate d5 left
 	rol.b d5+2
 	lda.b d5
@@ -29,11 +29,11 @@ PrintScoutRatings:					;Print the scouting ratings of team [a0], marking where i
 	cmp.w #$0001					; after the 7th
 	bne .next
 	jsl.l .advantages				; print the advantages
-.next:
+.next:								; 8 nibbles in total
 	dec.b d6						; next rating
 	bpl .rating
 	rtl
-.advantages:
+.advantages:						; print the advantages of team a0
 	lda.b [a0]						; ratings of team a0
 	xba
 	and.w #$000F
@@ -65,7 +65,7 @@ PrintScoutRatings:					;Print the scouting ratings of team [a0], marking where i
 	clc								; sum
 	adc.b d0
 	sta.b d0
-.printrating:
+.printrating:						; print the rating as a number
 	lda.w #$0002					; width 2
 	sta.b d1
 	jsl.l PushNumberWidth			; number to text
@@ -74,6 +74,6 @@ PrintScoutRatings:					;Print the scouting ratings of team [a0], marking where i
 	jsl.l print						; print it
 	pla								; restore x
 	sta.w printx
-.nexty:
+.nexty:								; next row
 	inc.w printy					; next row
 	rtl

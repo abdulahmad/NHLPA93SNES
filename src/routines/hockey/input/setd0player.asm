@@ -9,7 +9,7 @@ setd0player:						;Give player d0 to his team's controller, unless a controller 
 	cmp.w #$0006					; players 0-5 are home
 	bcs .away						; away
 	dec.b d1						; home: 0
-.away:
+.away:								; away: team 2
 	inc.b d1						; away: 2
 	inc.b d1
 	lda.w lastplayer				; last player
@@ -24,7 +24,7 @@ setd0player:						;Give player d0 to his team's controller, unless a controller 
 	cmp.w cont2team					; controller 2 team
 	bne .c1
 	jml.l setc2player				; give it to controller 2
-.c1:
+.c1:								; controller 1 team?
 	cmp.w cont1team					; controller 1 team
 	bne .rtl						; no: nobody
 	jml.l setc1player

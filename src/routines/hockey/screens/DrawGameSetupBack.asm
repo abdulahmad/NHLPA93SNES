@@ -12,7 +12,7 @@ DrawGameSetupBack:					;Draw the game setup screen backdrop with the NHLPA logo
 	sta.b tmp1
 	jsl.l DecompressBytecode		; decompress it
 	ldx.w #$07FE					; copy to the back map
-.map:
+.map:								; copy the map words to the back map
 	lda.l TestList,x				; map word
 	and.w #$DFFF					; priority bit off
 	sta.l backmap,x					; to the back map
@@ -29,7 +29,7 @@ DrawGameSetupBack:					;Draw the game setup screen backdrop with the NHLPA logo
 	jsl.l DecompressBytecode		; decompress the logo
 	lda.w #$0009					; 10 rows
 	sta.b tmp1
-.row:
+.row:								; next row of 8 columns
 	lda.w #$0007					; 8 columns
 	sta.b tmp0
 .col:								; row times 8

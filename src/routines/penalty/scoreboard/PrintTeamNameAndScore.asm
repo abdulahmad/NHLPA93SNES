@@ -17,7 +17,7 @@ PrintTeamNameAndScore:				;Print team a2's name, then its score as two character
 	beq .ones						; score below 10
 	adc.w #'0'						; tens digit
 	sta.w mesarea+2
-.ones:
+.ones:								; remainder = ones
 	lda.b mulres+2					; remainder = ones
 	adc.w #'0'
 	sta.w mesarea+3					; ones digit

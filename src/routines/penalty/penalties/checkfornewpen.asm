@@ -4,17 +4,17 @@ checkfornewpen:						;Look for a new penalty call. Stops play at once when the p
 	lda.w sfhormode					; not in horizontal mode
 	beq .go
 	jmp.w .rtl
-.go:
+.go:								; penalty buffer
 	lda.w #PenBuf					; penalty buffer
 	sta.b a0
-.next:
+.next:								; next PenBuf entry (0 = end)
 	lda.b (a0)						; next buffered penalty
 	inc.b a0
 	inc.b a0
 	tay								; zero: end of the buffer
 	bne .notcalled
 	jmp.w .rtl
-.notcalled:
+.notcalled:							; penalty already stopped play?
 	lda.w gmode						; already called: mark it
 	bit.w #gmpen					; penalty already stopped play?
 	bne .iscalled
@@ -54,7 +54,7 @@ checkfornewpen:						;Look for a new penalty call. Stops play at once when the p
 	sbc.w #$0006
 	eor.b d0
 	bmi .dc
-.callit:
+.callit:							; stop the clock and blow the whistle
 	jsl.l Stop4Pen					; stop play
 .iscalled:							;mark it called (bit 7 of the player byte)
 	dec.b a0						; player byte

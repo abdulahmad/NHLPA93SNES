@@ -17,7 +17,7 @@ SetPlList:							;Make the list of the players team a2 wants on the ice now
 	lda.w tmgoalie,y				; goalie
 	bpl .gin						; no goalie: skip the priolist goalie entry
 	inc.b a0						; skip the goalie entry
-.gin:
+.gin:								; line sets
 	lda.w tmdata,y					; line sets: team data + word at +6, + tmline*8
 	sta.b a1
 	lda.w #TeamList>>16
@@ -68,7 +68,7 @@ SetPlList:							;Make the list of the players team a2 wants on the ice now
 	lda.b d3
 	sta.b [a4],y					; store it
 	rep #$20						; 16-bit A
-.next:
+.next:								; next slot
 	dec.b d4						; next slot
 	bpl .0
 	lda.w #$0005					; 6 slots
@@ -128,7 +128,7 @@ SetPlList:							;Make the list of the players team a2 wants on the ice now
 	clc
 	adc.b a0
 	sta.b a0
-.s1:
+.s1:								; next substitute position from sublist
 	lda.b [a0]						; next candidate position
 	inc.b a0
 	and.w #$00FF
@@ -141,7 +141,7 @@ SetPlList:							;Make the list of the players team a2 wants on the ice now
 	sta.b d0
 	jsl.l TryAddPlayerToList		; try to add him
 	beq .s1							; failed: next candidate
-.next1:
+.next1:								; next slot
 	dec.b d4						; next slot
 	bmi .rtl						; all done
 	jmp.w .1

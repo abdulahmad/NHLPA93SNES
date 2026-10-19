@@ -68,7 +68,7 @@ PickStartingGoalie:					;Pick team a2's starting goalie; computer teams in the l
 	ldy.b a2
 	lda.b d0
 	sta.w tmgoalie,y
-.x:
+.x:									; restore registers
 	stx.b xsave						; keep X
 	ldx.w #$0002
 .resta:								; pull a0 and the words after it back

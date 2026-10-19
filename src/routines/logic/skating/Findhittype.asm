@@ -15,7 +15,7 @@ Findhittype:						;Swing type of player X for direction d0: forehand or backhand
 	plx								; restore X
 	and.w #$00FF					; byte
 	rtl
-.noattribute:
+.noattribute:						; backhand for d0 1-4
 	phx								; keep X
 	ldx.b d0						; direction as index
 	lda.l .noflip,x					; backhand for d0 1-4

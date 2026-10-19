@@ -21,23 +21,23 @@ remap:								;Copy tiles to video memory with each pixel color remapped through
 	asl.b tmp1+1					; bitplane 3
 	bcc .bit3
 	ldy.b #$08
-.bit3:
+.bit3:								; bitplane 2
 	asl.b tmp1						; bitplane 2
 	bcc .bit2
 	iny
 	iny
 	iny
 	iny
-.bit2:
+.bit2:								; bitplane 1
 	asl.b tmp0+1					; bitplane 1
 	bcc .bit1
 	iny
 	iny
-.bit1:
+.bit1:								; bitplane 0
 	asl.b tmp0						; bitplane 0
 	bcc .bit0
 	iny
-.bit0:
+.bit0:								; new color from the table at [a1]
 	lda.b [a1],y					; new color from the table at [a1]
 	lsr a							; its bits into the output planes
 	rol.b mula,x

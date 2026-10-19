@@ -1,7 +1,7 @@
 PWtoBits:							;Turn the password characters into the password bits
 	jsl.l ClrPassBits				; passbits = 0
 	ldx.w #$0000					; first character
-.char:
+.char:								; passbits = passbits * PWrange + the character
 	lda.w #PWrange					; passbits = passbits * PWrange + PassWord[x]
 	sta.b d0
 	jsl.l SuperMult					; passbits *= d0

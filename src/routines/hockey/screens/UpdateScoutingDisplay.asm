@@ -10,12 +10,12 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	bra .rtl
 .neg:								; signed compare: overflow flag corrects the sign
 	bvs .rtl
-.tm:
+.tm:								; count the screen delay down
 	lda.w asv						; asv: no delay
 	bmi .go
 	dec.w ScoutingReportTimer		; count the timer down
 	bpl .rtl
-.go:
+.go:								; time to print: a1 = text base
 	lda.w #ScoutingReportText		; commentary text
 	sta.b a1
 	lda.w #ScoutingReportText>>16
@@ -54,14 +54,14 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	and.w #$00FF
 	cmp.w #$000D					; end of line?
 	bne .find
-.cnt:
+.cnt:								; skip d0 paragraphs
 	dec.b d0						; paragraph lines left
 	bpl .find
 	lda.b a2						; text offset of the paragraph
 	sec
 	sbc.b a1
 	sta.b d0
-.cont:
+.cont:								; a2 = next word to print
 	lda.b a1						; text base plus offset
 	clc
 	adc.b d0
@@ -77,19 +77,19 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	cmp.w #'~'						; ~: home team
 	bne .c2
 	jmp.w .under
-.c2:
+.c2:								; { is the home team name
 	cmp.w #'{'						; {: home team name
 	bne .c3
 	jmp.w .home
-.c3:
+.c3:								; } is the away team name
 	cmp.w #'}'						; }: away team name
 	bne .c4
 	jmp.w .away
-.c4:
+.c4:								; [ is the home goalie
 	cmp.w #'['						; [: home goalie
 	bne .c5
 	jmp.w .hmtm
-.c5:
+.c5:								; ] is the away goalie
 	cmp.w #']'						; ]: away goalie
 	bne .word
 	jmp.w .awtm
@@ -107,7 +107,7 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	cmp.w #$000D					; end of line?
 	beq .eol
 	inc.b d0						; count the column
-.copy:
+.copy:								; copy the word and its trailing spaces
 	sep #$20						; 8-bit A
 	lda.b [a2]
 	sta.b [a0]						; copy a character
@@ -125,7 +125,7 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	clc
 	adc.w #$0028
 	sta.w ScoutingReportTimer
-.nopause:
+.nopause:							; stop the word at a space
 	lda.b [a2]						; next character
 	inc.b a2
 	and.w #$00FF
@@ -157,12 +157,12 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	beq .noscr
 	bmi .neg1
 	bvs .noscr
-.scr:
+.scr:								; scroll the text box up
 	jsl.l ScrollDisplayUp			; scroll up
 	bra .noscr
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvs .scr
-.noscr:
+.noscr:								; position the word: x 9 + column, y 4 + line
 	jsl.l printz					; print at column + DispAttribCtr, line + VertLineScrolling
 	%StringCp(CC_Font1,$0A,$04)
 	lda.w DispAttribCtr				; column
@@ -223,7 +223,7 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	beq .mtl
 	cmp.w #AllStarsWest
 	bne .ar
-.mtl:
+.mtl:								; Montreal for the All-Star teams
 	lda.w #Montreal					; Montreal for the All-Star teams
 .ar:								; store the team
 	sta.b a1
@@ -233,13 +233,13 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	sta.b a1
 	lda.w #TeamList>>16
 	sta.b a1+2
-.tname:
+.tname:								; team name
 	ldy.w #Teamname					; team name offset
 	lda.b a1
 	clc
 	adc.b [a1],y
 	sta.b a1
-.name:
+.name:								; step past the escape char
 	inc.w PlayerScrollCtr			; next character position
 	lda.b d0
 	clc
@@ -255,6 +255,6 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	and.w #$00FF
 	beq .pad						; trailing zero?
 	jmp.w .print
-.pad:
+.pad:								; drop the trailing zero
 	dec.b d1						; drop it
 	jmp.w .print

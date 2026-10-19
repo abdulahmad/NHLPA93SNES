@@ -48,7 +48,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	sta.b d0
 	jsl.l remap						; remap the font pixels
 	ldx.w #$0000
-.framertiles:
+.framertiles:						; framer tiles to VRAM
 	lda.l FramerTiles,x				; framer tiles to VRAM
 	sta.w VMDATAL
 	inx
@@ -68,7 +68,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	sta.b tmp1
 	jsl.l DecompressBytecode		; unpack
 	ldx.w #$0000
-.blocktiles:
+.blocktiles:						; team block tiles to VRAM
 	lda.l TestList,x				; team block tiles to VRAM
 	sta.w VMDATAL
 	inx
@@ -81,7 +81,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	sta.b tmp1
 	jsl.l DecompressBytecode		; unpack
 	ldx.w #$0000
-.easntiles:
+.easntiles:							; EASN tiles to VRAM
 	lda.l TestList+$400,x			; EASN tiles to VRAM
 	sta.w VMDATAL
 	inx
@@ -108,7 +108,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	sep #$20						; 8-bit A
 	stz.w CGADD						; palette from color 0
 	ldx.w #$0000
-.ronpal:
+.ronpal:							; Ron Barr palette to CRAM
 	lda.l TestList+$90,x			; palette bytes in the unpacked data
 	sta.w CGDATA
 	inx
@@ -136,7 +136,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	sta.b d0
 	sta.w SelectedPlayerIdx			; start with this player
 	stz.w DispAttribCtr				; first attribute column
-.redraw:
+.redraw:							; (re)draw the whole screen, entered again after A
 	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font2,$03,$01)
 	lda.w #$001A					; frame 26 x 6
@@ -180,7 +180,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	sta.b d1
 	jsl.l Framer					; draw the frame d0 x d1
 	jsl.l .show						; print the selected line
-.loop:
+.loop:								; per frame: d3 held, d1 pressed with repeat
 	lda.w #textmap					; upload the text map every frame
 	sta.w DMAList
 	lda.w #textmap>>16
@@ -192,7 +192,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	sta.b DMAlistend
 	lda.w #VBlank_List				; wait for the vblank
 	sta.b vbint
-.vbwait:
+.vbwait:							; wait for the next frame
 	cmp.b vbint						; until it changes
 	beq .vbwait
 	jsl.l ReadPads					; read the pads
@@ -202,7 +202,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	bit.w #$1000					; Start
 	beq .nostart
 	jmp.w .rtl						; leave
-.nostart:
+.nostart:							; Y pressed: toggle the team
 	bit.w #$4000					; Y
 	bne .team
 	stz.b d0						; d0 = 1
@@ -231,7 +231,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	jsl.l .show						; reprint
 .again:								; far branch to .loop
 	jmp.w .loop
-.col:
+.col:								; new attribute column page (not below 0)
 	lda.b d0						; move the attribute column by d0
 	clc
 	adc.w DispAttribCtr
@@ -240,7 +240,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	sta.w DispAttribCtr				; new column
 	jsl.l .show
 	bra .again
-.team:
+.team:								; A: next team struct; home -> away
 	lda.b a2						; toggle the team
 	eor.w #$0002
 	sta.b a2
@@ -260,7 +260,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	sta.w printx
 	lda.w #$0009					; y 9
 	sta.w printy
-.top:
+.top:								; attribute columns of the stats page
 	lda.w #PAttribColumns			; attribute columns of skaters
 	sta.b a1
 	lda.w #PAttribColumns>>16
@@ -280,7 +280,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	adc.b [a1]
 	adc.w #$0004
 	sta.b a1
-.2:
+.2:									; end of the list?
 	lda.b [a1]						; end of the list?
 	bmi .check
 	dec.b d0
@@ -290,7 +290,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	bpl .found
 	dec.w DispAttribCtr				; ran past the end: go back one column
 	bra .top
-.found:
+.found:								; print the attribute
 	jsl.l print						; print it
 	lda.b [a1]
 	sta.b d4+2

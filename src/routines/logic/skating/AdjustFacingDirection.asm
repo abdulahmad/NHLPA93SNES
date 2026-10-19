@@ -7,7 +7,7 @@ AdjustFacingDirection:				;Turn goalie X's facing one step toward d0, not past t
 	sta.b d0						; difference
 	bne .turn						; differs
 	jmp.w assgoalie_rtl				; same: done
-.turn:
+.turn:								; direction of the shortest turn
 	eor.w #$FFFF					; negate
 	inc a							; direction of the shortest turn
 	and.w #$0004					; +4 bit
@@ -19,7 +19,7 @@ AdjustFacingDirection:				;Turn goalie X's facing one step toward d0, not past t
 	beq .add						; yes
 	cmp.w #$0006					; 6
 	bne .dn							; no
-.add:
+.add:								; apply the step
 	clc								; add the step
 	adc.b d0
 	sta.b d1						; new facing
@@ -37,7 +37,7 @@ AdjustFacingDirection:				;Turn goalie X's facing one step toward d0, not past t
 	bcc .set
 	cmp.w #$0006					; 6
 	bcs .set						; outside 3-5
-.neg:
+.neg:								; reverse the step
 	lda.b d0						; step
 	eor.w #$FFFF					; negate
 	inc a							; reverse it

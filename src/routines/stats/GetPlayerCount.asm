@@ -14,7 +14,7 @@ GetPlayerCount:						;d0 = the number of players on team a2's roster
 	adc.b a0
 	sta.b a0
 	stz.b d0						; count = 0
-.count:
+.count:								; one more player
 	inc.b d0						; one more player
 	lda.b [a0]						; record length
 	clc

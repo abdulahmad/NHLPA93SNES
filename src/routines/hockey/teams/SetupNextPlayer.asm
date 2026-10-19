@@ -90,7 +90,7 @@ SetupNextPlayer:					;The next player of team a2 to show in the team block, with
 	bne .nib
 	lda.w #GoalieRosterAnims		; goalie animation table
 	sta.b a1
-.nib:
+.nib:								; rating byte: high nibble, then low nibble
 	lda.b [a0]						; high nibble first
 	and.w #$00FF
 	lsr a

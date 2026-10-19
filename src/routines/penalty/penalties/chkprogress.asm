@@ -5,7 +5,7 @@ chkprogress:						;Move the referee and the game through a penalty: when the sto
 	bit.w #gmpen
 	bne .pen
 	jmp.w .rtl
-.pen:
+.pen:								; Pencntdwn negative: InProgress
 	lda.w Pencntdwn					; Pencntdwn negative: InProgress
 	bpl .cnt
 	jmp.w InProgress
@@ -15,7 +15,7 @@ chkprogress:						;Move the referee and the game through a penalty: when the sto
 	sta.w Pencntdwn
 	bmi .over
 	jmp.w .rtl
-.over:
+.over:								; stop delay over
 	lda.w #gmpendel					; stop delay over: clear gmpendel
 	trb.w gmode
 	lda.w #PenBuf

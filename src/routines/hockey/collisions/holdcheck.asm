@@ -4,11 +4,11 @@ holdcheck:							;a2 holds or hooks X: both slow down, and a holding or hooking 
 	ora.w pf2fight,x				; already held, or fighting
 	beq .nopf2fight
 	jmp.w .rtl
-.nopf2fight:
+.nopf2fight:						; no hold on a goalie
 	lda.w position,x				; no hold on a goalie
 	bne .position
 	jmp.w .rtl
-.position:
+.position:							; a2 is the holder: x of X
 	ldy.b a2						; a2 is the holder
 	lda.w Xpos,x					; x of X
 	sec
@@ -28,7 +28,7 @@ holdcheck:							;a2 holds or hooks X: both slow down, and a holding or hooking 
 	cmp.w #$0003
 	bcc .close						; X must be within 1 direction of where a2 faces
 	jmp.w .rtl
-.close:
+.close:								; is X the puck carrier?
 	lda.w puckc						; puck carrier
 	asl a
 	cmp.b a3						; X?
@@ -71,7 +71,7 @@ holdcheck:							;a2 holds or hooks X: both slow down, and a holding or hooking 
 	beq .h2
 	lda.w #SPAhook2					; holding anim after SPAhook
 	sta.b d1
-.h2:
+.h2:								; start the hold animation
 	jsl.l SetSPA					; start animation d1
 	jsl.l checkagr					; aggression check
 	lda.b d0
@@ -84,9 +84,9 @@ holdcheck:							;a2 holds or hooks X: both slow down, and a holding or hooking 
 	beq .pen
 	lda.w #PenHooking				; hooking penalty
 	sta.b d0
-.pen:
+.pen:								; call the penalty
 	jsl.l AddPenalty				; call it
-.ex:
+.ex:								; swap back
 	ldx.b a2						; swap back
 	ldy.b a3
 	stx.b a3

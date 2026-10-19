@@ -15,7 +15,7 @@ UpdateScores:						;Update the ticker scores of the other playoff games
 	bit.w #gsfso					; game over
 	bne .next						; yes: keep the score
 	jsl.l SetScore					; compute the score
-.next:
+.next:								; previous game
 	dec.b a0						; previous game
 	dec.b a0
 	dec.b d1						; previous game number

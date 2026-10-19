@@ -19,13 +19,13 @@ TryAddPlayerToList:					;Add roster player d0 to slot d4 of the list of players 
 	bra .no
 .neg:								; signed compare: overflow flag corrects the sign
 	bvs .no
-.chk:
+.chk:								; on the ice or bench: not available
 	lda.w tmpdst,y					; state
 	cmp.w #TMPDOUT					; TMPDOUT: not available
 	beq .no
 	lda.w #$0005					; six list entries
 	sta.b d0
-.s2:
+.s2:								; is d1 already in PlList?
 	ldy.b d0						; entry
 	lda.b [a4],y					; list byte
 	and.w #$00FF
@@ -44,7 +44,7 @@ TryAddPlayerToList:					;Add roster player d0 to slot d4 of the list of players 
 	lda.b d1
 	and.w #$00FF					; number as the result
 	rtl
-.no:
+.no:								; not available: Z set, d1 = 0
 	lda.w #$0000					; not added
 	sta.b d1						; d1 = 0
 	rtl

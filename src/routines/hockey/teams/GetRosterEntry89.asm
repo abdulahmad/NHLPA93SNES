@@ -16,7 +16,7 @@ GetRosterEntry89:					;Bank $89 copy of GetRosterEntry (called from getname and
 	adc.b [a0]						; plus the record length
 	adc.w #$0008					; plus 8
 	sta.b a0
-.cnt:
+.cnt:								; d0 entries to skip
 	dec.b d0						; until record d0
 	bpl .next
 	rtl

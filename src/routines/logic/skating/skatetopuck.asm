@@ -108,7 +108,7 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	lda.b d0+2
 	sbc.w #$0000
 	bcc Sweepcheck
-.ex:
+.ex:								; d0 = stored direction
 	lda.w temp2b,x					; skate in the aimed direction
 	sta.b d0
 	lda.w position,x				; goalie never slows
@@ -160,5 +160,5 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	lsr.b mulres+2
 	ror a
 	sta.w Yvel,x
-.acc:
+.acc:								; d0 = direction
 	jml.l doplayeracc				; d0 = direction

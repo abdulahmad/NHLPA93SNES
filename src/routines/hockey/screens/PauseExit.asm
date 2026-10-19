@@ -4,7 +4,7 @@ PauseExit:							;Restore the screen and leave pause mode
 	jsl.l forceblack				; blank the screen
 	phx								; keep X
 	ldx.w #$07FE					; 2KB
-.restoretext:
+.restoretext:						; restore the saved text map
 	lda.l textsave,x				; saved text
 	sta.l textmap,x					; back to the text map
 	dex
@@ -20,7 +20,7 @@ PauseExit:							;Restore the screen and leave pause mode
 	sta.w sfhormode
 	bne .hor						; vertical: redo it
 	jsl.l ClrHor					; clear horizontal
-.hor:
+.hor:								; redraw the scores in horizontal mode
 	lda.w #$0001					; first flag bit
 	trb.w sflags					; clear it
 	jsl.l printscores1				; redraw the scores

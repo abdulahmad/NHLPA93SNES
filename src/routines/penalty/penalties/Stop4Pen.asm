@@ -40,7 +40,7 @@ Stop4Pen:							;Stop play for a penalty: stop the clock, set the face off spot 
 	beq .noticing
 	lda.w #$FDA8					; spot y -600
 	sta.b d1
-.noticing:
+.noticing:							; keep the unclamped x/y (x sign is tested below)
 	lda.b d0						; x within +-70; y near the ends: end face off spots (+-206, x +-70)
 	sta.b tmp0
 	sec
@@ -50,7 +50,7 @@ Stop4Pen:							;Stop play for a penalty: stop the clock, set the face off spot 
 	bra .0
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .0
-.x0:
+.x0:								; x limit 70
 	lda.w #$0046					; x limit 70
 	sta.b d0
 .0:									; clamp the faceoff X
@@ -63,10 +63,10 @@ Stop4Pen:							;Stop play for a penalty: stop the clock, set the face off spot 
 	bra .1
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvs .1
-.x1:
+.x1:								; -70
 	lda.w #$FFBA					; -70
 	sta.b d0
-.1:
+.1:									; yspot-.ygive = 206-40
 	lda.b d1						; y
 	sec
 	sbc.w #$00A6					; beyond the end of +166?
@@ -75,7 +75,7 @@ Stop4Pen:							;Stop play for a penalty: stop the clock, set the face off spot 
 	bra .2
 .neg2:								; signed compare: overflow flag corrects the sign
 	bvc .2
-.yhi:
+.yhi:								; end spot y 206
 	lda.w #$00CE					; end spot y 206
 	sta.b d1
 	lda.w #$0046					; x 70
@@ -94,7 +94,7 @@ Stop4Pen:							;Stop play for a penalty: stop the clock, set the face off spot 
 	bra .3
 .neg3:								; signed compare: overflow flag corrects the sign
 	bvs .3
-.ylo:
+.ylo:								; end spot y -206
 	lda.w #$FF32					; end spot y -206
 	sta.b d1
 	lda.w #$0046					; x 70
@@ -109,14 +109,14 @@ Stop4Pen:							;Stop play for a penalty: stop the clock, set the face off spot 
 	lda.b d1
 	sta.w foy						; face off y
 	jsl.l limitfo					; limit the spot
-.skipfo:
+.skipfo:							; start the stop delay count from 0
 	lda.b vcount					; sound cut off within 60 frames: reset the queue
 	sec
 	sbc.w sfxmutetime
 	cmp.w #$003C					; within 60 frames?
 	bcc .snd
 	jsl.l sndqreset					; reset the sound queue
-.snd:
+.snd:								; whistle
 	lda.w #SFXwhistle				; whistle, Pencntdwn = 0, gmpen, SetPA PenWhistle
 	pha								; whistle
 	jsl.l sfx

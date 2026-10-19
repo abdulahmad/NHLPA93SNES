@@ -24,7 +24,7 @@ PushRef:							;Draw referee frame d0 in the referee window; frame $40 erases th
 	cmp.w #$40						; $40: erase the window
 	bne .draw
 	jmp.w .clearit
-.draw:
+.draw:								; frame number
 	sta.b mulb						; frame number
 	lda.w #$70						; frame size $70
 	sta.b mula
@@ -48,16 +48,16 @@ PushRef:							;Draw referee frame d0 in the referee window; frame $40 erases th
 	sta.b a0						; horizontal referee map
 	lda.w #RefsMapHor>>16
 	sta.b a0+2
-.nosfhormode:
+.nosfhormode:						; frame address
 	lda.b a0						; frame address
 	clc
 	adc.b d0
 	sta.b a0
 	lda.w #$0008					; 8 rows
 	sta.b tmp2
-.row:
+.row:								; 7 tiles per row
 	ldy.w #$0007					; 7 tiles per row
-.1:
+.1:									; map word + start char/attributes
 	lda.b [a0]						; map word
 	clc
 	adc.b tmp0						; plus the tile base
@@ -70,7 +70,7 @@ PushRef:							;Draw referee frame d0 in the referee window; frame $40 erases th
 	cmp.b textdirtylo
 	bcs .lo
 	sta.b textdirtylo				; new low
-.lo:
+.lo:								; update the dirty range
 	cmp.b textdirtyhi				; dirty range high
 	bcc .hi
 	sta.b textdirtyhi				; new high
@@ -90,7 +90,7 @@ PushRef:							;Draw referee frame d0 in the referee window; frame $40 erases th
 	lda.w #sf2refref				; referee window changed
 	tsb.w sflags
 	bra .ex
-.clearit:
+.clearit:							; horizontal mode only clears the line
 	lda.w #$0007					; erase size 7 x 8
 	sta.b d0
 	lda.w #$0008
@@ -106,14 +106,14 @@ PushRef:							;Draw referee frame d0 in the referee window; frame $40 erases th
 	sta.w printx
 	lda.w #$000F					; row $0F
 	sta.w printy
-.nosfhormode2:
+.nosfhormode2:						; referee window changed
 	jsl.l eraser					; erase d0 x d1 with tile d2
 	lda.w #sf2refref				; referee window changed
 	tsb.w sflags
 	lda.w #$FFFF					; no message
 	sta.b d0
 	jsl.l prefmes					; clear the referee message
-.ex:
+.ex:								; restore and return
 	stx.b xsave						; keep X
 	ldx.w #$0006
 .resta:								; pull a0 and the words after it back

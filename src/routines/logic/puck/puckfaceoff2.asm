@@ -31,7 +31,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	bcc .ntm
 	lda.w #$0258
 	sta.b crowdlevel
-.ntm:
+.ntm:								; stop clock
 	lda.w #sfpz						;no pause, no lower lc box, no gloves, no icing, no refs, no goalie moves,
 									;puck invisible and loose
 	trb.w sflags
@@ -136,9 +136,9 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	sta.w tmflags,y
 	lda.w #afaceoffpl				; afaceoffpl
 	sta.b d0
-.l1:
+.l1:								; give the player his face off assignment
 	jsl.l assinsert					; insert assignment d0
-.goalie1:
+.goalie1:							; d4 = active players of this player's team
 	lda.w tmap						; d4 = (6-tmap)*8: .apl row
 	sta.b d4
 	ldx.b a3
@@ -212,7 +212,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	bit.w #$1000
 	beq .mid
 	ora.w #$E000
-.mid:
+.mid:								; negate
 	eor.w #$FFFF					; negate
 	inc a
 	clc
@@ -274,7 +274,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	dec.b d2
 	bmi .done
 	jmp.w .l0
-.done:
+.done:								; sort the sprites
 	jsl.l SprSort					; SprSort
 	pla
 	sta.b a3
@@ -429,7 +429,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	sta.w fofdata2+2
 	lda.w #$A000
 	sta.w fofdata2+6
-.nfl:
+.nfl:								; no pull directions yet
 	lda.w #$FFFF					; fodir1/fodir2 = none
 	sta.w fodir1
 	sta.w fodir2

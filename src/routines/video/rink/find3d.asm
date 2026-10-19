@@ -13,7 +13,7 @@ find3d:								;Project a rink position (x, y, z) to screen coordinates; off scr
 	sbc.w #$00C5					; minus $C5
 	sta.b d1
 	bra .cx
-.nhor:
+.nhor:								; position relative to the scroll
 	lda.b d0						; normal mode: x minus Hpos
 	sec
 	sbc.w Hpos						; minus the scroll x
@@ -28,7 +28,7 @@ find3d:								;Project a rink position (x, y, z) to screen coordinates; off scr
 	beq .ax
 	eor.w #$FFFF					; negate
 	inc a
-.ax:
+.ax:								; |x| > 144: off screen
 	cmp.w #$0091					; |x| > 144: off
 	bcs .off
 	lda.b d0
@@ -57,7 +57,7 @@ find3d:								;Project a rink position (x, y, z) to screen coordinates; off scr
 	sbc.b d1						; screen y
 	sta.b d1
 	rtl
-.off:
+.off:								; off screen marker
 	lda.w #OFFSCREEN				; off screen marker
 	sta.b d1
 	rtl

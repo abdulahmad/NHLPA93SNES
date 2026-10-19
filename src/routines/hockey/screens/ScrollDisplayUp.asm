@@ -7,11 +7,11 @@ ScrollDisplayUp:					;The next line of the scouting report text; scroll the text
 	sbc.w #$0007
 	bmi .neg
 	bvc .up							; not yet
-.ex1:
+.ex1:								; signed compare done: leave
 	jmp.w UpdateScoutingDisplay_rtl	; full: leave
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .ex1
-.up:
+.up:								; back to the last line
 	dec.w VertLineScrolling			; back to the last line
 	stx.b xsave						; keep X
 	ldx.w #$0000					; save d0 through d7
@@ -29,7 +29,7 @@ ScrollDisplayUp:					;The next line of the scouting report text; scroll the text
 	sta.b d1
 	lda.w #textmap>>16
 	sta.b d1+2
-.loop:
+.loop:								; copy 8 rows of the text box up by one row
 	lda.w #$0028					; 40 bytes
 	sta.b d0
 	lda.b d1						; source = destination row

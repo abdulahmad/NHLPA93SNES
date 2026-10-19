@@ -9,7 +9,7 @@ SPCGameUpload:						;Wait for the sound queue to empty, then upload the in-game 
 	lda.b vcount					; frame counter
 	clc
 	adc.w #$0006					; plus 6 frames
-.vblank:
+.vblank:							; wait for the frame
 	cmp.b vcount					; wait for them
 	bne .vblank
 	lda.w #$0001					; sndbank 1, no song

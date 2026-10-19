@@ -42,14 +42,14 @@ burst:								;Check button: a speed burst in the facing direction, which costs 
 	beq .yabs
 	eor.w #$FFFF					; negate
 	inc a
-.yabs:
+.yabs:								; |Yvel|
 	sta.b tmp0						; |Yvel|
 	lda.w Xvel,x					; x speed
 	bit.w #$8000
 	beq .xabs						; absolute value
 	eor.w #$FFFF					; negate
 	inc a
-.xabs:
+.xabs:								; |Xvel|+|Yvel|
 	clc								; plus |Yvel|
 	adc.b tmp0
 	sta.w pspeed,x					; |Xvel|+|Yvel|

@@ -11,7 +11,7 @@ ShowRinkRows:						;Queue the rink map rows that the vertical scroll brought on 
 	sbc.w Oldrow					; minus the old row
 	bne .moved						; unchanged
 	jmp.w .done						; nothing to do
-.moved:
+.moved:								; moved down?
 	bpl .down						; moved down
 	stx.w Oldrow					; new old row
 	eor.w #$FFFF					; negate: rows moved up
@@ -51,7 +51,7 @@ ShowRinkRows:						;Queue the rink map rows that the vertical scroll brought on 
 	sec
 	sbc.b tmp1
 	tax								; map row
-.rows:
+.rows:								; map row
 	txa								; map row
 	asl a
 	asl a
@@ -104,6 +104,6 @@ ShowRinkRows:						;Queue the rink map rows that the vertical scroll brought on 
 	tay
 	dex								; next row
 	bne .rowloop
-.done:
+.done:								; new list end
 	sty.b DMAlistend				; new list end
 	rtl

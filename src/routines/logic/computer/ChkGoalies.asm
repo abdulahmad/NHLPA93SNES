@@ -31,7 +31,7 @@ ChkGoalies_CPG:						;d0 = team (1/2), a2/a1 = team/other
 	beq .side						; home: as is
 	eor.w #$FFFF					; negate for away
 	inc a
-.side:
+.side:								; d0 = side
 	sta.b d0						; d0 = side
 	cmp.w #$0000					; compare
 	bpl .rtl						; puck is on its own side

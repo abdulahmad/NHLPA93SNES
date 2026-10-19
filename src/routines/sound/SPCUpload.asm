@@ -86,7 +86,7 @@ SPCUpload:							;Send an upload stream (blocks of length, address and data) to 
 	and.w #$7FFF
 	tay
 	inc.b sndptr+2
-.more:
+.more:								; more data to send
 	sep #$20						; 8-bit A
 	cpx.w #$0001					; APUIO1 = 1 if more data (length > 0)
 	lda.b #$00

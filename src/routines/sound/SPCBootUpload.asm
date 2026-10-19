@@ -8,12 +8,12 @@ SPCBootUpload:						;Wait for the sound queue to empty, then upload the sound dr
 	cmp.w #$000F					; full
 	beq .qwait
 	stz.b brightness				; else dark
-.qwait:
+.qwait:								; wait for the sound queue to empty
 	lda.b sndqin					; queue in
 	cmp.b sndqout					; equals queue out
 	bne .dark						; wait for the queue
 	lda.b vcount					; frame counter
-.vblank:
+.vblank:							; wait for a new frame
 	cmp.b vcount					; wait for a new frame
 	beq .vblank
 	lda.w #$0001					; sndbank 2, no song

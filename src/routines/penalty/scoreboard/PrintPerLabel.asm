@@ -5,7 +5,7 @@ PrintPerLabel:						;Print the label of the current period
 	sta.b a0
 	lda.w #PerLabels>>16
 	sta.b a0+2
-.next:
+.next:								; a1 = this label
 	lda.b a0						; a1 = this label
 	sta.b a1
 	lda.b a0+2

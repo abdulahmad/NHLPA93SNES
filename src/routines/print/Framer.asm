@@ -11,7 +11,7 @@ Framer:								;Draw a frame and fill it. d0 / d1 = width / height, printx / pri
 	jsl.l .setter					; set it
 	dec.b tmp2						; width - 2
 	dec.b tmp2
-.top:
+.top:								; top middle piece
 	ldx.w #$0002					; top middle piece
 	jsl.l .setter					; set it
 	dec.b tmp2						; next
@@ -20,7 +20,7 @@ Framer:								;Draw a frame and fill it. d0 / d1 = width / height, printx / pri
 	jsl.l .setter					; set it
 	dec.b d1						; height - 2
 	dec.b d1
-.row:
+.row:								; next row
 	lda.b tmp0						; left edge
 	sta.w printx					; back to the left
 	inc.w printy					; next row
@@ -30,7 +30,7 @@ Framer:								;Draw a frame and fill it. d0 / d1 = width / height, printx / pri
 	sta.b tmp2
 	ldx.w #$0006					; left piece
 	jsl.l .setter					; set it
-.mid:
+.mid:								; middle piece
 	ldx.w #$0008					; middle piece
 	jsl.l .setter					; set it
 	dec.b tmp2						; next
@@ -46,7 +46,7 @@ Framer:								;Draw a frame and fill it. d0 / d1 = width / height, printx / pri
 	dec.b d0
 	ldx.w #$000C					; bottom left piece
 	jsl.l .setter					; set it
-.bot:
+.bot:								; bottom middle piece
 	ldx.w #$000E					; bottom middle piece
 	jsl.l .setter					; set it
 	dec.b d0						; next

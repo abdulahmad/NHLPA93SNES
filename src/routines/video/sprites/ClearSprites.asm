@@ -2,7 +2,7 @@ ClearSprites:						;Move every sprite off screen and start a new sprite frame
 	clc								; clear carry
 	ldx.w #$0000					; offset 0
 	ldy.w #$0008					; 8 blocks of 16 sprites
-.loop:
+.loop:								; y = $E0, x = $E0: off screen
 	lda.w #$E0E0					; y = $E0, x = $E0: off screen
 	sta.w Satt,x					; sprite 0
 	stz.w Satt+2,x					; attributes 0
@@ -56,7 +56,7 @@ ClearSprites:						;Move every sprite off screen and start a new sprite frame
 	cmp.w #$0003					; slot life above 2
 	bcc .nosprnodraw
 	dec.b sprslotlife				; shorten the slot life
-.nosprnodraw:
+.nosprnodraw:						; big slot
 	lda.b sprbigslot				; big slot
 	sta.b sprbigslotend				; end of the big slots
 	lda.b sprslot					; small slot

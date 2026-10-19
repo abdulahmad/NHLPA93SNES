@@ -24,7 +24,7 @@ uppads:								;Update the gloves object and the pad objects, and queue new pad 
 	sta.w ffoy,y					; y times 4
 	lda.w #$0000
 	sta.w ffoz,y					; visible
-.nogloves:
+.nogloves:							; 4 pads (92 3); d4 = pads left-1
 	lda.w #$0003					; 4 pads: a0 = ffo index, a1 = padcont, d3 = PadControlBits
 	sta.b d4
 	stz.b a0

@@ -6,7 +6,7 @@ FigureJoy:							;Set which team each controller plays
 	lda.w OptPlayMode				; play mode
 	bne .po
 	jmp.w .fjnpo
-.po:
+.po:								; d1 = games - 1; d2 = the po team
 	jsl.l GetShifter				; d1 = games - 1
 	lda.w #potree					; d2 = the po team
 	sta.b a0						; po team table
@@ -22,7 +22,7 @@ FigureJoy:							;Set which team each controller plays
 	lda.w #$FFFF					; gamenum -1: po team not playing
 	sta.w gamenum					; no game yet
 	stz.b d0
-.f0:
+.f0:								; search the series: first team
 	lda.b d2						; search the series
 	ldy.b a1
 	cmp.w gst1,y					; first team of the series
@@ -35,13 +35,13 @@ FigureJoy:							;Set which team each controller plays
 	bpl .f0
 .rtl:								;po team not in the playoffs
 	rtl
-.it2:
+.it2:								; the po team is team 2: opponent
 	lda.w #4						; po team is team 2
 	sta.b d0
 	lda.w gst1,y					; opponent
 	sta.w OptTeam2					; OptTeam2
 	bra .itx
-.it1:
+.it1:								; the po team is team 1: opponent
 	stz.b d0						; po team is team 1
 	lda.w gst2,y					; opponent
 	sta.w OptTeam2					; OptTeam2
@@ -70,7 +70,7 @@ FigureJoy:							;Set which team each controller plays
 	lda.b [a0],y
 	sta.w cont2team					; cont2team
 	rtl
-.fjnpo:
+.fjnpo:								; regular season: pads from the table by OptPlayers
 	lda.w OptPlayers				; regular season: .noplist by OptPlayers
 	asl a							; times 4
 	asl a

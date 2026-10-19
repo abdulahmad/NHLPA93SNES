@@ -4,7 +4,7 @@ updateanim:							;Step object X's sprite animation, looping or ending it
 	stz.w pf2aip,x
 	stz.w pfalock,x
 	rtl
-.ia:
+.ia:								; a0 = SPAlist + SPA; d1 = attribute
 	clc								; a0 = SPAlist + SPA; d1 = attributes (+$10)
 	adc.w #SPAlist&$FFFF			; SPAlist base
 	sta.b a0
@@ -24,7 +24,7 @@ updateanim:							;Step object X's sprite animation, looping or ending it
 	dec a
 	and.w #$0007					; turn 90 degrees
 	sta.b d0
-.nhor:
+.nhor:								; x flip: mirror the direction
 	lda.w attribute,x				; x flip: mirror the direction
 	bit.w #attrxflip
 	beq .nox
@@ -33,7 +33,7 @@ updateanim:							;Step object X's sprite animation, looping or ending it
 	inc a
 	and.w #$0007					; 0-7
 	sta.b d0
-.nox:
+.nox:								; a0 += the direction table entry
 	lda.b d0						; a0 += direction table entry; d2 = new frame
 	asl a
 	tay
@@ -80,7 +80,7 @@ updateanim:							;Step object X's sprite animation, looping or ending it
 	beq .0
 	eor.w #$FFFF					; negate
 	inc a
-.0:
+.0:									; SPAcnt = the delay; frame = the new frame
 	sta.w SPAcnt,x					; SPAcnt = delay
 .cframe:							;frame = new frame
 	lda.b d2						; frame

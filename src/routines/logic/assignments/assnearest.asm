@@ -11,7 +11,7 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	lda.w #$0008
 	sta.w temp2b,x
 	stz.w temp1,x
-.nna:
+.nna:								; new assignment handled: who has the puck?
 	txa								; player number
 	lsr a
 	sta.b d1						; d1 = player number
@@ -20,7 +20,7 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	lda.w position,x				; goalie?
 	bne .pc
 	jmp.w assgoalie					; goalie assignment
-.pc:
+.pc:								; apuckc unless joystick controlled
 	lda.w #apuckc					; apuckc unless joystick controlled
 	sta.b d0
 	lda.w pflags,x
@@ -36,7 +36,7 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	sta.w temp1,x
 	bmi .dec						; expired: look again
 	jmp.w .nodec
-.dec:
+.dec:								; reload temp1 from aioff
 	adc.w aioff,x					; reload temp1 from aioff
 	bpl .setcnt
 	lda.w #$0000
@@ -54,16 +54,16 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	lda.w pfteam,y					; puck carrier on my team?
 	beq .pcteam
 	lda.w #$0001
-.pcteam:
+.pcteam:							; carrier team 0/1
 	sta.b tmp0						; carrier team 0/1
 	lda.w pfteam,x					; my team
 	beq .myteam
 	lda.w #$0001
-.myteam:
+.myteam:							; same team as the puck carrier?
 	eor.b tmp0						; same team as the puck carrier?
 	bne .np
 	jmp.w .switch					; then switch
-.np:
+.np:								; d2 = best (smallest) squared distance so far, unsigned
 	lda.w #$FFFF					; d2 = best distance^2 = $FFFFFFFF
 	sta.b d2
 	sta.b d2+2
@@ -77,19 +77,19 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	lda.w position,y				; position
 	bpl .pos						; skip empty slots
 	jmp.w .next
-.pos:
+.pos:								; skip empty slots and goalies
 	bne .nop						; skip goalies
 	jmp.w .next
-.nop:
+.nop:								; puck lockout
 	lda.w nopuck,y					; puck lockout
 	beq .unav
 	jmp.w .next
-.unav:
+.unav:								; unavailable?
 	lda.w pflags,y					; player flags
 	bit.w #pf2unav					; unavailable?
 	beq .pass
 	jmp.w .next
-.pass:
+.pass:								; assignment index
 	tya								; assignment index
 	asl a
 	asl a
@@ -126,7 +126,7 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	bit.w #$0200
 	beq .vx
 	ora.w #$FC00
-.vx:
+.vx:								; puckvx / 64
 	sta.b d3						; puckvx / 64
 	lda.b d0
 	sec
@@ -142,7 +142,7 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	bit.w #$0200
 	beq .vy
 	ora.w #$FC00
-.vy:
+.vy:								; puckvy / 64
 	sta.b d3						; puckvy / 64
 	lda.b d1
 	sec
@@ -175,13 +175,13 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	sta.b d2+2
 	lda.b a0						; new best player
 	sta.b a1
-.next:
+.next:								; next player
 	inc.b a0						; next player
 	inc.b a0
 	dec.b d4						; players left
 	bmi .done
 	jmp.w .de0
-.done:
+.done:								; found a player?
 	lda.b d2+2						; found a player?
 	bmi .de1
 	ldy.b a2						; team of this player
@@ -212,11 +212,11 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	stx.b a3
 	sty.b a1
 	jmp.w assexit					; leave the assignment
-.de1:
+.de1:								; locked: skip
 	lda.w pfalock,x					; animation locked?
 	beq .odds
 	jmp.w .rts
-.odds:
+.odds:								; default shift 2
 	lda.w #$0002					; default shift 2
 	sta.b d1
 	lda.b d2						; best distance
@@ -238,7 +238,7 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	inc.b d1
 	inc.b d1
 	inc.b d1
-.x:
+.x:									; random range ($14 - aggress) << d1
 	lda.w #$0014					; ($14-aggress) << d1
 	sec
 	sbc.w aggress,x					; minus aggression
@@ -250,22 +250,22 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	bmi .rnd
 	asl.b d0						; shift left
 	bra .shl
-.rnd:
+.rnd:								; random number 0 to d0-1
 	jsl.l randomd0					; random number 0 to d0-1
 	lda.b d0
 	cmp.w #$0002					; 2 or more: no change
 	bcs .nodec
 	lda.w #$00F0					; temp3 = 240
 	sta.w temp3,x
-.nodec:
+.nodec:								; locked: skip
 	lda.w pfalock,x					; animation locked?
 	beq .clk
 	jmp.w .rts
-.clk:
+.clk:								; clock stopped?
 	lda.w gmclock					; clock stopped?
 	beq .joy
 	jml.l assnothing
-.joy:
+.joy:								; joystick controlled?
 	lda.w pflags,x					; player flags
 	bit.w #pfjoycon					; joystick controlled?
 	beq .mode
@@ -278,14 +278,14 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	lda.w puckc						; puck carrier
 	bpl .cnt
 	jmp.w .topuck
-.cnt:
+.cnt:								; count temp3 down
 	lda.w temp3,x					; temp3 timer
 	sec
 	sbc.b d7						; minus the frame count
 	sta.w temp3,x
 	bmi .clr						; expired: clear it
 	jmp.w .topuck
-.clr:
+.clr:								; clear it
 	stz.w temp3,x					; clear it
 .mid:								;skate to halfway between the puck spot and the own goal mouth (0,+-$F4)
 	jsl.l skatetopuckinit			; d0/d1 = puck spot
@@ -343,11 +343,11 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	bra .go
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvc .go
-.clamp1:
+.clamp1:							; clamp y
 	lda.w #$0044					; clamp y
 	sta.b d1
 	bra .go
-.neg:
+.neg:								; mirrored for the other goal end
 	lda.b d1						; y
 	sec
 	sbc.w #$FFAD					; limit
@@ -357,16 +357,16 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	bra .go
 .neg2:								; signed compare: overflow flag corrects the sign
 	bvs .go
-.clamp2:
+.clamp2:							; clamp y
 	lda.w #$FFBC					; clamp y
 	sta.b d1
-.go:
+.go:								; no extra routine for skateto
 	lda.w #rtss						; a0 = rtss: nothing to do on arrival
 	sta.b a0
 	lda.w #rtss>>16
 	sta.b a0+2
 	jsl.l skateto					; d0/d1 = spot, [a0] = arrival routine
 	jmp.w check4check				; then check for a check
-.topuck:
+.topuck:							; falls into check4check
 	jsl.l skatetopuck				; skate to the puck
 	jmp.w check4check				; then check for a check

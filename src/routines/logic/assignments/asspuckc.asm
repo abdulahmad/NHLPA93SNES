@@ -5,20 +5,20 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	cmp.w puckc						; the puck carrier?
 	beq .nl
 	jmp.w assexit
-.nl:
+.nl:								; animation locked?
 	lda.w pfalock,x					; anim locked
 	beq .clk
 	jmp.w .rtl
-.clk:
+.clk:								; clock stopped: assnothing
 	lda.w gmclock					; clock stopped: assnothing
 	beq .go
 	jml.l assnothing
-.go:
+.go:								; joystick controlled: assexit
 	lda.w pflags,x					; joystick controlled: assexit
 	bit.w #pfjoycon
 	beq .na
 	jmp.w assexit
-.na:
+.na:								; new assignment: temp1 = 0
 	bit.w #pfna						; new assignment: temp1 = 0, temp2b = 8, temp3 = random 0-3
 	beq .nna
 	and.w #~pfna&$FFFF
@@ -30,7 +30,7 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	lda.w seed						; random 0-3
 	and.w #$0003
 	sta.w temp3,x
-.nna:
+.nna:								; decision timer counts down by d7 (elapsed frames)
 	lda.w temp1,x					; every aioff frames: checkob, chk4lc, chk4shot, chk4pass
 	sec
 	sbc.b d7						; minus the frame count
@@ -59,7 +59,7 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	beq .nd1
 	lda.w position,x				; position index
 	sta.b d0
-.nd1:
+.nd1:								; 4 bytes per entry (x,y words)
 	lda.b d0						; d0/d1 = spot x/y, negated for pfgoal clear
 	asl a
 	asl a
@@ -80,7 +80,7 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
-.nd0:
+.nd0:								; a0 = routine skateto calls to adjust the direction
 	lda.w #.chkdir					; skateto with the .chkdir callback
 	sta.b a0
 	lda.w #.chkdir>>16
@@ -95,7 +95,7 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	bit.w #$0080
 	beq .cd
 	ora.w #$FF00
-.cd:
+.cd:								; d2/d3 = puck + velocity
 	sta.b d0						; d2/d3 = puck + velocity
 	lda.w Xvel+1,x					; x velocity high byte
 	and.w #$00FF
@@ -123,7 +123,7 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	bcs .cd0
 	lda.w #$000C
 	sta.b a0
-.cd0:
+.cd0:								; opponent x + velocity - predicted puck x
 	ldy.b a0						; opponent
 	lda.w Xvel+1,y
 	and.w #$00FF
@@ -139,7 +139,7 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	beq .ax
 	eor.w #$FFFF					; negate
 	inc a
-.ax:
+.ax:								; within 20 in x?
 	cmp.w #$0015					; within 20?
 	bcs .next
 	lda.w Yvel+1,y
@@ -156,7 +156,7 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	beq .ay
 	eor.w #$FFFF					; negate
 	inc a
-.ay:
+.ay:								; within 20 in y?
 	cmp.w #$0015					; within 20?
 	bcs .next
 	inc.w threat					; threat +1; facing straight at it: turn one step either way
@@ -179,7 +179,7 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	adc.b d0
 	and.w #$0007					; new direction
 	sta.b d0
-.next:
+.next:								; next opponent
 	inc.b a0						; next opponent
 	inc.b a0
 	dec.b d4						; opponents left

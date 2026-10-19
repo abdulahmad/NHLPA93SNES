@@ -14,14 +14,14 @@ NewTicker3:							;Show the ticker box for game d3: round, period and both teams
 	bne .pj							; pause screen: one position code is enough
 	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pri,$02,$17)	; print the position code again
-.pj:
+.pj:								; horizontal rink mode: use the position as is
 	lda.w sfhormode					; horizontal rink mode
 	bne .frame						; use the position as is
 	lda.w printy
 	sec
 	sbc.w #$0005
 	sta.w printy					; print y - 5
-.frame:
+.frame:								; frame 28 wide, 5 high
 	lda.w #$001C					; frame width $1C
 	sta.b d0
 	lda.w #$0005					; frame height 5

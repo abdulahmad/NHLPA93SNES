@@ -4,7 +4,7 @@ PushNumber:							;a1 = d0 as a decimal string, no leading zeros
 	lda.w #mesarea>>16
 	sta.b a1+2
 	lda.b d0						; the number
-.0:
+.0:									; next digit: remainder of /10, written backwards
 	sta.b mulb						; divide by 10
 	lda.w #$000A
 	sta.b mula

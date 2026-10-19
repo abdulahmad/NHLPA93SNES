@@ -7,7 +7,7 @@ print:								;Print string [a1] into the text map at printx / printy. The strin
 	bcs .hang
 	phx								; keep X
 	ldy.w #$0002					; Y = 2: skip the length word
-.pos:
+.pos:								; X = (printy*32+printx)*2 + printmap
 	lda.w printy					; X = (printy*32+printx)*2 + printm
 	asl a
 	asl a
@@ -18,12 +18,12 @@ print:								;Print string [a1] into the text map at printx / printy. The strin
 	asl a							; plus the character offset
 	adc.b printm					; plus the map offset
 	tax
-.char:
+.char:								; end of the string?
 	tya								; end of the string?
 	cmp.b [a1]
 	bne .ctl
 	jmp.w .done						; done
-.ctl:
+.ctl:								; bit 7: control code
 	lda.b [a1],y					; character
 	bit.w #$0080					; bit 7: control code
 	bne .code
@@ -40,7 +40,7 @@ print:								;Print string [a1] into the text map at printx / printy. The strin
 	adc.w printfontset				; plus the font set
 	ora.w printa					; plus the palette and priority
 	plx
-.put:
+.put:								; store the tile unless it is already there
 	cmp.l textmap,x					; already there?
 	beq .nextc
 	sta.l textmap,x					; store the tile
@@ -53,7 +53,7 @@ print:								;Print string [a1] into the text map at printx / printy. The strin
 	cmp.b textdirtyhi
 	bcc .nextc						; new high
 	sta.b textdirtyhi
-.nextc:
+.nextc:								; next column
 	inc.w printx					; next column
 	inx								; next text map position
 	inx
@@ -107,13 +107,13 @@ print:								;Print string [a1] into the text map at printx / printy. The strin
 	sta.w printy					; printy
 	iny
 	jmp.w .pos						; continue
-.done:
+.done:								; a1 = end of the string
 	clc								; string length
 	adc.b a1						; plus the string start
 	sta.b a1						; a1 = end of the string
 	plx								; restore X
 	rtl
-.blank:
+.blank:								; blank tile plus the font set
 	lda.w blankchar					; blank tile
 	clc
 	adc.w printfontset				; plus the font set

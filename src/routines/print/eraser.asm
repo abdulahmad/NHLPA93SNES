@@ -5,7 +5,7 @@ eraser:								;Fill a d0 by d1 rectangle of the text map at printx / printy wit
 	adc.w printfontset				; plus the font set
 	sta.b d2
 	stz.b d1+2						; row counter 0
-.row:
+.row:								; next row
 	lda.w printy					; print y
 	clc
 	adc.b d1+2						; plus the row
@@ -20,7 +20,7 @@ eraser:								;Fill a d0 by d1 rectangle of the text map at printx / printy wit
 	tax								; X = map offset
 	ldy.b d0						; columns
 	lda.b d2						; tile
-.col:
+.col:								; fill a word
 	sta.l textmap,x					; fill a word
 	inx
 	inx
@@ -41,7 +41,7 @@ eraser:								;Fill a d0 by d1 rectangle of the text map at printx / printy wit
 	cmp.b textdirtylo				; below the dirty start
 	bcs .hi
 	sta.b textdirtylo				; new dirty start
-.hi:
+.hi:								; plus the height
 	lda.w printy					; print y
 	clc
 	adc.b d1						; plus the height

@@ -1,7 +1,7 @@
 SuperDiv:							;password bits /= d0, with the remainder in d0
 	phx								; remainder = passbits, divisor = d0 << 128
 	ldx.w #$000E					; 8 words
-.init:
+.init:								; dividend into mulres, divisor words 0
 	lda.w passbits,x				; dividend
 	sta.b mulres,x
 	stz.b mula,x					; divisor words 0
@@ -11,7 +11,7 @@ SuperDiv:							;password bits /= d0, with the remainder in d0
 	lda.b d0						; divisor
 	sta.b mula+16					; in the top word
 	ldx.w #$0080					; 128 steps
-.loop:
+.loop:								; shift the divisor right
 	lsr.b mula+16					; shift the divisor right
 	ror.b mula+14
 	ror.b mula+12
@@ -73,11 +73,11 @@ SuperDiv:							;password bits /= d0, with the remainder in d0
 	sbc.b mula+14
 	sta.b mulres+14
 	inc.w passbits					; quotient bit
-.next:
+.next:								; next step
 	dex								; next step
 	beq .done						; done
 	jmp.w .loop						; loop
-.done:
+.done:								; restore X; the remainder in d0
 	plx								; restore X
 	lda.b mulres					; remainder
 	sta.b d0						; in d0

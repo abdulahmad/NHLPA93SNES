@@ -4,14 +4,14 @@ DecompressBytecode:					;Unpack a compressed stream to unpackbuf. Each control b
 	stz.b tmp1+1					; output pointer = $7F0000
 	lda.w #TestList>>16				; output bank
 	sta.b tmp1+3
-.next:
+.next:								; next command byte of the stream
 	lda.b [tmp0]					; next command byte
 	inc.b tmp0
 	bit.w #$00E0					; top three bits zero: literal copy
 	bne .clear
 	and.w #$001F					; literal count - 1
 	tax
-.litloop:
+.litloop:							; copy the literal bytes
 	lda.b [tmp0]					; copy one literal byte
 	inc.b tmp0
 	sta.b [tmp1+1]
@@ -34,7 +34,7 @@ DecompressBytecode:					;Unpack a compressed stream to unpackbuf. Each control b
 	dex
 	bpl .clrloop
 	bra .next						; next command
-.fillop:
+.fillop:							; $3x: write the run of one byte
 	cmp.w #$0030					; $3x: run of one byte
 	bne .backshort
 	tya
@@ -71,7 +71,7 @@ DecompressBytecode:					;Unpack a compressed stream to unpackbuf. Each control b
 	sec
 	sbc.b tmp2+2
 	tax
-.backloop:
+.backloop:							; copy bytes from earlier output, going up
 	lda.l TestList,x				; copy a byte from earlier output
 	inx
 	sta.b [tmp1+1]
@@ -172,7 +172,7 @@ DecompressBytecode:					;Unpack a compressed stream to unpackbuf. Each control b
 	sec
 	sbc.b tmp2+2
 	tax
-.revloop:
+.revloop:							; copy bytes from earlier output, going down
 	lda.l TestList,x				; copy a byte from earlier output
 	dex								; going down
 	sta.b [tmp1+1]
@@ -213,5 +213,5 @@ DecompressBytecode:					;Unpack a compressed stream to unpackbuf. Each control b
 	inc a
 	tay
 	bra .revrun
-.end:
+.end:								; end of the stream: return
 	rtl								; done

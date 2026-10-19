@@ -24,9 +24,9 @@ setpads:							;Store which player a pad marker belongs to, so the graphics can 
 	asl.b d1						; rotate the mask
 	bcc .m2							; no carry
 	inc.b d1						; carry into bit 0
-.m2:
+.m2:								; again
 	bra .m1							; again
-.and:
+.and:								; clear the nibble
 	lda.w PadControlBits			; pad bits
 	and.b d1						; clear the nibble
 	sta.w PadControlBits
@@ -38,7 +38,7 @@ setpads:							;Store which player a pad marker belongs to, so the graphics can 
 	dec.b d0						; count down
 	asl.b d1						; shift
 	bra .sh
-.or:
+.or:								; insert the marker
 	lda.w PadControlBits			; pad bits
 	ora.b d1						; insert the marker
 	sta.w PadControlBits			; store

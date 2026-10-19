@@ -11,7 +11,7 @@ CompShoot:							;Computer player X shoots
 	eor.w #$FFFF					; negate for the bottom end
 	inc a
 	sta.b d0
-.ds0:
+.ds0:								; d0 = puck y toward the goal I shoot at
 	lda.w #blueline+goalline		; swing time = (blueline+goalline - y)/8, max 20
 	sec								; distance to the goal line
 	sbc.b d0
@@ -23,7 +23,7 @@ CompShoot:							;Computer player X shoots
 	bcc .lt
 	lda.w #$0014
 	sta.b d1
-.lt:
+.lt:								; temp2 = swing time
 	stz.w temp2,x					; temp2 = 0
 	lda.b d1
 	sta.w temp2b,x					; swing time

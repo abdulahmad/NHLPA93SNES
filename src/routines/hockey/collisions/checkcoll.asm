@@ -7,7 +7,7 @@ checkcoll:							;Move object X to its new x / y (d2 / d3), checking wall and pl
 	ldy.b d3						; d3 into d2
 	sta.b d3
 	sty.b d2
-.nhor1:
+.nhor1:								; no collision mode: skip all tests
 	lda.w pfnc,x					; pfnc: no collision
 	beq .go
 	jmp.w .ex
@@ -96,7 +96,7 @@ checkcoll:							;Move object X to its new x / y (d2 / d3), checking wall and pl
 	sta.w wcradiusx
 	sta.w wcradiusy
 	jsl.l checkwallcoll				; check the wall at the stick end
-.xx:
+.xx:								; restore d0-d6
 	pla								; pull d0-d6 back
 	sta.b d0
 	pla
@@ -126,11 +126,11 @@ checkcoll:							;Move object X to its new x / y (d2 / d3), checking wall and pl
 	pla
 	sta.b d6+2
 	jsl.l checkplcoll				; checkplcoll
-.ex:
+.ex:								; collision: restore the old position, else re-sort in OOlist
 	lda.b collflag					; collflag: restore the old position
 	beq .sort						; no collision: sort
 	jmp.w .restoreold
-.sort:
+.sort:								; move up or down OOlist by y
 	lda.w OOlistpos,x				; move up/down OOlist by y
 	sta.b d1
 .2:									; top of the object list?
@@ -150,7 +150,7 @@ checkcoll:							;Move object X to its new x / y (d2 / d3), checking wall and pl
 	bra .cl2
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .cl2
-.swapup:
+.swapup:							; move X up the list, the other down
 	inc.w OOlistpos,x				; move X up the list
 	lda.w OOlistpos,y				; and the other down
 	dec a
@@ -164,7 +164,7 @@ checkcoll:							;Move object X to its new x / y (d2 / d3), checking wall and pl
 	rep #$30						; 16-bit registers
 	inc.b d1						; next position
 	bra .2
-.cl2:
+.cl2:								; X's position in the sorted list; at the bottom: done
 	lda.w OOlistpos,x				; X's position in the sorted list
 	beq .ex2						; at the bottom: done
 	sta.b d1
@@ -182,7 +182,7 @@ checkcoll:							;Move object X to its new x / y (d2 / d3), checking wall and pl
 	bra .ex2
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvs .ex2
-.swapdn:
+.swapdn:							; move X down the list, the other up
 	dec.w OOlistpos,x				; move X down the list
 	lda.w OOlistpos,y				; and the other up
 	inc a
@@ -196,11 +196,11 @@ checkcoll:							;Move object X to its new x / y (d2 / d3), checking wall and pl
 	rep #$30						; 16-bit registers
 	dec.b d1						; previous position
 	bne .3
-.ex2:
+.ex2:								; store the new y in Ylist and return
 	lda.b d3						; new y
 	sta.w Ylist,x					; store it
 	rtl
-.restoreold:
+.restoreold:						; undo the move: restore the old x and y
 	lda.w OldXpos,x					; restore the old x
 	sta.w Xpos,x
 	lda.w OldYpos,x					; restore the old y

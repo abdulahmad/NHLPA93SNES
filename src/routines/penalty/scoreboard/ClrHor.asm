@@ -20,7 +20,7 @@ ClrHor:								;Switch back from the horizontal rink to the vertical ice rink
 	clc								; plus the character offset
 	adc.w charofs
 	ldx.w #$07FE					; 2KB
-.clr:
+.clr:								; clear the text map
 	sta.l textmap,x					; clear the text map
 	dex
 	dex
@@ -29,7 +29,7 @@ ClrHor:								;Switch back from the horizontal rink to the vertical ice rink
 	lda.w #$03FF
 	sta.b textdirtyhi				; 1023 words
 	jsl.l printscores1				; redraw the scores
-.ex:
+.ex:								; restore and return
 	stx.b xsave						; X again
 	ldx.w #$003A
 .resta:								; pull the registers back

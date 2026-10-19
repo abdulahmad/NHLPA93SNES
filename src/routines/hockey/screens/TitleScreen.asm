@@ -231,7 +231,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	clc
 	adc.w #180
 	sta.b d2
-.top6:
+.top6:								; hold the page for 120 frames
 	jsl.l ReadPads					; read the pads
 	lda.b d3
 	cmp.w #$00FE

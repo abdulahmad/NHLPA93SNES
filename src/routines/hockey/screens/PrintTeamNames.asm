@@ -25,7 +25,7 @@ PrintTeamNames:						;Print both team names, then set up the teams
 	sta.w HomeTeam
 	lda.w OptTeam2
 	sta.w VisTeam
-.print:
+.print:								; print the team names
 	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font2Pri,$02,$01)
 	lda.w VisTeam

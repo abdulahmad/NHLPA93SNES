@@ -47,7 +47,7 @@ SetPA2:								;Step the referee animation to its next frame and delay
 	sta.b d0
 	lda.w #$FFFF
 	sta.w RefStep
-.0:
+.0:									; low byte = delay
 	lda.b d0						; RefCnt = delay * 8, d0 = frame
 	and.w #$00FF
 	asl a

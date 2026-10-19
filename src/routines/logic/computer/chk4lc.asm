@@ -16,7 +16,7 @@ chk4lc:								;Should the computer call a line change? Then shoot the puck in
 	bmi .neg						; short of it
 	bvs .inzone						; overflow
 	bra .rts						; beyond: no call
-.neg:
+.neg:								; short of the blue line
 	bvs .rts						; overflow: inside
 .inzone:							;in own half, inside the blue line
 	lda.w seed						; random

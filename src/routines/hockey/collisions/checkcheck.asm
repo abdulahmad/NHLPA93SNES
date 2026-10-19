@@ -146,7 +146,7 @@ checkcheck:							;Two players are in contact: check what happens each way
 	bra .down
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvc .down
-.pen:
+.pen:								; penalty roll (checkagr <= 4)
 	jsl.l checkagr					;checkagr <= 4 and no highlight: PenCharging or PenSlashing (d0 = penalty
 	;roll)
 	lda.b d0
@@ -165,7 +165,7 @@ checkcheck:							;Two players are in contact: check what happens each way
 	adc.w #PenCharging
 	sta.b d0
 	jmp.w AddPenalty
-.down:
+.down:								; roll a penalty, then a2 falls
 	jsl.l checkagr					;checkagr <= 3 and no highlight: PenRoughing or PenCrossChk (d0 = penalty
 	;roll)
 	lda.b d0

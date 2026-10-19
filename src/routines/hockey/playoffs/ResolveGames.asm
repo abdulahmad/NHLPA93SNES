@@ -17,7 +17,7 @@ ResolveGames:						;Record the played playoff game and the series wins; when the
 	cmp.w #7						; 7 games per series
 	bne .b0
 	jmp.w .notbos
-.b0:
+.b0:								; skip finished series (4 wins decide)
 	ldy.b a0						; series index
 	lda.w #4						; 4 wins decide a series
 	cmp.w gspotwins,y				; series already decided?
@@ -30,20 +30,20 @@ ResolveGames:						;Record the played playoff game and the series wins; when the
 	beq .nf
 	lda.w #$0010					; teams swapped: d3 = $10
 	sta.b d3
-.nf:
+.nf:								; compare the scores
 	lda.w gss1,y					; compare the scores
 	cmp.w gss2,y
 	bpl .ns1
 	lda.b d3
 	eor.w #$0010					; flip the side of the win
 	sta.b d3
-.ns1:
+.ns1:								; series offset plus the side: count the win
 	lda.b a0						; series offset plus side
 	clc
 	adc.b d3
 	tax
 	inc.w gspotwins,x				; count the series win
-.b1:
+.b1:								; previous game of the round
 	dec.b a0						; next series
 	dec.b a0
 	dec.b d1
@@ -53,7 +53,7 @@ ResolveGames:						;Record the played playoff game and the series wins; when the
 	cmp.w #7						; series finished?
 	bne .more
 	jmp.w .nextround
-.more:
+.more:								; current game
 	lda.w gamenum					; current game
 	asl a
 	sta.b a0
@@ -73,12 +73,12 @@ ResolveGames:						;Record the played playoff game and the series wins; when the
 	bra .nextround
 .lvlneg:							; signed compare: overflow flag corrects the sign
 	bvs .nextround
-.cr:
+.cr:								; d1 = games - 1
 	jsl.l GetShifter				; d1 = games - 1
 	lda.b d1
 	asl a
 	sta.b a0
-.cr0:
+.cr0:								; skip the game just played
 	ldy.b a0						; series loop
 	lda.b d1
 	cmp.w gamenum					; skip the played series
@@ -117,7 +117,7 @@ ResolveGames:						;Record the played playoff game and the series wins; when the
 	bpl .cp
 	lda.w #sf3alttree				; alternate tree flag
 	tsb.w sflags3
-.nextround:
+.nextround:							; advance to the next round
 	stz.b bosgames					; reset the game counter
 	jsl.l GetShifter				; d1 = games - 1
 	lda.b d1
@@ -134,7 +134,7 @@ ResolveGames:						;Record the played playoff game and the series wins; when the
 	tax
 	lda.l BitMaskTable,x			; mark the winning series
 	tsb.b d3
-.nr1:
+.nr1:								; reset the win counts for the next round
 	lda.w #$0000					; clear the win counts
 	sta.w gspotwins,y
 	sta.w gspobwins,y
@@ -169,7 +169,7 @@ ResolveGames:						;Record the played playoff game and the series wins; when the
 	tax
 	lda.l BitMaskTable,x			; mark the series
 	tsb.b d3
-.s1:
+.s1:								; teams swapped?
 	lda.w gsflags,y					; teams swapped?
 	bit.w #gsftf
 	beq .s2

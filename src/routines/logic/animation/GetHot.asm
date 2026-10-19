@@ -7,7 +7,7 @@ GetHot:								;d0 / d1 = the hot spot x / y of object A's current frame
 	cmp.w #SPFPen					; the hotspot list skips the injury frames
 	bcc .remap						; before the injury frames
 	sbc.w #SPFPen-SPFfinjury		; skip them
-.remap:
+.remap:								; frames past the hotspot list
 	cmp.w #(HotListEnd-HotList)/2+1	; frames past the hotspot list
 	bcs .ex							; past the list
 	dec a							; frame - 1
@@ -19,14 +19,14 @@ GetHot:								;d0 / d1 = the hot spot x / y of object A's current frame
 	bit.w #$0080					; signed
 	beq .hx
 	ora.w #$FF00					; sign extend
-.hx:
+.hx:								; hot x done: get hot y
 	sta.b d0						; hot x
 	lda.l HotList+1,x				; HotList y
 	and.w #$00FF					; byte
 	bit.w #$0080					; signed
 	beq .hy
 	ora.w #$FF00					; sign extend
-.hy:
+.hy:								; hot y done: check the x flip
 	sta.b d1						; hot y
 	lda.w attribute,y				; attribute
 	bit.w #attrxflip				; x flip
@@ -35,7 +35,7 @@ GetHot:								;d0 / d1 = the hot spot x / y of object A's current frame
 	eor.w #$FFFF					; negate x
 	inc a
 	sta.b d0
-.nox:
+.nox:								; attribute bit 4 clear: negate hot y
 	lda.w attribute,y				; attribute
 	bit.w #attryflip				; y flip (clear = negate)
 	bne .noy						; y flip
@@ -43,7 +43,7 @@ GetHot:								;d0 / d1 = the hot spot x / y of object A's current frame
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1						; hot y
-.noy:
+.noy:								; horizontal screen: swap the axes
 	lda.w sfhormode					; horizontal mode: rotate
 	beq .ex							; vertical mode
 	lda.b d0						; rotate by 90 degrees
@@ -52,6 +52,6 @@ GetHot:								;d0 / d1 = the hot spot x / y of object A's current frame
 	inc a
 	sta.b d1
 	sty.b d0						; swap x and y
-.ex:
+.ex:								; restore registers, drop the argument
 	plx								; restore X
 	rtl

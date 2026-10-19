@@ -6,14 +6,14 @@ SuperAdd:							;password bits += d0
 	sta.w passbits
 	bcc .ex							; no carry: done
 	ldx.w #$0002					; carry into the next words
-.carry:
+.carry:								; increment passbits; no carry out: done
 	inc.w passbits,x				; increment
 	bne .ex							; no carry out: done
 	inx
 	inx
 	cpx.w #16						; 8 words in all
 	bne .carry
-.ex:
+.ex:								; restore X
 	plx								; restore X
 	clc
 	rtl

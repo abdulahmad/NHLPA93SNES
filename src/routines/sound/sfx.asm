@@ -18,6 +18,6 @@ sfx:								;Play the sound effect number pushed before the call, unless sound e
 	jsl.l QueueSound				; queue it
 .ret:								;return through jmlvector
 	jml.l jmlvector
-.drop:
+.drop:								; muted: drop the sound
 	pla								; drop the pushed sound
 	bra .ret

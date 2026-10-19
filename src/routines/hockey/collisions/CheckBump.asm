@@ -44,7 +44,7 @@ CheckBump:							;Goalie X pushed against the net with the puck near: if he is m
 .vx:								; X velocity limit
 	cmp.w #$2001
 	bcs .bb
-.ex:
+.ex:								; no bump: restore and return
 	stx.b xsave						; keep X
 	ldx.w #$0006
 .restore:							; pull d0 and the words after it back

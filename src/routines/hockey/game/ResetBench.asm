@@ -11,7 +11,7 @@ ResetBench:							;Empty the penalty boxes and put every player on his own bench
 .rb:								;team a0 (0/2), d1 = PBnum step
 	lda.w #(maxros-1)*2				; (MaxRos-1)*2
 	sta.b d0						; last player
-.rb1:
+.rb1:								; count this player as a box count
 	lda.w PBnum						; box count
 	clc
 	adc.b d1						; plus the step
@@ -45,7 +45,7 @@ ResetBench:							;Empty the penalty boxes and put every player on his own bench
 	beq .next						; stays out
 	lda.w #TMPDBENCH				; TMPDBENCH
 	sta.w tmpdst,y					; on the bench
-.next:
+.next:								; previous player
 	dec.b d0						; previous player
 	dec.b d0
 	bpl .rb1

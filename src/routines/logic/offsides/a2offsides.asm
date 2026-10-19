@@ -21,13 +21,13 @@ a2offsides:							;Offsides if the player's team is flagged and the puck is past
 	bra .rtl
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .rtl
-.team:
+.team:								; player team
 	stz.b a0						; a0 = team offset
 	lda.w pfteam,y					; player team
 	beq .1
 	lda.w #$0002
 	sta.b a0
-.1:
+.1:									; team offsides flag
 	ldy.b a0						; team
 	lda.w tmflags,y					; team flags
 	bit.w #tmfoside					; team flagged offsides

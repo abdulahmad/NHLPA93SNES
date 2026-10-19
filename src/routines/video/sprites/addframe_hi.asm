@@ -4,12 +4,12 @@ addframe_hi:						;addframe for the high frame numbers: find the frame set and d
 	cmp.w #SPFcrowd					; 6-byte pieces from SPFcrowd on
 	bcs .hi							; high frames
 	jml.l addframe_end				; low frames: normal
-.hi:
+.hi:								; renumber
 	dec.b sprframe					; renumber
 	stz.b sprsetofs					; first piece set offset 0
 	ldx.w #$0000					; table index
 	ldy.w #$0002
-.find:
+.find:								; skip empty table entries
 	lda.l FrameSetTable,x			; skip empty table entries
 	beq .find						; empty
 	sta.b farptr					; pointer to the set
@@ -20,7 +20,7 @@ addframe_hi:						;addframe for the high frame numbers: find the frame set and d
 	sbc.b [farptr]					; minus the set size
 	bcs .next						; frame is later
 	jml.l DrawFrameHi				; in this set
-.next:
+.next:								; the rest of the frame number
 	sta.b sprframe					; the rest
 	lda.b sprsetofs
 	clc

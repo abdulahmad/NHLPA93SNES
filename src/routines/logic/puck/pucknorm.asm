@@ -8,7 +8,7 @@ pucknorm:							;Assignment: the puck most of the time. Follows the carrier, wat
 	stz.w temp2+puckobj
 	lda.w #$0078
 	sta.w temp2b+puckobj
-.nna:
+.nna:								; puck crossing times count down
 	lda.w puckcross+2				; puckcross times count down
 	sec
 	sbc.b d7
@@ -89,12 +89,12 @@ pucknorm:							;Assignment: the puck most of the time. Follows the carrier, wat
 .mv:								;reset the still puck timer
 	lda.w #$0078
 	sta.w temp2b+puckobj
-.z:
+.z:									; puck in the air or moving up/down?
 	lda.w puckvz					; puck in the air: no unflip
 	and.w #$FF00
 	ora.w Zpos+puckobj
 	beq .flat
 	jmp.w checkpuckcoll
-.flat:
+.flat:								; stop spinning, check collisions
 	jsl.l pucknothing				; pucknothing: stop spinning
 	jmp.w checkpuckcoll				; bra checkpuckcoll

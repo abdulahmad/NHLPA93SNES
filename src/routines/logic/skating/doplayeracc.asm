@@ -4,7 +4,7 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	lda.w position,x				; goalie?
 	bne .skater
 	jml.l goalieacc					; goalie is special
-.skater:
+.skater:							; d1 = glide animation
 	lda.w #SPAglide					; d1 = glide animation
 	sta.b d1
 	lda.w pfrev,x					; skating backwards?
@@ -40,7 +40,7 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	cmp.w puckc						; the puck carrier never skates backwards
 	bne .nocarrier
 	jmp.w .clrrev
-.nocarrier:
+.nocarrier:							; dx to the puck
 	lda.w puckx						; dx to the puck
 	sec
 	sbc.w Xpos,x					; minus the x of X
@@ -81,7 +81,7 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	lda.b d2						; and the wanted direction
 	eor.w #$0004
 	sta.b d2
-.c1:
+.c1:								; already skating backwards?
 	lda.w pfrev,x					; already skating backwards?
 	bne .inrev
 	lda.b d3						; backwards only in his own zone
@@ -95,7 +95,7 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	cmp.w #$0003
 	bcs .clrrev						; forward unless the puck direction is 7, 0 or 1
 	bra .rev
-.inrev:
+.inrev:								; already backwards: stay so only if the wanted direction allows
 	lda.b d2						; already backwards: wanted direction 3, 4 or 5
 	sec
 	sbc.w #$0003
@@ -108,7 +108,7 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	and.w #$0007
 	cmp.w #$0005
 	bcs .clrrev
-.rev:
+.rev:								; backwards wanted: already so?
 	lda.w pfrev,x					; already backwards?
 	bne .done
 	lda.w Xvel,x
@@ -128,7 +128,7 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	inc a
 	sta.w pfrev,x					; start skating backwards
 	bra .done
-.clrrev:
+.clrrev:							; skate forwards
 	stz.w pfrev,x					; skate forwards
 .done:								;turn rate = .ftab (direction difference) * d7; 0: noturn0
 	pla								; d0 = wanted direction
@@ -220,7 +220,7 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	bpl .s1							; turning right or left
 	lda.w #SPAturnl-SPAturnr
 	sta.b d1
-.s1:
+.s1:								; attribute bit 3 swaps the turn sense
 	lda.w attribute,x				; attribute flip swaps the sense
 	bit.w #attrxflip
 	beq .s2
@@ -233,13 +233,13 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	adc.w #SPAturnr					; SPAturnr or SPAturnl
 	sta.b d1
 	sta.w pf2aip,x					; animation in progress
-.s3:
+.s3:								; set the animation
 	jsl.l SetSPA					; start animation d1
 	lda.b d3
 	cmp.w #$0003					; moving at some speed: accelerate
 	bcc .rtl2
 	jml.l noturn
-.rtl2:
+.rtl2:								; almost still: no acceleration
 	rtl								; almost still: no acceleration
 .ftab:								;turn rate by the direction difference
 	dw 0,23,23,23,0,-23,-23,-23		; turn step by (wanted - facing)

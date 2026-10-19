@@ -26,7 +26,7 @@ setInjuryType:						;Player a2 is injured for the period: the crowd reacts, the 
 	sta.b d1						; away team flag $8000
 	lda.w #$0002
 	sta.b a0						; away team offset 2
-.home:
+.home:								; player number plus the team flag
 	lda.w pnum,y					; player number
 	and.w #$00FF
 	ora.b d1						; plus the team flag
@@ -35,7 +35,7 @@ setInjuryType:						;Player a2 is injured for the period: the crowd reacts, the 
 	bit.w #$0080
 	beq .pos
 	ora.w #$FF00					; sign extend the player number
-.pos:
+.pos:								; times 2
 	asl a							; times 2
 	sta.b d1
 	lda.b a0

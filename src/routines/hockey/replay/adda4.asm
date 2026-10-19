@@ -23,7 +23,7 @@ adda4:								;Move the replay one frame forward
 	cmp.w ReplayBufferPtr+2
 	bne .nosf2drec
 	rtl								; reached the end
-.nosf2drec:
+.nosf2drec:							; not recording: compare the pointers
 	lda.b a4						; compare a4 with the pointer
 	cmp.w ReplayBufferPtr
 	bne .a4ne
@@ -31,6 +31,6 @@ adda4:								;Move the replay one frame forward
 	cmp.w ReplayBufferPtr+2
 	bne .a4ne
 	rtl								; reached the end
-.a4ne:
+.a4ne:								; not at the record position: restore and advance
 	jsl.l RestoreReplayFrame		; restore the frame
 	jml.l adda43					; advance

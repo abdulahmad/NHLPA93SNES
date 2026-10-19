@@ -4,17 +4,17 @@ assdefo:							;Assignment: a defenseman on offense holds the blue line on his s
 	lda.w pfalock,x					; assignment locked?
 	beq .clk
 	jmp.w .rtl
-.clk:
+.clk:								; clock stopped: do nothing
 	lda.w gmclock					; clock stopped: do nothing
 	beq .bench
 	jml.l assnothing
-.bench:
+.bench:								; bench check
 	jsl.l check4bench				; check for a bench change
 	lda.w pflags,x
 	bit.w #pfjoycon					; human controlled player?
 	beq .na
 	jmp.w .rtl
-.na:
+.na:								; assignment just started?
 	bit.w #pfna						; assignment just started?
 	beq .nna
 	and.w #~pfna&$FFFF
@@ -23,7 +23,7 @@ assdefo:							;Assignment: a defenseman on offense holds the blue line on his s
 	stz.w temp2,x
 	lda.w #$0008					; temp2b = 8
 	sta.w temp2b,x
-.nna:
+.nna:								; re-think every aioff frames
 	lda.w temp1,x					; countdown timer
 	sec
 	sbc.b d7						; minus the frame count
@@ -51,17 +51,17 @@ assdefo:							;Assignment: a defenseman on offense holds the blue line on his s
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
-.de1:
+.de1:								; is the puck back behind the blue line?
 	lda.b d1						; the puck back behind the blue line
 	sec
 	sbc.w #$5D						; line at $5D
 	bmi .neg
 	bvc .pc
-.def:
+.def:								; replace the assignment
 	jml.l assreplace				; replace the assignment with d0
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .def
-.pc:
+.pc:								; does the other team have the puck?
 	lda.w puckc						; the other team has the puck
 	bmi .nodec						; negative: nobody has it
 	sec
@@ -73,7 +73,7 @@ assdefo:							;Assignment: a defenseman on offense holds the blue line on his s
 	eor.b d1						; compare with this player's side
 	bpl .nodec
 	jml.l assreplace				; replace the assignment with d0
-.nodec:
+.nodec:								; target: x +-$50 by position, y +-98 by pfgoal
 	lda.w #EvadePC					; EvadePC avoidance; spot x +-80 by side, y 98 (blue line + 5)
 	sta.b a0
 	lda.w #EvadePC>>16
@@ -85,7 +85,7 @@ assdefo:							;Assignment: a defenseman on offense holds the blue line on his s
 	beq .1
 	lda.w #-80						; other side: -80
 	sta.b d0
-.1:
+.1:									; y 98
 	lda.w #98						; y 98
 	sta.b d1
 	lda.w pfgoal,x					; which end
@@ -96,7 +96,7 @@ assdefo:							;Assignment: a defenseman on offense holds the blue line on his s
 	sta.b d0
 	lda.w #-98						; y -98
 	sta.b d1
-.0:
+.0:									; same side as the puck?
 	lda.w puckx						; puck x
 	eor.b d0						; same side as the target?
 	bmi .2
@@ -112,7 +112,7 @@ assdefo:							;Assignment: a defenseman on offense holds the blue line on his s
 	ror a
 	clc								; plus the target x
 	adc.b d0
-.set:
+.set:								; skate there
 	sta.b d0						; target x
 	jml.l skateto					; skate there
 unused008E:							;unused, zero fill to the end of the bank

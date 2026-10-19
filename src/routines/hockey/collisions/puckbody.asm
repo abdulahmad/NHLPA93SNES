@@ -83,7 +83,7 @@ puckbody:							;The puck hits player a2: a fast high puck knocks him down, a sl
 	beq .rtl
 	bmi .neg2
 	bvs .rtl
-.fall:
+.fall:								; knock the player down (FallDown)
 	jmp.w FallDown					; FallDown
 .neg2:								; signed compare: overflow flag corrects the sign
 	bvs .fall

@@ -5,7 +5,7 @@ divu16:								;Unsigned 16-bit divide: mulres = mulb / mula, with the remainder
 	stz.b mula						; low word 0
 	lda.w #$0010					; 16 quotient bits
 	sta.b mulb+2
-.loop:
+.loop:								; shift the quotient
 	asl.b mulres					; shift the quotient
 	lsr.b mula+2					; shift the divisor right
 	ror.b mula
@@ -18,7 +18,7 @@ divu16:								;Unsigned 16-bit divide: mulres = mulb / mula, with the remainder
 	sbc.b mula
 	sta.b mulb
 	inc.b mulres					; set the quotient bit
-.next:
+.next:								; next quotient bit
 	dec.b mulb+2					; next bit
 	bne .loop
 	lda.b mulb						; remainder

@@ -6,14 +6,14 @@ muls32:								;Signed multiply with a 32-bit result in mulres
 	inc a
 	sta.b mula
 	inc.b mulneg
-.signb:
+.signb:								; second operand
 	lda.b mulb						; second operand
 	bpl .mul						; positive
 	eor.w #$FFFF					; negate it
 	inc a
 	sta.b mulb
 	inc.b mulneg
-.mul:
+.mul:								; mulres = mula*mulb
 	jsl.l mulu						; mulres = mula*mulb
 	lsr.b mulneg					; odd: negate the 32-bit result
 	bcc .rtl

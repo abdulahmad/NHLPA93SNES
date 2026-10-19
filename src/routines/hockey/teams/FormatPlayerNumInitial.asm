@@ -84,7 +84,7 @@ FormatPlayerNumInitial:				;mesarea = the number, first initial and last name of
 	lda.w #' '
 	sta.b [a1]
 	inc.b a1
-.skipfirst:
+.skipfirst:							; skip to the last name
 	lda.b [a0]						; skip to the last name
 	inc.b a0
 	and.w #$00FF

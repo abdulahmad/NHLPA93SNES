@@ -7,7 +7,7 @@ StartSong3:							;Start the third period music unless it is already playing
 	beq .cmd
 	jsl.l sndqreset					; reset the sound queue
 	jsl.l SPCGameUpload				; upload the game sound
-.cmd:
+.cmd:								; music cue 6
 	lda.w #$0006					; music cue number
 	jsl.l MusicCue					; driver command A (music cue)
 	lda.w #$0003

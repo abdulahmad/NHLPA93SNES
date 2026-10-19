@@ -4,7 +4,7 @@ shotdiradj:							;Aim a computer shot at the open side when the goalie covers t
 	bit.w #pfjoycon
 	beq .go
 	jmp.w .rtl
-.go:
+.go:								; default: no direction (8), search 6 players
 	lda.w #$0008					; default: no direction (8)
 	sta.b d0
 	lda.w #$0005					; search 6 players
@@ -30,7 +30,7 @@ shotdiradj:							;Aim a computer shot at the open side when the goalie covers t
 	bit.w #$0080
 	beq .gx
 	ora.w #$FF00					; sign extend
-.gx:
+.gx:								; half of the x distance
 	pha								; half of it
 	asl a
 	pla
@@ -45,7 +45,7 @@ shotdiradj:							;Aim a computer shot at the open side when the goalie covers t
 	bit.w #$0080
 	beq .gy
 	ora.w #$FF00					; sign extend
-.gy:
+.gy:								; half of the y distance
 	pha								; half of it
 	asl a
 	pla
@@ -114,7 +114,7 @@ shotdiradj:							;Aim a computer shot at the open side when the goalie covers t
 	beq .abs
 	eor.w #$FFFF					; negate
 	inc a
-.abs:
+.abs:								; |angle| < 45: shoot at the opponent
 	cmp.w #$002D					; |angle| < 45: shoot at the open side
 	bcs .x
 	lda.w pfgoal,x

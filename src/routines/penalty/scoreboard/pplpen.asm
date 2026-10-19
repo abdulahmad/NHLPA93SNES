@@ -20,7 +20,7 @@ pplpen:								;Print one penalty box line: player number and time left
 	adc.b [a1],y					; start of the players
 	sta.b a1
 	lsr.b d0						; player index
-.find:
+.find:								; skip d0+1 roster entries (name string + 8 bytes)
 	lda.b [a1]						; record length
 	clc
 	adc.b a1

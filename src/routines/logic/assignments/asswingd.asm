@@ -3,17 +3,17 @@ asswingd:							;Assignment: a wing on defense covers his side
 	lda.w pfalock,x					; assignment locked?
 	beq .clk
 	jmp.w .rtl
-.clk:
+.clk:								; clock stopped: do nothing
 	lda.w gmclock					; clock stopped: do nothing
 	beq .bench
 	jml.l assnothing
-.bench:
+.bench:								; bench check
 	jsl.l check4bench				; check for a bench change
 	lda.w pflags,x
 	bit.w #pfjoycon					; human controlled player?
 	beq .na
 	jmp.w .rtl
-.na:
+.na:								; assignment just started?
 	bit.w #pfna						; assignment just started?
 	beq .nna
 	and.w #~pfna&$FFFF
@@ -22,7 +22,7 @@ asswingd:							;Assignment: a wing on defense covers his side
 	stz.w temp2,x
 	lda.w #8						; temp2b = 8
 	sta.w temp2b,x
-.nna:
+.nna:								; re-think every aidef frames
 	lda.w temp1,x					; countdown timer
 	sec
 	sbc.b d7						; minus the frame count
@@ -49,7 +49,7 @@ asswingd:							;Assignment: a wing on defense covers his side
 	sta.b d1
 	bmi .nodec
 	jml.l assreplace				; replace the assignment with d0
-.nodec:
+.nodec:								; x 100 (left wing -100)
 	lda.w #100						; x 100 (left wing -100)
 	sta.b d0
 	lda.w position,x				; position 5 is the left wing
@@ -89,7 +89,7 @@ asswingd:							;Assignment: a wing on defense covers his side
 	bra .go
 .rtl:								; return
 	rtl
-.lo:
+.lo:								; far limit y -264
 	lda.w #-264						; far limit y -264
 	sta.b d2
 	sec
@@ -120,7 +120,7 @@ asswingd:							;Assignment: a wing on defense covers his side
 	lda.w pucky
 	sta.b d1
 	bra .go
-.hi:
+.hi:								; far limit y 264
 	lda.w #264						; far limit y 264
 	sta.b d2
 	sec
@@ -131,10 +131,10 @@ asswingd:							;Assignment: a wing on defense covers his side
 	bra .go
 .neg3:								; signed compare: overflow flag corrects the sign
 	bvs .go
-.set:
+.set:								; y = limit
 	lda.b d2						; use the limit
 	sta.b d1
-.go:
+.go:								; x = puck x if on the same side as the target x
 	lda.w #rtss						; a0 = rtss: no avoidance
 	sta.b a0
 	lda.w #rtss>>16
@@ -145,7 +145,7 @@ asswingd:							;Assignment: a wing on defense covers his side
 	bmi .skate
 	lda.w puckx
 	sta.b d0						; follow the puck x
-.skate:
+.skate:								; skate to d0, d1
 	jml.l skateto					; skate to d0, d1
 unusedFF89:							;unused, $FF fill to the end of the bank
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF

@@ -56,7 +56,7 @@ checksso:							;Draw the arrows that show where the two players are when they a
 	bra .0
 .r0:								; signed compare: overflow flag corrects the sign
 	bvc .0
-.rb:
+.rb:								; right bit
 	lda.w #8						; right bit
 	sta.b d2
 .0:									; left edge
@@ -69,7 +69,7 @@ checksso:							;Draw the arrows that show where the two players are when they a
 	bra .1
 .neg:								; signed compare: overflow flag corrects the sign
 	bvs .1
-.lb:
+.lb:								; left bit
 	lda.w #4						; left bit
 	tsb.b d2
 .1:									; top edge
@@ -81,7 +81,7 @@ checksso:							;Draw the arrows that show where the two players are when they a
 	bra .2
 .u0:								; signed compare: overflow flag corrects the sign
 	bvc .2
-.ub:
+.ub:								; up bit
 	inc.b d2						; up bit
 .2:									; bottom edge
 	lda.b d1
@@ -93,14 +93,14 @@ checksso:							;Draw the arrows that show where the two players are when they a
 	bra .3
 .d0:								; signed compare: overflow flag corrects the sign
 	bvs .3
-.db:
+.db:								; down bit
 	inc.b d2						; down bit
 	inc.b d2
-.3:
+.3:									; test: any direction off screen?
 	ldx.b d2						; on screen: no arrow
 	bne .off
 	jmp.w .rtl
-.off:
+.off:								; direction 0-7 times 8 bytes
 	lda.l jdtab8F,x					; direction 0-7
 	and.w #$00FF
 	asl a							; times 8 bytes
@@ -110,7 +110,7 @@ checksso:							;Draw the arrows that show where the two players are when they a
 	lda.l .tab,x					; .tab: x spot (0 = keep), y spot, frame add, flip bits
 	beq .4
 	sta.b d0						; spot x
-.4:
+.4:									; 128+128 (sprite coords)
 	lda.b d0						; x spot
 	clc
 	adc.w #$0100
@@ -119,7 +119,7 @@ checksso:							;Draw the arrows that show where the two players are when they a
 	lda.l .tab+2,x					; table y
 	beq .5
 	sta.b d1						; spot y
-.5:
+.5:									; y up is negative on screen
 	lda.b d1						; y spot
 	eor.w #$FFFF					; negate
 	inc a

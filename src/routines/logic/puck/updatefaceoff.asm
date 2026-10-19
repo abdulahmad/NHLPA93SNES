@@ -15,7 +15,7 @@ updatefaceoff:						;Step the puck drop animation; at its end erase the face off
 	bra .rtl
 .neg:								; signed compare: overflow flag corrects the sign
 	bvs .rtl
-.set:
+.set:								; d0 = 10 - d0
 	lda.b d0						; d0 = 10 - d0
 	eor.w #$FFFF					; negate
 	inc a
@@ -25,7 +25,7 @@ updatefaceoff:						;Step the puck drop animation; at its end erase the face off
 	sta.w fofdata					; drop animation frame
 .rtl:								; return
 	rtl
-.erase:
+.erase:								; face off display off
 	jsl.l printz					; erase the faceoff box
 	%StringCp(CC_Font1Pri,$00,$00)
 	lda.w fodropx					; drop x
@@ -37,7 +37,7 @@ updatefaceoff:						;Step the puck drop animation; at its end erase the face off
 	bit.w #$1000					; sign extend
 	beq .x
 	ora.w #$E000
-.x:
+.x:									; print x
 	sta.w printx					; print x
 	lda.w fodropy					; drop y
 	sec
@@ -48,7 +48,7 @@ updatefaceoff:						;Step the puck drop animation; at its end erase the face off
 	bit.w #$1000
 	beq .y
 	ora.w #$E000
-.y:
+.y:									; box 12 wide
 	sta.w printy					; print y
 	lda.w #$000C					; box 12 wide
 	sta.b d0

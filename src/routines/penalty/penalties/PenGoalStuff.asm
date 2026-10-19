@@ -71,7 +71,7 @@ PenGoalStuff:						;After a goal on a power play, let the first player out of th
 	lda.w #tmflcc
 	tsb.w tmflags					; line change box redraw
 	tsb.w tmflags+2
-.ex:
+.ex:								; restore and return
 	stx.b xsave						; keep X
 	ldx.w #$0002
 .resta:								; pull a0 and the words after it back

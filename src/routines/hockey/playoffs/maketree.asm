@@ -89,7 +89,7 @@ maketree:							;Build the playoff tree from the seeds and the series wins, then
 	dec.b d1
 	bpl .2
 	jsl.l FigureJoy					; choose the joystick teams
-.nogames:
+.nogames:							; restore the registers
 	stx.b xsave						; keep X
 	ldx.w #$000E
 .resta:								; pull a0 and the words after it back

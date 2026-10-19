@@ -11,7 +11,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	jmp.w .rtl
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .ex1
-.i2:
+.i2:								; impact of the other minus 10
 	lda.w impact,y					; impact of the other
 	sec
 	sbc.w #$000A					; minus 10
@@ -21,33 +21,33 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	jmp.w .rtl
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvc .ex2
-.lock:
+.lock:								; animation locked?
 	lda.w pfalock,y					; animation locked?
 	ora.w pfalock,x
 	beq .pen
 	jmp.w .rtl
-.pen:
+.pen:								; already penalised?
 	lda.w pflags,x					; player flags
 	ora.w pflags,y
 	bit.w #pf2pen					; already penalised?
 	beq .pos1
 	jmp.w .rtl
-.pos1:
+.pos1:								; position of X
 	lda.w position,x				; position
 	bne .pos2
 	jmp.w .rtl
-.pos2:
+.pos2:								; position of the other player
 	lda.w position,y				; position of the other
 	bne .clk
 	jmp.w .rtl
-.clk:
+.clk:								; highlight or clock stopped?
 	lda.w gmode						; highlight, clock stopped, the puck fighting
 	and.w #gmhl						; highlight bit
 	ora.w gmclock					; or the clock stopped
 	ora.w pf2fight+puckobj			; or the puck fighting
 	beq .go
 	jmp.w .rtl
-.go:
+.go:								; keep X and save the registers
 	stx.b xsave						; keep X
 	ldx.w #$0000					; keep X
 .save:								; save d0 and the words after it (10 words)
@@ -74,7 +74,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	cmp.w #pfaceoff					; face off?
 	bne .nofo
 	jmp.w .ex
-.nofo:
+.nofo:								; d0 = 10 + max(0, 40 - ChkCnt)
 	lda.w #$0028					; d0 = 10 + max(0, 40 - ChkCnt)/4
 	sec
 	sbc.w ChkCnt					; 40 minus the check count
@@ -103,7 +103,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	stz.w ChkCnt					; clear the check count
 	lda.w #$0000					; and the player check counts
 	ldy.w #maxros*2-2
-.clr:
+.clr:								; clear the check counts
 	sta.w pchecks,y					; clear
 	dey
 	dey
@@ -139,7 +139,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	bra .1
 .neg2:								; signed compare: overflow flag corrects the sign
 	bvc .1
-.flip:
+.flip:								; flip the facing
 	lda.b d1						; flip the facing
 	eor.w #$0007
 	sta.b d1
@@ -168,7 +168,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	lda.w position,x
 	beq .next						; skip goalies
 	jsl.l assinsert					; insert assignment d0
-.next:
+.next:								; next player
 	inx								; next player
 	inx
 	dec.b d1
@@ -181,7 +181,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	jsl.l assinsert					; insert assignment d0
 	lda.w #$FFFF
 	sta.b collflag					; no transfer
-.ex:
+.ex:								; restore the registers
 	stx.b xsave						; keep X
 	ldx.w #$000E
 .resta:								; pull a0 and the words after it back

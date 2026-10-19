@@ -8,10 +8,10 @@ EASNLogo:							;Draw the EASN logo on the rink unless a power play is on
 	stz.b tmp1						; text index
 	lda.w #$0002					; 2 rows
 	sta.b tmp2
-.row:
+.row:								; 8 columns
 	lda.w #$0007					; 8 columns
 	sta.b tmp2+2
-.col:
+.col:								; logo tile
 	ldx.b tmp0						; source
 	lda.l EASNLogoMap,x				; logo tile
 	clc

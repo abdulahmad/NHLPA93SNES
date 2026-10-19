@@ -43,7 +43,7 @@ StartPer:							;Start a period: reset the rink and clock, face off at center ic
 	jsl.l randoma					; random number 0 to A-1
 	inc a
 	sta.w p3cue
-.p3:
+.p3:								; periods 1 and 2: mid-period cue
 	lda.w gsp						; periods 1 and 2: mid-period cue at half time
 	cmp.w #$0002
 	bcs .blank
