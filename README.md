@@ -26,7 +26,7 @@ The SNES port is a hybrid: it began as a port of NHL92 Genesis (likely while NHL
 - `tools/split_routines.py` the tool that split the old module files into this layout; `tools/gen_file_map.py` regenerates `docs/file-map.md`.
 - `tools/scan_cleanup.py` counts raw addresses, generic labels and noise comments left in `src/`.
 - `tools/disasm65816.py` the quick-pass generator (recursive descent from the vectors, REP/SEP/PHP/PLP M/X tracking). Setup only; it wrote the old `bankXX_YYYY` slices.
-- `Extracted/` the incbin assets, extracted from the ROM by `tools/extractAssets93s.js` (run by `tools/prebuild.js` on every build; not committed; folders Graphics, Sound, Text as in 93G); `src/data/README.md` describes the file formats (`.map.sjim`, `.chr.pak`, `.smap`, `.pal`, ...).
+- `Extracted/` the incbin assets, extracted from the ROM by `tools/extractAssets93s.js` (run by `tools/prebuild.js` on every build; not committed; folders Graphics, Sound, Text as in 93G); `docs/file-formats.md` describes the file formats (`.map.sjim`, `.chr.pak`, `.smap`, `.pal`, ...).
 - `tools/snesgfx.py` unpacks the packed streams (a port of `DecompressBytecode`) and renders tiles, maps and screens to PNG.
 - `docs/history/SEGMENT_AGENT.md` rules and the per-slice history, `docs/history/PROMPT.md` the per-segment prompt (segment phase, finished), `docs/HANDOFF.md` setup notes and the cleanup progress.
 
@@ -56,3 +56,10 @@ Other scripts:
 - `npm run clean`: delete `output/` and `Extracted/` (re-extracted by the next build)
 - `tools/verify_all.sh`: extracts fresh, builds, and runs the asset and comment checks, printing ALL MATCH
 - Add `--verbose` to `node tools/build.js ...` for the full tool output; `--no-color` (or `NO_COLOR`) turns the colors off
+
+# Documentation
+
+- [File formats](docs/file-formats.md): every format in `Extracted/` (`.map.sjim`, `.sanim`, `.smap`, `.chr`, `.pal`, sound files, ...), strings, team data
+- [Adding a team](docs/adding-a-team.md)
+- [Source file map](docs/file-map.md): every file per bank in ROM order
+- [Handoff notes](docs/HANDOFF.md): alignment with 93G, current state

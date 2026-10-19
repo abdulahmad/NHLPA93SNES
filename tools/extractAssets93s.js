@@ -2,7 +2,7 @@
 // extractAssets93s.js: NHLPA 93 (SNES) asset extractor. Writes the ROM ranges that the source incbins (team palettes in
 // teamdata93s.asm, packed graphics and maps, sprite sets, text and sound blocks) into Extracted/<Graphics|Sound|Text>/
 // (the folders of the NHLPA 93 Genesis project). Extracted/ is not committed. tools/prebuild.js runs this when Extracted/
-// is missing or stale; this script writes Extracted/.extract-complete.json last. src/data/README.md describes the formats.
+// is missing or stale; this script writes Extracted/.extract-complete.json last. docs/file-formats.md describes the formats.
 // Usage: node tools/extractAssets93s.js nhlpa93retail.sfc           (write every asset and the marker)
 //        node tools/extractAssets93s.js nhlpa93retail.sfc --check   (compare Extracted/ with the ROM, exit 1 on a difference)
 // Each entry: file name below Extracted/, first ROM address, end address (exclusive), as SNES LoROM/FastROM addresses

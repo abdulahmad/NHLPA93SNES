@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """snesgfx.py - unpack and view the NHLPA Hockey '93 (SNES) graphics assets in Extracted/ (tools/extractAssets93s.js).
 
-Formats (see src/data/README.md):
+Formats (see docs/file-formats.md):
   *.pak       packed stream for the game's decompressor at $86FA3E (DecompressBytecode)
   *.chr       SNES 4bpp planar tiles, 32 bytes per 8x8 tile
   *.smap      SNES BG map words: vflip 15, hflip 14, priority 13, palette 12-10, tile 9-0
