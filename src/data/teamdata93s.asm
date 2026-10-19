@@ -152,27 +152,6 @@ AllStarsWest:						; team record: All Stars West (ASW), team 25
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/ASWh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/ASWv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(7020,00C7,9999,9099)
@@ -186,26 +165,6 @@ AllStarsWest:						; team record: All Stars West (ASW), team 25
 	db 01,19,22,13,04,11,05,00
 	db 01,17,20,14,07,15,08,00
 	db 01,22,18,15,08,14,07,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("Ed Belfour",			305F,AFFF,0100,FFFF)
@@ -247,27 +206,6 @@ Boston:								; team record: Boston (BOS), team 0
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/BOSh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/BOSv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(3311,21E6,6766,6756)
@@ -281,26 +219,6 @@ Boston:								; team record: Boston (BOS), team 0
 	db 01,21,22,15,16,11,05,00
 	db 01,19,20,11,12,15,07,00
 	db 01,21,22,15,07,11,12,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("Andy Moog",			353C,9ACC,0100,C9C9)
@@ -344,27 +262,6 @@ Buffalo:							; team record: Buffalo (BUF), team 1
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/BUFh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/BUFv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(5522,22D8,2442,3933)
@@ -378,26 +275,6 @@ Buffalo:							; team record: Buffalo (BUF), team 1
 	db 01,23,21,14,04,10,06,00
 	db 01,17,21,06,08,14,05,00
 	db 01,23,20,14,05,06,08,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("Daren Puppa",			3188,8AA8,0000,5588)
@@ -441,27 +318,6 @@ Calgary:							; team record: Calgary (CGY), team 2
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/CGYh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/CGYv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(6622,11D8,4334,4823)
@@ -475,26 +331,6 @@ Calgary:							; team record: Calgary (CGY), team 2
 	db 01,18,21,06,05,11,03,00
 	db 01,17,16,04,07,13,09,00
 	db 01,19,20,13,09,04,07,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("Mike Vernon",			3038,8AAB,0100,BB88)
@@ -537,27 +373,6 @@ Chicago:							; team record: Chicago (CHI), team 3
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/CHIh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/CHIv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(3000,21D7,7777,9888)
@@ -571,26 +386,6 @@ Chicago:							; team record: Chicago (CHI), team 3
 	db 01,21,22,07,10,11,05,00
 	db 01,21,22,07,10,06,09,00
 	db 01,18,19,06,09,07,10,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("Ed Belfour",			305F,AFFF,0100,FFFF)
@@ -634,27 +429,6 @@ Detroit:							; team record: Detroit (DET), team 4
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/DETh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/DETv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(6111,00D7,8879,7878)
@@ -668,26 +442,6 @@ Detroit:							; team record: Detroit (DET), team 4
 	db 01,21,18,15,05,09,06,00
 	db 01,20,18,06,07,13,04,00
 	db 01,17,19,13,04,06,07,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("Tim Cheveldae",		325D,ADDD,0100,DADD)
@@ -730,27 +484,6 @@ Edmonton:							; team record: Edmonton (EDM), team 5
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/EDMh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/EDMv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(6512,11C7,6535,4534)
@@ -764,26 +497,6 @@ Edmonton:							; team record: Edmonton (EDM), team 5
 	db 01,19,20,16,05,09,07,00
 	db 01,22,18,16,05,12,08,00
 	db 01,19,20,12,08,16,05,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("Bill Ranford",			303C,9CFC,0100,CCFC)
@@ -826,27 +539,6 @@ Hartford:							; team record: Hartford (HFD), team 6
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/HFDh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/HFDv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(1402,00F6,2222,1342)
@@ -860,26 +552,6 @@ Hartford:							; team record: Hartford (HFD), team 6
 	db 01,20,18,12,05,09,11,00
 	db 01,18,20,13,12,04,09,00
 	db 01,19,23,04,09,12,13,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("Kay Whitmore",			3545,8AA5,0100,5858)
@@ -922,27 +594,6 @@ LosAngeles:							; team record: Los Angeles (LA), team 8
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/LAh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/LAv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(4410,10D8,5664,6535)
@@ -956,26 +607,6 @@ LosAngeles:							; team record: Los Angeles (LA), team 8
 	db 01,17,18,12,04,09,05,00
 	db 01,17,18,12,06,13,04,00
 	db 01,19,20,13,04,12,06,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("Kelly Hrudey",			3259,9AAC,0100,6669)
@@ -1019,27 +650,6 @@ LongIsland:							; team record: Long Island (LI), team 7
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/LIh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/LIv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(5522,01E7,5455,5234)
@@ -1053,26 +663,6 @@ LongIsland:							; team record: Long Island (LI), team 7
 	db 01,23,18,13,06,03,14,00
 	db 01,17,19,16,07,08,11,00
 	db 01,20,22,08,11,16,07,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("Glenn Healy",			3546,9AA6,0100,3636)
@@ -1115,27 +705,6 @@ Minnesota:							; team record: Minnesota (MIN), team 9
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/MINh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/MINv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(1301,11F6,1232,1652)
@@ -1149,26 +718,6 @@ Minnesota:							; team record: Minnesota (MIN), team 9
 	db 01,20,18,05,04,09,03,00
 	db 01,21,18,15,04,14,07,00
 	db 01,20,23,14,07,15,04,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("Jon Casey",			301B,8BA8,0100,558B)
@@ -1211,27 +760,6 @@ Montreal:							; team record: Montreal (MTL), team 10
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/MTLh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/MTLv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(3011,22E7,7888,8499)
@@ -1245,26 +773,6 @@ Montreal:							; team record: Montreal (MTL), team 10
 	db 01,21,23,17,05,09,14,00
 	db 01,19,23,16,08,14,05,00
 	db 01,20,18,14,05,16,08,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("Patrick Roy",			335F,AFFF,0100,FFFF)
@@ -1308,27 +816,6 @@ NewJersey:							; team record: New Jersey (NJ), team 11
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/NJh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/NJv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(5200,11F6,8668,6467)
@@ -1342,26 +829,6 @@ NewJersey:							; team record: New Jersey (NJ), team 11
 	db 01,21,22,14,04,09,03,00
 	db 01,23,19,12,11,05,10,00
 	db 01,21,22,05,10,12,11,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("Chris Terreri",		311D,AAAA,0100,AAAA)
@@ -1404,27 +871,6 @@ NewYork:							; team record: New York (NY), team 12
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/NYh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/NYv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(7120,20F8,7989,7789)
@@ -1438,26 +884,6 @@ NewYork:							; team record: New York (NY), team 12
 	db 01,21,24,16,04,08,03,00
 	db 01,19,21,03,07,04,11,00
 	db 01,18,20,04,11,03,07,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("John Vanbiesbrk",		344A,ADAA,0100,ADAD)
@@ -1502,27 +928,6 @@ Ottawa:								; team record: Ottawa (OTW), team 13
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/OTWh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/OTWv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(0702,02A6,1111,1411)
@@ -1536,26 +941,6 @@ Ottawa:								; team record: Ottawa (OTW), team 13
 	db 01,17,14,07,10,02,03,00
 	db 01,12,13,10,02,08,09,00
 	db 01,17,16,08,09,10,02,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("Peter Sidorkwicz",		3055,8AA5,0100,5555)
@@ -1592,27 +977,6 @@ Philadelphia:						; team record: Philadelphia (PHI), team 14
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/PHIh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/PHIv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(2201,22E8,3443,2353)
@@ -1626,26 +990,6 @@ Philadelphia:						; team record: Philadelphia (PHI), team 14
 	db 01,21,18,13,03,09,04,00
 	db 01,17,23,04,09,03,05,00
 	db 01,21,20,03,05,04,09,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("Ron Hextall",			2769,9AA9,0100,CC99)
@@ -1689,27 +1033,6 @@ Pittsburgh:							; team record: Pittsburgh (PIT), team 15
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/PITh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/PITv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(7621,10E7,5566,5725)
@@ -1723,26 +1046,6 @@ Pittsburgh:							; team record: Pittsburgh (PIT), team 15
 	db 01,21,18,03,10,09,04,00
 	db 01,17,22,14,03,05,08,00
 	db 01,18,20,05,08,14,03,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("Tom Barrasso",			358C,9AC9,0000,99C9)
@@ -1785,27 +1088,6 @@ Quebec:								; team record: Quebec (QUE), team 16
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/QUEh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/QUEv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(2602,22E8,3212,1321)
@@ -1819,26 +1101,6 @@ Quebec:								; team record: Quebec (QUE), team 16
 	db 01,22,24,14,04,08,09,00
 	db 01,20,24,16,04,14,05,00
 	db 01,21,18,14,05,16,04,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("Jacques Cloutier",		3232,8AA2,0100,2225)
@@ -1883,27 +1145,6 @@ SanJose:							; team record: San Jose (SJ), team 17
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/SJh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/SJv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(0702,12E6,2111,3211)
@@ -1917,26 +1158,6 @@ SanJose:							; team record: San Jose (SJ), team 17
 	db 01,22,23,07,12,11,09,00
 	db 01,20,23,07,12,16,09,00
 	db 01,24,21,16,09,07,12,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("Jeff Hackett",			3042,8AA2,0100,2225)
@@ -1980,27 +1201,6 @@ StLouis:							; team record: St. Louis (STL), team 18
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/STLh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/STLv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(4210,21D8,4364,4564)
@@ -2014,26 +1214,6 @@ StLouis:							; team record: St. Louis (STL), team 18
 	db 01,21,20,07,04,09,08,00
 	db 01,22,20,07,09,13,05,00
 	db 01,21,19,13,05,07,09,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("Curtis Joseph",		315C,9CCC,0100,99CC)
@@ -2077,27 +1257,6 @@ TampaBay:							; team record: Tampa Bay (TBY), team 19
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/TBYh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/TBYv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(0702,02A7,2111,1411)
@@ -2111,26 +1270,6 @@ TampaBay:							; team record: Tampa Bay (TBY), team 19
 	db 01,15,13,11,04,07,02,00
 	db 01,14,13,10,03,11,05,00
 	db 01,16,18,11,05,10,03,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("Wendell Young",		0159,9AA9,0100,9699)
@@ -2168,27 +1307,6 @@ Toronto:							; team record: Toronto (TOR), team 20
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/TORh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/TORv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(1411,12E8,2123,3232)
@@ -2202,26 +1320,6 @@ Toronto:							; team record: Toronto (TOR), team 20
 	db 01,18,22,05,07,06,13,00
 	db 01,19,21,12,04,10,03,00
 	db 01,18,17,10,03,12,04,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("Grant Fuhr",			315E,8EEE,0000,BBEE)
@@ -2265,27 +1363,6 @@ Vancouver:							; team record: Vancouver (VAN), team 21
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/VANh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/VANv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(4111,10E8,6877,7577)
@@ -2299,26 +1376,6 @@ Vancouver:							; team record: Vancouver (VAN), team 21
 	db 01,22,17,12,05,11,04,00
 	db 01,19,22,06,07,12,05,00
 	db 01,17,18,12,05,06,07,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("Kirk McLean",			016D,AFFD,0100,DDFF)
@@ -2362,27 +1419,6 @@ Winnipeg:							; team record: Winnipeg (WPG), team 23
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/WPGh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/WPGv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(2020,10E7,4555,2185)
@@ -2396,26 +1432,6 @@ Winnipeg:							; team record: Winnipeg (WPG), team 23
 	db 01,22,18,14,04,12,11,00
 	db 01,20,23,15,04,14,05,00
 	db 01,22,18,14,05,15,04,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("Bob Essensa",			352F,9CCF,0100,CCCC)
@@ -2459,27 +1475,6 @@ Washington:							; team record: Washington (WSH), team 22
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/WSHh.pal"	; home colors
 	incbin "../../Extracted/Graphics/Pals/WSHv.pal"	; visitor colors
-;------------------------
-;q - scoring odds offense row (bits 4-6, SetScore)
-;r - scoring odds defense row (bits 0-2)
-;e - penalty kill deficit (negated while killing a penalty)
-;b - power play bonus
-
-;h - home bonus
-;v - visitor bonus (negated)
-;x - not read
-;x - not read
-
-;s - shooting
-;k - skating
-;p - passing
-;d - defense
-
-;c - checking
-;f - fighting
-;g - goalkeeping
-;o - overall
-;------------------------
 .sr:								; scouting report ratings
 	;     qreb,hvxx,skpd,cfgo
 	%hex2(7320,00E7,9697,8458)
@@ -2493,26 +1488,6 @@ Washington:							; team record: Washington (WSH), team 22
 	db 01,21,20,06,05,08,04,00
 	db 01,21,24,12,05,06,07,00
 	db 01,18,19,06,07,12,05,00
-;------------------------
-;u - uniform # x10
-;n - uniform # x1
-;w - weight
-;l - leg power
-;s - speed
-;o - offensive awareness
-;d - defensive awareness
-;p - shot power / NA for goalie
-
-;c - checking strength / NA
-;h - shooting hand / glove hand
-;g - stickhandling / glove left saves
-;a - shooting accuracy / glove right saves
-
-;e - endurance / stick right saves
-;y - shot/pass decision / stick left saves
-;t - passing accuracy / consistency
-;m - aggressiveness (PIM) / NA
-;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
 	;								unwl,sodp,chga,eytm
 	%Player("Don Beaupre",			3337,AAAA,0100,AAAA)
