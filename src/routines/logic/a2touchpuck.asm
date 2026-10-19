@@ -13,7 +13,7 @@ a2touchpuck:						;A player touches the puck: remember the last touches (for ass
 	beq .t
 	inc.b a0
 	inc.b a0
-.t:
+.t:									; touching player's number
 	lda.w pnum,y
 	sta.b d0
 	ldy.b a0
@@ -30,7 +30,7 @@ a2touchpuck:						;A player touches the puck: remember the last touches (for ass
 	sta.w tmtouch3,y
 	lda.w tmtouch1,y
 	sta.w tmtouch2,y
-.st:
+.st:								; record the touch
 	lda.b d0
 	sta.w tmtouch1,y
 	cmp.w tmtouch3,y				; also the third touch: drop it
@@ -68,7 +68,7 @@ a2touchpuck:						;A player touches the puck: remember the last touches (for ass
 	stx.b a3
 .rtl:								; return
 	rtl
-.up:
+.up:								; puck goes up or down the ice
 	lda.w pfgoal,y
 	beq .icing
 .notice:							;start a new icing watch for player a2
@@ -86,7 +86,7 @@ a2touchpuck:						;A player touches the puck: remember the last touches (for ass
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
-.0:
+.0:									; check the first team
 	lda.b d0
 	bmi .rtl
 	lda.w tmap						; own team not short-handed?
@@ -99,7 +99,7 @@ a2touchpuck:						;A player touches the puck: remember the last touches (for ass
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
-.1:
+.1:									; check the second team
 	lda.b d0
 	bmi .rtl
 	lda.w #ifok						; ifok

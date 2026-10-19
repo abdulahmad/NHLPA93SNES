@@ -142,7 +142,7 @@ passtoa0:							;Pass the puck to player a0, leading him by his speed
 	bit.w #$2000
 	beq .sx3
 	ora.w #$C000
-.sx3:
+.sx3:								; keep the divisor
 	sta.b d5
 	lda.b d5
 	bne .0							; avoid dividing by zero
@@ -165,16 +165,16 @@ passtoa0:							;Pass the puck to player a0, leading him by his speed
 	bpl .pos						; negative: try the other root
 	dec.b d3
 	bpl .0
-.pos:
+.pos:								; time cannot be zero
 	bne .1
 	inc.b d2						; time can't be zero
-.1:
+.1:									; limit the pass time
 	lda.b d2
 	cmp.w #$0019					; limit to 3 seconds
 	bcc .2
 	lda.w #$0018
 	sta.b d2
-.2:
+.2:									; time ok
 	lda.b d2
 	sep #$20						; 8-bit A
 	sta.w puckvz+1					; time in 1/8 sec for puckvz
@@ -185,7 +185,7 @@ passtoa0:							;Pass the puck to player a0, leading him by his speed
 	lda.b #$0C						; limit 12
 	sta.w puckvz+1
 	rep #$30						; 16-bit registers
-.3:
+.3:									; store the time in the pass
 	ldy.b a0
 	lda.b d2
 	asl a							; time * 8

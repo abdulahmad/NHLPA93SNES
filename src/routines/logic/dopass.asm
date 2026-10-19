@@ -40,7 +40,7 @@ dopass:								;Pass the puck in the pass direction, to the best teammate there 
 	beq .pa
 	lda.w passacc,x					; skater: passacc
 	sta.b d0
-.pa:
+.pa:								; pass direction to an index
 	lda.b d0
 	asl a
 	asl a
@@ -59,12 +59,12 @@ dopass:								;Pass the puck in the pass direction, to the best teammate there 
 	cpx.b a1						; don't pass to yourself
 	bne .1
 	jmp.w .next
-.1:
+.1:									; skip the goalie as a receiver
 	ldy.b a1
 	lda.w position,y				; don't pass to the goalie
 	bne .2
 	jmp.w .next
-.2:
+.2:									; check availability
 	lda.w pflags,y
 	bit.w #pf2unav					; player is unavailable
 	beq .3
@@ -156,7 +156,7 @@ dopass:								;Pass the puck in the pass direction, to the best teammate there 
 	bmi .nopp
 	jsl.l passtoa0					; pass to a0
 	jmp.w .exit
-.nopp:
+.nopp:								; no pass target: use the pass direction
 	lda.w passdir
 	asl a
 	asl a
@@ -215,10 +215,10 @@ dopass:								;Pass the puck in the pass direction, to the best teammate there 
 	lda.w puckvy					; goalie pass always goes up ice
 	bmi .nvy
 	bra .notgoalie
-.g0:
+.g0:								; puck moving toward the goalie?
 	lda.w puckvy
 	bmi .notgoalie
-.nvy:
+.nvy:								; use the Y velocity
 	eor.w #$FFFF					; negate
 	inc a
 	sta.w puckvy

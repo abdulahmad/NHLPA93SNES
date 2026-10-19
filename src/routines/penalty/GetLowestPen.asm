@@ -18,7 +18,7 @@ GetLowestPen:						;d0 = the power play time left, from the penalty box times. a
 	lda.b a2
 	beq .h0							; away team
 	lda.w #$0034
-.h0:
+.h0:								; index the penalty entry
 	clc
 	adc.b d2
 	tay
@@ -48,9 +48,9 @@ GetLowestPen:						;d0 = the power play time left, from the penalty box times. a
 	lda.b a3
 	beq .b
 	lda.w #$001A
-.b:
+.b:									; start of the box list
 	sta.b a0
-.t3:
+.t3:								; walk the box list
 	ldy.b a0
 	lda.w tmboxlist,y				; next entry
 	inc.b a0
@@ -61,7 +61,7 @@ GetLowestPen:						;d0 = the power play time left, from the penalty box times. a
 	lda.b a3
 	beq .h1							; away team
 	lda.w #$0034
-.h1:
+.h1:								; index the penalty entry
 	clc
 	adc.b d2
 	tay
@@ -76,7 +76,7 @@ GetLowestPen:						;d0 = the power play time left, from the penalty box times. a
 	bra .rtl						; done
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .rtl
-.add:
+.add:								; add the penalty time to the total
 	lda.b d0
 	clc								; total
 	adc.b d3						; plus the last
