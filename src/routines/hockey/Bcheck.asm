@@ -1,15 +1,15 @@
 Bcheck:								;Player a2 body checks a3: a3 falls if he is in front, and a charging
 									;penalty may be called on a2
-	ldy.b a2
-	lda.w pfalock,x
+	ldy.b a2						; y = the checker
+	lda.w pfalock,x					; animation locked?
 	beq .pos
 	jmp.w .rtl
 .pos:
-	lda.w position,x
-	bne .fight
+	lda.w position,x				; position
+	bne .fight						; goalies can't be checked
 	jmp.w .rtl
 .fight:
-	lda.w pf2fight,x
+	lda.w pf2fight,x				; fighting?
 	bne .rtl
 	lda.w OptPen					; penalties off: a2 needs randomd0($10 + aggression - a3 legstr) >= 12
 	bne .dir
@@ -25,16 +25,16 @@ Bcheck:								;Player a2 body checks a3: a3 falls if he is in front, and a char
 	cmp.w #12
 	bcc .rtl
 .dir:
-	lda.w Xpos,x
+	lda.w Xpos,x					; x of X
 	sec
-	sbc.w Xpos,y
+	sbc.w Xpos,y					; minus the checker's x
 	sta.b d0
-	lda.w Ypos,x
+	lda.w Ypos,x					; y of X
 	sec
-	sbc.w Ypos,y
+	sbc.w Ypos,y					; minus the checker's y
 	sta.b d1
 	jsl.l vtoa						; vector to direction
-	ldy.b a2
+	ldy.b a2						; checker
 	lda.b d0						; within one direction of a2 facing
 	sec
 	sbc.w facedir,y
@@ -42,24 +42,24 @@ Bcheck:								;Player a2 body checks a3: a3 falls if he is in front, and a char
 	and.w #$0007
 	cmp.w #$0003
 	bcs .rtl
-	ldx.b a2
+	ldx.b a2						; swap a2 and a3
 	ldy.b a3
 	stx.b a3
 	sty.b a2
 	jsl.l FallDown					; a3 falls
-	jsl.l checkagr
+	jsl.l checkagr					; aggression check
 	lda.b d0
-	cmp.w #$0005
+	cmp.w #$0005					; aggression under 5?
 	bcs .swap
 	lda.w #PenTripping				; penalty $20
 	sta.b d0
-	jsl.l AddPenalty
+	jsl.l AddPenalty				; call it
 .swap:
-	ldx.b a2
+	ldx.b a2						; swap back
 	ldy.b a3
 	stx.b a3
 	sty.b a2
-	lda.w #$FFFF
+	lda.w #$FFFF					; set collflag
 	sta.b collflag
 .rtl:
 	rtl
