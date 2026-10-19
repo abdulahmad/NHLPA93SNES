@@ -42,7 +42,7 @@ Table sweep (same day, branch `align-93g-tables`, build MATCH): `Penaltylist` da
 
 ## Data blocks in the bank files (2026-10-19, follow-up)
 
-Data blocks that are only a label, an `incbin` and a size `assert` (29 of them) are written in their bank file at the spot where the `incsrc` was, as in 93G's `graphics93.asm`. Data that also holds strings, tables or other content (39 files: the sprite-set headers, pixel remaps, text tables, attribute columns, `BigFontIndex`, `FrameSetTable`, the sound uploads) stays a file under `src/data/<category>/`, included from the bank file. `incbin` paths inside the bank files are `../../Extracted/...`. `tools/gen_file_map.py` lists both kinds; `tools/snesgfx.py` finds the `SpriteSetN:` headers in either place.
+Data blocks that are only a label and an `incbin` (29 of them) are written in their bank file at the spot where the `incsrc` was, as in 93G's `graphics93.asm`. Data that also holds strings, tables or other content (39 files: the sprite-set headers, pixel remaps, text tables, attribute columns, `BigFontIndex`, `FrameSetTable`, the sound uploads) stays a file under `src/data/<category>/`, included from the bank file. `incbin` paths inside the bank files are `../../Extracted/...`. `tools/gen_file_map.py` lists both kinds; `tools/snesgfx.py` finds the `SpriteSetN:` headers in either place.
 
 ## Local names (2026-10-14)
 
