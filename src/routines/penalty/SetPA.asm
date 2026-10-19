@@ -7,7 +7,7 @@ SetPA:								;Start the referee animation for penalty d0 and show its message
 	cmp.w #PenGoal					; goal: the goal box
 	bne .0
 	jsl.l ShowGoalBox
-.0:
+.0:									; show the message for a long time
 	lda.w #$7FFF
 	sta.w penmsgtimer				; show the message for a long time
 	lda.w sfhormode					; horizontal mode

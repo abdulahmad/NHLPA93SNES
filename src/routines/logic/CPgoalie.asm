@@ -24,7 +24,7 @@ CPgoalie:							;Should the computer pull its goalie? In the last minute of the 
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
-.0:
+.0:									; player number valid?
 	lda.b d1
 	bmi .rtl
 	ldy.b a2

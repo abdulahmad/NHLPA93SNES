@@ -2,7 +2,7 @@ setpde:								;Set the energy of player d1 of team a2 to d0
 	lda.b a2						; team
 	beq .home						; home
 	lda.w #$0034					; away team offset $34
-.home:
+.home:								; index the energy table
 	clc
 	adc.b d1						; plus the player
 	tay

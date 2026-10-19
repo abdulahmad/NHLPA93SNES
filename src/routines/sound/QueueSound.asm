@@ -24,6 +24,6 @@ QueueSound:							;Queue sound A for the sound driver. Dropped while a music cue
 	sta.b sndqin
 	stz.b sndlock					; unlock
 	ply								; restore Y
-.exit:
+.exit:								; restore X and return
 	plx
 	rtl

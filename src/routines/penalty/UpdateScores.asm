@@ -4,7 +4,7 @@ UpdateScores:						;Update the ticker scores of the other playoff games
 	sta.w TickerNum					; ticker starts there
 	asl a							; times 2
 	sta.b a0
-.top:
+.top:								; loop over the games
 	lda.b d1
 	cmp.w gamenum					; the user game
 	beq .next						; skip it

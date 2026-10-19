@@ -21,7 +21,7 @@ sroot:								;d0 = the square root of d0
 	lda.b tmp2
 	sta.b tmp1						; else lower high
 	bra .bs
-.lo:
+.lo:								; low bound of the search
 	lda.b tmp2
 	sta.b tmp0
 	bra .bs

@@ -81,7 +81,7 @@ USBoard:							;Update the scoreboard, with the players in the
 	lda.b a2
 	beq .noa23
 	lda.w #$001A
-.noa23:
+.noa23:								; team 2 box list
 	sta.b a0
 .l2:								; print the box list entries
 	ldy.b a0

@@ -78,7 +78,7 @@ assscore:							;Assignment: celebrating a goal; the scorer pumps his arm
 	bit.w #pfjoycon					; joystick controlled?
 	bne .rtl2						; yes: stand
 	jml.l skateto					; else skate to the target
-.rtl2:
+.rtl2:								; return
 	rtl
 unusedFF86:							;unused, $FF fill to the end of the bank
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF

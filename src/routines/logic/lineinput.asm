@@ -22,7 +22,7 @@ lineinput:							;Pad input while the line change box is open: choose a line, or
 	bit.w #abut						; Y: choice 0
 	beq .b							; not pressed
 	jml.l lcfound					; d2 = choice
-.b:
+.b:									; B pressed: choice 1
 	inc.b d2
 	bit.w #bbut						; B: choice 1
 	beq .a							; not pressed

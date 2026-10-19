@@ -7,7 +7,7 @@ chk4lc:								;Should the computer call a line change? Then shoot the puck in
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
-.gu:
+.gu:								; puck on the far side: no line change
 	lda.b d0
 	bmi .rts						; puck is on the far side
 	sec

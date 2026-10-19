@@ -7,7 +7,7 @@ ResetAndSelectPlayers:				;Clear the human controlled players, then give each hu
 	beq .nt1
 	stz.b d4						; controller 1
 	jsl.l changeplayer				; select his player
-.nt1:
+.nt1:								; controller 2 on a team?
 	lda.w cont2team
 	beq .rtl						; controller 2 on a team
 	lda.w #$0002

@@ -84,7 +84,7 @@ asscenterd:							;Assignment: the center on defense, halfway between the puck a
 	bra .z1
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvc .z1
-.half2:
+.half2:								; puck y for the second half
 	lda.b d1
 	clc
 	adc.w pucky						; plus puck y

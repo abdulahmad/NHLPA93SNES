@@ -41,7 +41,7 @@ setInjuryType:						;Player a2 is injured for the period: the crowd reacts, the 
 	lda.b a0
 	beq .tmofs						; home team: no extra offset
 	lda.w #$0034					; away team offset $34
-.tmofs:
+.tmofs:								; index the injury table
 	adc.b d1
 	tay								; Y = index into the table
 	lda.w #$FFFD

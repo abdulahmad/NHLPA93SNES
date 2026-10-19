@@ -6,7 +6,7 @@ reenergizeteam:						;Give every player of team a2 full energy, and move players
 	lda.b a2						; team
 	beq .tm
 	lda.w #$0034					; away team offset $34
-.tm:
+.tm:								; index the player energy
 	clc
 	adc.b d0
 	tay								; index

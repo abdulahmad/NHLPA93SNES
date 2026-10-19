@@ -5,7 +5,7 @@ pplpen:								;Print one penalty box line: player number and time left
 	lda.b a2						; team
 	beq .noa2
 	lda.w #$0034					; away team offset
-.noa2:
+.noa2:								; index the penalty state
 	adc.b d0
 	tay								; index
 	lda.w tmpdst,y					; state

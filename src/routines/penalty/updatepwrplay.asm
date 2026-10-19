@@ -8,7 +8,7 @@ updatepwrplay:						;Show the power play box: the time left and the team on the 
 	sta.b d0						; d0 = home - away
 	bne .diff						; equal: clear the box
 	jmp.w updatepwrplay_clr
-.diff:
+.diff:								; which team has the power play
 	bpl .t0
 	lda.w sflags					; negative: away team on the power play
 	bit.w #sf2pwrtm

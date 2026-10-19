@@ -5,7 +5,7 @@ DoHiLights:							;Playoffs: play the highlight of each game of the round that h
 	lda.b d1
 	asl a							; offset
 	sta.b a0
-.top:
+.top:								; loop over the games
 	ldy.b a0
 	lda.w gsflags,y					; game flags
 	bit.w #gsfso					; game over

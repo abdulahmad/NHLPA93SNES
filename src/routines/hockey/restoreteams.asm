@@ -13,7 +13,7 @@ restoreteams:						;Put both teams' players on the bench
 	lda.b a2						; team
 	beq .home
 	lda.w #$34						; away team offset
-.home:
+.home:								; index the team table
 	clc
 	adc.b d0
 	tay								; index

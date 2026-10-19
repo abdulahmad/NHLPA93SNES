@@ -12,7 +12,7 @@ a2offsides:							;Offsides if the player's team is flagged and the puck is past
 	eor.w #$FFFF					; negate for the bottom end
 	inc a
 	sta.b d0
-.0:
+.0:									; distance to the blue line
 	lda.b d0
 	sec								; distance to the blue line
 	sbc.w #blueline					; blueline

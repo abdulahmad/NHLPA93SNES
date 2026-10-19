@@ -19,7 +19,7 @@ setd0player:						;Give player d0 to his team's controller, unless a controller 
 	cmp.w cont1team					; controller 1 team
 	bne .c2							; no
 	jml.l setc1player				; give it to controller 1
-.c2:
+.c2:								; controller 2 team?
 	lda.b d1
 	cmp.w cont2team					; controller 2 team
 	bne .c1

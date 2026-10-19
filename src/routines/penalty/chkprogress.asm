@@ -9,7 +9,7 @@ chkprogress:						;Move the referee and the game through a penalty: when the sto
 	lda.w Pencntdwn					; Pencntdwn negative: InProgress
 	bpl .cnt
 	jmp.w InProgress
-.cnt:
+.cnt:								; count down the penalty counter
 	sec
 	sbc.b d7
 	sta.w Pencntdwn

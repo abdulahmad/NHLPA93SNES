@@ -14,7 +14,7 @@ asseben:							;Assignment: player X comes onto the ice from the bench
 	sbc.w #$0006
 	bmi .0							; home
 	inc a							; away: +1
-.0:
+.0:									; scale factor 14
 	sta.b mulb
 	lda.w #$000E					; 14
 	sta.b mula

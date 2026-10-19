@@ -31,7 +31,7 @@ asspenalty:							;Assignment: player X skates to the penalty box, glides in and
 	sta.b d1
 	lda.w #-11
 	sta.b d0
-.0:
+.0:									; low nibble for the second
 	lda.b d1
 	and.w #$000F					; low nibble for the second
 	sta.b d1

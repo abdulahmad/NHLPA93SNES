@@ -55,7 +55,7 @@ checkplcoll:						;Check object X against the objects near it in y
 	lda.w OOlistpos,x				; X's index in the sorted list
 	beq .ex							; at the bottom: done
 	sta.b d1
-.1:
+.1:									; next object down the list
 	ldy.b d1
 	lda.w OOlist-1,y				; next object down the list
 	and.w #$00FF

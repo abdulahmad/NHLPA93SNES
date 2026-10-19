@@ -21,7 +21,7 @@ updatesound:						;Move the crowd noise volume toward crowdlevel and send it whe
 	bit.w #$0800					; signed
 	beq .add
 	ora.w #$F000					; sign extend
-.add:
+.add:								; add to the current volume
 	clc
 	adc.w asv						; plus the current
 	sta.w asv						; new volume

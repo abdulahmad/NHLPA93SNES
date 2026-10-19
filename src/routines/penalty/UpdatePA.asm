@@ -7,7 +7,7 @@ UpdatePA:							;Animate the referee, and reprint the penalty message line when 
 	sta.w RefCnt					; new count
 	bpl .1							; still running
 	jsl.l SetPA2					; next animation step
-.1:
+.1:									; message timer
 	lda.w penmsgtimer
 	sec								; message timer
 	sbc.b d7

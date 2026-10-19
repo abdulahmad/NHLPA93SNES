@@ -59,7 +59,7 @@ SetPA2:								;Step the referee animation to its next frame and delay
 	xba
 	and.w #$00FF
 	sta.b d0
-.pr:
+.pr:								; push a referee, keep X
 	jsl.l PushRef
 	stx.b xsave						; keep X
 	ldx.w #$0006

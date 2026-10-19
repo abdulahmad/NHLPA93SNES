@@ -72,7 +72,7 @@ resetplstuff:						;Reset the team variables and the players on both teams
 	stz.w pfnc,x
 	stz.w pfrev,x
 	stz.w pfalock,x
-.next:
+.next:								; next object
 	inc.b a3
 	inc.b a3
 	ldx.b a3

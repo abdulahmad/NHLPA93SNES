@@ -88,7 +88,7 @@ setffo:								;Update the pads, then draw the objects tied to rink scrolling (t
 .draw:
 	sty.w mesarea					; number of characters
 	stz.b d0+2						; character counter
-.ch:
+.ch:								; check whether all are drawn
 	ldy.b d0+2
 	cpy.w mesarea					; all drawn?
 	beq .next

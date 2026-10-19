@@ -7,7 +7,7 @@ demoread:							;In the demo, Start pauses and any other button ends it
 	bit.w #JOYSTART					; Start on pad 1: startpause1
 	beq .any1						; not Start
 	jml.l startpause1
-.any1:
+.any1:								; any other button ends the demo
 	lda.b d1
 	bne .exit						; any other button ends the demo
 	jsl.l ReadJoy2					; read pad 2

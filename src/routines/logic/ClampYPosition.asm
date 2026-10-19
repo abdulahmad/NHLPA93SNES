@@ -17,7 +17,7 @@ ClampYPosition:						;d1 = y kept inside the goal lines, measured from goal line
 .hi:								; clamp to $103
 	lda.w #$0103
 	sta.b d1
-.one:
+.one:								; clamp to the lower limit
 	lda.b d1
 	sec
 	sbc.w #$FEFD					; minus -$103
