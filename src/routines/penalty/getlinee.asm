@@ -45,7 +45,7 @@ getlinee:							;d0 = the average energy of line d0 of team a2
 	lda.w tmap,y
 	sta.b d4
 	bra .next
-.loop:
+.loop:								; sum the energy of the line's players
 	ldy.b d4
 	lda.b [a0],y
 	and.w #$00FF
@@ -59,13 +59,13 @@ getlinee:							;d0 = the average energy of line d0 of team a2
 	lda.b a2
 	beq .addhome
 	lda.w #$0034
-.addhome:
+.addhome:							; add the home team offset
 	adc.b d3
 	tay
 	lda.w tmpde-2,y
 	adc.b mulb
 	sta.b mulb
-.next:
+.next:								; next player
 	dec.b d4
 	bpl .loop
 	jsl.l divu16					; d0 = energy sum / players

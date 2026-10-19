@@ -50,12 +50,12 @@ StartPer:							;Start a period: reset the rink and clock, face off at center ic
 	lda.w gameclock
 	lsr a
 	sta.w midpercue
-.blank:
+.blank:								; blank character
 	lda.w blankchar
 	clc
 	adc.w charofs
 	ldx.w #$07FE
-.clr:
+.clr:								; clear the text map
 	sta.l textmap,x
 	dex
 	dex

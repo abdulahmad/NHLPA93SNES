@@ -26,7 +26,7 @@ AvgCline:							;d0 = the average energy of team a2's current line
 	ldy.b a2
 	lda.w tmsort,y
 	sta.b a0
-.l0:
+.l0:								; each player on the line
 	ldy.b a0
 	lda.w position,y
 	beq .next
@@ -38,14 +38,14 @@ AvgCline:							;d0 = the average energy of team a2's current line
 	lda.b a2
 	beq .idx
 	lda.w #maxros*2
-.idx:
+.idx:								; index the player energy
 	adc.b d3
 	tay
 	lda.w tmpde,y
 	adc.b d0
 	sta.b d0
 	inc.b d1
-.next:
+.next:								; next player
 	inc.b a0
 	inc.b a0
 	dec.b d2

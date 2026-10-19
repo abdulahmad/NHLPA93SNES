@@ -31,7 +31,7 @@ AdjustFacingDirection:				;Turn goalie X's facing one step toward d0, not past t
 	cmp.w #$0007					; 7
 	beq .neg						; keep out of the 7-1 range
 	bra .set						; set
-.other:
+.other:								; turned past the blocked directions
 	lda.b d1
 	cmp.w #$0003					; 3
 	bcc .set
@@ -45,12 +45,12 @@ AdjustFacingDirection:				;Turn goalie X's facing one step toward d0, not past t
 	clc
 	adc.b d1						; add it
 	sta.b d1
-.dn:
+.dn:								; apply the step
 	lda.b d1
 	clc								; add the step
 	adc.b d0
 	sta.b d1
-.set:
+.set:								; wrap to 0-7
 	lda.b d1
 	and.w #$0007					; 0-7
 	sta.b d1

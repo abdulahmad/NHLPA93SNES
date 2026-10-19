@@ -44,7 +44,7 @@ PickStartingGoalie:					;Pick team a2's starting goalie; computer teams in the l
 	bra .set
 .neg:								; signed compare: overflow flag corrects the sign
 	bvs .set
-.po:
+.po:								; playoff mode: pick from the team list
 	lda.w OptLine
 	bne .set
 	lda.w #TeamList
@@ -64,7 +64,7 @@ PickStartingGoalie:					;Pick team a2's starting goalie; computer teams in the l
 	sta.b d0
 	jsl.l UnpackNibbles
 	jsl.l WeightedRandomSelect
-.set:
+.set:								; store the starting goalie
 	ldy.b a2
 	lda.b d0
 	sta.w tmgoalie,y

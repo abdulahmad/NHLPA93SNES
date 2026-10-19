@@ -13,14 +13,14 @@ puckstick:							;The puck hits player a2's stick
 	lda.w puckc						; puck carrier
 	bpl .carried					; loose puck: no steal
 	jmp.w .nosteal
-.carried:
+.carried:							; puck carried: carrier offset
 	asl a
 	sta.b a0						; a0 = carrier offset
 	tay
 	lda.w pfteam,y					; carrier team
 	beq .t1
 	lda.w #$0001
-.t1:
+.t1:								; team of the carrier
 	sta.b tmp0
 	ldy.b a2						; team of a2
 	lda.w pfteam,y					; team of a2
@@ -148,7 +148,7 @@ puckstick:							;The puck hits player a2's stick
 	sta.b mula
 	jsl.l mulu16					; mulu, mulres = mula*mulb
 	sta.b d1						; bonus
-.nohand:
+.nohand:							; no stick hand: add the offset
 	lda.b d1
 	clc
 	adc.w #$32C8					; + 13000

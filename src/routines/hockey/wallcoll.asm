@@ -86,7 +86,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bra .pok
 .neg:								; signed compare: overflow flag corrects the sign
 	bvs .pok
-.hard:
+.hard:								; hard hit: random bounce
 	lda.w #$0800
 	jsl.l randoma					; random number 0 to A-1
 	eor.w #$FFFF					; negate
@@ -104,7 +104,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bra .snd
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvc .snd
-.s2:
+.s2:								; louder wall sound, variant 2
 	pla
 	lda.w #SFXpuckwall1+1			; louder variant 2
 	pha
@@ -116,7 +116,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bra .snd
 .neg2:								; signed compare: overflow flag corrects the sign
 	bvc .snd
-.s3:
+.s3:								; wall sound, variant 3
 	pla
 	lda.w #SFXpuckwall1+2			; variant 3
 	pha
@@ -158,7 +158,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	jmp.w .nocoll
 .neg3:								; signed compare: overflow flag corrects the sign
 	bvs .nocoll1
-.p1:
+.p1:								; fast into the boards: board sound
 	lda.b d2
 	sec
 	sbc.w #$F000					; v1n <= -$1000 and impact >= 10: board sound

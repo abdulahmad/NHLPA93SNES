@@ -53,7 +53,7 @@ Stop4Pen:							;Stop play for a penalty: stop the clock, set the face off spot 
 .x0:
 	lda.w #$0046					; x limit 70
 	sta.b d0
-.0:
+.0:									; clamp the faceoff X
 	lda.b d0
 	sec
 	sbc.w #$FFBA					; and to -70
@@ -84,7 +84,7 @@ Stop4Pen:							;Stop play for a penalty: stop the clock, set the face off spot 
 	bpl .2
 	lda.w #$FFBA					; x -70
 	sta.b d0
-.2:
+.2:									; clamp the faceoff Y
 	lda.b d1
 	sec
 	sbc.w #$FF5A					; beyond -166?
@@ -103,7 +103,7 @@ Stop4Pen:							;Stop play for a penalty: stop the clock, set the face off spot 
 	bpl .3
 	lda.w #$FFBA					; x -70
 	sta.b d0
-.3:
+.3:									; store the faceoff spot
 	lda.b d0
 	sta.w fox						; face off x
 	lda.b d1

@@ -65,7 +65,7 @@ FightFall:							;Player X lost the fight: the other player gets a fighting pena
 	lda.b a0
 	beq .team
 	lda.w #$0034
-.team:
+.team:								; team index
 	clc
 	adc.b d1
 	tay
@@ -75,7 +75,7 @@ FightFall:							;Player X lost the fight: the other player gets a fighting pena
 	sta.w InjCntDown				; InjCntDown = 3
 	stz.w Xvel,x
 	jmp.w chkhit_ex
-.noinj:
+.noinj:								; not injured: fight fall animation
 	lda.w #SPAffall
 	sta.b d1
 	jsl.l SetSPA					; start animation d1
@@ -88,6 +88,6 @@ FightFall:							;Player X lost the fight: the other player gets a fighting pena
 	sta.b a2
 	lda.w #SFXcrowdboo
 	sta.b $01,s
-.snd:
+.snd:								; play the fall sound
 	jsl.l sfx
 	jmp.w chkhit_ex

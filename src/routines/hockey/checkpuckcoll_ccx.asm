@@ -79,7 +79,7 @@ checkpuckcoll_ccx:					;Puck contact with a player's stick, body or the goalie
 	beq .sy
 	eor.w #$FFFF					; negate
 	inc a
-.sy:
+.sy:								; within 15 in Y: check the body
 	cmp.w #$000F
 	bcs .chkbody
 	lda.b d0						; square dx (signed 32-bit result in mulres)
@@ -135,7 +135,7 @@ checkpuckcoll_ccx:					;Puck contact with a player's stick, body or the goalie
 	beq .by
 	eor.w #$FFFF					; negate
 	inc a
-.by:
+.by:								; body contact Y limit
 	cmp.w #$0009
 	bcs .exit						; more than 8 away in y: no contact
 	lda.b d0						; dist squared of the body
@@ -191,7 +191,7 @@ checkpuckcoll_ccx:					;Puck contact with a player's stick, body or the goalie
 	beq .gy
 	eor.w #$FFFF					; negate
 	inc a
-.gy:
+.gy:								; goalie box Y limit
 	cmp.w #$000D
 	bcs .exit						; more than 12 away in y: no contact
 	jsl.l puckgoalie				; within the box: the goalie handles the puck
