@@ -30,7 +30,7 @@ CompLine:							;The computer team picks a line by the man advantage, the score 
 	bpl .0							; sign of the difference
 	inc.b d0						; line 5 on the other side
 	inc.b d0
-.0:
+.0:									; try a line, keep its number
 	lda.b d0
 	pha								; keep the line
 	jsl.l getlinee					; energy of that line
@@ -48,11 +48,11 @@ CompLine:							;The computer team picks a line by the man advantage, the score 
 	bra .1
 .d1neg:								; signed compare: overflow flag corrects the sign
 	bvs .1
-.vs:
+.vs:								; next line number
 	pla
 	inc a							; line + 1
 	pha
-.1:
+.1:									; store the chosen line
 	pla
 	ldy.b a2
 	sta.w tmline,y					; store the chosen line
@@ -99,7 +99,7 @@ CompLine:							;The computer team picks a line by the man advantage, the score 
 	bpl .h0
 	lda.w #.behind					; behind table
 	sta.b a0
-.h0:
+.h0:								; current line
 	ldy.b a1
 	lda.w tmline,y					; current line
 	asl a							; table index
@@ -155,7 +155,7 @@ CompLine:							;The computer team picks a line by the man advantage, the score 
 	bcs .got
 	dec.b d1						; else try the next line
 	bpl .a0
-.got:
+.got:								; chosen line found: set the table pointer
 	dec.b a0
 	dec.b a0
 	ldy.b a2
@@ -164,7 +164,7 @@ CompLine:							;The computer team picks a line by the man advantage, the score 
 	jmp.w .ex
 .al1:								;the lines tried on a power play / penalty kill (3 words each)
 	dw 0,1,2
-.ahead2:
+.ahead2:							; line change table when ahead
 	dw 0,2,1
-.behind2:
+.behind2:							; line change table when behind
 	dw 0,1,0

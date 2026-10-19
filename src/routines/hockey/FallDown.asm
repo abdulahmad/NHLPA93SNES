@@ -14,19 +14,19 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	cmp.w #SPAinjury1
 	bne .s2
 	jmp.w .rtl
-.s2:
+.s2:								; already stumbling: nothing to do
 	cmp.w #SPAstumble
 	bne .s3
 	jmp.w .rtl
-.s3:
+.s3:								; already falling forward: nothing to do
 	cmp.w #SPAfallfwd
 	bne .s4
 	jmp.w .rtl
-.s4:
+.s4:								; already falling back: nothing to do
 	cmp.w #SPAfallback
 	bne .s5
 	jmp.w .rtl
-.s5:
+.s5:								; already flipping: nothing to do
 	cmp.w #SPAflip
 	bne .s6
 	jmp.w .rtl
@@ -63,7 +63,7 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	beq .tm
 	lda.w #$0002
 	sta.b a0
-.tm:
+.tm:								; count the team's checks
 	ldy.b a0
 	lda.w tmchecks,y				; team checks
 	inc a
@@ -74,7 +74,7 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	lda.w pfteam,x					; team offset
 	beq .pl
 	lda.w #$001A
-.pl:
+.pl:								; index the player stats
 	clc
 	adc.b d0
 	tay
@@ -148,7 +148,7 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	sta.b d0
 	bpl .pc							; a2 had the puck?
 	jmp.w newcheck
-.pc:
+.pc:								; find the puck carrier
 	tya
 	lsr a
 	cmp.b d0

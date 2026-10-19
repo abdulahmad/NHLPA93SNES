@@ -48,7 +48,7 @@ ChkOffsides:						;Clear each team's offsides flag once it is back onside; when 
 	ldy.b a2
 	lda.w tmsort,y					; first player of the attacking team
 	sta.b a0
-.0:
+.0:									; check each player of the defending team against the line
 	ldy.b a0
 	lda.w position,y				; skip empty positions
 	bmi .1
@@ -60,7 +60,7 @@ ChkOffsides:						;Clear each team's offsides flag once it is back onside; when 
 	bra .1
 .neg3:								; signed compare: overflow flag corrects the sign
 	bvs .1
-.set0:
+.set0:								; offside: flag the team
 	ldy.b a2
 	lda.w tmflags,y					; flag the team offsides
 	ora.w #tmfoside					; tmfoside
@@ -85,7 +85,7 @@ ChkOffsides:						;Clear each team's offsides flag once it is back onside; when 
 	bra .rtl
 .neg4:								; signed compare: overflow flag corrects the sign
 	bvc .rtl
-.b1:
+.b1:								; check the second line
 	lda.b d0
 	sec
 	sbc.w OldYpos+puckobj
@@ -94,7 +94,7 @@ ChkOffsides:						;Clear each team's offsides flag once it is back onside; when 
 	bra .rtl
 .neg5:								; signed compare: overflow flag corrects the sign
 	bvs .rtl
-.b2:
+.b2:								; offset the line
 	lda.b d0
 	sec
 	sbc.w #$000A					; -$A
@@ -106,13 +106,13 @@ ChkOffsides:						;Clear each team's offsides flag once it is back onside; when 
 	ldy.b a1
 	sta.b a1
 	sty.b a2
-.t1:
+.t1:								; second pass, players behind the puck
 	lda.w #$0005
 	sta.b d2
 	ldy.b a2
 	lda.w tmsort,y
 	sta.b a0
-.2:
+.2:									; check each player
 	ldy.b a0
 	lda.w position,y
 	bmi .3
@@ -125,13 +125,13 @@ ChkOffsides:						;Clear each team's offsides flag once it is back onside; when 
 	bra .3
 .neg6:								; signed compare: overflow flag corrects the sign
 	bvc .3
-.set2:
+.set2:								; flag the team offside
 	ldy.b a2
 	lda.w tmflags,y
 	ora.w #tmfoside
 	sta.w tmflags,y
 	rtl
-.3:
+.3:									; next player
 	inc.b a0
 	inc.b a0
 	dec.b d2

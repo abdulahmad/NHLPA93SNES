@@ -30,12 +30,12 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	sta.w temp1,x
 	bmi .new						; expired: reevaluate
 	jmp.w .de3						; still counting: skate on
-.new:
+.new:								; new assignment: reload the timer from aidef
 	clc
 	adc.w aidef,x					; reload from aidef
 	bpl .t1
 	lda.w #$0000					; not below zero
-.t1:
+.t1:								; store the re-think timer
 	sta.w temp1,x
 	lda.w pucky						; puck y
 	sta.b d1
@@ -65,7 +65,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	lda.b d3
 	bpl .v
 	stz.b d3
-.v:
+.v:									; puck y plus the lead
 	lda.b d3
 	clc
 	adc.b d1
@@ -125,7 +125,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	beq .gdwn
 	lda.w #1000						; bottom goal: start from 1000
 	sta.b d0
-.gup:
+.gup:								; each attacker: skip unavailable players
 	ldy.b a0
 	lda.w pflags,y					; player flags
 	bit.w #pf2unav					; skip unavailable players
@@ -143,7 +143,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	bit.w #$0800					; sign extend
 	beq .gu2s
 	ora.w #$F000
-.gu2s:
+.gu2s:								; attacker's projected y (guarding the near attacker)
 	clc
 	adc.w Ypos,y					; projected y of the attacker
 	sta.b d1
@@ -178,7 +178,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 .cl1:
 	lda.w #-220						; limit -220
 	sta.b d0
-.gu1:
+.gu1:								; store the target y and continue
 	lda.b d0
 	sta.w temp4,x					; target y
 	lda.w puckx						; puck x
@@ -209,7 +209,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	bit.w #$0800					; sign extend
 	beq .gd2s
 	ora.w #$F000
-.gd2s:
+.gd2s:								; attacker's projected y (guarding the far attacker)
 	clc
 	adc.w Ypos,y					; projected y of the attacker
 	sta.b d1
@@ -242,7 +242,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 .cl2:
 	lda.w #220						; limit 220
 	sta.b d0
-.gd1:
+.gd1:								; store the target y and continue
 	lda.b d0
 	sta.w temp4,x					; target y
 	lda.w temp3,x

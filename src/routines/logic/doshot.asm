@@ -52,7 +52,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	clc
 	adc.w passspeed
 	sta.w passspeed
-.nbh:
+.nbh:								; normal shot: check the pass speed
 	lda.w passspeed
 	cmp.w #$0032					; hard shot sound
 	bcc .speed
@@ -129,13 +129,13 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	jsl.l sroot
 	bne .1
 	inc a
-.1:
+.1:									; keep the shot distance
 	sta.b d3
 	lda.w gmode
 	bit.w #gmhl						; gmhl: highlights are always perfect
 	beq .chkperf
 	jmp.w .perf
-.chkperf:
+.chkperf:							; perfect shot distance check
 	lda.b d3
 	cmp.w #$00C9					; too far away for a perfect shot
 	bcs .notperf
@@ -168,13 +168,13 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	cmp.w #$00FB					; closer than 251: half the error
 	bcs .cp
 	lsr.b d0
-.cp:
+.cp:								; clamp the aim X to the sideline
 	lda.b d0
 	cmp.w #sideline					; clamp $88
 	bcc .ar
 	lda.w #sideline
 	sta.b d0
-.ar:
+.ar:								; random aim error
 	lda.b d0
 	pha
 	jsl.l randomas					; random number -A to A-1
@@ -187,7 +187,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	lda.w #$003C
 	sta.b d0
 	sta.b $01,s
-.ay:
+.ay:								; scale the aim error in Y
 	lda.b $05,s
 	bpl .am
 	lsr.b d0
@@ -255,7 +255,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	cmp.w #$1801
 	bcc .noup
 	lda.w #$1800					; max $1800
-.noup:
+.noup:								; store the Z velocity
 	sta.w puckvz
 .ex:								;play the sound, movem the registers back
 	jsl.l sfx
@@ -284,7 +284,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	bne .side
 	lda.w #-(blueline+goalline)
 	sta.b tmp0
-.side:
+.side:								; side of the net the puck is on
 	lda.b tmp0
 	sec
 	sbc.w pucky
