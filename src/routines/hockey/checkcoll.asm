@@ -2,9 +2,9 @@ checkcoll:							;Move object X to its new x / y (d2 / d3), checking wall and pl
 									;collisions and keeping the objects sorted
 	stz.b collflag					; collflag = 0
 	lda.w sfhormode					; horizontal: exg d2,d3
-	beq .nhor1
+	beq .nhor1						; collisions flag clear
 	lda.b d2
-	ldy.b d3
+	ldy.b d3						; d3 into d2
 	sta.b d3
 	sty.b d2
 .nhor1:
@@ -42,19 +42,19 @@ checkcoll:							;Move object X to its new x / y (d2 / d3), checking wall and pl
 	pha
 	lda.w Xpos,x					; around the hot spot with the wall
 	sta.b d2
-	lda.w Ypos,x
+	lda.w Ypos,x					; y of X
 	sta.b d3
-	lda.w radiusx,x
+	lda.w radiusx,x					; object radius in x
 	sta.w wcradiusx
-	lda.w radiusy,x
+	lda.w radiusy,x					; object radius in y
 	sta.w wcradiusy
-	jsl.l checkwallcoll
+	jsl.l checkwallcoll				; check the wall at the hot spot
 	lda.w Wallcos,x					; wall hit: done
 	ora.w Wallsin,x
-	bne .xx
+	bne .xx							; wall hit: skip the stick
 	cpx.w #$0018					; only players: the end of the stick
-	bcs .xx
-	lda.b $01,s
+	bcs .xx							; only players have a stick end
+	lda.b $01,s						; restore d0-d6 from the stack
 	sta.b d0
 	lda.b $03,s
 	sta.b d0+2
@@ -82,22 +82,22 @@ checkcoll:							;Move object X to its new x / y (d2 / d3), checking wall and pl
 	sta.b d6
 	lda.b $1B,s
 	sta.b d6+2
-	txa
+	txa								; player number
 	jsl.l GetHot					; GetHot
-	lda.w Xpos,x
+	lda.w Xpos,x					; x of the hot spot
 	clc
 	adc.b d0
 	sta.b d2
-	lda.w Ypos,x
+	lda.w Ypos,x					; y of the hot spot
 	clc
 	adc.b d1
 	sta.b d3
 	lda.w #$0001					; radius 1
 	sta.w wcradiusx
 	sta.w wcradiusy
-	jsl.l checkwallcoll
+	jsl.l checkwallcoll				; check the wall at the stick end
 .xx:
-	pla
+	pla								; pull d0-d6 back
 	sta.b d0
 	pla
 	sta.b d0+2
@@ -128,31 +128,31 @@ checkcoll:							;Move object X to its new x / y (d2 / d3), checking wall and pl
 	jsl.l checkplcoll				; checkplcoll
 .ex:
 	lda.b collflag					; collflag: restore the old position
-	beq .sort
+	beq .sort						; no collision: sort
 	jmp.w .restoreold
 .sort:
 	lda.w OOlistpos,x				; move up/down OOlist by y
 	sta.b d1
 .2:
 	ldy.b d1
-	cpy.w #$000F
+	cpy.w #$000F					; top of the list?
 	beq .cl2
-	lda.w OOlist+1,y
+	lda.w OOlist+1,y				; object above
 	and.w #$00FF
 	sta.b d4
 	tay
-	lda.b d3
+	lda.b d3						; new y
 	sec
-	sbc.w Ylist,y
+	sbc.w Ylist,y					; minus the y of the object above
 	beq .cl2
 	bmi .neg
-	bvc .swapup
+	bvc .swapup						; X is lower: swap up
 	bra .cl2
 .neg:
 	bvc .cl2
 .swapup:
-	inc.w OOlistpos,x
-	lda.w OOlistpos,y
+	inc.w OOlistpos,x				; move X up the list
+	lda.w OOlistpos,y				; and the other down
 	dec a
 	sta.w OOlistpos,y
 	sep #$30						; 8-bit registers
@@ -162,29 +162,29 @@ checkcoll:							;Move object X to its new x / y (d2 / d3), checking wall and pl
 	txa
 	sta.w OOlist+1,y
 	rep #$30						; 16-bit registers
-	inc.b d1
+	inc.b d1						; next position
 	bra .2
 .cl2:
-	lda.w OOlistpos,x
-	beq .ex2
+	lda.w OOlistpos,x				; X's position in the sorted list
+	beq .ex2						; at the bottom: done
 	sta.b d1
 .3:
 	ldy.b d1
-	lda.w OOlist-1,y
+	lda.w OOlist-1,y				; object below
 	and.w #$00FF
 	sta.b d4
 	tay
-	lda.b d3
+	lda.b d3						; new y
 	sec
-	sbc.w Ylist,y
+	sbc.w Ylist,y					; minus the y of the object below
 	bmi .neg1
-	bvs .swapdn
+	bvs .swapdn						; X is higher: swap down
 	bra .ex2
 .neg1:
 	bvs .ex2
 .swapdn:
-	dec.w OOlistpos,x
-	lda.w OOlistpos,y
+	dec.w OOlistpos,x				; move X down the list
+	lda.w OOlistpos,y				; and the other up
 	inc a
 	sta.w OOlistpos,y
 	sep #$30						; 8-bit registers
@@ -194,15 +194,15 @@ checkcoll:							;Move object X to its new x / y (d2 / d3), checking wall and pl
 	txa
 	sta.w OOlist-1,y
 	rep #$30						; 16-bit registers
-	dec.b d1
+	dec.b d1						; previous position
 	bne .3
 .ex2:
-	lda.b d3
-	sta.w Ylist,x
+	lda.b d3						; new y
+	sta.w Ylist,x					; store it
 	rtl
 .restoreold:
-	lda.w OldXpos,x
+	lda.w OldXpos,x					; restore the old x
 	sta.w Xpos,x
-	lda.w OldYpos,x
+	lda.w OldYpos,x					; restore the old y
 	sta.w Ypos,x
 	rtl
