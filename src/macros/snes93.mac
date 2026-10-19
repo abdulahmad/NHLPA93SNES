@@ -13,9 +13,19 @@ macro String(text)					;93G String/StringB: length word (counts itself), then th
 	db "<text>"
 ?e:
 endmacro
-macro StringCC(...)					;String of control-code bytes only (no text)
+macro StringCC(b)					;String of one control byte (no text)
 ?l:	dw ?e-?l
-	db <...>
+	db <b>
+?e:
+endmacro
+macro StringCp(cc, x, y)			;control code and position, no text
+?l:	dw ?e-?l
+	db <cc>,<x>,<y>
+?e:
+endmacro
+macro StringBt(b, text)				;one byte, then the text
+?l:	dw ?e-?l
+	db <b>,"<text>"
 ?e:
 endmacro
 macro StringCt(cc, x, y, text)		;control code, x, y, then the text (a print control code sets the
