@@ -206,7 +206,7 @@ org `$818000` when `pc()` is below it.
 
 - `$818000` data/sound/gamesound.asm (also GameSampleDir, GameSampleDirEnd, GameSamples, GameSamplesEnd)
 
-## src/banks/b82_rink_tiles_anims.asm
+## src/banks/b82_rink_tiles_anim_tables.asm
 
 org `$82B86C` when `pc()` is below it.
 
@@ -260,7 +260,7 @@ org `$838000` when `pc()` is below it.
 - `$83FAEC` RefsMap (data)
 - `$83FDFC` routines/logic/assignments/assgoalietopuck.asm (also unusedFF83)
 
-## src/banks/b84_goalie_sprites_scouting.asm
+## src/banks/b84_scouting_rosters.asm
 
 org `$848000` when `pc()` is below it.
 
@@ -301,7 +301,7 @@ org `$848000` when `pc()` is below it.
 - `$84FE5F` data/text/HandedTextTbl.asm
 - `$84FE6F` routines/stats/AttribWeight.asm (also unusedFF84)
 
-## src/banks/b85_check_sprites_title.asm
+## src/banks/b85_title_map.asm
 
 org `$858000` when `pc()` is below it.
 
@@ -333,7 +333,7 @@ org `$868000` when `pc()` is below it.
 - `$86FCE3` routines/hockey/teams/PickStartingGoalie.asm
 - `$86FD86` routines/logic/assignments/assscore.asm (also unusedFF86)
 
-## src/banks/b87_player_sprites.asm
+## src/banks/b87_ref_tiles_drawframe.asm
 
 org `$878000` when `pc()` is below it.
 
@@ -349,7 +349,7 @@ org `$878000` when `pc()` is below it.
 - `$87F55E` RefTiles (data)
 - `$87FF78` routines/logic/assignments/assepen.asm (also unusedFF87)
 
-## src/banks/b88_fight_sprites_playoffs.asm
+## src/banks/b88_teamblocks_playoffs_password.asm
 
 org `$888000` when `pc()` is below it.
 
@@ -380,7 +380,7 @@ org `$888000` when `pc()` is below it.
 - `$88FDB2` routines/hockey/password/SuperAdd.asm
 - `$88FDD0` routines/logic/skating/skateto.asm (also unusedFF88)
 
-## src/banks/b89_goalie_save_sprites_replay.asm
+## src/banks/b89_hor_ref_replay_music.asm
 
 org `$898000` when `pc()` is below it.
 
@@ -410,7 +410,7 @@ org `$898000` when `pc()` is below it.
 - `$89FD6A` routines/logic/skating/EvadePC.asm
 - `$89FDD6` routines/logic/assignments/asswingd.asm (also unusedFF89)
 
-## src/banks/b8A_misc_sprites_bracket.asm
+## src/banks/b8A_credits_bracket.asm
 
 org `$8A8000` when `pc()` is below it.
 
@@ -421,7 +421,7 @@ org `$8A8000` when `pc()` is below it.
 - `$8AFD6D` routines/logic/lines/getlchoice.asm
 - `$8AFE21` routines/penalty/highlights/SetScore.asm (also unusedFF8A)
 
-## src/banks/b8B_fall_sprites_opening.asm
+## src/banks/b8B_opening_playoffs.asm
 
 org `$8B8000` when `pc()` is below it.
 
@@ -437,7 +437,7 @@ org `$8B8000` when `pc()` is below it.
 - `$8BFFCC` routines/video/hud/showref.asm
 - `$8BFFD3` routines/logic/skating/skatetopuckinit.asm
 
-## src/banks/b8C_skate_sprites.asm
+## src/banks/b8C_nhlpa_logo.asm
 
 org `$8C8000` when `pc()` is below it.
 
@@ -446,7 +446,7 @@ org `$8C8000` when `pc()` is below it.
 - `$8CFC1A` routines/video/objects/checksso.asm
 - `$8CFD83` routines/logic/puck/chk4pass.asm (also unusedFF8C)
 
-## src/banks/b8D_goalie_sprites_fonts.asm
+## src/banks/b8D_bigfont_highlights.asm
 
 org `$8D8000` when `pc()` is below it.
 
@@ -473,7 +473,7 @@ org `$8D8000` when `pc()` is below it.
 - `$8DFE1B` routines/logic/controls/clrplayer.asm
 - `$8DFE36` routines/logic/skating/avdgoal.asm (also unused008D)
 
-## src/banks/b8E_celebrate_crowd_sprites.asm
+## src/banks/b8E_gameloop.asm
 
 org `$8E8000` when `pc()` is below it.
 

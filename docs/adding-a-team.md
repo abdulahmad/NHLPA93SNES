@@ -8,7 +8,7 @@
 |---|---|---|---|
 | TeamList | `src/data/teamdata93s.asm` | `dd` long pointer, 4 bytes | `(TeamListEnd-TeamList)/4 == NumofTeams` |
 | team record | after TeamList, or in bank $90 when it does not fit | one record (the shortest, Ottawa, is 531 bytes; Boston is 680) | the TeamList entry points at its label |
-| Teamblocksmap | `src/banks/b87_player_sprites.asm` | 36 bytes, a 9 x 2 tile block | `(TeamBlocksMapEnd-Teamblocksmap)/36 == NumofTeams` |
+| Teamblocksmap | `src/banks/b87_ref_tiles_drawframe.asm` | 36 bytes, a 9 x 2 tile block | `(TeamBlocksMapEnd-Teamblocksmap)/36 == NumofTeams` |
 | playoffseats | `src/data/teamdata93s.asm` | 16 team numbers | `(playoffseatsEnd-playoffseats)/16 == 34` |
 
 Leave 34 alone. playoffseats is 34 trees, not the team count.
@@ -33,7 +33,7 @@ A full record does not fit in 354 bytes. Assemble it from `src/banks/b90_expande
 
 Teamblocksmap is in the middle of bank $87. The bank ends with 9 bytes of `$FF` (`unusedFF87`), so one 36-byte row does not fit.
 
-`assepen` is the last routine in `src/banks/b87_player_sprites.asm` (127 bytes, then the 9-byte fill). `asstab` reaches it with `dd assepen`, so the routine and its fill can move into `b90_expanded.asm`. `DrawFrame`, just after the map, uses `jmp.w addframe_end`, so those two stay together in bank $87. The next bank's org pads the gap.
+`assepen` is the last routine in `src/banks/b87_ref_tiles_drawframe.asm` (127 bytes, then the 9-byte fill). `asstab` reaches it with `dd assepen`, so the routine and its fill can move into `b90_expanded.asm`. `DrawFrame`, just after the map, uses `jmp.w addframe_end`, so those two stay together in bank $87. The next bank's org pads the gap.
 
 Bank $8B ends on the `rtl` of `skatetopuckinit` and has no spare fill.
 
