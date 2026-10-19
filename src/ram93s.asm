@@ -633,6 +633,11 @@ cursong			=	$1651			;song playing on the SPC (0 = none); set by the song starter
 									;$86/$89
 DMAList			=	$1653			;vram dma list (7-byte entries, see dma* offsets), filled up to DMAlistend
 printfontset	=	$1BCB			; tile base of the selected print font (control code)
+; print control codes: a byte with bit 7 set picks palette, priority and font (font 1-3 also picks the map)
+; for the text after it; x and y follow. The byte is -(priority << 6 | palette << 4 | font).
+CC_Font1		=	$FF				; font 1
+CC_Font2		=	$FE				; font 2
+CC_Font1Pri		=	$BF				; font 1, priority set
 charofs			=	$1BCD			;added to every text map tile written by the game code ($FF00 at boot, 0
 									;in the game screens)
 charofs2		=	$1BCF			;second tile offset: cleared with charofs by the screen setups (the team

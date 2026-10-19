@@ -13,6 +13,32 @@ macro String(text)					;93G String/StringB: length word (counts itself), then th
 	db "<text>"
 ?e:
 endmacro
+macro StringCC(...)					;String of control-code bytes only (no text)
+?l:	dw ?e-?l
+	db <...>
+?e:
+endmacro
+macro StringCt(cc, x, y, text)		;control code, x, y, then the text (a print control code sets the
+	;priority, font and map, see CC_Font*)
+?l:	dw ?e-?l
+	db <cc>,<x>,<y>,"<text>"
+?e:
+endmacro
+macro StringCtc(cc, x, y, text, cc2, x2, y2)	;StringCt, then a second code and position
+?l:	dw ?e-?l
+	db <cc>,<x>,<y>,"<text>",<cc2>,<x2>,<y2>
+?e:
+endmacro
+macro StringCtctc(cc, x, y, text, cc2, x2, y2, text2, cc3, x3, y3)	;two texts, three codes
+?l:	dw ?e-?l
+	db <cc>,<x>,<y>,"<text>",<cc2>,<x2>,<y2>,"<text2>",<cc3>,<x3>,<y3>
+?e:
+endmacro
+macro StringTb(text, b)				;the text, then one byte
+?l:	dw ?e-?l
+	db "<text>",<b>
+?e:
+endmacro
 macro hex2(w1, w2, w3, w4)			;93G hex2: 4 words as big-endian bytes
 	db <w1>>>8,<w1>&$FF,<w2>>>8,<w2>&$FF,<w3>>>8,<w3>&$FF,<w4>>>8,<w4>&$FF
 endmacro

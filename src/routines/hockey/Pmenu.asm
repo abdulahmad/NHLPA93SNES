@@ -123,24 +123,14 @@ Pmenu:								;Draw the pause menu items with the current one highlighted
 	inc.w mesarea
 	rtl
 .mlist:								;the pause menu items
-	dw 13
-	db "Resume Game"
-	dw 16
-	db "Instant Replay"
-	dw 14
-	db "Stats Report"
-	dw 11
-	db "Goalie - "
-	dw 13
-	db "Team Roster"
+	%String("Resume Game")
+	%String("Instant Replay")
+	%String("Stats Report")
+	%String("Goalie - ")
+	%String("Team Roster")
 .mlist2:							;the menu items after the game (Exit Game first)
-	dw 11
-	db "Exit Game"
-	dw 16
-	db "Instant Replay"
-	dw 14
-	db "Stats Report"
-	dw 11
-	db "Goalie - "
-	dw 13
-	db "Team Roster"
+	%String("Exit Game")
+	%String("Instant Replay")
+	%String("Stats Report")
+	%String("Goalie - ")
+	%String("Team Roster")

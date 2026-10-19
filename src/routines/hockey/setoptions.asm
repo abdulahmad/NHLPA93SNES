@@ -471,8 +471,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 .print:
 	jml.l print
 .playoffs:							;the Team 1 / Team 2 choice in Cont. Playoffs
-	dw 10
-	db "Playoffs"
+	%String("Playoffs")
 .nms:								;move to line d7 + d0 (0..$C), skipping the lines fixed in this mode
 									;(Players in the playoffs, lines 1-3 in Cont. Playoffs, Team 2 in the
 									;playoffs), then move the frame from line d3
@@ -565,65 +564,38 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	dw .pl5-.pl
 	dw .pl6-.pl
 .pl0:								;Play Mode
-	dw 16
-	db "Regular Season"
-	dw 16
-	db "Cont. Playoffs"
-	dw 14
-	db "New Playoffs"
-	dw 11
-	db "Best of 7"
+	%String("Regular Season")
+	%String("Cont. Playoffs")
+	%String("New Playoffs")
+	%String("Best of 7")
 .pl1:								;Players (the last, One, is the only choice in the playoffs)
-	dw 6
-	db "Demo"
-	dw 12
-	db "One - Home"
-	dw 15
-	db "One - Visitor"
-	dw 11
-	db "Teammates"
-	dw 14
-	db "Head to Head"
-	dw 5
-	db "One"
+	%String("Demo")
+	%String("One - Home")
+	%String("One - Visitor")
+	%String("Teammates")
+	%String("Head to Head")
+	%String("One")
 .pl2:								;Team 1 and Team 2 (not used: .psdtp prints team names), Per. Length (30
 									;Seconds is beyond .pslim)
 .pl3:
 .pl4:
-	dw 11
-	db "5 Minutes"
-	dw 12
-	db "10 Minutes"
-	dw 12
-	db "20 Minutes"
-	dw 12
-	db "30 Seconds"
+	%String("5 Minutes")
+	%String("10 Minutes")
+	%String("20 Minutes")
+	%String("30 Seconds")
 .pl5:								;Penalties
-	dw 15
-	db "Only Fighting"
-	dw 4
-	db "On"
-	dw 16
-	db "On, No Offside"
+	%String("Only Fighting")
+	%String("On")
+	%String("On, No Offside")
 .pl6:								;Line Changes
-	dw 4
-	db "On"
-	dw 5
-	db "Off"
+	%String("On")
+	%String("Off")
 .text:								;the line names
-	dw 14
-	db $FE,$03,$0D,"Play Mode"
-	dw 12
-	db $FE,$03,$0F,"Players"
-	dw 11
-	db $FE,$03,$11,"Team 1"
-	dw 11
-	db $FE,$03,$13,"Team 2"
-	dw 16
-	db $FE,$03,$15,"Per. Length"
-	dw 14
-	db $FE,$03,$17,"Penalties"
-	dw 17
-	db $FE,$03,$19,"Line Changes"
-	dw 3							; end (a 0 byte)
-	db 0
+	%StringCt(CC_Font2,$03,$0D,"Play Mode")
+	%StringCt(CC_Font2,$03,$0F,"Players")
+	%StringCt(CC_Font2,$03,$11,"Team 1")
+	%StringCt(CC_Font2,$03,$13,"Team 2")
+	%StringCt(CC_Font2,$03,$15,"Per. Length")
+	%StringCt(CC_Font2,$03,$17,"Penalties")
+	%StringCt(CC_Font2,$03,$19,"Line Changes")
+	%StringCC(0)					;end (a 0 byte)

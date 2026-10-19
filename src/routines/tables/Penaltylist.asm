@@ -74,13 +74,11 @@ PenDelay	=	$2C					;delayed penalty ref
 ;text) then dw $ffdd,... (ff = frame, dd = delay; negative ends)
 PenDataEOP:							;period over
 	dw $0100
-	dw 13
-	db "Period Over"
+	%String("Period Over")
 	dw -$0510
 PenDataEOG:							;game over
 	dw $0100
-	dw 11
-	db "Game Over"
+	%String("Game Over")
 	dw $0510,-$4030
 PenDataGoal:						;goal
 	dw $0100
@@ -92,23 +90,19 @@ PenDataNoText:						;no text
 	dw $0510,-$4018
 PenDataice:							;icing
 	dw $0100
-	dw 7
-	db "Icing"
+	%String("Icing")
 	dw $0002,$0101,-$0206
 PenDataoffsides:					;offsides
 	dw $0100
-	dw 10
-	db "Off-side"
+	%String("Off-side")
 	dw $0002,$0301,-$040F
 PenDataGhold:						;face off (PenOOP, PenGhold)
 	dw $0100
-	dw 10
-	db "Face Off"
+	%String("Face Off")
 	dw -$050A
 PenDatadelay:						;delay
 	dw $0000
-	dw 9
-	db "Penalty"
+	%String("Penalty")
 	dw $0003,$0301,-$040F
 PenDatawhistle:						;whistle
 	dw $0000
@@ -116,61 +110,49 @@ PenDatawhistle:						;whistle
 	dw -$050A
 PenDatacharge:						;charging
 	dw $0402
-	dw 10
-	db "Charging"
+	%String("Charging")
 	dw $0004,$0101,$0A01,$0B01,$0A01,$0B01,$0A01,$0B01,$0A01,$0B01,-$0101
 PenDataslash:						;slashing
 	dw $0402
-	dw 10
-	db "Slashing"
+	%String("Slashing")
 	dw $0004,$0101,$0201,$0301,$0201,$0301,$0201,$0301,$0201,$0301,-$0101
 PenDatatrip:						;tripping
 	dw $0402
-	dw 10
-	db "Tripping"
+	%String("Tripping")
 	dw $0004,$0401,$0501,$0401,$0501,$0401,$0501,$0401,$0501,-$0101
 PenDatarough2:						;roughing, slow down time $A
 	dw $0A02
-	dw 10
-	db "Roughing"
+	%String("Roughing")
 	dw $0004,$0D01,$0E01,$0D01,$0E01,$0D01,$0E01,$0D01,$0E01,-$0101
 PenDatarough:						;roughing
 	dw $0402
-	dw 10
-	db "Roughing"
+	%String("Roughing")
 	dw $0004,$0D01,$0E01,$0D01,$0E01,$0D01,$0E01,$0D01,$0E01,-$0101
 PenDatahook:						;hooking
 	dw $0402
-	dw 9
-	db "Hooking"
+	%String("Hooking")
 	dw $0004,$0101,$0901,$0801,$0901,$0801,$0901,$0801,$0901,$0801,-$0101
 PenDatacross:						;cross check
 	dw $0402
-	dw 13
-	db "Cross Check"
+	%String("Cross Check")
 	dw $0004,$0601,$0F01,$1001,$0F01,$1001,$0F01,$1001,$0F01,$1001,-$0101
 PenDataint:							;interference
 	dw $0402
-	dw 14
-	db "Interference"
+	%String("Interference")
 	dw $0004,$0101,$0C06,-$0101
 PenDataHold:						;holding
 	dw $0402
-	dw 9
-	db "Holding"
+	%String("Holding")
 	dw $0004,$0101,$0706,-$0101
 PenDatafight:						;fighting
 	dw $2805
-	dw 10
-	db "Fighting"
+	%String("Fighting")
 	dw $0004,$0D01,$0E01,$0D01,$0E01,$0D01,$0E01,$0D01,$0E01,-$0101
 PenDatafight2:						;fighting *
 	dw $2805
-	dw 12
-	db "Fighting *"
+	%String("Fighting *")
 	dw $0004,$0D01,$0E01,$0D01,$0E01,$0D01,$0E01,$0D01,$0E01,-$0101
 PenDataInst:						;fight instigator
 	dw $2802
-	dw 18
-	db "Fight Instigator"
+	%String("Fight Instigator")
 	dw $0004,$0D01,$0E01,$0D01,$0E01,$0D01,$0E01,$0D01,$0E01,-$0101
