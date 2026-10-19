@@ -12,7 +12,7 @@ out = ['# Source file map', '',
        'Each later bank orgs only when `pc()` has not already reached that address, so a bank that grew is not rewound.',
        'On the stock tree the PC arrives exactly there and the org is skipped. A bank file then includes its routine and data',
        'files in exact ROM order. Routines are in `src/routines/<93G module>/<Routine>.asm`',
-       '(one routine per file; a routine that falls through into the next keeps both). Graphics, text and sound data blocks sit in the bank file itself, at their ROM position (listed here by label); the team and frame data have their own files in `src/data/`.',
+       '(one routine per file; a routine that falls through into the next keeps both). Data blocks that are only an `incbin` sit in the bank file itself, at their ROM position (listed here by label); other data is in `src/data/<category>/<Name>.asm`.',
        'The SNES internal header and vectors are in `src/header/snes_header.asm` (end of bank $80).',
        'Bank $90 is included last. The stock build writes no bytes there.',
        'Regenerate this file with `python3 tools/gen_file_map.py` after `npm run build:retail`.', '']

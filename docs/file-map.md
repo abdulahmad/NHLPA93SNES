@@ -4,7 +4,7 @@
 Each later bank orgs only when `pc()` has not already reached that address, so a bank that grew is not rewound.
 On the stock tree the PC arrives exactly there and the org is skipped. A bank file then includes its routine and data
 files in exact ROM order. Routines are in `src/routines/<93G module>/<Routine>.asm`
-(one routine per file; a routine that falls through into the next keeps both). Graphics, text and sound data blocks sit in the bank file itself, at their ROM position (listed here by label); the team and frame data have their own files in `src/data/`.
+(one routine per file; a routine that falls through into the next keeps both). Data blocks that are only an `incbin` sit in the bank file itself, at their ROM position (listed here by label); other data is in `src/data/<category>/<Name>.asm`.
 The SNES internal header and vectors are in `src/header/snes_header.asm` (end of bank $80).
 Bank $90 is included last. The stock build writes no bytes there.
 Regenerate this file with `python3 tools/gen_file_map.py` after `npm run build:retail`.
@@ -204,9 +204,7 @@ org `$808000`.
 
 org `$818000` when `pc()` is below it.
 
-- `$818000` GameSoundUpload (data)
-- `$818004` GameSampleDir (data)
-- `$818054` GameSamples (data)
+- `$818000` data/sound/gamesound.asm (also GameSampleDir, GameSampleDirEnd, GameSamples, GameSamplesEnd)
 
 ## src/banks/b82_sfx_rink.asm
 
@@ -222,16 +220,16 @@ org `$82B86C` when `pc()` is below it.
 - `$82FA7A` routines/sound/SPCGameUpload.asm
 - `$82FAB9` routines/sound/SPCUpload.asm
 - `$82FB79` routines/sound/QueueSound.asm
-- `$82FBA6` PasstoText (data)
+- `$82FBA6` data/text/PasstoText.asm
 - `$82FBC5` routines/hockey/PWtoBits.asm
 - `$82FBEA` routines/hockey/ClrPassBits.asm
 - `$82FC03` routines/hockey/PushBits.asm
 - `$82FC39` routines/hockey/BitMaskTable.asm
 - `$82FC59` routines/hockey/GameOver.asm
 - `$82FC97` routines/hockey/SaveRegsStartHL2.asm
-- `$82FCBD` PixelRemap8D (data)
+- `$82FCBD` data/gfx/PixelRemap8D.asm
 - `$82FCCD` routines/video/marktextlo.asm
-- `$82FCD4` PixelRemap83 (data)
+- `$82FCD4` data/gfx/PixelRemap83.asm
 - `$82FCDB` routines/middle/muls32.asm
 - `$82FD17` routines/video/addframe_hi.asm
 - `$82FD54` routines/logic/noturn.asm
@@ -266,7 +264,7 @@ org `$838000` when `pc()` is below it.
 
 org `$848000` when `pc()` is below it.
 
-- `$848000` SpriteSet9 (data)
+- `$848000` data/gfx/SpriteSet9.asm (also SpriteSet9End)
 - `$84D630` ScoutingReportText (data)
 - `$84E949` FaceOffMap (data)
 - `$84EA39` routines/middle/ConvertByteToDigits.asm
@@ -296,18 +294,18 @@ org `$848000` when `pc()` is below it.
 - `$84FC44` routines/stats/GetNameandAttrib.asm
 - `$84FD49` routines/stats/attribjmp.asm
 - `$84FD55` routines/stats/AttribStatus.asm
-- `$84FDC6` StatusTextTbl (data)
+- `$84FDC6` data/text/StatusTextTbl.asm
 - `$84FDEE` routines/stats/AttribEnergy.asm
 - `$84FE14` routines/stats/AttribFighting.asm (also AttribRating, AttribPrintPct)
 - `$84FE4A` routines/stats/AttribHanded.asm
-- `$84FE5F` HandedTextTbl (data)
+- `$84FE5F` data/text/HandedTextTbl.asm
 - `$84FE6F` routines/stats/AttribWeight.asm (also unusedFF84)
 
 ## src/banks/b85_title_gfx.asm
 
 org `$858000` when `pc()` is below it.
 
-- `$858000` SpriteSet4 (data)
+- `$858000` data/gfx/SpriteSet4.asm (also SpriteSet4End)
 - `$85D5A4` routines/hockey/GetShifter.asm
 - `$85D5C0` Title1Map (data)
 - `$85FBB9` routines/video/DrawFrameHi.asm
@@ -320,86 +318,7 @@ org `$858000` when `pc()` is below it.
 
 org `$868000` when `pc()` is below it.
 
-- `$868000` BootSoundUpload (data)
-- `$868004` SPCDriver (data)
-- `$868004` SPCCode (data)
-- `$868AA9` fmtune_playoff_order (data)
-- `$868AB1` fmtune_title_order (data)
-- `$868AB9` fmtune_unused2_order (data)
-- `$868AC1` fmtune_goal_order (data)
-- `$868AC9` fmtune_periodstart_order (data)
-- `$868AD1` fmtune_lategame_order (data)
-- `$868AD9` fmtune_unused7_order (data)
-- `$868AE1` fmtune_midperiod_order (data)
-- `$868AE9` fmtune_unused9_order (data)
-- `$868AF1` fmtune_playoff_set (data)
-- `$868B01` fmtune_title_set (data)
-- `$868B11` fmtune_unused2_set (data)
-- `$868B21` fmtune_goal_set (data)
-- `$868B31` fmtune_periodstart_set (data)
-- `$868B41` fmtune_lategame_set (data)
-- `$868B51` fmtune_unused7_set (data)
-- `$868B61` fmtune_midperiod_set (data)
-- `$868B71` fmtune_unused9_set (data)
-- `$868B81` fmtune_playoff_stream (data)
-- `$868C25` fmtune_unused2_stream (data)
-- `$868CFB` fmtune_unused9_stream (data)
-- `$868E83` fmtune_title_stream (data)
-- `$868FE5` fmtune_goal_stream (data)
-- `$869051` fmtune_lategame_stream (data)
-- `$8690B7` fmtune_periodstart_stream (data)
-- `$86913B` fmtune_unused7_stream (data)
-- `$869228` fmtune_midperiod_stream (data)
-- `$8692B6` fmtune_title_stream2 (data)
-- `$8692C0` fmtune_unused2_stream2 (data)
-- `$8692C6` fmtune_unused9_stream2 (data)
-- `$86952B` fmtune_goal_stream2 (data)
-- `$869542` fmtune_midperiod_stream2 (data)
-- `$86961D` fmtune_unused7_stream2 (data)
-- `$86964A` fmtune_periodstart_stream2 (data)
-- `$86969B` fmtune_lategame_stream2 (data)
-- `$8697C2` fmtune_goal_stream3 (data)
-- `$86984A` fmtune_title_stream3 (data)
-- `$869D79` fmtune_playoff_stream2 (data)
-- `$86A0A6` fmtune_unused2_stream3 (data)
-- `$86A4BF` sfx_table (data)
-- `$86A528` sfx_a1 (data)
-- `$86A534` sfx_siren (data)
-- `$86A548` sfx_crowd0 (data)
-- `$86A554` sfx_crowd1 (data)
-- `$86A560` sfx_crowd2 (data)
-- `$86A56C` sfx_crowd3 (data)
-- `$86A578` sfx_crowd4 (data)
-- `$86A584` sfx_crowd5 (data)
-- `$86A590` sfx_crowd6 (data)
-- `$86A59C` sfx_crowd7 (data)
-- `$86A5A8` sfx_crowdoff (data)
-- `$86A5B4` sfx_check1 (data)
-- `$86A5C0` sfx_check2 (data)
-- `$86A5CC` sfx_playerwall (data)
-- `$86A5D8` sfx_playerwall2 (data)
-- `$86A5E4` sfx_shothard (data)
-- `$86A5FB` sfx_puckwall1 (data)
-- `$86A607` sfx_puckwall2 (data)
-- `$86A613` sfx_puckwall3 (data)
-- `$86A61F` sfx_hithigh (data)
-- `$86A62B` sfx_hitlow (data)
-- `$86A637` sfx_shotfh (data)
-- `$86A643` sfx_shotbh (data)
-- `$86A64F` sfx_puckpost (data)
-- `$86A65B` sfx_stop1 (data)
-- `$86A667` sfx_stop2 (data)
-- `$86A673` sfx_shotwiff2 (data)
-- `$86A67F` sfx_shotwiff1 (data)
-- `$86A68B` sfx_shotwiff4 (data)
-- `$86A697` sfx_shotwiff3 (data)
-- `$86A6A3` sfx_crowdboo (data)
-- `$86A6AF` sfx_oooh2 (data)
-- `$86A6BB` sfx_crowdcheer (data)
-- `$86A6C7` sfx_whistle (data)
-- `$86A6EF` BootInstruments (data)
-- `$86A7A1` BootSampleDir (data)
-- `$86A7C9` BootSamples (data)
+- `$868000` data/sound/bootsound.asm (also SPCDriver, SPCCode, fmtune_playoff_order, fmtune_title_order, fmtune_unused2_order, fmtune_goal_order, fmtune_periodstart_order, fmtune_lategame_order, fmtune_unused7_order, fmtune_midperiod_order, fmtune_unused9_order, fmtune_playoff_set, fmtune_title_set, fmtune_unused2_set, fmtune_goal_set, fmtune_periodstart_set, fmtune_lategame_set, fmtune_unused7_set, fmtune_midperiod_set, fmtune_unused9_set, fmtune_playoff_stream, fmtune_unused2_stream, fmtune_unused9_stream, fmtune_title_stream, fmtune_goal_stream, fmtune_lategame_stream, fmtune_periodstart_stream, fmtune_unused7_stream, fmtune_midperiod_stream, fmtune_title_stream2, fmtune_unused2_stream2, fmtune_unused9_stream2, fmtune_goal_stream2, fmtune_midperiod_stream2, fmtune_unused7_stream2, fmtune_periodstart_stream2, fmtune_lategame_stream2, fmtune_goal_stream3, fmtune_title_stream3, fmtune_playoff_stream2, fmtune_unused2_stream3, sfx_table, sfx_a1, sfx_siren, sfx_crowd0, sfx_crowd1, sfx_crowd2, sfx_crowd3, sfx_crowd4, sfx_crowd5, sfx_crowd6, sfx_crowd7, sfx_crowdoff, sfx_check1, sfx_check2, sfx_playerwall, sfx_playerwall2, sfx_shothard, sfx_puckwall1, sfx_puckwall2, sfx_puckwall3, sfx_hithigh, sfx_hitlow, sfx_shotfh, sfx_shotbh, sfx_puckpost, sfx_stop1, sfx_stop2, sfx_shotwiff2, sfx_shotwiff1, sfx_shotwiff4, sfx_shotwiff3, sfx_crowdboo, sfx_oooh2, sfx_crowdcheer, sfx_whistle, SPCDriverEnd, BootInstruments, BootInstrumentsEnd, BootSampleDir, BootSampleDirEnd, BootSamples, BootSamplesEnd)
 - `$86FA3E` routines/decompress/DecompressBytecode.asm
 - `$86FB96` routines/hockey/RestoreBenchEnergy.asm
 - `$86FBE1` routines/sound/StartSong6.asm
@@ -418,15 +337,15 @@ org `$868000` when `pc()` is below it.
 
 org `$878000` when `pc()` is below it.
 
-- `$878000` SpriteSet2 (data)
+- `$878000` data/gfx/SpriteSet2.asm (also SpriteSet2End)
 - `$87C3A0` EASNmap (data)
 - `$87C6B4` FaceOffTiles (data)
 - `$87CABA` Teamblocksmap (data)
 - `$87CE62` routines/video/DrawFrame.asm
 - `$87D1FE` routines/video/addframe_end.asm
-- `$87D205` SpriteSet6 (data)
+- `$87D205` data/gfx/SpriteSet6.asm (also SpriteSet6End)
 - `$87F3E9` routines/hockey/RestoreReplayFrame.asm
-- `$87F55A` PixelRemap87 (data)
+- `$87F55A` data/gfx/PixelRemap87.asm
 - `$87F55E` RefTiles (data)
 - `$87FF78` routines/logic/assepen.asm (also unusedFF87)
 
@@ -449,13 +368,13 @@ org `$888000` when `pc()` is below it.
 - `$888853` routines/hockey/SuperMult.asm
 - `$8888C3` routines/hockey/DrawGameSetupBack.asm
 - `$888942` routines/middle/mulu.asm
-- `$888A0F` SpriteSet8 (data)
+- `$888A0F` data/gfx/SpriteSet8.asm (also SpriteSet8End)
 - `$889B73` TeamBlocksTiles (data)
-- `$88BC56` SpriteSet7 (data)
+- `$88BC56` data/gfx/SpriteSet7.asm (also SpriteSet7End)
 - `$88EF9C` routines/hockey/GetPassWord.asm
-- `$88F28F` PasswordText (data)
+- `$88F28F` data/text/PasswordText.asm
 - `$88F2B0` routines/hockey/TitleScreen.asm
-- `$88F4F0` CreditsBlank (data)
+- `$88F4F0` data/text/CreditsBlank.asm
 - `$88F512` routines/hockey/PlayoffScreen.asm
 - `$88F9FB` routines/tables/PlayoffTreeSetup.asm
 - `$88FBA6` routines/logic/assdefd.asm
@@ -466,9 +385,9 @@ org `$888000` when `pc()` is below it.
 
 org `$898000` when `pc()` is below it.
 
-- `$898000` SpriteSet11 (data)
+- `$898000` data/gfx/SpriteSet11.asm (also SpriteSet11End)
 - `$8990F0` routines/hockey/ReplayMode.asm
-- `$899383` SpriteSet13 (data)
+- `$899383` data/gfx/SpriteSet13.asm (also SpriteSet13End)
 - `$89E95D` routines/penalty/printscores1.asm
 - `$89EAB1` routines/penalty/PrintPerLabel.asm
 - `$89EAD7` routines/penalty/PrintTeamNameAndScore.asm
@@ -496,9 +415,9 @@ org `$898000` when `pc()` is below it.
 
 org `$8A8000` when `pc()` is below it.
 
-- `$8A8000` SpriteSet12 (data)
+- `$8A8000` data/gfx/SpriteSet12.asm (also SpriteSet12End)
 - `$8AF880` PlayoffBracketMap (data)
-- `$8AFAA8` Credits (data)
+- `$8AFAA8` data/text/Credits.asm
 - `$8AFD0C` routines/logic/lineinput.asm
 - `$8AFD6D` routines/logic/getlchoice.asm
 - `$8AFE21` routines/penalty/SetScore.asm (also unusedFF8A)
@@ -513,7 +432,7 @@ org `$8B8000` when `pc()` is below it.
 - `$8B8172` routines/hockey/Opening4.asm
 - `$8B817A` routines/hockey/ReadPassBits.asm
 - `$8B8253` routines/hockey/ResolveGames.asm
-- `$8B83EE` SpriteSet5 (data)
+- `$8B83EE` data/gfx/SpriteSet5.asm (also SpriteSet5End)
 - `$8BFCCE` routines/print/printbig.asm
 - `$8BFE47` routines/logic/asswingo.asm
 - `$8BFFCC` routines/video/showref.asm
@@ -524,7 +443,7 @@ org `$8B8000` when `pc()` is below it.
 org `$8C8000` when `pc()` is below it.
 
 - `$8C8000` NHLPALogo (data)
-- `$8C845A` SpriteSet0 (data)
+- `$8C845A` data/gfx/SpriteSet0.asm (also SpriteSet0End)
 - `$8CFC1A` routines/video/checksso.asm
 - `$8CFD83` routines/logic/chk4pass.asm (also unusedFF8C)
 
@@ -548,7 +467,7 @@ org `$8D8000` when `pc()` is below it.
 - `$8D871C` routines/middle/mulu16.asm
 - `$8D87B0` routines/logic/puckshadow.asm
 - `$8D87FB` routines/hockey/setd0player.asm
-- `$8D883C` SpriteSet10 (data)
+- `$8D883C` data/gfx/SpriteSet10.asm (also SpriteSet10End)
 - `$8DEEC8` BigFontTiles (data)
 - `$8DF888` routines/penalty/StartHL2.asm
 - `$8DFCC7` routines/logic/asspenalty.asm
@@ -562,8 +481,8 @@ org `$8E8000` when `pc()` is below it.
 - `$8E8000` routines/hockey/Gameloop.asm
 - `$8E8182` routines/hockey/FormatPlayerNumInitial.asm
 - `$8E826B` routines/logic/assbench.asm
-- `$8E83EB` SpriteSet3 (data)
-- `$8ED9A7` SpriteSet14 (data)
+- `$8E83EB` data/gfx/SpriteSet3.asm (also SpriteSet3End)
+- `$8ED9A7` data/gfx/SpriteSet14.asm (also SpriteSet14End)
 - `$8EFE73` routines/logic/assdefo.asm (also unused008E)
 
 ## src/banks/b8F_frontend.asm
@@ -573,9 +492,9 @@ org `$8F8000` when `pc()` is below it.
 - `$8F8000` BigFontMap (data)
 - `$8F8130` routines/video/unusedEnergyBar.asm
 - `$8F8213` routines/tables/linelist.asm
-- `$8F8236` PerLabels (data)
+- `$8F8236` data/text/PerLabels.asm
 - `$8F824D` EASNLogoMap (data)
-- `$8F8269` BigFontIndex (data)
+- `$8F8269` data/gfx/BigFontIndex.asm
 - `$8F82A4` routines/video/showclock.asm
 - `$8F833F` routines/logic/asseben.asm
 - `$8F83A7` routines/penalty/PushRef.asm
@@ -595,7 +514,7 @@ org `$8F8000` when `pc()` is below it.
 - `$8F8861` routines/penalty/NewTicker2.asm
 - `$8F887A` routines/penalty/NewTicker3.asm
 - `$8F8960` routines/penalty/PrintGameInfo.asm
-- `$8F89A3` GameLabels (data)
+- `$8F89A3` data/text/GameLabels.asm
 - `$8F8ABC` routines/video/showzam.asm
 - `$8F8AE9` routines/middle/waitxsr.asm
 - `$8F8B11` routines/hockey/clockcont.asm
@@ -615,7 +534,7 @@ org `$8F8000` when `pc()` is below it.
 - `$8F901A` routines/middle/jdtab8F.asm
 - `$8F902A` routines/penalty/InitScores.asm
 - `$8F9073` routines/hockey/ResetPassWord.asm
-- `$8F9085` SpriteSet1 (data)
+- `$8F9085` data/gfx/SpriteSet1.asm (also SpriteSet1End)
 - `$8FD4F9` routines/logic/fightinput.asm
 - `$8FD5BF` routines/hockey/holdcheck.asm
 - `$8FD68C` routines/penalty/Fprint_list.asm
@@ -623,9 +542,9 @@ org `$8F8000` when `pc()` is below it.
 - `$8FD75A` routines/logic/assnothing.asm
 - `$8FD76B` routines/logic/GetGoalieCount.asm
 - `$8FD793` routines/penalty/AdvanceStringPtr.asm
-- `$8FD7A1` PAttribColumns (data)
-- `$8FD8E6` GAttribColumns (data)
-- `$8FD9CC` PlayerPositionText (data)
+- `$8FD7A1` data/text/PAttribColumns.asm
+- `$8FD8E6` data/text/GAttribColumns.asm
+- `$8FD9CC` data/text/PlayerPositionText.asm
 - `$8FD9DF` routines/penalty/releasepl.asm
 - `$8FDA75` routines/hockey/InitScoutingDisplay.asm
 - `$8FDA8F` routines/logic/assstanley.asm
@@ -638,12 +557,12 @@ org `$8F8000` when `pc()` is below it.
 - `$8FDBF9` routines/penalty/loadTeamStruct.asm
 - `$8FDC0D` routines/hockey/ScoutingReport.asm
 - `$8FDED2` routines/hockey/PrintScoutRatings.asm
-- `$8FDF66` ScoutLabels (data)
+- `$8FDF66` data/text/ScoutLabels.asm
 - `$8FDFE2` routines/hockey/PuckcSpots.asm
 - `$8FE00A` routines/penalty/SetupTeamForIntermission.asm
 - `$8FE04C` routines/video/ClearSprites.asm
 - `$8FE0E4` routines/video/remap.asm
-- `$8FE154` PixelRemap8F (data)
+- `$8FE154` data/gfx/PixelRemap8F.asm
 - `$8FE164` routines/logic/playeracc.asm
 - `$8FE2D9` routines/logic/dirtab8F.asm
 - `$8FE2F9` routines/penalty/ClearPenaltyBuffer.asm
@@ -654,19 +573,19 @@ org `$8F8000` when `pc()` is below it.
 - `$8FE404` routines/middle/forceblack.asm
 - `$8FE43C` routines/logic/passmode.asm
 - `$8FE458` routines/logic/dopass.asm
-- `$8FE67D` FrameSetTable (data)
+- `$8FE67D` data/gfx/FrameSetTable.asm
 - `$8FE6BD` routines/logic/CompLine.asm
 - `$8FE825` routines/stats/TeamRosterScreen.asm
 - `$8FEBE0` routines/stats/RosterGoalies.asm
 - `$8FEBE4` routines/stats/RosterG.asm
-- `$8FEBF0` RosterLineNames (data)
+- `$8FEBF0` data/text/RosterLineNames.asm
 - `$8FEC68` routines/video/addframe.asm
 - `$8FECAB` routines/hockey/Pmenu.asm
 - `$8FEE4A` routines/hockey/seta2.asm
 - `$8FEE6B` routines/hockey/setpde.asm
 - `$8FEE83` routines/hockey/setoptions.asm
-- `$8FF4B8` PixelRemapFramer (data)
-- `$8FF4C8` PixelRemapFont (data)
+- `$8FF4B8` data/gfx/PixelRemapFramer.asm
+- `$8FF4C8` data/gfx/PixelRemapFont.asm
 - `$8FF4D8` routines/middle/UnpackNibbles.asm
 - `$8FF54E` routines/print/PushNumberWidth.asm
 - `$8FF58D` routines/penalty/SetHor_rink.asm
@@ -688,8 +607,7 @@ org `$8F8000` when `pc()` is below it.
 - `$8FFE7B` routines/sound/MusicCue.asm
 - `$8FFE8E` routines/sound/sfx8F.asm
 - `$8FFEB4` routines/hockey/ShowGoalBox.asm
-- `$8FFFDC` GoalBoxText (data)
-- `$8FFFFB` unusedFF8F (data)
+- `$8FFFDC` data/text/GoalBoxText.asm (also unusedFF8F)
 
 ## src/banks/b90_expanded.asm
 

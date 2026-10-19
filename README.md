@@ -20,7 +20,7 @@ The SNES port is a hybrid: it began as a port of NHL92 Genesis (likely while NHL
 
 ## Layout
 
-- `src/nhlpa93snes.asm` top level: includes the 16 bank files `src/banks/bXX_<name>.asm` in order. Each bank file has one `org` and includes its files in exact ROM order: routines in `src/routines/<93G module>/<Routine>.asm` (one per file), graphics, text and sound data blocks in the bank file itself, the team and frame data in `src/data/teamdata93s.asm` and `src/data/frames93s.asm`, the header and vectors in `src/header/snes_header.asm`. `docs/file-map.md` lists every file per bank.
+- `src/nhlpa93snes.asm` top level: includes the 16 bank files `src/banks/bXX_<name>.asm` in order. Each bank file has one `org` and includes its files in exact ROM order: routines in `src/routines/<93G module>/<Routine>.asm` (one per file), pure `incbin` data blocks in the bank file itself, other data (strings, tables, the team and frame data) in `src/data/<category>/<Name>.asm`, the header and vectors in `src/header/snes_header.asm`. `docs/file-map.md` lists every file per bank.
 - `src/ram93s.asm` hardware registers, RAM names and constants (as 93G ram93.asm), `src/macros/snes93.mac` macros.
 - `docs/history/symbol_map.csv` the address table (quick-pass names `CODE_xxxxxx` of the named routines), `docs/history/name_map.csv` the rename log (old,new,source), `docs/history/segment_notes.md` the notes of the old ~4 KB slices.
 - `tools/split_routines.py` the tool that split the old module files into this layout; `tools/gen_file_map.py` regenerates `docs/file-map.md`.
