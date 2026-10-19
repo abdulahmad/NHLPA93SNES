@@ -13,7 +13,7 @@ of the same names, so the SNES files get their own extensions, except the team p
 | `.chr.pak` | Packed SNES 4bpp tiles | `IceRink`, `SmallFont`, `BigFont`, `FaceOff`, `Ref`, `RefHor`, `PlayoffTiles` (palette first), `TeamBlocks`, `RinkLogoTiles` |
 | `.chr` | SNES 4bpp planar tiles, 32 bytes per 8x8 tile, not packed | `Sprites/setNN.chr`, `Framer` |
 | `.pieces` | Sprite frame pieces (see Sprites below) | `Sprites/setNN.pieces` |
-| `.snesmap` | SNES BG map words, not packed: vflip 15, hflip 14, priority 13, palette 12-10, tile 9-0 | `IceRink` (48 x 85), `IceRinkHor`, `Refs` (7 ref frames of 8 x 7), `RefsHor` (17 frames) |
+| `.snesmap` | SNES BG map words, not packed: vflip 15, hflip 14, priority 13, palette 12-10, tile 9-0 | `IceRink` (48 x 85), `IceRinkHor`, `Refs` (7 ref frames of 8 x 7), `RefsHor` (17 frames), `BigFont` (76 + 76 words), `SmallFont` (128 words), `TeamBlocks` (9 x 2 per team), `Arrows` (23 x 12, `PlayoffBracketMap`), `FaceOff` (12 x 10), `Framer` (3 x 3 pieces), `EASN` (7 x 2, the small logo) |
 | `.pal` | Team palette, 16 colours per row, 93G colour words `0000 BBBB GGGG RRRR`, high byte first (same bytes as the 93G `.pal` files), which `SetTeamColors` ($80B706) converts to BGR555 | `Pals/<team>h`, `Pals/<team>v` |
 | `.snespal` | Palette of SNES BGR555 words | `Pals/Rink` |
 | `.brr` | SPC700 BRR sound samples (the sample block of an SPC upload stream) | `bootsamples`, `gamesamples` |
