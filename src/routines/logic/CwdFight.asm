@@ -1,19 +1,19 @@
 CwdFight:							;The crowd reacts to a punch; the hit player X is pushed back by the
 									;puncher's strength
-	ldy.b a0
-	lda.b crowdlevel
+	ldy.b a0						; puncher
+	lda.b crowdlevel				; crowd noise
 	clc
 	adc.w #$0050					; +80
 	sta.b crowdlevel
 	lda.w #$0005					; (5 + puncher strength) * 500
-	clc
+	clc								; puncher strength
 	adc.w temp3,y
 	sta.b mulb
-	lda.w #$01F4
+	lda.w #$01F4					; 500
 	sta.b mula
 	jsl.l mulu16					; mulu, mulres = mula*mulb
-	sta.b d0
-	lda.w facedir,x
+	sta.b d0						; d0 = push
+	lda.w facedir,x					; facing
 	cmp.w #$0002					; push the other way when facing right
 	bne .xveladj
 	lda.b d0
@@ -21,8 +21,8 @@ CwdFight:							;The crowd reacts to a punch; the hit player X is pushed back by
 	inc a
 	sta.b d0
 .xveladj:
-	lda.w Xvel,x
+	lda.w Xvel,x					; speed of X
 	clc
 	adc.b d0
-	sta.w Xvel,x
+	sta.w Xvel,x					; pushed
 	rtl
