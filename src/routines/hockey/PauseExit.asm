@@ -1,31 +1,31 @@
 PauseExit:							;Restore the screen and leave pause mode
-	stz.w cuetimer
-	stz.w crowdvol
-	jsl.l forceblack
-	phx
-	ldx.w #$07FE
+	stz.w cuetimer					; cue off
+	stz.w crowdvol					; crowd off
+	jsl.l forceblack				; blank the screen
+	phx								; keep X
+	ldx.w #$07FE					; 2KB
 .restoretext:
-	lda.l textsave,x
-	sta.l textmap,x
+	lda.l textsave,x				; saved text
+	sta.l textmap,x					; back to the text map
 	dex
 	dex
 	bpl .restoretext
-	plx
-	stz.b textdirtylo
-	lda.w #$03FF
+	plx								; restore X
+	stz.b textdirtylo				; all dirty
+	lda.w #$03FF					; 1023 words
 	sta.b textdirtyhi
-	pla
+	pla								; flags from the stack
 	sta.w sflags
-	pla
+	pla								; horizontal mode
 	sta.w sfhormode
-	bne .hor
-	jsl.l ClrHor
+	bne .hor						; vertical: redo it
+	jsl.l ClrHor					; clear horizontal
 .hor:
-	lda.w #$0001
-	trb.w sflags
-	jsl.l printscores1
-	jsl.l setvideo
-	lda.b vcount
-	sta.w lastframevc
-	sta.w oldvcount
+	lda.w #$0001					; first flag bit
+	trb.w sflags					; clear it
+	jsl.l printscores1				; redraw the scores
+	jsl.l setvideo					; update the video
+	lda.b vcount					; frame counter
+	sta.w lastframevc				; last frame
+	sta.w oldvcount					; old counter
 	rtl

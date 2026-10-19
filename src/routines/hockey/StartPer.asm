@@ -1,8 +1,8 @@
 StartPer:							;Start a period: reset the rink and clock, face off at center ice, then
 									;the game loop
 	lda.w #$1FFF					; reset the stack
-	tcs
-	jsl.l ReadJoy1
+	tcs								; stack
+	jsl.l ReadJoy1					; read the pads
 	jsl.l ReadJoy2
 	jsl.l ReadJoy1
 	jsl.l ReadJoy2
@@ -10,28 +10,28 @@ StartPer:							;Start a period: reset the rink and clock, face off at center ic
 	jsl.l ReadJoy2
 	jsl.l ReadJoy1
 	jsl.l ReadJoy2
-	stz.b a2
-	jsl.l reenergizeteam
-	lda.w #$0002
+	stz.b a2						; team 0
+	jsl.l reenergizeteam			; full energy
+	lda.w #$0002					; team 1
 	sta.b a2
-	jsl.l reenergizeteam
-	jsl.l sndqreset
+	jsl.l reenergizeteam			; full energy
+	jsl.l sndqreset					; reset the sound queue
 	stz.b sprclock					; sprite VRAM slots
-	jsl.l setupice
-	jsl.l ResetClock
-	lda.w #$F000
-	tsb.w PadControlBits
+	jsl.l setupice					; set up the ice
+	jsl.l ResetClock				; period length
+	lda.w #$F000					; pad bits
+	tsb.w PadControlBits			; set them
 	lda.w #$FFFF					; no controlled players
 	sta.w c1playernum
 	sta.w c2playernum
 	sta.w lcplayer
 	ldx.w #puckobj					; puck: puckfaceoff at centre ice
 	stx.b a3
-	stz.w fox
-	stz.w foy
+	stz.w fox						; face off x = 0
+	stz.w foy						; face off y = 0
 	lda.w #$1B
 	sta.b d0
-	jsl.l assreplace
+	jsl.l assreplace				; set the assignment
 	lda.w gsp						; third period: p3cue = random time
 	cmp.w #$0002
 	bne .p3

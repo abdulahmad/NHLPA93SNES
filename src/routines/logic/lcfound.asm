@@ -1,24 +1,24 @@
 lcfound:							;Change team a2 to the chosen line
-	ldx.b a3
-	ldy.b a2
-	lda.b d2
+	ldx.b a3						; player
+	ldy.b a2						; team
+	lda.b d2						; chosen line
 	sta.b d0
-	sta.w tmlcchoice,y
-	jsl.l getlchoice
+	sta.w tmlcchoice,y				; remember the choice
+	jsl.l getlchoice				; find the line
 	lda.b d0
-	bmi .rtl
+	bmi .rtl						; none found: leave
 	lda.w pflags,x
-	and.w #~pf2lcm&$FFFF
-	ora.w #pfjoycon
+	and.w #~pf2lcm&$FFFF			; no longer in line change mode
+	ora.w #pfjoycon					; human controlled
 	sta.w pflags,x
-	jsl.l loadTeamStruct
+	jsl.l loadTeamStruct			; team structure
 	ldy.b a2
 	lda.w tmflags,y
-	and.w #~tmflcm&$FFFF
+	and.w #~tmflcm&$FFFF			; team out of line change mode
 	sta.w tmflags,y
 	lda.b d0
-	sta.w tmline,y
-	jsl.l setpersonel
-	jml.l lcfound2
+	sta.w tmline,y					; new line
+	jsl.l setpersonel				; new personnel
+	jml.l lcfound2					; redraw
 .rtl:
 	rtl

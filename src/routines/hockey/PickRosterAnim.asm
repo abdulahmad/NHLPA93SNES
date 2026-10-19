@@ -1,41 +1,41 @@
 PickRosterAnim:						;Pick the roster animation of a player's best qualifying rating
-	lda.b [a1]
+	lda.b [a1]						; minimum
 	and.w #$00FF
-	sta.b tmp0
+	sta.b tmp0						; tmp0
 	inc.b a1
-	lda.b [a1]
+	lda.b [a1]						; animation number
 	and.w #$00FF
-	sta.b tmp1
+	sta.b tmp1						; tmp1
 	inc.b a1
-	lda.b d1
+	lda.b d1						; best so far
 	sec
-	sbc.b tmp0
-	bmi .neg
+	sbc.b tmp0						; minus the minimum
+	bmi .neg						; below it
 	bvc .best
 .ex1:
-	jmp.w SlideOutRosterPlayer_rtl
+	jmp.w SlideOutRosterPlayer_rtl	; not eligible
 .neg:
 	bvc .ex1
 .best:
-	lda.b d1
+	lda.b d1						; best so far
 	sec
-	sbc.b d2
-	bmi .neg1
+	sbc.b d2						; minus the previous best
+	bmi .neg1						; worse
 	bvc .z
 .ex2:
-	jmp.w SlideOutRosterPlayer_rtl
+	jmp.w SlideOutRosterPlayer_rtl	; not eligible
 .neg1:
 	bvc .ex2
 .z:
-	lda.b d2
-	beq .take
+	lda.b d2						; previous best
+	beq .take						; none
 	lda.b tmp0
-	bne .take
-	jmp.w SlideOutRosterPlayer_rtl
+	bne .take						; minimum zero
+	jmp.w SlideOutRosterPlayer_rtl	; skip it
 .take:
-	lda.b d1
+	lda.b d1						; take it
 	sta.b d2
-	ldy.b a2
+	ldy.b a2						; team
 	lda.b tmp1
-	sta.w tmPenmin,y
+	sta.w tmPenmin,y				; store the animation
 	rtl

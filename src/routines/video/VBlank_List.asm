@@ -1,24 +1,24 @@
 VBlank_List:						;Vblank: run the transfer list once, then go back to vb2
-	sep #$20
-	lda.b #INIDISP_FBLANK
+	sep #$20						; 8-bit A
+	lda.b #INIDISP_FBLANK			; forced blank
 	sta.w INIDISP
-	ldx.b DMAlistend
-	bra .next
+	ldx.b DMAlistend				; last entry
+	bra .next						; go
 .dmaloop:
-	ldy.w DMAList+dmavram,x
+	ldy.w DMAList+dmavram,x			; video address
 	sty.w VMADDL
-	ldy.w DMAList+dmalen,x
+	ldy.w DMAList+dmalen,x			; length
 	sty.w DAS7L
-	ldy.w #DMA_VRAMWORD
+	ldy.w #DMA_VRAMWORD				; word mode
 	sty.w DMAP7
-	ldy.w DMAList+dmasrc,x
+	ldy.w DMAList+dmasrc,x			; source
 	sty.w A1T7L
-	lda.w DMAList+dmabank,x
+	lda.w DMAList+dmabank,x			; bank
 	sta.w A1B7
-	lda.b #MDMAEN_CH7
+	lda.b #MDMAEN_CH7				; go
 	sta.w MDMAEN
 .next:
-	dex
+	dex								; next entry (7 bytes)
 	dex
 	dex
 	dex
@@ -26,8 +26,8 @@ VBlank_List:						;Vblank: run the transfer list once, then go back to vb2
 	dex
 	dex
 	bpl .dmaloop
-	rep #$30
-	stz.b DMAlistend
-	lda.w #vb2
+	rep #$30						; 16-bit
+	stz.b DMAlistend				; list empty
+	lda.w #vb2						; back to the palette fade handler
 	sta.b vbint
-	jmp.w vb2
+	jmp.w vb2						; finish the vblank

@@ -1,45 +1,45 @@
 divs16:								;Signed 16-bit divide: A = mulb / mula
-	stz.b mulsign
-	lda.b mula
-	bpl .mulapos
-	eor.w #$FFFF
+	stz.b mulsign					; sign count
+	lda.b mula						; divisor
+	bpl .mulapos					; positive
+	eor.w #$FFFF					; negate it
 	inc a
-	inc.b mulsign
+	inc.b mulsign					; one negative
 .mulapos:
-	sta.b mula+2
-	stz.b mula
-	lda.w #$0010
+	sta.b mula+2					; divisor to the high word
+	stz.b mula						; low word 0
+	lda.w #$0010					; 16 bits
 	sta.b mulcnt
-	lda.b mulb
-	bpl .loop
-	eor.w #$FFFF
+	lda.b mulb						; dividend
+	bpl .loop						; positive
+	eor.w #$FFFF					; negate it
 	inc a
-	sta.b mulb
-	inc.b mulsign
+	sta.b mulb						; dividend
+	inc.b mulsign					; one negative
 .loop:
-	lsr.b mula+2
+	lsr.b mula+2					; shift the divisor right
 	ror.b mula
-	asl.b mulres
-	lda.b mulb
+	asl.b mulres					; shift the quotient
+	lda.b mulb						; dividend
 	cmp.b mula
 	lda.w #$0000
 	sbc.b mula+2
-	bcc .next
-	lda.b mulb
+	bcc .next						; too small: quotient bit 0
+	lda.b mulb						; subtract
 	sbc.b mula
 	sta.b mulb
-	inc.b mulres
+	inc.b mulres					; set the quotient bit
 .next:
-	dec.b mulcnt
+	dec.b mulcnt					; next bit
 	bne .loop
-	lsr.b mulsign
-	bcc .pos
-	lda.w #$0000
+	lsr.b mulsign					; odd count?
+	bcc .pos						; no: keep
+	lda.w #$0000					; negate
 	sbc.b mulres
 	sta.b mulres
 .pos:
-	lda.b mulres
+	lda.b mulres					; quotient
 	sta.b mula
 	sta.b mulb
-	clc
+	clc								; clear carry
 	rtl

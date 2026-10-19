@@ -1,24 +1,24 @@
 reenergizeteam:						;Give every player of team a2 full energy, and move players who were sent
 									;out to the bench
-	lda.w #$0032
+	lda.w #$0032					; last player
 	sta.b d0
 .top:
-	lda.b a2
+	lda.b a2						; team
 	beq .tm
-	lda.w #$0034
+	lda.w #$0034					; away team offset $34
 .tm:
 	clc
 	adc.b d0
-	tay
+	tay								; index
 	lda.w #$1000					; max energy
-	sta.w tmpde,y
+	sta.w tmpde,y					; full
 	lda.w tmpdst,y					; out: back to the bench
-	cmp.w #TMPDOUT
+	cmp.w #TMPDOUT					; out of play?
 	bne .nb
-	lda.w #TMPDBENCH
+	lda.w #TMPDBENCH				; back to the bench
 	sta.w tmpdst,y
 .nb:
-	dec.b d0
+	dec.b d0						; previous player
 	dec.b d0
 	bpl .top
 	rtl

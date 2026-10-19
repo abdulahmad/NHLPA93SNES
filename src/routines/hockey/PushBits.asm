@@ -1,6 +1,6 @@
 PushBits:							;password bits = password bits * d1 + d0
 	stx.b xsave
-	ldx.w #$0000
+	ldx.w #$0000					; save d0 through d3
 .save:
 	lda.b d0,x
 	pha
@@ -14,13 +14,13 @@ PushBits:							;password bits = password bits * d1 + d0
 	sta.b d1
 	stx.b d0
 	jsl.l SuperMult					; passbits *= d0
-	stz.b d0+2
-	lda.b d1
+	stz.b d0+2						; d0 high word 0
+	lda.b d1						; old d0
 	sta.b d0
 	jsl.l SuperAdd					; passbits += d0
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0006
-.restore:
+.restore:							; pull d0-d3 back
 	pla
 	sta.b d0,x
 	dex

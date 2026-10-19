@@ -1,60 +1,60 @@
 NewPO:								;Start new playoffs with the same team 1 and build the tree
 	lda.w #32						; d0 = random 0-31
 	sta.b d0
-	jsl.l randomd0
+	jsl.l randomd0					; random seat
 .top:
-	lda.b d0
+	lda.b d0						; next seat
 	inc a
-	and.w #$001F
+	and.w #$001F					; 0-31
 	sta.b d0
-	asl a
+	asl a							; times 16
 	asl a
 	asl a
 	asl a
 	adc.w #playoffseats				; a0 = playoffseats + 16 * d0
-	sta.b a0
+	sta.b a0						; bank
 	lda.w #playoffseats>>16
 	sta.b a0+2
-	lda.w #15
-	sta.b d1
-	lda.w OptTeam1
-	sta.b d2
+	lda.w #15						; 16 teams
+	sta.b d1						; d1 = 15
+	lda.w OptTeam1					; team 1
+	sta.b d2						; team
 	cmp.w #24						; all-star teams (24+): team 23
 	bcc .loop
 	lda.w #23
 	sta.b d2
 .loop:
-	lda.b [a0]
-	inc.b a0
-	and.w #$00FF
-	cmp.b d2
-	beq .found
-	dec.b d1
-	bpl .loop
-	bra .top
+	lda.b [a0]						; seat team
+	inc.b a0						; next seat
+	and.w #$00FF					; byte
+	cmp.b d2						; our team
+	beq .found						; found
+	dec.b d1						; next
+	bpl .loop						; more
+	bra .top						; not in the seat: next seat
 .found:
 	lda.b d1						; potreeteam = slot of OptTeam1
-	eor.w #$000F
-	sta.b d1
-	sta.w potreeteam
+	eor.w #$000F					; slot
+	sta.b d1						; reverse
+	sta.w potreeteam				; playoff tree team
 	lda.b d0
-	sta.w postarts
-	stz.w gamelevel
+	sta.w postarts					; seat
+	stz.w gamelevel					; first round
 	lda.w #7						; bosgames 7: single games (OptPlayMode 2)
 	sta.b bosgames
-	lda.w OptPlayMode
-	cmp.w #2
-	beq .tree
+	lda.w OptPlayMode				; play mode
+	cmp.w #2						; single games
+	beq .tree						; yes
 	stz.b bosgames					; best of seven: clear the series
-	lda.w #7
+	lda.w #7						; 8 series
 	sta.b d0
-	ldx.w #$0000
+	ldx.w #$0000					; X = 0
 .cg:
-	stz.w gspotwins,x
-	stz.w gspobwins,x
+	stz.w gspotwins,x				; home wins
+	stz.w gspobwins,x				; visitor wins
+	inx								; next series
 	inx
-	inx
-	dec.b d0
+	dec.b d0						; count down
 	bpl .cg
 .tree:
-	jml.l maketree
+	jml.l maketree					; build the tree

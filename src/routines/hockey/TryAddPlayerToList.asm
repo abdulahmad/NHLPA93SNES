@@ -1,50 +1,50 @@
 TryAddPlayerToList:					;Add roster player d0 to slot d4 of the list of players wanted on the ice,
 									;if he is available
-	lda.b d0
-	sta.b d1
-	dec.b d0
-	asl.b d0
-	lda.b a2
+	lda.b d0						; roster player
+	sta.b d1						; keep the number in d1
+	dec.b d0						; zero-based
+	asl.b d0						; word offset
+	lda.b a2						; team
 	beq .idx
-	lda.w #$0034
+	lda.w #$0034					; away team offset $34
 .idx:
 	adc.b d0
-	tay
-	lda.w tmpdst,y
+	tay								; index
+	lda.w tmpdst,y					; state
 	sec
 	sbc.w #$0000
-	beq .chk
+	beq .chk						; on the ice or bench
 	bmi .neg
 	bvs .chk
 	bra .no
 .neg:
 	bvs .no
 .chk:
-	lda.w tmpdst,y
+	lda.w tmpdst,y					; state
 	cmp.w #TMPDOUT					; TMPDOUT: not available
 	beq .no
-	lda.w #$0005
+	lda.w #$0005					; six list entries
 	sta.b d0
 .s2:
-	ldy.b d0
-	lda.b [a4],y
+	ldy.b d0						; entry
+	lda.b [a4],y					; list byte
 	and.w #$00FF
 	sta.b tmp0
 	lda.b d1
 	and.w #$00FF
-	cmp.b tmp0
+	cmp.b tmp0						; same player
 	beq .no							; already in PlList
-	dec.b d0
+	dec.b d0						; next entry
 	bpl .s2
-	ldy.b d4
+	ldy.b d4						; slot d4
 	sep #$20
-	lda.b d1
-	sta.b [a4],y
+	lda.b d1						; the player
+	sta.b [a4],y					; store him
 	rep #$20
 	lda.b d1
-	and.w #$00FF
+	and.w #$00FF					; number as the result
 	rtl
 .no:
-	lda.w #$0000
-	sta.b d1
+	lda.w #$0000					; not added
+	sta.b d1						; d1 = 0
 	rtl

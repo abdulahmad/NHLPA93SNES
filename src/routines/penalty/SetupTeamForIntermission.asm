@@ -1,31 +1,31 @@
 SetupTeamForIntermission:			;Before a period: reset the bench, refill every player's energy and pick
 									;each team's starting line
 		;   (power play or penalty kill line when a team is a man up or short)
-	jsl.l ResetBench
-	stz.b a2
-	lda.w #$0002
+	jsl.l ResetBench				; bench reset
+	stz.b a2						; team 0
+	lda.w #$0002					; other team 1
 	sta.b a3
 	jsl.l .team
-	stz.b a3
-	lda.w #$0002
+	stz.b a3						; swap them
+	lda.w #$0002					; other team
 	sta.b a2
 .team:								;team a2 (a3 = the other)
-	jsl.l reenergizeteam
-	ldx.b a3
-	ldy.b a2
-	stz.w tmline,x
-	lda.w OptLine
-	bne .rtl
-	lda.w tmap,x
+	jsl.l reenergizeteam			; full energy
+	ldx.b a3						; other team
+	ldy.b a2						; this team
+	stz.w tmline,x					; line 0
+	lda.w OptLine					; line changes
+	bne .rtl						; off: line 0
+	lda.w tmap,x					; difference in players on the ice
 	sec
 	sbc.w tmap,y
-	sta.b d0
-	beq .rtl
-	lda.w #$0003
+	sta.b d0						; equal
+	beq .rtl						; equal: line 0
+	lda.w #$0003					; power play line
 	sta.w tmline,x
-	lda.b d0
-	bpl .rtl
-	lda.w #$0005
+	lda.b d0						; sign
+	bpl .rtl						; ahead
+	lda.w #$0005					; penalty kill line
 	sta.w tmline,x
 .rtl:
 	rtl
