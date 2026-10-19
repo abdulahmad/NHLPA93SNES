@@ -46,7 +46,7 @@ A comment-only or rename-only change must not change a single byte. Never commit
 
 - Every symbol that is defined has a comment on its line: labels (also local ones), equates and RAM
   variables. A routine's label line says what it does, what it takes and returns, and where it is called from.
-- Every file starts with a header that says what is in the file. It does not list the routines in order.
+- Every file starts with a header that says what is in the file. It does not list the routines in order. In a routine file (one routine per file) the comment on the label line is the header: it says what the routine does, what it takes and returns, and who calls it; a file with several routines, or a data or equate file, has a header block before the first label.
 - Routines read as a story: a short comment for each step (a block of 3 to 8 instructions), what the
   registers hold, why a branch is taken, where the flow falls through.
 - Anything not obvious gets a comment: magic numbers, bit tests (name the flag), tricks (code patched by
