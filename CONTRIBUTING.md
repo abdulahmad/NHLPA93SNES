@@ -102,3 +102,8 @@ A comment-only or rename-only change must not change a single byte. Never commit
 - Comments start with `;`. Labels end with `:`; a local label is `.name:`. Constants are `Name = $value` in
   the RAM file; the layout rules in section 5 are the same.
 - `incsrc` order is ROM order. A file must not move bytes: check that `build.sh` still says `MATCH`.
+
+## Editor setup (VS Code)
+
+The `.vscode/settings.json` in this repo selects the "NHL 65816 (asar)" language mode for `*.asm`, turns off colour swatches on hex values and colours macro names orange. The mode itself is a small extension that lives in
+[abdulahmad/nhl-disasm-report](https://github.com/abdulahmad/nhl-disasm-report/tree/main/vscode/nhl-asm). Clone that repo and run `vscode\install.cmd` (Windows) or link `vscode/nhl-asm` into `~/.vscode/extensions/` (macOS/Linux), then restart VS Code. Without it the files open as plain Assembly.
