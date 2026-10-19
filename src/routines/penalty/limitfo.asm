@@ -23,7 +23,7 @@ limitfo:							;Keep the face off spot away from the blue line for every called 
 	sta.b a0
 	lda.w #$0000
 	sta.b a0+2
-.loop:
+.loop:								; limit each of the faceoff spots
 	jsl.l .lf
 	inc.b a0
 	inc.b a0
@@ -67,11 +67,11 @@ limitfo:							;Keep the face off spot away from the blue line for every called 
 	bra .rtl
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .rtl
-.ny:
+.ny:								; clamp the faceoff Y at the lower limit
 	lda.w #$FFBF
 	sta.w foy
 	bra .sx
-.0:
+.0:									; limit Y against the bounds
 	lda.b d1
 	sec
 	sbc.w foy
@@ -81,17 +81,17 @@ limitfo:							;Keep the face off spot away from the blue line for every called 
 	bra .rtl
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvs .rtl
-.py:
+.py:								; clamp the faceoff Y at the upper limit
 	lda.w #$0041
 	sta.w foy
-.sx:
+.sx:								; limit X
 	lda.w #$0046
 	sta.b d0
 	lda.w fox
 	bpl .1
 	lda.w #$FFBA
 	sta.b d0
-.1:
+.1:									; store the X limit
 	lda.b d0
 	sta.w fox
 .rtl:								; return

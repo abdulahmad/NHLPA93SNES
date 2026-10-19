@@ -55,9 +55,9 @@ USBoard:							;Update the scoreboard, with the players in the
 	lda.b a2
 	beq .noa2
 	lda.w #$001A
-.noa2:
+.noa2:								; team 1: start of the box list
 	sta.b a0
-.l1:
+.l1:								; print the box list entries
 	ldy.b a0
 	lda.w tmboxlist,y
 	inc.b a0
@@ -68,7 +68,7 @@ USBoard:							;Update the scoreboard, with the players in the
 	lda.b a2
 	beq .noa22
 	lda.w #$0034
-.noa22:
+.noa22:								; index the player
 	clc
 	adc.b d0
 	tay
@@ -77,13 +77,13 @@ USBoard:							;Update the scoreboard, with the players in the
 	bne .l1
 	jsl.l pplpen
 	bra .l1
-.p2:
+.p2:								; team 2 start of the box list
 	lda.b a2
 	beq .noa23
 	lda.w #$001A
 .noa23:
 	sta.b a0
-.l2:
+.l2:								; print the box list entries
 	ldy.b a0
 	lda.w tmboxlist,y
 	inc.b a0
@@ -94,7 +94,7 @@ USBoard:							;Update the scoreboard, with the players in the
 	lda.b a2
 	beq .noa24
 	lda.w #$0034
-.noa24:
+.noa24:								; index the player
 	clc
 	adc.b d0
 	tay

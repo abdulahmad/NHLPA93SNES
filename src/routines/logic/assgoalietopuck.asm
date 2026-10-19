@@ -5,7 +5,7 @@ assgoalietopuck:					;Assignment: the goalie skates out to a loose puck moving t
 	ora.w gmclock
 	beq .ai
 	jml.l assexit					; assignment over
-.ai:
+.ai:								; check for bench change, then handle a new assignment
 	jsl.l check4bench
 	lda.w pflags,x
 	bit.w #pfna
@@ -13,7 +13,7 @@ assgoalietopuck:					;Assignment: the goalie skates out to a loose puck moving t
 	and.w #~pfna&$FFFF
 	sta.w pflags,x
 	stz.w temp1,x
-.nna:
+.nna:								; re-think countdown
 	lda.w temp1,x
 	sec
 	sbc.b d7
@@ -26,7 +26,7 @@ assgoalietopuck:					;Assignment: the goalie skates out to a loose puck moving t
 	adc.w temp1,x
 	bpl .store
 	lda.w #$0000
-.store:
+.store:								; store the countdown
 	sta.w temp1,x
 	lda.w puckc						; carried puck: assexit
 	bmi .loose
@@ -40,7 +40,7 @@ assgoalietopuck:					;Assignment: the goalie skates out to a loose puck moving t
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b tmp0
-.dir:
+.dir:								; puck direction check
 	lda.b tmp0
 	bpl .near
 	jml.l assexit					; assignment over
@@ -53,7 +53,7 @@ assgoalietopuck:					;Assignment: the goalie skates out to a loose puck moving t
 	stz.b a2
 	lda.w #$0002
 	sta.b a1
-.t0:
+.t0:								; own team stats threshold
 	ldy.b a1
 	lda.w tmnear,y
 	cmp.w #$0E10
@@ -61,7 +61,7 @@ assgoalietopuck:					;Assignment: the goalie skates out to a loose puck moving t
 	sbc.w #$0000
 	bcs .other
 	jml.l assexit					; assignment over
-.other:
+.other:								; other team stats threshold
 	ldy.b a2
 	lda.w tmnear,y
 	cmp.w #$0640

@@ -6,7 +6,7 @@ findpc_calc:						;findpc for one goal line
 	lda.w puckvy
 	bne .div
 	jmp.w .nocross
-.div:
+.div:								; divide the puck Y distance by the velocity
 	sta.b mula
 	lda.b d0						; mulb = d0 << 12
 	stz.b mulb
@@ -21,7 +21,7 @@ findpc_calc:						;findpc for one goal line
 	bit.w #$0800
 	beq .hi
 	ora.w #$F000
-.hi:
+.hi:								; high word of the quotient
 	sta.b mulb+2
 	jsl.l divs						; signed divide
 	bpl .time
@@ -38,14 +38,14 @@ findpc_calc:						;findpc for one goal line
 	beq .vy
 	eor.w #$FFFF					; negate
 	inc a
-.vy:
+.vy:								; puck Y velocity sign
 	sta.b mula
 	lda.b mulres+2
 	bit.w #$8000
 	beq .ov
 	eor.w #$FFFF					; negate
 	inc a
-.ov:
+.ov:								; compare the time against the frames to cross
 	cmp.b mula
 	bcs .nocross
 	lda.w puckvy
@@ -65,7 +65,7 @@ findpc_calc:						;findpc for one goal line
 	sec
 	sbc.b d0
 	sta.b d0
-.o1b:
+.o1b:								; clamp the crossing X to the left limit
 	lda.b d0
 	sec
 	sbc.w #$FF78
@@ -80,11 +80,11 @@ findpc_calc:						;findpc for one goal line
 	sec
 	sbc.b d0
 	sta.b d0
-.o2b:
+.o2b:								; store the crossing X
 	lda.b d0
 	sta.w puckcross,y
 	bra .rtl
-.nocross:
+.nocross:							; no crossing: mark it with -1
 	lda.w #$FFFF
 	sta.w puckcross+2,y
 .rtl:								; return

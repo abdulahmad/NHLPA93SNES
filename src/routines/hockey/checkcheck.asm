@@ -52,11 +52,11 @@ checkcheck:							;Two players are in contact: check what happens each way
 	cmp.w #SPAHold
 	bne .h2
 	jml.l holdcheck
-.h2:
+.h2:								; hook check: hand over to holdcheck
 	cmp.w #SPAhook
 	bne .b
 	jml.l holdcheck
-.b:
+.b:									; sweep check: hand over to Bcheck
 	cmp.w #SPAsweepchk
 	bne .burst
 	jml.l Bcheck
@@ -69,7 +69,7 @@ checkcheck:							;Two players are in contact: check what happens each way
 	lda.w #$0100
 	sta.w impact,x
 	sta.w impact,y
-.nofight:
+.nofight:							; no fight: compare positions
 	lda.w Xpos,y
 	sec
 	sbc.w Xpos,x
@@ -124,7 +124,7 @@ checkcheck:							;Two players are in contact: check what happens each way
 	bit.w #pfjoycon
 	beq .00
 	asl.b d0
-.00:
+.00:								; weight difference
 	lda.b d0
 	sec
 	sbc.w weight,x
@@ -153,12 +153,12 @@ checkcheck:							;Two players are in contact: check what happens each way
 	cmp.w #$0005
 	bcc .nohl
 	jmp.w .rtl
-.nohl:
+.nohl:								; not a highlight: roll
 	lda.w gmode
 	bit.w #gmhl
 	beq .roll
 	jmp.w .rtl
-.roll:
+.roll:								; random roll
 	lda.w seed+1
 	and.w #$0002
 	clc

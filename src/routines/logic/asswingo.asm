@@ -30,12 +30,12 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	sta.w temp1,x
 	bmi .reload						; expired: reevaluate
 	jmp.w .nodec
-.reload:
+.reload:							; new assignment: reload from aidef
 	clc
 	adc.w aidef,x					; reload from aidef
 	bpl .t1
 	lda.w #$0000					; not below zero
-.t1:
+.t1:								; store the re-think timer
 	sta.w temp1,x
 	lda.w #awingd					; awingd
 	sta.b d0
@@ -63,7 +63,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	bit.w #$0200					; sign extend
 	beq .vy
 	ora.w #$FC00
-.vy:
+.vy:								; puck Y with the velocity lead
 	clc
 	adc.b d0						; d3 = puck y plus velocity / 64
 	sta.b d3
@@ -98,7 +98,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	bra .de2
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvc .de2
-.z2:
+.z2:								; check the team offside flag
 	ldy.b a2
 	lda.w tmflags,y
 	bit.w #tmfoside					; offsides: stay back
@@ -115,14 +115,14 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 .z3:
 	lda.w #24						; zone 24: past the goal line
 	sta.b d2
-.de2:
+.de2:								; same zone as last time?
 	lda.b d2
 	cmp.w temp5,x					; same zone as last time?
 	bne .de3
 	lda.w seed						; same zone: new spot only now and then
 	cmp.w #$0200					; random
 	bcs .nodec
-.de3:
+.de3:								; remember the zone
 	lda.b d2
 	sta.w temp5,x					; remember the zone
 	tay
