@@ -3,8 +3,8 @@ PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start 
 		;   A = 0 to leave, 1 to redraw
 	stz.w psitem
 .gj:								; redraw the menu and read the pad
-	jsl.l Pmenu
-	jsl.l PauseReadJoy
+	jsl.l Pmenu						; draw the pause menu
+	jsl.l PauseReadJoy				; read the pad
 	lda.b d1						; Start: leave
 	bit.w #JOYSTART
 	beq .down

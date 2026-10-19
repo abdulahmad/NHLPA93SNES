@@ -96,8 +96,8 @@ Gameloop:							;Main game loop: wait for a frame, run the clock, music and crow
 	adc.w #150
 	sta.w cheervc
 .frame:								; run the game frame and demo
-	jsl.l DoGameFrame
-	jsl.l demoread
+	jsl.l DoGameFrame				; run one frame of game logic
+	jsl.l demoread					; demo handling
 	bra .gh
 .cheat:								;not reached (the bra above skips it): new pad presses L, A, X in a row
 									;set the score of controller 1's team to 9
@@ -146,7 +146,7 @@ Gameloop:							;Main game loop: wait for a frame, run the clock, music and crow
 	stx.b a3
 	lda.w #PenOOP					; penalty 6
 	sta.b d0
-	jsl.l AddPenalty2
+	jsl.l AddPenalty2				; penalty on the goalie
 	lda.w #300						; nopuck 300
 	sta.w nopuck,x
 	lda.w #$FFFF
@@ -163,10 +163,10 @@ Gameloop:							;Main game loop: wait for a frame, run the clock, music and crow
 	and.w #~pf2lcm&$FFFF
 	sta.w pflags,x
 	stz.b a2
-	jsl.l lcfound2
+	jsl.l lcfound2					; line change check, team 1
 	lda.w #$0002
 	sta.b a2
-	jsl.l lcfound2
+	jsl.l lcfound2					; line change check, team 2
 	lda.w #tmflcm					; tmflcm off for both teams
 	trb.w tmflags
 	trb.w tmflags+2
@@ -176,6 +176,6 @@ Gameloop:							;Main game loop: wait for a frame, run the clock, music and crow
 	lda.w sflags
 	bit.w #sfpz
 	beq .loop
-	jsl.l Pausemode
+	jsl.l Pausemode					; pause menu
 .loop:								; far branch to Gameloop
 	jmp.w Gameloop

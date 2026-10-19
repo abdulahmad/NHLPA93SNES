@@ -1,10 +1,10 @@
 setplayer:							;Bring roster player d3 onto the ice as object X and set his stats
-	phx
+	phx								; keep X and Y
 	phy
 	lda.w pflags,x					; clear pf2inj
 	and.w #~pf2inj&$FFFF
 	sta.w pflags,x
-	stz.b a0
+	stz.b a0						; a0 = team offset (0 or 2)
 	lda.w pfteam,x
 	beq .0
 	inc.b a0
@@ -175,7 +175,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	adc.b a0
 	sta.b a0
 .find:								;skip the roster records before player d3
-	lda.b [a0]
+	lda.b [a0]						; record length
 	clc
 	adc.b a0
 	adc.w #$0008
@@ -191,7 +191,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	sta.w rostnum,x
 	ldy.w #$0001					; byte 1: weight (high nibble*8), legstr
 	lda.b [a0],y
-	and.w #$00F0
+	and.w #$00F0					; weight in the high nibble
 	lsr a
 	sta.w weight,x
 	lda.b [a0],y
@@ -203,11 +203,11 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	lsr a
 	lsr a
 	lsr a
-	and.w #$000F
+	and.w #$000F					; leg speed in the high nibble
 	sta.w legspd,x
 	lda.b [a0],y
 	and.w #$000F
-	clc
+	clc								; aioff = nibble plus all bonuses
 	adc.w PPBonus
 	clc
 	adc.w PKBonus
@@ -215,14 +215,14 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	adc.w HmAwBonus
 	clc
 	adc.b ThirdPBonus
-	jsl.l ClampNibble
+	jsl.l ClampNibble				; clamp to 0-15
 	eor.w #$000F					; frames to skip: (15-n+15)/2
 	clc
 	adc.w #$000F
 	lsr a
 	sta.w aioff,x
 	iny								; byte 3: aidef, shotspd
-	lda.b [a0],y
+	lda.b [a0],y					; aidef in the high nibble
 	lsr a
 	lsr a
 	lsr a
@@ -236,14 +236,14 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	adc.w #$000F
 	lsr a
 	sta.w aidef,x
-	lda.b [a0],y
+	lda.b [a0],y					; shot speed in the low nibble
 	and.w #$000F
 	sta.w shotspd,x
 	lda.w attribute,x				; clear the x flip
 	and.w #~attrxflip&$FFFF
 	sta.w attribute,x
 	iny								; byte 4: aggress, handed, fightagg
-	lda.b [a0],y
+	lda.b [a0],y					; aggressiveness in the high nibble
 	lsr a
 	lsr a
 	lsr a
@@ -261,11 +261,11 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	ora.w #attrxflip
 	sta.w attribute,x
 .ha:								; fight aggression from the player data
-	lda.b [a0],y
+	lda.b [a0],y					; fight aggression bits
 	and.w #$000E
 	sta.w fightagg,x
 	iny								; byte 5: stickhand, shotacc
-	lda.b [a0],y
+	lda.b [a0],y					; stick handling high nibble
 	lsr a
 	lsr a
 	lsr a
@@ -279,7 +279,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	adc.w HmAwBonus
 	jsl.l ClampNibble
 	sta.w stickhand,x
-	lda.b [a0],y
+	lda.b [a0],y					; shot accuracy low nibble
 	and.w #$000F
 	clc
 	adc.w PPBonus
@@ -290,14 +290,14 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	jsl.l ClampNibble
 	sta.w shotacc,x
 	iny								; byte 6: endurance, spodds
-	lda.b [a0],y
+	lda.b [a0],y					; endurance high nibble
 	lsr a
 	lsr a
 	lsr a
 	lsr a
 	and.w #$000F
 	sta.w endurance,x
-	lda.b [a0],y
+	lda.b [a0],y					; shot odds low nibble
 	and.w #$000F
 	clc
 	adc.b ThirdPBonus
@@ -306,7 +306,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	jsl.l ClampNibble
 	sta.w spodds,x
 	iny								; byte 7: passacc, GGSleft
-	lda.b [a0],y
+	lda.b [a0],y					; pass accuracy high nibble
 	lsr a
 	lsr a
 	lsr a
@@ -318,9 +318,9 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	adc.w HmAwBonus
 	jsl.l ClampNibble
 	sta.w passacc,x
-	lda.b [a0],y
+	lda.b [a0],y					; goalie games-saved-left low nibble
 	and.w #$000F
 	sta.w GGSleft,x
-	ply
+	ply								; restore Y and X
 	plx
 	rtl

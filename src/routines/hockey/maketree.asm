@@ -36,10 +36,10 @@ maketree:							;Build the playoff tree from the seeds and the series wins, then
 	sta.b a1
 	lda.w #playoffseats>>16
 	sta.b a1+2
-	ldy.w #$000E
+	ldy.w #$000E					; 16 seeds, 8 words
 	sty.b d2
 .first:								;first round: 16 teams from the tree
-	lda.b [a1],y
+	lda.b [a1],y					; copy the seeds into the tree
 	sta.b [a0],y
 	dey
 	dey
@@ -48,7 +48,7 @@ maketree:							;Build the playoff tree from the seeds and the series wins, then
 	sta.b a1
 	lda.b a0+2
 	sta.b a1+2
-	lda.w WinBits
+	lda.w WinBits					; win bits of the series so far
 	sta.b d0
 .0:									;winbit picks the team of each pair
 	lda.b d0
@@ -56,7 +56,7 @@ maketree:							;Build the playoff tree from the seeds and the series wins, then
 	sta.b d1
 	tay
 	sep #$20						; 8-bit A
-	lda.b [a0],y
+	lda.b [a0],y					; copy the winner of the pair
 	sta.b [a1]
 	rep #$20						; 16-bit A
 	inc.b a1
@@ -67,7 +67,7 @@ maketree:							;Build the playoff tree from the seeds and the series wins, then
 	bpl .0
 	jsl.l GetShifter				; d1 = games of this round, d2 = first slot
 	lda.b d1
-	bmi .nogames
+	bmi .nogames					; round has no games
 	lda.b d2
 	asl a
 	adc.w #potree
@@ -88,7 +88,7 @@ maketree:							;Build the playoff tree from the seeds and the series wins, then
 	inc.b a1
 	dec.b d1
 	bpl .2
-	jsl.l FigureJoy
+	jsl.l FigureJoy					; choose the joystick teams
 .nogames:
 	stx.b xsave						; keep X
 	ldx.w #$000E
@@ -130,7 +130,7 @@ maketree:							;Build the playoff tree from the seeds and the series wins, then
 	and.w #$00FF
 	sta.w gst1,x
 	rtl
-.flip:								; flip the team flag
+.flip:								; games 2, 3, 5: teams in tree order
 	lda.w gsflags,x
 	and.w #~gsftf&$FFFF
 	sta.w gsflags,x

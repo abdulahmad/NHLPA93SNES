@@ -30,18 +30,18 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	bne .savea
 	ldx.b xsave						; restore X
 .top:								; walk the penalty buffer from the start
-	lda.w #$0000
+	lda.w #$0000					; walk the penalty buffer from the start
 	sta.b a0+2
 	lda.w #PenBuf
 	sta.b a0
-	lda.b [a0]
+	lda.b [a0]						; empty buffer: leave
 	inc.b a0
 	inc.b a0
 	cmp.w #$0000
 	bne .0
 	jmp.w .exit
 .0:									;find the end of the list
-	lda.b [a0]
+	lda.b [a0]						; scan to the end of the list
 	inc.b a0
 	inc.b a0
 	cmp.w #$0000
@@ -62,19 +62,19 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	asl a
 	sta.b d1
 	tay
-	lda.w position,y
+	lda.w position,y				; player no longer on the ice?
 	bmi .clr
 	jmp.w .ex
 .clr:								; clear the entry
 	lda.w #$0000
 	sta.b [a0]
 	jmp.w .ex
-.Sa:
+.Sa:								; new penalty entry
 	lda.b [a0]						; d2 = penalty minutes; none: no player involved
 	and.w #$00FF
 	sta.b d0
 	tay
-	lda.w #Penaltylist
+	lda.w #Penaltylist				; Penaltylist entry for this penalty
 	sta.b a1
 	lda.w #Penaltylist>>16
 	sta.b a1+2
@@ -82,10 +82,10 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	clc
 	adc.b a1
 	sta.b a1
-	lda.b [a1]
+	lda.b [a1]						; penalty minutes
 	and.w #$00FF
 	sta.b d2
-	bne .min
+	bne .min						; no minutes: no player involved
 	jmp.w .sa2
 .min:
 	stx.b xsave						; keep X
@@ -108,8 +108,8 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	cpx.w #$0010
 	bne .savea2
 	ldx.b xsave						; restore X
-	jsl.l GetPeriodTimeRemaining
-	lda.b [a0]
+	jsl.l GetPeriodTimeRemaining	; period time remaining
+	lda.b [a0]						; player offset of the penalized player
 	xba
 	and.w #$00FF
 	asl a
@@ -137,7 +137,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	adc.b d2
 	sta.w tmPenmin,y
 	lda.w pnum,x					; TempPlOffset = pnum | visitors
-	and.w #$00FF
+	and.w #$00FF					; team and player number in TempPlOffset
 	ora.b d0
 	sta.w TempPlOffset
 	and.w #$00FF
@@ -171,7 +171,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	sta.w tmpdst,y
 	lda.w #TMPDINJ
 	trb.b d2
-	lda.w #(maxros-1)*2+2
+	lda.w #(maxros-1)*2+2			; compare with the other team
 	sta.b d1
 .ctop:								;same time on the other team: coincidental
 	dec.b d1
@@ -180,7 +180,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	lda.b a1
 	beq .ct
 	lda.w #maxros*2
-.ct:								; add the count offset
+.ct:								; other team slot of the same time
 	clc
 	adc.b d1
 	tay
@@ -195,7 +195,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	lda.b a2
 	beq .cg
 	lda.w #maxros*2
-.cg:								; add the goalie offset
+.cg:								; mark the penalized player as well
 	clc
 	adc.b d0
 	tay
@@ -203,22 +203,22 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	ora.w #$4000
 	sta.w tmpdst,y
 .nocoin:							;add the player to the penalty box list
-	lda.b a0+2
+	lda.b a0+2						; keep a0
 	pha
 	lda.b a0
 	pha
 	lda.b a2
 	beq .bl
 	lda.w #maxros
-.bl:								; clear the box list entry
+.bl:								; box list start of the penalized team
 	sta.b a0
 	lda.w #$0018
 	sta.b d1
-.pl:								; find the player in the box list
+.pl:								; find a free slot in the box list
 	ldy.b a0
 	inc.b a0
 	lda.w tmboxlist,y
-	bit.w #$0080
+	bit.w #$0080					; free slot?
 	bne .put
 	dec.b d1
 	bpl .pl
@@ -230,7 +230,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	sta.b a0
 	pla
 	sta.b a0+2
-	lda.w #apenalty
+	lda.w #apenalty					; penalized player goes to the box
 	sta.b d0
 	jsl.l assreplace				; replace the assignment with d0
 	stx.b xsave						; keep X
@@ -270,11 +270,11 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	lda.w #$0002
 	sta.b a2
 	jsl.l coinsearch
-	lda.w #gmpen
+	lda.w #gmpen					; penalty mode over
 	trb.w gmode
 	ldx.w #puckobj
 	stx.b a3
-	lda.w #pfaceoff
+	lda.w #pfaceoff					; puck goes to the faceoff assignment
 	sta.b d0
 	jsl.l assreplace				; replace the assignment with d0
 .ex:
