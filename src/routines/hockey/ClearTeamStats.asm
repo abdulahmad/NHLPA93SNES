@@ -4,18 +4,18 @@ ClearTeamStats:						;Clear the team stats (but the goalie choice) and both pena
 	pha
 	lda.w tmgoalie+2
 	pha
-	ldx.w #$0000
+	ldx.w #$0000					; stats area $1CC bytes
 .clr:
-	stz.w tmshots,x
+	stz.w tmshots,x					; clear a word
 	inx
 	inx
 	cpx.w #$01CC
 	bne .clr
-	pla
+	pla								; restore tmgoalie
 	sta.w tmgoalie+2
 	pla
 	sta.w tmgoalie
 	lda.w #$FFFF					; both penalty box lists empty
-	sta.w tmboxlist
-	sta.w tmboxlist+$1A
-	jml.l setteams
+	sta.w tmboxlist					; empty
+	sta.w tmboxlist+$1A				; second list
+	jml.l setteams					; set up the teams
