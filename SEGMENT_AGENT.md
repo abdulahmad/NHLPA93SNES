@@ -68,7 +68,7 @@ NHLPA Hockey 93 SNES is a hybrid. The SNES port started from NHL92 Genesis (like
 - Reference ROM: `lst/nhlpa93snes.bin` (524288 bytes, sha1 `76a01492cfb656e9fce0094bca356c312adfea0e`). Bytes and branch targets come from it. Do not substitute another ROM.
 - There is no IDA listing. The starting point is the auto-generated `src/bankXX_YYYY.asm` slices (quick recursive-descent pass from the vectors, `tools/disasm65816.py`). Each instruction line carries `; $address: bytes`. Unreached bytes are `db` lines: they are unresolved, not proven data. Do not re-run the generator over a bank once it has been edited.
 - Style / naming source: https://github.com/abdulahmad/NHLPA93Genesis (first), then https://github.com/abdulahmad/NHL92Genesis where 93 lacks the routine.
-- `src/nhlpa93snes.asm` is the full build top level: `inc/snes_regs.asm`, `macros/snes93.mac`, `ram93s.asm`, then the 16 bank files `banks/bXX_<name>.asm`.
+- `src/nhlpa93snes.asm` is the full build top level: `macros/snes93.mac`, `ram93s.asm` (hardware registers, RAM), then the 16 bank files `banks/bXX_<name>.asm`.
 
 ## Mapping
 
@@ -87,7 +87,7 @@ Vectors: native COP `$80B4`, BRK `$80B2`, ABORT `$80B4`, NMI `$80B4`, IRQ `$8390
 - Direct page (D) and data bank (DB) matter for what an operand means. Note `pld`/`tcd`/`plb`/`phk : plb` changes. A `.w` operand is a RAM name only when DB is `$00-$3F/$80-$BF` (or `$7E` and the address is WRAM).
 - Branches use labels (`bne CODE_80803D` or a real name). Never a bare number: asar reads `bne $xxxx` differently. A branch whose target is not a decoded instruction stays as `db` with the comment.
 - Replace `db` with instructions only after you have traced the entry and M/X. Jump tables (`jmp (abs,x)`, `jsr (abs,x)`, pushed-address `rts` tricks) are the main source of unreached code: write the table as `dw label` entries.
-- Hardware registers use the names in `src/inc/snes_regs.asm` (`sta.w INIDISP`). Add DMA channel names there as needed.
+- Hardware registers use the names at the top of `src/ram93s.asm` (`sta.w INIDISP`). Add DMA channel names there as needed.
 - Data goes in the segment of the code that owns it. Graphics (4bpp planar composite, from about ROM `$709A7`) become `incbin` files under `data/` named for the asset (93G / 92G file name when it is the same asset), never an address. Pointers inside data are written with labels.
 - A 93G name is the field even when the SNES value differs. The equate gets the SNES value; the comment may record the 68000 value as '93 $xx'.
 - A global label ends local-label scope (asar `.local` labels belong to the previous global). Keep comment lines under 200 characters.
