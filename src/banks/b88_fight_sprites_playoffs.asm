@@ -1,4 +1,5 @@
-; Bank $88: title playoffs. Files in ROM order (docs/file-map.md).
+; Bank $88: fight, goal and puck sprites (sets 7 and 8), the team block tiles, and the title, playoff and
+; password routines. Files in ROM order (docs/file-map.md).
 
 if pc() < $888000
 	org $888000
@@ -12,12 +13,12 @@ SmallFontMap:						;print character (0-127) -> small font tile (+ flip bits), ad
 									;smallfontchars by print
 	incbin "../../Extracted/Graphics/SmallFont.smap"
 
-incsrc "../routines/middle/mulu32.asm"
-incsrc "../routines/penalty/getlinee.asm"
-incsrc "../routines/hockey/WritePassBits.asm"
-incsrc "../routines/logic/noturn0.asm"
-incsrc "../routines/hockey/PWprint.asm"
-incsrc "../routines/hockey/EncodePW.asm"
+incsrc "../routines/middle/math/mulu32.asm"
+incsrc "../routines/penalty/energy/getlinee.asm"
+incsrc "../routines/hockey/password/WritePassBits.asm"
+incsrc "../routines/logic/skating/noturn0.asm"
+incsrc "../routines/hockey/password/PWprint.asm"
+incsrc "../routines/hockey/password/EncodePW.asm"
 
 FramerMap:							;Framer.map.jim: the 3 x 3 box pieces (corner, edge, side, centre) from
 									;the 4 FramerTiles with flips (Framer_piece)
@@ -27,10 +28,10 @@ FramerTiles:						;the 4 Framer box tiles (4bpp, Framer.chr): sent to vram by
 									;ScoutingReport; setupice remaps them with PixelRemap87
 	incbin "../../Extracted/Graphics/Framer.chr"
 
-incsrc "../routines/video/showcrowd.asm"
-incsrc "../routines/hockey/SuperMult.asm"
-incsrc "../routines/hockey/DrawGameSetupBack.asm"
-incsrc "../routines/middle/mulu.asm"
+incsrc "../routines/video/crowd/showcrowd.asm"
+incsrc "../routines/hockey/password/SuperMult.asm"
+incsrc "../routines/hockey/screens/DrawGameSetupBack.asm"
+incsrc "../routines/middle/math/mulu.asm"
 SpriteSet8:							;frame set 8 (arrows, pads, puck and goal): frames 384-405
 	incbin "../../Extracted/Graphics/Sprites/Sprites384_405.sanim"
 
@@ -41,12 +42,12 @@ TeamBlocksTiles:					;TeamBlocks.map.jim tiles: 405 team name banner tiles, pack
 
 SpriteSet7:							;frame set 7 (gloves, fight, injury and penalty box): frames 353-383
 	incbin "../../Extracted/Graphics/Sprites/Sprites353_383.sanim"
-incsrc "../routines/hockey/GetPassWord.asm"
+incsrc "../routines/hockey/password/GetPassWord.asm"
 incsrc "../data/text/PasswordText.asm"
-incsrc "../routines/hockey/TitleScreen.asm"
+incsrc "../routines/hockey/screens/TitleScreen.asm"
 incsrc "../data/text/CreditsBlank.asm"
-incsrc "../routines/hockey/PlayoffScreen.asm"
+incsrc "../routines/hockey/playoffs/PlayoffScreen.asm"
 incsrc "../routines/tables/PlayoffTreeSetup.asm"
-incsrc "../routines/logic/assdefd.asm"
-incsrc "../routines/hockey/SuperAdd.asm"
-incsrc "../routines/logic/skateto.asm"
+incsrc "../routines/logic/assignments/assdefd.asm"
+incsrc "../routines/hockey/password/SuperAdd.asm"
+incsrc "../routines/logic/skating/skateto.asm"

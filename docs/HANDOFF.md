@@ -48,6 +48,10 @@ Data blocks that are only a label and an `incbin` (29 of them) are written in th
 
 `SpriteSetN` is one ROM range per set (header, frame index, pieces, tiles): `Extracted/Graphics/Sprites/Sprites<first frame>_<last frame>.sanim` (`Sprites001_096.sanim` ... `Sprites659_720.sanim`), 15 files instead of 30 (`setNN.pieces` / `setNN.chr`). Extensions: `.map.snesjim` -> `.map.sjim`, `.sanim` for the sets, `.snesmap` -> `.smap`, `.snespal` -> `.spal` (the `s` marks the SNES flavour of the 93G `.map.jim` / `.anim` / `.pal`). `docs/file-formats.md` replaces `src/data/README.md` and documents every format; 93G's `docs/file-formats.md` was written to match.
 
+## Routine areas and bank names (2026-10-19)
+
+The routine files keep the 93G module as their group, and the big modules have areas that say what the routines do: `hockey/{collisions,display,game,input,interrupts,password,players,playoffs,replay,screens,teams,util}`, `logic/{animation,assignments,computer,contact,controls,lines,offsides,puck,skating}`, `penalty/{energy,highlights,penalties,scoreboard,ticker,util}`, `video/{crowd,dma,hud,interrupts,objects,rink,sprites,text}`, `middle/{input,math,util}`. Twelve files that were in the wrong module moved to the right one (`sound`, `stats`, `print`, `penalty/penalties`). The banks are named after their largest data (most of them are mostly sprite sets): `b81_game_samples`, `b82_rink_tiles_anims`, `b83_teams_rink_maps`, `b84_goalie_sprites_scouting`, `b85_check_sprites_title`, `b88_fight_sprites_playoffs`, `b89_goalie_save_sprites_replay`, `b8A_misc_sprites_bracket`, `b8B_fall_sprites_opening`, `b8D_goalie_sprites_fonts`, `b8E_celebrate_crowd_sprites`; each bank file starts with a header that says what is in it. Build MATCH.
+
 ## Local names (2026-10-14)
 
 Signed-compare overflow tails (`bmi` / `bvs` / `bvc`) are `.neg`, `.neg1`, `.neg2`, ... in source order. The earlier `.vN` pass is unchanged. `assdefd` had one leftover `.gt1` tail; it is `.neg2`, and the later tails in that routine moved to `.neg3` and `.neg4`. A `bcc` test is not that pattern. Where 93 Genesis already names the label, that name stays (`CompShoot` `.lt`). `holdcheck` has no 93G label on the facing test, so a facing delta under 3 is `.close`. `remap` has no 93G routine: the pixel bits are `.bit3`..`.bit0` and the video-memory store is `.vram`.
@@ -107,9 +111,9 @@ Moving to the bank/routine layout: `src/banks/bXX_<name>.asm` (one per bank: `or
 `src/routines/<module>/<Routine>.asm` (one routine per file), `src/data/<category>/<Name>.asm`. Split mechanically with
 `tools/split_routines.py migrate <bank> <bankfile>`; every step builds MATCH.
 
-Done: all 16 banks migrated, every step MATCH. Bank files: b80_engine, b81_sfx, b82_sfx_rink, b83_teams, b84_scouting, b85_title_gfx,
-b86_sound_driver, b87_player_sprites, b88_title_playoffs, b89_replay_music, b8A_playoffbracket_credits, b8B_opening, b8C_skate_sprites,
-b8D_fonts, b8E_gameloop, b8F_frontend. The old `src/<module>_bXX.asm`, `src/frames.asm`, `src/main.asm` and `src/gfx/` are gone.
+Done: all 16 banks migrated, every step MATCH. Bank files: b80_engine, b81_game_samples, b82_rink_tiles_anims, b83_teams_rink_maps, b84_goalie_sprites_scouting, b85_check_sprites_title,
+b86_sound_driver, b87_player_sprites, b88_fight_sprites_playoffs, b89_goalie_save_sprites_replay, b8A_misc_sprites_bracket, b8B_fall_sprites_opening, b8C_skate_sprites,
+b8D_goalie_sprites_fonts, b8E_celebrate_crowd_sprites, b8F_frontend. The old `src/<module>_bXX.asm`, `src/frames.asm`, `src/main.asm` and `src/gfx/` are gone.
 Rules for new routines: docs/history/SEGMENT_AGENT.md Layout note. Judgment calls: small tables of code modules stay in `routines/<module>/`
 (e.g. jdtab, dirtab, PenaltyList, linelist); text tables (GameLabels, PerLabels, ScoutLabels, PositionNames, RosterLineNames,
 AttribMenuSkater/Goalie) moved to `data/text/`; the sprite animation list and tables (SPAList and every SPA*_table) are one file, `data/frames93s.asm`; `unusedFFxx` fills merged

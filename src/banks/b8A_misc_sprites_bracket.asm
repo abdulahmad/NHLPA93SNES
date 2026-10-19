@@ -1,4 +1,5 @@
-; Bank $8A: playoffbracket credits. Files in ROM order (docs/file-map.md).
+; Bank $8A: face-off, zamboni, flip, stumble and hook sprites (set 12), the playoff bracket map and the
+; credits. Files in ROM order (docs/file-map.md).
 
 if pc() < $8A8000
 	org $8A8000
@@ -11,6 +12,6 @@ PlayoffBracketMap:					;DrawTreeArrow graphics: 23 rows of 12 map words; Playoff
 	incbin "../../Extracted/Graphics/Arrows.smap"
 
 incsrc "../data/text/Credits.asm"
-incsrc "../routines/logic/lineinput.asm"
-incsrc "../routines/logic/getlchoice.asm"
-incsrc "../routines/penalty/SetScore.asm"
+incsrc "../routines/logic/lines/lineinput.asm"
+incsrc "../routines/logic/lines/getlchoice.asm"
+incsrc "../routines/penalty/highlights/SetScore.asm"
