@@ -75,9 +75,9 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	inx
 	cpx.w #$32A0
 	bne .blocktiles
-	lda.w #ScoutMap					; EASN map, compressed
+	lda.w #EASNmap					; EASN map, compressed
 	sta.b tmp0
-	lda.w #ScoutMap>>16
+	lda.w #EASNmap>>16
 	sta.b tmp1
 	jsl.l DecompressBytecode		; unpack
 	ldx.w #$0000

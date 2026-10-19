@@ -677,7 +677,7 @@ palbuffer		=	$7E6C74			;CGRAM shadow (256 colors, 512 bytes):
 textmap			=	$7E6E74			;text layer tile map buffer (32x32 words);
 									;textdirtylo/hi mark what to send
 backmap			=	$7E7674			;second BG map buffer (32x32 words) after textmap: screen backgrounds
-									;(GameSetUpMap, Title1Map, ScoutMap)
+									;(GameSetUpMap, Title1Map, EASNmap)
 hlsavebuf		=	$7E7E74			;StartHL2: the game state (gmode-1 .. ScoreSumbytes) while a highlight
 									;plays. ReplayStart role
 unpackbuf		=	$7F0000			;DecompressBytecode output buffer (64K, bank $7F): tiles are copied to

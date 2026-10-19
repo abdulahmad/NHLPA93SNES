@@ -338,7 +338,7 @@ org `$868000` when `pc()` is below it.
 org `$878000` when `pc()` is below it.
 
 - `$878000` SpriteSet2 (data)
-- `$??????` ScoutMap (data)
+- `$??????` EASNmap (data)
 - `$87C6B4` FaceOffTiles (data)
 - `$87CABA` Teamblocksmap (data)
 - `$87CE62` routines/video/sprites/DrawFrame.asm
