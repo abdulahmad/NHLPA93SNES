@@ -7,14 +7,10 @@ endif
 GameSetUpMap:						;the game setup screen backdrop (two team boxes, options box),
 									;packed: 32 x 32 map, 128 colors at $800, 18 tiles at $900
 	incbin "../../Extracted/Graphics/GameSetUp.map.snesjim"
-GameSetupMapEnd:					; end of GameSetupMap
-	assert GameSetupMapEnd-GameSetUpMap == $22F
 
 SmallFontMap:						;print character (0-127) -> small font tile (+ flip bits), added to
 									;smallfontchars by print
 	incbin "../../Extracted/Graphics/SmallFont.snesmap"
-SmallFontMapEnd:					; end of SmallFontMap
-	assert SmallFontMapEnd-SmallFontMap == 256
 
 incsrc "../routines/middle/mulu32.asm"
 incsrc "../routines/penalty/getlinee.asm"
@@ -26,8 +22,6 @@ incsrc "../routines/hockey/EncodePW.asm"
 FramerMap:							;Framer.map.jim: the 3 x 3 box pieces (corner, edge, side, centre) from
 									;the 4 FramerTiles with flips (Framer_piece)
 	incbin "../../Extracted/Graphics/Framer.snesmap"
-FramerMapEnd:						; end of FramerMap
-	assert FramerMapEnd-FramerMap == 18
 
 FramerTiles:						;the 4 Framer box tiles (4bpp, Framer.chr): sent to vram by
 									;ScoutingReport; setupice remaps them with PixelRemap87
@@ -43,8 +37,6 @@ TeamBlocksTiles:					;TeamBlocks.map.jim tiles: 405 team name banner tiles, pack
 									;unpacked); sent to vram by PlayoffScreen, the scouting report and
 									;setoptions
 	incbin "../../Extracted/Graphics/TeamBlocks.chr.pak"
-TeamBlocksTilesEnd:					; end of TeamBlocksTiles
-	assert TeamBlocksTilesEnd-TeamBlocksTiles == $20E3
 
 incsrc "../data/gfx/SpriteSet7.asm"
 incsrc "../routines/hockey/GetPassWord.asm"

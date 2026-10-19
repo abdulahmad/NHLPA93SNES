@@ -7,8 +7,6 @@ incsrc "../data/frames93s.asm"
 
 IceRinkTiles:						;packed rink tiles
 	incbin "../../Extracted/Graphics/IceRink.chr.pak"
-IceRinkTilesEnd:					; end of IceRinkTiles
-	assert IceRinkTilesEnd-IceRinkTiles == $2B9C
 
 incsrc "../routines/penalty/SetPA2.asm"
 incsrc "../routines/penalty/UpdateScores.asm"

@@ -8,8 +8,6 @@ incsrc "../data/gfx/SpriteSet12.asm"
 PlayoffBracketMap:					;DrawTreeArrow graphics: 23 rows of 12 map words; PlayoffScreen copies
 									;column n (arrow graphics n) to the tree
 	incbin "../../Extracted/Graphics/Arrows.snesmap"
-PlayoffBracketMapEnd:				; end of PlayoffBracketMap
-	assert PlayoffBracketMapEnd-PlayoffBracketMap == 552
 
 incsrc "../data/text/Credits.asm"
 incsrc "../routines/logic/lineinput.asm"

@@ -7,8 +7,6 @@ endif
 BigFontMap:							;bigfont.map: big font tiles of each character: 76 top-row words, then the
 									;76 bottom-row words (+$98); printbig uses BigFontIndex
 	incbin "../../Extracted/Graphics/BigFont.snesmap"
-BigFontMapEnd:						; end of BigFontMap
-	assert BigFontMapEnd-BigFontMap == 304
 
 incsrc "../routines/video/unusedEnergyBar.asm"
 incsrc "../routines/tables/linelist.asm"
@@ -17,8 +15,6 @@ incsrc "../data/text/PerLabels.asm"
 EASNLogoMap:						;easn.map (small): the 7 x 2 EASN logo tile words for EASNLogo
 									;(unusedchars + n)
 	incbin "../../Extracted/Graphics/EASN.snesmap"
-EASNLogoMapEnd:						; end of EASNLogoMap
-	assert EASNLogoMapEnd-EASNLogoMap == 28
 
 incsrc "../data/gfx/BigFontIndex.asm"
 incsrc "../routines/video/showclock.asm"

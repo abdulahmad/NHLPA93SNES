@@ -15,14 +15,10 @@ incsrc "../routines/sound/p_music_vblank.asm"
 RefTilesHor:						;packed ref window tiles for the horizontal rink (104 tiles,
 									;RefHor.chr.pak): setupice sends them to refcharshor
 	incbin "../../Extracted/Graphics/RefHor.chr.pak"
-RefTilesHorEnd:						; end of RefTilesHor
-	assert RefTilesHorEnd-RefTilesHor == $8B6
 
 RefsMapHor:							;ref window frames for the horizontal rink, 17 frames of 8 x 7 words
 									;(RefsHor.snesmap); PushRef uses it when sfhormode
 	incbin "../../Extracted/Graphics/RefsHor.snesmap"
-RefsMapHorEnd:						; end of RefsMapHor
-	assert RefsMapHorEnd-RefsMapHor == 17*$70
 
 incsrc "../routines/sound/StartSong8.asm"
 incsrc "../routines/sound/StartSong9.asm"
