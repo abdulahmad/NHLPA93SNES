@@ -78,12 +78,12 @@ AllStarsEast:						; team record: All Stars East (ASE), team 24
 ;o - overall
 ;------------------------
 .sr:								; scouting report ratings
-	;		qreb,hvxx,skpd,cfgo
+	;     qreb,hvxx,skpd,cfgo
 	%hex2(7020,00D6,9999,9099)
 .godds:								; starting goalie weights, 4 nibbles (PickStartingGoalie)
 	db 216,160
 .ls:								; line sets: 7 lines of 8 roster numbers, by position
-	;		-G,LD,RD,LW,-C,RW,XA,00
+	;  -G,LD,RD,LW,-C,RW,XA,00
 	db 01,17,18,14,04,11,05,00		; line 1
 	db 01,19,20,15,05,12,04,00		; line 2
 	db 01,21,22,16,06,13,04,00		; line 3
@@ -112,7 +112,7 @@ AllStarsEast:						; team record: All Stars East (ASE), team 24
 ;m - aggressiveness (PIM) / NA
 ;------------------------
 .pld:								; roster: Player records, then an empty record (length 2)
-	;							unwl,sodp,chga,eytm
+	;								unwl,sodp,chga,eytm
 	%Player("Patrick Roy",			335F,AFFF,0100,FFFF)
 	%Player("Mike Richter",			355D,ADDD,0100,DDDD)
 	%Player("Don Beaupre",			0137,AAAA,0100,AAAA)
