@@ -19,9 +19,9 @@ SpriteSet0:							;frame set 0 (SPFskatewp, SPFskate, SPFturnl, SPFturnr): frame
 	dw 397,399,405,412,416,424,434,441
 	dw 445
 .pieces:							;x, y, tile, attributes per piece
-	incbin "../../../data/Sprites/set00.pieces"
+	incbin "../../../Extracted/Graphics/Sprites/set00.pieces"
 	assert .tiles-.pieces == 4*445
 .tiles:								;896 4bpp tiles (32 bytes each)
-	incbin "../../../data/Sprites/set00.chr"
+	incbin "../../../Extracted/Graphics/Sprites/set00.chr"
 SpriteSet0End:
 	assert SpriteSet0End-SpriteSet0 == $7C0+896*32

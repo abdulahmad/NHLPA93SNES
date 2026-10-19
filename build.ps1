@@ -2,6 +2,7 @@
 $ErrorActionPreference = 'Stop'
 Set-Location $PSScriptRoot
 $asar = Join-Path $PSScriptRoot 'tools\bin\asar.exe'; if (-not (Test-Path $asar)) { $asar = 'asar' }
+python3 tools/prebuild.py; if ($LASTEXITCODE -ne 0) { exit 1 }
 New-Item -ItemType Directory -Force -Path output | Out-Null
 Remove-Item -ErrorAction SilentlyContinue output\nhlpa93snes.sfc
 & $asar --fix-checksum=off --symbols=wla --symbols-path=output/nhlpa93snes.sym src/nhlpa93snes.asm output/nhlpa93snes.sfc

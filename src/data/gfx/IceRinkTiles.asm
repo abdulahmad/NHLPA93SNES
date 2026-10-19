@@ -1,4 +1,4 @@
 IceRinkTiles:						;packed rink tiles
-	incbin "../../../data/IceRink.chr.pak"
+	incbin "../../../Extracted/Graphics/IceRink.chr.pak"
 IceRinkTilesEnd:
 	assert IceRinkTilesEnd-IceRinkTiles == $2B9C

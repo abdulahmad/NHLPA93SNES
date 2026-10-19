@@ -13,9 +13,9 @@ SpriteSet4:							;frame set 4 (hip, shoulder and sweep checks): frames 225-272
 	dw 273,281,288,296,303,312,321,329
 	dw 334
 .pieces:							;x, y, tile, attributes per piece
-	incbin "../../../data/Sprites/set04.pieces"
+	incbin "../../../Extracted/Graphics/Sprites/set04.pieces"
 	assert .tiles-.pieces == 4*334
 .tiles:								;640 4bpp tiles (32 bytes each)
-	incbin "../../../data/Sprites/set04.chr"
+	incbin "../../../Extracted/Graphics/Sprites/set04.chr"
 SpriteSet4End:
 	assert SpriteSet4End-SpriteSet4 == $5A4+640*32

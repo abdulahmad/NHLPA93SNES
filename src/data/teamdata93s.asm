@@ -1,14 +1,14 @@
-; Team record offsets, as in 93G teamdata93.asm
-Playerdata	=	0
-Palettedata	=	2
-Teamname	=	4
-LineSets	=	6
-ScoutReport	=	8
-GoalieOdds	=	10
-NumofTeams	=	26					; clubs 0-23, AllStarsEast 24, AllStarsWest 25
+; Team data. TeamList points to one record per team, the All-Star teams included. A record holds the
+; players, colours, name, lines, scouting report and scoring odds. The playoff seeds follow; the credits
+; are in text/Credits.asm.
+;
+; Record layout (the all-star records come first in the file, then the 24 teams): six word offsets from .0
+; (Playerdata, Palettedata, Teamname, LineSets, ScoutReport, GoalieOdds), then the palettes, scouting
+; ratings, scoring odds, line sets (7 lines of 8 bytes), players, team name and abbreviation.
 
 ; ---- TeamList ----
-TeamList:							;long pointer to each team record (TeamList index = team number)
+TeamList:							;table of long pointers to the team records, indexed by team number
+									;(HomeTeam/VisTeam); the 2 all-star teams are last
 	dd Boston						; team 0
 	dd Buffalo						; team 1
 	dd Calgary						; team 2
@@ -38,6 +38,14 @@ TeamList:							;long pointer to each team record (TeamList index = team number)
 	assert (TeamListEnd-TeamList)/4 == NumofTeams
 TeamListEnd:
 
+Playerdata	=	0					;record offset of the word offset to the player data (.pld)
+Palettedata	=	2					;record offset of the word offset to the palettes (.pad)
+Teamname	=	4					;record offset of the word offset to the team name (.tn)
+LineSets	=	6					;record offset of the word offset to the line sets (.ls)
+ScoutReport	=	8					;record offset of the word offset to the scouting report ratings (.sr)
+GoalieOdds	=	10					;record offset of the word offset to the starting goalie weights (.godds)
+NumofTeams	=	26					;number of teams in TeamList (26)
+
 
 ; ---- AllStarsEast ----
 AllStarsEast:						;team 24
@@ -48,8 +56,8 @@ AllStarsEast:						;team 24
 	dw .sr-.0						; ScoutReport
 	dw .godds-.0					; GoalieOdds
 .pad:
-	incbin "../../data/Pals/ASEh.snespal"	; home colours (SNES BGR555, 16 colours)
-	incbin "../../data/Pals/ASEv.snespal"	; visitor colours
+	incbin "../../Extracted/Graphics/Pals/ASEh.pal"	; home colours (SNES BGR555, 16 colours)
+	incbin "../../Extracted/Graphics/Pals/ASEv.pal"	; visitor colours
 .sr:	%hex2($7020,$00D6,$9999,$9099)	; qreb,hvxx,skpd,cfgo
 .godds:								;starting goalie weights, 4 nibbles (PickStartingGoalie)
 	db 216,160
@@ -98,8 +106,8 @@ AllStarsWest:						;team 25
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/ASWh.snespal"
-	incbin "../../data/Pals/ASWv.snespal"
+	incbin "../../Extracted/Graphics/Pals/ASWh.pal"
+	incbin "../../Extracted/Graphics/Pals/ASWv.pal"
 .sr:	%hex2($7020,$00C7,$9999,$9099)
 .godds:	db 173,224
 .ls:
@@ -147,8 +155,8 @@ Boston:								;team 0
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/BOSh.snespal"
-	incbin "../../data/Pals/BOSv.snespal"
+	incbin "../../Extracted/Graphics/Pals/BOSh.pal"
+	incbin "../../Extracted/Graphics/Pals/BOSv.pal"
 .sr:	%hex2($3311,$21E6,$6766,$6756)
 .godds:	db 197,34
 .ls:
@@ -198,8 +206,8 @@ Buffalo:							;team 1
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/BUFh.snespal"
-	incbin "../../data/Pals/BUFv.snespal"
+	incbin "../../Extracted/Graphics/Pals/BUFh.pal"
+	incbin "../../Extracted/Graphics/Pals/BUFv.pal"
 .sr:	%hex2($5522,$22D8,$2442,$3933)
 .godds:	db 101,80
 .ls:
@@ -249,8 +257,8 @@ Calgary:							;team 2
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/CGYh.snespal"
-	incbin "../../data/Pals/CGYv.snespal"
+	incbin "../../Extracted/Graphics/Pals/CGYh.pal"
+	incbin "../../Extracted/Graphics/Pals/CGYv.pal"
 .sr:	%hex2($6622,$11D8,$4334,$4823)
 .godds:	db 196,0
 .ls:
@@ -299,8 +307,8 @@ Chicago:							;team 3
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/CHIh.snespal"
-	incbin "../../data/Pals/CHIv.snespal"
+	incbin "../../Extracted/Graphics/Pals/CHIh.pal"
+	incbin "../../Extracted/Graphics/Pals/CHIv.pal"
 .sr:	%hex2($3000,$21D7,$7777,$9888)
 .godds:	db 164,49
 .ls:
@@ -350,8 +358,8 @@ Detroit:							;team 4
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/DETh.snespal"
-	incbin "../../data/Pals/DETv.snespal"
+	incbin "../../Extracted/Graphics/Pals/DETh.pal"
+	incbin "../../Extracted/Graphics/Pals/DETv.pal"
 .sr:	%hex2($6111,$00D7,$8879,$7878)
 .godds:	db 226,16
 .ls:
@@ -400,8 +408,8 @@ Edmonton:							;team 5
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/EDMh.snespal"
-	incbin "../../data/Pals/EDMv.snespal"
+	incbin "../../Extracted/Graphics/Pals/EDMh.pal"
+	incbin "../../Extracted/Graphics/Pals/EDMv.pal"
 .sr:	%hex2($6512,$11C7,$6535,$4534)
 .godds:	db 214,34
 .ls:
@@ -450,8 +458,8 @@ Hartford:							;team 6
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/HFDh.snespal"
-	incbin "../../data/Pals/HFDv.snespal"
+	incbin "../../Extracted/Graphics/Pals/HFDh.pal"
+	incbin "../../Extracted/Graphics/Pals/HFDv.pal"
 .sr:	%hex2($1402,$00F6,$2222,$1342)
 .godds:	db 146,0
 .ls:
@@ -500,8 +508,8 @@ LosAngeles:							;team 8
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/LAh.snespal"
-	incbin "../../data/Pals/LAv.snespal"
+	incbin "../../Extracted/Graphics/Pals/LAh.pal"
+	incbin "../../Extracted/Graphics/Pals/LAv.pal"
 .sr:	%hex2($4410,$10D8,$5664,$6535)
 .godds:	db 198,16
 .ls:
@@ -551,8 +559,8 @@ LongIsland:							;team 7
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/LIh.snespal"
-	incbin "../../data/Pals/LIv.snespal"
+	incbin "../../Extracted/Graphics/Pals/LIh.pal"
+	incbin "../../Extracted/Graphics/Pals/LIv.pal"
 .sr:	%hex2($5522,$01E7,$5455,$5234)
 .godds:	db 102,0
 .ls:
@@ -601,8 +609,8 @@ Minnesota:							;team 9
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/MINh.snespal"
-	incbin "../../data/Pals/MINv.snespal"
+	incbin "../../Extracted/Graphics/Pals/MINh.pal"
+	incbin "../../Extracted/Graphics/Pals/MINv.pal"
 .sr:	%hex2($1301,$11F6,$1232,$1652)
 .godds:	db 166,0
 .ls:
@@ -651,8 +659,8 @@ Montreal:							;team 10
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/MTLh.snespal"
-	incbin "../../data/Pals/MTLv.snespal"
+	incbin "../../Extracted/Graphics/Pals/MTLh.pal"
+	incbin "../../Extracted/Graphics/Pals/MTLv.pal"
 .sr:	%hex2($3011,$22E7,$7888,$8499)
 .godds:	db 210,32
 .ls:
@@ -702,8 +710,8 @@ NewJersey:							;team 11
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/NJh.snespal"
-	incbin "../../data/Pals/NJv.snespal"
+	incbin "../../Extracted/Graphics/Pals/NJh.pal"
+	incbin "../../Extracted/Graphics/Pals/NJv.pal"
 .sr:	%hex2($5200,$11F6,$8668,$6467)
 .godds:	db 165,0
 .ls:
@@ -752,8 +760,8 @@ NewYork:							;team 12
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/NYh.snespal"
-	incbin "../../data/Pals/NYv.snespal"
+	incbin "../../Extracted/Graphics/Pals/NYh.pal"
+	incbin "../../Extracted/Graphics/Pals/NYv.pal"
 .sr:	%hex2($7120,$20F8,$7989,$7789)
 .godds:	db 152,0
 .ls:
@@ -804,8 +812,8 @@ Ottawa:								;team 13
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/OTWh.snespal"
-	incbin "../../data/Pals/OTWv.snespal"
+	incbin "../../Extracted/Graphics/Pals/OTWh.pal"
+	incbin "../../Extracted/Graphics/Pals/OTWv.pal"
 .sr:	%hex2($0702,$02A6,$1111,$1411)
 .godds:	db 96,0
 .ls:
@@ -848,8 +856,8 @@ Philadelphia:						;team 14
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/PHIh.snespal"
-	incbin "../../data/Pals/PHIv.snespal"
+	incbin "../../Extracted/Graphics/Pals/PHIh.pal"
+	incbin "../../Extracted/Graphics/Pals/PHIv.pal"
 .sr:	%hex2($2201,$22E8,$3443,$2353)
 .godds:	db 147,0
 .ls:
@@ -899,8 +907,8 @@ Pittsburgh:							;team 15
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/PITh.snespal"
-	incbin "../../data/Pals/PITv.snespal"
+	incbin "../../Extracted/Graphics/Pals/PITh.pal"
+	incbin "../../Extracted/Graphics/Pals/PITv.pal"
 .sr:	%hex2($7621,$10E7,$5566,$5725)
 .godds:	db 182,0
 .ls:
@@ -949,8 +957,8 @@ Quebec:								;team 16
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/QUEh.snespal"
-	incbin "../../data/Pals/QUEv.snespal"
+	incbin "../../Extracted/Graphics/Pals/QUEh.pal"
+	incbin "../../Extracted/Graphics/Pals/QUEv.pal"
 .sr:	%hex2($2602,$22E8,$3212,$1321)
 .godds:	db 84,32
 .ls:
@@ -1001,8 +1009,8 @@ SanJose:							;team 17
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/SJh.snespal"
-	incbin "../../data/Pals/SJv.snespal"
+	incbin "../../Extracted/Graphics/Pals/SJh.pal"
+	incbin "../../Extracted/Graphics/Pals/SJv.pal"
 .sr:	%hex2($0702,$12E6,$2111,$3211)
 .godds:	db 133,34
 .ls:
@@ -1052,8 +1060,8 @@ StLouis:							;team 18
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/STLh.snespal"
-	incbin "../../data/Pals/STLv.snespal"
+	incbin "../../Extracted/Graphics/Pals/STLh.pal"
+	incbin "../../Extracted/Graphics/Pals/STLv.pal"
 .sr:	%hex2($4210,$21D8,$4364,$4564)
 .godds:	db 194,32
 .ls:
@@ -1103,8 +1111,8 @@ TampaBay:							;team 19
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/TBYh.snespal"
-	incbin "../../data/Pals/TBYv.snespal"
+	incbin "../../Extracted/Graphics/Pals/TBYh.pal"
+	incbin "../../Extracted/Graphics/Pals/TBYv.pal"
 .sr:	%hex2($0702,$02A7,$2111,$1411)
 .godds:	db 48,0
 .ls:
@@ -1148,8 +1156,8 @@ Toronto:							;team 20
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/TORh.snespal"
-	incbin "../../data/Pals/TORv.snespal"
+	incbin "../../Extracted/Graphics/Pals/TORh.pal"
+	incbin "../../Extracted/Graphics/Pals/TORv.pal"
 .sr:	%hex2($1411,$12E8,$2123,$3232)
 .godds:	db 211,0
 .ls:
@@ -1199,8 +1207,8 @@ Vancouver:							;team 21
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/VANh.snespal"
-	incbin "../../data/Pals/VANv.snespal"
+	incbin "../../Extracted/Graphics/Pals/VANh.pal"
+	incbin "../../Extracted/Graphics/Pals/VANv.pal"
 .sr:	%hex2($4111,$10E8,$6877,$7577)
 .godds:	db 211,0
 .ls:
@@ -1250,8 +1258,8 @@ Winnipeg:							;team 23
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/WPGh.snespal"
-	incbin "../../data/Pals/WPGv.snespal"
+	incbin "../../Extracted/Graphics/Pals/WPGh.pal"
+	incbin "../../Extracted/Graphics/Pals/WPGv.pal"
 .sr:	%hex2($2020,$10E7,$4555,$2185)
 .godds:	db 149,48
 .ls:
@@ -1301,8 +1309,8 @@ Washington:							;team 22
 	dw .sr-.0
 	dw .godds-.0
 .pad:
-	incbin "../../data/Pals/WSHh.snespal"
-	incbin "../../data/Pals/WSHv.snespal"
+	incbin "../../Extracted/Graphics/Pals/WSHh.pal"
+	incbin "../../Extracted/Graphics/Pals/WSHv.pal"
 .sr:	%hex2($7320,$00E7,$9697,$8458)
 .godds:	db 164,32
 .ls:

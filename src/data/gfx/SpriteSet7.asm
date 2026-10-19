@@ -10,9 +10,9 @@ SpriteSet7:							;frame set 7 (gloves, fight, injury and penalty box): frames 3
 	dw 98,106,111,115,120,126,130,135
 	dw 141,150,159,167,174,181,186,191
 .pieces:							;x, y, tile, attributes per piece
-	incbin "../../../data/Sprites/set07.pieces"
+	incbin "../../../Extracted/Graphics/Sprites/set07.pieces"
 	assert .tiles-.pieces == 4*191
 .tiles:								;384 4bpp tiles (32 bytes each)
-	incbin "../../../data/Sprites/set07.chr"
+	incbin "../../../Extracted/Graphics/Sprites/set07.chr"
 SpriteSet7End:
 	assert SpriteSet7End-SpriteSet7 == $346+384*32

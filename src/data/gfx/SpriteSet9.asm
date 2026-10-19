@@ -14,9 +14,9 @@ SpriteSet9:							;frame set 9: frames 406-461
 	dw 310,318,326,332,338,343,351,356
 	dw 365
 .pieces:							;x, y, tile, attributes per piece
-	incbin "../../../data/Sprites/set09.pieces"
+	incbin "../../../Extracted/Graphics/Sprites/set09.pieces"
 	assert .tiles-.pieces == 4*365
 .tiles:								;640 4bpp tiles (32 bytes each)
-	incbin "../../../data/Sprites/set09.chr"
+	incbin "../../../Extracted/Graphics/Sprites/set09.chr"
 SpriteSet9End:
 	assert SpriteSet9End-SpriteSet9 == $630+640*32

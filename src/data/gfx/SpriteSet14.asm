@@ -14,10 +14,10 @@ SpriteSet14:						;frame set 14: frames 659-720, 6-byte pieces (DrawFrameHi)
 	dw 696,706,710,712,714,717,718,721
 	dw 724,727,730,733,736,739,742
 .pieces:							;x, y (signed words), tile, attributes per piece (6 bytes, DrawFrameHi)
-	incbin "../../../data/Sprites/set14.pieces"
+	incbin "../../../Extracted/Graphics/Sprites/set14.pieces"
 	assert .tiles-.pieces == 6*742
 	assert .tiles-SpriteSet14 == $11EC
 .tiles:								;151 4bpp tiles (32 bytes each)
-	incbin "../../../data/Sprites/set14.chr"
+	incbin "../../../Extracted/Graphics/Sprites/set14.chr"
 SpriteSet14End:
 	assert SpriteSet14End-SpriteSet14 == $11EC+151*32

@@ -15,9 +15,9 @@ SpriteSet5:							;frame set 5 (falls: SPFfallback, SPFfallfwd): frames 273-336
 	dw 463,471,482,490,498,505,515,526
 	dw 533
 .pieces:							;x, y, tile, attributes per piece
-	incbin "../../../data/Sprites/set05.pieces"
+	incbin "../../../Extracted/Graphics/Sprites/set05.pieces"
 	assert .tiles-.pieces == 4*533
 .tiles:								;896 4bpp tiles (32 bytes each)
-	incbin "../../../data/Sprites/set05.chr"
+	incbin "../../../Extracted/Graphics/Sprites/set05.chr"
 SpriteSet5End:
 	assert SpriteSet5End-SpriteSet5 == $8E0+896*32
