@@ -1,26 +1,26 @@
 Findhittype:						;Swing type of player X for direction d0: forehand or backhand
-	lda.b d0
-	eor.w #$FFFF
+	lda.b d0						; direction
+	eor.w #$FFFF					; negate it
 	inc a
 	clc
-	adc.w facedir,x
-	and.w #$0007
+	adc.w facedir,x					; plus the facing
+	and.w #$0007					; 0-7
 	sta.b d0
-	lda.w attribute,x
-	bit.w #attrxflip
+	lda.w attribute,x				; player attributes
+	bit.w #attrxflip				; x flip attribute
 	beq .noattribute
-	phx
-	ldx.b d0
+	phx								; keep X
+	ldx.b d0						; direction as index
 	lda.l .xflip,x					; x flip: backhand for d0 4-7
-	plx
-	and.w #$00FF
+	plx								; restore X
+	and.w #$00FF					; byte
 	rtl
 .noattribute:
-	phx
-	ldx.b d0
+	phx								; keep X
+	ldx.b d0						; direction as index
 	lda.l .noflip,x					; backhand for d0 1-4
-	plx
-	and.w #$00FF
+	plx								; restore X
+	and.w #$00FF					; byte
 	rtl
 .xflip:								;x flip: 1 = backhand for d0 4-7 (%11110000); its last 5 bytes start
 									;.noflip
