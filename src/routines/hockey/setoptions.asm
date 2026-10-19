@@ -9,14 +9,14 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	sec
 	sbc.w #$003C
 	ldx.w #$0000
-.clrframetime:
+.clrframetime:						; clear the sprite frame times
 	sta.l sprframetime,x
 	inx
 	inx
 	cpx.w #$4C74
 	bne .clrframetime
 	ldx.w #$0000
-.clrslottime:
+.clrslottime:						; clear the sprite slot times
 	sta.w sprslottime,x
 	inx
 	inx
@@ -30,7 +30,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	sta.w NMITIMEN
 	rep #$30						; 16-bit registers
 	lda.b vcount
-.vwait:
+.vwait:								; wait for a new frame
 	cmp.b vcount
 	beq .vwait
 	jsl.l InitPPU
@@ -75,7 +75,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	sep #$20						; 8-bit A
 	stz.w CGADD
 	ldx.w #$0000
-.setuppal:
+.setuppal:							; load the main palette
 	lda.l TestList+$800,x
 	sta.l palbuffer,x
 	sta.w CGDATA
@@ -83,7 +83,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	cpx.w #$0100
 	bne .setuppal
 	ldx.w #$0000
-.rinkpal:
+.rinkpal:							; load the rink palette
 	lda.l RinkPalette,x
 	sta.l palbuffer+$100,x
 	sta.w CGDATA
@@ -94,7 +94,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	lda.w #$1000
 	sta.w VMADDL
 	ldx.w #$0000
-.setuptiles:
+.setuptiles:						; load the font and rink tiles
 	lda.l TestList+$900,x
 	sta.w VMDATAL
 	inx
@@ -102,7 +102,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	cpx.w #$0240
 	bne .setuptiles
 	ldx.w #$0010
-.padvram:
+.padvram:							; pad the tile data with zeros
 	stz.w VMDATAL
 	dex
 	bne .padvram
@@ -139,7 +139,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	sta.b tmp1
 	jsl.l DecompressBytecode
 	ldx.w #$0000
-.logotiles:
+.logotiles:							; load the logo tiles
 	lda.l TestList+$1A0,x
 	sta.w VMDATAL
 	inx
@@ -152,7 +152,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	sta.b tmp1
 	jsl.l DecompressBytecode
 	ldx.w #$0000
-.blocktiles:
+.blocktiles:						; load the team block tiles
 	lda.l TestList,x
 	sta.w VMDATAL
 	inx
@@ -185,7 +185,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	cmp.w #$0002
 	bcc .nopo
 	jsl.l NewPO
-.nopo:
+.nopo:								; no playoff mode: start at the first option
 	stz.b d7
 	stz.b d0
 	jsl.l .nms
@@ -201,7 +201,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	inc.w seed
 	bne .seed
 	inc.w seed+2
-.seed:
+.seed:								; wait for the vblank handler, then read the pads
 	lda.b vbint
 	cmp.w #VBlank_SprPal			; VBlank_SprPal not run yet?
 	beq .frame
@@ -223,7 +223,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	lda.b DMAlistend
 	bne .dmaqueued
 	jsl.l QueueBackmapDMA
-.dmaqueued:
+.dmaqueued:							; vblank DMA queued
 	lda.w #VBlank_SprPal
 	sta.b vbint
 	dec.b d6
@@ -232,7 +232,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	jsl.l randoma					; random number 0 to A-1
 	sta.w OptTeam1
 	sta.w HomeTeam
-.team2:
+.team2:								; pick a second team different from the first
 	lda.w #NumofTeams
 	jsl.l randoma					; random number 0 to A-1
 	cmp.w OptTeam1
@@ -252,7 +252,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	cmp.w #$0001
 	bne .nopass
 	jsl.l GetPassWord
-.nopass:
+.nopass:							; no password set
 	lda.w #$0080
 	tsb.w PassWord
 	jml.l maketree
@@ -268,16 +268,16 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	jsl.l .nms
 	jsl.l .ps
 	jmp.w .idle
-.2:
+.2:									; Up/Down moves the cursor
 	bit.w #$0800
 	beq .3
 	lda.w #$FFFE
 	sta.b d0
 	jsl.l .nms
 	jsl.l .ps
-.back:
+.back:								; nothing changed
 	jmp.w .idle
-.3:
+.3:									; Left/Right changes the item
 	lda.w #$0001
 	sta.b d2
 	lda.b d1
@@ -287,7 +287,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	beq .back
 	lda.w #$FFFF
 	sta.b d2
-.4:
+.4:									; change the item and redraw
 	jsl.l .IncItem
 	jsl.l .ps
 	jmp.w .idle
@@ -316,7 +316,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	bne .ii0
 	lda.w #$0018
 	sta.b d4
-.ii0:
+.ii0:								; limits for the Players line
 	cpy.w #$0002
 	bne .ii1
 	lda.w #$0005
@@ -338,7 +338,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	tya
 	bne .npo
 	jml.l NewPO
-.npo:
+.npo:								; NewPO when the playoff option changes
 	cpy.w #$0004
 	bne .rts
 	jml.l NewPO
@@ -354,22 +354,22 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	bmi .lowneg
 	bvs .under
 	bra .iil1
-.lowneg:
+.lowneg:							; low limit compare
 	bvs .iil1
-.under:
+.under:								; below the low limit: clamp to the limit
 	lda.b d4
 	dec a
 	sta.b d3
-.iil1:
+.iil1:								; high limit compare
 	lda.b d3
 	sec
 	sbc.b d4
 	bmi .highneg
 	bvc .over
 	bra .rts
-.highneg:
+.highneg:							; high limit sign fixup
 	bvc .rts
-.over:
+.over:								; above the high limit: clamp to the limit
 	lda.b d5
 	sta.b d3
 	rtl
@@ -378,7 +378,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	sta.b d6
 	lda.w #$FFFE
 	sta.b d7
-.psloop:
+.psloop:							; print each line
 	inc.b d7
 	inc.b d7
 	stz.b d2
@@ -476,21 +476,21 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 		;   to d7
 	lda.b d7
 	sta.b d3
-.nms0:
+.nms0:								; move the cursor line
 	lda.b d7
 	clc
 	adc.b d0
 	sta.b d7
 	bpl .nms1
 	stz.b d7
-.nms1:
+.nms1:								; wrap the cursor line
 	lda.b d7
 	cmp.w #$000E
 	bcc .nms2
 	lda.b d7
 	sbc.b d0
 	sta.b d7
-.nms2:
+.nms2:								; skip lines hidden by the play mode
 	lda.w OptPlayMode
 	cmp.w #$0002
 	bcc .nmscp
@@ -499,7 +499,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	lda.b d7
 	cmp.w #$0002
 	beq .nms0
-.nmscp:
+.nmscp:								; skip the computer line in one-player mode
 	lda.w OptPlayMode
 	cmp.w #$0001
 	bne .nmst2
@@ -507,7 +507,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	beq .nmst2
 	cmp.w #$0007
 	bcc .nms0
-.nmst2:
+.nmst2:								; skip lines for the other modes
 	lda.w OptPlayMode
 	cmp.w #$0002
 	bcc .nms4
@@ -539,12 +539,12 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	cmp.w #$0002
 	bcs .po
 	jmp.w .rts
-.po:
+.po:								; playoff mode: check which line changed
 	lda.b d3
 	cmp.w #$0004
 	beq .team1
 	jmp.w .rts
-.team1:
+.team1:								; line 4 changed: set the limit in d1
 	lda.w #$0005
 	sta.b d1
 	rtl
@@ -574,8 +574,8 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	%String("One")
 .pl2:								;Team 1 and Team 2 (not used: .psdtp prints team names), Per. Length (30
 									;Seconds is beyond .pslim)
-.pl3:
-.pl4:
+.pl3:								; play length strings
+.pl4:								; play length strings
 	%String("5 Minutes")
 	%String("10 Minutes")
 	%String("20 Minutes")

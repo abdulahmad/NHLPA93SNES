@@ -6,14 +6,14 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	beq .vx
 	eor.w #$FFFF					; negate
 	inc a
-.vx:
+.vx:								; |Xvel| in tmp0
 	sta.b tmp0
 	lda.w Yvel,x
 	bit.w #$8000
 	beq .vy
 	eor.w #$FFFF					; negate
 	inc a
-.vy:
+.vy:								; speed = |Xvel|+|Yvel|
 	clc
 	adc.b tmp0
 	sta.b tmp0
@@ -23,7 +23,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	cmp.w #$1000
 	bcs .setspd
 	lda.w #$1000
-.setspd:
+.setspd:							; store the speed limit for the object
 	sta.w pspeed,x
 	dex
 	dex
@@ -32,7 +32,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	bne .scload
 	lda.w #$000F
 	tsb.w PadControlBits
-.scload:
+.scload:							; start the per-object loop with the first object
 	ldx.w #$0000
 	stx.b a3
 .top:								;each object: old position = position
@@ -58,14 +58,14 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	sbc.b d7
 	bpl .np
 	lda.w #$0000
-.np:
+.np:								; store the nopuck countdown
 	sta.w nopuck,x
 	lda.w nopuckb,x
 	sec
 	sbc.b d7
 	bpl .np2
 	lda.w #$0000
-.np2:
+.np2:								; store the second nopuck countdown
 	sta.w nopuckb,x
 	lda.w sflags3					; sflags3 bit 5: count frames on ice (loadTeamStruct)
 	bit.w #sf3icetime
@@ -75,13 +75,13 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	bit.w #$0080
 	beq .pn
 	ora.w #$FF00
-.pn:
+.pn:								; sign-extend the player number
 	sta.b d0
 	cmp.w #$0000
 	bmi .vel
 	asl.b d0
 	jsl.l loadTeamStruct			; a2 = team of X, a1 = the other
-.vel:
+.vel:								; apply velocity to position
 	lda.w SPA,x
 	cmp.w #SPAinjury1				; SPAinjury1: no movement
 	bne .slow
@@ -105,7 +105,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	lda.b d2+2
 	and.w #$00FF
 	sta.b d2
-.off:
+.off:								; apply Xvel
 	lda.w Xvel,x
 	sta.b mula
 	lda.b d2
@@ -146,7 +146,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	lda.w Xpos,x
 	adc.b mulres+2
 	sta.w Xpos,x
-.y2:
+.y2:								; apply Yvel
 	lda.w Yvel,x
 	beq .z
 	sta.b mula
@@ -178,7 +178,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	bne .z1
 	lda.w Zvel,x
 	beq .done
-.z1:
+.z1:								; apply gravity to Zvel
 	lda.b velstep
 	sta.b mula
 	lda.w Zvel,x					; Zvel -= gravstep
@@ -207,14 +207,14 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	bra .done
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .done
-.bsnd:
+.bsnd:								; random sound for a wiffed shot
 	lda.w seed
 	and.w #$0003
 	clc
 	adc.w #SFXshotwiff
 	pha
 	jsl.l sfx
-.done:
+.done:								; done moving: set the controller for this object
 	txa
 	lsr a
 	sta.b d6
@@ -227,7 +227,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	lda.w #-2						; d4 = -2: pad index of the puck carrier
 	sta.b d4
 	jsl.l setpads
-.tp:
+.tp:								; which pad controls this player?
 	lda.b d6
 	cmp.w c1playernum				; controller 1 player: doinput
 	bne .t0
@@ -239,7 +239,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	db $F7,$F5,$F2,$EF,$EC,$E9,$E6,$E3,$E1,$DE
 .decel2:							;with pfdoff
 	db $FF,$FF,$FE,$FE,$FE,$FD,$FD,$FD,$FC,$FC
-.t0:
+.t0:								; controller 2 player?
 	cmp.w c2playernum
 	bne .t1
 	jsl.l ReadJoy2					; read pad 2
@@ -269,7 +269,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	ldx.b a3
 	jsl.l loadTeamStruct			; loadTeamStruct, then the assignment
 	jsl.l jmlvector
-.cc:
+.cc:								; wall collision values for this object
 	lda.w Ypos,x
 	sta.b d3
 	stz.w Wallcos,x					; Wallcos = Wallsin = 0
@@ -305,7 +305,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	beq .ay
 	eor.w #$FFFF					; negate
 	inc a
-.ay:
+.ay:								; goal line crossing in Y
 	sec
 	sbc.w #$010D					; crossing y = +-269 (the goal line)?
 	sta.b tmp0
@@ -314,7 +314,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	beq .oy
 	eor.w #$FFFF					; negate
 	inc a
-.oy:
+.oy:								; compare with last frame's side
 	sec
 	sbc.w #$010D
 	eor.b tmp0
@@ -340,7 +340,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	sbc.b impactstep
 	bpl .nf1
 	lda.w #$0000
-.nf1:
+.nf1:								; clear the impact values
 	sta.w impact,x
 	sta.w limpact,x
 	lda.w frame,x					;injury frames: SPFfinjury inclusive, SPFPen
@@ -358,10 +358,10 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	bra .cx
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvs .cx
-.cl1:
+.cl1:								; clamp injured player X at -$60
 	lda.w #$FFA0
 	sta.w Xpos,x
-.cx:
+.cx:								; X limit check
 	lda.w Xpos,x
 	sec
 	sbc.w #$0060
@@ -370,10 +370,10 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	bra .next
 .neg2:								; signed compare: overflow flag corrects the sign
 	bvc .next
-.cl2:
+.cl2:								; clamp X to $60
 	lda.w #$0060
 	sta.w Xpos,x
-.next:
+.next:								; next object
 	inx
 	inx
 	stx.b a3
@@ -382,20 +382,20 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	jmp.w .top
 .lim:								;players faster than pspeed are slowed to it
 	ldx.w #$0016
-.lim1:
+.lim1:								; speed limit loop
 	lda.w Xvel,x
 	bit.w #$8000
 	beq .lvx
 	eor.w #$FFFF					; negate
 	inc a
-.lvx:
+.lvx:								; |Yvel| next
 	sta.b tmp0
 	lda.w Yvel,x
 	bit.w #$8000
 	beq .lvy
 	eor.w #$FFFF					; negate
 	inc a
-.lvy:
+.lvy:								; add |Xvel| and |Yvel|
 	clc
 	adc.b tmp0
 	cmp.w pspeed,x
@@ -419,7 +419,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	sta.b mula
 	jsl.l divs						; signed divide
 	sta.w Yvel,x
-.lnext:
+.lnext:								; next object
 	dex
 	dex
 	bpl .lim1
@@ -434,10 +434,10 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	bra .px2
 .neg3:								; signed compare: overflow flag corrects the sign
 	bvs .px2
-.px1:
+.px1:								; clamp puck X to -sideline
 	lda.w #$FF78
 	sta.w puckx
-.px2:
+.px2:								; puck X upper limit
 	lda.w puckx
 	sec
 	sbc.w #sideline					; x <= $88
@@ -447,7 +447,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	bra .py
 .neg4:								; signed compare: overflow flag corrects the sign
 	bvc .py
-.px3:
+.px3:								; clamp puck X to sideline
 	lda.w #sideline
 	sta.w puckx
 .py:								;puck on the ice within |y| < 318: keep it inside the boards
@@ -458,7 +458,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	beq .py1
 	eor.w #$FFFF					; negate
 	inc a
-.py1:
+.py1:								; puck Y lower limit
 	cmp.w #$013E
 	bcs .cy
 	lda.w pucky
@@ -469,10 +469,10 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	bra .py3
 .neg5:								; signed compare: overflow flag corrects the sign
 	bvs .py3
-.py2:
+.py2:								; clamp puck Y to the lower limit
 	lda.w #$FEDB
 	sta.w pucky
-.py3:
+.py3:								; puck Y upper limit
 	lda.w pucky
 	sec
 	sbc.w #$012A					; y <= $12A
@@ -482,7 +482,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	bra .cy
 .neg6:								; signed compare: overflow flag corrects the sign
 	bvc .cy
-.py4:
+.py4:								; clamp puck Y to the upper limit
 	lda.w #$012A
 	sta.w pucky
 .cy:								;carried: carriedy = pucky
