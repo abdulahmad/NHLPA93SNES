@@ -4,6 +4,7 @@ asseben:							;Assignment: player X comes onto the ice from the bench
 	lda.w pflags,x					; flags
 	bit.w #pfna
 	beq .nna						; not new
+;first time: bench slot y = 14 * slot (slot from the player number), x = -Sideline; step over the wall
 	and.w #~pfna&$FFFF				; clear the new flag
 	sta.w pflags,x
 	stz.w Xvel,x					; no speed

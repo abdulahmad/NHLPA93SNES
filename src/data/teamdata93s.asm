@@ -56,6 +56,27 @@ AllStarsEast:						;team 24
 .pad:								; team palettes (home and visitor)
 	incbin "../../Extracted/Graphics/Pals/ASEh.pal"	; home colours (SNES BGR555, 16 colours)
 	incbin "../../Extracted/Graphics/Pals/ASEv.pal"	; visitor colours
+;------------------------
+;q - scoring odds offense row (bits 4-6, SetScore)
+;r - scoring odds defense row (bits 0-2)
+;e - penalty kill deficit (negated while killing a penalty)
+;b - power play bonus
+
+;h - home bonus
+;v - visitor bonus (negated)
+;x - not read
+;x - not read
+
+;s - shooting
+;k - skating
+;p - passing
+;d - defense
+
+;c - checking
+;f - fighting
+;g - goalkeeping
+;o - overall
+;------------------------
 .sr:	%hex2($7020,$00D6,$9999,$9099)	; qreb,hvxx,skpd,cfgo
 .godds:								;starting goalie weights, 4 nibbles (PickStartingGoalie)
 	db 216,160
@@ -67,6 +88,26 @@ AllStarsEast:						;team 24
 	db 01,19,20,16,05,12,04,00		; line 5, power play 2
 	db 01,21,22,16,08,15,07,00		; line 6, penalty kill 1
 	db 01,20,17,15,07,16,08,00		; line 7, penalty kill 2
+;------------------------
+;u - uniform # x10
+;n - uniform # x1
+;w - weight
+;l - leg power
+;s - speed
+;o - offensive awareness
+;d - defensive awareness
+;p - shot power / NA for goalie
+
+;c - checking strength / NA
+;h - shooting hand / glove hand
+;g - stickhandling / glove left saves
+;a - shooting accuracy / glove right saves
+
+;e - endurance / stick right saves
+;y - shot/pass decision / stick left saves
+;t - passing accuracy / consistency
+;m - aggressiveness (PIM) / NA
+;------------------------
 .pld:								;unwl,sodp,chga,eytm
 	%Player("Patrick Roy", $335F,$AFFF,$0100,$FFFF)
 	%Player("Mike Richter", $355D,$ADDD,$0100,$DDDD)

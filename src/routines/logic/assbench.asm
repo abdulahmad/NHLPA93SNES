@@ -35,11 +35,13 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 	sta.w temp3,x					; target x at the bench
 	stz.w temp1,x					; clear the door timer
 .nna:
+;may switch to a position change or reassign to abench
 	lda.w newpnum,x					; same player: just change position
 	cmp.w pnum,x					; same player: only the position changes
 	bne .dec
 	jmp.w .nobench
 .dec:
+;temp1 counts frames; re-check arrival every 8
 	lda.w temp1,x					; count the door timer down
 	sec
 	sbc.b d7

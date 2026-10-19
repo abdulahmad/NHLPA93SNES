@@ -3,6 +3,7 @@ SetShotMode:						;Start a shot by player X: shot mode, aim at the goal, shot an
 	sta.w passdir					; no direction
 	lda.w #sfssdir
 	tsb.w sflags					; shot mode
+;aim at the goal being attacked: (d0,d1) = vector from player to goal (28 beyond center)
 	stz.b d0						; x of the goal
 	lda.w #$0128					; $128: goal y + 40
 	sta.b d1						; goal y

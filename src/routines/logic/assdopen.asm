@@ -8,6 +8,7 @@ assdopen:							;Assignment: put player X in the penalty box
 	lda.w #$0001					; team 1: add 1
 	sta.b d0
 .1:
+;PBnum: high nibble = home box count, low nibble = visitors
 	lda.w PBnum						; penalty box count
 	clc
 	adc.b d0

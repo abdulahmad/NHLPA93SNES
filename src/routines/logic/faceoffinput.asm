@@ -23,6 +23,7 @@ faceoffinput:						;Pad input for a player taking a face off
 	sta.b [a0]						; store it
 	lda.w pf2aip,x					; pf2aip set: already pulling
 	bne .rtl
+;B swings at the puck (once: pf2aip marks it); otherwise ready stance
 	lda.b d1						; buttons
 	bit.w #bbut						; B button
 	beq .1							; no

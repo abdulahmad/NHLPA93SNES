@@ -7,6 +7,7 @@ asspenalty:							;Assignment: player X skates to the penalty box, glides in and
 	lda.w pflags,x					; new assignment
 	bit.w #pfna
 	beq .nna
+;first time: unavailable, joystick off him, target = box slot y, x = Sideline
 	and.w #~pfna&$FFFF
 	ora.w #pf2unav
 	sta.w pflags,x
@@ -84,6 +85,7 @@ asspenalty:							;Assignment: player X skates to the penalty box, glides in and
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .st0
 .near:
+;wait out temp1 in steps of 8
 	lda.w temp1,x					; timer
 	sec
 	sbc.b d7						; minus the frame count
@@ -93,6 +95,7 @@ asspenalty:							;Assignment: player X skates to the penalty box, glides in and
 .step:
 	adc.w #8						; reload it
 	sta.w temp1,x
+;glide in, turn toward the wall (facedir 6 or 2 by handedness)
 	lda.w #SPAglide					; SPAglide, pfnc
 	sta.b d1
 	sta.w pfnc,x					; no collisions

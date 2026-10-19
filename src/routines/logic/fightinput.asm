@@ -11,6 +11,7 @@ fightinput:							;Pad input in a fight: move and punch
 .input:
 	lda.b d1						; keep the presses
 	pha
+;skate with the dpad (unless no direction) while fighting
 	lda.b d0						; pad direction
 	sta.b d2
 	bit.w #$0008					; no direction
@@ -19,6 +20,7 @@ fightinput:							;Pad input in a fight: move and punch
 	sta.b d2
 	jsl.l playeracc					; skate that way
 .noa:
+;keep the fighter face to face and near the fight scroll x (xc1): brake Xvel when it points away
 	lda.w xc1						; view x
 	clc
 	adc.w #$000C					; plus 12

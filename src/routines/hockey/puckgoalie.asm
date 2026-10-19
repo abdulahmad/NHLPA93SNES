@@ -35,6 +35,10 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	sbc.w facedir,y
 	and.w #$0007					; 0-7
 	sta.b d0
+;0 puck straight in front of goalie
+;1-3 puck to goalies right
+;4 puck straight behind goalie
+;5-7 puck to goalies left
 	and.w #$0003					; front or back?
 	sta.b d1
 	bne .lr

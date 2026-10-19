@@ -48,6 +48,7 @@ changeplayer:						;Switch controller d4 to the teammate nearest the puck, or sw
 	sta.b d3
 	lda.w #$FFFF					; d5 = best distance^2
 	sta.b d5+2
+;search the 6 teammates of controller d4 (d3 = the other controller) for the one nearest the lead point
 	ldx.w #$0000
 	lda.w cont1team,y				; controller on the home team: players 0-5, else 6-11
 	cmp.w #$0001

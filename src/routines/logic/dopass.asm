@@ -48,6 +48,8 @@ dopass:								;Pass the puck in the pass direction, to the best teammate there 
 	sta.w passspeed
 	lda.w #$FFFF					; no candidate yet
 	sta.b d4+2
+;find the teammate (own 6 players) with the lowest score = dist^2 + angle^2 from passdir; players more than
+;one direction step off passdir (angle^2 > 256^2) are skipped
 	lda.w #$0005					; 6 players
 	sta.b d3
 	stz.b a1						; a1 = first player of the team

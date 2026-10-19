@@ -11,6 +11,7 @@ assfaceoffpl:						;Assignment: the players taking the face off
 	beq .nna						; not new
 	and.w #~pfna&$FFFF				; clear the new flag
 	sta.w pflags,x
+;first time: clear temp1
 	stz.w temp1,x					; temp1 = 0
 .nna:
 	lda.w #fofdata2					; a0 = fofdata2, +4 for the visitors
@@ -38,6 +39,7 @@ assfaceoffpl:						;Assignment: the players taking the face off
 	lda.w pflags,x					; flags
 	bit.w #pfjoycon					; joystick: the player pulls
 	bne .rts						; human: leave
+;computer: start the swing only once
 	lda.w pf2aip,x					; set pf2aip, test the old value
 	pha
 	lda.w #$0001					; new value

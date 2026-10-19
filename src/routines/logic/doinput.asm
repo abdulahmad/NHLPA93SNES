@@ -38,6 +38,7 @@ doinput:							;Pad input for player X. d0 = pad directions, d1 = new buttons, d
 	beq .nolock
 	jmp.w .islocked
 .nolock:
+;fighting: punch controls
 	lda.w pf2fight,x				; fighting?
 	beq .nofight
 	jml.l fightinput				; fight input
