@@ -1,52 +1,55 @@
 ; Animation (SPA) and sprite frame (SPF) names, as in 93G frames93.asm.
 ;
 ; First the SPF equates: the first frame number of each group of frames in the SNES sprite sets, each one the
-; previous plus the size of its group. From SPFpuck on the frames are one lower than in 93G (no SPFreplay
-; frame), and the goalie and the groups new in 93 are laid out differently.
+; previous plus the size of its group ("New" marks groups added in 93). From SPFpuck on the frames are one
+; lower than in 93G (no SPFreplay frame), and the goalie and the groups new in 93 are laid out differently.
 ;
 ; Then SPAlist and one table per animation, in the order of the SPA numbers. Each SPA equate sits above its
 ; table and an assert checks it against the table.
 
 ; Sprite Frame (SPF) base indices
-SPFskatewp		=	1				; 1
-SPFskate		=	SPFskatewp+40	; 41
-SPFturnl		=	SPFskate+40		; 81
-SPFturnr		=	SPFturnl+8		; 89
-SPFswing		=	SPFturnr+8		; 97
-SPFstop			=	SPFswing+48		; 145
-SPFskateb		=	SPFstop+16		; 161
-SPFcelebrate	=	SPFskateb+24	; 185
-SPFpump			=	SPFcelebrate+16	; 201
-SPFcup			=	SPFpump+16		; 217
-SPFhipl			=	SPFcup+8		; 225
-SPFhipr			=	SPFhipl+8		; 233
-SPFshoulderl	=	SPFhipr+8		; 241
-SPFshoulderr	=	SPFshoulderl+8	; 249
-SPFsweep		=	SPFshoulderr+8	; 257
-SPFfallback		=	SPFsweep+16		; 273
-SPFfallfwd		=	SPFfallback+32	; 305
-SPFduck			=	SPFfallfwd+32	; 337
-SPFhold			=	SPFduck+8		; 345
-SPFgloves		=	SPFhold+8		; 353
-SPFfight		=	SPFgloves+1		; 354
-SPFfinjury		=	SPFfight+17		; 371
-SPFPen			=	SPFfinjury+6	; 377
-SPFarrow		=	SPFPen+7		; 384
-SPFpad			=	SPFarrow+6		; 390
-SPFpuck			=	SPFpad+3		; 393, 93G 394
-SPFgoal			=	SPFpuck+11		; 404, 93G 405
-SPFGoalie		=	SPFgoal+2		; 406, 93G 407
-SPFSiren		=	SPFGoalie+112	; 518, 93G 555
+SPFskatewp		=	1				; 1 (skating, stick down)
+SPFskate		=	SPFskatewp+40	; 41 (skating, stick up)
+SPFturnl		=	SPFskate+40		; 81 (turning left)
+SPFturnr		=	SPFturnl+8		; 89 (turning right)
+SPFswing		=	SPFturnr+8		; 97 (pass and shot swings)
+SPFstop			=	SPFswing+48		; 145 (scrape stop)
+SPFskateb		=	SPFstop+16		; 161 (skating backwards)
+SPFcelebrate	=	SPFskateb+24	; 185 (celebrating)
+SPFpump			=	SPFcelebrate+16	; 201 (arm pump)
+SPFcup			=	SPFpump+16		; 217 (skating with the cup)
+SPFhipl			=	SPFcup+8		; 225 (hip check left)
+SPFhipr			=	SPFhipl+8		; 233 (hip check right)
+SPFshoulderl	=	SPFhipr+8		; 241 (shoulder check left)
+SPFshoulderr	=	SPFshoulderl+8	; 249 (shoulder check right)
+SPFsweep		=	SPFshoulderr+8	; 257 (sweep check)
+
+SPFfallback		=	SPFsweep+16		; 273 (falling backward)
+SPFfallfwd		=	SPFfallback+32	; 305 (falling forward)
+SPFduck			=	SPFfallfwd+32	; 337 (ducking)
+SPFhold			=	SPFduck+8		; 345 (holding)
+SPFgloves		=	SPFhold+8		; 353 (gloves on the ice (fights))
+SPFfight		=	SPFgloves+1		; 354 (fighting)
+SPFfinjury		=	SPFfight+17		; 371 - New (fight injury)
+SPFPen			=	SPFfinjury+6	; 377 (frames used by the wall jump animations)
+
+SPFarrow		=	SPFPen+7		; 384 (arrows for off screen players)
+SPFpad			=	SPFarrow+6		; 390 (face off pads)
+SPFpuck			=	SPFpad+3		; 393 (puck), 93G 394
+SPFgoal			=	SPFpuck+11		; 404 (goal), 93G 405
+SPFGoalie		=	SPFgoal+2		; 406 (goalie), 93G 407
+SPFSiren		=	SPFGoalie+112	; 518 (siren), 93G 555
+
 SPFfaceoff		=	SPFSiren+14		; 532: big faceoff sprites (frame 1; checkfo adds SPFfaceoff-1)
 SPFsmallfont	=	SPFfaceoff+10	; 542: pad-label glyphs (the glyph index is added)
 SPFzamboni		=	SPFsmallfont+15	; 557: zamboni
-SPFflip			=	SPFzamboni+1	; 558, 93G 625
-SPFstumble		=	SPFflip+8		; 566, 93G 601
-SPFhook			=	SPFstumble+24	; 590, 93G 585
-SPFcatch		=	SPFhook+16		; 606, 93G 569
-SPFbglass		=	SPFcatch+16		; 622, 93G 645
-SPFgready		=	SPFbglass+5		; 627, 93G 539
-SPFgdive		=	SPFgready+16	; 643, 93G 519
+SPFflip			=	SPFzamboni+1	; 558 - New (flipping over), 93G 625
+SPFstumble		=	SPFflip+8		; 566 - New (stumbling), 93G 601
+SPFhook			=	SPFstumble+24	; 590 - New (hooking), 93G 585
+SPFcatch		=	SPFhook+16		; 606 - New (catching a puck hit), 93G 569
+SPFbglass		=	SPFcatch+16		; 622 - New (glass bang), 93G 645
+SPFgready		=	SPFbglass+5		; 627 - New (goalie ready), 93G 539
+SPFgdive		=	SPFgready+16	; 643 - New (goalie dive), 93G 519
 SPFcrowd		=	SPFgdive+16		; 659: crowd and penalty-box sprites; first frame stored as 6-byte pieces
 
 SPAlist:							;sprite animation pointer list
