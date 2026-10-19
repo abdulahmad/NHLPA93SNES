@@ -1,14 +1,14 @@
-; Team record offsets, as in 93G teamdata93.asm
-Playerdata	=	0
-Palettedata	=	2
-Teamname	=	4
-LineSets	=	6
-ScoutReport	=	8
-GoalieOdds	=	10
-NumofTeams	=	26					; clubs 0-23, AllStarsEast 24, AllStarsWest 25
+; Team data. TeamList points to one record per team, the All-Star teams included. A record holds the
+; players, colours, name, lines, scouting report and scoring odds. The playoff seeds follow; the credits are in
+; text/Credits.asm.
+;
+; Record layout (the all-star records come first in the file, then the 24 teams): six word offsets from .0
+; (Playerdata, Palettedata, Teamname, LineSets, ScoutReport, GoalieOdds), then the palettes, scouting
+; ratings, scoring odds, line sets (7 lines of 8 bytes), players, team name and abbreviation.
 
 ; ---- TeamList ----
-TeamList:							;long pointer to each team record (TeamList index = team number)
+TeamList:							;table of long pointers to the team records, indexed by team number
+									;(HomeTeam/VisTeam); the 2 all-star teams are last
 	dd Boston						; team 0
 	dd Buffalo						; team 1
 	dd Calgary						; team 2
@@ -37,6 +37,14 @@ TeamList:							;long pointer to each team record (TeamList index = team number)
 	dd AllStarsWest					; team 25
 	assert (TeamListEnd-TeamList)/4 == NumofTeams
 TeamListEnd:
+
+Playerdata	=	0					;record offset of the word offset to the player data (.pld)
+Palettedata	=	2					;record offset of the word offset to the palettes (.pad)
+Teamname	=	4					;record offset of the word offset to the team name (.tn)
+LineSets	=	6					;record offset of the word offset to the line sets (.ls)
+ScoutReport	=	8					;record offset of the word offset to the scouting report ratings (.sr)
+GoalieOdds	=	10					;record offset of the word offset to the starting goalie weights (.godds)
+NumofTeams	=	26					;number of teams in TeamList (26)
 
 
 ; ---- AllStarsEast ----
