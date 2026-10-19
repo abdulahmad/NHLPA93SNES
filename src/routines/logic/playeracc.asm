@@ -1,21 +1,21 @@
 playeracc:							;Accelerate player X in direction d2 by his weight and leg strength, up to
 									;his top speed; uses energy
-	asl.b d2
+	asl.b d2						; 4 bytes per direction entry
 	asl.b d2
 	ldx.b d2
-	lda.l dirtab8F+2,x
+	lda.l dirtab8F+2,x				; y increment of the direction
 	sta.b mula
 	lda.b d7
 	sta.b mulb
 	jsl.l muls16					; signed multiply
-	lsr a
+	lsr a							; scale down by 4
 	lsr a
 	bit.w #$2000
 	beq .sx
 	ora.w #$C000
 .sx:
 	sta.b d1
-	lda.l dirtab8F,x
+	lda.l dirtab8F,x				; x increment of the direction
 	sta.b mula
 	lda.b d7
 	sta.b mulb
@@ -28,19 +28,19 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 .sy:
 	sta.b d0
 	ldx.b a3
-	lda.w Wallsin,x
+	lda.w Wallsin,x					; wall normal y: don't push into the wall
 	beq .nox
 	eor.b d0
 	bpl .nox
-	stz.b d0
+	stz.b d0						; pushing into the wall in x: cancel x
 .nox:
-	lda.w Wallcos,x
+	lda.w Wallcos,x					; wall normal x
 	beq .noy
 	eor.b d1
 	bmi .noy
-	stz.b d1
+	stz.b d1						; pushing into the wall in y: cancel y
 .noy:
-	lda.w weight,x
+	lda.w weight,x					; weight / 16
 	lsr a
 	lsr a
 	lsr a
@@ -50,10 +50,10 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	clc
 	adc.w #$0020
 	clc
-	adc.w legstr,x
+	adc.w legstr,x					; plus leg strength
 	sta.b d2
 	lda.w position,x
-	bne .ng
+	bne .ng							; goalies add leg strength again plus 8
 	lda.b d2
 	clc
 	adc.w legstr,x
@@ -62,7 +62,7 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	sta.b d2
 .ng:
 	lda.b d2
-	pha
+	pha								; keep the acceleration factor
 	sta.b mula
 	lda.b d0
 	sta.b mulb
@@ -77,11 +77,11 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	ror a
 	lsr.b mulres+2
 	ror a
-	sta.b mula
+	sta.b mula						; increment * factor / 32
 	lda.b d7
 	sta.b mulb
 	jsl.l muls16					; signed multiply
-	adc.w Xvel,x
+	adc.w Xvel,x					; new velocity = old + increment
 	sta.b d0
 	sta.b mula
 	sta.b mulb
@@ -108,12 +108,12 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	lda.b d7
 	sta.b mulb
 	jsl.l muls16					; signed multiply
-	adc.w Yvel,x
+	adc.w Yvel,x					; new y velocity = old + increment
 	sta.b d1
 	sta.b mula
 	sta.b mulb
 	jsl.l muls32					; signed 32-bit multiply
-	adc.b d2
+	adc.b d2						; d3 = sum of the squares
 	sta.b d3
 	lda.b mulres+2
 	adc.b d2+2
@@ -122,8 +122,8 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	pha
 	lda.b d0
 	pha
-	jsl.l getpde
-	lda.w legspd,x
+	jsl.l getpde					; energy of this player
+	lda.w legspd,x					; leg speed
 	sta.b mula
 	lda.b d0
 	lsr a
@@ -143,7 +143,7 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	asl a
 	asl a
 	tax
-	lda.l MaxSpeed,x
+	lda.l MaxSpeed,x				; max speed squared for the rating level
 	sta.b d2
 	lda.l MaxSpeed+2,x
 	sta.b d2+2
@@ -152,36 +152,36 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	sta.b d0
 	pla
 	sta.b d1
-	lda.b d2
+	lda.b d2						; max speed check
 	cmp.b d3
 	lda.b d2+2
 	sbc.b d3+2
-	bcc .sube
+	bcc .sube						; too fast: keep the old velocity
 	lda.b d0
-	sta.w Xvel,x
+	sta.w Xvel,x					; store the new velocity
 	lda.b d1
 	sta.w Yvel,x
 .sube:
-	lda.w OptLine
+	lda.w OptLine					; energy only drains when line changes are on
 	bne .rtl
-	lda.w seed
+	lda.w seed						; random value
 	and.w #$003F
-	bne .rtl
+	bne .rtl						; only 1 call in 64
 	jsl.l getpde
 	lda.b d0
 	sec
-	sbc.w #$0021
+	sbc.w #$0021					; lower the energy by 33
 	sta.b d0
 	sec
 	sbc.w #$0C00
-	bmi .neg
+	bmi .neg						; below $C00: just lower it
 	bvc .add
 .set:
 	jmp.w setpde
 .neg:
 	bvc .set
 .add:
-	lda.w endurance,x
+	lda.w endurance,x				; above $C00: also add the endurance byte
 	sta.b d2
 	clc
 	adc.b d0
