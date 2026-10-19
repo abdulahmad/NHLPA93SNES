@@ -1,17 +1,18 @@
-; Bank $89: replay music. Files in ROM order (docs/file-map.md).
+; Bank $89: goalie save sprites (sets 11 and 13), the horizontal ref tiles, and the replay and music
+; routines. Files in ROM order (docs/file-map.md).
 
 if pc() < $898000
 	org $898000
 endif
 SpriteSet11:						;frame set 11 (goal siren): frames 518-531
 	incbin "../../Extracted/Graphics/Sprites/Sprites518_531.sanim"
-incsrc "../routines/hockey/ReplayMode.asm"
+incsrc "../routines/hockey/replay/ReplayMode.asm"
 SpriteSet13:						;frame set 13 (goalie catch, glass and save): frames 606-658
 	incbin "../../Extracted/Graphics/Sprites/Sprites606_658.sanim"
-incsrc "../routines/penalty/printscores1.asm"
-incsrc "../routines/penalty/PrintPerLabel.asm"
-incsrc "../routines/penalty/PrintTeamNameAndScore.asm"
-incsrc "../routines/penalty/nullrtl89.asm"
+incsrc "../routines/penalty/scoreboard/printscores1.asm"
+incsrc "../routines/penalty/scoreboard/PrintPerLabel.asm"
+incsrc "../routines/penalty/scoreboard/PrintTeamNameAndScore.asm"
+incsrc "../routines/penalty/util/nullrtl89.asm"
 incsrc "../routines/sound/p_music_vblank.asm"
 
 RefTilesHor:						;packed ref window tiles for the horizontal rink (104 tiles,
@@ -29,11 +30,11 @@ incsrc "../routines/sound/StartSong2.asm"
 incsrc "../routines/sound/StartSong3.asm"
 incsrc "../routines/sound/StartSong4.asm"
 incsrc "../routines/sound/StartSong5.asm"
-incsrc "../routines/middle/CopyWords.asm"
-incsrc "../routines/hockey/ClearRosterName.asm"
-incsrc "../routines/hockey/GetRosterEntry89.asm"
-incsrc "../routines/hockey/FinalizeTextBuffer.asm"
-incsrc "../routines/hockey/StartGame.asm"
-incsrc "../routines/hockey/restoreteams.asm"
-incsrc "../routines/logic/EvadePC.asm"
-incsrc "../routines/logic/asswingd.asm"
+incsrc "../routines/middle/util/CopyWords.asm"
+incsrc "../routines/hockey/teams/ClearRosterName.asm"
+incsrc "../routines/hockey/teams/GetRosterEntry89.asm"
+incsrc "../routines/print/FinalizeTextBuffer.asm"
+incsrc "../routines/hockey/game/StartGame.asm"
+incsrc "../routines/hockey/game/restoreteams.asm"
+incsrc "../routines/logic/skating/EvadePC.asm"
+incsrc "../routines/logic/assignments/asswingd.asm"

@@ -1,4 +1,5 @@
-; Bank $84: scouting. Files in ROM order (docs/file-map.md).
+; Bank $84: goalie sprites (set 9), the scouting report text, the hot spot list, and the roster and
+; scouting routines. Files in ROM order (docs/file-map.md).
 
 if pc() < $848000
 	org $848000
@@ -14,18 +15,18 @@ FaceOffMap:							;the 12 x 10 faceoff box map (tiles from FaceOffTiles, attribu
 									;copied into textmap by puckfaceoff2
 	incbin "../../Extracted/Graphics/FaceOff.smap"
 
-incsrc "../routines/middle/ConvertByteToDigits.asm"
-incsrc "../routines/hockey/UpdateRosterPlayers.asm"
-incsrc "../routines/hockey/UpdateRosterPlayer.asm"
-incsrc "../routines/hockey/SlideOutRosterPlayer.asm"
-incsrc "../routines/hockey/SetupNextPlayer.asm"
-incsrc "../routines/hockey/PickRosterAnim.asm"
-incsrc "../routines/hockey/GetRosterEntry.asm"
-incsrc "../routines/hockey/SkaterRosterAnims.asm"
-incsrc "../routines/hockey/GoalieRosterAnims.asm"
-incsrc "../routines/hockey/RosterAnimScripts.asm"
-incsrc "../routines/hockey/RosterOrderTable.asm"
-incsrc "../routines/hockey/UpdateTeamSprites.asm"
+incsrc "../routines/middle/util/ConvertByteToDigits.asm"
+incsrc "../routines/hockey/teams/UpdateRosterPlayers.asm"
+incsrc "../routines/hockey/teams/UpdateRosterPlayer.asm"
+incsrc "../routines/hockey/teams/SlideOutRosterPlayer.asm"
+incsrc "../routines/hockey/teams/SetupNextPlayer.asm"
+incsrc "../routines/hockey/teams/PickRosterAnim.asm"
+incsrc "../routines/hockey/teams/GetRosterEntry.asm"
+incsrc "../routines/hockey/teams/SkaterRosterAnims.asm"
+incsrc "../routines/hockey/teams/GoalieRosterAnims.asm"
+incsrc "../routines/hockey/teams/RosterAnimScripts.asm"
+incsrc "../routines/hockey/teams/RosterOrderTable.asm"
+incsrc "../routines/hockey/display/UpdateTeamSprites.asm"
 
 HotList:							;hot spot (stick blade) x, y bytes for every sprite frame, read by GetHot
 	incbin "../../Extracted/Graphics/HotList.bin"
@@ -36,21 +37,21 @@ RinkLogoTiles:						;packed rink logo tiles (14 tiles, $1C0 bytes unpacked), sen
 	incbin "../../Extracted/Graphics/RinkLogoTiles.chr.pak"
 RinkLogoTilesEnd:					; end of RinkLogoTiles
 
-incsrc "../routines/hockey/UpdateScoutingDisplay.asm"
-incsrc "../routines/hockey/ScrollDisplayUp.asm"
+incsrc "../routines/hockey/screens/UpdateScoutingDisplay.asm"
+incsrc "../routines/hockey/screens/ScrollDisplayUp.asm"
 
 PlayoffTiles:						;packed playoff screen palette and tiles (decompressor
 									;DecompressBytecode): 128 colors, then 6 tiles; PlayoffScreen sends them
 									;to vram $1000
 	incbin "../../Extracted/Graphics/PlayoffTiles.chr.pak"
 
-incsrc "../routines/video/InitSortObjects.asm"
-incsrc "../routines/video/SsoInitTable.asm"
-incsrc "../routines/video/FfoInitTable.asm"
-incsrc "../routines/video/SortObjInitTable.asm"
-incsrc "../routines/middle/Readjoy12.asm"
+incsrc "../routines/video/objects/InitSortObjects.asm"
+incsrc "../routines/video/objects/SsoInitTable.asm"
+incsrc "../routines/video/objects/FfoInitTable.asm"
+incsrc "../routines/video/objects/SortObjInitTable.asm"
+incsrc "../routines/middle/input/Readjoy12.asm"
 incsrc "../routines/stats/DisplayStats.asm"
-incsrc "../routines/penalty/DisplayStats_sslist.asm"
+incsrc "../routines/stats/DisplayStats_sslist.asm"
 incsrc "../routines/stats/GetNameandAttrib.asm"
 incsrc "../routines/stats/attribjmp.asm"
 incsrc "../routines/stats/AttribStatus.asm"
