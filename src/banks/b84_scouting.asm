@@ -4,7 +4,7 @@ if pc() < $848000
 	org $848000
 endif
 SpriteSet9:							;frame set 9: frames 406-461
-	incbin "../../Extracted/Graphics/Sprites/Sprites09.sanim"
+	incbin "../../Extracted/Graphics/Sprites/Sprites406_461.sanim"
 
 ScoutingReportText:					;scouting report strings (read by UpdateScoutingDisplay)
 	incbin "../../Extracted/Text/ScoutingReportText.bin"

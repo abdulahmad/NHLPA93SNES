@@ -6,7 +6,7 @@ Formats (see docs/file-formats.md):
   *.chr       SNES 4bpp planar tiles, 32 bytes per 8x8 tile
   *.smap      SNES BG map words: vflip 15, hflip 14, priority 13, palette 12-10, tile 9-0
   *.spal      SNES palette, BGR555 words (16 colours per palette row); the team *.pal files hold 93G words (see team_colours)
-  *.sanim     sprite frame set: header, first piece of each frame, pieces, tiles (Extracted/Graphics/Sprites/SpritesNN.sanim)
+  *.sanim     sprite frame set: header, first piece of each frame, pieces, tiles (Extracted/Graphics/Sprites/Sprites<first>_<last>.sanim)
 
 Commands:
   unpack IN [-o OUT]                  unpack a .pak file (or --rom ADDR: a packed stream in nhlpa93retail.sfc)
@@ -211,10 +211,16 @@ def asm_words(line):
         return None
 
 
+def sanim_path(n):
+    """Set n's file: Sprites<first frame>_<last frame>.sanim (the sets are in frame order, so the names sort in set order)."""
+    files = sorted(f for f in os.listdir(SPRITES) if f.endswith('.sanim'))
+    return os.path.join(SPRITES, files[n])
+
+
 def read_sanim(n):
-    """Sprites%02d.sanim: header (frames, pieces, tiles, offset of the pieces, offset of the tiles, all words), the first piece
+    """A Sprites<first>_<last>.sanim file: header (frames, pieces, tiles, offset of the pieces, offset of the tiles, all words), the first piece
     of each frame (+1 for the end), the pieces, then the 4bpp tiles. Returns the set dict, its pieces and its tiles."""
-    d = open(os.path.join(SPRITES, 'Sprites%02d.sanim' % n), 'rb').read()
+    d = open(sanim_path(n), 'rb').read()
     frames, pieces, tiles, poff, toff = struct.unpack_from('<5H', d, 0)
     starts = list(struct.unpack_from('<%dH' % (frames + 1), d, 10))
     size = (toff - poff) // pieces
@@ -223,7 +229,7 @@ def read_sanim(n):
 
 
 def sprite_sets():
-    """The 15 frame sets of FrameSetTable ($8FE67D), read from Extracted/Graphics/Sprites/Sprites00-14.sanim: number, first global
+    """The 15 frame sets of FrameSetTable ($8FE67D), read from Extracted/Graphics/Sprites/Sprites*.sanim: number, first global
     frame (sprframe; frame 0 is no frame), piece start of each frame (+1 for the end), piece and tile counts, piece size."""
     sets, base = [], 1
     for n in range(15):

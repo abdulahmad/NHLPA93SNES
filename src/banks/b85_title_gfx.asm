@@ -4,7 +4,7 @@ if pc() < $858000
 	org $858000
 endif
 SpriteSet4:							;frame set 4 (hip, shoulder and sweep checks): frames 225-272
-	incbin "../../Extracted/Graphics/Sprites/Sprites04.sanim"
+	incbin "../../Extracted/Graphics/Sprites/Sprites225_272.sanim"
 incsrc "../routines/hockey/GetShifter.asm"
 
 Title1Map:							;the title screen backdrop, packed (map, palette, tiles)

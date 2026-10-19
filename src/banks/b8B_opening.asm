@@ -10,7 +10,7 @@ incsrc "../routines/hockey/Opening4.asm"
 incsrc "../routines/hockey/ReadPassBits.asm"
 incsrc "../routines/hockey/ResolveGames.asm"
 SpriteSet5:							;frame set 5 (falls: SPFfallback, SPFfallfwd): frames 273-336
-	incbin "../../Extracted/Graphics/Sprites/Sprites05.sanim"
+	incbin "../../Extracted/Graphics/Sprites/Sprites273_336.sanim"
 incsrc "../routines/print/printbig.asm"
 incsrc "../routines/logic/asswingo.asm"
 incsrc "../routines/video/showref.asm"

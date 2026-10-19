@@ -22,7 +22,7 @@ part (`s` for SNES): the SNES files are not the same as the Genesis ones, so the
 | Genesis | SNES | Notes |
 |---------|------|-------|
 | `X.map.jim` | `X.map.sjim` | screen container: map, palette and tiles in one file |
-| `Sprites.anim`, `X.anim` | `SpritesNN.sanim` | sprite frame sets |
+| `Sprites.anim`, `X.anim` | `Sprites<first>_<last>.sanim` | sprite frame sets |
 | `X.pal` | `X.pal` (team palettes), `X.spal` (BGR555) | the team palettes are the same bytes as the 93G files |
 | inside `X.map.jim` | `X.smap` | the Genesis keeps a map inside its `.map.jim`; the SNES game also has maps that are not packed and share tiles, so they are files of their own |
 | inside `X.map.jim` / `X.anim` | `X.chr`, `X.chr.pak` | tiles without a map: 4bpp planar, raw or packed |
@@ -32,7 +32,7 @@ part (`s` for SNES): the SNES files are not the same as the Genesis ones, so the
 | Extension | Format | Files |
 |-----------|--------|-------|
 | `.map.sjim` | Packed screen: the same compression as the 93G `.map.jim` (`DecompressBytecode`, see [Packed streams](#packed-streams-pak)), but one stream holding map, palette and tiles, see [Screens](#screens-mapsjim) | `Title1`, `EASN`, `RonBarr`, `GameSetUp`, `NHLPALogo` |
-| `.sanim` | Sprite frame set: header, frame index, pieces, tiles, see [Sprite sets](#sprite-sets-sanim) | `Sprites/Sprites00` ... `Sprites14` |
+| `.sanim` | Sprite frame set: header, frame index, pieces, tiles, see [Sprite sets](#sprite-sets-sanim) | `Sprites/Sprites001_096` ... `Sprites/Sprites659_720` |
 | `.smap` | SNES BG map words, not packed, see [Maps](#maps-smap) | `IceRink`, `IceRinkHor`, `Refs`, `RefsHor`, `BigFont`, `SmallFont`, `TeamBlocks`, `Arrows`, `FaceOff`, `Framer`, `EASN` |
 | `.chr.pak` | Packed SNES 4bpp tiles | `IceRink`, `SmallFont`, `BigFont`, `FaceOff`, `Ref`, `RefHor`, `PlayoffTiles` (palette first), `TeamBlocks`, `RinkLogoTiles` |
 | `.chr` | SNES 4bpp planar tiles, 32 bytes per 8x8 tile, not packed | `Framer` |
@@ -115,7 +115,7 @@ SNES 4bpp planar tiles, 8 x 8 pixels, 32 bytes each: bitplanes 0 and 1 interleav
 
 ## Sprite sets (`.sanim`)
 
-`FrameSetTable` (`$8FE67D`) lists the 15 frame sets. Each `Graphics/Sprites/SpritesNN.sanim` is one set, byte for byte as it is in the ROM
+`FrameSetTable` (`$8FE67D`) lists the 15 frame sets. Each `Graphics/Sprites/Sprites<first frame>_<last frame>.sanim` is one set, byte for byte as it is in the ROM
 (`SpriteSetN` in the bank files):
 
 | Offset | Size | Content |
@@ -134,21 +134,21 @@ animations that step through them.
 
 | Set | File | ROM | Bytes | Frames | Count | Pieces | Tiles | Piece size |
 |-----|------|-----|-------|--------|-------|--------|-------|------------|
-| 0 | `Sprites00.sanim` | `$8C845A` | 30656 | 1-96 | 96 | 445 | 896 | 4 |
-| 1 | `Sprites01.sanim` | `$8F9085` | 17524 | 97-144 | 48 | 258 | 512 | 4 |
-| 2 | `Sprites02.sanim` | `$878000` | 17312 | 145-184 | 40 | 209 | 512 | 4 |
-| 3 | `Sprites03.sanim` | `$8E83EB` | 21948 | 185-224 | 40 | 344 | 640 | 4 |
-| 4 | `Sprites04.sanim` | `$858000` | 21924 | 225-272 | 48 | 334 | 640 | 4 |
-| 5 | `Sprites05.sanim` | `$8B83EE` | 30944 | 273-336 | 64 | 533 | 896 | 4 |
-| 6 | `Sprites06.sanim` | `$87D205` | 8676 | 337-352 | 16 | 110 | 256 | 4 |
-| 7 | `Sprites07.sanim` | `$88BC56` | 13126 | 353-383 | 31 | 191 | 384 | 4 |
-| 8 | `Sprites08.sanim` | `$888A0F` | 4452 | 384-405 | 22 | 75 | 128 | 4 |
-| 9 | `Sprites09.sanim` | `$848000` | 22064 | 406-461 | 56 | 365 | 640 | 4 |
-| 10 | `Sprites10.sanim` | `$8D883C` | 26252 | 462-517 | 56 | 388 | 768 | 4 |
-| 11 | `Sprites11.sanim` | `$898000` | 4336 | 518-531 | 14 | 50 | 128 | 4 |
-| 12 | `Sprites12.sanim` | `$8A8000` | 30848 | 532-605 | 74 | 504 | 896 | 4 |
-| 13 | `Sprites13.sanim` | `$899383` | 21978 | 606-658 | 53 | 345 | 640 | 4 |
-| 14 | `Sprites14.sanim` | `$8ED9A7` | 9420 | 659-720 | 62 | 742 | 151 | 6 |
+| 0 | `Sprites001_096.sanim` | `$8C845A` | 30656 | 1-96 | 96 | 445 | 896 | 4 |
+| 1 | `Sprites097_144.sanim` | `$8F9085` | 17524 | 97-144 | 48 | 258 | 512 | 4 |
+| 2 | `Sprites145_184.sanim` | `$878000` | 17312 | 145-184 | 40 | 209 | 512 | 4 |
+| 3 | `Sprites185_224.sanim` | `$8E83EB` | 21948 | 185-224 | 40 | 344 | 640 | 4 |
+| 4 | `Sprites225_272.sanim` | `$858000` | 21924 | 225-272 | 48 | 334 | 640 | 4 |
+| 5 | `Sprites273_336.sanim` | `$8B83EE` | 30944 | 273-336 | 64 | 533 | 896 | 4 |
+| 6 | `Sprites337_352.sanim` | `$87D205` | 8676 | 337-352 | 16 | 110 | 256 | 4 |
+| 7 | `Sprites353_383.sanim` | `$88BC56` | 13126 | 353-383 | 31 | 191 | 384 | 4 |
+| 8 | `Sprites384_405.sanim` | `$888A0F` | 4452 | 384-405 | 22 | 75 | 128 | 4 |
+| 9 | `Sprites406_461.sanim` | `$848000` | 22064 | 406-461 | 56 | 365 | 640 | 4 |
+| 10 | `Sprites462_517.sanim` | `$8D883C` | 26252 | 462-517 | 56 | 388 | 768 | 4 |
+| 11 | `Sprites518_531.sanim` | `$898000` | 4336 | 518-531 | 14 | 50 | 128 | 4 |
+| 12 | `Sprites532_605.sanim` | `$8A8000` | 30848 | 532-605 | 74 | 504 | 896 | 4 |
+| 13 | `Sprites606_658.sanim` | `$899383` | 21978 | 606-658 | 53 | 345 | 640 | 4 |
+| 14 | `Sprites659_720.sanim` | `$8ED9A7` | 9420 | 659-720 | 62 | 742 | 151 | 6 |
 
 - Sets 0-13 (frames 1-658, `DrawFrame` `$87CE62`): 4-byte pieces: x, y (signed bytes), tile, attributes.
 - Set 14 (frames 659-720, `DrawFrameHi` `$85FBB9`): 6-byte pieces: x, y (signed words), tile, attributes. These are the crowd: 659-689 for the

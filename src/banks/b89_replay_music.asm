@@ -4,10 +4,10 @@ if pc() < $898000
 	org $898000
 endif
 SpriteSet11:						;frame set 11 (goal siren): frames 518-531
-	incbin "../../Extracted/Graphics/Sprites/Sprites11.sanim"
+	incbin "../../Extracted/Graphics/Sprites/Sprites518_531.sanim"
 incsrc "../routines/hockey/ReplayMode.asm"
 SpriteSet13:						;frame set 13 (goalie catch, glass and save): frames 606-658
-	incbin "../../Extracted/Graphics/Sprites/Sprites13.sanim"
+	incbin "../../Extracted/Graphics/Sprites/Sprites606_658.sanim"
 incsrc "../routines/penalty/printscores1.asm"
 incsrc "../routines/penalty/PrintPerLabel.asm"
 incsrc "../routines/penalty/PrintTeamNameAndScore.asm"

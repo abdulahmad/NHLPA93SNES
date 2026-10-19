@@ -46,7 +46,7 @@ Data blocks that are only a label and an `incbin` (29 of them) are written in th
 
 ## Sprite sets and file extensions (2026-10-19)
 
-`SpriteSetN` is one ROM range per set (header, frame index, pieces, tiles): `Extracted/Graphics/Sprites/SpritesNN.sanim`, 15 files instead of 30 (`setNN.pieces` / `setNN.chr`). Extensions: `.map.snesjim` -> `.map.sjim`, `.sanim` for the sets, `.snesmap` -> `.smap`, `.snespal` -> `.spal` (the `s` marks the SNES flavour of the 93G `.map.jim` / `.anim` / `.pal`). `docs/file-formats.md` replaces `src/data/README.md` and documents every format; 93G's `docs/file-formats.md` was written to match.
+`SpriteSetN` is one ROM range per set (header, frame index, pieces, tiles): `Extracted/Graphics/Sprites/Sprites<first frame>_<last frame>.sanim` (`Sprites001_096.sanim` ... `Sprites659_720.sanim`), 15 files instead of 30 (`setNN.pieces` / `setNN.chr`). Extensions: `.map.snesjim` -> `.map.sjim`, `.sanim` for the sets, `.snesmap` -> `.smap`, `.snespal` -> `.spal` (the `s` marks the SNES flavour of the 93G `.map.jim` / `.anim` / `.pal`). `docs/file-formats.md` replaces `src/data/README.md` and documents every format; 93G's `docs/file-formats.md` was written to match.
 
 ## Local names (2026-10-14)
 

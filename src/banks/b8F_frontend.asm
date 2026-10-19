@@ -57,7 +57,7 @@ incsrc "../routines/middle/jdtab8F.asm"
 incsrc "../routines/penalty/InitScores.asm"
 incsrc "../routines/hockey/ResetPassWord.asm"
 SpriteSet1:							;frame set 1 (SPFswing): frames 97-144
-	incbin "../../Extracted/Graphics/Sprites/Sprites01.sanim"
+	incbin "../../Extracted/Graphics/Sprites/Sprites097_144.sanim"
 incsrc "../routines/logic/fightinput.asm"
 incsrc "../routines/hockey/holdcheck.asm"
 incsrc "../routines/penalty/Fprint_list.asm"

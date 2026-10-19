@@ -20,7 +20,7 @@ incsrc "../routines/middle/mulu16.asm"
 incsrc "../routines/logic/puckshadow.asm"
 incsrc "../routines/hockey/setd0player.asm"
 SpriteSet10:						;frame set 10: frames 462-517
-	incbin "../../Extracted/Graphics/Sprites/Sprites10.sanim"
+	incbin "../../Extracted/Graphics/Sprites/Sprites462_517.sanim"
 
 BigFontTiles:						;the big font tiles (144 tiles, BigFont.chr.pak),
 									;packed; setupice sends them to BigFontChars (PixelRemap8D), printbig

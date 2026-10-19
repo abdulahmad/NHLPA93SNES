@@ -9,6 +9,6 @@ NHLPALogo:							;the NHLPA logo, packed (NHLPALogo.map.sjim): 8 x 10 map, 128
 	incbin "../../Extracted/Graphics/NHLPALogo.map.sjim"
 
 SpriteSet0:							;frame set 0 (SPFskatewp, SPFskate, SPFturnl, SPFturnr): frames 1-96
-	incbin "../../Extracted/Graphics/Sprites/Sprites00.sanim"
+	incbin "../../Extracted/Graphics/Sprites/Sprites001_096.sanim"
 incsrc "../routines/video/checksso.asm"
 incsrc "../routines/logic/chk4pass.asm"

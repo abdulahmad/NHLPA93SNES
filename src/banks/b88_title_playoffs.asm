@@ -32,7 +32,7 @@ incsrc "../routines/hockey/SuperMult.asm"
 incsrc "../routines/hockey/DrawGameSetupBack.asm"
 incsrc "../routines/middle/mulu.asm"
 SpriteSet8:							;frame set 8 (arrows, pads, puck and goal): frames 384-405
-	incbin "../../Extracted/Graphics/Sprites/Sprites08.sanim"
+	incbin "../../Extracted/Graphics/Sprites/Sprites384_405.sanim"
 
 TeamBlocksTiles:					;TeamBlocks.map.jim tiles: 405 team name banner tiles, packed ($32A0 bytes
 									;unpacked); sent to vram by PlayoffScreen, the scouting report and
@@ -40,7 +40,7 @@ TeamBlocksTiles:					;TeamBlocks.map.jim tiles: 405 team name banner tiles, pack
 	incbin "../../Extracted/Graphics/TeamBlocks.chr.pak"
 
 SpriteSet7:							;frame set 7 (gloves, fight, injury and penalty box): frames 353-383
-	incbin "../../Extracted/Graphics/Sprites/Sprites07.sanim"
+	incbin "../../Extracted/Graphics/Sprites/Sprites353_383.sanim"
 incsrc "../routines/hockey/GetPassWord.asm"
 incsrc "../data/text/PasswordText.asm"
 incsrc "../routines/hockey/TitleScreen.asm"
