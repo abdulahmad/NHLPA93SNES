@@ -1,10 +1,10 @@
 chk4shot:							;Computer player X looks for a shot. A penalty killer under pressure in
 									;front of his net may clear the puck
-	jsl.l chkpk
-	bne .npk
+	jsl.l chkpk						; penalty killer check
+	bne .npk						; not a penalty killer
 	lda.w threat					; threat on the puck carrier
 	beq .npk
-	lda.w Ypos,x
+	lda.w Ypos,x					; |Y| of the player
 	bit.w #$8000
 	beq .yabs
 	eor.w #$FFFF					; negate
@@ -27,17 +27,17 @@ chk4shot:							;Computer player X looks for a shot. A penalty killer under pres
 	sta.b d4
 	lda.w #blueline+goalline		; blueline+goalline
 	sta.b d1
-	lda.w pfgoal,x
+	lda.w pfgoal,x					; pfgoal selects which goal is attacked
 	bne .c0
 	lda.w #-(blueline+goalline)
 	sta.b d1
 .c0:
-	lda.b d1
+	lda.b d1						; d1 = goal distance in Y
 	sec
 	sbc.w pucky
 	sta.b d1
 	pha
-	lda.w puckx
+	lda.w puckx						; puck X negated for the distance
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b mula
@@ -56,9 +56,9 @@ chk4shot:							;Computer player X looks for a shot. A penalty killer under pres
 	lda.b mulres+2
 	adc.b d0+2
 	sta.b tmp1
-	pla
+	pla								; restore X
 	sta.b d0
-	pla
+	pla								; restore Y
 	sta.b d1
 	lda.b tmp0
 	cmp.w #$2711					; distance^2 > 100*100?
@@ -70,18 +70,18 @@ chk4shot:							;Computer player X looks for a shot. A penalty killer under pres
 	lsr.b d4
 	lsr.b d4
 	jsl.l vtoa						; vector to direction
-	sta.b d5
-	lda.w #$0005
+	sta.b d5						; d5 = direction to the goal
+	lda.w #$0005					; 6 opponents
 	sta.b d3
-	stz.b a1
-	cpx.w #$000C
+	stz.b a1						; a1 = first opponent slot
+	cpx.w #$000C					; pick the opposing team's slots
 	bcs .co0
 	lda.w #$000C
 	sta.b a1
 .co0:								;each opponent: a defender in the shot line doubles d4; a busy goalie
 									;means shoot now
 	ldy.b a1
-	lda.w position,y
+	lda.w position,y				; empty slot: the goalie
 	beq .gl
 	lda.w Xpos,y
 	sec
@@ -97,23 +97,23 @@ chk4shot:							;Computer player X looks for a shot. A penalty killer under pres
 	asl.b d4
 	bra .co1
 .gl:
-	lda.w pf2aip,y
+	lda.w pf2aip,y					; goalie flagged (pf2aip): shoot now
 	beq .co1
-	stz.b d3
+	stz.b d3						; stop checking
 	lda.w #$0001
 	sta.b d4
 .co1:
-	inc.b a1
+	inc.b a1						; next opponent
 	inc.b a1
 	dec.b d3
-	bpl .co0
+	bpl .co0						; loop
 .no1:
 	lda.b d4
 	jsl.l randoma					; random number 0 to A-1
 	cmp.w #$0009					; no shot if random(d4) > 8
-	bcs .rts
+	bcs .rts						; too unlikely: no shot
 	lda.w pucky
-	sta.b d0
+	sta.b d0						; d0 = puck Y relative to our goal
 	lda.w pfgoal,x
 	bne .ds0
 	lda.b d0
@@ -122,14 +122,14 @@ chk4shot:							;Computer player X looks for a shot. A penalty killer under pres
 	sta.b d0
 .ds0:
 	lda.b d0
-	bmi .rts
+	bmi .rts						; behind the goal line: no shot
 	lda.w #blueline+goalline
 	sec
 	sbc.b d0
-	bmi .rts
+	bmi .rts						; beyond the blue line: no shot
 	lda.w sflags					; sf2offsig: player is offside
 	bit.w #sf2offsig
 	bne .rts
-	bra CompShoot
+	bra CompShoot					; take the shot
 .rts:
 	rtl
