@@ -374,7 +374,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	ora.w #$1000
 	sta.b d2
 	jsl.l eraser					; d0 x d1, tile d2
-	jsl.l StartSong9				; keep the music going
+	jsl.l StartSngPO				; keep the music going
 .scroll:							;clamp Hscroll, queue the 128-column map window, wait a frame
 	lda.w Hscroll
 	cmp.b d2+2						; clamp to the left limit (d2+2)

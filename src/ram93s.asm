@@ -387,7 +387,7 @@ oldvcount			=	$0427		; vcount at the last game frame (d7 = vcount - oldvcount)
 goalcue				=	$0429		;nonzero: home team just scored (lead 0-2): assfaceoff plays the goal
 									;music cue at the next faceoff
 percue				=	$042B		; nonzero: period just started: assfaceoff plays the period music cue
-p3cue				=	$042D		;third period: frames until StartSong3 plays its music cue (set by
+p3cue				=	$042D		;third period: frames until StartSngLateGame plays its music cue (set by
 									;StartPer, 0 = done)
 midpercue			=	$042F		;gameclock value (half the period) at which assfaceoff plays the
 									;mid-period music cue (0 = done)
@@ -631,6 +631,15 @@ sndbank			=	$164F			;sound set loaded into the SPC (1 = the in-game sounds); sfx
 									;only for it
 cursong			=	$1651			;song playing on the SPC (0 = none); set by the song starters in banks
 									;$86/$89
+SngGoal		=	1					;song 1: home goal (StartSngGoal, cursong)
+SngPeriodStart		=	2			;song 2: period start (StartSngPeriodStart, cursong)
+SngLateGame		=	3				;song 3: third period (StartSngLateGame, cursong)
+SngPP		=	4					;song 4: power play (unused) (StartSngPP, cursong)
+SngFaceoff		=	5				;song 5: mid-period faceoff (StartSngFaceoff, cursong)
+SngTitle		=	6				;song 6: title screen (StartSngTitle, cursong)
+SngEOP		=	7					;song 7: end of period (unused) (StartSngEOP, cursong)
+SngEOG		=	8					;song 8: end of game (unused) (StartSngEOG, cursong)
+SngPO		=	9					;song 9: playoff screen (StartSngPO, cursong)
 DMAList			=	$1653			;vram dma list (7-byte entries, see dma* offsets), filled up to DMAlistend
 printfontset	=	$1BCB			; tile base of the selected print font (control code)
 ; print control codes: a byte with bit 7 set picks palette, priority and font (font 1-3 also picks the map)

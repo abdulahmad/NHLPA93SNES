@@ -16,20 +16,20 @@ incsrc "../routines/penalty/util/nullrtl89.asm"
 incsrc "../routines/sound/p_music_vblank.asm"
 
 RefTilesHor:						;packed ref window tiles for the horizontal rink (104 tiles,
-									;RefHor.chr.pak): setupice sends them to refcharshor
-	incbin "../../Extracted/Graphics/RefHor.chr.pak"
+									;Ref2.chr.pak): setupice sends them to refcharshor
+	incbin "../../Extracted/Graphics/Ref2.chr.pak"
 
 RefsMapHor:							;ref window frames for the horizontal rink, 17 frames of 8 x 7 words
-									;(RefsHor.smap); PushRef uses it when sfhormode
-	incbin "../../Extracted/Graphics/RefsHor.smap"
+									;(Refs2.smap); PushRef uses it when sfhormode
+	incbin "../../Extracted/Graphics/Refs2.smap"
 
-incsrc "../routines/sound/StartSong8.asm"
-incsrc "../routines/sound/StartSong9.asm"
-incsrc "../routines/sound/StartSong1.asm"
-incsrc "../routines/sound/StartSong2.asm"
-incsrc "../routines/sound/StartSong3.asm"
-incsrc "../routines/sound/StartSong4.asm"
-incsrc "../routines/sound/StartSong5.asm"
+incsrc "../routines/sound/StartSngEOG.asm"
+incsrc "../routines/sound/StartSngPO.asm"
+incsrc "../routines/sound/StartSngGoal.asm"
+incsrc "../routines/sound/StartSngPeriodStart.asm"
+incsrc "../routines/sound/StartSngLateGame.asm"
+incsrc "../routines/sound/StartSngPP.asm"
+incsrc "../routines/sound/StartSngFaceoff.asm"
 incsrc "../routines/middle/util/CopyWords.asm"
 incsrc "../routines/hockey/teams/ClearRosterName.asm"
 incsrc "../routines/hockey/teams/GetRosterEntry89.asm"

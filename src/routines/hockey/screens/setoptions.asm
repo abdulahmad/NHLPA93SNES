@@ -191,7 +191,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	jsl.l .nms
 	jsl.l .ps
 	jsl.l ReadPads					; read the pads
-	jsl.l StartSong6				; start the options music
+	jsl.l StartSngTitle				; start the options music
 	lda.w #$0001					; fade in
 	sta.b fadein
 .idle:								;restart the idle count (d6 = $12C0 frames until the demo)

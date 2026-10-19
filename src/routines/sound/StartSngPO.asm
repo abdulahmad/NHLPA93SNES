@@ -1,17 +1,17 @@
-StartSong8:							;Start song 8 unless it is already playing. Unused
+StartSngPO:							;Start the playoff screen music unless it is already playing
 	lda.w cursong					; current song
-	cmp.w #8						; already playing
+	cmp.w #SngPO					; already playing
 	beq .rtl
 	lda.w sndbank					; sound bank loaded
 	cmp.w #2						; bank 2 is the game bank
 	beq .cmd
 	jsl.l SPCBootUpload				; else upload it
-.cmd:								; APUIO0 = 9: play song 8
+.cmd:								; APUIO0 = 1: play song 9
 	sep #$20						; 8-bit A
-	lda.b #$09
+	lda.b #$01
 	sta.w APUIO0					; send the command
 	rep #$30						; 16-bit registers
-	lda.w #8
+	lda.w #SngPO
 	sta.w cursong					; remember the song
 .rtl:								; return
 	rtl

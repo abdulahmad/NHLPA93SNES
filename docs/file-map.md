@@ -321,8 +321,8 @@ org `$868000` when `pc()` is below it.
 - `$868000` data/sound/bootsound.asm (also SPCDriver, SPCCode, fmtune_playoff_order, fmtune_title_order, fmtune_unused2_order, fmtune_goal_order, fmtune_periodstart_order, fmtune_lategame_order, fmtune_unused7_order, fmtune_midperiod_order, fmtune_unused9_order, fmtune_playoff_set, fmtune_title_set, fmtune_unused2_set, fmtune_goal_set, fmtune_periodstart_set, fmtune_lategame_set, fmtune_unused7_set, fmtune_midperiod_set, fmtune_unused9_set, fmtune_playoff_stream, fmtune_unused2_stream, fmtune_unused9_stream, fmtune_title_stream, fmtune_goal_stream, fmtune_lategame_stream, fmtune_periodstart_stream, fmtune_unused7_stream, fmtune_midperiod_stream, fmtune_title_stream2, fmtune_unused2_stream2, fmtune_unused9_stream2, fmtune_goal_stream2, fmtune_midperiod_stream2, fmtune_unused7_stream2, fmtune_periodstart_stream2, fmtune_lategame_stream2, fmtune_goal_stream3, fmtune_title_stream3, fmtune_playoff_stream2, fmtune_unused2_stream3, sfx_table, sfx_a1, sfx_siren, sfx_crowd0, sfx_crowd1, sfx_crowd2, sfx_crowd3, sfx_crowd4, sfx_crowd5, sfx_crowd6, sfx_crowd7, sfx_crowdoff, sfx_check1, sfx_check2, sfx_playerwall, sfx_playerwall2, sfx_shothard, sfx_puckwall1, sfx_puckwall2, sfx_puckwall3, sfx_hithigh, sfx_hitlow, sfx_shotfh, sfx_shotbh, sfx_puckpost, sfx_stop1, sfx_stop2, sfx_shotwiff2, sfx_shotwiff1, sfx_shotwiff4, sfx_shotwiff3, sfx_crowdboo, sfx_oooh2, sfx_crowdcheer, sfx_whistle, SPCDriverEnd, BootInstruments, BootInstrumentsEnd, BootSampleDir, BootSampleDirEnd, BootSamples, BootSamplesEnd)
 - `$86FA3E` routines/decompress/DecompressBytecode.asm
 - `$86FB96` routines/hockey/teams/RestoreBenchEnergy.asm
-- `$86FBE1` routines/sound/StartSong6.asm
-- `$86FC05` routines/sound/StartSong7.asm
+- `$86FBE1` routines/sound/StartSngTitle.asm
+- `$86FC05` routines/sound/StartSngEOP.asm
 - `$86FC29` routines/hockey/game/setteams.asm
 - `$86FC53` routines/middle/input/ProcessInputWithRepeat.asm
 - `$86FC76` routines/hockey/screens/setoptions_printpos2.asm
@@ -338,7 +338,7 @@ org `$868000` when `pc()` is below it.
 org `$878000` when `pc()` is below it.
 
 - `$878000` SpriteSet2 (data)
-- `$87C3A0` EASNmap (data)
+- `$??????` EASNmap (data)
 - `$87C6B4` FaceOffTiles (data)
 - `$87CABA` Teamblocksmap (data)
 - `$87CE62` routines/video/sprites/DrawFrame.asm
@@ -394,13 +394,13 @@ org `$898000` when `pc()` is below it.
 - `$89EB15` routines/sound/p_music_vblank.asm
 - `$89EB45` RefTilesHor (data)
 - `$89F3FB` RefsMapHor (data)
-- `$89FB6B` routines/sound/StartSong8.asm
-- `$89FB8F` routines/sound/StartSong9.asm
-- `$89FBB3` routines/sound/StartSong1.asm
-- `$89FBDF` routines/sound/StartSong2.asm
-- `$89FC0B` routines/sound/StartSong3.asm
-- `$89FC37` routines/sound/StartSong4.asm
-- `$89FC63` routines/sound/StartSong5.asm
+- `$89FB6B` routines/sound/StartSngEOG.asm
+- `$89FB8F` routines/sound/StartSngPO.asm
+- `$89FBB3` routines/sound/StartSngGoal.asm
+- `$89FBDF` routines/sound/StartSngPeriodStart.asm
+- `$89FC0B` routines/sound/StartSngLateGame.asm
+- `$89FC37` routines/sound/StartSngPP.asm
+- `$89FC63` routines/sound/StartSngFaceoff.asm
 - `$89FC8F` routines/middle/util/CopyWords.asm
 - `$89FCC1` routines/hockey/teams/ClearRosterName.asm
 - `$89FCD8` routines/hockey/teams/GetRosterEntry89.asm
