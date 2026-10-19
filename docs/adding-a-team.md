@@ -8,7 +8,7 @@
 |---|---|---|---|
 | TeamList | `src/data/teamdata93s.asm` | `dd` long pointer, 4 bytes | `(TeamListEnd-TeamList)/4 == NumofTeams` |
 | team record | after TeamList, or in bank $90 when it does not fit | one record (the shortest, Ottawa, is 531 bytes; Boston is 680) | the TeamList entry points at its label |
-| Teamblocksmap | `src/data/gfx/Teamblocksmap.asm` | 36 bytes, a 9 x 2 tile block | `(TeamBlocksMapEnd-Teamblocksmap)/36 == NumofTeams` |
+| Teamblocksmap | `src/banks/b87_player_sprites.asm` | 36 bytes, a 9 x 2 tile block | `(TeamBlocksMapEnd-Teamblocksmap)/36 == NumofTeams` |
 | playoffseats | `src/data/teamdata93s.asm` | 16 team numbers | `(playoffseatsEnd-playoffseats)/16 == 34` |
 
 Leave 34 alone. playoffseats is 34 trees, not the team count.
@@ -49,9 +49,9 @@ Bank $80 keeps an unconditional `org`. Each bank file after it orgs only when `p
 
 ## Header
 
-`src/header/snes_header.asm` keeps size byte `$09`, complement `$B75A`, checksum `$48A5`. `build.sh` and `build.ps1` assemble with `--fix-checksum=off`, then run `python3 tools/patchheader.py` on `output/nhlpa93snes.sfc`.
+`src/header/snes_header.asm` keeps size byte `$09`, complement `$B75A`, checksum `$48A5`. `tools/build.js` assembles with `--fix-checksum=off`, then runs `tools/patchHeader.js` on the image (`output/retail/nhlpa93snes.sfc`).
 
-On the retail image the patch writes nothing, so `./build.sh` still matches. Running it on `lst/nhlpa93snes.bin` leaves `$48A5` and `$B75A`.
+On the retail image the patch writes nothing, so `npm run build:retail` still matches. Running it on `nhlpa93retail.sfc` leaves `$48A5` and `$B75A`.
 
 On a larger image the patch pads with `$00` to the next SNES size, sets the size byte, and stores the checksum and its complement, little-endian. It checks that the finished file sums to the word it stored.
 

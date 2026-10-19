@@ -12,7 +12,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for how changes are made (names, comments
 
 **AI agent: start with [docs/history/START_HERE.md](docs/history/START_HERE.md).**
 
-Bitwise rebuild of NHLPA Hockey '93 for the Super Nintendo, assembled with asar. The full build is byte-identical to `lst/nhlpa93snes.bin` (sha1 `76a01492cfb656e9fce0094bca356c312adfea0e`). Every bank is disassembled and named; the source is laid out like the NHLPA 93 Genesis source (one file per bank, one file per routine, routine folders named after the 93G modules).
+Bitwise rebuild of NHLPA Hockey '93 for the Super Nintendo, assembled with asar. The full build is byte-identical to `nhlpa93retail.sfc` (sha1 `76a01492cfb656e9fce0094bca356c312adfea0e`). Every bank is disassembled and named; the source is laid out like the NHLPA 93 Genesis source (one file per bank, one file per routine, routine folders named after the 93G modules).
 
 ## Lineage
 
@@ -20,25 +20,39 @@ The SNES port is a hybrid: it began as a port of NHL92 Genesis (likely while NHL
 
 ## Layout
 
-- `src/nhlpa93snes.asm` top level: includes the 16 bank files `src/banks/bXX_<name>.asm` in order. Each bank file has one `org` and includes its files in exact ROM order: routines in `src/routines/<93G module>/<Routine>.asm` (one per file), data in `src/data/<category>/<Name>.asm`, the header and vectors in `src/header/snes_header.asm`. `docs/file-map.md` lists every file per bank.
+- `src/nhlpa93snes.asm` top level: includes the 16 bank files `src/banks/bXX_<name>.asm` in order. Each bank file has one `org` and includes its files in exact ROM order: routines in `src/routines/<93G module>/<Routine>.asm` (one per file), graphics, text and sound data blocks in the bank file itself, the team and frame data in `src/data/teamdata93s.asm` and `src/data/frames93s.asm`, the header and vectors in `src/header/snes_header.asm`. `docs/file-map.md` lists every file per bank.
 - `src/ram93s.asm` hardware registers, RAM names and constants (as 93G ram93.asm), `src/macros/snes93.mac` macros.
 - `docs/history/symbol_map.csv` the address table (quick-pass names `CODE_xxxxxx` of the named routines), `docs/history/name_map.csv` the rename log (old,new,source), `docs/history/segment_notes.md` the notes of the old ~4 KB slices.
 - `tools/split_routines.py` the tool that split the old module files into this layout; `tools/gen_file_map.py` regenerates `docs/file-map.md`.
 - `tools/scan_cleanup.py` counts raw addresses, generic labels and noise comments left in `src/`.
-- `lst/nhlpa93snes.bin` reference ROM (committed, as NHL94Genesis does).
 - `tools/disasm65816.py` the quick-pass generator (recursive descent from the vectors, REP/SEP/PHP/PLP M/X tracking). Setup only; it wrote the old `bankXX_YYYY` slices.
-- `Extracted/` the incbin assets, extracted from the ROM by `tools/extract.py` (run by `tools/prebuild.py` on every build; not committed; folders Graphics, Sound, Text as in 93G); `src/data/README.md` describes the file formats (`.map.snesjim`, `.chr.pak`, `.snesmap`, `.pal`, ...).
+- `Extracted/` the incbin assets, extracted from the ROM by `tools/extractAssets93s.js` (run by `tools/prebuild.js` on every build; not committed; folders Graphics, Sound, Text as in 93G); `src/data/README.md` describes the file formats (`.map.snesjim`, `.chr.pak`, `.snesmap`, `.pal`, ...).
 - `tools/snesgfx.py` unpacks the packed streams (a port of `DecompressBytecode`) and renders tiles, maps and screens to PNG.
 - `docs/history/SEGMENT_AGENT.md` rules and the per-slice history, `docs/history/PROMPT.md` the per-segment prompt (segment phase, finished), `docs/HANDOFF.md` setup notes and the cleanup progress.
 
 ## Build
 
-Requires asar 1.91 on PATH:
+1. Install node from https://nodejs.org/en/download if it isn't already installed on your machine. No `npm i` is needed: the scripts have no dependencies.
 
-```sh
-git clone --depth 1 https://github.com/RPGHacker/asar.git && cd asar
-cmake -S src -B build -DCMAKE_BUILD_TYPE=Release -DASAR_GEN_LIB=OFF && cmake --build build -j
-cp build/asar/bin/asar ~/.local/bin/
-```
+2. Install asar 1.91 into `tools/bin` with `sh tools/setup.sh` (Linux/macOS; needs git, cmake and a C++ compiler) or `tools\setup.ps1` (Windows). An asar 1.91 on PATH also works.
 
-Or run `sh tools/setup.sh` (Linux/macOS) or `tools\setup.ps1` (Windows), which install asar 1.91 into `tools/bin`. Then `./build.sh` (or `make`, or `build.ps1` on Windows). It writes `output/nhlpa93snes.sfc` and prints MATCH / MISMATCH.
+3. Copy the NHLPA Hockey 93 Super Nintendo retail ROM into the `NHLPA93SNES` folder as `nhlpa93retail.sfc` (no copier header). It is not in the repo (gitignored); the build refuses any other file at that name.
+
+    | ROM | File name | SHA-1 | Size |
+    | --- | --- | --- | --- |
+    | NHLPA Hockey '93 SNES retail (USA) | `nhlpa93retail.sfc` | `76a01492cfb656e9fce0094bca356c312adfea0e` | 524288 bytes |
+
+4. Run `npm run build:retail` (or `node tools/build.js retail`). It prints one line per step, with a short note under it and the result under that:
+
+    1. **prebuild**: check the ROM and extract graphics, sound and text assets into `Extracted/` (when it is missing or stale).
+    2. **assemble**: asar turns `src/nhlpa93snes.asm` into the ROM image.
+    3. **header**: pad the image and store the checksum if the ROM grew (`tools/patchHeader.js`; the stock image is left as it is).
+    4. **verify**: compare byte for byte with `nhlpa93retail.sfc`.
+
+    The built ROM is `output/retail/nhlpa93snes.sfc`; `output/retail/obj/` holds asar's log and its symbol file (`nhlpa93snes.sym`, read by `tools/gen_file_map.py` and `tools/scan_cleanup.py`).
+
+Other scripts:
+- `npm run assets`: ROM check and asset extraction only (`npm run extractassets` runs the extractor directly; `node tools/extractAssets93s.js nhlpa93retail.sfc --check` compares `Extracted/` with the ROM)
+- `npm run clean`: delete `output/` and `Extracted/` (re-extracted by the next build)
+- `tools/verify_all.sh`: extracts fresh, builds, and runs the asset and comment checks, printing ALL MATCH
+- Add `--verbose` to `node tools/build.js ...` for the full tool output; `--no-color` (or `NO_COLOR`) turns the colors off

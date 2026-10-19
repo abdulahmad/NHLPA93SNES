@@ -73,86 +73,86 @@ PenDelay	=	$2C					;delayed penalty ref
 ;format: dw $ttmm (tt = slow down time in half secs, mm = penalty min.); string (length word counting itself,
 ;text) then dw $ffdd,... (ff = frame, dd = delay; negative ends)
 PenDataEOP:							;period over
-	dw $0100
+	dw $0100						;ttmm: slow down 1 half sec, 0 minutes; then the text and frame/delay
 	%String("Period Over")
 	dw -$0510
 PenDataEOG:							;game over
-	dw $0100
+	dw $0100						;ttmm: slow down 1, 0 minutes
 	%String("Game Over")
 	dw $0510,-$4030
 PenDataGoal:						;goal
-	dw $0100
-	dw 2
+	dw $0100						;ttmm: slow down 1, 0 minutes; empty text
+	dw 2							;String with no text
 	dw $050A,-$4010
 PenDataNoText:						;no text
-	dw $0100
-	dw 2
+	dw $0100						;ttmm: slow down 1, 0 minutes; empty text
+	dw 2							;String with no text
 	dw $0510,-$4018
 PenDataice:							;icing
-	dw $0100
+	dw $0100						;ttmm: slow down 1, 0 minutes
 	%String("Icing")
 	dw $0002,$0101,-$0206
 PenDataoffsides:					;offsides
-	dw $0100
+	dw $0100						;ttmm: slow down 1, 0 minutes
 	%String("Off-side")
 	dw $0002,$0301,-$040F
 PenDataGhold:						;face off (PenOOP, PenGhold)
-	dw $0100
+	dw $0100						;ttmm: slow down 1, 0 minutes (also used for out of play / PenOOP)
 	%String("Face Off")
 	dw -$050A
 PenDatadelay:						;delay
-	dw $0000
+	dw $0000						;ttmm: no slow down, 0 minutes
 	%String("Penalty")
 	dw $0003,$0301,-$040F
 PenDatawhistle:						;whistle
-	dw $0000
-	dw 2
+	dw $0000						;ttmm: no slow down, 0 minutes; empty text
+	dw 2							;String with no text
 	dw -$050A
 PenDatacharge:						;charging
-	dw $0402
+	dw $0402						;ttmm: slow down 4, 2 minutes
 	%String("Charging")
 	dw $0004,$0101,$0A01,$0B01,$0A01,$0B01,$0A01,$0B01,$0A01,$0B01,-$0101
 PenDataslash:						;slashing
-	dw $0402
+	dw $0402						;ttmm: slow down 4, 2 minutes
 	%String("Slashing")
 	dw $0004,$0101,$0201,$0301,$0201,$0301,$0201,$0301,$0201,$0301,-$0101
 PenDatatrip:						;tripping
-	dw $0402
+	dw $0402						;ttmm: slow down 4, 2 minutes
 	%String("Tripping")
 	dw $0004,$0401,$0501,$0401,$0501,$0401,$0501,$0401,$0501,-$0101
 PenDatarough2:						;roughing, slow down time $A
-	dw $0A02
+	dw $0A02						;ttmm: slow down $0a, 2 minutes
 	%String("Roughing")
 	dw $0004,$0D01,$0E01,$0D01,$0E01,$0D01,$0E01,$0D01,$0E01,-$0101
 PenDatarough:						;roughing
-	dw $0402
+	dw $0402						;ttmm: slow down 4, 2 minutes
 	%String("Roughing")
 	dw $0004,$0D01,$0E01,$0D01,$0E01,$0D01,$0E01,$0D01,$0E01,-$0101
 PenDatahook:						;hooking
-	dw $0402
+	dw $0402						;ttmm: slow down 4, 2 minutes
 	%String("Hooking")
 	dw $0004,$0101,$0901,$0801,$0901,$0801,$0901,$0801,$0901,$0801,-$0101
 PenDatacross:						;cross check
-	dw $0402
+	dw $0402						;ttmm: slow down 4, 2 minutes
 	%String("Cross Check")
 	dw $0004,$0601,$0F01,$1001,$0F01,$1001,$0F01,$1001,$0F01,$1001,-$0101
 PenDataint:							;interference
-	dw $0402
+	dw $0402						;ttmm: slow down 4, 2 minutes
 	%String("Interference")
 	dw $0004,$0101,$0C06,-$0101
 PenDataHold:						;holding
-	dw $0402
+	dw $0402						;ttmm: slow down 4, 2 minutes
 	%String("Holding")
 	dw $0004,$0101,$0706,-$0101
 PenDatafight:						;fighting
-	dw $2805
+	dw $2805						;ttmm: slow down $28, 5 minutes
 	%String("Fighting")
 	dw $0004,$0D01,$0E01,$0D01,$0E01,$0D01,$0E01,$0D01,$0E01,-$0101
 PenDatafight2:						;fighting *
-	dw $2805
+	dw $2805						;ttmm: slow down $28, 5 minutes
 	%String("Fighting *")
 	dw $0004,$0D01,$0E01,$0D01,$0E01,$0D01,$0E01,$0D01,$0E01,-$0101
 PenDataInst:						;fight instigator
-	dw $2802
+	dw $2802						;ttmm: slow down $28, 2 minutes
 	%String("Fight Instigator")
 	dw $0004,$0D01,$0E01,$0D01,$0E01,$0D01,$0E01,$0D01,$0E01,-$0101

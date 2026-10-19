@@ -4,10 +4,10 @@
 ; itself, then the text and control bytes (String: text only; the others name the shape of the bytes).
 
 macro Player(name, w1, w2, w3, w4)	;93G Player: length word (counts itself), name,
-	;ratings as 4 big-endian words
+	;ratings as 4 big-endian words (hex digits, no $)
 ?l:	dw ?e-?l
 	db "<name>"
-?e:	db <w1>>>8,<w1>&$FF,<w2>>>8,<w2>&$FF,<w3>>>8,<w3>&$FF,<w4>>>8,<w4>&$FF
+?e:	db $<w1>>>8,$<w1>&$FF,$<w2>>>8,$<w2>&$FF,$<w3>>>8,$<w3>&$FF,$<w4>>>8,$<w4>&$FF
 endmacro
 macro String(text)					;93G String/StringB: length word (counts itself), then the text
 ?l:	dw ?e-?l
@@ -50,6 +50,6 @@ macro StringTb(text, b)				;the text, then one byte
 	db "<text>",<b>
 ?e:
 endmacro
-macro hex2(w1, w2, w3, w4)			;93G hex2: 4 words as big-endian bytes
-	db <w1>>>8,<w1>&$FF,<w2>>>8,<w2>&$FF,<w3>>>8,<w3>&$FF,<w4>>>8,<w4>&$FF
+macro hex2(w1, w2, w3, w4)			;93G hex2: 4 words as big-endian bytes (hex digits, no $)
+	db $<w1>>>8,$<w1>&$FF,$<w2>>>8,$<w2>&$FF,$<w3>>>8,$<w3>&$FF,$<w4>>>8,$<w4>&$FF
 endmacro

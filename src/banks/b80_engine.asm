@@ -169,7 +169,15 @@ incsrc "../routines/penalty/InProgress.asm"
 incsrc "../routines/penalty/coinsearch.asm"
 incsrc "../routines/penalty/UpdatePA.asm"
 incsrc "../routines/penalty/SetPA.asm"
-incsrc "../data/gfx/RonBarrMap.asm"
+
+RonBarrMap:							;the Ron Barr picture of the scouting report, packed for
+									;DecompressBytecode (RonBarr.map.snesjim, 1590 bytes): unpacked an 8 x 9
+									;map, 64 colors at
+		;   +$90, tiles at +$190 (loaded by the scouting report)
+	incbin "../../Extracted/Graphics/RonBarr.map.snesjim"
+RonBarrMapEnd:						; end of RonBarrMap
+	assert RonBarrMapEnd-RonBarrMap == $636
+
 incsrc "../routines/hockey/adda43.asm"
 incsrc "../routines/logic/setlccords.asm"
 incsrc "../routines/hockey/startpause.asm"
