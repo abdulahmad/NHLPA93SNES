@@ -1,13 +1,13 @@
 NewTicker2:							;d3 = the next game for the ticker, or negative when none is left
-	lda.w OptPlayMode
+	lda.w OptPlayMode				; regular season: no ticker
 	beq .rtl
-	lda.w TickerNum
+	lda.w TickerNum					; next ticker game
 	sta.b d3
-	bmi .rtl
-	dec.w TickerNum
+	bmi .rtl						; none left
+	dec.w TickerNum					; following one next time
 	lda.b d3
-	cmp.w gamenum
-	beq NewTicker2
-	bra NewTicker3
+	cmp.w gamenum					; the current game itself
+	beq NewTicker2					; skip it
+	bra NewTicker3					; show it
 .rtl:
 	rtl

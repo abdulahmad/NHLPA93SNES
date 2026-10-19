@@ -5,11 +5,11 @@ periodicevents:						;Run every game loop; the slower checks once a second
 	jsl.l clockcont					; clockcont
 	lda.w sfhormode					; horizontal: no screen updates
 	bne .rtl
-	lda.w lldisp
+	lda.w lldisp					; countdown to the next slow check
 	sec
-	sbc.b d7
+	sbc.b d7						; minus d7
 	sta.w lldisp
-	bpl .rtl
+	bpl .rtl						; not a second yet: leave
 	clc
 	adc.w #jps						; +$18 frames
 	sta.w lldisp
