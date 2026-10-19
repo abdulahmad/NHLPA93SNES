@@ -2,18 +2,18 @@ setvideo:							;Once per game frame, when vblank is idle: build the sprite tabl
 									;transfer list for the next vblank.
 		;   Not vblank code itself
 	lda.b vbint						; vblank busy with a list: skip this frame
-	cmp.w #vb2
-	beq .go
+	cmp.w #vb2						; skip if vblank is not ready
+	beq .go							; the blank vblank handler
 	cmp.w #vb2_blank
-	bne .rtl
+	bne .rtl						; else leave
 	lda.b fadein					; first time after vb2_blank: fade in
-	bne .go
-	stz.b brightness
-	inc.b fadein
+	bne .go							; already faded in
+	stz.b brightness				; brightness 0
+	inc.b fadein					; fade in counter
 .go:								;clear the sprite table
 	jsl.l ClearSprites				; clear the sprite table (all sprites off screen)
 	stx.b xsave
-	ldx.w #$0000
+	ldx.w #$0000					; save a0 through the 29 words after it
 .savea:
 	lda.b a0,x
 	pha
@@ -21,29 +21,29 @@ setvideo:							;Once per game frame, when vblank is idle: build the sprite tabl
 	inx
 	cpx.w #$003C
 	bne .savea
-	ldx.b xsave
-	jsl.l show_rink
-	jsl.l checkfo
-	jsl.l checksso
-	jsl.l setsortcords
-	jsl.l setffo
-	jsl.l showclock
+	ldx.b xsave						; restore X
+	jsl.l show_rink					; rink scroll
+	jsl.l checkfo					; face off circles
+	jsl.l checksso					; shootout
+	jsl.l setsortcords				; sort the sprites
+	jsl.l setffo					; face off objects
+	jsl.l showclock					; game clock
 	jsl.l showzam					; elapsed time from vcountmark
-	jsl.l showcrowd
+	jsl.l showcrowd					; crowd
 	jsl.l showref					; clears sf2refref
 	jsl.l ShowRinkRows				; queue the rink map rows for Vscroll
 	jsl.l QueueTextDMA				; queue the changed textmap words (textdirtylo/hi)
 	lda.w #VBlank_long				; VBlank sends it all next vblank
-	sta.b vbint
-	stx.b xsave
+	sta.b vbint						; handler for the next vblank
+	stx.b xsave						; X again
 	ldx.w #$003A
-.resta:
+.resta:								; pull the registers back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .resta
-	ldx.b xsave
-	ldx.b a3
+	ldx.b xsave						; restore X
+	ldx.b a3						; X = a3
 .rtl:
 	rtl
