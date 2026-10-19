@@ -43,9 +43,9 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	dex
 	dex
 	bpl .clrtext
-	lda.w #EASNmap					; EASN map, compressed
+	lda.w #EASNBGMap				; EASNBG map, compressed
 	sta.b tmp0
-	lda.w #EASNmap>>16
+	lda.w #EASNBGMap>>16
 	sta.b tmp1
 	jsl.l DecompressBytecode		; unpack
 	ldx.w #$03FE					; copy the unpacked map into the back map

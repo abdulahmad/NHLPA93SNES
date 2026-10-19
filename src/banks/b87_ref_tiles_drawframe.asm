@@ -7,7 +7,7 @@ endif
 SpriteSet2:							;frame set 2 (stop and skate backwards): frames 145-184
 	incbin "../../Extracted/Graphics/Sprites/Sprites145_184.sanim"
 
-EASNmap:							;EASNBG.map.sjim: the EASN backdrop, packed (decompressor
+EASNBGMap:							;EASNBG.map.sjim: the EASN backdrop, packed (decompressor
 									;DecompressBytecode): a 32 x 16 map, then the tiles; unpacked by the
 									;scouting report and team roster screens
 	incbin "../../Extracted/Graphics/EASNBG.map.sjim"
