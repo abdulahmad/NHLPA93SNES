@@ -12,9 +12,9 @@ SpriteSet2:							;frame set 2 (stop and skate backwards): frames 145-184
 	dw 171,176,179,184,189,194,199,204
 	dw 209
 .pieces:							;x, y, tile, attributes per piece
-	incbin "../../../data/Sprites/set02.pieces"
+	incbin "../../../Extracted/Graphics/Sprites/set02.pieces"
 	assert .tiles-.pieces == 4*209
 .tiles:								;512 4bpp tiles (32 bytes each)
-	incbin "../../../data/Sprites/set02.chr"
+	incbin "../../../Extracted/Graphics/Sprites/set02.chr"
 SpriteSet2End:
 	assert SpriteSet2End-SpriteSet2 == $3A0+512*32

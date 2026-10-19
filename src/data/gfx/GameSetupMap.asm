@@ -1,5 +1,5 @@
 GameSetUpMap:						;SNES: the game setup screen backdrop (two team boxes, options box),
 									;packed: 32 x 32 map, 128 colours at $800, 18 tiles at $900
-	incbin "../../../data/GameSetup.map.pak"
+	incbin "../../../Extracted/Graphics/GameSetUp.map.snesjim"
 GameSetupMapEnd:
 	assert GameSetupMapEnd-GameSetUpMap == $22F

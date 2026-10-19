@@ -13,9 +13,9 @@ SpriteSet13:						;frame set 13 (goalie catch, glass and save): frames 606-658
 	dw 228,239,248,257,267,276,284,293
 	dw 304,313,325,332,339,345
 .pieces:							;x, y, tile, attributes per piece
-	incbin "../../../data/Sprites/set13.pieces"
+	incbin "../../../Extracted/Graphics/Sprites/set13.pieces"
 	assert .tiles-.pieces == 4*345
 .tiles:								;640 4bpp tiles (32 bytes each)
-	incbin "../../../data/Sprites/set13.chr"
+	incbin "../../../Extracted/Graphics/Sprites/set13.chr"
 SpriteSet13End:
 	assert SpriteSet13End-SpriteSet13 == $5DA+640*32

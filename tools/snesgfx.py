@@ -6,13 +6,13 @@ Formats (see data/README.md):
   *.chr       SNES 4bpp planar tiles, 32 bytes per 8x8 tile
   *.snesmap   SNES BG map words: vflip 15, hflip 14, priority 13, palette 12-10, tile 9-0
   *.snespal   SNES palette, BGR555 words (16 colours per palette row); the team files hold 93G words (see team_colours)
-  *.pieces    sprite frame pieces (data/Sprites/setNN, with setNN.chr; the frame tables are read from src/data/gfx/SpriteSet*.asm)
+  *.pieces    sprite frame pieces (Extracted/Graphics/Sprites/setNN, with setNN.chr; the frame tables are read from src/data/gfx/SpriteSet*.asm)
 
 Commands:
   unpack IN [-o OUT]                  unpack a .pak file (or --rom ADDR: a packed stream in lst/nhlpa93snes.bin)
   tiles IN [-o PNG]                   tile sheet of a .chr / unpacked file (--offset, --count, --columns)
   map MAP --tiles CHR [-o PNG]        render a map with its tiles (--width in tiles, --map-offset, --tiles-offset)
-  screen IN.map.pak [-o PNG]          unpack a packed screen and render it (--map-size, --pal-offset, --tiles-offset)
+  screen IN.map.snesjim [-o PNG]          unpack a packed screen and render it (--map-size, --pal-offset, --tiles-offset)
   sprites SET|all [-o PNG|GIF]        sprite frames of a frame set (0-14) as a labelled sheet, or a .gif animation
                                       (--frames 406-461 picks global frame numbers, --team BOS, --visitor, --rink)
 
@@ -21,10 +21,10 @@ Palettes for tiles/map/screen: --pal FILE[:OFFSET] (a .snespal or any file with 
 Rendering needs Pillow (python3 -m pip install pillow); unpack does not.
 
 Examples:
-  python tools/snesgfx.py screen data/Title1.map.pak -o title.png
-  python tools/snesgfx.py screen data/EASN.map.pak --width 32 --map-size 0x400 --no-pal -o easn.png
-  python tools/snesgfx.py tiles data/BigFont.chr.pak --columns 16 -o bigfont.png
-  python tools/snesgfx.py map data/IceRink.snesmap --tiles data/IceRink.chr.pak --width 48 --pal data/Pals/Rink.snespal -o rink.png
+  python tools/snesgfx.py screen Extracted/Graphics/Title1.map.snesjim -o title.png
+  python tools/snesgfx.py screen Extracted/Graphics/EASN.map.snesjim --width 32 --map-size 0x400 --no-pal -o easn.png
+  python tools/snesgfx.py tiles Extracted/Graphics/BigFont.chr.pak --columns 16 -o bigfont.png
+  python tools/snesgfx.py map Extracted/Graphics/IceRink.snesmap --tiles Extracted/Graphics/IceRink.chr.pak --width 48 --pal Extracted/Graphics/Pals/Rink.snespal -o rink.png
   python tools/snesgfx.py sprites 0 -o set00.png
   python tools/snesgfx.py sprites --frames 406-461 --team MTL --visitor -o goalie.png
   python tools/snesgfx.py sprites --frames 41-48 -o skate.gif
@@ -176,8 +176,8 @@ def render_map(mp, tiles, cols, width, height, scale):
 
 
 SRC = os.path.join(ROOT, 'src')
-SPRITES = os.path.join(ROOT, 'data', 'Sprites')
-PALS = os.path.join(ROOT, 'data', 'Pals')
+SPRITES = os.path.join(ROOT, 'Extracted', 'Graphics', 'Sprites')
+PALS = os.path.join(ROOT, 'Extracted', 'Graphics', 'Pals')
 
 
 def snes_rgb(v):
@@ -195,8 +195,8 @@ def sprite_palette(team, visitor_team=None):
     """The 128 sprite colours: Rink.snespal with sprite rows 2 (home) and 3 (visitor) from the team colours (setplayercolors)."""
     cols = palette(os.path.join(PALS, 'Rink.snespal'))[:128]
     if team:
-        cols[32:48] = team_colours(os.path.join(PALS, team + 'h.snespal'))
-        cols[48:64] = team_colours(os.path.join(PALS, (visitor_team or team) + 'v.snespal'))
+        cols[32:48] = team_colours(os.path.join(PALS, team + 'h.pal'))
+        cols[48:64] = team_colours(os.path.join(PALS, (visitor_team or team) + 'v.pal'))
     return cols
 
 
@@ -314,8 +314,8 @@ def cmd_sprites(a):
         bg = cols[0] + (255,)
     back = None
     if a.rink:      # the crowd frames (659-689) are pieces of the vertical rink map, with the frame origin at its top left
-        back = render_map(open(os.path.join(ROOT, 'data', 'IceRink.snesmap'), 'rb').read(),
-                          maybe_unpack(os.path.join(ROOT, 'data', 'IceRink.chr.pak')), cols, 48, 85, 1).convert('RGBA')
+        back = render_map(open(os.path.join(ROOT, 'Extracted', 'Graphics', 'IceRink.snesmap'), 'rb').read(),
+                          maybe_unpack(os.path.join(ROOT, 'Extracted', 'Graphics', 'IceRink.chr.pak')), cols, 48, 85, 1).convert('RGBA')
     cols = [c + (255,) for c in cols]
     frames = []     # (global frame, pieces, tiles)
     for st in chosen:
@@ -466,11 +466,11 @@ def main():
     p.add_argument('--scale', type=num, default=2)
     p.set_defaults(func=cmd_screen)
 
-    p = sub.add_parser('sprites', help='render the sprite frames of a frame set (data/Sprites) to a sheet or GIF')
+    p = sub.add_parser('sprites', help='render the sprite frames of a frame set (Extracted/Graphics/Sprites) to a sheet or GIF')
     p.add_argument('set', nargs='?', help='frame set 0-14, or all (default: the sets of --frames)')
     p.add_argument('-o', '--output', default='sprites.png', help='a .gif output is an animation of the frames')
     p.add_argument('--frames', help='global frame numbers (sprframe, the SPF names), e.g. 406-461,500')
-    p.add_argument('--team', default='BOS', help='team colours for sprite palettes 2/3 (data/Pals/<team>h/v), or none')
+    p.add_argument('--team', default='BOS', help='team colours for sprite palettes 2/3 (Extracted/Graphics/Pals/<team>h/v), or none')
     p.add_argument('--visitor', action='store_const', const=0x8000, default=0, help='draw palette 2 pieces in the visitor colours (sprflag $8000)')
     p.add_argument('--visitor-team', help='a different team for the visitor colours')
     p.add_argument('--bg', default='', help='background RRGGBB or transparent (default: palette colour 0, the ice)')

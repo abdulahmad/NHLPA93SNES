@@ -2,6 +2,7 @@
 # Assemble src/nhlpa93snes.asm with asar (--fix-checksum=off), then patch the SNES
 # header if the image grew. The stock image is left unchanged and must match lst/nhlpa93snes.bin.
 cd "$(dirname "$0")"
+python3 tools/prebuild.py || exit 1
 mkdir -p output
 ASAR=asar; [ -x tools/bin/asar ] && ASAR=tools/bin/asar
 if command -v sha1sum >/dev/null; then SHA="sha1sum"; else SHA="shasum -a 1"; fi

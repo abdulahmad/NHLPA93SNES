@@ -12,9 +12,9 @@ SpriteSet3:							;frame set 3 (SPFcelebrate, SPFpump, SPFcup): frames 185-224
 	dw 267,276,292,304,311,319,327,333
 	dw 344
 .pieces:							;x, y, tile, attributes per piece
-	incbin "../../../data/Sprites/set03.pieces"
+	incbin "../../../Extracted/Graphics/Sprites/set03.pieces"
 	assert .tiles-.pieces == 4*344
 .tiles:								;640 4bpp tiles (32 bytes each)
-	incbin "../../../data/Sprites/set03.chr"
+	incbin "../../../Extracted/Graphics/Sprites/set03.chr"
 SpriteSet3End:
 	assert SpriteSet3End-SpriteSet3 == $5BC+640*32

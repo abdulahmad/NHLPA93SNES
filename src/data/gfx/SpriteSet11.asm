@@ -8,9 +8,9 @@ SpriteSet11:						;frame set 11 (goal siren): frames 518-531
 	dw 0,2,5,8,16,19,22,24
 	dw 28,32,35,39,42,46,50
 .pieces:							;x, y, tile, attributes per piece
-	incbin "../../../data/Sprites/set11.pieces"
+	incbin "../../../Extracted/Graphics/Sprites/set11.pieces"
 	assert .tiles-.pieces == 4*50
 .tiles:								;128 4bpp tiles (32 bytes each)
-	incbin "../../../data/Sprites/set11.chr"
+	incbin "../../../Extracted/Graphics/Sprites/set11.chr"
 SpriteSet11End:
 	assert SpriteSet11End-SpriteSet11 == $F0+128*32

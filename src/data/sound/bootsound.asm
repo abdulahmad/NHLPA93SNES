@@ -5,7 +5,7 @@ BootSoundUpload:					;boot SPC upload: the sound driver and its sample set (sndb
 ; ---- SPCDriver ----
 SPCDriver:							;SPC700 sound driver code, loaded at APU $0400 (not disassembled: SPC700
 									;code)
-	incbin "../../../data/spc/driver.spc700"
+	incbin "../../../Extracted/Sound/driver.spc700"
 SPCDriverEnd:
 	assert SPCDriverEnd-SPCDriver == SPCDRIVERSIZE
 	dw BootInstrumentsEnd-BootInstruments, SPCINSTR	; block 2: the instrument table
@@ -62,7 +62,7 @@ BootSampleDirEnd:
 
 ; ---- BootSamples ----
 BootSamples:						;BRR samples of the boot set (9-byte blocks)
-	incbin "../../../data/bootsamples.brr"
+	incbin "../../../Extracted/Sound/bootsamples.brr"
 BootSamplesEnd:
 	assert BootSamplesEnd-BootSamples == BOOTSAMPLESIZE
 	dw $0000, SPCDRIVER				; end block: length 0, start the driver at $0400

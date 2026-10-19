@@ -9,9 +9,9 @@ SpriteSet8:							;frame set 8 (arrows, pads, puck and goal): frames 384-405
 	dw 40,42,43,44,45,46,47,48
 	dw 49,50,51,52,53,63,75
 .pieces:							;x, y, tile, attributes per piece
-	incbin "../../../data/Sprites/set08.pieces"
+	incbin "../../../Extracted/Graphics/Sprites/set08.pieces"
 	assert .tiles-.pieces == 4*75
 .tiles:								;128 4bpp tiles (32 bytes each)
-	incbin "../../../data/Sprites/set08.chr"
+	incbin "../../../Extracted/Graphics/Sprites/set08.chr"
 SpriteSet8End:
 	assert SpriteSet8End-SpriteSet8 == $164+128*32
