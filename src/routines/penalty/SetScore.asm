@@ -6,26 +6,26 @@ SetScore:							;Play one period of playoff game a0 with random goals; a game ti
 	bcc .go
 	jmp.w .rtl
 .go:
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.save:
+.save:								; save d0 and the words after it (4 words)
 	lda.b d0,x
 	pha
 	inx
 	inx
 	cpx.w #$0008
 	bne .save
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.savea:
+.savea:								; save a0 and the words after it (4 words)
 	lda.b a0,x
 	pha
 	inx
 	inx
 	cpx.w #$0008
 	bne .savea
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	ldy.b a0
 	lda.w gsper,y
 	cmp.w #3						; after period 3
@@ -37,7 +37,7 @@ SetScore:							;Play one period of playoff game a0 with random goals; a game ti
 	sbc.w gss2,y
 	bit.w #$8000
 	beq .diff
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .diff:
 	cmp.w #2
@@ -73,24 +73,24 @@ SetScore:							;Play one period of playoff game a0 with random goals; a game ti
 	adc.b d0
 	sta.w gss2,y
 .ex:
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0006
-.resta:
+.resta:								; pull a0 and the words after it back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .resta
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0006
-.restore:
+.restore:							; pull d0 and the words after it back
 	pla
 	sta.b d0,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 .rtl:
 	rtl
 .getscore:							;d0 = scoring team, d1 = other team; nibblebuffer = the .sctab rows of

@@ -13,7 +13,7 @@ PrintTeamNameAndScore:				;Print team a2's name, then its score as two character
 	sta.b mulb
 	lda.w #10						; divide by 10
 	sta.b mula
-	jsl.l divu16
+	jsl.l divu16					; mulb / mula
 	beq .ones						; score below 10
 	adc.w #'0'						; tens digit
 	sta.w mesarea+2

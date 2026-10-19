@@ -73,11 +73,11 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	lda.w pfgoal,x
 	bne .nd0
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 	lda.b d1
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
 .nd0:
@@ -137,7 +137,7 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	sbc.b d2
 	bit.w #$8000
 	beq .ax
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .ax:
 	cmp.w #$0015
@@ -154,7 +154,7 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	sbc.b d3
 	bit.w #$8000
 	beq .ay
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .ay:
 	cmp.w #$0015
@@ -168,7 +168,7 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	sec
 	sbc.w Ypos,y
 	sta.b d1
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 	lda.w facedir,x
 	eor.w #$0004
 	cmp.b d0

@@ -1,24 +1,24 @@
 AvgCline:							;d0 = the average energy of team a2's current line
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.save:
+.save:								; save d1 and the words after it (6 words)
 	lda.b d1,x
 	pha
 	inx
 	inx
 	cpx.w #$000C
 	bne .save
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.savea:
+.savea:								; save a0 and the words after it (2 words)
 	lda.b a0,x
 	pha
 	inx
 	inx
 	cpx.w #$0004
 	bne .savea
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	stz.b d0
 	stz.b d1
 	lda.w #$0005
@@ -55,25 +55,25 @@ AvgCline:							;d0 = the average energy of team a2's current line
 	sta.b mula
 	lda.b d0
 	sta.b mulb
-	jsl.l divu16
+	jsl.l divu16					; mulb / mula
 	sta.b d0
 .ex:
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0002
-.resta:
+.resta:								; pull a0 and the words after it back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .resta
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$000A
-.restore:
+.restore:							; pull d1 and the words after it back
 	pla
 	sta.b d1,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	rtl

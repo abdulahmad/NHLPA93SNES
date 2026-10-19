@@ -92,7 +92,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	lda.b sprhflip
 	beq .sx
 	lda.b sprox
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sec
 	sbc.w #$0007
@@ -222,13 +222,13 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	lda.b sprtile
 	sta.w Satt+2,x
 	xba
-	sep #$20
+	sep #$20						; 8-bit A
 	ora.b sprpal
 	ora.b sprpriority
 	ora.b sprpattr
 	eor.b sprhflip
 	sta.w Satt+3,x
-	rep #$30
+	rep #$30						; 16-bit registers
 	lda.b sprcount
 	and.w #$0003
 	tax
@@ -238,7 +238,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	lsr a
 	lsr a
 	tax
-	sep #$20
+	sep #$20						; 8-bit A
 	tya
 	and.w SattHi,x
 	sta.w SattHi,x
@@ -249,7 +249,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	ora.w SattHi,x
 	sta.w SattHi,x
 .next:
-	rep #$30
+	rep #$30						; 16-bit registers
 	inc.b sprcount
 	jmp.w .nextpiece
 .himask:							;SattHi masks that clear the x bit 8 of sprite 0-3 in a byte
@@ -258,7 +258,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	lda.b sprhflip
 	beq .bx
 	lda.b sprox
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sec
 	sbc.w #$000F
@@ -423,13 +423,13 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	lda.b sprtile
 	sta.w Satt+2,x
 	xba
-	sep #$20
+	sep #$20						; 8-bit A
 	ora.b sprpal
 	ora.b sprpriority
 	ora.b sprpattr
 	eor.b sprhflip
 	sta.w Satt+3,x
-	rep #$30
+	rep #$30						; 16-bit registers
 	lda.b sprcount
 	and.w #$0003
 	tax
@@ -439,7 +439,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	lsr a
 	lsr a
 	tax
-	sep #$20
+	sep #$20						; 8-bit A
 	tya
 	and.w SattHi,x
 	sta.w SattHi,x
@@ -455,7 +455,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	ora.w SattHi,x
 	sta.w SattHi,x
 .bnext:
-	rep #$30
+	rep #$30						; 16-bit registers
 	inc.b sprcount
 .nextpiece:							;next piece
 	inc.b sprframe

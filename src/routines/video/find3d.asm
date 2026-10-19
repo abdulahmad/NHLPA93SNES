@@ -5,7 +5,7 @@ find3d:								;Project a rink position (x, y, z) to screen coordinates; off scr
 	lda.b d0
 	pha
 	lda.b d1
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 	pla
@@ -26,7 +26,7 @@ find3d:								;Project a rink position (x, y, z) to screen coordinates; off scr
 	lda.b d0
 	bit.w #$8000
 	beq .ax
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .ax:
 	cmp.w #$0091					; |x| > 144: off
@@ -47,7 +47,7 @@ find3d:								;Project a rink position (x, y, z) to screen coordinates; off scr
 	sta.b d1
 	bit.w #$8000
 	beq .ay
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .ay:
 	cmp.w #$0091

@@ -124,14 +124,14 @@ assfight:							;Assignment: fighting. A computer fighter punches when close; bo
 	sta.b d0
 	bit.w #$8000
 	beq .inrange
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .inrange:
 	cmp.w #$0019					; computer punches only within 25 pixels
 	bcs .j
 	lda.w #$0008
 	sta.b d0
-	jsl.l randomd0
+	jsl.l randomd0					; random number 0 to d0-1
 	lda.b d0
 	cmp.w #$0003
 	bcc .p
@@ -146,7 +146,7 @@ assfight:							;Assignment: fighting. A computer fighter punches when close; bo
 	ldy.b d0
 	lda.b [a1],y
 	sta.b d1
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 .j:
 	jsl.l chkhit
 	lda.w SPA,x
@@ -184,7 +184,7 @@ assfight:							;Assignment: fighting. A computer fighter punches when close; bo
 	lda.w #$0005
 	sta.b mulb
 .mul:
-	jsl.l muls16
+	jsl.l muls16					; signed multiply
 	sta.b d0
 	clc
 	adc.w Xvel,x

@@ -49,7 +49,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	sbc.w #12
 	eor.b d1
 	bpl .de0
-	jml.l assreplace
+	jml.l assreplace				; replace the assignment with d0
 .de0:
 	lda.w pucky						; d3 = pucky + puckvy / 64
 	sta.b d0
@@ -70,11 +70,11 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	lda.w pfgoal,x
 	bne .de1
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 	lda.b d3
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d3
 .de1:								;zone number
@@ -135,7 +135,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	lda.b [a0],y
 	dey
 	dey
-	jsl.l randomas
+	jsl.l randomas					; random number -A to A-1
 	adc.b [a0],y
 	sta.w temp3,x
 	iny
@@ -147,7 +147,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	lda.b [a0],y
 	dey
 	dey
-	jsl.l randomas
+	jsl.l randomas					; random number -A to A-1
 	adc.b [a0],y
 	sta.w temp4,x
 .nodec:
@@ -157,7 +157,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	cmp.w #5
 	beq .1
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 .1:
@@ -166,11 +166,11 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	lda.w pfgoal,x
 	bne .0
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 	lda.b d1
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
 .0:

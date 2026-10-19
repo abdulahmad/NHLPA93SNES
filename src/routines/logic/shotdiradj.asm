@@ -60,14 +60,14 @@ shotdiradj:							;Aim a computer shot at the open side when the goalie covers t
 	pha
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d0
 	lda.b mulres+2
 	sta.b d0+2
 	lda.b d1
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sec
 	adc.b d0
 	sta.b d0
@@ -98,7 +98,7 @@ shotdiradj:							;Aim a computer shot at the open side when the goalie covers t
 	lda.b d4
 	sta.b d5
 	pla
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d3
 	pla
@@ -112,7 +112,7 @@ shotdiradj:							;Aim a computer shot at the open side when the goalie covers t
 	lda.b d4
 	bit.w #$8000
 	beq .abs
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .abs:
 	cmp.w #$002D					; |angle| < 45: shoot at the open side
@@ -120,7 +120,7 @@ shotdiradj:							;Aim a computer shot at the open side when the goalie covers t
 	lda.w pfgoal,x
 	beq .s
 	lda.b d4
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d4
 .s:

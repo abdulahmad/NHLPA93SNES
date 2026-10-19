@@ -54,11 +54,11 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	lda.w pfgoal,x
 	bne .de00
 	lda.b d1
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
 	lda.b d3
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d3
 .de00:								;only lead when moving up ice
@@ -101,7 +101,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	eor.b d1
 	sta.b d1
 	bmi .de0
-	jml.l assreplace
+	jml.l assreplace				; replace the assignment with d0
 .de0:
 	lda.w #65
 	sta.w temp3,x
@@ -246,7 +246,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	lda.b d0
 	sta.w temp4,x
 	lda.w temp3,x
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.w temp3,x
 	lda.w puckx

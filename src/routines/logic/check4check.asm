@@ -8,11 +8,11 @@ check4check:						;Look for a good chance to check an opponent
 	asl.b d0
 .nopen:
 	lda.b d0
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	cmp.w #$0004
 	bcc .go
 	lda.b d0
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	cmp.w #$0004
 	bcs .rts
 .go:
@@ -37,7 +37,7 @@ check4check:						;Look for a good chance to check an opponent
 	sta.b d0
 	bit.w #$8000
 	beq .dx
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .dx:
 	cmp.w #$001F
@@ -48,12 +48,12 @@ check4check:						;Look for a good chance to check an opponent
 	sta.b d1
 	bit.w #$8000
 	beq .dy
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .dy:
 	cmp.w #$001F
 	bcs .next
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 	lda.b d0
 	cmp.w facedir,x					; opponent in the facing direction
 	bne .next

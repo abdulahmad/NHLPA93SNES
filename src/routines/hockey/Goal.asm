@@ -10,7 +10,7 @@ Goal:								;The puck is in the goal: add the score, sound the siren, log it, u
 	jmp.w .rtl
 .in:
 	jsl.l ChkShotStat				; sound reset, siren, mute other sfx
-	jsl.l sndqreset
+	jsl.l sndqreset					; reset the sound queue
 	lda.w #SFXsiren
 	pha
 	jsl.l sfx
@@ -89,26 +89,26 @@ Goal:								;The puck is in the goal: add the score, sound the siren, log it, u
 	clc
 	adc.b d0
 	tay
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.w tmgoals,y
 	inc a
 	sta.w tmgoals,y
-	rep #$20
+	rep #$20						; 16-bit A
 	ldy.b a2						; assists
 	lda.w tmtouch2,y
 	bmi .noast
-	sep #$20
+	sep #$20						; 8-bit A
 	sta.b [a0]
-	rep #$20
+	rep #$20						; 16-bit A
 	inc.b a0
 	lda.w tmtouch3,y
 	bmi .noast
-	sep #$20
+	sep #$20						; 8-bit A
 	sta.b [a0]
-	rep #$20
+	rep #$20						; 16-bit A
 .noast:
 	jsl.l PenGoalStuff				; PenGoalStuff, printscores1, ascore for the scoring team
-	jsl.l printscores1
+	jsl.l printscores1				; redraw the scores
 	lda.w #ascore
 	sta.b d0
 	jsl.l .setass
@@ -152,12 +152,12 @@ Goal:								;The puck is in the goal: add the score, sound the siren, log it, u
 	sta.w pfnc+puckobj
 	lda.w #pnothing
 	sta.b d0
-	jsl.l assreplace
+	jsl.l assreplace				; replace the assignment with d0
 	inx								; shadow: siren anim
 	inx
 	lda.w #SPAsiren
 	sta.b d1
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 	ldy.b a2						; PenGoal for the first object of team a2
 	ldx.w tmsort,y
 	stx.b a3
@@ -182,7 +182,7 @@ Goal:								;The puck is in the goal: add the score, sound the siren, log it, u
 	lda.w pf2fight,x
 	bne .nl
 	stz.w pfnc,x
-	jsl.l assinsert
+	jsl.l assinsert					; insert assignment d0
 .nl:
 	inx
 	inx

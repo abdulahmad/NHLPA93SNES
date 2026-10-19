@@ -2,61 +2,61 @@ Framer:								;Draw a frame and fill it. d0 / d1 = width / height, printx / pri
 									;printm = top left corner
 
 		;   a d0 x d1 box of FramerMap pieces at printx/printy
-	phx
-	lda.w printx
-	sta.b tmp0
-	lda.b d0
+	phx								; keep X
+	lda.w printx					; print x
+	sta.b tmp0						; left edge
+	lda.b d0						; width
 	sta.b tmp2
-	ldx.w #$0000
-	jsl.l .setter
-	dec.b tmp2
+	ldx.w #$0000					; top left piece
+	jsl.l .setter					; set it
+	dec.b tmp2						; width - 2
 	dec.b tmp2
 .top:
-	ldx.w #$0002
-	jsl.l .setter
-	dec.b tmp2
+	ldx.w #$0002					; top middle piece
+	jsl.l .setter					; set it
+	dec.b tmp2						; next
 	bne .top
-	ldx.w #$0004
-	jsl.l .setter
-	dec.b d1
+	ldx.w #$0004					; top right piece
+	jsl.l .setter					; set it
+	dec.b d1						; height - 2
 	dec.b d1
 .row:
-	lda.b tmp0
-	sta.w printx
-	inc.w printy
-	lda.b d0
-	dec a
+	lda.b tmp0						; left edge
+	sta.w printx					; back to the left
+	inc.w printy					; next row
+	lda.b d0						; width
+	dec a							; -2
 	dec a
 	sta.b tmp2
-	ldx.w #$0006
-	jsl.l .setter
+	ldx.w #$0006					; left piece
+	jsl.l .setter					; set it
 .mid:
-	ldx.w #$0008
-	jsl.l .setter
-	dec.b tmp2
+	ldx.w #$0008					; middle piece
+	jsl.l .setter					; set it
+	dec.b tmp2						; next
 	bne .mid
-	ldx.w #$000A
-	jsl.l .setter
-	dec.b d1
+	ldx.w #$000A					; right piece
+	jsl.l .setter					; set it
+	dec.b d1						; next row
 	bne .row
-	lda.b tmp0
+	lda.b tmp0						; left edge
 	sta.w printx
-	inc.w printy
+	inc.w printy					; next row
+	dec.b d0						; width - 2
 	dec.b d0
-	dec.b d0
-	ldx.w #$000C
-	jsl.l .setter
+	ldx.w #$000C					; bottom left piece
+	jsl.l .setter					; set it
 .bot:
-	ldx.w #$000E
-	jsl.l .setter
-	dec.b d0
+	ldx.w #$000E					; bottom middle piece
+	jsl.l .setter					; set it
+	dec.b d0						; next
 	bne .bot
-	ldx.w #$0010
-	jsl.l .setter
-	lda.b tmp0
+	ldx.w #$0010					; bottom right piece
+	jsl.l .setter					; set it
+	lda.b tmp0						; left edge
 	sta.w printx
-	inc.w printy
-	plx
+	inc.w printy					; next row
+	plx								; restore X
 	rtl
 .setter:							;one FramerMap piece (X = piece * 2) at printx/printy, printx + 1
 	lda.l FramerMap,x

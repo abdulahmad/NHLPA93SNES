@@ -45,8 +45,8 @@ PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start 
 	lda.b d1
 	bit.w #cbut
 	beq .gj
-	jsl.l forceblack
-	jsl.l sndqreset
+	jsl.l forceblack				; blank the screen
+	jsl.l sndqreset					; reset the sound queue
 	lda.b d7
 	pha
 	lda.b vcount+2
@@ -76,9 +76,9 @@ PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start 
 	jmp.w .gj
 .ros1:
 	jsl.l TeamRosterScreen
-	jsl.l sndqreset
-	jsl.l forceblack
-	sep #$20
+	jsl.l sndqreset					; reset the sound queue
+	jsl.l forceblack				; blank the screen
+	sep #$20						; 8-bit A
 	lda.b #$00
 	sta.w BG1SC
 	lda.b #$05
@@ -95,7 +95,7 @@ PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start 
 	inx
 	cpx.w #$0080
 	bne .pal
-	rep #$30
+	rep #$30						; 16-bit registers
 	lda.w #$FF00
 	sta.w charofs
 	stz.w charofs+2
@@ -140,8 +140,8 @@ PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start 
 	lda.w #$FFFF
 	sta.b textdirtylo
 	stz.b textdirtyhi
-	jsl.l SetHor
-	jsl.l setvideo
+	jsl.l SetHor					; switch to the horizontal rink
+	jsl.l setvideo					; update the video
 	jmp.w .redraw
 .go:								;Goalie: left/right change tmgoalie (0, 1, none), then Setpersonel
 	jsl.l seta2
@@ -161,7 +161,7 @@ PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start 
 	dec a
 .set:
 	sta.w tmgoalie,y
-	jsl.l setpersonel
+	jsl.l setpersonel				; update the players on the ice
 	jmp.w .gj
 .lastg:
 	lda.b d0

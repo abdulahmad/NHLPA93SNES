@@ -2,7 +2,7 @@ dostop:								;Player X stops
 	lda.w Xvel,x
 	bit.w #$8000
 	beq .xabs
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .xabs:
 	cmp.w #$1001					; |Xvel| > $1000?
@@ -10,7 +10,7 @@ dostop:								;Player X stops
 	lda.w Yvel,x
 	bit.w #$8000
 	beq .yabs
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .yabs:
 	cmp.w #$1001
@@ -35,7 +35,7 @@ dostop:								;Player X stops
 	sta.b d1
 	sta.w pf2aip,x
 .setspa:
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 StopNA:								;slow player a3 by 150 on each axis, no animation change. Falls in from
 									;dostop, also entered from goalieacc and others
 		;   slow player X by $70*d7 on each axis, no animation change

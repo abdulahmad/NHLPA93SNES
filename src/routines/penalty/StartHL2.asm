@@ -28,7 +28,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	inc.w printx
 	dec.w printy
 	dec.w printy
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%String("Highlight from game:")
 	lda.w #180						; 180 frames, Start skips
 	sta.b d0
@@ -38,8 +38,8 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	beq .play
 	jmp.w .nhl1
 .play:
-	jsl.l forceblack
-	jsl.l sndqreset
+	jsl.l forceblack				; blank the screen
+	jsl.l sndqreset					; reset the sound queue
 	lda.w sndbank
 	cmp.w #$0001
 	beq .snd
@@ -50,18 +50,18 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	sta.w HomeTeam
 	lda.w gst2,y
 	sta.w VisTeam
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.pushg:
+.pushg:								; save a0 and the words after it (2 words)
 	lda.b a0,x
 	pha
 	inx
 	inx
 	cpx.w #$0004
 	bne .pushg
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	jsl.l ClearTeamStats
-	jsl.l restoreteams
+	jsl.l restoreteams				; restore the teams
 	stz.b a2
 	jsl.l reenergizeteam
 	lda.w #$0002
@@ -73,28 +73,28 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	stz.w cont1team
 	stz.w cont2team
 	lda.w #120						; gameclock = 120 + random 120
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	adc.w #120
 	sta.w gameclock
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0002
-.popg:
+.popg:								; pull a0 and the words after it back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .popg
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.pushg2:
+.pushg2:							; save a0 and the words after it (2 words)
 	lda.b a0,x
 	pha
 	inx
 	inx
 	cpx.w #$0004
 	bne .pushg2
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	ldy.b a0						; gsp, scores from the game
 	lda.w gsper,y
 	dec a
@@ -123,7 +123,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	sta.w puckcross+2
 	sta.w puckcross+6
 	jsl.l setupice
-	jsl.l ClrHor
+	jsl.l ClrHor					; back to the vertical rink
 	stz.w Vpos
 	stz.w Hpos
 	jsl.l ResetBench
@@ -166,7 +166,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	inc.b a1
 	dec.b d0
 	bpl .ploop
-	jsl.l SprSort
+	jsl.l SprSort					; sort the sprites
 	lda.w #180						; 180 frames after the clock stops
 	pha
 	lda.b vcount
@@ -200,7 +200,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	sta.b d7x1024
 	stx.w lastframevc
 	stx.w oldvcount
-	jsl.l ReadPads
+	jsl.l ReadPads					; read the pads
 	lda.w sflags
 	bit.w #sfpz
 	bne .frame
@@ -240,61 +240,61 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	lda.w tmscore					; tied: random goal
 	cmp.w tmscore+2
 	bne .endhl
-	jsl.l random
+	jsl.l random					; random number
 	and.w #$0002
 	tax
 	inc.w tmscore,x
 .endhl:
 	pla
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0002
-.popg2:
+.popg2:								; pull a0 and the words after it back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .popg2
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.pushd1:
+.pushd1:							; save d1 and the words after it (2 words)
 	lda.b d1,x
 	pha
 	inx
 	inx
 	cpx.w #$0004
 	bne .pushd1
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.pusha0:
+.pusha0:							; save a0 and the words after it (2 words)
 	lda.b a0,x
 	pha
 	inx
 	inx
 	cpx.w #$0004
 	bne .pusha0
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	jsl.l KillCrowd
-	jsl.l sndqreset
-	stx.b xsave
+	jsl.l sndqreset					; reset the sound queue
+	stx.b xsave						; keep X
 	ldx.w #$0002
-.popa0:
+.popa0:								; pull a0 and the words after it back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .popa0
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0002
-.popd1:
+.popd1:								; pull d1 and the words after it back
 	pla
 	sta.b d1,x
 	dex
 	dex
 	bpl .popd1
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	ldy.b a0						; back into the game record
 	lda.w tmscore
 	sta.w gss1,y
@@ -305,11 +305,11 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	beq .stats
 	jmp.w .nhl1
 .stats:
-	jsl.l forceblack
+	jsl.l forceblack				; blank the screen
 	jsl.l .lo						; restore the game state
 	jsl.l setplayercolors
-	jsl.l SetHor
-	jsl.l setvideo
+	jsl.l SetHor					; switch to the horizontal rink
+	jsl.l setvideo					; update the video
 	jsl.l printz					; DisplayStats box
 	%StringCp(CC_Font1Pri,$05,$0C)
 	lda.w #22
@@ -317,47 +317,47 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	lda.w #7
 	sta.b d1
 	jsl.l Framer					; d0 x d1
-	jsl.l printscores1
+	jsl.l printscores1				; redraw the scores
 	jsl.l Pmenu						; DisplayStats
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$001A
-.resta:
+.resta:								; pull a0 and the words after it back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .resta
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$001E
-.restore:
+.restore:							; pull d0 and the words after it back
 	pla
 	sta.b d0,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	ldx.b a3
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.save:
+.save:								; save d0 and the words after it (16 words)
 	lda.b d0,x
 	pha
 	inx
 	inx
 	cpx.w #$0020
 	bne .save
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.savea:
+.savea:								; save a0 and the words after it (14 words)
 	lda.b a0,x
 	pha
 	inx
 	inx
 	cpx.w #$001C
 	bne .savea
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	ldy.b a0
 	lda.w #4						; gsper 4: tied after the highlight: again
 	sta.w gsper,y
@@ -381,24 +381,24 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	lda.w #sf3sbut
 	tsb.w sflags3
 .exit:
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$001A
-.resta2:
+.resta2:							; pull a0 and the words after it back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .resta2
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$001E
-.restore2:
+.restore2:							; pull d0 and the words after it back
 	pla
 	sta.b d0,x
 	dex
 	dex
 	bpl .restore2
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	ldx.b a3
 	rtl
 .nhl1:
@@ -411,7 +411,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 .setteam:							;team a2 for the highlight: energy, setpersonel, forcepldata, no
 									;last touches
 	jsl.l reenergizeteam
-	jsl.l setpersonel
+	jsl.l setpersonel				; update the players on the ice
 	jsl.l forcepldata
 	ldy.b a2
 	lda.w #$FFFF
@@ -425,7 +425,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	cmp.w gss2,y
 	bne .rr0
 	lda.w #2
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	ldy.b a0
 	pha
 	clc

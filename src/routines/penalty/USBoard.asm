@@ -1,53 +1,53 @@
 USBoard:							;Update the scoreboard, with the players in the
 									;penalty box and their time left
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.save:
+.save:								; save d0 and the words after it (16 words)
 	lda.b d0,x
 	pha
 	inx
 	inx
 	cpx.w #$0020
 	bne .save
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.savea:
+.savea:								; save a0 and the words after it (8 words)
 	lda.b a0,x
 	pha
 	inx
 	inx
 	cpx.w #$0010
 	bne .savea
-	ldx.b xsave
-	jsl.l printscores1
-	jsl.l printz
+	ldx.b xsave						; restore X
+	jsl.l printscores1				; redraw the scores
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pri,$14,$08)
 	stz.b a2
 	jsl.l .dispen
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pri,$05,$08)
 	lda.w #$0002
 	sta.b a2
 	jsl.l .dispen
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$000E
-.resta:
+.resta:								; pull a0 and the words after it back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .resta
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$001E
-.restore:
+.restore:							; pull d0 and the words after it back
 	pla
 	sta.b d0,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	ldx.b a3
 .rtl:
 	rtl

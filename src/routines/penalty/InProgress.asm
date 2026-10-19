@@ -9,26 +9,26 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	bmi .go
 	jmp.w .rtl
 .go:
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.save:
+.save:								; save d0 and the words after it (2 words)
 	lda.b d0,x
 	pha
 	inx
 	inx
 	cpx.w #$0004
 	bne .save
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.savea:
+.savea:								; save a0 and the words after it (8 words)
 	lda.b a0,x
 	pha
 	inx
 	inx
 	cpx.w #$0010
 	bne .savea
-	ldx.b xsave
+	ldx.b xsave						; restore X
 .top:
 	lda.w #$0000
 	sta.b a0+2
@@ -88,26 +88,26 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	bne .min
 	jmp.w .sa2
 .min:
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.save2:
+.save2:								; save d0 and the words after it (4 words)
 	lda.b d0,x
 	pha
 	inx
 	inx
 	cpx.w #$0008
 	bne .save2
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.savea2:
+.savea2:							; save a1 and the words after it (8 words)
 	lda.b a1,x
 	pha
 	inx
 	inx
 	cpx.w #$0010
 	bne .savea2
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	jsl.l GetPeriodTimeRemaining
 	lda.b [a0]
 	xba
@@ -232,25 +232,25 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	sta.b a0+2
 	lda.w #apenalty
 	sta.b d0
-	jsl.l assreplace
-	stx.b xsave
+	jsl.l assreplace				; replace the assignment with d0
+	stx.b xsave						; keep X
 	ldx.w #$000E
-.resta2:
+.resta2:							; pull a1 and the words after it back
 	pla
 	sta.b a1,x
 	dex
 	dex
 	bpl .resta2
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0006
-.restore2:
+.restore2:							; pull d0 and the words after it back
 	pla
 	sta.b d0,x
 	dex
 	dex
 	bpl .restore2
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	ldx.b a3						; SetPA, USBoard
 	jsl.l SetPA
 	jsl.l USBoard
@@ -276,26 +276,26 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	stx.b a3
 	lda.w #pfaceoff
 	sta.b d0
-	jsl.l assreplace
+	jsl.l assreplace				; replace the assignment with d0
 .ex:
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$000E
-.resta:
+.resta:								; pull a0 and the words after it back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .resta
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0002
-.restore:
+.restore:							; pull d0 and the words after it back
 	pla
 	sta.b d0,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	ldx.b a3
 .rtl:
 	rtl

@@ -18,7 +18,7 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	txa
 	jsl.l GetHot
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sec
 	sbc.w Xvel+1,x					; - high byte of Xvel
@@ -33,7 +33,7 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	sbc.w Xpos,x
 	sta.b d0
 	lda.b d1
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sec
 	sbc.w Yvel+1,x					; - high byte of Yvel
@@ -49,7 +49,7 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	sta.b d1
 	pla
 	pla
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 	lda.b d0
 	sta.w temp2b,x					; temp2b = direction to the puck
 	lda.w position,x
@@ -58,7 +58,7 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	sta.b d0
 	lda.w puckvy
 	sta.b d1
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 	lda.b d0
 	eor.w #$0004					; puck coming toward the player
 	cmp.w facedir,x
@@ -73,7 +73,7 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	sbc.w Xpos,x
 	sta.b d0
 	pha
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 	lda.b d0
 	sta.b tmp0
 	pla
@@ -85,14 +85,14 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	lda.w facedir,x
 	cmp.b tmp0
 	bne .ex
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d0
 	lda.b mulres+2
 	sta.b d0+2
 	lda.b d1
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	adc.b d0
 	sta.b d0
 	lda.b d0+2
@@ -118,7 +118,7 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	sbc.w puckx
 	bit.w #$8000
 	beq .dx
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .dx:
 	sta.b tmp0
@@ -127,7 +127,7 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	sbc.w pucky
 	bit.w #$8000
 	beq .dy
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .dy:
 	clc
@@ -138,7 +138,7 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	sta.b mula
 	lda.w #$0007
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lsr.b mulres+2
 	ror a
 	lsr.b mulres+2
@@ -150,7 +150,7 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	sta.b mula
 	lda.w #$0007
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lsr.b mulres+2
 	ror a
 	lsr.b mulres+2

@@ -1,5 +1,5 @@
 Pmenu:								;Draw the pause menu items with the current one highlighted
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pri,$06,$0D)
 	stz.b d0
 	lda.w #.mlist
@@ -22,7 +22,7 @@ Pmenu:								;Draw the pause menu items with the current one highlighted
 .nohilite:
 	lda.w #$0006
 	sta.w printx
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%String("                    ")
 	lda.w #mesarea
 	sta.b a1
@@ -38,12 +38,12 @@ Pmenu:								;Draw the pause menu items with the current one highlighted
 	jsl.l .goalie
 	lda.b [a1]
 	lsr a
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	clc
 	adc.w #$0011
 	sta.w printx
-	jsl.l print
+	jsl.l print						; print it
 	inc.w printy
 	lda.b a0
 	clc

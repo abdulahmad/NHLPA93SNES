@@ -66,7 +66,7 @@ puckstick:							;The puck hits player a2's stick
 	sbc.b d0
 	clc
 	adc.w #$0024
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	cmp.w #$0003					; steal fails
 	bcs .rtl
 .steal:
@@ -124,14 +124,14 @@ puckstick:							;The puck hits player a2's stick
 	lda.w puckvx
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d0
 	lda.b mulres+2
 	sta.b d0+2
 	lda.w puckvy
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	adc.b d0
 	sta.b d0
 	lda.b d0+2

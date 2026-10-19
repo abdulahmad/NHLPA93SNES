@@ -48,7 +48,7 @@ asswingd:							;Assignment: a wing on defense covers his side
 	eor.b d1
 	sta.b d1
 	bmi .nodec
-	jml.l assreplace
+	jml.l assreplace				; replace the assignment with d0
 .nodec:
 	lda.w #100						; x 100 (left wing -100)
 	sta.b d0
@@ -63,7 +63,7 @@ asswingd:							;Assignment: a wing on defense covers his side
 	lda.w pfgoal,x					; pfgoal: defending the top goal
 	beq .up
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 	lda.w #-158

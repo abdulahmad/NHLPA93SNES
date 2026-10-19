@@ -23,14 +23,14 @@ Pausemode:							;Pause mode: save the screen, stop the sound, show the pause me
 .top:								;draw the pause screen
 	jsl.l printbigz					; big PAUSE title and the menu frame (22 x 7)
 	%StringCt(CC_Font1Pri,$0B,$02,"PAUSE")
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pri,$05,$0C)
 	lda.w #$0016
 	sta.b d0
 	lda.w #$0007
 	sta.b d1
 	jsl.l Framer					; d0 x d1
-	jsl.l printscores1
+	jsl.l printscores1				; redraw the scores
 	jsl.l PauseMenu					; nonzero: draw again
 	bne .top
 	jml.l PauseExit					; resume

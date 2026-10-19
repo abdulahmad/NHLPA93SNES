@@ -1,26 +1,26 @@
 PenGoalStuff:						;After a goal on a power play, let the first player out of the box whose
 									;penalty is not coincidental.
 		;   a1 = team scored on, a2 = scoring team
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.save:
+.save:								; save d0 and the words after it (6 words)
 	lda.b d0,x
 	pha
 	inx
 	inx
 	cpx.w #$000C
 	bne .save
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.savea:
+.savea:								; save a0 and the words after it (2 words)
 	lda.b a0,x
 	pha
 	inx
 	inx
 	cpx.w #$0004
 	bne .savea
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	jsl.l ClearPenaltyBuffer
 	ldy.b a2
 	lda.w tmap,y					; tmap(a2) - tmap(a1) > 0?
@@ -72,22 +72,22 @@ PenGoalStuff:						;After a goal on a power play, let the first player out of th
 	tsb.w tmflags					; line change box redraw
 	tsb.w tmflags+2
 .ex:
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0002
-.resta:
+.resta:								; pull a0 and the words after it back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .resta
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$000A
-.restore:
+.restore:							; pull d0 and the words after it back
 	pla
 	sta.b d0,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	rtl

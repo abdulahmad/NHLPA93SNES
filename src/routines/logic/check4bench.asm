@@ -26,7 +26,7 @@ check4bench:						;If a line change wants player X off, send him to the bench (o
 	beq .rts						; puck carrier stays
 	sep #$20						; pop the jsl return address
 	pla								; pop the jsl return address
-	rep #$30
+	rep #$30						; 16-bit registers
 	pla
 	lda.w pflags,x					; flags
 	ora.w #pf2unav					; pf2unav
@@ -40,7 +40,7 @@ check4bench:						;If a line change wants player X off, send him to the bench (o
 .samepl:							;same roster player: just change position
 	sep #$20						; pop the jsl return address
 	pla								; pop the jsl return address
-	rep #$30
+	rep #$30						; 16-bit registers
 	pla
 	lda.w pflags,x					; flags
 	and.w #~pf2unav&$FFFF			; clear pf2unav

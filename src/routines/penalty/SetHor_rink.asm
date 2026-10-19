@@ -1,6 +1,6 @@
 SetHor_rink:						;Clear the text screen, draw the horizontal rink scoreboard background,
 									;then the scoreboard
-	jsl.l printz
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1,$00,$00)
 	lda.w #$0020
 	sta.b d0
@@ -8,8 +8,8 @@ SetHor_rink:						;Clear the text screen, draw the horizontal rink scoreboard ba
 	sta.b d1
 	lda.w blankchar
 	sta.b d2
-	jsl.l eraser
-	jsl.l printz
+	jsl.l eraser					; erase d0 x d1 with tile d2
+	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1,$00,$00)
 	lda.w #$0418
 	sta.w VMADDL

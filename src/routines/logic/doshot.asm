@@ -1,5 +1,5 @@
 doshot:								;The stick is at the puck: launch it toward the goal
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
 .save:								;movem d0-d7/a0-a3 to the stack
 	lda.b d0,x
@@ -8,17 +8,17 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	inx
 	cpx.w #$0020
 	bne .save
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.savea:
+.savea:								; save a0 and the words after it (8 words)
 	lda.b a0,x
 	pha
 	inx
 	inx
 	cpx.w #$0010
 	bne .savea
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	jsl.l shotdiradj
 	lda.w seed						; sound: wiff (one of 4)
 	and.w #$0003
@@ -47,7 +47,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	lda.w passspeed
 	lsr a
 	lsr a
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	clc
 	adc.w passspeed
@@ -113,14 +113,14 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	pha
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d0
 	lda.b mulres+2
 	sta.b d0+2
 	lda.b d1
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	adc.b d0
 	sta.b d0
 	lda.b mulres+2
@@ -141,7 +141,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	bcs .notperf
 	lda.w #$0010
 	adc.w shotacc,x
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	cmp.w #$000F					; chance of a perfect shot
 	bcs .perf
 .notperf:							;aim error from passspeed, shotacc and distance
@@ -177,7 +177,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 .ar:
 	lda.b d0
 	pha
-	jsl.l randomas
+	jsl.l randomas					; random number -A to A-1
 	adc.b $03,s
 	sta.b $03,s
 	lda.b $01,s
@@ -198,7 +198,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	sta.b $05,s
 	pla
 	lsr a
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	adc.b $05,s
 	sta.b $05,s
 .perf:								;puckvx/puckvy = passspeed*$44*dx/d3 and dy/d3; puckvz from the height
@@ -206,26 +206,26 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	sta.b mulb
 	lda.w #$0044					; 1024/15
 	sta.b mula
-	jsl.l muls16
+	jsl.l muls16					; signed multiply
 	pla
 	sta.b mula
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.b d3
 	sta.b mula
-	jsl.l divs
+	jsl.l divs						; signed divide
 	asl a
 	sta.w puckvx
 	lda.w passspeed
 	sta.b mulb
 	lda.w #$0044
 	sta.b mula
-	jsl.l muls16
+	jsl.l muls16					; signed multiply
 	pla
 	sta.b mula
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.b d3
 	sta.b mula
-	jsl.l divs
+	jsl.l divs						; signed divide
 	asl a
 	sta.w puckvy
 	pla
@@ -259,24 +259,24 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	sta.w puckvz
 .ex:								;play the sound, movem the registers back
 	jsl.l sfx
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$000E
-.resta:
+.resta:								; pull a0 and the words after it back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .resta
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$001E
-.restore:
+.restore:							; pull d0 and the words after it back
 	pla
 	sta.b d0,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	ldx.b a3
 	lda.w #blueline+goalline		; puckvy sign toward the shooting goal
 	sta.b tmp0
@@ -291,7 +291,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	eor.w puckvy
 	bpl .rtl
 	lda.w puckvy
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.w puckvy
 .rtl:

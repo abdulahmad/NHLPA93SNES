@@ -60,7 +60,7 @@ print:								;Print string [a1] into the text map at printx / printy. The strin
 	iny
 	bra .char
 .code:								;control code -n: palette/priority bits, font number, map; then x, y
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	pha
 	and.w #$0030					; bits 4-5: palette (printa bits 10-12)

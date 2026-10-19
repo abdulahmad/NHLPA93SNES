@@ -21,14 +21,14 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	inc.b d2
 .side:
 	lda.b d0						; direction from the goalie to the puck, relative to facedir
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 	lda.b d1
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 	ldy.b a2
 	lda.b d0
 	sec
@@ -81,7 +81,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	lda.w puckvy
 	bit.w #$8000
 	beq .hard
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .hard:								;hard shot from the blue line area may slip through
 	cmp.w #$3000					; |puckvy| >= $3000
@@ -89,18 +89,18 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	lda.w carriedy					; shot taken 80..169 from the goal line: 1 in (182-y) slips through
 	bit.w #$8000
 	beq .dist
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .dist:
 	cmp.w #$0050
 	bcc .frame
 	cmp.w #$00AA
 	bcs .frame
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	clc
 	adc.w #$00B6
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	cmp.w #$0003
 	bne .frame
 	jmp.w .rtl
@@ -131,7 +131,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	lda.w puckvy
 	bit.w #$8000
 	beq .vy
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .vy:
 	cmp.w #$3000
@@ -199,16 +199,16 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	eor.b d1
 	bmi .0
 	lda.b d1
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
 .0:
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.b d0
 	sta.w Xvel+1,x
 	lda.b d1
 	sta.w Yvel+1,x
-	rep #$20
+	rep #$20						; 16-bit A
 	jmp.w puckflip
 .rtl:
 	rtl
@@ -223,7 +223,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	xba
 	and.w #$FF00
 	asl a
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	adc.w #$0C00
 	sta.b d0
 	sec
@@ -246,7 +246,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	bvc .b2
 .c3:
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 	sec

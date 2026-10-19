@@ -47,7 +47,7 @@ asspenalty:							;Assignment: player X skates to the penalty box, glides in and
 	sta.b mula
 	lda.b d1
 	sta.b mulb
-	jsl.l muls16
+	jsl.l muls16					; signed multiply
 	sta.b d1
 	sta.w temp4,x
 	lda.w #sideline					; temp3 = $88: the sideline
@@ -64,7 +64,7 @@ asspenalty:							;Assignment: player X skates to the penalty box, glides in and
 	sbc.w temp4,x
 	bit.w #$8000
 	beq .ay
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .ay:
 	cmp.w #13
@@ -96,7 +96,7 @@ asspenalty:							;Assignment: player X skates to the penalty box, glides in and
 	lda.w #SPAglide					; SPAglide, pfnc
 	sta.b d1
 	sta.w pfnc,x
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 	lda.w #6						; face 6 (2 for the other hand)
 	sta.b d2
 	lda.w handed,x
@@ -132,13 +132,13 @@ asspenalty:							;Assignment: player X skates to the penalty box, glides in and
 	sta.w pfalock,x
 	lda.w #SPAwallright				; SPAwallright
 	sta.b d1
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 	lda.w pflags,x
 	and.w #~pf2pen&$FFFF			; pf2pen off
 	sta.w pflags,x
 	lda.w #$0D						; adopen
 	sta.b d0
-	jml.l assreplace
+	jml.l assreplace				; replace the assignment with d0
 .rtl:
 	rtl
 .st:								;skate to the box

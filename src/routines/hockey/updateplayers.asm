@@ -4,14 +4,14 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	lda.w Xvel,x
 	bit.w #$8000
 	beq .vx
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .vx:
 	sta.b tmp0
 	lda.w Yvel,x
 	bit.w #$8000
 	beq .vy
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .vy:
 	clc
@@ -80,7 +80,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	cmp.w #$0000
 	bmi .vel
 	asl.b d0
-	jsl.l loadTeamStruct
+	jsl.l loadTeamStruct			; a2 = team of X, a1 = the other
 .vel:
 	lda.w SPA,x
 	cmp.w #SPAinjury1				; SPAinjury1: no movement
@@ -110,14 +110,14 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	sta.b mula
 	lda.b d2
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.b mulres+1					; velocity = velocity * factor / 256
 	sta.w Xvel,x
 	lda.w Yvel,x
 	sta.b mula
 	lda.b d2
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.b mulres+1
 	sta.w Yvel,x
 .x2:								;Xpos += Xvel*velstep (/4 in horizontal mode except in the penalty box)
@@ -140,7 +140,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	lsr.b mulb
 	lsr.b mulb
 .x3:
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	adc.w Xfrac,x
 	sta.w Xfrac,x
 	lda.w Xpos,x
@@ -166,7 +166,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	lsr.b mulb
 	lsr.b mulb
 .y3:
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	adc.w Yfrac,x
 	sta.w Yfrac,x
 	lda.w Ypos,x
@@ -186,7 +186,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	sbc.b gravstep
 	sta.w Zvel,x
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	adc.w Zfrac,x
 	sta.w Zfrac,x
 	lda.w Zpos,x
@@ -196,7 +196,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	stz.w Zpos,x					; bounce off the ice: Zvel = -Zvel/2
 	stz.w Zfrac,x
 	lda.w Zvel,x
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	lsr a
 	sta.w Zvel,x
@@ -231,7 +231,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	lda.b d6
 	cmp.w c1playernum				; controller 1 player: doinput
 	bne .t0
-	jsl.l ReadJoy1
+	jsl.l ReadJoy1					; read pad 1
 	stz.b d4
 	jsl.l doinput
 	bra .t1
@@ -242,7 +242,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 .t0:
 	cmp.w c2playernum
 	bne .t1
-	jsl.l ReadJoy2
+	jsl.l ReadJoy2					; read pad 2
 	lda.w #$0002
 	sta.b d4
 	jsl.l doinput
@@ -295,7 +295,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	lda.w Xpos,x
 	bit.w #$8000
 	beq .ax
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .ax:
 	cmp.w #$0019					; |x| < 25
@@ -303,7 +303,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	lda.w Ypos,x
 	bit.w #$8000
 	beq .ay
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .ay:
 	sec
@@ -312,7 +312,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	lda.w OldYpos,x
 	bit.w #$8000
 	beq .oy
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .oy:
 	sec
@@ -322,7 +322,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	lda.w Ypos,x
 	bit.w #$8000
 	beq .gl
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .gl:
 	cmp.w #$0103					; 259 <= |y| < 279
@@ -386,14 +386,14 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	lda.w Xvel,x
 	bit.w #$8000
 	beq .lvx
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .lvx:
 	sta.b tmp0
 	lda.w Yvel,x
 	bit.w #$8000
 	beq .lvy
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .lvy:
 	clc
@@ -405,19 +405,19 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	sta.b mula
 	lda.w pspeed,x
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.b tmp0
 	sta.b mula
-	jsl.l divs
+	jsl.l divs						; signed divide
 	sta.w Xvel,x
 	lda.w Yvel,x
 	sta.b mula
 	lda.w pspeed,x
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.b tmp0
 	sta.b mula
-	jsl.l divs
+	jsl.l divs						; signed divide
 	sta.w Yvel,x
 .lnext:
 	dex
@@ -456,7 +456,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	lda.w pucky
 	bit.w #$8000
 	beq .py1
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .py1:
 	cmp.w #$013E

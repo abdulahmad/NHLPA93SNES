@@ -9,7 +9,7 @@ ResolveGames:						;Record the played playoff game and the series wins; when the
 	sta.w gss1,y
 	lda.w tmscore+2
 	sta.w gss2,y
-	jsl.l GetShifter
+	jsl.l GetShifter				; d1 = games - 1
 	lda.b d1
 	asl a
 	sta.b a0
@@ -74,7 +74,7 @@ ResolveGames:						;Record the played playoff game and the series wins; when the
 .lvlneg:
 	bvs .nextround
 .cr:
-	jsl.l GetShifter
+	jsl.l GetShifter				; d1 = games - 1
 	lda.b d1
 	asl a
 	sta.b a0
@@ -92,7 +92,7 @@ ResolveGames:						;Record the played playoff game and the series wins; when the
 	inc a
 	sta.w gspotwins,y
 	lda.w #200						; random series result: 50/50 per game
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	lsr a
 	bcc .cr0
 	lda.w gspotwins,y
@@ -119,7 +119,7 @@ ResolveGames:						;Record the played playoff game and the series wins; when the
 	tsb.w sflags3
 .nextround:
 	stz.b bosgames
-	jsl.l GetShifter
+	jsl.l GetShifter				; d1 = games - 1
 	lda.b d1
 	asl a
 	sta.b a0

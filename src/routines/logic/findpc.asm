@@ -1,7 +1,7 @@
 findpc:								;When and where the puck will cross each goal line
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000					; save d0 through d4
-.save:
+.save:								; save d0 and the words after it (10 words)
 	lda.b d0,x
 	pha
 	inx
@@ -25,5 +25,5 @@ findpc:								;When and where the puck will cross each goal line
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	rtl

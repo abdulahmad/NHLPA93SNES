@@ -29,7 +29,7 @@ updateanim:							;Step object X's sprite animation, looping or ending it
 	bit.w #attrxflip
 	beq .nox
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	and.w #$0007
 	sta.b d0
@@ -78,7 +78,7 @@ updateanim:							;Step object X's sprite animation, looping or ending it
 	lda.b [a0],y
 	bit.w #$8000
 	beq .0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .0:
 	sta.w SPAcnt,x

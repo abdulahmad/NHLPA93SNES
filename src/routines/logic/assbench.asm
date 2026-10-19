@@ -13,7 +13,7 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 	lda.w pflags,x
 	bit.w #pf2pen					; pf2pen: assexit
 	beq .pen
-	jml.l assexit
+	jml.l assexit					; assignment over
 .pen:
 	bit.w #pfna
 	beq .nna
@@ -55,7 +55,7 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 	sbc.w temp4,x
 	bit.w #$8000
 	beq .ay
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .ay:
 	cmp.w #41
@@ -83,7 +83,7 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 	lda.w #SPAgready
 	sta.b d1
 .gli:
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 	lda.w #1
 	sta.w pfnc,x
 	lda.w facedir,x
@@ -116,7 +116,7 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 	sta.w facedir,x
 	lda.w #SPAwallleft				; SPAwallleft
 	sta.b d1
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 	lda.w #100
 	sta.w temp1,x
 	sta.w pfalock,x

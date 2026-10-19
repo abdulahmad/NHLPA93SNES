@@ -3,7 +3,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	sec
 	sbc.w wcradiusy
 	pha
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	clc
 	adc.w #$0040
@@ -12,7 +12,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	sec
 	sbc.w wcradiusx
 	pha
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	clc
 	adc.w #$0040
@@ -40,7 +40,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	bvc .circle
 .gl1:
 	lda.b d4
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d4
 	sec
@@ -57,7 +57,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	jmp.w .exit
 .ctc:
 	lda.b d5
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d5
 	sec
@@ -80,7 +80,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	bvc .circle
 .c3:
 	lda.b d4
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d4
 	sec
@@ -100,12 +100,12 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	sec
 	sbc.b d4
 	sta.b d2
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
 	bit.w #$8000
 	beq .dx
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .dx:
 	sta.b mula
@@ -115,7 +115,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	sta.b d0
 	bit.w #$8000
 	beq .dy
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .dy:
 	sta.b mulb
@@ -143,7 +143,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	lda.w #$FFFF
 	sta.b mulb+3
 .cos:
-	jsl.l divs
+	jsl.l divs						; signed divide
 	sta.b d0
 	lda.b d3
 	sta.b mula
@@ -155,7 +155,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	lda.w #$FFFF
 	sta.b mulb+3
 .sin:
-	jsl.l divs
+	jsl.l divs						; signed divide
 	sta.b d1
 	jsl.l wallcollb
 .exit:								;no corner hit: the side and end boards
@@ -184,11 +184,11 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	bvs .b1
 .s1:
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 	lda.b d5
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d5
 	sec
@@ -217,11 +217,11 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	bvs .b3
 .s3:
 	lda.b d1
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
 	lda.b d4
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d4
 	sec

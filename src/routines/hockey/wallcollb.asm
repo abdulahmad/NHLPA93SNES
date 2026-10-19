@@ -69,7 +69,7 @@ wallcollb:							;Object X hits a wall: the puck may go over the glass and out o
 	stx.b a3
 	lda.w #SPAbglass				; object 15 (shadow): SPAbglass
 	sta.b d1
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 	plx
 	stx.b a3
 	lda.w #SFXbglass				; over the glass sound

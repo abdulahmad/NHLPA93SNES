@@ -1,25 +1,25 @@
 SetPA2:								;Step the referee animation to its next frame and delay
 	phx
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.save:
+.save:								; save d0 and the words after it (6 words)
 	lda.b d0,x
 	pha
 	inx
 	inx
 	cpx.w #$000C
 	bne .save
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.savea:
+.savea:								; save a0 and the words after it (4 words)
 	lda.b a0,x
 	pha
 	inx
 	inx
 	cpx.w #$0008
 	bne .savea
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	lda.w #$0040					; d0 = $40 (clear the ref window) when RefStep is negative
 	sta.b d0
 	lda.w RefStep
@@ -61,23 +61,23 @@ SetPA2:								;Step the referee animation to its next frame and delay
 	sta.b d0
 .pr:
 	jsl.l PushRef
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0006
-.resta:
+.resta:								; pull a0 and the words after it back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .resta
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$000A
-.restore:
+.restore:							; pull d0 and the words after it back
 	pla
 	sta.b d0,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	plx
 	rtl

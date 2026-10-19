@@ -15,7 +15,7 @@ ScrollDisplayUp:					;The next line of the scouting report text; scroll the text
 	dec.w VertLineScrolling			; back to the last line
 	stx.b xsave						; keep X
 	ldx.w #$0000					; save d0 through d7
-.save:
+.save:								; save d0 and the words after it (8 words)
 	lda.b d0,x
 	pha
 	inx

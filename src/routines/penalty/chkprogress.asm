@@ -48,7 +48,7 @@ chkprogress:						;Move the referee and the game through a penalty: when the sto
 	beq .find
 	lda.w #sf2drec					;sf2drec, SetHor, load the horizontal ref; the puck does nothing for 120 s
 	tsb.w sflags
-	jsl.l SetHor
+	jsl.l SetHor					; switch to the horizontal rink
 	jsl.l NewTicker					; horizontal ref
 	lda.w #$FF00
 	tsb.w puckc
@@ -56,7 +56,7 @@ chkprogress:						;Move the referee and the game through a penalty: when the sto
 	stx.b a3
 	lda.w #pnothing
 	sta.b d0
-	jsl.l assinsert
+	jsl.l assinsert					; insert assignment d0
 	lda.w #$1C20
 	ldx.b a3
 	sta.w temp1,x					; temp1 = 120*60

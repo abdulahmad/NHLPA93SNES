@@ -44,7 +44,7 @@ SetPlList:							;Make the list of the players team a2 wants on the ice now
 	and.w #$00FF
 	sta.b d5
 	tay
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.b [a1],y
 	ldy.b d4
 	sta.b [a4],y
@@ -56,7 +56,7 @@ SetPlList:							;Make the list of the players team a2 wants on the ice now
 	iny
 	lda.b d5
 	sta.b [a4],y
-	rep #$20
+	rep #$20						; 16-bit A
 	lda.b d5
 	bne .next
 	ldy.b a2						; goalie: 1 + tmgoalie
@@ -64,10 +64,10 @@ SetPlList:							;Make the list of the players team a2 wants on the ice now
 	inc a
 	sta.b d3
 	ldy.b d4
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.b d3
 	sta.b [a4],y
-	rep #$20
+	rep #$20						; 16-bit A
 .next:
 	dec.b d4
 	bpl .0

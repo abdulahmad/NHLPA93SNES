@@ -26,7 +26,7 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 .cgl:								;no turn animation playing (pf2aip): SetSPA
 	lda.w pf2aip,x
 	bne .rtl
-	jml.l SetSPA
+	jml.l SetSPA					; start animation d1
 .rtl:
 	rtl
 .d1:								;a direction: pfrev, then the turn
@@ -67,15 +67,15 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	lda.w pfgoal,x
 	bne .c1
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 	lda.b d1
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
 	lda.b d3
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d3
 	lda.b d2
@@ -89,7 +89,7 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	lda.b d2
 	cmp.w #$0004
 	bne .clrrev
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 	inc a
 	and.w #$0007
 	cmp.w #$0003
@@ -102,7 +102,7 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	and.w #$0007
 	cmp.w #$0003
 	bcs .clrrev
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 	inc a
 	inc a
 	and.w #$0007
@@ -117,7 +117,7 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	beq .setrev
 	lda.w Yvel,x
 	sta.b d1
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 	sec
 	sbc.b $01,s
 	inc a
@@ -149,7 +149,7 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	sta.b mula
 	lda.b d7
 	sta.b mulb
-	jsl.l muls16
+	jsl.l muls16					; signed multiply
 	sta.b tmp0
 	lda.b tmp0
 	bne .turn
@@ -158,14 +158,14 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	lda.w Xvel,x
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d4
 	lda.b mulres+2
 	sta.b d4+2
 	lda.w Yvel,x
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	adc.b d4
 	lda.b mulres+2
 	adc.b d4+2
@@ -189,7 +189,7 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	sta.b mula
 	lda.b d4
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d4
 	lda.b mulres+2
 	sta.b d4+2
@@ -234,7 +234,7 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	sta.b d1
 	sta.w pf2aip,x
 .s3:
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 	lda.b d3
 	cmp.w #$0003
 	bcc .rtl2

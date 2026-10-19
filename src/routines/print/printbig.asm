@@ -1,15 +1,15 @@
 printbig:							;print with the big font (2 by 2 tiles per character)
 	phx
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.save:
+.save:								; save d0 and the words after it (6 words)
 	lda.b d0,x
 	pha
 	inx
 	inx
 	cpx.w #$000C
 	bne .save
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	ldy.w #$0002					; y = 2: after the length word
 .top:
 	tya
@@ -57,7 +57,7 @@ printbig:							;print with the big font (2 by 2 tiles per character)
 .w0:
 	cmp.w #$0000
 	bpl .w1
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	stz.b d2
 .w1:
@@ -137,7 +137,7 @@ printbig:							;print with the big font (2 by 2 tiles per character)
 	sta.b textdirtyhi
 	bra .next
 .code:								;control byte -$ab, x, y: attribute b, map a
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	pha
 	and.w #$0030					; palette bits
@@ -185,14 +185,14 @@ printbig:							;print with the big font (2 by 2 tiles per character)
 	iny
 	jmp.w .top
 .done:
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$000A
-.restore:
+.restore:							; pull d0 and the words after it back
 	pla
 	sta.b d0,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	plx
 	rtl

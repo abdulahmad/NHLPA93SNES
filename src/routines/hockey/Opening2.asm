@@ -3,7 +3,7 @@ Opening2:							;Opening2 from scratch: reset the hardware and RAM, set the defa
 	sei								; interrupts off, native mode
 	clc								; native mode
 	xce
-	rep #$30
+	rep #$30						; 16-bit registers
 	lda.w #$1FFF					; stack
 	tcs
 	lda.w #$0000					; direct page 0
@@ -11,7 +11,7 @@ Opening2:							;Opening2 from scratch: reset the hardware and RAM, set the defa
 	sep #$20						; bank 0
 	pha
 	plb
-	rep #$30
+	rep #$30						; 16-bit registers
 	jsl.l InitPPU					; hardware
 	ldx.w #$0000					; clear RAM
 .clr:

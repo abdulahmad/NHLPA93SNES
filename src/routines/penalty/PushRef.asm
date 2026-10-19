@@ -1,25 +1,25 @@
 PushRef:							;Draw referee frame d0 in the referee window; frame $40 erases the window
 	phx
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.save:
+.save:								; save d0 and the words after it (6 words)
 	lda.b d0,x
 	pha
 	inx
 	inx
 	cpx.w #$000C
 	bne .save
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.savea:
+.savea:								; save a0 and the words after it (4 words)
 	lda.b a0,x
 	pha
 	inx
 	inx
 	cpx.w #$0008
 	bne .savea
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	lda.b d0
 	cmp.w #$40
 	bne .draw
@@ -28,7 +28,7 @@ PushRef:							;Draw referee frame d0 in the referee window; frame $40 erases th
 	sta.b mulb
 	lda.w #$70
 	sta.b mula
-	jsl.l mulu16
+	jsl.l mulu16					; A = mula * mulb
 	sta.b d0
 	lda.w #RefsMap
 	sta.b a0
@@ -107,30 +107,30 @@ PushRef:							;Draw referee frame d0 in the referee window; frame $40 erases th
 	lda.w #$000F
 	sta.w printy
 .nosfhormode2:
-	jsl.l eraser
+	jsl.l eraser					; erase d0 x d1 with tile d2
 	lda.w #sf2refref
 	tsb.w sflags
 	lda.w #$FFFF
 	sta.b d0
 	jsl.l prefmes
 .ex:
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0006
-.resta:
+.resta:								; pull a0 and the words after it back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .resta
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$000A
-.restore:
+.restore:							; pull d0 and the words after it back
 	pla
 	sta.b d0,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	plx
 	rtl

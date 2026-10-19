@@ -83,7 +83,7 @@ a2touchpuck:						;A player touches the puck: remember the last touches (for ass
 	lda.w #ifdir					; ifdir
 	tsb.w iflags
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 .0:
@@ -96,7 +96,7 @@ a2touchpuck:						;A player touches the puck: remember the last touches (for ass
 	lda.w pfteam,y
 	beq .1
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 .1:

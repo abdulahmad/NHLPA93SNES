@@ -7,10 +7,10 @@ StartSong7:							;Start song 7 unless it is already playing. Unused
 	beq .cmd
 	jsl.l SPCBootUpload				; else upload it
 .cmd:
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.b #$02
 	sta.w APUIO0					; send the command
-	rep #$30
+	rep #$30						; 16-bit registers
 	lda.w #7
 	sta.w cursong					; remember the song
 .rtl:

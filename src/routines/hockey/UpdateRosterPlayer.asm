@@ -79,7 +79,7 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	bmi .flip
 	jmp.w SlideOutRosterPlayer_rtl
 .flip:								;negative facedir: first step of a new player, print the name
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.w facedir,x
 	ldy.b a2
@@ -134,7 +134,7 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	sta.w mesarea
 	dec a
 	dec a
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	clc
 	adc.w #$000B
@@ -144,7 +144,7 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	sta.w printx
 	lda.w #mesarea
 	sta.b a1
-	jsl.l print
+	jsl.l print						; print it
 	pla
 	sta.w printx
 	inc.w printy
@@ -176,7 +176,7 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	sta.w mesarea
 	dec a
 	dec a
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	clc
 	adc.w #$000B
@@ -186,4 +186,4 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	sta.w printx
 	lda.w #mesarea
 	sta.b a1
-	jml.l print
+	jml.l print						; print it

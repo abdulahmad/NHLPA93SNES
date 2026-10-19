@@ -21,7 +21,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	lda.w Xpos,x					; outside the crease area: skate back
 	bit.w #$8000
 	beq .crx
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .crx:
 	cmp.w #$0035
@@ -29,7 +29,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	lda.w Ypos,x
 	bit.w #$8000
 	beq .cry
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .cry:
 	cmp.w #$010F
@@ -63,7 +63,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 .gready:
 	lda.w #SPAgready
 	sta.b d1
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 	lda.w gmclock					; clock stopped: nothing
 	beq .clk
 	jmp.w .rtl
@@ -154,7 +154,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bvs .de1j
 .roll:
 	lda.w #$0064					; 1 in 4: pass
-	jsl.l randoma
+	jsl.l randoma					; random number 0 to A-1
 	cmp.w #$004B
 	bcs .pass
 	jmp.w .de1
@@ -176,7 +176,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	sbc.w Ypos,y
 	bit.w #$8000
 	beq .tly
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .tly:
 	cmp.w #$001D
@@ -186,7 +186,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	sbc.w Xpos,y
 	bit.w #$8000
 	beq .tlx
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .tlx:
 	cmp.w #$001A
@@ -212,7 +212,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	sta.b d0
 	bit.w #$8000
 	beq .cvx
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .cvx:
 	cmp.w #$0015
@@ -221,7 +221,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	sta.b d1
 	bit.w #$8000
 	beq .cvy
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .cvy:
 	cmp.w #$0109
@@ -232,19 +232,19 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	sta.b d1
 	bit.w #$8000
 	beq .cvd
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .cvd:
 	cmp.w #$001F
 	bcs .de1
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 	lda.b d0
 	sta.w facedir,x					; facedir to the puck, nopuck 8, cover anim, pf2aip, crowd +150
 	lda.w #$0008
 	sta.w nopuck,x
 	lda.w #SPAgdive
 	sta.b d1
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 	lda.w #$0096
 	sta.w pf2aip,x
 	clc
@@ -269,7 +269,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	lda.w Ypos,x					; out of the crease in y: behind the goal line
 	bit.w #$8000
 	beq .de2y
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .de2y:
 	cmp.w #$0105
@@ -282,7 +282,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	lda.b d1
 	bit.w #$8000
 	beq .near
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .near:
 	cmp.w #$002E
@@ -291,7 +291,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	pha
 	lda.b d0
 	pha
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 	jsl.l AdjustFacingDirection
 	lda.b $01,s
 	sta.b d0
@@ -304,7 +304,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	lda.w Xpos,x
 	bit.w #$8000
 	beq .outx
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .outx:
 	cmp.w #$002D
@@ -321,7 +321,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	sta.b d0
 	jmp.w .de5
 .in:								;face the puck, lead it by its velocity
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 	jsl.l AdjustFacingDirection
 	lda.w puckvy					; lead the puck by its velocity (/2 near the ends)
 	xba
@@ -382,14 +382,14 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	lda.b d0
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d0
 	lda.b mulres+2
 	sta.b d0+2
 	lda.b d1
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d1
 	lda.b mulres+2
 	sta.b d1+2
@@ -429,10 +429,10 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	sta.b mulb
 	lda.b d4
 	sta.b mula
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.b d2
 	sta.b mula
-	jsl.l divs
+	jsl.l divs						; signed divide
 	sta.b d1
 	lda.b d4
 	adc.w #$0006
@@ -440,10 +440,10 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	sta.b mula
 	lda.b d0
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	lda.b d2
 	sta.b mula
-	jsl.l divs
+	jsl.l divs						; signed divide
 	sta.b d0
 .de4:
 	lda.b d1
@@ -460,7 +460,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	lda.b [a0]
 	bit.w #$8000
 	beq .cx
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .cx:
 	cmp.w #$0019
@@ -475,7 +475,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	lda.w pucky
 	bit.w #$8000
 	beq .cy2
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .cy2:
 	cmp.w #$0109
@@ -496,7 +496,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	sec
 	sbc.w Ypos,x
 	sta.b d1
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 	lda.b d0
 	sec
 	sbc.w facedir,x
@@ -558,7 +558,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	ldy.b d0
 	lda.b [a1],y
 	sta.b d1
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 	lda.b crowdlevel				; crowd +150
 	clc
 	adc.w #$0096
@@ -605,7 +605,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	beq .vx
 	ora.w #$FF00
 .vx:
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 	pla
@@ -621,7 +621,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	beq .vy
 	ora.w #$FF00
 .vy:
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
 	pla
@@ -641,7 +641,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	lda.b d0
 	bit.w #$8000
 	beq .nx
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .nx:
 	cmp.b tmp0
@@ -649,7 +649,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	lda.b d1
 	bit.w #$8000
 	beq .ny
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .ny:
 	cmp.b tmp0
@@ -657,7 +657,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	stz.b d0
 	stz.b d1
 .vt:
-	jsl.l vtoa
+	jsl.l vtoa						; vector to direction
 	lda.b d0
 	sta.w temp2b,x
 .nodec:
@@ -669,7 +669,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bmi .neg7
 	bvc .stop
 .acc:
-	jml.l playeracc
+	jml.l playeracc					; accelerate the player
 .neg7:
 	bvc .acc
 .stop:
@@ -734,7 +734,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	lda.w pfgoal,x
 	beq .dir2
 	lda.b tmp0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b tmp0
 .dir2:
@@ -745,14 +745,14 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	lda.w puckvx
 	bit.w #$8000
 	beq .ax
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .ax:
 	sta.b d0
 	lda.w puckvy
 	bit.w #$8000
 	beq .ay
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 .ay:
 	sta.b d1

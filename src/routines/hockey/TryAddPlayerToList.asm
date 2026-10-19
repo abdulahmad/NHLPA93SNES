@@ -37,10 +37,10 @@ TryAddPlayerToList:					;Add roster player d0 to slot d4 of the list of players 
 	dec.b d0						; next entry
 	bpl .s2
 	ldy.b d4						; slot d4
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.b d1						; the player
 	sta.b [a4],y					; store him
-	rep #$20
+	rep #$20						; 16-bit A
 	lda.b d1
 	and.w #$00FF					; number as the result
 	rtl

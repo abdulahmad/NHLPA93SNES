@@ -56,7 +56,7 @@ puckfaceoff:						;Assignment: the start of play. Period end and overtime checks
 	beq .nohor
 	lda.w #sfslock
 	tsb.w sflags
-	jsl.l ClrHor
+	jsl.l ClrHor					; back to the vertical rink
 .nohor:
 	lda.w c1playernum				; controller players get the lc box
 	sta.b d0
@@ -84,7 +84,7 @@ puckfaceoff:						;Assignment: the start of play. Period end and overtime checks
 	cmp.w cont2team
 	beq .rtl
 	jsl.l CompLine
-	jsl.l setpersonel
+	jsl.l setpersonel				; update the players on the ice
 	jml.l printscores1
 .slc:								;controlled player d0 gets the line change box
 	ldy.b a3

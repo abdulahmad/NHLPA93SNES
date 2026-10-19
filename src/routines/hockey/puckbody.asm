@@ -47,7 +47,7 @@ puckbody:							;The puck hits player a2: a fast high puck knocks him down, a sl
 	sta.w Xvel+1,x
 	lda.b d1
 	sta.w Yvel+1,x
-	rep #$30
+	rep #$30						; 16-bit registers
 	jsl.l puckflip					; puckflip
 	lda.w Zpos,x
 	sec
@@ -62,14 +62,14 @@ puckbody:							;The puck hits player a2: a fast high puck knocks him down, a sl
 	lda.b d2
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	sta.b d2
 	lda.b mulres+2
 	sta.b d2+2
 	lda.b d3
 	sta.b mula
 	sta.b mulb
-	jsl.l muls32
+	jsl.l muls32					; signed 32-bit multiply
 	adc.b d2
 	sta.b d2
 	lda.b mulres+2
@@ -101,7 +101,7 @@ puckbody:							;The puck hits player a2: a fast high puck knocks him down, a sl
 	ldy.b a3
 	stx.b a3
 	sty.b a2
-	jsl.l SetSPA
+	jsl.l SetSPA					; start animation d1
 	ldx.b a2
 	ldy.b a3
 	stx.b a3

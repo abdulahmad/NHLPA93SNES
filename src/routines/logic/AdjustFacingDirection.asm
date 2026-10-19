@@ -1,58 +1,58 @@
 AdjustFacingDirection:				;Turn goalie X's facing one step toward d0, not past the sides of the net
-	lda.w facedir,x
-	sta.b d1
-	lda.b d0
+	lda.w facedir,x					; facing
+	sta.b d1						; d1
+	lda.b d0						; wanted direction
 	sec
-	sbc.b d1
-	sta.b d0
-	bne .turn
-	jmp.w assgoalie_rtl
+	sbc.b d1						; minus the facing
+	sta.b d0						; difference
+	bne .turn						; differs
+	jmp.w assgoalie_rtl				; same: done
 .turn:
-	eor.w #$FFFF
-	inc a
-	and.w #$0004
-	lsr a
-	dec a
-	sta.b d0
-	lda.b d1
-	cmp.w #$0001
-	beq .add
-	cmp.w #$0006
-	bne .dn
+	eor.w #$FFFF					; negate
+	inc a							; direction of the shortest turn
+	and.w #$0004					; +4 bit
+	lsr a							; /2
+	dec a							; -1: +1 or -1
+	sta.b d0						; step
+	lda.b d1						; facing
+	cmp.w #$0001					; 1
+	beq .add						; yes
+	cmp.w #$0006					; 6
+	bne .dn							; no
 .add:
-	clc
+	clc								; add the step
 	adc.b d0
-	sta.b d1
-	lda.w pfgoal,x
-	bne .other
+	sta.b d1						; new facing
+	lda.w pfgoal,x					; goal end
+	bne .other						; bottom end
 	lda.b d1
-	cmp.w #$0002
+	cmp.w #$0002					; 0 or 1
 	bcc .neg
-	cmp.w #$0007
-	beq .neg
-	bra .set
+	cmp.w #$0007					; 7
+	beq .neg						; keep out of the 7-1 range
+	bra .set						; set
 .other:
 	lda.b d1
-	cmp.w #$0003
+	cmp.w #$0003					; 3
 	bcc .set
-	cmp.w #$0006
-	bcs .set
+	cmp.w #$0006					; 6
+	bcs .set						; outside 3-5
 .neg:
-	lda.b d0
-	eor.w #$FFFF
-	inc a
+	lda.b d0						; step
+	eor.w #$FFFF					; negate
+	inc a							; reverse it
 	sta.b d0
 	clc
-	adc.b d1
+	adc.b d1						; add it
 	sta.b d1
 .dn:
 	lda.b d1
-	clc
+	clc								; add the step
 	adc.b d0
 	sta.b d1
 .set:
 	lda.b d1
-	and.w #$0007
+	and.w #$0007					; 0-7
 	sta.b d1
-	sta.w facedir,x
+	sta.w facedir,x					; new facing
 	rtl

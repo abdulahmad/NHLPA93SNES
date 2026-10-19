@@ -29,27 +29,27 @@ VBlank_Cram:						;Vblank: run the transfer list, set the scroll and send the pa
 	bpl .dmaloop
 	rep #$30						; 16-bit
 	stz.b DMAlistend				; list empty
-	sep #$20
+	sep #$20						; 8-bit A
 	lda.w Hscroll					; scroll x
 	and.b #$07						; low 3 bits
 	sta.w BG1HOFS					; BG1HOFS = Hscroll&7
 	stz.w BG1HOFS					; high byte 0
 	stz.w BG1VOFS					; vertical scroll 0
 	stz.w BG1VOFS
-	rep #$30
+	rep #$30						; 16-bit registers
 	lda.w #DMA_CGRAM				; DMA to CGRAM
 	sta.w DMAP7
 	lda.w #palbuffer&$FFFF			; colors 0-127
 	sta.w A1T7L
 	lda.w #$0100					; $100 bytes
 	sta.w DAS7L
-	sep #$20
+	sep #$20						; 8-bit A
 	stz.w CGADD						; CGRAM address 0
 	lda.b #palbuffer>>16			; bank
 	sta.w A1B7
 	lda.b #MDMAEN_CH7				; go
 	sta.w MDMAEN
-	rep #$30
+	rep #$30						; 16-bit registers
 	lda.w #VBlank_CramOnly			; from now on: CGRAM every frame
 	sta.b vbint
 	ldx.w #$0012					; short delay

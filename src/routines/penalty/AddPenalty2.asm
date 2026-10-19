@@ -4,26 +4,26 @@ AddPenalty2:						;Call penalty d0 on player X without the checks; used for forc
 	beq .go
 	jmp.w .rtl
 .go:
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.save:
+.save:								; save d1 and the words after it (2 words)
 	lda.b d1,x
 	pha
 	inx
 	inx
 	cpx.w #$0004
 	bne .save
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.savea:
+.savea:								; save a0 and the words after it (4 words)
 	lda.b a0,x
 	pha
 	inx
 	inx
 	cpx.w #$0008
 	bne .savea
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	lda.b d0
 	sec
 	sbc.w #$000E					; goal and up
@@ -91,23 +91,23 @@ AddPenalty2:						;Call penalty d0 on player X without the checks; used for forc
 	lda.w #$0000
 	sta.b [a1]
 .noplayer:
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0006
-.resta:
+.resta:								; pull a0 and the words after it back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .resta
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0002
-.restore:
+.restore:							; pull d1 and the words after it back
 	pla
 	sta.b d1,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 .rtl:
 	rtl

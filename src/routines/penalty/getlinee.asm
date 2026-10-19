@@ -1,24 +1,24 @@
 getlinee:							;d0 = the average energy of line d0 of team a2
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.save:
+.save:								; save d3 and the words after it (4 words)
 	lda.b d3,x
 	pha
 	inx
 	inx
 	cpx.w #$0008
 	bne .save
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0000
-.savea:
+.savea:								; save a0 and the words after it (4 words)
 	lda.b a0,x
 	pha
 	inx
 	inx
 	cpx.w #$0008
 	bne .savea
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	ldy.b a2
 	lda.w tmdata,y
 	sta.b a1
@@ -70,22 +70,22 @@ getlinee:							;d0 = the average energy of line d0 of team a2
 	bpl .loop
 	jsl.l divu16					; d0 = energy sum / players
 	sta.b d0
-	stx.b xsave
+	stx.b xsave						; keep X
 	ldx.w #$0006
-.resta:
+.resta:								; pull a0 and the words after it back
 	pla
 	sta.b a0,x
 	dex
 	dex
 	bpl .resta
-	ldx.b xsave
-	stx.b xsave
+	ldx.b xsave						; restore X
+	stx.b xsave						; keep X
 	ldx.w #$0006
-.restore:
+.restore:							; pull d3 and the words after it back
 	pla
 	sta.b d3,x
 	dex
 	dex
 	bpl .restore
-	ldx.b xsave
+	ldx.b xsave						; restore X
 	rtl
