@@ -110,7 +110,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	jmp.w .nextpiece
 .xlov:								; signed compare: overflow flag corrects the sign
 	bvc .xloout
-.xhi:
+.xhi:								; off screen to the right?
 	lda.b sprox
 	sec
 	sbc.w #$00FF					; off screen to the right?
@@ -121,7 +121,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	jmp.w .nextpiece
 .xhiv:								; signed compare: overflow flag corrects the sign
 	bvs .xhiout
-.ylo:
+.ylo:								; off screen above?
 	lda.b sproy
 	sec
 	sbc.w #$FFF9					; off screen above?
@@ -131,7 +131,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	jmp.w .nextpiece
 .ylov:								; signed compare: overflow flag corrects the sign
 	bvc .yloout
-.yhi:
+.yhi:								; off screen below?
 	lda.b sproy
 	sec
 	sbc.w #$00DF					; off screen below?
@@ -165,7 +165,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	cmp.b sprslotend				; wrapped to the end slot
 	bne .chk
 	jml.l addframe_full				; VRAM sprite cache full
-.chk:
+.chk:								; look for a free sprite slot older than the current frame
 	asl a
 	tax
 	lda.b sprclock
@@ -276,7 +276,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	jmp.w .nextpiece
 .bxlov:								; signed compare: overflow flag corrects the sign
 	bvc .bxloout
-.bxhi:
+.bxhi:								; off screen to the right?
 	lda.b sprox
 	sec
 	sbc.w #$00FF					; off screen to the right?
@@ -287,7 +287,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	jmp.w .nextpiece
 .bxhiv:								; signed compare: overflow flag corrects the sign
 	bvs .bxhiout
-.bylo:
+.bylo:								; off screen above?
 	lda.b sproy
 	sec
 	sbc.w #$FFF1					; off screen above?
@@ -297,7 +297,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	jmp.w .nextpiece
 .bylov:								; signed compare: overflow flag corrects the sign
 	bvc .byloout
-.byhi:
+.byhi:								; off screen below?
 	lda.b sproy
 	sec
 	sbc.w #$00DF					; off screen below?
@@ -370,7 +370,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	asl a
 	adc.w #$6000					; VRAM address of the slot
 	ldx.b DMAlistend				; append two DMA list entries
-.bhang2:
+.bhang2:							; second row at +$100
 	cpx.w #$0571
 	bcs .bhang2
 	sta.w DMAList+dmavram,x

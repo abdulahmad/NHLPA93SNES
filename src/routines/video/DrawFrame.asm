@@ -47,7 +47,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	bit.w #$0080
 	beq .px
 	ora.w #$FF00
-.px:
+.px:								; store the X offset
 	sta.b sprox
 	iny
 	lda.b [farptr],y				; y offset, sign extended
@@ -55,7 +55,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	bit.w #$0080
 	beq .py
 	ora.w #$FF00
-.py:
+.py:								; store the Y offset
 	sta.b sproy
 	iny
 	lda.b [farptr],y				; tile number, 32 bytes per tile
@@ -82,7 +82,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	bpl .size
 	lda.w #$0006
 	sta.b sprpal
-.size:
+.size:								; piece size bits
 	txa
 	and.w #$00C0					; bits 6-7 of the piece attribute
 	sta.b sprpattr
@@ -184,7 +184,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 .shorten:
 	dec.b sprslotlife				; keep slots for less time
 	lda.b sprslot
-.chk:
+.chk:								; look for a free sprite slot older than the current frame
 	asl a
 	tax
 	lda.b sprclock					; age of this slot
@@ -221,7 +221,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	tax
 	lda.b sprslot
 	sta.l sprframetime+2,x			; remember the slot for the frame
-.have:
+.have:								; slot found: stamp it
 	lda.b sprclock
 	sta.l sprframetime,x			; stamp the frame time
 	lda.l sprframetime+2,x
@@ -367,10 +367,10 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	cmp.w #$0005
 	bcs .bshorten
 	jml.l addframe_full				; VRAM sprite cache full
-.bshorten:
+.bshorten:							; shorten the slot life
 	dec.b sprslotlife
 	lda.b sprbigslot
-.bchk:
+.bchk:								; check the big slot
 	and.w #$000F					; skip slots that straddle a row
 	cmp.w #$000F
 	beq .bfind
@@ -437,7 +437,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	tax
 	lda.b sprbigslot
 	sta.l sprframetime+2,x			; remember the slot for the frame
-.bhave:
+.bhave:								; big slot found: stamp it
 	lda.b sprclock
 	sta.l sprframetime,x			; stamp the frame time
 	lda.l sprframetime+2,x

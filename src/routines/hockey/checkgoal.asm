@@ -112,7 +112,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
-.an:
+.an:								; puck on the right side of the goal line?
 	lda.b d1
 	bpl .nocon						; puck on the wrong side?
 	lda.w #$0001
@@ -163,7 +163,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	beq .m1
 	eor.w #$FFFF					; negate
 	inc a
-.m1:
+.m1:								; take the high word of the product
 	sta.b mula
 	lda.b mulres+2					; high word
 	bit.w #$8000
@@ -174,7 +174,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	cmp.b mula						; compare with the y movement
 	bcc .dv
 	jmp.w .sideentry				; side entry
-.dv:
+.dv:								; divide by the Y distance
 	lda.b d1
 	sta.b mula
 	jsl.l divs						; d5 = d5*d3 / d1
@@ -191,7 +191,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	jmp.w .sideentry
 .neg6:								; signed compare: overflow flag corrects the sign
 	bvc .se1
-.xl2:
+.xl2:								; negate X for the other side
 	lda.b d4
 	eor.w #$FFFF					; negate
 	inc a
@@ -237,7 +237,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	bra .deflectsf					; off the post
 .neg8:								; signed compare: overflow flag corrects the sign
 	bvs .deflectsf
-.ml:
+.ml:								; negate X for the other post
 	lda.b d4
 	eor.w #$FFFF					; negate
 	inc a
@@ -269,7 +269,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
-.df0:
+.df0:								; deflect: give the puck a new Y velocity
 	lda.b d0
 	sta.w puckvy					; puck y velocity
 	lda.w #$2000					; random x velocity
