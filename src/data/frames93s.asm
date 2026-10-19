@@ -1,114 +1,58 @@
-; Animation (SPA) and sprite frame (SPF) equates, as in 93G frames93.asm
-; animations (offsets into the animation data; value in the comment)
-; SPA values: offsets of the SPAlist tables (bank82_C000 asserts each one). named and ordered like the 68000
-; frame tables
-SPAgready		=	$0002			; SPAgready $2: goalie ready (loops)
-SPAgready2		=	$0134			; SPAgready2 $134
-SPAgglover		=	$0166			; SPAgglover $166: glove save (GoalieSaveList 0)
-SPAgglovel		=	$0198			; SPAgglovel $198: glove save (GoalieSaveList 1)
-SPAgstickr		=	$01CA			; SPAgstickr $20C: stick save (GoalieSaveList 4)
-SPAgstickl		=	$01FC			; SPAgstickl $23E: stick save (GoalieSaveList 5)
-SPAgstackr		=	$022E			; SPAgstackr $270: stack pad save (GoalieSaveList 2)
-SPAgstackl		=	$0280			; SPAgstackl $2C2: stack pad save (GoalieSaveList 3)
-SPAgswing		=	$02D2			; SPAgswing $386
-SPAgskate		=	$0344			; SPAgskate $3F8: goalie skating
-SPApflip		=	$03D6			; SPApflip $48A: puck spin
-SPAglide		=	$0478			; SPAglide $52C: glide
-SPAskatewp		=	$04AA			; SPAskatewp $55E
-SPAskate		=	$055C			; SPAskate $5F0
-SPAturnl		=	$060E			; SPAturnl $682
-SPAturnr		=	$0640			; SPAturnr $6B4
-SPAstop			=	$0672			; SPAstop $6E6: stop
-SPApassf		=	$06C4			; SPApassf $738
-SPApassb		=	$0736			; SPApassb $7AA
-SPAshotf		=	$07A8			; SPAshotf $81C: forehand shot
-SPAshotb		=	$08BA			; SPAshotb $94E: backhand shot
-SPAglideback	=	$09CC			; SPAglideback $A80
-SPAskateback	=	$09FE			; SPAskateback $AB2
-SPAsweepchk		=	$0A90			; SPAsweepchk $B44: sweep check
-SPAshoulderchkl	=	$0B02			; SPAshoulderchkl $BB6
-SPAshoulderchkr	=	$0B34			; SPAshoulderchkr $BE8
-SPAhipchkl		=	$0B66			; SPAhipchkl $C1A
-SPAhipchkr		=	$0B98			; SPAhipchkr $C4C
-SPAburst		=	$0BCA			; SPAburst $C7E: check button burst
-SPAHold			=	$0BFC			; SPAHold $CB0: hold
-SPAHold2		=	$0C2E			; SPAHold2 $CE2
-SPAflail		=	$0C60			; SPAflail $D14
-SPAfallfwd		=	$0C92			; SPAfallfwd $D46
-SPAfallback		=	$0D44			; SPAfallback $DF8
-SPAcelebrate	=	$0DF6			; SPAcelebrate $EAA
-SPApump			=	$0E68			; SPApump $F1C
-SPAfight		=	$0EDA			; SPAfight $F8E: fight
-SPAfgrab		=	$0F0C			; SPAfgrab $FC0
-SPAfheld		=	$0F2E			; SPAfheld $FE2
-SPAfhigh		=	$0F50			; SPAfhigh $1004
-SPAflow			=	$0F82			; SPAflow $1036
-SPAfhith		=	$0FB4			; SPAfhith $1068
-SPAfhitl		=	$0FD6			; SPAfhitl $108A
-SPAffall		=	$0FF8			; SPAffall $10AC
-SPAwallright	=	$101A			; SPAwallright $1128
-SPAwallleft		=	$1058			; SPAwallleft $1166
-SPAfaceoff		=	$1096			; SPAfaceoff $11A4: faceoff pull
-SPAfaceoffr		=	$10C0			; SPAfaceoffr $11CE: faceoff ready
-SPAsiren		=	$10DA			; SPAsiren $11E8: goal siren on the puck shadow
-SPAstanley		=	$1124			; SPAstanley $1258
-SPAfinjury		=	$1156			; SPAfinjury $10CE: fight injury (fight loser down)
-SPAflip			=	$11B0			; SPAflip $1524: third fall animation (flip)
-SPAstumble		=	$12A2			; SPAstumble $13A0: stumble instead of a fall
-SPAhook			=	$1354			; SPAhook $12DC: hold/hook (Holdplayer, Acheck)
-SPAhook2		=	$1386			; SPAhook2 $130E
-SPAcatch		=	$1418			; SPAcatch $128A: player hit by a slow puck
-SPAbglass		=	$146A			; SPAbglass $1232: the puck shadow over the glass
-SPAgdive		=	$1490			; SPAgdive $314: goalie dive (temp5 = 5 after a save)
-SPAinjury1		=	$1502			;SPAinjury1 $1616: injured: no movement, no bounce (SNES frames differ
-									;from )
-; sprite frame bases (SPF): first frame of each group in the SNES sprite set. named like the 68000 frame
-; tables; frames from SPFpuck on are one lower than (no SPFreplay frame) and the goalie and 93-only groups are
-; laid out differently
+; Animation (SPA) and sprite frame (SPF) names, as in 93G frames93.asm.
+;
+; First the SPF equates: the first frame number of each group of frames in the SNES sprite sets, each one the
+; previous plus the size of its group. From SPFpuck on the frames are one lower than in 93G (no SPFreplay
+; frame), and the goalie and the groups new in 93 are laid out differently.
+;
+; Then SPAlist and one table per animation, in the order of the SPA numbers. Each SPA equate sits above its
+; table and an assert checks it against the table.
+
+; Sprite Frame (SPF) base indices
 SPFskatewp		=	1				; 1
-SPFskate		=	41				; 41
-SPFturnl		=	81				; 81
-SPFturnr		=	89				; 89
-SPFswing		=	97				; 97
-SPFstop			=	145				; 145
-SPFskateb		=	161				; 161
-SPFcelebrate	=	185				; 185
-SPFpump			=	201				; 201
-SPFcup			=	217				; 217
-SPFhipl			=	225				; 225
-SPFhipr			=	233				; 233
-SPFshoulderl	=	241				; 241
-SPFshoulderr	=	249				; 249
-SPFsweep		=	257				; 257
-SPFfallback		=	273				; 273
-SPFfallfwd		=	305				; 305
-SPFduck			=	337				; 337
-SPFhold			=	345				; 345
-SPFgloves		=	353				; 353
-SPFfight		=	354				; 354
-SPFfinjury		=	371				; 371
-SPFPen			=	377				; 377
-SPFarrow		=	384				; 384
-SPFpad			=	390				; 390
-SPFpuck			=	393				; 394
-SPFgoal			=	404				; 405
-SPFGoalie		=	406				; 407
-SPFgdive		=	643				; 519
-SPFgready		=	627				; 539
-SPFSiren		=	518				; 555
-SPFcatch		=	606				; 569
-SPFhook			=	590				; 585
-SPFstumble		=	566				; 601
-SPFflip			=	558				; 625
-SPFbglass		=	622				; 645
-SPFfaceoff		=	532				; big faceoff sprites (frame 1; checkfo adds SPFfaceoff-1)
-SPFsmallfont	=	542				; pad-label glyphs (the glyph index is added)
-SPFzamboni		=	557				; zamboni
-SPFcrowd		=	659				; crowd and penalty-box sprites; first frame stored as 6-byte pieces
+SPFskate		=	SPFskatewp+40	; 41
+SPFturnl		=	SPFskate+40		; 81
+SPFturnr		=	SPFturnl+8		; 89
+SPFswing		=	SPFturnr+8		; 97
+SPFstop			=	SPFswing+48		; 145
+SPFskateb		=	SPFstop+16		; 161
+SPFcelebrate	=	SPFskateb+24	; 185
+SPFpump			=	SPFcelebrate+16	; 201
+SPFcup			=	SPFpump+16		; 217
+SPFhipl			=	SPFcup+8		; 225
+SPFhipr			=	SPFhipl+8		; 233
+SPFshoulderl	=	SPFhipr+8		; 241
+SPFshoulderr	=	SPFshoulderl+8	; 249
+SPFsweep		=	SPFshoulderr+8	; 257
+SPFfallback		=	SPFsweep+16		; 273
+SPFfallfwd		=	SPFfallback+32	; 305
+SPFduck			=	SPFfallfwd+32	; 337
+SPFhold			=	SPFduck+8		; 345
+SPFgloves		=	SPFhold+8		; 353
+SPFfight		=	SPFgloves+1		; 354
+SPFfinjury		=	SPFfight+17		; 371
+SPFPen			=	SPFfinjury+6	; 377
+SPFarrow		=	SPFPen+7		; 384
+SPFpad			=	SPFarrow+6		; 390
+SPFpuck			=	SPFpad+3		; 393, 93G 394
+SPFgoal			=	SPFpuck+11		; 404, 93G 405
+SPFGoalie		=	SPFgoal+2		; 406, 93G 407
+SPFSiren		=	SPFGoalie+112	; 518, 93G 555
+SPFfaceoff		=	SPFSiren+14		; 532: big faceoff sprites (frame 1; checkfo adds SPFfaceoff-1)
+SPFsmallfont	=	SPFfaceoff+10	; 542: pad-label glyphs (the glyph index is added)
+SPFzamboni		=	SPFsmallfont+15	; 557: zamboni
+SPFflip			=	SPFzamboni+1	; 558, 93G 625
+SPFstumble		=	SPFflip+8		; 566, 93G 601
+SPFhook			=	SPFstumble+24	; 590, 93G 585
+SPFcatch		=	SPFhook+16		; 606, 93G 569
+SPFbglass		=	SPFcatch+16		; 622, 93G 645
+SPFgready		=	SPFbglass+5		; 627, 93G 539
+SPFgdive		=	SPFgready+16	; 643, 93G 519
+SPFcrowd		=	SPFgdive+16		; 659: crowd and penalty-box sprites; first frame stored as 6-byte pieces
 
 SPAlist:							;sprite animation pointer list
 	dw 0							; (SPA 0 = no animation)
-SPAgready_table:					;SPAgready frames by direction
+SPAgready		=	$0002			; goalie ready (loops)
+SPAgready_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAgready_table			; direction 0
 	dw .d1-SPAgready_table			; direction 1
 	dw .d2-SPAgready_table			; direction 2
@@ -136,7 +80,8 @@ SPAgready_table:					;SPAgready frames by direction
 	dw SPFgready+14,-10
 	assert SPAgready_table-SPAlist == SPAgready
 
-SPAgready2_table:					;SPAgready2 frames by direction
+SPAgready2		=	$0134
+SPAgready2_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAgready2_table			; direction 0
 	dw .d1-SPAgready2_table			; direction 1
 	dw .d2-SPAgready2_table			; direction 2
@@ -156,7 +101,8 @@ SPAgready2_table:					;SPAgready2 frames by direction
 .d7:	dw SPFGoalie+21,-30
 	assert SPAgready2_table-SPAlist == SPAgready2
 
-SPAgglover_table:					;SPAgglover frames by direction
+SPAgglover		=	$0166			; glove save (GoalieSaveList 0)
+SPAgglover_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAgglover_table			; direction 0
 	dw .d1-SPAgglover_table			; direction 1
 	dw .d2-SPAgglover_table			; direction 2
@@ -176,7 +122,8 @@ SPAgglover_table:					;SPAgglover frames by direction
 .d7:	dw SPFGoalie+22,-32
 	assert SPAgglover_table-SPAlist == SPAgglover
 
-SPAgglovel_table:					;SPAgglovel frames by direction
+SPAgglovel		=	$0198			; glove save (GoalieSaveList 1)
+SPAgglovel_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAgglovel_table			; direction 0
 	dw .d1-SPAgglovel_table			; direction 1
 	dw .d2-SPAgglovel_table			; direction 2
@@ -196,7 +143,8 @@ SPAgglovel_table:					;SPAgglovel frames by direction
 .d7:	dw SPFGoalie+23,-32
 	assert SPAgglovel_table-SPAlist == SPAgglovel
 
-SPAgstickr_table:					;SPAgstickr frames by direction
+SPAgstickr		=	$01CA			; stick save (GoalieSaveList 4) (93G $20C)
+SPAgstickr_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAgstickr_table			; direction 0
 	dw .d1-SPAgstickr_table			; direction 1
 	dw .d2-SPAgstickr_table			; direction 2
@@ -216,7 +164,8 @@ SPAgstickr_table:					;SPAgstickr frames by direction
 .d7:	dw SPFGoalie+78,-32
 	assert SPAgstickr_table-SPAlist == SPAgstickr
 
-SPAgstickl_table:					;SPAgstickl frames by direction
+SPAgstickl		=	$01FC			; stick save (GoalieSaveList 5) (93G $23E)
+SPAgstickl_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAgstickl_table			; direction 0
 	dw .d1-SPAgstickl_table			; direction 1
 	dw .d2-SPAgstickl_table			; direction 2
@@ -236,7 +185,8 @@ SPAgstickl_table:					;SPAgstickl frames by direction
 .d7:	dw SPFGoalie+79,-32
 	assert SPAgstickl_table-SPAlist == SPAgstickl
 
-SPAgstackr_table:					;SPAgstackr frames by direction
+SPAgstackr		=	$022E			; stack pad save (GoalieSaveList 2) (93G $270)
+SPAgstackr_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAgstackr_table			; direction 0
 	dw .d1-SPAgstackr_table			; direction 1
 	dw .d2-SPAgstackr_table			; direction 2
@@ -256,7 +206,8 @@ SPAgstackr_table:					;SPAgstackr frames by direction
 .d7:	dw SPFGoalie+50,8,SPFGoalie+51,-20
 	assert SPAgstackr_table-SPAlist == SPAgstackr
 
-SPAgstackl_table:					;SPAgstackl frames by direction
+SPAgstackl		=	$0280			; stack pad save (GoalieSaveList 3) (93G $2C2)
+SPAgstackl_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAgstackl_table			; direction 0
 	dw .d1-SPAgstackl_table			; direction 1
 	dw .d2-SPAgstackl_table			; direction 2
@@ -276,7 +227,8 @@ SPAgstackl_table:					;SPAgstackl frames by direction
 .d7:	dw SPFGoalie+62,8,SPFGoalie+63,-20
 	assert SPAgstackl_table-SPAlist == SPAgstackl
 
-SPAgswing_table:					;SPAgswing frames by direction
+SPAgswing		=	$02D2			; (93G $386)
+SPAgswing_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAgswing_table			; direction 0
 	dw .d1-SPAgswing_table			; direction 1
 	dw .d2-SPAgswing_table			; direction 2
@@ -296,7 +248,8 @@ SPAgswing_table:					;SPAgswing frames by direction
 .d7:	dw SPFGoalie+38,5,SPFGoalie+39,8,SPFGoalie+38,-16
 	assert SPAgswing_table-SPAlist == SPAgswing
 
-SPAgskate_table:					;SPAgskate frames by direction
+SPAgskate		=	$0344			; goalie skating (93G $3F8)
+SPAgskate_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAgskate_table			; direction 0
 	dw .d1-SPAgskate_table			; direction 1
 	dw .d2-SPAgskate_table			; direction 2
@@ -316,7 +269,8 @@ SPAgskate_table:					;SPAgskate frames by direction
 .d7:	dw SPFGoalie+108,10,SPFGoalie+109,10,SPFGoalie+110,10,SPFGoalie+111,-15
 	assert SPAgskate_table-SPAlist == SPAgskate
 
-SPApflip_table:						;SPApflip frames by direction
+SPApflip		=	$03D6			; puck spin (93G $48A)
+SPApflip_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPApflip_table			; direction 0
 	dw .d1-SPApflip_table			; direction 1
 	dw .d2-SPApflip_table			; direction 2
@@ -336,7 +290,8 @@ SPApflip_table:						;SPApflip frames by direction
 .d7:	dw SPFpuck+5,-4096
 	assert SPApflip_table-SPAlist == SPApflip
 
-SPAglide_table:						;SPAglide frames by direction
+SPAglide		=	$0478			; glide (93G $52C)
+SPAglide_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAglide_table			; direction 0
 	dw .d1-SPAglide_table			; direction 1
 	dw .d2-SPAglide_table			; direction 2
@@ -356,7 +311,8 @@ SPAglide_table:						;SPAglide frames by direction
 .d7:	dw SPFskatewp+35,-8
 	assert SPAglide_table-SPAlist == SPAglide
 
-SPAskatewp_table:					;SPAskatewp frames by direction
+SPAskatewp		=	$04AA			; (93G $55E)
+SPAskatewp_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAskatewp_table			; direction 0
 	dw .d1-SPAskatewp_table			; direction 1
 	dw .d2-SPAskatewp_table			; direction 2
@@ -376,7 +332,8 @@ SPAskatewp_table:					;SPAskatewp frames by direction
 .d7:	dw SPFskatewp+36,10,SPFskatewp+37,10,SPFskatewp+38,10,SPFskatewp+39,10,SPFskatewp+35,-15
 	assert SPAskatewp_table-SPAlist == SPAskatewp
 
-SPAskate_table:						;SPAskate frames by direction
+SPAskate		=	$055C			; (93G $5F0)
+SPAskate_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAskate_table			; direction 0
 	dw .d1-SPAskate_table			; direction 1
 	dw .d2-SPAskate_table			; direction 2
@@ -396,7 +353,8 @@ SPAskate_table:						;SPAskate frames by direction
 .d7:	dw SPFskate+36,10,SPFskate+37,10,SPFskate+38,10,SPFskate+39,10,SPFskate+35,-15
 	assert SPAskate_table-SPAlist == SPAskate
 
-SPAturnl_table:						;SPAturnl frames by direction
+SPAturnl		=	$060E			; (93G $682)
+SPAturnl_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAturnl_table			; direction 0
 	dw .d1-SPAturnl_table			; direction 1
 	dw .d2-SPAturnl_table			; direction 2
@@ -416,7 +374,8 @@ SPAturnl_table:						;SPAturnl frames by direction
 .d7:	dw SPFturnl+7,-18
 	assert SPAturnl_table-SPAlist == SPAturnl
 
-SPAturnr_table:						;SPAturnr frames by direction
+SPAturnr		=	$0640			; (93G $6B4)
+SPAturnr_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAturnr_table			; direction 0
 	dw .d1-SPAturnr_table			; direction 1
 	dw .d2-SPAturnr_table			; direction 2
@@ -436,7 +395,8 @@ SPAturnr_table:						;SPAturnr frames by direction
 .d7:	dw SPFturnr+7,-18
 	assert SPAturnr_table-SPAlist == SPAturnr
 
-SPAstop_table:						;SPAstop frames by direction
+SPAstop			=	$0672			; stop (93G $6E6)
+SPAstop_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAstop_table			; direction 0
 	dw .d1-SPAstop_table			; direction 1
 	dw .d2-SPAstop_table			; direction 2
@@ -456,7 +416,8 @@ SPAstop_table:						;SPAstop frames by direction
 .d7:	dw SPFstop+14,4,SPFstop+15,-4
 	assert SPAstop_table-SPAlist == SPAstop
 
-SPApassf_table:						;SPApassf frames by direction
+SPApassf		=	$06C4			; (93G $738)
+SPApassf_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPApassf_table			; direction 0
 	dw .d1-SPApassf_table			; direction 1
 	dw .d2-SPApassf_table			; direction 2
@@ -476,7 +437,8 @@ SPApassf_table:						;SPApassf frames by direction
 .d7:	dw SPFswing+45,4,SPFswing+46,4,SPFswing+47,-20
 	assert SPApassf_table-SPAlist == SPApassf
 
-SPApassb_table:						;SPApassb frames by direction
+SPApassb		=	$0736			; (93G $7AA)
+SPApassb_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPApassb_table			; direction 0
 	dw .d1-SPApassb_table			; direction 1
 	dw .d2-SPApassb_table			; direction 2
@@ -496,7 +458,8 @@ SPApassb_table:						;SPApassb frames by direction
 .d7:	dw SPFswing+45,4,SPFswing+44,4,SPFswing+43,-20
 	assert SPApassb_table-SPAlist == SPApassb
 
-SPAshotf_table:						;SPAshotf frames by direction
+SPAshotf		=	$07A8			; forehand shot (93G $81C)
+SPAshotf_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAshotf_table			; direction 0
 	dw .d1-SPAshotf_table			; direction 1
 	dw .d2-SPAshotf_table			; direction 2
@@ -516,7 +479,8 @@ SPAshotf_table:						;SPAshotf frames by direction
 .d7:	dw SPFswing+45,4,SPFswing+44,4,SPFswing+43,4,SPFswing+42,4,SPFswing+44,0,SPFswing+45,0,SPFswing+46,0,SPFswing+47,-20
 	assert SPAshotf_table-SPAlist == SPAshotf
 
-SPAshotb_table:						;SPAshotb frames by direction
+SPAshotb		=	$08BA			; backhand shot (93G $94E)
+SPAshotb_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAshotb_table			; direction 0
 	dw .d1-SPAshotb_table			; direction 1
 	dw .d2-SPAshotb_table			; direction 2
@@ -536,7 +500,8 @@ SPAshotb_table:						;SPAshotb frames by direction
 .d7:	dw SPFswing+45,4,SPFswing+46,4,SPFswing+47,4,SPFswing+47,4,SPFswing+46,0,SPFswing+45,0,SPFswing+44,0,SPFswing+43,-20
 	assert SPAshotb_table-SPAlist == SPAshotb
 
-SPAglideback_table:					;SPAglideback frames by direction
+SPAglideback	=	$09CC			; (93G $A80)
+SPAglideback_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAglideback_table		; direction 0
 	dw .d1-SPAglideback_table		; direction 1
 	dw .d2-SPAglideback_table		; direction 2
@@ -556,7 +521,8 @@ SPAglideback_table:					;SPAglideback frames by direction
 .d7:	dw SPFskateb+21,-8
 	assert SPAglideback_table-SPAlist == SPAglideback
 
-SPAskateback_table:					;SPAskateback frames by direction
+SPAskateback	=	$09FE			; (93G $AB2)
+SPAskateback_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAskateback_table		; direction 0
 	dw .d1-SPAskateback_table		; direction 1
 	dw .d2-SPAskateback_table		; direction 2
@@ -576,7 +542,8 @@ SPAskateback_table:					;SPAskateback frames by direction
 .d7:	dw SPFskateb+21,10,SPFskateb+22,10,SPFskateb+21,10,SPFskateb+23,-10
 	assert SPAskateback_table-SPAlist == SPAskateback
 
-SPAsweepchk_table:					;SPAsweepchk frames by direction
+SPAsweepchk		=	$0A90			; sweep check (93G $B44)
+SPAsweepchk_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAsweepchk_table		; direction 0
 	dw .d1-SPAsweepchk_table		; direction 1
 	dw .d2-SPAsweepchk_table		; direction 2
@@ -596,7 +563,8 @@ SPAsweepchk_table:					;SPAsweepchk frames by direction
 .d7:	dw SPFsweep+14,4,SPFsweep+15,8,SPFsweep+14,-4
 	assert SPAsweepchk_table-SPAlist == SPAsweepchk
 
-SPAshoulderchkl_table:				;SPAshoulderchkl frames by direction
+SPAshoulderchkl	=	$0B02			; (93G $BB6)
+SPAshoulderchkl_table:				;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAshoulderchkl_table	; direction 0
 	dw .d1-SPAshoulderchkl_table	; direction 1
 	dw .d2-SPAshoulderchkl_table	; direction 2
@@ -616,7 +584,8 @@ SPAshoulderchkl_table:				;SPAshoulderchkl frames by direction
 .d7:	dw SPFshoulderl+7,-24
 	assert SPAshoulderchkl_table-SPAlist == SPAshoulderchkl
 
-SPAshoulderchkr_table:				;SPAshoulderchkr frames by direction
+SPAshoulderchkr	=	$0B34			; (93G $BE8)
+SPAshoulderchkr_table:				;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAshoulderchkr_table	; direction 0
 	dw .d1-SPAshoulderchkr_table	; direction 1
 	dw .d2-SPAshoulderchkr_table	; direction 2
@@ -636,7 +605,8 @@ SPAshoulderchkr_table:				;SPAshoulderchkr frames by direction
 .d7:	dw SPFshoulderr+7,-24
 	assert SPAshoulderchkr_table-SPAlist == SPAshoulderchkr
 
-SPAhipchkl_table:					;SPAhipchkl frames by direction
+SPAhipchkl		=	$0B66			; (93G $C1A)
+SPAhipchkl_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAhipchkl_table			; direction 0
 	dw .d1-SPAhipchkl_table			; direction 1
 	dw .d2-SPAhipchkl_table			; direction 2
@@ -656,7 +626,8 @@ SPAhipchkl_table:					;SPAhipchkl frames by direction
 .d7:	dw SPFhipl+7,-24
 	assert SPAhipchkl_table-SPAlist == SPAhipchkl
 
-SPAhipchkr_table:					;SPAhipchkr frames by direction
+SPAhipchkr		=	$0B98			; (93G $C4C)
+SPAhipchkr_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAhipchkr_table			; direction 0
 	dw .d1-SPAhipchkr_table			; direction 1
 	dw .d2-SPAhipchkr_table			; direction 2
@@ -676,7 +647,8 @@ SPAhipchkr_table:					;SPAhipchkr frames by direction
 .d7:	dw SPFhipr+7,-24
 	assert SPAhipchkr_table-SPAlist == SPAhipchkr
 
-SPAburst_table:						;SPAburst frames by direction
+SPAburst		=	$0BCA			; check button burst (93G $C7E)
+SPAburst_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAburst_table			; direction 0
 	dw .d1-SPAburst_table			; direction 1
 	dw .d2-SPAburst_table			; direction 2
@@ -696,7 +668,8 @@ SPAburst_table:						;SPAburst frames by direction
 .d7:	dw SPFskate+35,-24
 	assert SPAburst_table-SPAlist == SPAburst
 
-SPAHold_table:						;SPAHold frames by direction
+SPAHold			=	$0BFC			; hold (93G $CB0)
+SPAHold_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAHold_table			; direction 0
 	dw .d1-SPAHold_table			; direction 1
 	dw .d2-SPAHold_table			; direction 2
@@ -716,7 +689,8 @@ SPAHold_table:						;SPAHold frames by direction
 .d7:	dw SPFhold+7,-30
 	assert SPAHold_table-SPAlist == SPAHold
 
-SPAHold2_table:						;SPAHold2 frames by direction
+SPAHold2		=	$0C2E			; (93G $CE2)
+SPAHold2_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAHold2_table			; direction 0
 	dw .d1-SPAHold2_table			; direction 1
 	dw .d2-SPAHold2_table			; direction 2
@@ -736,7 +710,8 @@ SPAHold2_table:						;SPAHold2 frames by direction
 .d7:	dw SPFhold+7,-30
 	assert SPAHold2_table-SPAlist == SPAHold2
 
-SPAflail_table:						;SPAflail frames by direction
+SPAflail		=	$0C60			; (93G $D14)
+SPAflail_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAflail_table			; direction 0
 	dw .d1-SPAflail_table			; direction 1
 	dw .d2-SPAflail_table			; direction 2
@@ -756,7 +731,8 @@ SPAflail_table:						;SPAflail frames by direction
 .d7:	dw SPFskate+35,-30
 	assert SPAflail_table-SPAlist == SPAflail
 
-SPAfallfwd_table:					;SPAfallfwd frames by direction
+SPAfallfwd		=	$0C92			; (93G $D46)
+SPAfallfwd_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAfallfwd_table			; direction 0
 	dw .d1-SPAfallfwd_table			; direction 1
 	dw .d2-SPAfallfwd_table			; direction 2
@@ -776,7 +752,8 @@ SPAfallfwd_table:					;SPAfallfwd frames by direction
 .d7:	dw SPFfallfwd+28,6,SPFfallfwd+29,6,SPFfallfwd+30,100,SPFfallfwd+31,8,SPFduck+7,-8
 	assert SPAfallfwd_table-SPAlist == SPAfallfwd
 
-SPAfallback_table:					;SPAfallback frames by direction
+SPAfallback		=	$0D44			; (93G $DF8)
+SPAfallback_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAfallback_table		; direction 0
 	dw .d1-SPAfallback_table		; direction 1
 	dw .d2-SPAfallback_table		; direction 2
@@ -796,7 +773,8 @@ SPAfallback_table:					;SPAfallback frames by direction
 .d7:	dw SPFfallback+28,6,SPFfallback+29,6,SPFfallback+30,100,SPFfallback+31,8,SPFduck+7,-8
 	assert SPAfallback_table-SPAlist == SPAfallback
 
-SPAcelebrate_table:					;SPAcelebrate frames by direction
+SPAcelebrate	=	$0DF6			; (93G $EAA)
+SPAcelebrate_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAcelebrate_table		; direction 0
 	dw .d1-SPAcelebrate_table		; direction 1
 	dw .d2-SPAcelebrate_table		; direction 2
@@ -816,7 +794,8 @@ SPAcelebrate_table:					;SPAcelebrate frames by direction
 .d7:	dw SPFcelebrate+14,12,SPFcelebrate+15,40,SPFcelebrate+14,-5
 	assert SPAcelebrate_table-SPAlist == SPAcelebrate
 
-SPApump_table:						;SPApump frames by direction
+SPApump			=	$0E68			; (93G $F1C)
+SPApump_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPApump_table			; direction 0
 	dw .d1-SPApump_table			; direction 1
 	dw .d2-SPApump_table			; direction 2
@@ -836,7 +815,8 @@ SPApump_table:						;SPApump frames by direction
 .d7:	dw SPFpump+14,8,SPFpump+15,8,SPFpump+14,-8
 	assert SPApump_table-SPAlist == SPApump
 
-SPAfight_table:						;SPAfight frames by direction
+SPAfight		=	$0EDA			; fight (93G $F8E)
+SPAfight_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAfight_table			; direction 0
 	dw .d0-SPAfight_table			; direction 1
 	dw .d0-SPAfight_table			; direction 2
@@ -850,7 +830,8 @@ SPAfight_table:						;SPAfight frames by direction
 .d3:	dw SPFfight,8,SPFfight+1,8,SPFfight+2,8,SPFfight+8,-6
 	assert SPAfight_table-SPAlist == SPAfight
 
-SPAfgrab_table:						;SPAfgrab frames by direction
+SPAfgrab		=	$0F0C			; (93G $FC0)
+SPAfgrab_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAfgrab_table			; direction 0
 	dw .d0-SPAfgrab_table			; direction 1
 	dw .d0-SPAfgrab_table			; direction 2
@@ -864,7 +845,8 @@ SPAfgrab_table:						;SPAfgrab frames by direction
 .d3:	dw SPFfight+9,28,SPFfight+8,-4
 	assert SPAfgrab_table-SPAlist == SPAfgrab
 
-SPAfheld_table:						;SPAfheld frames by direction
+SPAfheld		=	$0F2E			; (93G $FE2)
+SPAfheld_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAfheld_table			; direction 0
 	dw .d0-SPAfheld_table			; direction 1
 	dw .d0-SPAfheld_table			; direction 2
@@ -878,7 +860,8 @@ SPAfheld_table:						;SPAfheld frames by direction
 .d3:	dw SPFfight+9,30,SPFfight+8,-4
 	assert SPAfheld_table-SPAlist == SPAfheld
 
-SPAfhigh_table:						;SPAfhigh frames by direction
+SPAfhigh		=	$0F50			; (93G $1004)
+SPAfhigh_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAfhigh_table			; direction 0
 	dw .d0-SPAfhigh_table			; direction 1
 	dw .d0-SPAfhigh_table			; direction 2
@@ -892,7 +875,8 @@ SPAfhigh_table:						;SPAfhigh frames by direction
 .d3:	dw SPFfight+10,6,SPFfight+11,16,SPFfight+10,4,SPFfight+8,-16
 	assert SPAfhigh_table-SPAlist == SPAfhigh
 
-SPAflow_table:						;SPAflow frames by direction
+SPAflow			=	$0F82			; (93G $1036)
+SPAflow_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAflow_table			; direction 0
 	dw .d0-SPAflow_table			; direction 1
 	dw .d0-SPAflow_table			; direction 2
@@ -906,7 +890,8 @@ SPAflow_table:						;SPAflow frames by direction
 .d3:	dw SPFfight+10,6,SPFfight+12,16,SPFfight+10,4,SPFfight+8,-16
 	assert SPAflow_table-SPAlist == SPAflow
 
-SPAfhith_table:						;SPAfhith frames by direction
+SPAfhith		=	$0FB4			; (93G $1068)
+SPAfhith_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAfhith_table			; direction 0
 	dw .d0-SPAfhith_table			; direction 1
 	dw .d0-SPAfhith_table			; direction 2
@@ -920,7 +905,8 @@ SPAfhith_table:						;SPAfhith frames by direction
 .d3:	dw SPFfight+14,16,SPFfight+8,-8
 	assert SPAfhith_table-SPAlist == SPAfhith
 
-SPAfhitl_table:						;SPAfhitl frames by direction
+SPAfhitl		=	$0FD6			; (93G $108A)
+SPAfhitl_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAfhitl_table			; direction 0
 	dw .d0-SPAfhitl_table			; direction 1
 	dw .d0-SPAfhitl_table			; direction 2
@@ -934,7 +920,8 @@ SPAfhitl_table:						;SPAfhitl frames by direction
 .d3:	dw SPFfight+13,16,SPFfight+8,-8
 	assert SPAfhitl_table-SPAlist == SPAfhitl
 
-SPAffall_table:						;SPAffall frames by direction
+SPAffall		=	$0FF8			; (93G $10AC)
+SPAffall_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAffall_table			; direction 0
 	dw .d0-SPAffall_table			; direction 1
 	dw .d0-SPAffall_table			; direction 2
@@ -947,7 +934,8 @@ SPAffall_table:						;SPAffall frames by direction
 .d0:	dw SPFfight+14,8,SPFfight+15,8,SPFfight+16,200,SPFfight+16,-2
 	assert SPAffall_table-SPAlist == SPAffall
 
-SPAwallright_table:					;SPAwallright frames by direction
+SPAwallright	=	$101A			; (93G $1128)
+SPAwallright_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAwallright_table		; direction 0
 	dw .d1-SPAwallright_table		; direction 1
 	dw .d1-SPAwallright_table		; direction 2
@@ -962,7 +950,8 @@ SPAwallright_table:					;SPAwallright frames by direction
 .d3:	dw SPFPen+3,8,SPFPen+2,8,SPFPen+1,8,SPFPen,-8
 	assert SPAwallright_table-SPAlist == SPAwallright
 
-SPAwallleft_table:					;SPAwallleft frames by direction
+SPAwallleft		=	$1058			; (93G $1166)
+SPAwallleft_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAwallleft_table		; direction 0
 	dw .d1-SPAwallleft_table		; direction 1
 	dw .d1-SPAwallleft_table		; direction 2
@@ -977,7 +966,8 @@ SPAwallleft_table:					;SPAwallleft frames by direction
 .d3:	dw SPFPen,8,SPFPen+1,8,SPFPen+2,8,SPFPen+3,-8
 	assert SPAwallleft_table-SPAlist == SPAwallleft
 
-SPAfaceoff_table:					;SPAfaceoff frames by direction
+SPAfaceoff		=	$1096			; faceoff pull (93G $11A4)
+SPAfaceoff_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAfaceoff_table			; direction 0
 	dw .d1-SPAfaceoff_table			; direction 1
 	dw .d1-SPAfaceoff_table			; direction 2
@@ -991,7 +981,8 @@ SPAfaceoff_table:					;SPAfaceoff frames by direction
 .d1:	dw SPFskatewp+20,2,SPFsweep+9,10,SPFsweep+8,-6
 	assert SPAfaceoff_table-SPAlist == SPAfaceoff
 
-SPAfaceoffr_table:					;SPAfaceoffr frames by direction
+SPAfaceoffr		=	$10C0			; faceoff ready (93G $11CE)
+SPAfaceoffr_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAfaceoffr_table		; direction 0
 	dw .d1-SPAfaceoffr_table		; direction 1
 	dw .d1-SPAfaceoffr_table		; direction 2
@@ -1005,7 +996,8 @@ SPAfaceoffr_table:					;SPAfaceoffr frames by direction
 .d1:	dw SPFskatewp+20,-5
 	assert SPAfaceoffr_table-SPAlist == SPAfaceoffr
 
-SPAsiren_table:						;SPAsiren frames by direction
+SPAsiren		=	$10DA			; goal siren on the puck shadow (93G $11E8)
+SPAsiren_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAsiren_table			; direction 0
 	dw .d0-SPAsiren_table			; direction 1
 	dw .d0-SPAsiren_table			; direction 2
@@ -1019,7 +1011,8 @@ SPAsiren_table:						;SPAsiren frames by direction
 	dw SPFSiren+8,3,SPFSiren+9,3,SPFSiren+10,3,SPFSiren+11,3,SPFSiren+12,3,SPFSiren+13,-3
 	assert SPAsiren_table-SPAlist == SPAsiren
 
-SPAstanley_table:					;SPAstanley frames by direction
+SPAstanley		=	$1124			; (93G $1258)
+SPAstanley_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAstanley_table			; direction 0
 	dw .d1-SPAstanley_table			; direction 1
 	dw .d2-SPAstanley_table			; direction 2
@@ -1039,7 +1032,8 @@ SPAstanley_table:					;SPAstanley frames by direction
 .d7:	dw SPFcup+7,-30
 	assert SPAstanley_table-SPAlist == SPAstanley
 
-SPAfinjury_table:					;SPAfinjury frames by direction
+SPAfinjury		=	$1156			; fight injury (fight loser down) (93G $10CE)
+SPAfinjury_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAfinjury_table			; direction 0
 	dw .d0-SPAfinjury_table			; direction 1
 	dw .d0-SPAfinjury_table			; direction 2
@@ -1054,7 +1048,8 @@ SPAfinjury_table:					;SPAfinjury frames by direction
 	dw SPFfinjury+4,10,SPFfinjury+5,-400
 	assert SPAfinjury_table-SPAlist == SPAfinjury
 
-SPAflip_table:						;SPAflip frames by direction
+SPAflip			=	$11B0			; third fall animation (flip) (93G $1524)
+SPAflip_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAflip_table			; direction 0
 	dw .d1-SPAflip_table			; direction 1
 	dw .d2-SPAflip_table			; direction 2
@@ -1074,7 +1069,8 @@ SPAflip_table:						;SPAflip frames by direction
 .d7:	dw SPFflip,6,SPFflip+1,6,SPFflip+2,6,SPFflip+3,6,SPFfallback+30,100,SPFfallback+31,8,SPFduck+7,-8
 	assert SPAflip_table-SPAlist == SPAflip
 
-SPAstumble_table:					;SPAstumble frames by direction
+SPAstumble		=	$12A2			; stumble instead of a fall (93G $13A0)
+SPAstumble_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAstumble_table			; direction 0
 	dw .d1-SPAstumble_table			; direction 1
 	dw .d2-SPAstumble_table			; direction 2
@@ -1094,7 +1090,8 @@ SPAstumble_table:					;SPAstumble frames by direction
 .d7:	dw SPFstumble+21,6,SPFstumble+22,6,SPFstumble+23,8,SPFstumble+22,6,SPFstumble+21,-6
 	assert SPAstumble_table-SPAlist == SPAstumble
 
-SPAhook_table:						;SPAhook frames by direction
+SPAhook			=	$1354			; hold/hook (Holdplayer, Acheck) (93G $12DC)
+SPAhook_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAhook_table			; direction 0
 	dw .d1-SPAhook_table			; direction 1
 	dw .d2-SPAhook_table			; direction 2
@@ -1114,7 +1111,8 @@ SPAhook_table:						;SPAhook frames by direction
 .d7:	dw SPFhook+14,-30
 	assert SPAhook_table-SPAlist == SPAhook
 
-SPAhook2_table:						;SPAhook2 frames by direction
+SPAhook2		=	$1386			; (93G $130E)
+SPAhook2_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAhook2_table			; direction 0
 	dw .d1-SPAhook2_table			; direction 1
 	dw .d2-SPAhook2_table			; direction 2
@@ -1134,7 +1132,8 @@ SPAhook2_table:						;SPAhook2 frames by direction
 .d7:	dw SPFhook+14,9,SPFhook+15,9,SPFhook+14,9,SPFhook+15,-9
 	assert SPAhook2_table-SPAlist == SPAhook2
 
-SPAcatch_table:						;SPAcatch frames by direction
+SPAcatch		=	$1418			; player hit by a slow puck (93G $128A)
+SPAcatch_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAcatch_table			; direction 0
 	dw .d1-SPAcatch_table			; direction 1
 	dw .d2-SPAcatch_table			; direction 2
@@ -1154,7 +1153,8 @@ SPAcatch_table:						;SPAcatch frames by direction
 .d7:	dw SPFcatch+14,6,SPFcatch+15,-6
 	assert SPAcatch_table-SPAlist == SPAcatch
 
-SPAbglass_table:					;SPAbglass frames by direction
+SPAbglass		=	$146A			; the puck shadow over the glass (93G $1232)
+SPAbglass_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAbglass_table			; direction 0
 	dw .d0-SPAbglass_table			; direction 1
 	dw .d0-SPAbglass_table			; direction 2
@@ -1167,7 +1167,8 @@ SPAbglass_table:					;SPAbglass frames by direction
 .d0:	dw SPFbglass,8,SPFbglass+1,8,SPFbglass+2,8,SPFbglass+3,8,SPFbglass+4,-1000
 	assert SPAbglass_table-SPAlist == SPAbglass
 
-SPAgdive_table:						;SPAgdive frames by direction
+SPAgdive		=	$1490			; goalie dive (temp5 = 5 after a save) (93G $314)
+SPAgdive_table:						;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAgdive_table			; direction 0
 	dw .d1-SPAgdive_table			; direction 1
 	dw .d2-SPAgdive_table			; direction 2
@@ -1187,7 +1188,8 @@ SPAgdive_table:						;SPAgdive frames by direction
 .d7:	dw SPFgdive+14,8,SPFgdive+15,48,SPFgdive+14,-8
 	assert SPAgdive_table-SPAlist == SPAgdive
 
-SPAinjury1_table:					;SPAinjury1 frames by direction
+SPAinjury1		=	$1502			; injured: no movement, no bounce (93G $1616)
+SPAinjury1_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .d0-SPAinjury1_table			; direction 0
 	dw .d0-SPAinjury1_table			; direction 1
 	dw .d0-SPAinjury1_table			; direction 2
