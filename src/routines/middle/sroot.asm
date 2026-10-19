@@ -1,30 +1,30 @@
 sroot:								;d0 = the square root of d0
-	stz.b tmp0
-	lda.w #$1000
+	stz.b tmp0						; low = 0
+	lda.w #$1000					; high = $1000
 	sta.b tmp1
 .bs:
-	lda.b tmp0
+	lda.b tmp0						; low + high
 	clc
 	adc.b tmp1
-	ror a
+	ror a							; /2: the middle
 	cmp.b tmp0
-	beq .done
-	sta.b tmp2
+	beq .done						; converged
+	sta.b tmp2						; candidate
 	sta.b mula
 	sta.b mulb
 	jsl.l mulu						; mulres = mula*mulb
 	lda.b d0
-	cmp.b mulres
+	cmp.b mulres					; compare with d0
 	lda.b d0+2
 	sbc.b mulres+2
-	bcs .lo
+	bcs .lo							; candidate squared is not above d0: raise low
 	lda.b tmp2
-	sta.b tmp1
+	sta.b tmp1						; else lower high
 	bra .bs
 .lo:
 	lda.b tmp2
 	sta.b tmp0
 	bra .bs
 .done:
-	sta.b d0
+	sta.b d0						; d0 = root
 	rtl
