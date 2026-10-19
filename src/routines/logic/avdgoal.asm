@@ -1,6 +1,7 @@
 avdgoal:							;Do not skate through the goal: when the path to d0 / d1 crosses the net,
 									;aim beside it instead
-									;Called by skateto and skatetopuck: X = the player, d0 / d1 = the target (in and out).
+									;Called by skateto and skatetopuck: X = the player,
+									;d0 / d1 = the target (in and out).
 	stz.b tmp2						; tmp2 = 1 once a goal line has redirected the target
 	lda.w #-258						; goal line at y -258 ($FEFE) and 258 ($102)
 	jsl.l .ch1						; goal line at y = -258
