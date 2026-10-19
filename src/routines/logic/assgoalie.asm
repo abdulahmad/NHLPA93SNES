@@ -4,7 +4,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	lda.w pfalock,x					; anim locked: nothing
 	beq .go
 	jmp.w .rtl
-.go:
+.go:								; check for bench change, then handle a new assignment
 	jsl.l check4bench
 	lda.w pflags,x					; new assignment: temp1/temp2 = 0, temp2b = 8, temp4 = -1
 	bit.w #pfna
@@ -23,7 +23,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	beq .crx
 	eor.w #$FFFF					; negate
 	inc a
-.crx:
+.crx:								; crease X limit
 	cmp.w #$0035
 	bcs .skate
 	lda.w Ypos,x
@@ -31,7 +31,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	beq .cry
 	eor.w #$FFFF					; negate
 	inc a
-.cry:
+.cry:								; crease Y limits: past $10F is out of position, under $D3 is in position
 	cmp.w #$010F
 	bcs .skate
 	cmp.w #$00D3
@@ -47,7 +47,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bpl .0
 	lda.w #$FFFC
 	sta.b d0
-.0:
+.0:									; target y in front of the net, negated for the other goal
 	lda.w #$00E4
 	sta.b d1
 	lda.w pfgoal,x
@@ -60,7 +60,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	lda.w pf2aip,x					; pf2aip: nothing
 	beq .gready
 	jmp.w .rtl
-.gready:
+.gready:							; in position: stand ready
 	lda.w #SPAgready
 	sta.b d1
 	jsl.l SetSPA					; start animation d1
@@ -93,7 +93,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	sta.w temp1,x
 	bmi .dec
 	jmp.w .nodec
-.dec:
+.dec:								; re-think every aidef/4 frames
 	lda.w aidef,x
 	lsr a
 	lsr a
@@ -101,7 +101,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	adc.w temp1,x
 	bpl .st1
 	lda.w #$0000
-.st1:
+.st1:								; store the countdown
 	sta.w temp1,x
 	lda.w pflags,x					; joystick goalie: only .cover
 	bit.w #pfjoycon
@@ -120,7 +120,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	lda.w pfgoal,x
 	bne .other
 	jmp.w .de5
-.other:
+.other:								; puck in the other half: stay at the top of the crease
 	lda.w #$FF0C
 	sta.b d2
 	jmp.w .de5
@@ -129,7 +129,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bpl .pc
 	lda.w #$FFFF
 	sta.w temp4,x
-.pc:
+.pc:								; does the goalie hold the puck?
 	lda.w SCnum,x
 	cmp.w puckc
 	beq .hold0
@@ -139,7 +139,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bpl .hold
 	lda.w #$005A
 	sta.w temp5,x
-.hold:
+.hold:								; holding: arm the hold timer
 	lda.w #$FFFF
 	sta.w temp4,x
 	lda.w temp5,x
@@ -148,17 +148,17 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	beq .roll
 	bmi .neg
 	bvs .roll
-.de1j:
+.de1j:								; out of branch range: jump to .de1
 	jmp.w .de1
 .neg:								; signed compare: overflow flag corrects the sign
 	bvs .de1j
-.roll:
+.roll:								; random chance to pass
 	lda.w #$0064					; 1 in 4: pass
 	jsl.l randoma					; random number 0 to A-1
 	cmp.w #$004B
 	bcs .pass
 	jmp.w .de1
-.pass:
+.pass:								; pass only if no opponent is near the puck: check the 6 opponents
 	lda.w #$0005
 	sta.b d0
 	stz.b a0
@@ -178,7 +178,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	beq .tly
 	eor.w #$FFFF					; negate
 	inc a
-.tly:
+.tly:								; opponent Y within 28 of the puck?
 	cmp.w #$001D
 	bcs .tn
 	lda.w puckx
@@ -188,11 +188,11 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	beq .tlx
 	eor.w #$FFFF					; negate
 	inc a
-.tlx:
+.tlx:								; opponent X within 25 of the puck?
 	cmp.w #$001A
 	bcs .tn
 	jmp.w .de1
-.tn:
+.tn:								; next opponent
 	inc.b a0
 	inc.b a0
 	dec.b d0
@@ -214,7 +214,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	beq .cvx
 	eor.w #$FFFF					; negate
 	inc a
-.cvx:
+.cvx:								; loose puck X near the goalie?
 	cmp.w #$0015
 	bcs .de1
 	lda.w pucky
@@ -223,7 +223,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	beq .cvy
 	eor.w #$FFFF					; negate
 	inc a
-.cvy:
+.cvy:								; loose puck Y inside the goal line limits?
 	cmp.w #$0109
 	bcs .de1
 	lda.b d1
@@ -234,7 +234,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	beq .cvd
 	eor.w #$FFFF					; negate
 	inc a
-.cvd:
+.cvd:								; puck within reach in Y: dive on it
 	cmp.w #$001F
 	bcs .de1
 	jsl.l vtoa						; vector to direction
@@ -271,7 +271,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	beq .de2y
 	eor.w #$FFFF					; negate
 	inc a
-.de2y:
+.de2y:								; compare Y against the goal line limit
 	cmp.w #$0105
 	bcs .out
 	lda.w puckx						; face the puck: ClampYPosition, vtoa, AdjustFacingDirection
@@ -284,7 +284,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	beq .near
 	eor.w #$FFFF					; negate
 	inc a
-.near:
+.near:								; puck close to the net in Y: face the puck, else .in
 	cmp.w #$002E
 	bcs .in
 	lda.b d1
@@ -306,17 +306,17 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	beq .outx
 	eor.w #$FFFF					; negate
 	inc a
-.outx:
+.outx:								; behind the goal line: X distance from the net center
 	cmp.w #$002D
 	bcc .out2
 	jmp.w .de5
-.out2:
+.out2:								; near the post: go to the sideline spot
 	lda.w #sideline
 	sta.b d0
 	lda.w Xpos,x
 	bmi .outn
 	jmp.w .de5
-.outn:
+.outn:								; negative side
 	lda.w #$FF78
 	sta.b d0
 	jmp.w .de5
@@ -330,7 +330,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bit.w #$0040
 	beq .iy
 	ora.w #$FF80
-.iy:
+.iy:								; lead in Y
 	clc
 	adc.w pucky
 	sta.b d1
@@ -340,7 +340,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bit.w #$0080
 	beq .ix
 	ora.w #$FF00
-.ix:
+.ix:								; lead in X
 	sta.b d0
 	lda.b d1
 	sec
@@ -351,7 +351,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bra .lead2
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvs .lead2
-.lo:
+.lo:								; lower limit of the lead
 	lda.b d1
 	sec
 	sbc.w #$FF20
@@ -361,14 +361,14 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bra .lead
 .neg2:								; signed compare: overflow flag corrects the sign
 	bvs .lead
-.lead2:
+.lead2:								; smaller lead outside the crease region
 	lda.b d0
 	pha
 	asl a
 	pla
 	ror a
 	sta.b d0
-.lead:
+.lead:								; lead the puck by its velocity
 	lda.b d0
 	clc
 	adc.w puckx
@@ -378,7 +378,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	pha
 	lda.b d0
 	pha
-.sq:
+.sq:								; square the target distance
 	lda.b d0
 	sta.b mula
 	sta.b mulb
@@ -421,7 +421,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	beq .f0
 	lda.w #$001C
 	sta.b d4
-.f0:
+.f0:								; scale the target to a short arc
 	pla
 	sta.b d0
 	pla
@@ -445,7 +445,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	sta.b mula
 	jsl.l divs						; signed divide
 	sta.b d0
-.de4:
+.de4:								; absolute target y
 	lda.b d1
 	clc
 	adc.b d3
@@ -462,26 +462,26 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	beq .cx
 	eor.w #$FFFF					; negate
 	inc a
-.cx:
+.cx:								; crossing X within reach?
 	cmp.w #$0019
 	bcc .cz
 	jmp.w .rush
-.cz:
+.cz:								; frames until crossing small enough?
 	lda.b [a0],y
 	cmp.w #$000C
 	bcc .cy
 	jmp.w .de8
-.cy:
+.cy:								; puck Y within the goal limits?
 	lda.w pucky
 	bit.w #$8000
 	beq .cy2
 	eor.w #$FFFF					; negate
 	inc a
-.cy2:
+.cy2:								; puck Y limit
 	cmp.w #$0109
 	bcc .aip
 	jmp.w .de8
-.aip:
+.aip:								; no animation in progress: start a save
 	lda.w pf2aip,x
 	beq .saveanim
 	jmp.w .de8
@@ -521,7 +521,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bra .de7
 .neg3:								; signed compare: overflow flag corrects the sign
 	bvs .de7
-.pz:
+.pz:								; puck height and speed select a stick save
 	lda.w puckvz
 	sec
 	sbc.w #$0800
@@ -531,7 +531,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bra .de7
 .neg4:								; signed compare: overflow flag corrects the sign
 	bvs .de7
-.stick:
+.stick:								; stick save
 	lda.b d0
 	clc
 	adc.w #$0004
@@ -549,7 +549,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bmi .de7
 	dec.b d0
 	dec.b d0
-.de7:
+.de7:								; index the save list
 	asl.b d0
 	lda.w #GoalieSaveList
 	sta.b a1
@@ -563,7 +563,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	clc
 	adc.w #$0096
 	sta.b crowdlevel
-.de8:
+.de8:								; target x = crossing x, or hug the post when the puck is wide
 	lda.b [a0]
 	sta.b d0
 	lda.w pucky						; puck near the goal line: hug the post (+-$18)
@@ -575,7 +575,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bra .post
 .neg5:								; signed compare: overflow flag corrects the sign
 	bvs .post
-.p2:
+.p2:								; puck wide of the net?
 	lda.w pucky
 	sec
 	sbc.w #$FF04
@@ -637,13 +637,13 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	cmp.w puckc
 	bne .near2
 	asl.b tmp0
-.near2:
+.near2:								; distance to the target
 	lda.b d0
 	bit.w #$8000
 	beq .nx
 	eor.w #$FFFF					; negate
 	inc a
-.nx:
+.nx:								; X distance under 4?
 	cmp.b tmp0
 	bcs .vt
 	lda.b d1
@@ -651,12 +651,12 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	beq .ny
 	eor.w #$FFFF					; negate
 	inc a
-.ny:
+.ny:								; Y distance under 4?
 	cmp.b tmp0
 	bcs .vt
 	stz.b d0
 	stz.b d1
-.vt:
+.vt:								; within 4 pixels: stop, else move
 	jsl.l vtoa						; vector to direction
 	lda.b d0
 	sta.w temp2b,x
@@ -672,7 +672,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	jml.l playeracc					; accelerate the player
 .neg7:								; signed compare: overflow flag corrects the sign
 	bvc .acc
-.stop:
+.stop:								; stop
 	jmp.w StopNA
 .rush:								;rush a loose puck when the tmnear stats say so
 	lda.w puckc
@@ -683,7 +683,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bit.w #ifok
 	beq .r2
 	jmp.w .de5
-.r2:
+.r2:								; find own and opponent team stats
 	stz.b a1
 	lda.w #$0002
 	sta.b a2
@@ -700,7 +700,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	sbc.w #$0000
 	bcs .t1
 	jmp.w .de5
-.t1:
+.t1:								; opponent team stat threshold
 	ldy.b a2
 	lda.w tmnear,y
 	cmp.w #$09C4
@@ -717,18 +717,18 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bra .dir
 .neg8:								; signed compare: overflow flag corrects the sign
 	bvs .dir
-.r4:
+.r4:								; puck Y beyond the rush limit?
 	lda.w pucky
 	sec
 	sbc.w #$FF20
 	beq .dir
 	bmi .neg9
 	bvs .dir
-.de5j:
+.de5j:								; out of branch range: jump to .de5
 	jmp.w .de5
 .neg9:								; signed compare: overflow flag corrects the sign
 	bvs .de5j
-.dir:
+.dir:								; puck moving toward this goal?
 	lda.w puckvy
 	sta.b tmp0
 	lda.w pfgoal,x
@@ -737,24 +737,24 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b tmp0
-.dir2:
+.dir2:								; puck moving away: do not rush
 	lda.b tmp0
 	bpl .toward
 	jmp.w .de5
-.toward:
+.toward:							; compare |vx| against |vy|
 	lda.w puckvx
 	bit.w #$8000
 	beq .ax
 	eor.w #$FFFF					; negate
 	inc a
-.ax:
+.ax:								; |vx| in d0
 	sta.b d0
 	lda.w puckvy
 	bit.w #$8000
 	beq .ay
 	eor.w #$FFFF					; negate
 	inc a
-.ay:
+.ay:								; |vy| in d1, sideways puck: do not rush
 	sta.b d1
 	lda.b d1
 	cmp.b d0
