@@ -11,7 +11,7 @@ SetInst:							;Start a fight between X and a2 when both are aggressive enough; 
 	sbc.w #$0002
 	bmi .neg						; both need fightagg >= 2
 	bvc .r2
-.ex1:
+.ex1:								; far branch to checkfight_rtl
 	jmp.w checkfight_rtl
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .ex1
@@ -43,7 +43,7 @@ SetInst:							;Start a fight between X and a2 when both are aggressive enough; 
 	beq .set
 	bmi .neg1
 	bvs .set
-.ex2:
+.ex2:								; far branch to checkfight_rtl
 	jmp.w checkfight_rtl
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvs .ex2

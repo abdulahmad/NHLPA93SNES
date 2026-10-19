@@ -7,7 +7,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	sbc.w #$000A					; minus 10
 	bmi .neg
 	bvc .i2
-.ex1:
+.ex1:								; far branch to .rtl
 	jmp.w .rtl
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .ex1
@@ -17,7 +17,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	sbc.w #$000A					; minus 10
 	bmi .neg1
 	bvc .lock
-.ex2:
+.ex2:								; far branch to .rtl
 	jmp.w .rtl
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvc .ex2

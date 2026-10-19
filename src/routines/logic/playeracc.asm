@@ -176,7 +176,7 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	sbc.w #$0C00
 	bmi .neg						; below $C00: just lower it
 	bvc .add
-.set:
+.set:								; far branch to setpde
 	jmp.w setpde
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .set

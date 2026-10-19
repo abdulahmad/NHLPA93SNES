@@ -113,7 +113,7 @@ checkcheck:							;Two players are in contact: check what happens each way
 	sbc.w #$0014
 	bmi .neg
 	bvc .fall
-.ex1:
+.ex1:								; far branch to .rtl
 	jmp.w .rtl
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .ex1
@@ -180,7 +180,7 @@ checkcheck:							;Two players are in contact: check what happens each way
 	adc.w #PenRoughing
 	sta.b d0
 	jsl.l AddPenalty
-.dn2:
+.dn2:								; far branch to FallDown
 	jmp.w FallDown
 .list:								;check anim by direction
 	dw SPAshoulderchkl,SPAshoulderchkr,SPAhipchkr,SPAhipchkr,SPAhipchkr,SPAhipchkl,SPAhipchkl,SPAshoulderchkl

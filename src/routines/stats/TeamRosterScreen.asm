@@ -229,7 +229,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	bcs .again
 	sta.w SelectedPlayerIdx			; new selected line
 	jsl.l .show						; reprint
-.again:
+.again:								; far branch to .loop
 	jmp.w .loop
 .col:
 	lda.b d0						; move the attribute column by d0

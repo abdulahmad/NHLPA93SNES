@@ -46,7 +46,7 @@ CompLine:							;The computer team picks a line by the man advantage, the score 
 	bmi .d1neg						; compare the two energies
 	bvs .vs
 	bra .1
-.d1neg:
+.d1neg:								; signed compare: overflow flag corrects the sign
 	bvs .1
 .vs:
 	pla

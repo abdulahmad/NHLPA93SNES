@@ -166,7 +166,7 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	bmi .yneg
 	bvs .ylo
 	bra .noy
-.yneg:
+.yneg:								; signed compare: overflow flag corrects the sign
 	bvs .noy
 .ylo:
 	lda.b d1
@@ -175,7 +175,7 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	bmi .yneg2
 	bvc .sety
 	bra .noy
-.yneg2:
+.yneg2:								; signed compare: overflow flag corrects the sign
 	bvc .noy
 .sety:
 	lda.b d1

@@ -177,5 +177,5 @@ Gameloop:							;Main game loop: wait for a frame, run the clock, music and crow
 	bit.w #sfpz
 	beq .loop
 	jsl.l Pausemode
-.loop:
+.loop:								; far branch to Gameloop
 	jmp.w Gameloop

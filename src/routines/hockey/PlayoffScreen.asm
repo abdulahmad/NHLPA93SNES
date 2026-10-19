@@ -554,7 +554,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	bne .again
 .stop:								;stop at the round columns
 	stz.b d3+2
-.again:
+.again:								; far branch to .scroll
 	jmp.w .scroll
 .blink:								;BGR555 colours the user's team block blinks between (white, blue, white)
 	dw $7FFF,$7E10,$7FFF

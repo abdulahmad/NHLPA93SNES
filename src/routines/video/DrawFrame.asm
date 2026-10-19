@@ -106,9 +106,9 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	sbc.w #$FFF9					; off screen to the left?
 	bmi .xlov
 	bvc .xhi
-.xloout:
+.xloout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.xlov:
+.xlov:								; signed compare: overflow flag corrects the sign
 	bvc .xloout
 .xhi:
 	lda.b sprox						; off screen to the right?
@@ -117,9 +117,9 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	beq .sy
 	bmi .xhiv
 	bvs .sy
-.xhiout:
+.xhiout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.xhiv:
+.xhiv:								; signed compare: overflow flag corrects the sign
 	bvs .xhiout
 .sy:
 	lda.b sprvflip					; mirror y for a flip
@@ -137,9 +137,9 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	sbc.w #$FFF9
 	bmi .ylov
 	bvc .yhi
-.yloout:
+.yloout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.ylov:
+.ylov:								; signed compare: overflow flag corrects the sign
 	bvc .yloout
 .yhi:
 	lda.b sproy						; off screen below?
@@ -148,16 +148,16 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	beq .cache
 	bmi .yhiv
 	bvs .cache
-.yhiout:
+.yhiout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.yhiv:
+.yhiv:								; signed compare: overflow flag corrects the sign
 	bvs .yhiout
 .cache:
 	lda.b sprframe					; frame number plus set offset
 	clc
 	adc.b sprsetofs
 	cmp.w #$131D					; frame beyond the table: hang
-.hang1:
+.hang1:								; hangs if the carry is set (should not happen)
 	bcs .hang1
 	asl a
 	asl a
@@ -290,9 +290,9 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	sbc.w #$FFF1
 	bmi .bxlov
 	bvc .bxhi
-.bxloout:
+.bxloout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.bxlov:
+.bxlov:								; signed compare: overflow flag corrects the sign
 	bvc .bxloout
 .bxhi:
 	lda.b sprox						; off screen to the right?
@@ -301,9 +301,9 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	beq .by
 	bmi .bxhiv
 	bvs .by
-.bxhiout:
+.bxhiout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.bxhiv:
+.bxhiv:								; signed compare: overflow flag corrects the sign
 	bvs .bxhiout
 .by:
 	lda.b sprvflip					; mirror y for a flip
@@ -321,9 +321,9 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	sbc.w #$FFF1
 	bmi .bylov
 	bvc .byhi
-.byloout:
+.byloout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.bylov:
+.bylov:								; signed compare: overflow flag corrects the sign
 	bvc .byloout
 .byhi:
 	lda.b sproy						; off screen below?
@@ -332,16 +332,16 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	beq .bcache
 	bmi .byhiv
 	bvs .bcache
-.byhiout:
+.byhiout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.byhiv:
+.byhiv:								; signed compare: overflow flag corrects the sign
 	bvs .byhiout
 .bcache:
 	lda.b sprframe					; frame number plus set offset
 	clc
 	adc.b sprsetofs
 	cmp.w #$131D
-.bhang1:
+.bhang1:							; hangs if the carry is set (should not happen)
 	bcs .bhang1
 	asl a
 	asl a

@@ -38,7 +38,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	bmi .vl
 	bvs .ylmin
 	bra .ok
-.vl:
+.vl:								; signed compare: overflow flag corrects the sign
 	bvs .ok
 .ylmin:
 	lda.w #$FFCE					; limit -50

@@ -10,5 +10,5 @@ clrplayer:							;Take the controller off player X
 	beq .ch
 	inc.b d4						; controller 2: d4 = 4
 	inc.b d4
-.ch:
+.ch:								; far branch to changeplayer
 	jml.l changeplayer

@@ -71,7 +71,7 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 	beq .gli0
 	bmi .neg
 	bvs .gli0
-.nd:
+.nd:								; far branch to .nodec
 	jmp.w .nodec
 .neg:								; signed compare: overflow flag corrects the sign
 	bvs .nd

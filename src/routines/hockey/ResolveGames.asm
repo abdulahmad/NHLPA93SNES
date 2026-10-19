@@ -71,7 +71,7 @@ ResolveGames:						;Record the played playoff game and the series wins; when the
 	bmi .lvlneg
 	bvs .cr
 	bra .nextround
-.lvlneg:
+.lvlneg:							; signed compare: overflow flag corrects the sign
 	bvs .nextround
 .cr:
 	jsl.l GetShifter				; d1 = games - 1

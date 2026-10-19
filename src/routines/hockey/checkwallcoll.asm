@@ -65,7 +65,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	beq .c2
 	bmi .neg3
 	bvs .c2
-.exit1:
+.exit1:								; far branch to .exit
 	jmp.w .exit
 .neg3:								; signed compare: overflow flag corrects the sign
 	bvs .exit1

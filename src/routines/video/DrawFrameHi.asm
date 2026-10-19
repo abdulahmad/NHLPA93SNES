@@ -106,9 +106,9 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	sbc.w #$FFF9					; off screen to the left?
 	bmi .xlov
 	bvc .xhi
-.xloout:
+.xloout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.xlov:
+.xlov:								; signed compare: overflow flag corrects the sign
 	bvc .xloout
 .xhi:
 	lda.b sprox
@@ -117,9 +117,9 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	beq .ylo
 	bmi .xhiv
 	bvs .ylo
-.xhiout:
+.xhiout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.xhiv:
+.xhiv:								; signed compare: overflow flag corrects the sign
 	bvs .xhiout
 .ylo:
 	lda.b sproy
@@ -127,9 +127,9 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	sbc.w #$FFF9					; off screen above?
 	bmi .ylov
 	bvc .yhi
-.yloout:
+.yloout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.ylov:
+.ylov:								; signed compare: overflow flag corrects the sign
 	bvc .yloout
 .yhi:
 	lda.b sproy
@@ -138,9 +138,9 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	beq .cache
 	bmi .yhiv
 	bvs .cache
-.yhiout:
+.yhiout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.yhiv:
+.yhiv:								; signed compare: overflow flag corrects the sign
 	bvs .yhiout
 .cache:								;cached and still fresh: reuse its slot
 	lda.b sprframe					; frame number plus set offset
@@ -272,9 +272,9 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	sbc.w #$FFF1					; off screen to the left?
 	bmi .bxlov
 	bvc .bxhi
-.bxloout:
+.bxloout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.bxlov:
+.bxlov:								; signed compare: overflow flag corrects the sign
 	bvc .bxloout
 .bxhi:
 	lda.b sprox
@@ -283,9 +283,9 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	beq .bylo
 	bmi .bxhiv
 	bvs .bylo
-.bxhiout:
+.bxhiout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.bxhiv:
+.bxhiv:								; signed compare: overflow flag corrects the sign
 	bvs .bxhiout
 .bylo:
 	lda.b sproy
@@ -293,9 +293,9 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	sbc.w #$FFF1					; off screen above?
 	bmi .bylov
 	bvc .byhi
-.byloout:
+.byloout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.bylov:
+.bylov:								; signed compare: overflow flag corrects the sign
 	bvc .byloout
 .byhi:
 	lda.b sproy
@@ -304,16 +304,16 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	beq .bcache
 	bmi .byhiv
 	bvs .bcache
-.byhiout:
+.byhiout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.byhiv:
+.byhiv:								; signed compare: overflow flag corrects the sign
 	bvs .byhiout
 .bcache:
 	lda.b sprframe					; frame number plus set offset
 	clc
 	adc.b sprsetofs
 	cmp.w #$131D					; frame beyond the table: hang
-.bhang1:
+.bhang1:							; hangs if the carry is set (should not happen)
 	bcs .bhang1
 	asl a
 	asl a

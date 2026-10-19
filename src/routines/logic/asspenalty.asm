@@ -79,7 +79,7 @@ asspenalty:							;Assignment: player X skates to the penalty box, glides in and
 	sbc.w #-24						; within 24 of the box x?
 	bmi .neg
 	bvc .near
-.st0:
+.st0:								; far branch to .st
 	jmp.w .st
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .st0

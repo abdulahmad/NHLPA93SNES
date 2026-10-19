@@ -154,7 +154,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	beq .p1
 	bmi .neg3
 	bvs .p1
-.nocoll1:
+.nocoll1:							; far branch to .nocoll
 	jmp.w .nocoll
 .neg3:								; signed compare: overflow flag corrects the sign
 	bvs .nocoll1

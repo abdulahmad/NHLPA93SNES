@@ -54,7 +54,7 @@ checksso:							;Draw the arrows that show where the two players are when they a
 	bmi .r0
 	bvc .rb
 	bra .0
-.r0:
+.r0:								; signed compare: overflow flag corrects the sign
 	bvc .0
 .rb:
 	lda.w #8						; right bit
@@ -79,7 +79,7 @@ checksso:							;Draw the arrows that show where the two players are when they a
 	bmi .u0
 	bvc .ub
 	bra .2
-.u0:
+.u0:								; signed compare: overflow flag corrects the sign
 	bvc .2
 .ub:
 	inc.b d2						; up bit
@@ -91,7 +91,7 @@ checksso:							;Draw the arrows that show where the two players are when they a
 	bmi .d0
 	bvs .db
 	bra .3
-.d0:
+.d0:								; signed compare: overflow flag corrects the sign
 	bvs .3
 .db:
 	inc.b d2						; down bit

@@ -28,5 +28,5 @@ SetShotMode:						;Start a shot by player X: shot mode, aim at the goal, shot an
 	beq .ck1						; forehand
 	lda.w #SPAshotb					; SPAshotb $94E
 	sta.b d1						; backhand animation
-.ck1:
+.ck1:								; far branch to SetSPA
 	jmp.w SetSPA

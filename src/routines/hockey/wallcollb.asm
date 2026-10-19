@@ -33,7 +33,7 @@ wallcollb:							;Object X hits a wall: the puck may go over the glass and out o
 	sbc.w #$000D					; x 13-15 (the goal mouth)
 	bmi .neg2
 	bvc .x15
-.wc1:
+.wc1:								; far branch to wallcoll
 	jmp.w wallcoll
 .neg2:								; signed compare: overflow flag corrects the sign
 	bvc .wc1

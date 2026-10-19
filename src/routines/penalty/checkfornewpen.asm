@@ -96,7 +96,7 @@ checkfornewpen:						;Look for a new penalty call. Stops play at once when the p
 	beq .nx
 	bmi .neg
 	bvc .longer
-.nx:
+.nx:								; far branch to .next
 	jmp.w .next
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .nx

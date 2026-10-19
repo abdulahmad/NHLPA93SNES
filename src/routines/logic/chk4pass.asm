@@ -107,7 +107,7 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	sbc.w #-15
 	bmi .neg1
 	bvc .ok
-.miss:
+.miss:								; far branch to .rtl
 	jmp.w .rtl
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvc .miss

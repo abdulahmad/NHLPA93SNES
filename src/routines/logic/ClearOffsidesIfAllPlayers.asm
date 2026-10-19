@@ -31,7 +31,7 @@ ClearOffsidesIfAllPlayers:			;Clear team a2's offsides flag once none of its
 	beq .more
 	bmi .neg
 	bvs .more						; still past it
-.rtl:
+.rtl:								; far branch to ChkOffsides_rtl
 	jmp.w ChkOffsides_rtl
 .neg:
 	bvs .rtl						; still past it

@@ -6,7 +6,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	beq .z
 	bmi .neg
 	bvs .z
-.ex1:
+.ex1:								; far branch to .rtl
 	jmp.w .rtl
 .neg:								; signed compare: overflow flag corrects the sign
 	bvs .ex1
@@ -29,7 +29,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	beq .xl
 	bmi .neg1
 	bvs .xl
-.ex2:
+.ex2:								; far branch to .rtl
 	jmp.w .rtl
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvs .ex2
@@ -43,7 +43,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	sbc.b d4
 	bmi .neg2
 	bvc .yh
-.ex3:
+.ex3:								; far branch to .rtl
 	jmp.w .rtl
 .neg2:								; signed compare: overflow flag corrects the sign
 	bvc .ex3
@@ -61,7 +61,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	beq .yl
 	bmi .neg3
 	bvs .yl
-.ex4:
+.ex4:								; far branch to .rtl
 	jmp.w .rtl
 .neg3:								; signed compare: overflow flag corrects the sign
 	bvs .ex4
@@ -75,7 +75,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	sbc.b d5
 	bmi .neg4
 	bvc .inside
-.ex5:
+.ex5:								; far branch to .rtl
 	jmp.w .rtl
 .neg4:								; signed compare: overflow flag corrects the sign
 	bvc .ex5
@@ -187,7 +187,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	sbc.b d4						; against the edge
 	bmi .neg6
 	bvc .xl2
-.se1:
+.se1:								; far branch to .sideentry
 	jmp.w .sideentry
 .neg6:								; signed compare: overflow flag corrects the sign
 	bvc .se1
@@ -202,7 +202,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	beq .mouth						; between the posts?
 	bmi .neg7
 	bvs .mouth
-.se2:
+.se2:								; far branch to .sideentry
 	jmp.w .sideentry
 .neg7:								; signed compare: overflow flag corrects the sign
 	bvs .se2
@@ -247,7 +247,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	sbc.b d4
 	bmi .neg9
 	bvs .deflectsf
-.goal:
+.goal:								; far branch to Goal
 	jmp.w Goal
 .neg9:								; signed compare: overflow flag corrects the sign
 	bvs .goal

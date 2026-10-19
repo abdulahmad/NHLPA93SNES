@@ -115,7 +115,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	sbc.w #$0002					; minus 2
 	bmi .neg1
 	bvs .saved
-.nosave:
+.nosave:							; far branch to .rtl
 	jmp.w .rtl
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvs .nosave
@@ -230,7 +230,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	sbc.w puckvx					; minus puck x velocity
 	bmi .neg2
 	bvc .c2
-.b1:
+.b1:								; far branch to .bounce
 	jmp.w .bounce
 .neg2:								; signed compare: overflow flag corrects the sign
 	bvc .b1
@@ -240,7 +240,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	sbc.w puckvy					; minus puck y velocity
 	bmi .neg3
 	bvc .c3
-.b2:
+.b2:								; far branch to .bounce
 	jmp.w .bounce
 .neg3:								; signed compare: overflow flag corrects the sign
 	bvc .b2
@@ -254,7 +254,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	beq .c4
 	bmi .neg4
 	bvs .c4
-.b3:
+.b3:								; far branch to .bounce
 	jmp.w .bounce
 .neg4:								; signed compare: overflow flag corrects the sign
 	bvs .b3
@@ -265,7 +265,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	beq .c5
 	bmi .neg5
 	bvs .c5
-.b4:
+.b4:								; far branch to .bounce
 	jmp.w .bounce
 .neg5:								; signed compare: overflow flag corrects the sign
 	bvs .b4
