@@ -1,22 +1,22 @@
 skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep check when
 									;the puck comes at him
 	jsl.l skatetopuckinit			; d0/d1 = puck spot
-	lda.w temp2,x
+	lda.w temp2,x					; temp2 counts down frames to the next aim
 	sec
 	sbc.b d7
 	sta.w temp2,x
-	bmi .aim
-	jmp.w .ex
+	bmi .aim						; aim is due when the counter goes negative
+	jmp.w .ex						; not due: keep the previous aim
 .aim:								;every 10 frames: aim at the puck (avoid the goal), maybe sweep check
 	adc.w #$0009					; +10
-	sta.w temp2,x
+	sta.w temp2,x					; aim at the puck, steering around the goal
 	jsl.l avdgoal
 	lda.b d1
-	pha
+	pha								; save the avoid-goal target
 	lda.b d0
 	pha
 	txa
-	jsl.l GetHot
+	jsl.l GetHot					; get the player's hot spot
 	lda.b d0
 	eor.w #$FFFF					; negate
 	inc a
@@ -31,7 +31,7 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	adc.b $01,s
 	sec
 	sbc.w Xpos,x
-	sta.b d0
+	sta.b d0						; d0 = X offset to the lead point
 	lda.b d1
 	eor.w #$FFFF					; negate
 	inc a
@@ -47,34 +47,34 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	sec
 	sbc.w Ypos,x
 	sta.b d1
-	pla
+	pla								; drop the saved target
 	pla
 	jsl.l vtoa						; vector to direction
-	lda.b d0
+	lda.b d0						; d0 = direction to the puck
 	sta.w temp2b,x					; temp2b = direction to the puck
 	lda.w position,x
 	beq .ex							; goalie skips the sweep check
-	lda.w puckvx
+	lda.w puckvx					; puck direction of travel
 	sta.b d0
 	lda.w puckvy
 	sta.b d1
 	jsl.l vtoa						; vector to direction
 	lda.b d0
 	eor.w #$0004					; puck coming toward the player
-	cmp.w facedir,x
+	cmp.w facedir,x					; puck heading at the player: facing it
 	beq .ex
-	lda.w pucky
+	lda.w pucky						; player to puck, Y
 	sec
 	sbc.w Ypos,x
 	sta.b d1
 	pha
 	lda.w puckx
-	sec
+	sec								; player to puck, X
 	sbc.w Xpos,x
 	sta.b d0
 	pha
 	jsl.l vtoa						; vector to direction
-	lda.b d0
+	lda.b d0						; direction from player to puck
 	sta.b tmp0
 	pla
 	sta.b d0
@@ -83,7 +83,7 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	pla
 	sta.b d1
 	lda.w facedir,x
-	cmp.b tmp0
+	cmp.b tmp0						; player must face the puck
 	bne .ex
 	jsl.l muls32					; signed 32-bit multiply
 	sta.b d0
@@ -109,12 +109,12 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	sbc.w #$0000
 	bcc Sweepcheck
 .ex:
-	lda.w temp2b,x
+	lda.w temp2b,x					; skate in the aimed direction
 	sta.b d0
-	lda.w position,x
+	lda.w position,x				; goalie never slows
 	beq .acc
 	lda.w Xpos,x
-	sec
+	sec								; distance to the puck, X
 	sbc.w puckx
 	bit.w #$8000
 	beq .dx
@@ -122,7 +122,7 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	inc a
 .dx:
 	sta.b tmp0
-	lda.w Ypos,x
+	lda.w Ypos,x					; distance to the puck, Y
 	sec
 	sbc.w pucky
 	bit.w #$8000
@@ -131,7 +131,7 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	inc a
 .dy:
 	clc
-	adc.b tmp0
+	adc.b tmp0						; Manhattan distance
 	cmp.w #$0036					; close to the puck: slow down, Xvel*7/8, Yvel*7/16
 	bcs .acc
 	lda.w Xvel,x
