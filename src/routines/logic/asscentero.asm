@@ -8,7 +8,7 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	beq .go
 	jml.l assnothing
 .go:
-	jsl.l check4bench
+	jsl.l check4bench				; check for a bench change
 	lda.w pflags,x					; joystick controlled: nothing
 	bit.w #pfjoycon
 	beq .na
@@ -18,8 +18,8 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	beq .nna
 	and.w #~pfna&$FFFF
 	sta.w pflags,x
-	lda.w #$FFFF
-	sta.w temp5,x
+	lda.w #$FFFF					; no zone yet
+	sta.w temp5,x					; clear the timers
 	stz.w temp1,x
 	stz.w temp2,x
 	lda.w #$0008
@@ -28,26 +28,26 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	lda.w temp1,x					; every aidef frames
 	sec
 	sbc.b d7
-	sta.w temp1,x
+	sta.w temp1,x					; expired: reevaluate
 	bmi .dec
 	jmp.w .nodec
 .dec:
 	clc
-	adc.w aidef,x
-	bpl .st
+	adc.w aidef,x					; reload from aidef
+	bpl .st							; not below zero
 	lda.w #$0000
 .st:
 	sta.w temp1,x
 	lda.w puckc						; other team has the puck: acenterd
 	bmi .de0
 	sec
-	sbc.w #$0006
+	sbc.w #$0006					; puck side
 	sta.b d1
 	lda.w #acenterd
 	sta.b d0
 	txa
 	sec
-	sbc.w #$000C
+	sbc.w #$000C					; compare with this player's side
 	eor.b d1
 	bpl .de0
 	jml.l assreplace				; replace the assignment with d0
@@ -61,21 +61,21 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	inc a
 	sta.b d0
 .de1:								;zone number
-	stz.b d2
+	stz.b d2						; zone 0: own zone
 	lda.b d0
 	sec
-	sbc.w #$FFA8
+	sbc.w #$FFA8					; first zone limit
 	bmi .neg1
 	bvc .z1
 	bra .de2
 .neg1:
 	bvc .de2
 .z1:
-	lda.w #$0008
+	lda.w #$0008					; zone 8
 	sta.b d2
 	lda.b d0
 	sec
-	sbc.w #blueline
+	sbc.w #blueline					; blue line
 	bmi .neg2
 	bvc .z2
 	bra .de2
@@ -86,59 +86,59 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	lda.w tmflags,y
 	bit.w #tmfoside
 	bne .de2
-	asl.b d2
+	asl.b d2						; zone 16
 	lda.b d0
 	sec
-	sbc.w #$0108
+	sbc.w #$0108					; far zone limit
 	bmi .neg3
 	bvc .z3
 	bra .de2
 .neg3:
 	bvc .de2
 .z3:
-	lda.w #$0018
+	lda.w #$0018					; zone 24
 	sta.b d2
 .de2:
 	lda.b d2						; same zone: new spot only 1 in 128
-	cmp.w temp5,x
+	cmp.w temp5,x					; same zone as last time?
 	bne .de3
-	lda.w seed+2
+	lda.w seed+2					; random
 	cmp.w #$0200
 	bcs .nodec
 .de3:
-	lda.b d2
+	lda.b d2						; remember the zone
 	sta.w temp5,x
-	tay
+	tay								; zone table
 	lda.w #.dedata					; temp3/temp4 = .dedata spot + randomas of the range
 	sta.b a0
 	lda.w #.dedata>>16
 	sta.b a0+2
 	iny
 	iny
-	lda.b [a0],y
+	lda.b [a0],y					; x random range
 	dey
 	dey
 	jsl.l randomas					; random number -A to A-1
-	adc.b [a0],y
-	sta.w temp3,x
+	adc.b [a0],y					; plus the zone x
+	sta.w temp3,x					; temp3 = spot x
 	iny
 	iny
 	iny
 	iny
 	iny
 	iny
-	lda.b [a0],y
+	lda.b [a0],y					; y random range
 	dey
 	dey
 	jsl.l randomas					; random number -A to A-1
-	adc.b [a0],y
-	sta.w temp4,x
+	adc.b [a0],y					; plus the zone y
+	sta.w temp4,x					; temp4 = spot y
 .nodec:
-	lda.w temp3,x
+	lda.w temp3,x					; spot x
 	sta.b d0
-	lda.w temp4,x
+	lda.w temp4,x					; spot y
 	sta.b d1
-	lda.w pfgoal,x
+	lda.w pfgoal,x					; which end
 	bne .0
 	lda.b d1
 	eor.w #$FFFF					; negate
