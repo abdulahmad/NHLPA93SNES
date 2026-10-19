@@ -13,7 +13,7 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	clc
 	adc.w charofs
 	ldx.w #$0400
-.clr:
+.clr:								; clear the replay icon area
 	sta.w VMDATAL
 	dex
 	bne .clr
@@ -22,11 +22,11 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	ldx.w #$2020
 	lda.w #$0004
 	sta.b tmp1
-.icon:
+.icon:								; draw the replay icon
 	lda.b tmp0
 	sta.w VMADDL
 	ldy.w #$0008
-.iconrow:
+.iconrow:							; draw one icon row
 	lda.l IceRinkMap,x
 	ora.w #$2000
 	clc
@@ -62,7 +62,7 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	sta.w ReplayBufferPtr
 	lda.w #ReplayBufferStart>>16
 	sta.w ReplayBufferPtr+2
-.chk:
+.chk:								; check the replay buffer limit
 	lda.w #ReplayBufferEnd
 	cmp.w ReplayBufferPtr
 	lda.w #ReplayBufferEnd>>16
@@ -104,7 +104,7 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	dec a
 	pha
 	bra .fwd
-.go:
+.go:								; sort the sprites and update the video
 	pla
 	jsl.l SprSort					; sort the sprites
 	jsl.l setvideo					; update the video
@@ -153,7 +153,7 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	bcs .nox
 	lda.b d1
 	sta.w Hpos
-.nox:
+.nox:								; camera X step
 	iny
 	iny
 	lda.b [a0],y
@@ -168,7 +168,7 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	bra .noy
 .yneg:								; signed compare: overflow flag corrects the sign
 	bvs .noy
-.ylo:
+.ylo:								; clamp Y at the lower limit
 	lda.b d1
 	sec
 	sbc.w #$FF39
@@ -177,7 +177,7 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	bra .noy
 .yneg2:								; signed compare: overflow flag corrects the sign
 	bvc .noy
-.sety:
+.sety:								; store the vertical position
 	lda.b d1
 	sta.w Vpos
 .noy:
@@ -209,7 +209,7 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	jsl.l suba4						; one replay frame back
 	jsl.l SprSort					; sort the sprites
 	lda.w #VBlank_long
-.wait:
+.wait:								; wait for the next frame
 	cmp.b vbint
 	beq .wait
 	bra .vid

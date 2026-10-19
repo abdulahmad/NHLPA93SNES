@@ -37,7 +37,7 @@ Goal:								;The puck is in the goal: add the score, sound the siren, log it, u
 	sta.b a2
 	eor.w #$0002
 	sta.b a1
-.g1:
+.g1:								; increment the team's score
 	ldy.b a2
 	lda.w tmscore,y
 	inc a
@@ -48,7 +48,7 @@ Goal:								;The puck is in the goal: add the score, sound the siren, log it, u
 	sec
 	sbc.w #$0006
 	sta.w ScoreSumbytes
-.sum:
+.sum:								; add the goal to the score summary
 	lda.w #$0000
 	sta.b a0+2
 	lda.w #ScoreSum
@@ -73,7 +73,7 @@ Goal:								;The puck is in the goal: add the score, sound the siren, log it, u
 	ldy.b a2
 	beq .home
 	ora.w #$0080
-.home:
+.home:								; scorer recorded
 	sta.b [a0]
 	inc.b a0
 	lda.w tmtouch1,y				; byte 3 = scorer; no assists yet
@@ -85,7 +85,7 @@ Goal:								;The puck is in the goal: add the score, sound the siren, log it, u
 	lda.b a2						; goals +1 for the scorer
 	beq .h1
 	lda.w #$001A
-.h1:
+.h1:								; index the player in the team table
 	clc
 	adc.b d0
 	tay
@@ -131,7 +131,7 @@ Goal:								;The puck is in the goal: add the score, sound the siren, log it, u
 	bpl .1
 	lda.w #$FFFA
 	sta.b d0
-.1:
+.1:									; place the puck at the goal X
 	lda.b d0
 	sta.w puckx
 	lda.w #$0110
@@ -140,7 +140,7 @@ Goal:								;The puck is in the goal: add the score, sound the siren, log it, u
 	bpl .0
 	lda.w #$FEF0
 	sta.b d0
-.0:
+.0:									; place the puck at the goal Y
 	lda.b d0
 	sta.w pucky
 	lda.w #$0600
@@ -175,7 +175,7 @@ Goal:								;The puck is in the goal: add the score, sound the siren, log it, u
 	tax
 	lda.w #$0005
 	sta.b d3
-.loop:
+.loop:								; loop over the 6 skaters
 	lda.w position,x
 	bmi .nl
 	beq .nl
@@ -183,7 +183,7 @@ Goal:								;The puck is in the goal: add the score, sound the siren, log it, u
 	bne .nl
 	stz.w pfnc,x
 	jsl.l assinsert					; insert assignment d0
-.nl:
+.nl:								; next skater
 	inx
 	inx
 	dec.b d3

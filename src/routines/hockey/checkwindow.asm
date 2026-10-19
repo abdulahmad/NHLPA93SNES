@@ -55,7 +55,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	bit.w #$0100
 	beq .sy
 	ora.w #$FE00
-.sy:
+.sy:								; add the object's Y
 	clc
 	adc.w Ypos,x					; plus the object's y
 	clc
@@ -77,7 +77,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	bra .1
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvs .1
-.up:
+.up:								; scrolling up
 	lda.b d2
 	sec
 	sbc.w #$FFF6					; d1 = target - 10 (scrolling up)
@@ -94,7 +94,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	lda.w #$FF39					; limit -199
 	sta.b d1
 	bra .2
-.1:
+.1:									; check the dead band below
 	lda.b d0
 	sec
 	sbc.w #$000A					; more than 10 below?
@@ -104,7 +104,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	bra .2x
 .neg3:								; signed compare: overflow flag corrects the sign
 	bvc .2x
-.down:
+.down:								; scrolling down
 	lda.b d2
 	sec
 	sbc.w #$000A					; d1 = target + 10 (scrolling down)
@@ -134,7 +134,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	cmp.w #$0000					; at least 1
 	bne .neg5
 	inc a
-.neg5:
+.neg5:								; store the new vertical position
 	clc
 	adc.w Vpos
 	sta.w Vpos						; new vertical position
@@ -150,7 +150,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	bra .3
 .neg6:								; signed compare: overflow flag corrects the sign
 	bvs .3
-.left:
+.left:								; scrolling left
 	lda.b d3
 	sec
 	sbc.w #$FFD8					; d1 = target + 40 (scrolling left)
@@ -166,7 +166,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	lda.w #$FFC4					; limit -60
 	sta.b d1
 	bra .4
-.3:
+.3:									; check the dead band to the right
 	lda.b d0
 	sec
 	sbc.w #$0028					; more than 40 to the right?
@@ -176,7 +176,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	bra .rtl
 .neg8:								; signed compare: overflow flag corrects the sign
 	bvc .rtl
-.right:
+.right:								; scrolling right
 	lda.b d3
 	sec
 	sbc.w #$0028					; d1 = target - 40 (scrolling right)
@@ -207,7 +207,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	cmp.w #$0000					; at least 1
 	bne .h2
 	inc a
-.h2:
+.h2:								; store the new horizontal position
 	clc
 	adc.w Hpos
 	sta.w Hpos						; new horizontal position

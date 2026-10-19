@@ -5,13 +5,13 @@ puckfaceoff:						;Assignment: the start of play. Period end and overtime checks
 	bit.w #pfna
 	bne .first
 	jmp.w .nna
-.first:
+.first:								; clear the new-assignment flag, then check the clock
 	and.w #~pfna&$FFFF
 	sta.w pflags,x
 	lda.w gameclock					; clock out: PeriodOver
 	bne .endper
 	jml.l PeriodOver
-.endper:
+.endper:							; end of the period
 	lda.w gmode
 	bit.w #gmeog
 	beq .ot
@@ -24,7 +24,7 @@ puckfaceoff:						;Assignment: the start of play. Period end and overtime checks
 	cmp.w tmscore+2
 	beq .npo
 	jml.l clockcont_0
-.npo:
+.npo:								; no period over: check for a penalty delay
 	lda.w gmode
 	bit.w #gmpendel					; gmpendel: Stop4Pen
 	beq .rg
@@ -42,7 +42,7 @@ puckfaceoff:						;Assignment: the start of play. Period end and overtime checks
 	trb.w tmflags
 	trb.w tmflags+2
 	ldy.w #$0016
-.lcm:
+.lcm:								; clear the line change flag for the player
 	lda.w pflags,y
 	and.w #~pf2lcm&$FFFF
 	sta.w pflags,y
@@ -62,7 +62,7 @@ puckfaceoff:						;Assignment: the start of play. Period end and overtime checks
 	sta.b d0
 	bmi .nlp
 	jsl.l .slc
-.nlp:
+.nlp:								; controller 2 line change request
 	lda.w c2playernum
 	sta.b d0
 	bmi .nlp2
@@ -121,7 +121,7 @@ puckfaceoff:						;Assignment: the start of play. Period end and overtime checks
 	txa
 	lsr a
 	sta.w temp3,y
-.slcex:
+.slcex:								; swap the players in the line change
 	ldx.b a2
 	ldy.b a3
 	stx.b a3
@@ -166,7 +166,7 @@ puckfaceoff:						;Assignment: the start of play. Period end and overtime checks
 	beq .clh
 	lda.w #$0002
 	sta.b a2
-.clh:
+.clh:								; clear the line change flag for the player
 	lda.w pflags,y
 	bit.w #pf2lcm					; pf2lcm still on?
 	bne .clnd
@@ -179,7 +179,7 @@ puckfaceoff:						;Assignment: the start of play. Period end and overtime checks
 	sta.w temp1,y
 	ldx.b a3
 	jmp.w SetLCmode2
-.clnd:
+.clnd:								; move to the next player slot
 	lda.b a3
 	clc
 	adc.b d0
@@ -190,7 +190,7 @@ puckfaceoff:						;Assignment: the start of play. Period end and overtime checks
 	sta.w temp1,y
 	bmi .clcex
 	jmp.w .rtl
-.clcex:
+.clcex:								; line change done
 	ldx.b a3
 	phx
 	ldx.b d1
@@ -201,7 +201,7 @@ puckfaceoff:						;Assignment: the start of play. Period end and overtime checks
 	stz.b d2
 	jsl.l lcfound
 	jsl.l SetLCmode2
-.pop:
+.pop:								; restore and return
 	plx
 	stx.b a3
 	rtl
