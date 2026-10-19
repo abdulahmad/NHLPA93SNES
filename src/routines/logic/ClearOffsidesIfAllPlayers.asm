@@ -1,44 +1,44 @@
 ClearOffsidesIfAllPlayers:			;Clear team a2's offsides flag once none of its
 									;skaters is past the blue line
-	ldy.b a2
+	ldy.b a2						; team offset
 	lda.w tmflags,y					; tmfoside
 	bit.w #tmfoside
-	bne .go
-	jmp.w ChkOffsides_rtl
+	bne .go							; not flagged
+	jmp.w ChkOffsides_rtl			; nothing to do
 .go:
-	lda.w tmsort,y
-	sta.b a0
-	lda.w #$0005
+	lda.w tmsort,y					; sorted players of the team
+	sta.b a0						; a0 = first
+	lda.w #$0005					; six skaters
 	sta.b d1
 .top:
 	ldy.b a0
-	lda.w position,y
-	bmi .next
-	lda.w Ypos,y
+	lda.w position,y				; position
+	bmi .next						; none
+	lda.w Ypos,y					; y
 	sta.b d0
-	lda.w pfgoal,y
-	bne .next
+	lda.w pfgoal,y					; goal end
+	bne .next						; top end
 	lda.b d0
-	eor.w #$FFFF
+	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
 .next:
 	inc.b a0
 	inc.b a0
-	lda.b d0
+	lda.b d0						; y
 	sec
-	sbc.w #blueline
+	sbc.w #blueline					; minus the blue line
 	beq .more
 	bmi .neg
-	bvs .more
+	bvs .more						; still past it
 .rtl:
 	jmp.w ChkOffsides_rtl
 .neg:
-	bvs .rtl
+	bvs .rtl						; still past it
 .more:
-	dec.b d1
+	dec.b d1						; next skater
 	bpl .top
-	ldy.b a2
+	ldy.b a2						; none past: clear the flag
 	lda.w tmflags,y
 	and.w #~tmfoside&$FFFF			; clear tmfoside
 	sta.w tmflags,y
