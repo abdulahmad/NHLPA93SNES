@@ -1,11 +1,11 @@
 AdvanceStringPtr:					;a1 = string d0 of the string list [a1]
-	bra .cnt
+	bra .cnt						; count first
 .next:
 	lda.b a1
 	clc
-	adc.b [a1]
+	adc.b [a1]						; plus the string length: next string
 	sta.b a1
 .cnt:
-	dec.b d0
-	bpl .next
+	dec.b d0						; one less to skip
+	bpl .next						; more to skip
 	rtl

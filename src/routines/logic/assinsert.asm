@@ -1,7 +1,7 @@
 assinsert:							;Give player X assignment d0 on top of the current one
 	lda.w assnum,x					; assnum - 1
-	dec a
-	and.w #$0007
+	dec a							; one slot back
+	and.w #$0007					; wrap around the 8 slots
 	sta.w assnum,x
 assreplace:							;replace current assignment on player a3. d0 = assignment
 		;   replace the current assignment of player X with d0
@@ -14,7 +14,7 @@ assreplace:							;replace current assignment on player a3. d0 = assignment
 	adc.w assnum,x
 	tay
 	sep #$20
-	lda.b d0
-	sta.w asslist,y
+	lda.b d0						; the assignment
+	sta.w asslist,y					; store it
 	rep #$30
 	rtl

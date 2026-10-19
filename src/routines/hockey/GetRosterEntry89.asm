@@ -1,22 +1,22 @@
 GetRosterEntry89:					;Bank $89 copy of GetRosterEntry (called from getname and
 									;FormatPlayerNumInitial): a0 = the roster record of player d0 of team a2
-	lda.w #TeamList>>16
+	lda.w #TeamList>>16				; team list bank
 	sta.b a0+2
 	ldy.b a2
-	lda.w tmdata,y
+	lda.w tmdata,y					; team data pointer
 	sta.b a0
 	ldy.w #Playerdata
-	clc
+	clc								; offset of the player data
 	adc.b [a0]
-	sta.b a0
-	bra .cnt
+	sta.b a0						; a0 = start of the player data
+	bra .cnt						; count down
 .next:
 	lda.b a0
 	clc
-	adc.b [a0]
-	adc.w #$0008
+	adc.b [a0]						; plus the record length
+	adc.w #$0008					; plus 8
 	sta.b a0
 .cnt:
-	dec.b d0
+	dec.b d0						; until record d0
 	bpl .next
 	rtl

@@ -1,11 +1,11 @@
 ResetPassWord:						;Blank the password
-	sep #$30
-	stz.w PassWord
-	ldy.b #$0F
-	lda.b #$1E
+	sep #$30						; 8-bit registers
+	stz.w PassWord					; first character 0
+	ldy.b #$0F						; 15 characters
+	lda.b #$1E						; blank character
 .blank:
 	sta.w PassWord,y
 	dey
-	bne .blank
-	rep #$30
+	bne .blank						; until all are blank
+	rep #$30						; 16-bit registers
 	rtl

@@ -3,20 +3,20 @@ sfx8F:								;Queue the sound number pushed before the call, unless sound effec
 	pla								; return address +1 into jmlvector
 	inc a
 	sta.w jmlvector+1
-	sep #$20
+	sep #$20						; 8-bit A
 	pla
-	sta.w jmlvector+3
+	sta.w jmlvector+3				; bank
 	rep #$20
 	lda.b vcount
 	sec
 	sbc.w sfxmutetime
-	cmp.w #$00B4
-	bcc .muted
+	cmp.w #$00B4					; muted for 180 frames
+	bcc .muted						; muted: drop it
 	pla								; the sound (0 = none)
-	beq .ret
-	jsl.l QueueSound
+	beq .ret						; no sound: skip
+	jsl.l QueueSound				; queue it
 .ret:
 	jml.l jmlvector
 .muted:
-	pla
+	pla								; drop the pushed sound
 	bra .ret
