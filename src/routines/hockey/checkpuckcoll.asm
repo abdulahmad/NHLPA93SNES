@@ -1,63 +1,67 @@
 checkpuckcoll:						;Puck collision with the players near it
+									;Called by jump from pucknorm. Walks up and down the OOlist from
+									;the puck and runs checkpuckcoll_ccx on each object within 22 in y:
+									;stick (puckstick), body (puckbody) or goalie (puckgoalie). No
+									;collision while the puck's feet are in the air.
 	lda.w Zpos+puckobj				; puck feet in the air (Zpos > 16): no collision
 	sec
 	sbc.w #$0010
-	beq .setup
-	bmi .neg
-	bvs .setup
-	bra .rtl
-.neg:
-	bvs .rtl
-.setup:
+	beq .setup						; Zpos = 16: still low enough
+	bmi .neg						; negative result: .neg checks the overflow
+	bvs .setup						; positive with overflow: really negative, Zpos < 16
+	bra .rtl						; Zpos > 16: feet in the air, no collision
+.neg:								; negative result
+	bvs .rtl						; overflow: really positive, Zpos > 16
+.setup:								; puck is low: walk the OOlist up and down from it
 	lda.w OOlistpos+puckobj			; Y = puck position in OOlist
 	sta.b d1
-.up:
+.up:								; loop: next higher object in the OOlist
 	ldy.b d1
 	cpy.w #$000F					; top object
-	beq .cl
-	lda.w OOlist+1,y
+	beq .cl							; none above the puck: walk down instead
+	lda.w OOlist+1,y				; object number of the next higher one
 	and.w #$00FF
-	sta.b d4
+	sta.b d4						; d4 = object number, used by checkpuckcoll_ccx
 	tay
-	lda.w Ylist,y
+	lda.w Ylist,y					; y of the next higher object
 	sec
-	sbc.w pucky
+	sbc.w pucky						; minus the puck's y
 	sec
 	sbc.w #$0016					; next higher object within 22 in y
-	beq .cc1
-	bmi .neg1
-	bvs .cc1
-	bra .cl
-.neg1:
-	bvs .cl
-.cc1:
+	beq .cc1						; gap = 22: collide
+	bmi .neg1						; negative result: .neg1 checks the overflow
+	bvs .cc1						; positive with overflow: really negative, gap < 22
+	bra .cl							; gap > 22: out of reach, walk down
+.neg1:								; negative result
+	bvs .cl							; overflow: really positive, gap > 22
+.cc1:								; object within 22 in y: test the stick, body or goalie
 	jsl.l checkpuckcoll_ccx
-	inc.b d1
+	inc.b d1						; next object up
 	bra .up
-.cl:
+.cl:								; walk down the OOlist from the puck
 	lda.w OOlistpos+puckobj
-	beq .rtl
+	beq .rtl						; puck is the lowest object: done
 	sta.b d1
-.dn:
+.dn:								; loop: next lower object in the OOlist
 	ldy.b d1
-	lda.w OOlist-1,y
+	lda.w OOlist-1,y				; object number of the next lower one
 	and.w #$00FF
-	sta.b d4
+	sta.b d4						; d4 = object number, used by checkpuckcoll_ccx
 	tay
-	lda.w pucky
+	lda.w pucky						; puck's y
 	sec
-	sbc.w Ylist,y
+	sbc.w Ylist,y					; minus the y of the next lower object
 	sec
 	sbc.w #$0016
-	beq .cc2
-	bmi .neg2
-	bvs .cc2
-	bra .rtl
-.neg2:
-	bvs .rtl
-.cc2:
+	beq .cc2						; gap = 22: collide
+	bmi .neg2						; negative result: .neg2 checks the overflow
+	bvs .cc2						; positive with overflow: really negative, gap < 22
+	bra .rtl						; gap > 22: out of reach, done
+.neg2:								; negative result
+	bvs .rtl						; overflow: really positive, gap > 22
+.cc2:								; object within 22 in y: test the stick, body or goalie
 	jsl.l checkpuckcoll_ccx
-	dec.b d1
-	bne .dn
+	dec.b d1						; next object down
+	bne .dn							; until the bottom of the OOlist
 .rtl:
 	rtl

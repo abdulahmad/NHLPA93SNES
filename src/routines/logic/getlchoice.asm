@@ -1,8 +1,8 @@
 getlchoice:							;d0 = the line for line choice d0 of team a2, by the man advantage; -1 =
 									;none
-	stx.b xsave
+	stx.b xsave						; keep the caller's X
 	ldx.w #$0000
-.save:
+.save:								; save d1 through d4 on the stack
 	lda.b d1,x
 	pha
 	inx
@@ -11,25 +11,25 @@ getlchoice:							;d0 = the line for line choice d0 of team a2, by the man advan
 	bne .save
 	ldx.b xsave
 	lda.b a2						; d2 = other tmap - our tmap: players short
-	eor.w #2
+	eor.w #2						; the other team's slot
 	tay
-	lda.w tmap,y
+	lda.w tmap,y					; other team's tmap
 	ldy.b a2
 	sec
-	sbc.w tmap,y
+	sbc.w tmap,y					; minus our tmap
 	sta.b d2
-	beq .1
+	beq .1							; equal strength: table section 0 (no power play)
 	lda.b d0						; penalty killing: +21
 	clc
 	adc.w #21
 	sta.b d0
-	lda.b d2
-	bmi .1
+	lda.b d2						; sign of the difference
+	bmi .1							; bmi: the penalty killing section, no more added
 	lda.b d0						; power play: +21 more
 	clc
 	adc.w #21
 	sta.b d0
-.1:
+.1:									; section chosen: add 3 * the team's current line (tmline)
 	ldy.b a2						; + 3 * tmline
 	lda.w tmline,y
 	sta.b d1
@@ -41,18 +41,18 @@ getlchoice:							;d0 = the line for line choice d0 of team a2, by the man advan
 	clc
 	adc.b d1
 	sta.b d0
-	tay
-	lda.w #.tab
+	tay								; offset into the table
+	lda.w #.tab						; a0 = the table
 	sta.b a0
 	lda.w #.tab>>16
 	sta.b a0+2
-	lda.b [a0],y
+	lda.b [a0],y					; choice for this button, -1 = none
 	and.w #$00FF
 	bit.w #$0080
-	beq .sext
+	beq .sext						; a negative byte: sign extend
 	ora.w #$FF00
 .sext:
-	sta.b d0
+	sta.b d0						; d0 = the line, or -1
 	stx.b xsave
 	ldx.w #$0006
 .restore:
