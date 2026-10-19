@@ -10,10 +10,10 @@ consistent with each other and with NHL 92, the root of the family (the SNES gam
 The code, data and bytes must not change unless the change is the point of the PR. Before every push:
 
 ```
-./build.sh
+tools/verify_all.sh -q
 ```
 
-`build.sh` assembles `src/nhlpa93snes.asm` with asar and must print `MATCH` against `lst/nhlpa93snes.bin`.
+It extracts the assets fresh, builds with `node tools/build.js retail` (asar assembles `src/nhlpa93snes.asm`, the verify step must print `MATCH` against `lst/nhlpa93snes.bin`), checks the assets against the ROM and runs the comment check. `npm run build:retail` alone is enough while editing.
 
 A comment-only or rename-only change must not change a single byte. Never commit ROMs, `Extracted/` or
 `output/`.
@@ -91,7 +91,7 @@ A comment-only or rename-only change must not change a single byte. Never commit
 
 ## 8. Checklist
 
-- [ ] `./build.sh` matches
+- [ ] `npm run build:retail` matches
 - [ ] `python3 tools/check_comments.py` is clean for the files you touched
 - [ ] new symbols have comments, new constants replace the numbers they stand for
 - [ ] names follow 92 (spelling, capitalisation); renames are in the history file
@@ -101,7 +101,7 @@ A comment-only or rename-only change must not change a single byte. Never commit
 
 - Comments start with `;`. Labels end with `:`; a local label is `.name:`. Constants are `Name = $value` in
   the RAM file; the layout rules in section 5 are the same.
-- `incsrc` order is ROM order. A file must not move bytes: check that `build.sh` still says `MATCH`.
+- `incsrc` order is ROM order. A file must not move bytes: check that `npm run build:retail` still says `MATCH`.
 
 ## Editor setup (VS Code)
 

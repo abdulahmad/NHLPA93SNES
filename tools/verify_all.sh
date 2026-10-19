@@ -1,6 +1,26 @@
-#!/bin/sh
-# Full check, as 93G tools/verify_all.sh: extract the assets (tools/prebuild.py), assemble, compare with the retail image, check comments.
-cd "$(dirname "$0")/.."
-./build.sh || exit 1
-python3 tools/extract.py lst/nhlpa93snes.bin --check || exit 1
-python3 tools/check_comments.py || exit 1
+#!/bin/bash
+# verify_all.sh: fresh asset extraction, then the retail build with tools/build.js, verified against lst/nhlpa93snes.bin,
+# then the extracted assets against the ROM and the comment layout check. Same wrapper as NHLPA93Genesis.
+# Usage: tools/verify_all.sh [-q|--quiet]
+# -q: print only failures and the final ALL MATCH / VERIFY FAILED line.
+cd "$(dirname "$0")/.." || exit 1
+quiet=0; case "$1" in -q|--quiet) quiet=1;; esac
+fail=0
+rm -rf Extracted output
+# build.js prints the result of each step on an indented line under it: "   MATCH output/retail/nhlpa93snes.sfc == ...".
+r=$(node tools/build.js retail)
+last=$(echo "$r" | grep -E '^ +MATCH ')
+case "$last" in
+  *MATCH*) [ $quiet = 1 ] || echo "retail: ${last#"${last%%[! ]*}"}" ;;
+  *) echo "retail: FAILED"; echo "$r"; fail=1 ;;
+esac
+if [ $fail = 0 ]; then
+  node tools/extractAssets93s.js lst/nhlpa93snes.bin --check | tail -1 | grep -q "^158 of 158" || { echo "assets: Extracted/ differs from the ROM"; fail=1; }
+  python3 tools/check_comments.py | tail -1 | grep -q "comment layout OK" || { echo "comments: layout check failed"; python3 tools/check_comments.py | tail -5; fail=1; }
+fi
+if [ "$fail" = 1 ]; then
+  echo "VERIFY FAILED"
+  exit 1
+fi
+echo "ALL MATCH"
+exit 0

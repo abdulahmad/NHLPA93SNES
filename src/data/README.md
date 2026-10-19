@@ -1,9 +1,9 @@
 # Extracted/ (binary assets)
 
 The `src/**/*.asm` files `incbin` binary assets from `Extracted/{Graphics,Sound,Text}/`, the folder layout of the NHLPA 93 Genesis
-project. `Extracted/` is not committed. `tools/extract.py` writes it from `lst/nhlpa93snes.bin` (107 assets, each an exact ROM range),
-`tools/prebuild.py` checks the ROM SHA-1 and runs the extraction when `Extracted/` is missing or stale, and `build.sh` / `build.ps1`
-run `prebuild.py` first, so the build stays byte-identical. This file lives next to the sources that include the assets.
+project. `Extracted/` is not committed. `tools/extractAssets93s.js` writes it from `lst/nhlpa93snes.bin` (158 assets, each an exact ROM range),
+`tools/prebuild.js` checks the ROM SHA-1 and runs the extraction when `Extracted/` is missing or stale, and `tools/build.js`
+runs `prebuild.js` first, so the build stays byte-identical. This file lives next to the sources that include the assets.
 The file extension gives the format. The SNES formats are not the same as the Genesis (93G/94G) `.map.jim` / `.pal` / `.tiles` files
 of the same names, so the SNES files get their own extensions, except the team palettes, which are byte-identical to the 93G `.pal` files.
 

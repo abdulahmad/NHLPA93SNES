@@ -16,4 +16,4 @@ $v = & $exe --version | Select-Object -First 1
 if ($v -notmatch 'Asar 1\.91') { throw "asar version check FAILED: $v" }
 Write-Host "asar: $v"
 if (Get-Command python -ErrorAction SilentlyContinue) { Write-Host "python: $(python --version)" } else { Write-Host 'WARNING: python not found (only needed for tools/disasm65816.py)' }
-Write-Host 'setup OK. Next: .\build.ps1'
+Write-Host 'setup OK. Next: npm run build:retail'

@@ -27,18 +27,33 @@ The SNES port is a hybrid: it began as a port of NHL92 Genesis (likely while NHL
 - `tools/scan_cleanup.py` counts raw addresses, generic labels and noise comments left in `src/`.
 - `lst/nhlpa93snes.bin` reference ROM (committed, as NHL94Genesis does).
 - `tools/disasm65816.py` the quick-pass generator (recursive descent from the vectors, REP/SEP/PHP/PLP M/X tracking). Setup only; it wrote the old `bankXX_YYYY` slices.
-- `Extracted/` the incbin assets, extracted from the ROM by `tools/extract.py` (run by `tools/prebuild.py` on every build; not committed; folders Graphics, Sound, Text as in 93G); `src/data/README.md` describes the file formats (`.map.snesjim`, `.chr.pak`, `.snesmap`, `.pal`, ...).
+- `Extracted/` the incbin assets, extracted from the ROM by `tools/extractAssets93s.js` (run by `tools/prebuild.js` on every build; not committed; folders Graphics, Sound, Text as in 93G); `src/data/README.md` describes the file formats (`.map.snesjim`, `.chr.pak`, `.snesmap`, `.pal`, ...).
 - `tools/snesgfx.py` unpacks the packed streams (a port of `DecompressBytecode`) and renders tiles, maps and screens to PNG.
 - `docs/history/SEGMENT_AGENT.md` rules and the per-slice history, `docs/history/PROMPT.md` the per-segment prompt (segment phase, finished), `docs/HANDOFF.md` setup notes and the cleanup progress.
 
 ## Build
 
-Requires asar 1.91 on PATH:
+1. Install node from https://nodejs.org/en/download if it isn't already installed on your machine. No `npm i` is needed: the scripts have no dependencies.
 
-```sh
-git clone --depth 1 https://github.com/RPGHacker/asar.git && cd asar
-cmake -S src -B build -DCMAKE_BUILD_TYPE=Release -DASAR_GEN_LIB=OFF && cmake --build build -j
-cp build/asar/bin/asar ~/.local/bin/
-```
+2. Install asar 1.91 into `tools/bin` with `sh tools/setup.sh` (Linux/macOS; needs git, cmake and a C++ compiler) or `tools\setup.ps1` (Windows). An asar 1.91 on PATH also works.
 
-Or run `sh tools/setup.sh` (Linux/macOS) or `tools\setup.ps1` (Windows), which install asar 1.91 into `tools/bin`. Then `./build.sh` (or `make`, or `build.ps1` on Windows). It writes `output/nhlpa93snes.sfc` and prints MATCH / MISMATCH.
+3. The reference ROM is `lst/nhlpa93snes.bin` (committed, as in NHL94Genesis). The build refuses any other file at that path.
+
+    | ROM | File name | SHA-1 | Size |
+    | --- | --- | --- | --- |
+    | NHLPA Hockey '93 SNES retail (USA) | `lst/nhlpa93snes.bin` | `76a01492cfb656e9fce0094bca356c312adfea0e` | 524288 bytes |
+
+4. Run `npm run build:retail` (or `node tools/build.js retail`). It prints one line per step, with a short note under it and the result under that:
+
+    1. **prebuild**: check the ROM and extract graphics, sound and text assets into `Extracted/` (when it is missing or stale).
+    2. **assemble**: asar turns `src/nhlpa93snes.asm` into the ROM image.
+    3. **header**: pad the image and store the checksum if the ROM grew (`tools/patchHeader.js`; the stock image is left as it is).
+    4. **verify**: compare byte for byte with `lst/nhlpa93snes.bin`.
+
+    The built ROM is `output/retail/nhlpa93snes.sfc`; `output/retail/obj/` holds asar's log and its symbol file (`nhlpa93snes.sym`, read by `tools/gen_file_map.py` and `tools/scan_cleanup.py`).
+
+Other scripts:
+- `npm run assets`: ROM check and asset extraction only (`npm run extractassets` runs the extractor directly; `node tools/extractAssets93s.js lst/nhlpa93snes.bin --check` compares `Extracted/` with the ROM)
+- `npm run clean`: delete `output/` and `Extracted/` (re-extracted by the next build)
+- `tools/verify_all.sh`: extracts fresh, builds, and runs the asset and comment checks, printing ALL MATCH
+- Add `--verbose` to `node tools/build.js ...` for the full tool output; `--no-color` (or `NO_COLOR`) turns the colors off

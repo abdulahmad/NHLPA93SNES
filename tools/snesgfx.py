@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""snesgfx.py - unpack and view the NHLPA Hockey '93 (SNES) graphics assets in Extracted/ (tools/extract.py).
+"""snesgfx.py - unpack and view the NHLPA Hockey '93 (SNES) graphics assets in Extracted/ (tools/extractAssets93s.js).
 
 Formats (see src/data/README.md):
   *.pak       packed stream for the game's decompressor at $86FA3E (DecompressBytecode)

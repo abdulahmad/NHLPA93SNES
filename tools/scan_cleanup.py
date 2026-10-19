@@ -2,7 +2,7 @@
 """Count what the source cleanup still has to do in src/ (raw addresses, generic labels, noise comments).
 
 Usage: python3 tools/scan_cleanup.py [-v] [src_dir]
-Needs output/nhlpa93snes.sym (run ./build.sh first) for the pointer-immediate check.
+Needs output/retail/obj/nhlpa93snes.sym (run npm run build:retail first) for the pointer-immediate check.
   -v  list every hit, not just the counts
 """
 import glob, os, re, sys
@@ -10,7 +10,7 @@ import glob, os, re, sys
 verbose = '-v' in sys.argv
 args = [a for a in sys.argv[1:] if a != '-v']
 SRC = args[0] if args else os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'src')
-SYM = os.path.join(SRC, '..', 'output', 'nhlpa93snes.sym')
+SYM = os.path.join(SRC, '..', 'output', 'retail', 'obj', 'nhlpa93snes.sym')
 
 rom_labels = set()
 if os.path.exists(SYM):

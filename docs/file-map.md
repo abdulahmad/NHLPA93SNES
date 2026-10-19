@@ -7,7 +7,7 @@ files in exact ROM order. Routines are in `src/routines/<93G module>/<Routine>.a
 (one routine per file; a routine that falls through into the next keeps both), non-code data in `src/data/<category>/<Name>.asm`.
 The SNES internal header and vectors are in `src/header/snes_header.asm` (end of bank $80).
 Bank $90 is included last. The stock build writes no bytes there.
-Regenerate this file with `python3 tools/gen_file_map.py` after `./build.sh`.
+Regenerate this file with `python3 tools/gen_file_map.py` after `npm run build:retail`.
 
 ## src/banks/b80_engine.asm
 
