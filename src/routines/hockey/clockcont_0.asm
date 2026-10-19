@@ -1,116 +1,116 @@
 clockcont_0:						;End of a period: in the third period the winners celebrate (with the
 									;Stanley Cup after the final), and the clock stops
-	ldx.w #$001C
+	ldx.w #$001C					; object 14 (offset $1C)
 	stx.b a3
-	lda.w #$18
+	lda.w #$18						; assignment $18
 	sta.b d0
-	jsl.l assinsert
-	lda.w gsp
-	cmp.w #$0002
-	bcs .p3
-	jmp.w .notp3
+	jsl.l assinsert					; insert it
+	lda.w gsp						; period
+	cmp.w #$0002					; third period or later
+	bcs .p3							; yes
+	jmp.w .notp3					; no
 .p3:
-	lda.w #$0007
+	lda.w #$0007					; assignment 7
 	sta.b d0
-	ldx.w #$0000
+	ldx.w #$0000					; team 0
 	stx.b a3
-	lda.w gamelevel
-	cmp.w #$0003
+	lda.w gamelevel					; round
+	cmp.w #$0003					; not the final
 	bne .winners
-	lda.b bosgames
-	cmp.w #$0007
+	lda.b bosgames					; series?
+	cmp.w #$0007					; single games: cup
 	beq .cup
-	lda.w gamenum
-	asl a
+	lda.w gamenum					; game
+	asl a							; times 2
 	sta.b a0
-	tay
-	stz.b d3
+	tay								; offset
+	stz.b d3						; d3 = 0
 	lda.w gsflags,y
-	bit.w #gsftf
+	bit.w #gsftf					; team flag
 	beq .nf
-	lda.w #gspobwins-gspotwins
+	lda.w #gspobwins-gspotwins		; offset to the other wins
 	sta.b d3
 .nf:
-	lda.w tmscore
-	cmp.w tmscore+2
+	lda.w tmscore					; home score
+	cmp.w tmscore+2					; home won?
 	bpl .ns1
-	lda.b d3
+	lda.b d3						; swap
 	eor.w #gspobwins-gspotwins
 	sta.b d3
 .ns1:
-	lda.b a0
+	lda.b a0						; game offset
 	clc
-	adc.b d3
+	adc.b d3						; plus the side
 	tay
-	lda.w gspotwins,y
-	cmp.w #$0003
+	lda.w gspotwins,y				; series wins
+	cmp.w #$0003					; three: the cup
 	bne .winners
 .cup:
-	lda.w #$0008
+	lda.w #$0008					; assignment 8
 	sta.b d0
-	lda.w #$000B
+	lda.w #$000B					; 12 players
 	sta.b d2
-.cpu:
+.cpu:								; release the controllers
 	lda.w pflags,x
-	and.w #~pfjoycon&$FFFF
+	and.w #~pfjoycon&$FFFF			; clear the joystick flag
 	sta.w pflags,x
 	inx
 	inx
-	dec.b d2
+	dec.b d2						; next player
 	bpl .cpu
-	ldx.w #$0000
+	ldx.w #$0000					; team 0
 	stx.b a3
 .winners:
-	lda.w #$0005
+	lda.w #$0005					; celebrate: 6 players
 	sta.b d2
-	lda.w tmscore
-	cmp.w tmscore+2
-	beq .notp3
-	bpl .celeb
-	ldx.w #$000C
+	lda.w tmscore					; scores
+	cmp.w tmscore+2					; equal
+	beq .notp3						; tied: no winners
+	bpl .celeb						; home won
+	ldx.w #$000C					; else team 1
 	stx.b a3
 .celeb:
-	lda.w position,x
-	beq .next
-	jsl.l assinsert
-	lda.w #$0007
+	lda.w position,x				; position
+	beq .next						; none
+	jsl.l assinsert					; assignment
+	lda.w #$0007					; 7
 	sta.b d0
-.next:
+.next:								; next player
 	inx
 	inx
 	stx.b a3
-	dec.b d2
+	dec.b d2						; count down
 	bpl .celeb
 .gameover:
-	jsl.l ClearPenaltyBuffer
-	lda.b crowdlevel
+	jsl.l ClearPenaltyBuffer		; clear the penalties
+	lda.b crowdlevel				; crowd
 	clc
-	adc.w #$03E8
+	adc.w #$03E8					; +1000
 	sta.b crowdlevel
-	lda.w #$0040
+	lda.w #$0040					; clock stopped
 	sta.w gmclock
-	tsb.w gmode
-	lda.w tmscore
+	tsb.w gmode						; game mode
+	lda.w tmscore					; scores
 	cmp.w tmscore+2
-	bmi .awaywon
-	stz.b crowdlevel
-	lda.w #$0003
+	bmi .awaywon					; away won
+	stz.b crowdlevel				; crowd quiet
+	lda.w #$0003					; cheer 3 times
 	sta.w cheercnt
-	lda.b vcount
+	lda.b vcount					; frame
 	sec
-	sbc.w #$0096
+	sbc.w #$0096					; minus 150
 	sta.w cheervc
 .awaywon:
-	lda.w #PenEOG
+	lda.w #PenEOG					; game over penalty
 	sta.b d0
-	jml.l AddPenalty2
+	jml.l AddPenalty2				; call it
 .notp3:
-	lda.w gsp
-	cmp.w #$0003
+	lda.w gsp						; period
+	cmp.w #$0003					; overtime
 	bne .perover
-	lda.w OptPlayMode
-	beq .gameover
+	lda.w OptPlayMode				; play mode
+	beq .gameover					; regular season: game over
 .perover:
-	lda.w #PenEOP
+	lda.w #PenEOP					; period over penalty
 	sta.b d0
-	jml.l AddPenalty2
+	jml.l AddPenalty2				; call it
