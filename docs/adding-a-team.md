@@ -8,7 +8,7 @@
 |---|---|---|---|
 | TeamList | `src/data/teamdata93s.asm` | `dd` long pointer, 4 bytes | `(TeamListEnd-TeamList)/4 == NumofTeams` |
 | team record | after TeamList, or in bank $90 when it does not fit | one record (the shortest, Ottawa, is 531 bytes; Boston is 680) | the TeamList entry points at its label |
-| Teamblocksmap | `src/data/gfx/Teamblocksmap.asm` | 36 bytes, a 9 x 2 tile block | `(TeamBlocksMapEnd-Teamblocksmap)/36 == NumofTeams` |
+| Teamblocksmap | `src/banks/b87_player_sprites.asm` | 36 bytes, a 9 x 2 tile block | `(TeamBlocksMapEnd-Teamblocksmap)/36 == NumofTeams` |
 | playoffseats | `src/data/teamdata93s.asm` | 16 team numbers | `(playoffseatsEnd-playoffseats)/16 == 34` |
 
 Leave 34 alone. playoffseats is 34 trees, not the team count.

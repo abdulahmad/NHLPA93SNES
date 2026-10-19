@@ -75,7 +75,7 @@ A comment-only or rename-only change must not change a single byte. Never commit
 
 ## 6. Where things go
 
-- `src/nhlpa93snes.asm` includes the bank files `src/banks/bXX_<name>.asm`, and each bank includes its routine files in exact ROM order. A routine lives in its own file under `src/routines/<area>/`, named after the routine.
+- `src/nhlpa93snes.asm` includes the bank files `src/banks/bXX_<name>.asm`, and each bank includes its routine files in exact ROM order. A routine lives in its own file under `src/routines/<area>/`, named after the routine. Graphics, text and sound data blocks (label, `incbin`, size `assert`) are written in the bank file itself, at their ROM position, as in 93G's `graphics93.asm`; the team data and the frame tables are the files `src/data/teamdata93s.asm` and `src/data/frames93s.asm`.
 - RAM names and constants are in `src/ram93s.asm`, hardware registers at the top of that file, macros in `src/macros/`, assets in `Extracted/` (see `src/data/README.md`).
 - Where a routine is the same code as a Genesis routine, use the Genesis name (93 Genesis, then 92) and say so with a `92 <name>` or `93G <name>` note only when the names differ.
 

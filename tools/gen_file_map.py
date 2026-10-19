@@ -12,7 +12,7 @@ out = ['# Source file map', '',
        'Each later bank orgs only when `pc()` has not already reached that address, so a bank that grew is not rewound.',
        'On the stock tree the PC arrives exactly there and the org is skipped. A bank file then includes its routine and data',
        'files in exact ROM order. Routines are in `src/routines/<93G module>/<Routine>.asm`',
-       '(one routine per file; a routine that falls through into the next keeps both), non-code data in `src/data/<category>/<Name>.asm`.',
+       '(one routine per file; a routine that falls through into the next keeps both). Graphics, text and sound data blocks sit in the bank file itself, at their ROM position (listed here by label); the team and frame data have their own files in `src/data/`.',
        'The SNES internal header and vectors are in `src/header/snes_header.asm` (end of bank $80).',
        'Bank $90 is included last. The stock build writes no bytes there.',
        'Regenerate this file with `python3 tools/gen_file_map.py` after `npm run build:retail`.', '']
@@ -30,7 +30,12 @@ for b in sorted(glob.glob(os.path.join(SRC, 'banks', '*.asm'))):
     files = 0
     for l in text.splitlines():
         m = re.match(r'incsrc "\.\./(.*)"', l)
-        if not m: continue
+        if not m:
+            g = re.match(r'([A-Za-z_]\w*):', l)
+            if g and not (g.group(1).endswith('End') and g.group(1)[:-3] in sym):
+                files += 1
+                out.append('- `$%s` %s (data)' % (sym.get(g.group(1), '??????'), g.group(1)))
+            continue
         files += 1
         f = m.group(1)
         g = [x for x in re.findall(r'^([A-Za-z_]\w*):', open(os.path.join(SRC, f)).read(), re.M)]

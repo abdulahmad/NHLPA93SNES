@@ -18,7 +18,7 @@ of the same names, so the SNES files get their own extensions, except the team p
 | `.snespal` | Palette of SNES BGR555 words | `Pals/Rink` |
 | `.brr` | SPC700 BRR sound samples (the sample block of an SPC upload stream) | `bootsamples`, `gamesamples` |
 | `.spc700` | SPC700 sound driver code and tables only, uploaded to APU $0400 (the first $AA5 bytes of the driver block) | `driver` |
-| `_cmdstream.bin` | N-SPC command streams of the sound program, named like the 93G `fmtune_*_cmdstream` / `sfx_*_cmdstream` files. `fmtune_<song>`: the song's order list, its channel set and its channel streams, joined in address order (the pieces are scattered through the driver block, see `SPCDriver` in `src/data/sound/bootsound.asm`). `sfx_<name>`: one sound effect program. `sfx_table.bin`: the effect program pointers and voices | `fmtune_playoff`, `fmtune_title`, `fmtune_goal`, ... , `sfx_whistle`, ... |
+| `_cmdstream.bin` | N-SPC command streams of the sound program, named like the 93G `fmtune_*_cmdstream` / `sfx_*_cmdstream` files. `fmtune_<song>`: the song's order list, its channel set and its channel streams, joined in address order (the pieces are scattered through the driver block, see `SPCDriver` in `src/banks/b86_sound_driver.asm`). `sfx_<name>`: one sound effect program. `sfx_table.bin`: the effect program pointers and voices | `fmtune_playoff`, `fmtune_title`, `fmtune_goal`, ... , `sfx_whistle`, ... |
 | `.bin` | Tables or text with their own format, described where they are included | `HotList` (the 549 hot spot pairs), `Text/ScoutingReportText` |
 
 Genesis vs SNES, for comparison:
@@ -55,7 +55,7 @@ The unpacked data holds the map words, then the palette, then the tiles. Offsets
 
 ## Sprites (`Extracted/Graphics/Sprites/setNN`)
 
-`FrameSetTable` ($8FE67D) lists the 15 frame sets. Each set's header in `src/data/gfx/SpriteSet*.asm` (`SpriteSetN:`) gives the frame,
+`FrameSetTable` ($8FE67D) lists the 15 frame sets. Each set's header (`SpriteSetN:` in `src/banks/*.asm`) (`SpriteSetN:`) gives the frame,
 piece and tile counts and the first piece of each frame (`.frames`). `setNN.pieces` holds the pieces and `setNN.chr` the 4bpp tiles.
 Frame numbers (`sprframe`, the `SPF` names in `ram93s.asm`) run on from set to set, starting at 1 (set 0).
 
