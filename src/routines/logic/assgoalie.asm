@@ -5,7 +5,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	beq .go
 	jmp.w .rtl
 .go:								; check for bench change, then handle a new assignment
-	jsl.l check4bench
+	jsl.l check4bench				; bench change check
 	lda.w pflags,x					; new assignment: temp1/temp2 = 0, temp2b = 8, temp4 = -1
 	bit.w #pfna
 	beq .nna
@@ -85,14 +85,14 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bpl .nofo
 	lda.w #PenGhold
 	sta.b d0
-	jsl.l AddPenalty2
+	jsl.l AddPenalty2				; goalie held the puck too long: holding penalty
 .nofo:
 	lda.w temp1,x					; every aidef/4 frames
 	sec
 	sbc.b d7
 	sta.w temp1,x
 	bmi .dec
-	jmp.w .nodec
+	jmp.w .nodec					; skip the re-think
 .dec:								; re-think every aidef/4 frames
 	lda.w aidef,x
 	lsr a
@@ -106,7 +106,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	lda.w pflags,x					; joystick goalie: only .cover
 	bit.w #pfjoycon
 	beq .half
-	jmp.w .cover
+	jmp.w .cover					; cover the puck
 .half:
 	lda.w pucky						; puck in the other half: stay at the top of the crease (y +-$F4)
 	sta.b d0
@@ -199,7 +199,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bpl .tl
 	lda.w #$0001					; threat = 1, chk4pass
 	sta.w threat
-	jsl.l chk4pass
+	jsl.l chk4pass					; pass the puck out
 	bra .de1
 .cover:								;cover a loose puck at the crease
 	lda.w temp4,x
@@ -278,7 +278,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	sta.b d0
 	lda.w pucky
 	sta.b d1
-	jsl.l ClampYPosition
+	jsl.l ClampYPosition			; clamp the puck Y
 	lda.b d1
 	bit.w #$8000
 	beq .near
@@ -292,12 +292,12 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	lda.b d0
 	pha
 	jsl.l vtoa						; vector to direction
-	jsl.l AdjustFacingDirection
+	jsl.l AdjustFacingDirection		; turn toward the puck
 	lda.b $01,s
 	sta.b d0
 	lda.b $03,s
 	sta.b d1
-	jmp.w .sq
+	jmp.w .sq						; go square the distance
 .out:								;behind the goal line
 	stz.b d2
 	stz.b d0
@@ -322,7 +322,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	jmp.w .de5
 .in:								;face the puck, lead it by its velocity
 	jsl.l vtoa						; vector to direction
-	jsl.l AdjustFacingDirection
+	jsl.l AdjustFacingDirection		; turn toward the puck
 	lda.w puckvy					; lead the puck by its velocity (/2 near the ends)
 	xba
 	lsr a
@@ -373,7 +373,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	clc
 	adc.w puckx
 	sta.b d0
-	jsl.l ClampYPosition
+	jsl.l ClampYPosition			; clamp the lead target Y
 	lda.b d1
 	pha
 	lda.b d0
@@ -410,7 +410,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	sta.b d1
 	bra .de4
 .far:								;scale to a 20 (28 if shooting) pixel arc
-	jsl.l sroot
+	jsl.l sroot						; distance to the target
 	lda.b d0
 	inc a
 	sta.b d2
@@ -673,7 +673,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 .neg7:								; signed compare: overflow flag corrects the sign
 	bvc .acc
 .stop:								; stop
-	jmp.w StopNA
+	jmp.w StopNA					; stop the goalie
 .rush:								;rush a loose puck when the tmnear stats say so
 	lda.w puckc
 	bmi .r1

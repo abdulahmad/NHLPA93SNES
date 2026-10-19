@@ -2,7 +2,7 @@ PickStartingGoalie:					;Pick team a2's starting goalie; computer teams in the l
 									;rounds pick one at random by the
 		;   scouting report weights
 	stx.b xsave						; keep X
-	ldx.w #$0000
+	ldx.w #$0000					; save d0 and a0
 .save:								; save d0 and the words after it (2 words)
 	lda.b d0,x
 	pha
@@ -21,21 +21,21 @@ PickStartingGoalie:					;Pick team a2's starting goalie; computer teams in the l
 	cpx.w #$0004
 	bne .savea
 	ldx.b xsave						; restore X
-	ldy.b a2
-	lda.w #$0000
+	ldy.b a2						; team index
+	lda.w #$0000					; default: first goalie
 	sta.w tmgoalie,y
-	jsl.l FigureJoy
+	jsl.l FigureJoy					; set up the joystick assignment
 	lda.b a2
 	tay
 	lsr a
 	inc a
-	sta.b d0
+	sta.b d0						; d0 = controller team number
 	cmp.w cont1team					; a controller team: keep goalie 0
-	beq .x
+	beq .x							; human team: keep the choice
 	cmp.w cont2team
 	beq .x
 	stz.b d0
-	lda.w gamelevel
+	lda.w gamelevel					; game level: playoffs?
 	sec
 	sbc.w #$0002
 	beq .po
@@ -47,7 +47,7 @@ PickStartingGoalie:					;Pick team a2's starting goalie; computer teams in the l
 .po:								; playoff mode: pick from the team list
 	lda.w OptLine
 	bne .set
-	lda.w #TeamList
+	lda.w #TeamList					; team data for the pick
 	sta.b a0
 	lda.w #TeamList>>16
 	sta.b a0+2

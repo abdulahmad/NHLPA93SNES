@@ -1,11 +1,11 @@
 setoptions:							;The options screen: up and down pick a line, left and right change it,
 									;Start goes on;
 		;   left idle, a demo game starts with random teams
-	lda.w #vb2_blank
+	lda.w #vb2_blank				; blank vblank handler while the screen is built
 	sta.b vbint
-	lda.w #HBdefault
+	lda.w #HBdefault				; default horizontal-blank handler
 	sta.b hbint
-	lda.b sprclock
+	lda.b sprclock					; sprite times are set a second back
 	sec
 	sbc.w #$003C
 	ldx.w #$0000
@@ -22,26 +22,26 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	inx
 	cpx.w #$0400
 	bne .clrslottime
-	stz.b DMAlistend
+	stz.b DMAlistend				; clear the DMA list
 	sep #$20						; 8-bit A
-	cli
+	cli								; enable interrupts
 	lda.w RDNMI
 	lda.b #NMITIMEN_NMI|NMITIMEN_JOY
 	sta.w NMITIMEN
 	rep #$30						; 16-bit registers
-	lda.b vcount
+	lda.b vcount					; wait for one frame
 .vwait:								; wait for a new frame
 	cmp.b vcount
 	beq .vwait
-	jsl.l InitPPU
+	jsl.l InitPPU					; reset the PPU
 	sep #$20						; 8-bit A
 	cli
 	lda.w RDNMI
 	lda.b #NMITIMEN_NMI|NMITIMEN_JOY
 	sta.w NMITIMEN
-	lda.b #$03
+	lda.b #$03						; sprite size and name base
 	sta.w OBSEL
-	lda.b #BGMODE_1
+	lda.b #BGMODE_1					; BG mode 1
 	sta.w BGMODE
 	lda.b #$00
 	sta.w BG1SC
@@ -49,13 +49,13 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	sta.w BG2SC
 	lda.b #$11
 	sta.w BG12NBA
-	lda.b #TM_BG1|TM_BG2|TM_OBJ
+	lda.b #TM_BG1|TM_BG2|TM_OBJ		; BG1, BG2 and sprites on
 	sta.w TM
 	rep #$30						; 16-bit registers
 	stz.w printfontset
 	stz.w charofs
 	stz.w charofs2
-	lda.w #$0012
+	lda.w #$0012					; tile numbers: blank, small font, framer, logo, score
 	sta.w blankchar
 	inc a
 	sta.w smallfontchars
@@ -66,8 +66,8 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	sta.w logochars
 	adc.w #$0035
 	sta.w scorechars
-	jsl.l DrawGameSetupBack
-	lda.w #GameSetUpMap
+	jsl.l DrawGameSetupBack			; draw the setup background
+	lda.w #GameSetUpMap				; decompress the setup graphics
 	sta.b tmp0
 	lda.w #GameSetUpMap>>16
 	sta.b tmp1
@@ -91,7 +91,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	cpx.w #$0100
 	bne .rinkpal
 	rep #$30						; 16-bit registers
-	lda.w #$1000
+	lda.w #$1000					; VRAM address $1000
 	sta.w VMADDL
 	ldx.w #$0000
 .setuptiles:						; load the font and rink tiles
@@ -106,12 +106,12 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	stz.w VMDATAL
 	dex
 	bne .padvram
-	lda.w #SmallFontTiles
+	lda.w #SmallFontTiles			; small font tiles
 	sta.b tmp0
 	lda.w #SmallFontTiles>>16
 	sta.b tmp1
 	jsl.l DecompressBytecode
-	lda.w #unpackbuf&$FFFF
+	lda.w #unpackbuf&$FFFF			; remap the font pixels
 	sta.b a0
 	lda.w #unpackbuf>>16
 	sta.b a0+2
@@ -122,18 +122,18 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	lda.w #$0064
 	sta.b d0
 	jsl.l remap
-	lda.w #FramerTiles
+	lda.w #FramerTiles				; framer tiles
 	sta.b a0
 	lda.w #FramerTiles>>16
 	sta.b a0+2
-	lda.w #PixelRemapFramer
+	lda.w #PixelRemapFramer			; remap the framer pixels
 	sta.b a1
 	lda.w #PixelRemapFramer>>16
 	sta.b a1+2
 	lda.w #$0004
 	sta.b d0
 	jsl.l remap
-	lda.w #NHLPALogo
+	lda.w #NHLPALogo				; logo tiles
 	sta.b tmp0
 	lda.w #NHLPALogo>>16
 	sta.b tmp1
@@ -146,7 +146,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	inx
 	cpx.w #$06A0
 	bne .logotiles
-	lda.w #TeamBlocksTiles
+	lda.w #TeamBlocksTiles			; team block tiles
 	sta.b tmp0
 	lda.w #TeamBlocksTiles>>16
 	sta.b tmp1
@@ -165,11 +165,11 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	sta.b sprpriority
 	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font2,$00,$00)
-	jsl.l InitSortObjects
-	lda.w #$0028
+	jsl.l InitSortObjects			; sort the objects
+	lda.w #$0028					; roster player X start
 	sta.w OldXpos
 	sta.w OldXpos+$C
-	lda.w #.text
+	lda.w #.text					; option text
 	sta.b a1
 	lda.w #.text>>16
 	sta.b a1+2
@@ -179,9 +179,9 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	lda.b [a1],y
 	and.w #$00FF
 	bne .textlp
-	lda.w #$FFFF
+	lda.w #$FFFF					; notdemo = -1: not a demo
 	sta.w notdemo
-	lda.w OptPlayMode
+	lda.w OptPlayMode				; playoff mode: set up the tree
 	cmp.w #$0002
 	bcc .nopo
 	jsl.l NewPO
@@ -191,14 +191,14 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	jsl.l .nms
 	jsl.l .ps
 	jsl.l ReadPads					; read the pads
-	jsl.l StartSong6
-	lda.w #$0001
+	jsl.l StartSong6				; start the options music
+	lda.w #$0001					; fade in
 	sta.b fadein
 .idle:								;restart the idle count (d6 = $12C0 frames until the demo)
-	lda.w #$12C0
+	lda.w #$12C0					; idle frames until the demo
 	sta.b d6
 .frame:								;one frame: seed counts up while waiting for VBlank_SprPal to run
-	inc.w seed
+	inc.w seed						; count the seed up
 	bne .seed
 	inc.w seed+2
 .seed:								; wait for the vblank handler, then read the pads
@@ -209,17 +209,17 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	lda.b vcount
 	sta.w lastframevc
 	sta.w oldvcount
-	jsl.l ClearSprites
-	jsl.l UpdateRosterPlayers
+	jsl.l ClearSprites				; hide all sprites
+	jsl.l UpdateRosterPlayers		; animate the roster players
 	jsl.l ReadJoy1					; read pad 1
 	jsl.l ProcessInputWithRepeat
-	lda.b d1
+	lda.b d1						; pad 1 pressed anything?
 	bne .input
 	jsl.l ReadJoy2					; read pad 2
 	jsl.l ProcessInputWithRepeat
-	lda.b d1
+	lda.b d1						; pad 2 pressed anything?
 	bne .input
-	jsl.l QueueTextDMA
+	jsl.l QueueTextDMA				; queue the text DMA
 	lda.b DMAlistend
 	bne .dmaqueued
 	jsl.l QueueBackmapDMA
@@ -231,61 +231,61 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	lda.w #NumofTeams				; demo: random teams, both computer
 	jsl.l randoma					; random number 0 to A-1
 	sta.w OptTeam1
-	sta.w HomeTeam
+	sta.w HomeTeam					; home team
 .team2:								; pick a second team different from the first
 	lda.w #NumofTeams
 	jsl.l randoma					; random number 0 to A-1
 	cmp.w OptTeam1
 	beq .team2
 	sta.w OptTeam2
-	sta.w VisTeam
-	stz.w notdemo
+	sta.w VisTeam					; visitor team
+	stz.w notdemo					; demo game
 	stz.w OptPlayMode
 	stz.w OptPlayers
 .start:								;Start, or the demo: pojoy from OptPlayers, the password in Cont.
 									;Playoffs, then maketree
-	lda.w OptPlayers
+	lda.w OptPlayers				; pojoy from the number of players
 	sec
 	sbc.w #$0005
 	sta.w pojoy
-	lda.w OptPlayMode
+	lda.w OptPlayMode				; password mode?
 	cmp.w #$0001
 	bne .nopass
-	jsl.l GetPassWord
-.nopass:							; no password set
-	lda.w #$0080
+	jsl.l GetPassWord				; ask for the password
+.nopass:							; password entry done or skipped
+	lda.w #$0080					; password bit 7
 	tsb.w PassWord
-	jml.l maketree
+	jml.l maketree					; build the playoff tree
 .input:								;a pad pressed (d1): Start, Up/Down (.nms by 2), Left/Right (.IncItem by
 									;1)
-	lda.b d1
+	lda.b d1						; Start pressed
 	bit.w #$1000
 	bne .start
-	bit.w #$0400
+	bit.w #$0400					; Down pressed
 	beq .2
-	lda.w #$0002
+	lda.w #$0002					; move the cursor down
 	sta.b d0
 	jsl.l .nms
 	jsl.l .ps
 	jmp.w .idle
 .2:									; Up/Down moves the cursor
-	bit.w #$0800
+	bit.w #$0800					; Up pressed
 	beq .3
-	lda.w #$FFFE
+	lda.w #$FFFE					; move the cursor up
 	sta.b d0
 	jsl.l .nms
 	jsl.l .ps
 .back:								; nothing changed
 	jmp.w .idle
 .3:									; Left/Right changes the item
-	lda.w #$0001
+	lda.w #$0001					; step +1 for Right
 	sta.b d2
 	lda.b d1
-	bit.w #$0100
+	bit.w #$0100					; Right
 	bne .4
-	bit.w #$0200
+	bit.w #$0200					; Left
 	beq .back
-	lda.w #$FFFF
+	lda.w #$FFFF					; step -1 for Left
 	sta.b d2
 .4:									; change the item and redraw
 	jsl.l .IncItem
@@ -295,26 +295,26 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 									;it). Players is fixed to One outside Regular Season; Team 1 has $18
 									;choices in the playoffs; a new
 		;   mode or Team 1 in the playoffs restarts them (NewPO)
-	lda.w #OptPlayMode
+	lda.w #OptPlayMode				; a2 = options table
 	sta.b a2
 	lda.w #$0000
 	sta.b a2+2
-	lda.w #.pslim
+	lda.w #.pslim					; a3 = limits table
 	sta.b a3
 	lda.w #.pslim>>16
 	sta.b a3+2
-	stz.b d5
+	stz.b d5						; low limit 0
 	ldy.b d7
-	lda.b [a3],y
+	lda.b [a3],y					; high limit of this line
 	sta.b d4
-	lda.b [a2],y
+	lda.b [a2],y					; current value
 	sta.b d3
 	lda.w OptPlayMode
 	cmp.w #$0002
 	bcc .ii0
-	cpy.w #$0004
+	cpy.w #$0004					; Team 1 in playoff mode
 	bne .ii0
-	lda.w #$0018
+	lda.w #$0018					; 24 teams in the playoffs
 	sta.b d4
 .ii0:								; limits for the Players line
 	cpy.w #$0002
@@ -329,15 +329,15 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 .ii1:
 	jsl.l .iilimit					; d3 = the new value
 	lda.b d3
-	sta.b [a2],y
+	sta.b [a2],y					; store the new value
 	lda.b d2
-	beq .rts
+	beq .rts						; d2 = 0: only limit
 	lda.w OptPlayMode
 	cmp.w #$0002
 	bcc .rts
-	tya
+	tya								; first line (play mode)?
 	bne .npo
-	jml.l NewPO
+	jml.l NewPO						; new play mode: restart the tree
 .npo:								; NewPO when the playoff option changes
 	cpy.w #$0004
 	bne .rts
@@ -345,7 +345,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 .rts:								; return
 	rtl
 .iilimit:							;d3 + d2, wrapped into d5 ... d4-1
-	lda.b d3
+	lda.b d3						; add the step
 	clc
 	adc.b d2
 	sta.b d3
@@ -356,7 +356,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	bra .iil1
 .lowneg:							; low limit compare
 	bvs .iil1
-.under:								; below the low limit: clamp to the limit
+.under:								; below the low limit: wrap to the top
 	lda.b d4
 	dec a
 	sta.b d3
@@ -369,84 +369,84 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	bra .rts
 .highneg:							; high limit sign fixup
 	bvc .rts
-.over:								; above the high limit: clamp to the limit
+.over:								; above the high limit: wrap to the bottom
 	lda.b d5
 	sta.b d3
 	rtl
 .ps:								;print the choices of all 7 lines (.psd), then PrintTeamNames
-	lda.b d7
+	lda.b d7						; remember the cursor line
 	sta.b d6
-	lda.w #$FFFE
+	lda.w #$FFFE					; start before line 0
 	sta.b d7
 .psloop:							; print each line
 	inc.b d7
 	inc.b d7
 	stz.b d2
-	jsl.l .IncItem
-	jsl.l .psd
+	jsl.l .IncItem					; limit the line value
+	jsl.l .psd						; print the line
 	lda.b d7
-	cmp.w #$000C
+	cmp.w #$000C					; all 7 lines done?
 	bne .psloop
-	lda.b d6
+	lda.b d6						; restore the cursor line
 	sta.b d7
-	jml.l PrintTeamNames
+	jml.l PrintTeamNames			; print the team names
 .psd:								;print the choice of line d7 at x $11 (14 chars erased first): string d3
 									;of its .pl list; the team lines print the team name (.psdtp)
 	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font2Pri,$11,$0D)
-	lda.w printy
+	lda.w printy					; line y plus the cursor offset
 	clc
 	adc.b d7
 	sta.w printy
-	lda.w #$000E
+	lda.w #$000E					; erase 14 characters
 	sta.b d0
 	lda.w #$0001
 	sta.b d1
 	lda.w blankchar
 	sta.b d2
 	jsl.l eraser					; erase d0 x d1 with tile d2
-	dec.w printy
+	dec.w printy					; back to the line
 	lda.w #$0011
 	sta.w printx
-	ldy.b d7
+	ldy.b d7						; team lines print the team name
 	cpy.w #$0004
 	beq .psdtp
 	cpy.w #$0006
 	beq .psdtp
-	lda.w #OptPlayMode
+	lda.w #OptPlayMode				; options table
 	sta.b a0
 	lda.w #$0000
 	sta.b a0+2
-	lda.b [a0],y
+	lda.b [a0],y					; value of this line
 	sta.b d3
-	lda.w #.pl>>16
+	lda.w #.pl>>16					; string list of this line
 	sta.b a0+2
 	lda.w #.pl
 	sta.b a0
-	clc
+	clc								; offset to the first string
 	adc.b [a0],y
 	sta.b a0
 .psd3:								;step to string d3
-	lda.b a0+2
+	lda.b a0+2						; a1 = this string
 	sta.b a1+2
 	lda.b a0
 	sta.b a1
 	clc
-	adc.b [a0]
+	adc.b [a0]						; next string
 	sta.b a0
 	dec.b d3
 	bpl .psd3
 	jml.l print						; print it
 .psdtp:								;team line: the name of team d3 from its bank $83 team record, or
 									;.playoffs in Cont. Playoffs
-	ldy.b d7
+	ldy.b d7						; line of the team choice
 	lda.w #OptPlayMode
 	sta.b a1
 	lda.w #$0000
 	sta.b a1+2
 	lda.b [a1],y
 	sta.b d3
-	asl a
+	asl a							; team index to a TeamList offset
 	asl a
 	tay
 	lda.w #TeamList
@@ -455,11 +455,11 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	sta.b a1+2
 	lda.b [a1],y
 	sta.b a1
-	ldy.w #Teamname
+	ldy.w #Teamname					; team name offset
 	clc
 	adc.b [a1],y
 	sta.b a1
-	lda.w OptPlayMode
+	lda.w OptPlayMode				; Cont. Playoffs shows "Playoffs"
 	cmp.w #$0001
 	bne .print
 	lda.w #.playoffs
@@ -474,23 +474,23 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 									;(Players in the playoffs, lines 1-3 in Cont. Playoffs, Team 2 in the
 									;playoffs), then move the frame from line d3
 		;   to d7
-	lda.b d7
+	lda.b d7						; keep the old line
 	sta.b d3
 .nms0:								; move the cursor line
 	lda.b d7
 	clc
 	adc.b d0
 	sta.b d7
-	bpl .nms1
+	bpl .nms1						; clamp at the first line
 	stz.b d7
 .nms1:								; wrap the cursor line
 	lda.b d7
-	cmp.w #$000E
+	cmp.w #$000E					; clamp at the last line
 	bcc .nms2
 	lda.b d7
 	sbc.b d0
 	sta.b d7
-.nms2:								; skip lines hidden by the play mode
+.nms2:								; playoffs: skip the Players line
 	lda.w OptPlayMode
 	cmp.w #$0002
 	bcc .nmscp
@@ -499,7 +499,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	lda.b d7
 	cmp.w #$0002
 	beq .nms0
-.nmscp:								; skip the computer line in one-player mode
+.nmscp:								; Cont. Playoffs: skip lines 1-3
 	lda.w OptPlayMode
 	cmp.w #$0001
 	bne .nmst2
@@ -507,7 +507,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	beq .nmst2
 	cmp.w #$0007
 	bcc .nms0
-.nmst2:								; skip lines for the other modes
+.nmst2:								; playoffs: skip the Team 2 line
 	lda.w OptPlayMode
 	cmp.w #$0002
 	bcc .nms4
@@ -515,14 +515,14 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	cmp.w #$0006
 	beq .nms0
 .nms4:								;erase the old frame, draw the new one
-	jsl.l .setrect
+	jsl.l .setrect					; erase the old frame
 	lda.w blankchar
 	sta.b d2
 	jsl.l eraser					; erase d0 x d1 with tile d2
 	lda.b d7
 	sta.b d3
-	jsl.l .setrect
-	jml.l Framer
+	jsl.l .setrect					; draw the frame on the new line
+	jml.l Framer					; draw the frame
 .setrect:							;printx $10, printy $C + d3, frame size d0 x d1 = $10 x 3 (5 tall for Team
 									;1 in the playoff modes)
 	jsl.l printz					; print the string that follows
@@ -531,20 +531,20 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	clc
 	adc.b d3
 	sta.w printy
-	lda.w #$0010
+	lda.w #$0010					; frame width 16
 	sta.b d0
-	lda.w #$0003
+	lda.w #$0003					; frame height 3
 	sta.b d1
-	lda.w OptPlayMode
+	lda.w OptPlayMode				; play mode
 	cmp.w #$0002
 	bcs .po
 	jmp.w .rts
-.po:								; playoff mode: check which line changed
+.po:								; playoff mode: the Team 1 line is taller
 	lda.b d3
 	cmp.w #$0004
 	beq .team1
 	jmp.w .rts
-.team1:								; line 4 changed: set the limit in d1
+.team1:								; Team 1 line: frame height 5
 	lda.w #$0005
 	sta.b d1
 	rtl
