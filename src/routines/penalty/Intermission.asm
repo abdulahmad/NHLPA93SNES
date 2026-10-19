@@ -55,5 +55,5 @@ Intermission:						;Between periods: the pause menu screen with the scores of th
 	jsl.l PauseMenu					; run the pause menu
 	bne .top						; nonzero: show the screen again
 	stz.w demoflag					; leave demo mode
-.rtl:
+.rtl:								; return
 	rtl

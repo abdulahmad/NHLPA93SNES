@@ -126,7 +126,7 @@ puckfaceoff:						;Assignment: the start of play. Period end and overtime checks
 	ldy.b a3
 	stx.b a3
 	sty.b a2
-.rtl:
+.rtl:								; return
 	rtl
 .nna:								;count down the two lc box timers (temp1/temp2); both done: pfaceoff2
 	stz.b d0

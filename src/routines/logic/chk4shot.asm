@@ -131,5 +131,5 @@ chk4shot:							;Computer player X looks for a shot. A penalty killer under pres
 	bit.w #sf2offsig
 	bne .rts
 	bra CompShoot					; take the shot
-.rts:
+.rts:								; return
 	rtl

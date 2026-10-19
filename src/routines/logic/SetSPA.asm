@@ -6,5 +6,5 @@ SetSPA:								;Start sprite animation d1 on object X
 	stz.w SPAnum,x					; SPAnum = 0, SPAcnt = -1
 	lda.w #$FFFF
 	sta.w SPAcnt,x
-.rtl:
+.rtl:								; return
 	rtl

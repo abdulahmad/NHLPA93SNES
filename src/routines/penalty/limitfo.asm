@@ -65,7 +65,7 @@ limitfo:							;Keep the face off spot away from the blue line for every called 
 	bmi .neg
 	bvc .ny
 	bra .rtl
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .rtl
 .ny:
 	lda.w #$FFBF
@@ -79,7 +79,7 @@ limitfo:							;Keep the face off spot away from the blue line for every called 
 	bmi .neg1
 	bvs .py
 	bra .rtl
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .rtl
 .py:
 	lda.w #$0041
@@ -94,5 +94,5 @@ limitfo:							;Keep the face off spot away from the blue line for every called 
 .1:
 	lda.b d0
 	sta.w fox
-.rtl:
+.rtl:								; return
 	rtl

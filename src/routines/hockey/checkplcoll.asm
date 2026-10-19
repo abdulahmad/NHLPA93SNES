@@ -28,7 +28,7 @@ checkplcoll:						;Check object X against the objects near it in y
 	bmi .neg
 	bvs .uy
 	bra .cl
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .cl
 .uy:
 	lda.w Xpos,y					; its x
@@ -71,7 +71,7 @@ checkplcoll:						;Check object X against the objects near it in y
 	bmi .neg1
 	bvs .dy
 	bra .ex
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .ex
 .dy:
 	lda.w Xpos,y					; its x
@@ -94,5 +94,5 @@ checkplcoll:						;Check object X against the objects near it in y
 .dnext:
 	dec.b d1						; next down
 	bne .1
-.ex:
+.ex:								; return
 	rtl

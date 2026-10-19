@@ -222,7 +222,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	dey
 	bne .arrowrow
 	bra .arrow
-.rtl:
+.rtl:								; return
 	rtl
 .scores:							;scroll limits, then the series scores (not for single games)
 	lda.b [a0]						; Hscroll limits (x8)

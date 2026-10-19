@@ -61,7 +61,7 @@ asscenterd:							;Assignment: the center on defense, halfway between the puck a
 	bmi .neg
 	bvs .half
 	bra .z1
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .z1
 .half:
 	lda.w #$FF80					; halfway
@@ -73,7 +73,7 @@ asscenterd:							;Assignment: the center on defense, halfway between the puck a
 	ror a
 	sta.b d1
 	bra .z1							; skate there
-.rtl:
+.rtl:								; return
 	rtl
 .nopfgoal:
 	lda.w #blueline					; blue line
@@ -82,7 +82,7 @@ asscenterd:							;Assignment: the center on defense, halfway between the puck a
 	bmi .neg1
 	bvc .half2
 	bra .z1
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvc .z1
 .half2:
 	lda.b d1

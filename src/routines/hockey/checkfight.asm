@@ -9,7 +9,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	bvc .i2
 .ex1:
 	jmp.w .rtl
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .ex1
 .i2:
 	lda.w impact,y					; impact of the other
@@ -19,7 +19,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	bvc .lock
 .ex2:
 	jmp.w .rtl
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvc .ex2
 .lock:
 	lda.w pfalock,y					; animation locked?
@@ -137,7 +137,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	bmi .neg2
 	bvc .flip
 	bra .1
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvc .1
 .flip:
 	lda.b d1						; flip the facing
@@ -201,7 +201,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	bpl .restore
 	ldx.b xsave						; restore X
 	ldx.b a3
-.rtl:
+.rtl:								; return
 	rtl
 .sf:								;start the fight for X against a2
 	ldy.b a2						; impactp = a2

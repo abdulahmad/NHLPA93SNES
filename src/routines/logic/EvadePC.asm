@@ -48,5 +48,5 @@ EvadePC:							;Near the puck carrier: d0 = the direction away from him
 	sbc.w pucky
 	sta.b d1						; d1 = dy from the carrier
 	jml.l vtoa						; vector to direction: away from him
-.rtl:
+.rtl:								; return
 	rtl

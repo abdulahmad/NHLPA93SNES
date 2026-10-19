@@ -135,5 +135,5 @@ updatereplay:						;Save this frame into the replay buffer
 	inc.b a0
 	lda.w Vpos						; vertical scroll
 	sta.b [a0]
-.rtl:
+.rtl:								; return
 	rtl

@@ -178,7 +178,7 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	bvc .add
 .set:
 	jmp.w setpde
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .set
 .add:
 	lda.w endurance,x				; above $C00: also add the endurance byte
@@ -187,5 +187,5 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	adc.b d0
 	sta.b d0
 	jmp.w setpde
-.rtl:
+.rtl:								; return
 	rtl

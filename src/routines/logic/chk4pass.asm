@@ -96,7 +96,7 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	bmi .neg
 	bvs .le
 	bra .ok
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .ok
 .le:
 	lda.b d0
@@ -109,7 +109,7 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	bvc .ok
 .miss:
 	jmp.w .rtl
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvc .miss
 .ok:
 	lda.w Ypos,y					; passdir, d2 = distance squared
@@ -193,7 +193,7 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	pla
 	rep #$30						; 16-bit registers
 	jml.l assexit					; assignment over
-.rtl:
+.rtl:								; return
 	rtl
 unusedFF8C:							;unused, $FF fill to the end of the bank
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF

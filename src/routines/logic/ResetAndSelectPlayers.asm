@@ -13,5 +13,5 @@ ResetAndSelectPlayers:				;Clear the human controlled players, then give each hu
 	lda.w #$0002
 	sta.b d4						; controller 2
 	jsl.l changeplayer				; select his player
-.rtl:
+.rtl:								; return
 	rtl

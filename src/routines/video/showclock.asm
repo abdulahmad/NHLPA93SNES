@@ -57,5 +57,5 @@ showclock:							;Draw the game clock (not during a replay)
 	lda.w #mesarea>>16
 	sta.b a1+2
 	jml.l print						; print it and return
-.rtl:
+.rtl:								; return
 	rtl

@@ -32,5 +32,5 @@ assfaceoff:							;Assignment: players wait until the face off is over.
 	bcs .rts
 	stz.w midpercue					; used once
 	jsl.l StartSong5				; mid-period music cue
-.rts:
+.rts:								; return
 	rtl

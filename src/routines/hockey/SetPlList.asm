@@ -145,7 +145,7 @@ SetPlList:							;Make the list of the players team a2 wants on the ice now
 	dec.b d4						; next slot
 	bmi .rtl						; all done
 	jmp.w .1
-.rtl:
+.rtl:								; return
 	rtl
 .all:								;try every roster player, last first
 	jsl.l GetPlayerCount			; GetPlayerCount

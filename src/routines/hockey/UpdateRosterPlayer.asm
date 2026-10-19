@@ -33,9 +33,9 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	bvs .rtl
 .next1:
 	jmp.w SetupNextPlayer			; set up the next player
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .next1
-.rtl:
+.rtl:								; return
 	rtl
 .in:								;skating in from the left
 	lda.w OldXpos,x					; skating in: x += 1 while negative

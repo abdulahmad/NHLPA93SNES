@@ -27,7 +27,7 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	bit.w #pfjoycon
 	bne .rts
 	jmp.w assinsert					; insert the assignment
-.rts:
+.rts:								; return
 	rtl
 .nopc:								;every aioff frames: find the teammate nearest the (moving) puck
 	lda.w temp1,x					; timer
@@ -341,7 +341,7 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	bmi .neg1
 	bvc .clamp1
 	bra .go
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvc .go
 .clamp1:
 	lda.w #$0044					; clamp y
@@ -355,7 +355,7 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	bmi .neg2
 	bvs .clamp2
 	bra .go
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvs .go
 .clamp2:
 	lda.w #$FFBC					; clamp y

@@ -29,5 +29,5 @@ restorepl:							;Take the controller off player d1 and give it to player d0; a 
 	lda.w pflags,y					; flags
 	ora.w #pfjoycon					; controller on
 	sta.w pflags,y
-.rtl:
+.rtl:								; return
 	rtl

@@ -120,14 +120,14 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	bmi .neg
 	bvc .p3
 	bra .nomod
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .nomod
 .p3:
 	beq .half
 	bmi .neg1
 	bvs .half
 	bra .score
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .score
 .half:
 	jsl.l GetPeriodTime				; GetPeriodTime
@@ -139,7 +139,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	bmi .neg2
 	bvs .score
 	bra .nomod
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvs .nomod
 .score:
 	lda.w tmscore					; tied or trailing: ThirdPBonus = 2

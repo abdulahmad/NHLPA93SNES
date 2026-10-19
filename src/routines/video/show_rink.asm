@@ -11,5 +11,5 @@ show_rink:							;Set the rink scroll from the camera position
 	sec
 	sbc.w #$0070					; minus $70: scroll y
 	sta.w Vscroll
-.rtl:
+.rtl:								; return
 	rtl

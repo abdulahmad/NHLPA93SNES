@@ -294,5 +294,5 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	eor.w #$FFFF					; negate
 	inc a
 	sta.w puckvy
-.rtl:
+.rtl:								; return
 	rtl

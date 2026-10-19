@@ -27,7 +27,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	bmi .neg
 	bvs .negy
 	bra .ctc
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .ctc
 .negy:
 	lda.b d2						; goal mouth x range: left edge
@@ -36,7 +36,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	bmi .neg1
 	bvc .gl1
 	bra .circle
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvc .circle
 .gl1:
 	lda.b d4						; right edge
@@ -48,7 +48,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	bmi .neg2
 	bvc .goal13
 	bra .circle
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvc .circle
 .goal13:							;goal at the -y end (object 13)
 	lda.w #$001A
@@ -67,7 +67,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	bvs .c2
 .exit1:
 	jmp.w .exit
-.neg3:
+.neg3:								; signed compare: overflow flag corrects the sign
 	bvs .exit1
 .c2:
 	lda.b d2						; goal mouth x range: left edge
@@ -76,7 +76,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	bmi .neg4
 	bvc .c3
 	bra .circle
-.neg4:
+.neg4:								; signed compare: overflow flag corrects the sign
 	bvc .circle
 .c3:
 	lda.b d4						; right edge
@@ -88,7 +88,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	bmi .neg5
 	bvc .goal12
 	bra .circle
-.neg5:
+.neg5:								; signed compare: overflow flag corrects the sign
 	bvc .circle
 .goal12:							;goal at the +y end (object 12)
 	lda.w #$0018
@@ -180,7 +180,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	bvs .s1
 .b1:
 	jmp.w wallcollb					; wall hit, high y board
-.neg6:
+.neg6:								; signed compare: overflow flag corrects the sign
 	bvs .b1
 .s1:
 	lda.b d0						; mirror the normal
@@ -197,7 +197,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	bvs .s2
 .b2:
 	jmp.w wallcollb					; wall hit, low y board
-.neg7:
+.neg7:								; signed compare: overflow flag corrects the sign
 	bvs .b2
 .s2:
 	lda.b d0						; swap cos and sin
@@ -213,7 +213,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	bvs .s3
 .b3:
 	jmp.w wallcollb					; wall hit, x board
-.neg8:
+.neg8:								; signed compare: overflow flag corrects the sign
 	bvs .b3
 .s3:
 	lda.b d1
@@ -230,7 +230,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	bvs .rtl
 .b4:
 	jmp.w wallcollb					; wall hit, opposite x board
-.neg9:
+.neg9:								; signed compare: overflow flag corrects the sign
 	bvs .b4
-.rtl:
+.rtl:								; return
 	rtl

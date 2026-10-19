@@ -68,5 +68,5 @@ chkprogress:						;Move the referee and the game through a penalty: when the sto
 	sta.w RefCnt
 	stz.b d0
 	jsl.l PushRef
-.rtl:
+.rtl:								; return
 	rtl

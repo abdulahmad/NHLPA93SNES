@@ -13,5 +13,5 @@ StartSong7:							;Start song 7 unless it is already playing. Unused
 	rep #$30						; 16-bit registers
 	lda.w #7
 	sta.w cursong					; remember the song
-.rtl:
+.rtl:								; return
 	rtl

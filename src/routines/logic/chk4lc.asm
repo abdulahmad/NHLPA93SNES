@@ -42,5 +42,5 @@ chk4lc:								;Should the computer call a line change? Then shoot the puck in
 	jsl.l setpersonel				; personnel
 	jsl.l printscores1				; redraw
 	jmp.w CompShoot					; then shoot
-.rts:
+.rts:								; return
 	rtl

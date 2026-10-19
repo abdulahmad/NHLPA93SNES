@@ -352,7 +352,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	bmi .neg
 	bvc .fewer
 	bra .row
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .row
 .fewer:
 	dec.b d1
@@ -380,5 +380,5 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	inc.w printy
 	dec.b d1
 	bpl .row						; more rows?
-.rtl:
+.rtl:								; return
 	rtl

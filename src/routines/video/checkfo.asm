@@ -36,5 +36,5 @@ checkfo:							;Draw the face off sprites
 	bne .top
 	lda.w #$0020					; normal priority again
 	sta.b sprpriority
-.rtl:
+.rtl:								; return
 	rtl

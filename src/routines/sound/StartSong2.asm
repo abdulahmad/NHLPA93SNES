@@ -14,5 +14,5 @@ StartSong2:							;Start the period start music unless it is already playing
 	sta.w cursong					; remember the song
 	lda.w #$01CE					; time until the cue ends
 	sta.w cuetimer					; set the cue timer
-.rtl:
+.rtl:								; return
 	rtl

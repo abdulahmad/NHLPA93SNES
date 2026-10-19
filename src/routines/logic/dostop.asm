@@ -71,5 +71,5 @@ StopNA:								;slow player a3 by 150 on each axis, no animation change. Falls i
 	sta.w Yvel,x
 	bpl .rts
 	stz.w Yvel,x
-.rts:
+.rts:								; return
 	rtl

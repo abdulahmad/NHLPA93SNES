@@ -84,7 +84,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bmi .neg
 	bvs .hard
 	bra .pok
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .pok
 .hard:
 	lda.w #$0800
@@ -102,7 +102,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bmi .neg1
 	bvc .s2
 	bra .snd
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvc .snd
 .s2:
 	pla
@@ -114,7 +114,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bmi .neg2
 	bvc .s3
 	bra .snd
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvc .snd
 .s3:
 	pla
@@ -156,7 +156,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bvs .p1
 .nocoll1:
 	jmp.w .nocoll
-.neg3:
+.neg3:								; signed compare: overflow flag corrects the sign
 	bvs .nocoll1
 .p1:
 	lda.b d2
@@ -166,7 +166,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bmi .neg4
 	bvs .imp
 	bra .nosfx
-.neg4:
+.neg4:								; signed compare: overflow flag corrects the sign
 	bvs .nosfx
 .imp:
 	lda.w impact,x					; impact
@@ -175,7 +175,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bmi .neg5
 	bvc .psnd
 	bra .nosfx
-.neg5:
+.neg5:								; signed compare: overflow flag corrects the sign
 	bvc .nosfx
 .psnd:
 	lda.w seed+1					; random sound variant
@@ -198,7 +198,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bmi .neg6
 	bvc .min
 	bra .noadd
-.neg6:
+.neg6:								; signed compare: overflow flag corrects the sign
 	bvc .noadd
 .min:
 	lda.w #$FC18					; limit -1000

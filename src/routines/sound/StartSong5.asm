@@ -14,5 +14,5 @@ StartSong5:							;Start the mid-period music unless it is already playing
 	sta.w cursong					; remember the song
 	lda.w #$041A					; time until the cue ends
 	sta.w cuetimer					; set the cue timer
-.rtl:
+.rtl:								; return
 	rtl

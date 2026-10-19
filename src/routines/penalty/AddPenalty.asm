@@ -13,5 +13,5 @@ AddPenalty:							;Call penalty d0 on player X, unless the clock is stopped or p
 	lda.b d0
 	cmp.w #PenOffsides				; offsides off: no offsides penalty
 	bne AddPenalty2
-.rtl:
+.rtl:								; return
 	rtl

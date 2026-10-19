@@ -7,7 +7,7 @@ ResetClock:							;Set the period length and stop the clock; regular season over
 	bmi .neg						; below 3: normal length
 	bvc .overtime
 	bra .set
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .set
 .overtime:
 	lda.w OptPlayMode				; playoff mode

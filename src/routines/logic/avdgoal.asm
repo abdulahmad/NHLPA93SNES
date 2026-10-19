@@ -64,7 +64,7 @@ avdgoal:							;Do not skate through the goal: when the path to d0 / d1 crosses 
 	bpl .rtl						; moving right: keep +60
 	lda.w #-60						; moving left: aim left
 	sta.b d0
-.rtl:
+.rtl:								; return
 	rtl
 unused008D:							;unused, zero fill to the end of the bank
 	db $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00

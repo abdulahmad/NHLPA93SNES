@@ -199,7 +199,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	bmi .neg
 	bvs .def
 	bra .nodef
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .nodef
 .def:
 	lda.w fox
@@ -461,7 +461,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	bmi .neg1
 	bvc .one
 	bra .sub
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvc .sub
 .one:
 	lda.w #$0001

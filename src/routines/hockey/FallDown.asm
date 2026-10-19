@@ -49,7 +49,7 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	bmi .neg
 	bvc .stumble
 	bra .fall
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .fall
 .stumble:							;no second stumble for $3C
 	lda.w #$003C
@@ -121,7 +121,7 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	bmi .neg1
 	bvc .f3
 	bra .set
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvc .set
 .f3:
 	cpx.w #$0018					; players only
@@ -179,7 +179,7 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	bmi .neg2
 	bvs .inj
 	bra .snd
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvs .snd
 .inj:
 	lda.w gmclock					; clock stopped?
@@ -224,5 +224,5 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	sta.b $01,s
 .3:
 	jsl.l sfx						; play it
-.rtl:
+.rtl:								; return
 	rtl

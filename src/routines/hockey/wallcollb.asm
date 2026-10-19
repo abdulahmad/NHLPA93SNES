@@ -11,7 +11,7 @@ wallcollb:							;Object X hits a wall: the puck may go over the glass and out o
 	bmi .neg
 	bvs .z1
 	bra .0
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .0
 .z1:
 	lda.w Zpos+puckobj
@@ -25,7 +25,7 @@ wallcollb:							;Object X hits a wall: the puck may go over the glass and out o
 	bmi .neg1
 	bvc .x13
 	bra .0
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvc .0
 .x13:
 	lda.w puckx
@@ -35,7 +35,7 @@ wallcollb:							;Object X hits a wall: the puck may go over the glass and out o
 	bvc .x15
 .wc1:
 	jmp.w wallcoll
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvc .wc1
 .x15:
 	lda.w puckx
@@ -45,7 +45,7 @@ wallcollb:							;Object X hits a wall: the puck may go over the glass and out o
 	bmi .neg3
 	bvs .vy
 	bra wallcoll
-.neg3:
+.neg3:								; signed compare: overflow flag corrects the sign
 	bvs wallcoll
 .vy:
 	lda.w puckvy
@@ -54,7 +54,7 @@ wallcollb:							;Object X hits a wall: the puck may go over the glass and out o
 	bmi .neg4
 	bvc .glass
 	bra wallcoll
-.neg4:
+.neg4:								; signed compare: overflow flag corrects the sign
 	bvc wallcoll
 .glass:								;over the glass at the goal: shadow animation, sound, crowd
 	phx
@@ -100,5 +100,5 @@ wallcollb:							;Object X hits a wall: the puck may go over the glass and out o
 	jsl.l AddPenalty2
 	ldx.w #$001C
 	stx.b a3
-.rtl:
+.rtl:								; return
 	rtl

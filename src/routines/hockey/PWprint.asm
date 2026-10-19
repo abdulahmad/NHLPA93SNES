@@ -75,5 +75,5 @@ PWprint:							;Print the password, unless it is hidden
 	dex
 	bpl .restore
 	ldx.b xsave						; restore X
-.rtl:
+.rtl:								; return
 	rtl

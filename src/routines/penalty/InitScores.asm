@@ -32,5 +32,5 @@ InitScores:							;Playoffs: give the other games of the round random scores so 
 	dec.b a0
 	dec.b d1
 	bpl .top
-.rtl:
+.rtl:								; return
 	rtl

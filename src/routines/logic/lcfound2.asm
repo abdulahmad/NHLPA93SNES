@@ -6,7 +6,7 @@ lcfound2:							;Close the line change box and redraw the scoreboard
 	bmi .neg						; signed compare
 	bvc .low
 	bra .nollcm
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .nollcm
 .low:
 	lda.w #sf3llcs					; clear the line change box flag

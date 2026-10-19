@@ -109,7 +109,7 @@ puckstick:							;The puck hits player a2's stick
 	jsl.l sfx						; play it
 	jsl.l a2touchpuck				; a2 touches the puck
 	jmp.w deflect					; deflect
-.rtl:
+.rtl:								; return
 	rtl
 .nosteal:
 	ldy.b a2						; a2

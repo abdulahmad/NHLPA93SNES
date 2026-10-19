@@ -41,5 +41,5 @@ lineinput:							;Pad input while the line change box is open: choose a line, or
 	lda.w pf2fight,x				; fighting
 	bne .x
 	jml.l doplayeracc				; skate
-.x:
+.x:									; return
 	rtl

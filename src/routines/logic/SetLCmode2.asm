@@ -15,7 +15,7 @@ SetLCmode2:							;Draw the line change box for team a2, one row per line it can
 	bmi .neg
 	bvc .lower
 	bra .box
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .box
 .lower:								;lower box: sf3llcs
 	lda.w #sf3llcs

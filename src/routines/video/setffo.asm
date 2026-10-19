@@ -124,5 +124,5 @@ setffo:								;Update the pads, then draw the objects tied to rink scrolling (t
 	cpx.w #$000A					; all objects done?
 	beq .rtl
 	jmp.w .top
-.rtl:
+.rtl:								; return
 	rtl

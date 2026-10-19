@@ -13,7 +13,7 @@ SetInst:							;Start a fight between X and a2 when both are aggressive enough; 
 	bvc .r2
 .ex1:
 	jmp.w checkfight_rtl
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .ex1
 .r2:
 	lda.w pnum,y					; d1 = $10 - 2 * a2 checks
@@ -45,7 +45,7 @@ SetInst:							;Start a fight between X and a2 when both are aggressive enough; 
 	bvs .set
 .ex2:
 	jmp.w checkfight_rtl
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .ex2
 .set:
 	lda.w #$0001					; flag both players as fighting
@@ -84,7 +84,7 @@ SetInst:							;Start a fight between X and a2 when both are aggressive enough; 
 	jsl.l AddPenalty2				; add it to the first eligible teammate
 	ldx.b a4						; restore X
 	stx.b a3
-.rtl:
+.rtl:								; return
 	rtl
 .next:
 	inc.b a3

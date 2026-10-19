@@ -7,7 +7,7 @@ puckbody:							;The puck hits player a2: a fast high puck knocks him down, a sl
 	bmi .neg
 	bvs .low
 	bra .hit
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .hit
 .low:								;low puck: only a hit dead center counts
 	lda.b d0
@@ -56,7 +56,7 @@ puckbody:							;The puck hits player a2: a fast high puck knocks him down, a sl
 	bmi .neg1
 	bvc .high
 	bra .rtl
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvc .rtl
 .high:								;old speed^2 > $3000^2 and puck above 12: FallDown
 	lda.b d2
@@ -85,9 +85,9 @@ puckbody:							;The puck hits player a2: a fast high puck knocks him down, a sl
 	bvs .rtl
 .fall:
 	jmp.w FallDown					; FallDown
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvs .fall
-.rtl:
+.rtl:								; return
 	rtl
 .slow:
 	ldy.b a2

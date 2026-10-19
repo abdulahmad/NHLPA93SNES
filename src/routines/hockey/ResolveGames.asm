@@ -155,7 +155,7 @@ ResolveGames:						;Record the played playoff game and the series wins; when the
 	jsl.l mulu16					; 16-bit multiply
 	tsb.w WinBits					; merge the new winners
 	inc.w gamelevel					; next round level
-.rtl:
+.rtl:								; return
 	rtl
 .notbos:							;single games
 	stz.b d3

@@ -13,7 +13,7 @@ checksso:							;Draw the arrows that show where the two players are when they a
 	lda.w #SPFarrow+3				; player 2: SPFarrow+3
 	sta.b d3
 	jsl.l .ca						; draw it
-.rtl:
+.rtl:								; return
 	rtl
 .ca:								;a0 = pad object (ffo index), a3 = sso, d3 = first arrow frame
 	ldy.b a0
@@ -67,7 +67,7 @@ checksso:							;Draw the arrows that show where the two players are when they a
 	bmi .neg
 	bvs .lb
 	bra .1
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .1
 .lb:
 	lda.w #4						; left bit

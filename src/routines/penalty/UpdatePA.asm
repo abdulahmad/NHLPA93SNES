@@ -27,5 +27,5 @@ UpdatePA:							;Animate the referee, and reprint the penalty message line when 
 	sbc.b d0						; centered
 	sta.w printx
 	jmp.w print						; print the name
-.rtl:
+.rtl:								; return
 	rtl

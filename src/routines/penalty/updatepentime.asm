@@ -62,7 +62,7 @@ updatepentime:						;Once a second, count down the penalty box times of both tea
 	jsl.l RemovePlayerFromList		; out: remove from the list
 .stay:
 	bra .next						; next entry
-.rtl:
+.rtl:								; return
 	rtl
 .done:
 	lda.w mesarea					; first player
@@ -96,7 +96,7 @@ updatepentime:						;Once a second, count down the penalty box times of both tea
 	bmi .neg
 	bvs .le5
 	bra .rtl
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .rtl
 .le5:
 	lda.w tmpdst,y					; state

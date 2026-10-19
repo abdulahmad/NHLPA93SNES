@@ -85,7 +85,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	bmi .neg
 	bvc .z1
 	bra .de2
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .de2
 .z1:
 	lda.w #8						; zone 8: centre
@@ -96,7 +96,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	bmi .neg1
 	bvc .z2
 	bra .de2
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvc .de2
 .z2:
 	ldy.b a2
@@ -110,7 +110,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	bmi .neg2
 	bvc .z3
 	bra .de2
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvc .de2
 .z3:
 	lda.w #24						; zone 24: past the goal line
@@ -179,7 +179,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	lda.w #EvadePC>>16
 	sta.b a0+2
 	jml.l skateto					; skate to the spot
-.rtl:
+.rtl:								; return
 	rtl
 .dedata:							;x, x random, y, y random per zone
 	dw 80,20,-70,10					; own zone

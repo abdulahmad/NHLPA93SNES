@@ -103,7 +103,7 @@ Pmenu:								;Draw the pause menu items with the current one highlighted
 	inc.w mesarea					; grow the message length
 	ply
 	bra .copyname
-.rtl:
+.rtl:								; return
 	rtl
 .none:
 	ldy.w mesarea					; no goalie: append NONE

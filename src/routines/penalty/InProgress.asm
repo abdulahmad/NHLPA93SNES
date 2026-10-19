@@ -297,5 +297,5 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	bpl .restore
 	ldx.b xsave						; restore X
 	ldx.b a3
-.rtl:
+.rtl:								; return
 	rtl

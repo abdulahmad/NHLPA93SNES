@@ -44,7 +44,7 @@ checkcheck:							;Two players are in contact: check what happens each way
 	bpl .restore
 	ldx.b xsave						; restore X
 	ldx.b a3
-.rtl:
+.rtl:								; return
 	rtl
 .cc:								;X is checking a2
 	ldy.b a2						; a2 holding: holdcheck
@@ -115,7 +115,7 @@ checkcheck:							;Two players are in contact: check what happens each way
 	bvc .fall
 .ex1:
 	jmp.w .rtl
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .ex1
 .fall:								;d0 = (120 (*2 joystick) - weight + weight of a2) / 2 - impact of a2
 	lda.w #$0078
@@ -144,7 +144,7 @@ checkcheck:							;Two players are in contact: check what happens each way
 	bmi .neg1
 	bvc .pen
 	bra .down
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvc .down
 .pen:
 	jsl.l checkagr					;checkagr <= 4 and no highlight: PenCharging or PenSlashing (d0 = penalty

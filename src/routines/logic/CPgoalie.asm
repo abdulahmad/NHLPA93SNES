@@ -32,5 +32,5 @@ CPgoalie:							;Should the computer pull its goalie? In the last minute of the 
 	ora.w #$FF00					; pull the goalie
 	sta.w tmgoalie,y
 	jmp.w setpersonel
-.rtl:
+.rtl:								; return
 	rtl

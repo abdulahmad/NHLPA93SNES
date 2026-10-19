@@ -18,9 +18,9 @@ PuckIChk:							;Watch for icing: the loose puck crossing the far goal line
 	bmi .neg
 	bvs .rtl						; not past
 	bra .set						; past
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .set
-.rtl:
+.rtl:								; return
 	rtl
 .0:
 	lda.w #blueline+goalline		; other end
@@ -30,7 +30,7 @@ PuckIChk:							;Watch for icing: the loose puck crossing the far goal line
 	bmi .neg1
 	bvs .set
 	bra .rtl
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .rtl
 .set:
 	lda.w #ifcgl					; ifcgl

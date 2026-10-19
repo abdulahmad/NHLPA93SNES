@@ -71,7 +71,7 @@ assscore:							;Assignment: celebrating a goal; the scorer pumps his arm
 	lda.w #120
 	jsl.l randoma					; random number 0 to A-1
 	sta.w temp1,x					; store it
-.rtl:
+.rtl:								; return
 	rtl
 .chkcon:							;joystick controlled: stand, else skateto
 	lda.w pflags,x					; player flags

@@ -81,13 +81,13 @@ asswingd:							;Assignment: a wing on defense covers his side
 	bmi .neg
 	bvs .hi0
 	bra .lo
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .lo
 .hi0:
 	lda.w pucky
 	sta.b d1
 	bra .go
-.rtl:
+.rtl:								; return
 	rtl
 .lo:
 	lda.w #-264						; far limit y -264
@@ -97,7 +97,7 @@ asswingd:							;Assignment: a wing on defense covers his side
 	bmi .neg1
 	bvc .set1
 	bra .go
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvc .go
 .set1:
 	bra .set
@@ -114,7 +114,7 @@ asswingd:							;Assignment: a wing on defense covers his side
 	bmi .neg2
 	bvc .up0
 	bra .hi
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvc .hi
 .up0:
 	lda.w pucky
@@ -129,7 +129,7 @@ asswingd:							;Assignment: a wing on defense covers his side
 	bmi .neg3
 	bvs .set
 	bra .go
-.neg3:
+.neg3:								; signed compare: overflow flag corrects the sign
 	bvs .go
 .set:
 	lda.b d2						; use the limit

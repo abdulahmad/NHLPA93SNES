@@ -20,5 +20,5 @@ DoHiLights:							;Playoffs: play the highlight of each game of the round that h
 	dec.b a0
 	dec.b d1						; until game 0
 	bpl .top
-.rtl:
+.rtl:								; return
 	rtl

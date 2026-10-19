@@ -11,7 +11,7 @@ ProcessInputWithRepeat:				;Read pads 1 and 2 with key repeat: a held button rep
 	sta.w repeatdelay
 	lda.b d3						; held buttons count as new presses
 	sta.b d1
-.rtl:
+.rtl:								; return
 	rtl
 .chg:
 	lda.w #15						; first repeat after 15 frames

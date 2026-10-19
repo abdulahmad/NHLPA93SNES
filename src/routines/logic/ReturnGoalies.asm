@@ -27,5 +27,5 @@ ReturnGoalies_r:					;d0 = team (1/2), a2/a1 = team/other
 	lda.w foy						; d1 = foy
 	sta.b d1
 	jmp.w CPgoalie					; put the goalie back
-.rtl:
+.rtl:								; return
 	rtl

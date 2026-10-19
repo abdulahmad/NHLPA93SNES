@@ -8,7 +8,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	bvs .z
 .ex1:
 	jmp.w .rtl
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .ex1
 .z:
 	cpx.w #puckobj					; not the puck: checkgoalp
@@ -31,7 +31,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	bvs .xl
 .ex2:
 	jmp.w .rtl
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .ex2
 .xl:
 	lda.b d4						; left edge
@@ -45,7 +45,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	bvc .yh
 .ex3:
 	jmp.w .rtl
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvc .ex3
 .yh:
 	lda.w #$0004					; goal depth 4
@@ -63,7 +63,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	bvs .yl
 .ex4:
 	jmp.w .rtl
-.neg3:
+.neg3:								; signed compare: overflow flag corrects the sign
 	bvs .ex4
 .yl:
 	lda.b d5						; front edge
@@ -77,7 +77,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	bvc .inside
 .ex5:
 	jmp.w .rtl
-.neg4:
+.neg4:								; signed compare: overflow flag corrects the sign
 	bvc .ex5
 .inside:							;inside the goal area now
 	lda.w #$FFFF					; collflag
@@ -88,7 +88,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	bmi .neg5
 	bvc .over
 	bra .nod
-.neg5:
+.neg5:								; signed compare: overflow flag corrects the sign
 	bvc .nod
 .over:								;OldZpos >= 13: came over the top
 	lda.w OldZpos+puckobj			; restore the old height
@@ -189,7 +189,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	bvc .xl2
 .se1:
 	jmp.w .sideentry
-.neg6:
+.neg6:								; signed compare: overflow flag corrects the sign
 	bvc .se1
 .xl2:
 	lda.b d4
@@ -204,7 +204,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	bvs .mouth
 .se2:
 	jmp.w .sideentry
-.neg7:
+.neg7:								; signed compare: overflow flag corrects the sign
 	bvs .se2
 .mouth:								;crossed between the posts
 	stz.b d1						; crossed between the posts
@@ -235,7 +235,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	bmi .neg8
 	bvs .ml
 	bra .deflectsf					; off the post
-.neg8:
+.neg8:								; signed compare: overflow flag corrects the sign
 	bvs .deflectsf
 .ml:
 	lda.b d4
@@ -249,7 +249,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	bvs .deflectsf
 .goal:
 	jmp.w Goal
-.neg9:
+.neg9:								; signed compare: overflow flag corrects the sign
 	bvs .goal
 .deflectsf:							;off the post
 	jsl.l ChkShotStat				; off the post: sfx and crowd +300
@@ -291,7 +291,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	inc a
 .dz:
 	sta.w puckvz					; store it
-.rtl:
+.rtl:								; return
 	rtl
 .sideentry:							;off the side: wallcoll with normal (0, +-256)
 	stz.b d0						; normal x 0

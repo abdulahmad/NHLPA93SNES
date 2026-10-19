@@ -48,7 +48,7 @@ assfight:							;Assignment: fighting. A computer fighter punches when close; bo
 	bmi .neg
 	bvc .clampr
 	bra .left
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .left
 .clampr:
 	stz.w Xvel,x					; stop the velocity
@@ -61,7 +61,7 @@ assfight:							;Assignment: fighting. A computer fighter punches when close; bo
 	bmi .neg1
 	bvs .clampl
 	bra .nna2
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .nna2
 .clampl:
 	stz.w Xvel,x					; stop the velocity
@@ -201,7 +201,7 @@ assfight:							;Assignment: fighting. A computer fighter punches when close; bo
 	bmi .neg2
 	bvc .y1
 	bra .y2
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvc .y2
 .y1:
 	lda.w #$1000					; upper limit
@@ -214,7 +214,7 @@ assfight:							;Assignment: fighting. A computer fighter punches when close; bo
 	bmi .neg3
 	bvs .y3
 	bra .sety
-.neg3:
+.neg3:								; signed compare: overflow flag corrects the sign
 	bvs .sety
 .y3:
 	lda.w #$F000					; lower limit
@@ -222,7 +222,7 @@ assfight:							;Assignment: fighting. A computer fighter punches when close; bo
 .sety:
 	lda.b d1
 	sta.w Yvel,x					; new y velocity
-.rts:
+.rts:								; return
 	rtl
 .al:								;punch animations SPAfhigh, SPAflow, SPAfgrab
 	dw SPAfhigh,SPAflow,SPAfgrab

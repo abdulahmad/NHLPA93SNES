@@ -86,7 +86,7 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	lda.w #.chkdir>>16
 	sta.b a0+2
 	jml.l skateto					; d0/d1 = target, a0 = callback
-.rtl:
+.rtl:								; return
 	rtl
 .chkdir:							;skateto callback. d0 = direction; turn away from an opponent within 20 of
 									;where the puck will be (threat = count)

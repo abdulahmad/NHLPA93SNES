@@ -27,5 +27,5 @@ SetupTeamForIntermission:			;Before a period: reset the bench, refill every play
 	bpl .rtl						; ahead
 	lda.w #$0005					; penalty kill line
 	sta.w tmline,x
-.rtl:
+.rtl:								; return
 	rtl

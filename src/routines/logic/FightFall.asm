@@ -49,7 +49,7 @@ FightFall:							;Player X lost the fight: the other player gets a fighting pena
 	bmi .neg
 	bvs .inj
 	bra .noinj
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .noinj
 .inj:								;player X is injured
 	lda.w #$00B4					; 180: player is injured

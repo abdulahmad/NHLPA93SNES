@@ -67,5 +67,5 @@ check4check:						;Look for a good chance to check an opponent
 	inc.b a0
 	dec.b d2						; opponents left
 	bpl .0
-.rts:
+.rts:								; return
 	rtl

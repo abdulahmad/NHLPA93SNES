@@ -49,7 +49,7 @@ USBoard:							;Update the scoreboard, with the players in the
 	bpl .restore
 	ldx.b xsave						; restore X
 	ldx.b a3
-.rtl:
+.rtl:								; return
 	rtl
 .dispen:							;penalty box list of team a2: timed players first
 	lda.b a2

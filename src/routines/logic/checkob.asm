@@ -44,7 +44,7 @@ checkob:							;Show the little warning referee when a teammate is over the blue
 	bmi .neg
 	bvs .bottom
 	bra .nob
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .nob
 .bottom:							;any teammate below the blue line?
 	ldy.b a0
@@ -57,7 +57,7 @@ checkob:							;Show the little warning referee when a teammate is over the blue
 	bmi .neg1
 	bvs .bn
 	bra .ob
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .ob
 .bn:
 	inc.b a0
@@ -89,7 +89,7 @@ checkob:							;Show the little warning referee when a teammate is over the blue
 	dex
 	bpl .restore
 	ldx.b xsave						; restore X
-.rts:
+.rts:								; return
 	rtl
 .ob:								;offside: set the signal, ref up
 	lda.w #$0006					; d0 = 6
@@ -109,7 +109,7 @@ checkob:							;Show the little warning referee when a teammate is over the blue
 	bmi .neg2
 	bvc .top1
 	bra .nob
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvc .nob
 .top1:
 	ldy.b a0
@@ -121,7 +121,7 @@ checkob:							;Show the little warning referee when a teammate is over the blue
 	bmi .neg3
 	bvc .tn
 	bra .ob
-.neg3:
+.neg3:								; signed compare: overflow flag corrects the sign
 	bvc .ob
 .tn:
 	inc.b a0

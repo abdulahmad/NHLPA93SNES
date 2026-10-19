@@ -28,5 +28,5 @@ setd0player:						;Give player d0 to his team's controller, unless a controller 
 	cmp.w cont1team					; controller 1 team
 	bne .rtl						; no: nobody
 	jml.l setc1player
-.rtl:
+.rtl:								; return
 	rtl

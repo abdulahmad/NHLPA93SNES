@@ -205,7 +205,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	bmi .neg
 	bvc .bsnd
 	bra .done
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .done
 .bsnd:
 	lda.w seed
@@ -356,7 +356,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	bmi .neg1
 	bvs .cl1
 	bra .cx
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .cx
 .cl1:
 	lda.w #$FFA0
@@ -368,7 +368,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	bmi .neg2
 	bvc .cl2
 	bra .next
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvc .next
 .cl2:
 	lda.w #$0060
@@ -432,7 +432,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	bmi .neg3
 	bvs .px1
 	bra .px2
-.neg3:
+.neg3:								; signed compare: overflow flag corrects the sign
 	bvs .px2
 .px1:
 	lda.w #$FF78
@@ -445,7 +445,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	bmi .neg4
 	bvc .px3
 	bra .py
-.neg4:
+.neg4:								; signed compare: overflow flag corrects the sign
 	bvc .py
 .px3:
 	lda.w #sideline
@@ -467,7 +467,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	bmi .neg5
 	bvs .py2
 	bra .py3
-.neg5:
+.neg5:								; signed compare: overflow flag corrects the sign
 	bvs .py3
 .py2:
 	lda.w #$FEDB
@@ -480,7 +480,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	bmi .neg6
 	bvc .py4
 	bra .cy
-.neg6:
+.neg6:								; signed compare: overflow flag corrects the sign
 	bvc .cy
 .py4:
 	lda.w #$012A
@@ -490,5 +490,5 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	bmi .rtl
 	lda.w pucky
 	sta.w carriedy
-.rtl:
+.rtl:								; return
 	rtl

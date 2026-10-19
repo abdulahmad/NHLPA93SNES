@@ -30,7 +30,7 @@ AddPenalty2:						;Call penalty d0 on player X without the checks; used for forc
 	bmi .neg
 	bvc .snd
 	bra .nosnd
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .nosnd
 .snd:								;goal and up: crowd and a sound
 	lda.b crowdlevel				; crowd +200
@@ -109,5 +109,5 @@ AddPenalty2:						;Call penalty d0 on player X without the checks; used for forc
 	dex
 	bpl .restore
 	ldx.b xsave						; restore X
-.rtl:
+.rtl:								; return
 	rtl

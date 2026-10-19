@@ -14,7 +14,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	bmi .neg
 	bvs .low
 	bra .side
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .side
 .low:								;puck region: +2 when low
 	inc.b d2
@@ -117,7 +117,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	bvs .saved
 .nosave:
 	jmp.w .rtl
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .nosave
 .saved:
 	jsl.l ChkShotStat				; ChkShotStat
@@ -210,7 +210,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	sta.w Yvel+1,x
 	rep #$20						; 16-bit A
 	jmp.w puckflip					; flip the puck
-.rtl:
+.rtl:								; return
 	rtl
 .nopc:								;loose puck: the goalie holds it if it is slow enough
 	ldy.b a2
@@ -232,7 +232,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	bvc .c2
 .b1:
 	jmp.w .bounce
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvc .b1
 .c2:
 	lda.b d0
@@ -242,7 +242,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	bvc .c3
 .b2:
 	jmp.w .bounce
-.neg3:
+.neg3:								; signed compare: overflow flag corrects the sign
 	bvc .b2
 .c3:
 	lda.b d0
@@ -256,7 +256,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	bvs .c4
 .b3:
 	jmp.w .bounce
-.neg4:
+.neg4:								; signed compare: overflow flag corrects the sign
 	bvs .b3
 .c4:
 	lda.b d0
@@ -267,7 +267,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	bvs .c5
 .b4:
 	jmp.w .bounce
-.neg5:
+.neg5:								; signed compare: overflow flag corrects the sign
 	bvs .b4
 .c5:
 	ldy.b a2						; goalie

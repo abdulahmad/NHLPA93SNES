@@ -342,7 +342,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	cpy.w #$0004
 	bne .rts
 	jml.l NewPO
-.rts:
+.rts:								; return
 	rtl
 .iilimit:							;d3 + d2, wrapped into d5 ... d4-1
 	lda.b d3

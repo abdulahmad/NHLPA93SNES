@@ -22,5 +22,5 @@ QueueTextDMA:						;Queue the changed part of the text map for transfer to video
 	clc
 	adc.w #dmasize
 	sta.b DMAlistend
-.rtl:
+.rtl:								; return
 	rtl

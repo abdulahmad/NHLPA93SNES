@@ -41,5 +41,5 @@ EASNLogo:							;Draw the EASN logo on the rink unless a power play is on
 	cmp.b textdirtyhi				; compare
 	bcc .rtl						; already higher
 	sta.b textdirtyhi				; new high
-.rtl:
+.rtl:								; return
 	rtl

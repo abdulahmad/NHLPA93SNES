@@ -29,5 +29,5 @@ puckshadow:							;Assignment: the puck shadow follows the puck
 	lda.w #-300						; y
 	sta.w Ypos,x
 	dec.w Zpos,x					; z
-.rtl:
+.rtl:								; return
 	rtl

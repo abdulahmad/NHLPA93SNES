@@ -73,7 +73,7 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 	bvs .gli0
 .nd:
 	jmp.w .nodec
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .nd
 .gli0:
 	lda.w #SPAglide					; SPAglide (goalie SPAgready)
@@ -103,7 +103,7 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 	bmi .neg1
 	bvs .stop
 	bra .rtl
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .rtl
 .stop:
 	stz.w Xvel,x					; stop sliding
@@ -120,7 +120,7 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 	lda.w #100
 	sta.w temp1,x					; door timer 100: at the door
 	sta.w pfalock,x					; lock the assignment
-.rtl:
+.rtl:								; return
 	rtl
 .done:
 	stz.w frame,x					; hide the sprite

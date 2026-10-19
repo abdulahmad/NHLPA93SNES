@@ -8,7 +8,7 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	bmi .neg
 	bvs .tm
 	bra .rtl
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .rtl
 .tm:
 	lda.w asv						; asv: no delay
@@ -39,7 +39,7 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	sta.w ScoutingReportTimer
 	lda.w #$01E0					; leave the screen after 480 frames
 	sta.w screentimer
-.rtl:
+.rtl:								; return
 	rtl
 .para:								;blank line between paragraphs
 	jsl.l ScrollDisplayUp			; blank line between paragraphs
@@ -160,7 +160,7 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 .scr:
 	jsl.l ScrollDisplayUp			; scroll up
 	bra .noscr
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .scr
 .noscr:
 	jsl.l printz					; print at column + DispAttribCtr, line + VertLineScrolling

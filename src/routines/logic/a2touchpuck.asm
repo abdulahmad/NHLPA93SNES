@@ -66,7 +66,7 @@ a2touchpuck:						;A player touches the puck: remember the last touches (for ass
 	jsl.l AddPenalty				; AddPenalty
 	plx
 	stx.b a3
-.rtl:
+.rtl:								; return
 	rtl
 .up:
 	lda.w pfgoal,y

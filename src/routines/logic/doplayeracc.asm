@@ -27,7 +27,7 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	lda.w pf2aip,x					; animation in progress: leave it
 	bne .rtl
 	jml.l SetSPA					; start animation d1
-.rtl:
+.rtl:								; return
 	rtl
 .d1:								;a direction: pfrev, then the turn
 	lda.b d1						; save the animation
@@ -179,7 +179,7 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	bmi .neg
 	bvs .vs
 	bra .iok
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .iok
 .vs:
 	lda.w #$0180

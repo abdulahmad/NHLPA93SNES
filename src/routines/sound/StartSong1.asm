@@ -14,5 +14,5 @@ StartSong1:							;Start the home goal music unless it is already playing
 	sta.w cursong					; remember the song
 	lda.w #$0240					; time until the cue ends
 	sta.w cuetimer					; set the cue timer
-.rtl:
+.rtl:								; return
 	rtl

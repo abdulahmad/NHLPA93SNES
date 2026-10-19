@@ -14,7 +14,7 @@ IntermissionTick:					;During the intermission, show the next ticker score from 
 	jsl.l DoHiLights				; else the highlights
 	lda.w #$0008
 	trb.w sflags3					; clear sflags3 bit 3
-.rtl:
+.rtl:								; return
 	rtl
 .wait:
 	lda.w #$0000					; nothing to report

@@ -4,5 +4,5 @@ clockcont:							;When the clock runs out, freeze the view and end the period
 	bne .rtl						; still running: leave
 	jsl.l freezewindow				; lock the view
 	jmp.w clockcont_0				; end the period
-.rtl:
+.rtl:								; return
 	rtl

@@ -20,5 +20,5 @@ lcfound:							;Change team a2 to the chosen line
 	sta.w tmline,y					; new line
 	jsl.l setpersonel				; new personnel
 	jml.l lcfound2					; redraw
-.rtl:
+.rtl:								; return
 	rtl

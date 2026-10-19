@@ -75,7 +75,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	bmi .neg
 	bvc .pastline
 	bra .de0
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .de0
 .pastline:
 	ldy.b a2						; team of this player
@@ -153,7 +153,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	bmi .neg1
 	bvs .gu3
 	bra .gu0
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .gu0
 .gu3:
 	lda.b d1						; new best y
@@ -173,7 +173,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	bmi .neg2
 	bvs .cl1
 	bra .gu1
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvs .gu1
 .cl1:
 	lda.w #-220						; limit -220
@@ -189,7 +189,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	bpl .de3
 	stz.w temp3,x					; opposite sign to puck x: clear temp3
 	bra .de3
-.rtl:
+.rtl:								; return
 	rtl
 .gdwn:
 	ldy.b a0						; player flags
@@ -218,7 +218,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	bmi .neg3
 	bvc .gd3
 	bra .gd0
-.neg3:
+.neg3:								; signed compare: overflow flag corrects the sign
 	bvc .gd0
 .gd3:
 	lda.b d1						; new best y
@@ -237,7 +237,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	bmi .neg4
 	bvc .cl2
 	bra .gd1
-.neg4:
+.neg4:								; signed compare: overflow flag corrects the sign
 	bvc .gd1
 .cl2:
 	lda.w #220						; limit 220

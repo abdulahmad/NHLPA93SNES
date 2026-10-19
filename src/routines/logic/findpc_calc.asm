@@ -58,7 +58,7 @@ findpc_calc:						;findpc for one goal line
 	bmi .neg
 	bvc .o1
 	bra .o1b
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .o1b
 .o1:								;bounce off the right side boards
 	lda.w #$0198					; 3*$88 - x
@@ -73,7 +73,7 @@ findpc_calc:						;findpc for one goal line
 	bmi .neg1
 	bvs .o2
 	bra .o2b
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .o2b
 .o2:								;bounce off the left side boards
 	lda.w #$FE68					; -3*$88 - x
@@ -87,5 +87,5 @@ findpc_calc:						;findpc for one goal line
 .nocross:
 	lda.w #$FFFF
 	sta.w puckcross+2,y
-.rtl:
+.rtl:								; return
 	rtl

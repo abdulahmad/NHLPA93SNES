@@ -81,7 +81,7 @@ asspenalty:							;Assignment: player X skates to the penalty box, glides in and
 	bvc .near
 .st0:
 	jmp.w .st
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .st0
 .near:
 	lda.w temp1,x					; timer
@@ -120,7 +120,7 @@ asspenalty:							;Assignment: player X skates to the penalty box, glides in and
 	bmi .neg1
 	bvc .stop
 	bra .rtl
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvc .rtl
 .stop:
 	stz.w Xvel,x					; stop sliding
@@ -139,7 +139,7 @@ asspenalty:							;Assignment: player X skates to the penalty box, glides in and
 	lda.w #$0D						; adopen
 	sta.b d0
 	jml.l assreplace				; replace the assignment with d0
-.rtl:
+.rtl:								; return
 	rtl
 .st:								;skate to the box
 	lda.w temp3,x					; box x

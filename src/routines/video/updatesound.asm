@@ -38,5 +38,5 @@ updatesound:						;Move the crowd noise volume toward crowdlevel and send it whe
 	sta.w crowdvol					; store
 	pha								; keep it
 	jsl.l sfx8F						; send it
-.rtl:
+.rtl:								; return
 	rtl

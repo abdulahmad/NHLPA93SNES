@@ -29,7 +29,7 @@ RestoreBenchEnergy:					;Once a second with line changes on, players on the benc
 	bmi .neg
 	bvc .max
 	bra .next
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .next
 .max:
 	lda.w #$1000					; clamp
@@ -38,5 +38,5 @@ RestoreBenchEnergy:					;Once a second with line changes on, players on the benc
 	dec.b d0						; previous player
 	dec.b d0
 	bpl .b0
-.x:
+.x:									; return
 	rtl

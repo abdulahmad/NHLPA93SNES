@@ -63,5 +63,5 @@ checkpuckcoll:						;Puck collision with the players near it
 	jsl.l checkpuckcoll_ccx
 	dec.b d1						; next object down
 	bne .dn							; until the bottom of the OOlist
-.rtl:
+.rtl:								; return
 	rtl

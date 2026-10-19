@@ -74,12 +74,12 @@ GetLowestPen:						;d0 = the power play time left, from the penalty box times. a
 	bmi .neg						; more left
 	bvc .add						; no overflow
 	bra .rtl						; done
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .rtl
 .add:
 	lda.b d0
 	clc								; total
 	adc.b d3						; plus the last
 	sta.b d0
-.rtl:
+.rtl:								; return
 	rtl

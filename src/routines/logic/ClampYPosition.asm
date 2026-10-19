@@ -12,7 +12,7 @@ ClampYPosition:						;d1 = y kept inside the goal lines, measured from goal line
 	bmi .neg
 	bvc .hi
 	bra .one
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .one
 .hi:								; clamp to $103
 	lda.w #$0103
@@ -25,7 +25,7 @@ ClampYPosition:						;d1 = y kept inside the goal lines, measured from goal line
 	bmi .neg1
 	bvs .lo
 	bra .two
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .two
 .lo:
 	lda.w #$FEFD					; clamp to -$103

@@ -9,7 +9,7 @@ ScrollDisplayUp:					;The next line of the scouting report text; scroll the text
 	bvc .up							; not yet
 .ex1:
 	jmp.w UpdateScoutingDisplay_rtl	; full: leave
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .ex1
 .up:
 	dec.w VertLineScrolling			; back to the last line

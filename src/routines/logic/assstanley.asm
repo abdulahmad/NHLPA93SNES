@@ -36,12 +36,12 @@ assstanley:							;Assignment: skate to the side of the screen
 	bmi .neg
 	bvs .turn
 	bra .rtl						; far: keep skating
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .rtl
 .turn:								; close enough: turn
 	lda.b d0
 	sta.b d2
 	sta.w facedir,x					; facing
 	jmp.w playeracc					; skate
-.rtl:
+.rtl:								; return
 	rtl

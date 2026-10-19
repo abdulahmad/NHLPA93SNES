@@ -31,7 +31,7 @@ PenGoalStuff:						;After a goal on a power play, let the first player out of th
 	bmi .neg
 	bvc .more
 	bra .ex
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .ex
 .more:								;scoring team had more players on the ice
 	lda.b a1

@@ -5,7 +5,7 @@ updatecrowdf:						;Every game loop: let the crowd level fade and step the crowd
 	bmi .neg
 	bvc .loud
 	bra .dec
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .dec
 .loud:
 	dec.b crowdlevel				; loud crowd calms down faster
@@ -79,5 +79,5 @@ updatecrowdf:						;Every game loop: let the crowd level fade and step the crowd
 	sep #$20						; 8-bit A
 	sta.b crowdframe
 	rep #$30						; 16-bit registers
-.rtl:
+.rtl:								; return
 	rtl

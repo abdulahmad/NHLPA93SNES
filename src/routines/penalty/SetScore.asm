@@ -91,7 +91,7 @@ SetScore:							;Play one period of playoff game a0 with random goals; a game ti
 	dex
 	bpl .restore
 	ldx.b xsave						; restore X
-.rtl:
+.rtl:								; return
 	rtl
 .getscore:							;d0 = scoring team, d1 = other team; nibblebuffer = the .sctab rows of
 									;both teams' scoring odds rows; returns d0 = goals 0-3

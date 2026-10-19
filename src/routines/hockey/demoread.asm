@@ -18,7 +18,7 @@ demoread:							;In the demo, Start pauses and any other button ends it
 .any2:
 	lda.b d1						; any button ends the demo
 	bne .exit						; none: continue
-.rtl:
+.rtl:								; return
 	rtl
 .exit:								;end the demo: back to the title screen
 	jsl.l sndqreset					; sound queue reset; on to the title screen

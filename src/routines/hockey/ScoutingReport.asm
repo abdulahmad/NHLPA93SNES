@@ -295,5 +295,5 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	jsl.l UpdateScoutingDisplay		; UpdateScoutingDisplay
 	dec.w screentimer				; count down the screen timer
 	bpl .top
-.rtl:
+.rtl:								; return
 	rtl

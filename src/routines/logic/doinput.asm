@@ -116,7 +116,7 @@ doinput:							;Pad input for player X. d0 = pad directions, d1 = new buttons, d
 	bit.w #$8000					; B pressed?
 	beq .rtl
 	jmp.w changeplayer				; switch player
-.rtl:
+.rtl:								; return
 	rtl
 .setpassmode:						;the goalie keeps the puck behind the net (|x| < 16, |y| $108-$10F)
 	lda.w position,x				; goalie?

@@ -23,5 +23,5 @@ muls16:								;Signed 16-bit multiply: A = mula * mulb
 	sta.b mulb						; and mulb
 	sta.b mulres					; and mulres
 	clc								; clear carry
-.rtl:
+.rtl:								; return
 	rtl

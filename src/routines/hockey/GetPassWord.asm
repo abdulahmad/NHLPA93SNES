@@ -220,7 +220,7 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	lda.w #3
 	sta.b d0
 	sta.b d1
-.rtl:
+.rtl:								; return
 	rtl
 .exit:								;Start
 	jsl.l DecodePW

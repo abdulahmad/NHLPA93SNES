@@ -98,7 +98,7 @@ chkhit:								;In a fight, is player X hit by player a0?
 	bmi .neg
 	bvc .cl1
 	bra .chkneg
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .chkneg
 .cl1:
 	lda.w #$005A
@@ -111,7 +111,7 @@ chkhit:								;In a fight, is player X hit by player a0?
 	bmi .neg1
 	bvs .cl2
 	bra .drcont
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .drcont
 .cl2:
 	lda.w #$FFA6

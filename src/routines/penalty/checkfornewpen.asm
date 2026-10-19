@@ -98,13 +98,13 @@ checkfornewpen:						;Look for a new penalty call. Stops play at once when the p
 	bvc .longer
 .nx:
 	jmp.w .next
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .nx
 .longer:							;Pencntdwn = delay*32 if longer
 	lda.b d1						; longer: take it
 	sta.w Pencntdwn					; countdown
 	jmp.w .next
-.rtl:
+.rtl:								; return
 	rtl
 .dc:								;delayed call: PenDelay ref once
 	lda.w #gmpendel					; first delayed call: SetPA PenDelay

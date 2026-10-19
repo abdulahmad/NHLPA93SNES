@@ -89,5 +89,5 @@ fightinput:							;Pad input in a fight: move and punch
 	jml.l SetSPA					; start it
 .nopunch:
 	stz.w pf2aip,x					; no punch
-.rtl:
+.rtl:								; return
 	rtl

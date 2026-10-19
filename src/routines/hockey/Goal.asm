@@ -189,5 +189,5 @@ Goal:								;The puck is in the goal: add the score, sound the siren, log it, u
 	dec.b d3
 	bpl .loop
 	plx
-.rtl:
+.rtl:								; return
 	rtl

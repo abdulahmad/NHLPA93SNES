@@ -54,7 +54,7 @@ CheckBump:							;Goalie X pushed against the net with the puck near: if he is m
 	dex
 	bpl .restore
 	ldx.b xsave						; restore X
-.rtl:
+.rtl:								; return
 	rtl
 .bb:								;drop the saved d0-d3 and the jsl return: return to the caller of
 									;checkgoalp

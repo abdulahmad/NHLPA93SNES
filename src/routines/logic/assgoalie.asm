@@ -150,7 +150,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bvs .roll
 .de1j:
 	jmp.w .de1
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .de1j
 .roll:
 	lda.w #$0064					; 1 in 4: pass
@@ -250,7 +250,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	clc
 	adc.b crowdlevel
 	sta.b crowdlevel
-.rtl:
+.rtl:								; return
 	rtl
 .de1:								;a0 = puckcross entry of my goal, d3 = goal line
 	lda.w #puckcross
@@ -349,7 +349,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bmi .neg1
 	bvs .lo
 	bra .lead2
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .lead2
 .lo:
 	lda.b d1
@@ -359,7 +359,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bmi .neg2
 	bvs .lead2
 	bra .lead
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvs .lead
 .lead2:
 	lda.b d0
@@ -519,7 +519,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bmi .neg3
 	bvs .pz
 	bra .de7
-.neg3:
+.neg3:								; signed compare: overflow flag corrects the sign
 	bvs .de7
 .pz:
 	lda.w puckvz
@@ -529,7 +529,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bmi .neg4
 	bvs .stick
 	bra .de7
-.neg4:
+.neg4:								; signed compare: overflow flag corrects the sign
 	bvs .de7
 .stick:
 	lda.b d0
@@ -573,7 +573,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bmi .neg5
 	bvs .p2
 	bra .post
-.neg5:
+.neg5:								; signed compare: overflow flag corrects the sign
 	bvs .post
 .p2:
 	lda.w pucky
@@ -583,7 +583,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bmi .neg6
 	bvs .post
 	bra .de5
-.neg6:
+.neg6:								; signed compare: overflow flag corrects the sign
 	bvs .de5
 .post:								;hug the post
 	lda.w #$0018
@@ -670,7 +670,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bvc .stop
 .acc:
 	jml.l playeracc					; accelerate the player
-.neg7:
+.neg7:								; signed compare: overflow flag corrects the sign
 	bvc .acc
 .stop:
 	jmp.w StopNA
@@ -715,7 +715,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bmi .neg8
 	bvs .r4
 	bra .dir
-.neg8:
+.neg8:								; signed compare: overflow flag corrects the sign
 	bvs .dir
 .r4:
 	lda.w pucky
@@ -726,7 +726,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bvs .dir
 .de5j:
 	jmp.w .de5
-.neg9:
+.neg9:								; signed compare: overflow flag corrects the sign
 	bvs .de5j
 .dir:
 	lda.w puckvy

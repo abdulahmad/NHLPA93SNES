@@ -42,7 +42,7 @@ PickStartingGoalie:					;Pick team a2's starting goalie; computer teams in the l
 	bmi .neg
 	bvs .po
 	bra .set
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .set
 .po:
 	lda.w OptLine

@@ -59,5 +59,5 @@ EncodePW:							;After a playoff game, work out the winners and the new password
 	beq .rtl						; keep it
 	lda.w #$0003
 	sta.w OptPlayMode				; else 3
-.rtl:
+.rtl:								; return
 	rtl

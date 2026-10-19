@@ -133,5 +133,5 @@ shotdiradj:							;Aim a computer shot at the open side when the goalie covers t
 .x:
 	lda.b d0
 	sta.w passdir					; set the pass direction
-.rtl:
+.rtl:								; return
 	rtl
