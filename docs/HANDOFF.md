@@ -23,6 +23,17 @@ Still to do, in this order (do them one at a time; build MATCH + check_comments 
 
 Working rules learned: do NOT run many parallel agents (12 comment workers plus analysts used the whole usage limit in minutes); one agent at a time at most, or work directly. Partial uncommitted comment edits in the old worktrees /home/user/wt/cmtN were discarded.
 
+## Team data layout aligned with 93G (2026-10-19)
+
+`src/data/teamdata93s.asm` now reads like 93G `teamdata93.asm` (build MATCH, `check_comments.py` clean):
+- TeamList has no per-line `; team N`; `NumofTeams` (value 26, asserted against `TeamListEnd`) comes right after the list, before the `Playerdata`..`GoalieOdds` offsets, as in 93G.
+- All 26 records share one layout: header `; team record: <name> (<abbr>), team N`, `.0:` on its own line, the six `dw` offsets with the field name as comment (the ASE block's wording), `.pad:` comment and `home colors` / `visitor colors` on the incbins, each of `.sr .godds .ls .pld .tn .ta` on its own line with the data on the next line (`.tn` / `.ta` were `label: %String(..)`). The `qreb,...` / `-G,LD,...` / `unwl,...` column headers, the legend blocks and the `; line N` notes stay in AllStarsEast only, as in 93G.
+- `%Player` and `%hex2` take plain hex digits (`$<w1>` inside the macro), so call sites read like 93G; Player ratings are tab-aligned to column 36 like 93G.
+- playoffseats: blank line after every 8 trees, no per-row `; tree N`, header wording from 93G.
+- `cd0` has 93G's explanation and the blank line between the 4 crowd blocks; `Credits` has a blank line between pages.
+93G got the matching comment sync (same wording in `teamdata93.asm`; its playoffseats header said 32 trees, there are 34).
+Left alone on purpose: label case differences against 93G (`maketree` / `MakeTree`, `crowdlevel` / `Crowdlevel`, ...): 92 itself writes both and SNASM68K ignores case, so the SNES kept the dominant spelling per name.
+
 ## Local names (2026-10-14)
 
 Signed-compare overflow tails (`bmi` / `bvs` / `bvc`) are `.neg`, `.neg1`, `.neg2`, ... in source order. The earlier `.vN` pass is unchanged. `assdefd` had one leftover `.gt1` tail; it is `.neg2`, and the later tails in that routine moved to `.neg3` and `.neg4`. A `bcc` test is not that pattern. Where 93 Genesis already names the label, that name stays (`CompShoot` `.lt`). `holdcheck` has no 93G label on the facing test, so a facing delta under 3 is `.close`. `remap` has no 93G routine: the pixel bits are `.bit3`..`.bit0` and the video-memory store is `.vram`.
