@@ -28,8 +28,7 @@ prefmes:							;Print the message for penalty d0, or clear it when negative: und
 	lda.b d0
 	bpl .d0pos
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$00,$0A
+	%StringCp(CC_Font1Pri,$00,$0A)
 	lda.w #$000D
 	sta.b d0
 	lda.w #$0003
@@ -40,8 +39,7 @@ prefmes:							;Print the message for penalty d0, or clear it when negative: und
 	jmp.w .ex
 .d0pos:
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$05,$0A
+	%StringCp(CC_Font1Pri,$05,$0A)
 	ldy.b d0
 	lda.w #Penaltylist
 	sta.b a1
@@ -91,8 +89,7 @@ prefmes:							;Print the message for penalty d0, or clear it when negative: und
 	lda.b d0
 	bmi .ex
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$11,$0B
+	%StringCp(CC_Font1Pri,$11,$0B)
 	lda.w #Penaltylist
 	sta.b a1
 	lda.w #Penaltylist>>16

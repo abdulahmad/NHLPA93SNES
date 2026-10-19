@@ -106,8 +106,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	cpx.w #$0080
 	bne .framertiles
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $FE,$06,$03
+	%StringCp(CC_Font2,$06,$03)
 	lda.w #$0019
 	sta.b d0
 	lda.w #$0009
@@ -171,20 +170,17 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	cmp.w #$0009
 	bne .ronrow
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $FF,$02,$0D
+	%StringCp(CC_Font1,$02,$0D)
 	lda.w VisTeam
 	sta.b d1
 	jsl.l DrawTeamBlocks
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $FF,$15,$0D
+	%StringCp(CC_Font1,$15,$0D)
 	lda.w HomeTeam
 	sta.b d1
 	jsl.l DrawTeamBlocks
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $FF,$11,$0F
+	%StringCp(CC_Font1,$11,$0F)
 	lda.w #ScoutLabels
 	sta.b a1
 	lda.w #ScoutLabels>>16
@@ -204,8 +200,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	bit.w #$0080
 	beq .pl
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $FF,$19,$0F
+	%StringCp(CC_Font1,$19,$0F)
 	lda.w tmdata
 	sta.b a0
 	lda.w #TeamList>>16
@@ -223,8 +218,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	sta.b a2
 	jsl.l PrintScoutRatings
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $FF,$04,$0F
+	%StringCp(CC_Font1,$04,$0F)
 	lda.b a0
 	ldx.b a2
 	sta.b a2

@@ -283,8 +283,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	ldx.b a3
 	jsl.l ResetAndSelectPlayers
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$00,$00
+	%StringCp(CC_Font1Pri,$00,$00)
 	lda.w #$0036					; 8+46
 	sta.b d0
 	lda.w fox

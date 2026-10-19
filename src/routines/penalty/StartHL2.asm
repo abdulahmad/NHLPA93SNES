@@ -29,8 +29,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	dec.w printy
 	dec.w printy
 	jsl.l printz
-	dw $0016						; printz inline string: length (counts itself), then control bytes / text
-	db "Highlight from game:"
+	%String("Highlight from game:")
 	lda.w #180						; 180 frames, Start skips
 	sta.b d0
 	jsl.l waitxsr					; wait d0 frames or a button
@@ -312,8 +311,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	jsl.l SetHor
 	jsl.l setvideo
 	jsl.l printz					; DisplayStats box
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$05,$0C
+	%StringCp(CC_Font1Pri,$05,$0C)
 	lda.w #22
 	sta.b d0
 	lda.w #7

@@ -8,7 +8,7 @@ AttribWeight:						;Roster column: the player's weight in pounds, from his weigh
 	jsl.l PushNumber
 	jsl.l print
 	jsl.l printz
-	%String("   ")	;printz inline string: length (counts itself), then control bytes / text
+	%String("   ")
 	rtl
 unusedFF84:							;unused, $FF fill to the end of the bank
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF

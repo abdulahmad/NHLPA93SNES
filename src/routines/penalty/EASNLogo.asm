@@ -3,8 +3,7 @@ EASNLogo:							;Draw the EASN logo on the rink unless a power play is on
 	bit.w #sf2pwrplay
 	bne .rtl
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$01,$19
+	%StringCp(CC_Font1Pri,$01,$19)
 	stz.b tmp0
 	stz.b tmp1
 	lda.w #$0002

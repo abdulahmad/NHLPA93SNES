@@ -1,11 +1,9 @@
 DisplayStats:						;The STATS page of the pause menu: shots, power play, penalties, body
 									;checks and attack zone time for both teams
 	jsl.l printbigz
-	dw $000A						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$0B,$02,"STATS"
+	%StringCt(CC_Font1Pri,$0B,$02,"STATS")
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$05,$07
+	%StringCp(CC_Font1Pri,$05,$07)
 	lda.w #$0016
 	sta.b d0
 	lda.w #$0005
@@ -14,31 +12,23 @@ DisplayStats:						;The STATS page of the pause menu: shots, power play, penalti
 	sta.b d2
 	jsl.l eraser
 	jsl.l printz
-	dw $000B						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$0D,$06,"      "
+	%StringCt(CC_Font1Pri,$0D,$06,"      ")
 	jsl.l printz
-	dw $000A						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$0D,$07,"Shots"
+	%StringCt(CC_Font1Pri,$0D,$07,"Shots")
 	jsl.l printz
-	dw $000F						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$0B,$08,"Power Play"
+	%StringCt(CC_Font1Pri,$0B,$08,"Power Play")
 	jsl.l printz
-	dw $000E						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$0B,$09,"Penalties"
+	%StringCt(CC_Font1Pri,$0B,$09,"Penalties")
 	jsl.l printz
-	dw $0010						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$0B,$0A,"Body Checks"
+	%StringCt(CC_Font1Pri,$0B,$0A,"Body Checks")
 	jsl.l printz
-	dw $000F						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$0B,$0B,"AttackZone"
+	%StringCt(CC_Font1Pri,$0B,$0B,"AttackZone")
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$1A,$07
+	%StringCp(CC_Font1Pri,$1A,$07)
 	stz.b a2						; home stats at x 26, then the away stats at x 9
 	jsl.l .ss
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$09,$07
+	%StringCp(CC_Font1Pri,$09,$07)
 	inc.b a2
 	inc.b a2
 .ss:								;the .sslist stats of team a2 at printx
@@ -74,8 +64,7 @@ DisplayStats:						;The STATS page of the pause menu: shots, power play, penalti
 	sta.b [a3]
 	jsl.l appstring
 	jsl.l appendz
-	dw $0003						; printz inline string: length (counts itself), then control bytes / text
-	db "/"
+	%String("/")
 	lda.b a2
 	clc
 	adc.b d1

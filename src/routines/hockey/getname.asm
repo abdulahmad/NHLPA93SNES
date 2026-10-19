@@ -59,7 +59,7 @@ getname:							;mesarea = the uniform number and name of roster player d0 of tea
 	sta.b d0
 	jsl.l ConvertByteToDigits		; two digits, then a blank and the name
 	jsl.l appendz
-	%String(" ")	;printz inline string: length (counts itself), then control bytes / text
+	%String(" ")
 	stx.b xsave
 	ldx.w #$0002
 .poprec:

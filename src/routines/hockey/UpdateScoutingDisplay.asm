@@ -164,8 +164,7 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	bvs .scr
 .noscr:
 	jsl.l printz					; print at column + DispAttribCtr, line + VertLineScrolling
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $FF,$0A,$04
+	%StringCp(CC_Font1,$0A,$04)
 	lda.w DispAttribCtr
 	clc
 	adc.w printx

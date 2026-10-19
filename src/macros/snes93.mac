@@ -1,6 +1,7 @@
 ; NHLPA Hockey '93 (SNES) macros. Included once by nhlpa93snes.asm, before the bank files (like 93G
 ; macros/genesis93.mac). Player, String and hex2 build the bank $83 team data (93G teamdata93.asm) with the
-; 93G macro names.
+; 93G macro names. The String macros write every string the print routines read: a length word that counts
+; itself, then the text and control bytes (String: text only; the others name the shape of the bytes).
 
 macro Player(name, w1, w2, w3, w4)	;93G Player: length word (counts itself), name,
 	;ratings as 4 big-endian words

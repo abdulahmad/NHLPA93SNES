@@ -1,7 +1,6 @@
 Pmenu:								;Draw the pause menu items with the current one highlighted
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$06,$0D
+	%StringCp(CC_Font1Pri,$06,$0D)
 	stz.b d0
 	lda.w #.mlist
 	sta.b a0
@@ -24,8 +23,7 @@ Pmenu:								;Draw the pause menu items with the current one highlighted
 	lda.w #$0006
 	sta.w printx
 	jsl.l printz
-	dw $0016						; printz inline string: length (counts itself), then control bytes / text
-	db "                    "
+	%String("                    ")
 	lda.w #mesarea
 	sta.b a1
 	lda.w #mesarea>>16

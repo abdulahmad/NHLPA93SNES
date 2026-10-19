@@ -241,8 +241,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	sta.b d0+2
 	stz.b d3+2
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $EF,$00,$00
+	%StringCp(CC_Font1Pal1,$00,$00)
 	lda.b bosgames					; single games: no scores
 	cmp.w #7
 	beq .logo
@@ -350,8 +349,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	bne .logorow
 	jsl.l ClearSprites				; clear the sprite table
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $EF,"8d"
+	%StringBt(CC_Font1Pal1,"8d")
 	jsl.l PWprint
 	lda.w #$0180					; start in the middle
 	sta.w Hscroll

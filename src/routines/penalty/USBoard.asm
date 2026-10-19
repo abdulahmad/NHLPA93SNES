@@ -22,13 +22,11 @@ USBoard:							;Update the scoreboard, with the players in the
 	ldx.b xsave
 	jsl.l printscores1
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$14,$08
+	%StringCp(CC_Font1Pri,$14,$08)
 	stz.b a2
 	jsl.l .dispen
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$05,$08
+	%StringCp(CC_Font1Pri,$05,$08)
 	lda.w #$0002
 	sta.b a2
 	jsl.l .dispen

@@ -19,5 +19,5 @@ AttribPrintPct:						;print d0 4 wide plus padding
 	jsl.l PushNumberWidth
 	jsl.l print
 	jsl.l printz
-	%String("  ")	;printz inline string: length (counts itself), then control bytes / text
+	%String("  ")
 	rtl

@@ -21,23 +21,20 @@ ShowInjuryBox:						;The injury box: the injured player and whether he is out fo
 	bne .savea
 	ldx.b xsave
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$0B,$03
+	%StringCp(CC_Font1Pri,$0B,$03)
 	lda.w #$0012
 	sta.b d0
 	lda.w #$0005
 	sta.b d1
 	jsl.l Framer
 	jsl.l printz
-	dw $0023						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$0C,$04,"Injury to:",$BF,$0C,$06,"Out for period",$BF,$0C,$05
+	%StringCtctc(CC_Font1Pri,$0C,$04,"Injury to:",CC_Font1Pri,$0C,$06,"Out for period",CC_Font1Pri,$0C,$05)
 	jsl.l GetPlayerNumInitial
 	jsl.l print
 	lda.w pf2fight+puckobj
 	beq .period
 	jsl.l printz
-	dw $000D						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$14,$06,"the game"
+	%StringCt(CC_Font1Pri,$14,$06,"the game")
 .period:
 	stx.b xsave
 	ldx.w #$0012

@@ -27,14 +27,12 @@ PrintTeamNames:						;Print both team names, then set up the teams
 	sta.w VisTeam
 .print:
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BE,$02,$01
+	%StringCp(CC_Font2Pri,$02,$01)
 	lda.w VisTeam
 	sta.b d1
 	jsl.l DrawTeamBlocks			; print team d1 name
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BE,$15,$01
+	%StringCp(CC_Font2Pri,$15,$01)
 	lda.w HomeTeam
 	sta.b d1
 	jsl.l DrawTeamBlocks			; print team d1 name

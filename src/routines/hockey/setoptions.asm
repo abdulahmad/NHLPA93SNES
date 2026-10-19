@@ -164,8 +164,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	lda.w #$0000
 	sta.b sprpriority
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $FE,$00,$00
+	%StringCp(CC_Font2,$00,$00)
 	jsl.l InitSortObjects
 	lda.w #$0028
 	sta.w OldXpos
@@ -394,8 +393,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 .psd:								;print the choice of line d7 at x $11 (14 chars erased first): string d3
 									;of its .pl list; the team lines print the team name (.psdtp)
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BE,$11,$0D
+	%StringCp(CC_Font2Pri,$11,$0D)
 	lda.w printy
 	clc
 	adc.b d7
@@ -528,8 +526,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 .setrect:							;printx $10, printy $C + d3, frame size d0 x d1 = $10 x 3 (5 tall for Team
 									;1 in the playoff modes)
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $FF,$10,$0C
+	%StringCp(CC_Font1,$10,$0C)
 	lda.w printy
 	clc
 	adc.b d3

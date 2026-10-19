@@ -8,14 +8,12 @@ NewTicker3:							;Show the ticker box for game d3: round, period and both teams
 	bit.w #$0006
 	bne NewTicker2
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$02,$17
+	%StringCp(CC_Font1Pri,$02,$17)
 	lda.w sflags
 	bit.w #sfpz
 	bne .pj
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$02,$17
+	%StringCp(CC_Font1Pri,$02,$17)
 .pj:
 	lda.w sfhormode
 	bne .frame
@@ -42,8 +40,7 @@ NewTicker3:							;Show the ticker box for game d3: round, period and both teams
 	lda.w #$2400
 	sta.w printa
 	jsl.l printz
-	dw $001C						; printz inline string: length (counts itself), then control bytes / text
-	db "                          "
+	%String("                          ")
 	lda.b $01,s
 	sta.w printx
 	lda.b d3

@@ -31,8 +31,7 @@ ShowGoalBox:						;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the
 	adc.w ScoreSumbytes
 	sta.b a4
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$0B,$02
+	%StringCp(CC_Font1Pri,$0B,$02)
 	lda.w #$0013
 	sta.b d0
 	lda.w #$0005
@@ -92,8 +91,7 @@ ShowGoalBox:						;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the
 	bit.w #$0080
 	bne .ex
 	jsl.l printz
-	dw $0012						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$0E,$06,"Assist by:",$BF,$0C,$07
+	%StringCtc(CC_Font1Pri,$0E,$06,"Assist by:",CC_Font1Pri,$0C,$07)
 	jsl.l FormatPlayerNumInitial
 	jsl.l print
 	ldy.w #$0005
@@ -103,8 +101,7 @@ ShowGoalBox:						;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the
 	bit.w #$0080
 	bne .ex
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$0C,$08
+	%StringCp(CC_Font1Pri,$0C,$08)
 	jsl.l FormatPlayerNumInitial
 	jsl.l print
 .ex:

@@ -5,8 +5,7 @@ setlccords:							;printx / printy and the size of team a2's line change box
 	inc.b d0
 .0:
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$13,$01
+	%StringCp(CC_Font1Pri,$13,$01)
 	lda.w gmode						; gmdir flips it
 	bit.w #gmdir
 	beq .noflip

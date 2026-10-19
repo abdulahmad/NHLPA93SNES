@@ -1,8 +1,7 @@
 SetHor_rink:						;Clear the text screen, draw the horizontal rink scoreboard background,
 									;then the scoreboard
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $FF,$00,$00
+	%StringCp(CC_Font1,$00,$00)
 	lda.w #$0020
 	sta.b d0
 	lda.w #$001D
@@ -11,8 +10,7 @@ SetHor_rink:						;Clear the text screen, draw the horizontal rink scoreboard ba
 	sta.b d2
 	jsl.l eraser
 	jsl.l printz
-	dw $0005						; printz inline string: length (counts itself), then control bytes / text
-	db $FF,$00,$00
+	%StringCp(CC_Font1,$00,$00)
 	lda.w #$0418
 	sta.w VMADDL
 	lda.w #$001C
