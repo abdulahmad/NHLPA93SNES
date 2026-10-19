@@ -111,7 +111,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	sta.b d1
 	bpl .pos
 	jmp.w .next
-.pos:
+.pos:								; position test: goalies are placed separately
 	beq .goalie1
 	lda.w #afaceoff
 	sta.b d0
@@ -123,7 +123,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	beq .tm
 	inc.b a2
 	inc.b a2
-.tm:
+.tm:								; team of this player
 	ldy.b a2
 	lda.w pnum,x
 	and.w #$00FF
@@ -146,7 +146,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	beq .t0
 	lda.w tmap+2
 	sta.b d4
-.t0:
+.t0:								; negate Y for the other end
 	lda.b d4
 	eor.w #$FFFF					; negate
 	inc a
@@ -189,7 +189,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
-.f0:
+.f0:								; goalie or skater?
 	lda.w position,x
 	beq .goalie2
 	lda.b d4						; defense (entry <= 2*4): shift by fox/foy
@@ -201,7 +201,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	bra .nodef
 .neg:								; signed compare: overflow flag corrects the sign
 	bvs .nodef
-.def:
+.def:								; defender: mirror by the faceoff spot
 	lda.w fox
 	eor.b d0
 	bpl .notmid
@@ -218,20 +218,20 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	clc
 	adc.b d1
 	sta.b d1
-.notmid:
+.notmid:							; not on the center line: scaled spot offset
 	lda.w fox
 	lsr a
 	lsr a
 	bit.w #$2000
 	beq .xadj
 	ora.w #$C000
-.xadj:
+.xadj:								; apply the X adjustment
 	sta.b d3
 	lda.b d0
 	sec
 	sbc.b d3
 	sta.b d0
-.nodef:
+.nodef:								; forwards: add the faceoff spot X
 	lda.b d0
 	clc
 	adc.w fox
@@ -240,7 +240,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	clc
 	adc.w foy
 	sta.b d1
-.goalie2:
+.goalie2:							; goalie: place at the goal
 	lda.b d0
 	sta.w Xpos,x
 	sec
@@ -268,7 +268,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	lda.w #SPAglide
 	sta.b d1
 	jsl.l SetSPA					; start animation d1
-.next:
+.next:								; next player
 	inc.b a3
 	inc.b a3
 	dec.b d2
@@ -290,7 +290,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	bpl .fok
 	lda.w #$00BE					; (18*8)+46
 	sta.b d0
-.fok:
+.fok:								; store the puck drop spot X
 	lda.b d0
 	sta.w fodropx
 	sec
@@ -343,7 +343,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 .row:								;copy the 12x10 FaceOffMap into the text map
 	lda.w #$000C
 	sta.b tmp2+1
-.col:
+.col:								; copy the faceoff map columns with the tile set added
 	lda.b [tmp0],y
 	clc
 	adc.w faceoffvrcset
@@ -384,7 +384,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	sta.b d1
 	lda.w tmline+2
 	sta.b d0
-.nx:
+.nx:								; next print position
 	inc.w printx
 	dec.w printy
 	dec.w printy
@@ -463,10 +463,10 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	bra .sub
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvc .sub
-.one:
+.one:								; decrement by one
 	lda.w #$0001
 	sta.b tmp0
-.sub:
+.sub:								; subtract from the timer
 	lda.w temp1,x
 	sec
 	sbc.b tmp0

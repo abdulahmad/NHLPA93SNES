@@ -35,7 +35,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	sta.b tmp1
 	jsl.l DecompressBytecode
 	ldx.w #$0000
-.treetiles:
+.treetiles:							; copy the bracket tiles to VRAM
 	lda.l TestList+$100,x
 	sta.w VMDATAL
 	inx
@@ -43,7 +43,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	cpx.w #$00C0
 	bne .treetiles
 	ldx.w #$0000
-.treepal:
+.treepal:							; load the bracket palette
 	lda.l TestList,x
 	sta.l palbuffer,x
 	inx
@@ -88,7 +88,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	sta.b tmp1
 	jsl.l DecompressBytecode
 	ldx.w #$0000
-.blocktiles:
+.blocktiles:						; copy the team block tiles to VRAM
 	lda.l TestList,x
 	sta.w VMDATAL
 	inx
@@ -97,7 +97,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	bne .blocktiles
 	lda.w #$0000					; clear textmap and backmap (128 x 32 map)
 	ldx.w #$1FFE
-.clr:
+.clr:								; clear the text map
 	sta.l textmap,x
 	dex
 	dex
@@ -163,7 +163,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	lda.w #9
 	sta.b tmp0
 	sta.b tmp1
-.row1:
+.row1:								; first score row of a series box
 	lda.b [a2],y
 	clc
 	adc.w scorechars
@@ -176,7 +176,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	inx
 	dec.b tmp0
 	bne .row1
-.row2:
+.row2:								; second score row of a series box
 	lda.b [a2],y
 	clc
 	adc.w scorechars
@@ -209,7 +209,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	asl a
 	tax
 	ldy.w #23
-.arrowrow:
+.arrowrow:							; copy an arrow row into the text map
 	lda.b [tmp0]
 	sta.l textmap+$200,x
 	lda.b tmp0
@@ -251,7 +251,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	sta.b d4
 	beq .logo
 	stz.b a2
-.score:
+.score:								; print the series score
 	lda.b [a0]
 	inc.b a0
 	and.w #$00FF
@@ -289,7 +289,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	sta.b tmp1
 	jsl.l DecompressBytecode
 	ldx.w #$001E					; logo palette to palette row 2
-.logopal:
+.logopal:							; load the logo palette
 	lda.l TestList+$A0,x
 	sta.l palbuffer+$C0,x
 	dex
@@ -303,7 +303,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	adc.w #$1000
 	sta.w VMADDL
 	ldx.w #$0000
-.logotiles:
+.logotiles:							; copy the logo tiles to VRAM
 	lda.l TestList+$1A0,x
 	sta.w VMDATAL
 	inx
@@ -311,9 +311,9 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	cpx.w #$06A0
 	bne .logotiles
 	stz.b tmp1
-.logorow:
+.logorow:							; logo rows
 	stz.b tmp0
-.logocol:
+.logocol:							; logo columns
 	lda.b tmp1
 	sta.b mula
 	lda.w #8
@@ -380,11 +380,11 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	cmp.b d2+2
 	bcs .min
 	lda.b d2+2
-.min:
+.min:								; clamp the scroll to the minimum
 	cmp.b d0+2
 	bcc .max
 	lda.b d0+2
-.max:
+.max:								; clamp the scroll to the maximum
 	sta.w Hscroll
 	lsr a
 	lsr a
@@ -394,7 +394,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	sta.b tmp0
 	stz.b tmp1
 	ldy.w #$0000
-.dma:
+.dma:								; queue the scroll DMA
 	lda.b tmp1
 	sta.w DMAList+dmavram,y
 	clc
@@ -423,7 +423,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	sty.b DMAlistend
 	lda.w #VBlank_Cram				; playoff vblank handler
 	sta.b vbint
-.wait:
+.wait:								; wait for the next frame
 	cmp.b vbint
 	beq .wait
 .pad:
@@ -533,7 +533,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	beq .left
 	cmp.w #JOYRIGHT
 	beq .right
-.move:
+.move:								; apply the scroll step
 	lda.w Hscroll
 	clc
 	adc.b d3+2
@@ -558,11 +558,11 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	jmp.w .scroll
 .blink:								;BGR555 colours the user's team block blinks between (white, blue, white)
 	dw $7FFF,$7E10,$7FFF
-.left:
+.left:								; scroll left
 	lda.w #$FFFF
 	sta.b d3+2
 	jmp.w .move
-.right:
+.right:								; scroll right
 	lda.w #$0001
 	sta.b d3+2
 	jmp.w .move
