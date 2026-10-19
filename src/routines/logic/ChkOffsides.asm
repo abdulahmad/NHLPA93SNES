@@ -1,21 +1,21 @@
 ChkOffsides:						;Clear each team's offsides flag once it is back onside; when the puck
 									;crosses a blue line into the zone
 		;   with an attacker already past it, flag that team offsides
-	lda.w gmode
+	lda.w gmode						; game mode
 	bit.w #gmoffs
-	beq .rtl
+	beq .rtl						; gmoffs clear: return
 	stz.b a1						; a1 = home, a2 = away; then swapped
 	lda.w #$0002
 	sta.b a2
-	jsl.l ClearOffsidesIfAllPlayers
+	jsl.l ClearOffsidesIfAllPlayers	; clear the flag for the home side when all its players are back
 	stz.b a2
 	lda.w #$0002
 	sta.b a1
-	jsl.l ClearOffsidesIfAllPlayers
+	jsl.l ClearOffsidesIfAllPlayers	; and for the away side
 	lda.w #blueline-4				; blueline-4
 	sta.b d0
 	sec
-	sbc.w pucky
+	sbc.w pucky						; puck y against the line
 	beq .top
 	bmi .neg1
 	bvs .top
@@ -25,7 +25,7 @@ ChkOffsides:						;Clear each team's offsides flag once it is back onside; when 
 .top:								;puck crossed the top line this frame?
 	lda.w #blueline-4
 	sec
-	sbc.w OldYpos+puckobj
+	sbc.w OldYpos+puckobj			; puck y last frame against the line
 	beq .rtl
 	bmi .neg2
 	bvc .t
@@ -43,18 +43,18 @@ ChkOffsides:						;Clear each team's offsides flag once it is back onside; when 
 	sta.b a1
 	sty.b a2
 .t0:
-	lda.w #$0005
+	lda.w #$0005					; check 6 players
 	sta.b d2
 	ldy.b a2
-	lda.w tmsort,y
+	lda.w tmsort,y					; first player of the attacking team
 	sta.b a0
 .0:
 	ldy.b a0
-	lda.w position,y
+	lda.w position,y				; skip empty positions
 	bmi .1
 	lda.b d0
 	sec
-	sbc.w Ypos,y
+	sbc.w Ypos,y					; player y against the line
 	bmi .neg3
 	bvs .set0
 	bra .1
@@ -62,19 +62,19 @@ ChkOffsides:						;Clear each team's offsides flag once it is back onside; when 
 	bvs .1
 .set0:
 	ldy.b a2
-	lda.w tmflags,y
+	lda.w tmflags,y					; flag the team offsides
 	ora.w #tmfoside					; tmfoside
 	sta.w tmflags,y
 .rtl:
 	rtl
 .1:
-	inc.b a0
+	inc.b a0						; next player
 	inc.b a0
 	dec.b d2
 	bpl .0
 	rtl
 .neg:								;bottom line
-	lda.b d0
+	lda.b d0						; line for the bottom end
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
