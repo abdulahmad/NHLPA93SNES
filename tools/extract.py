@@ -82,7 +82,51 @@ ASSETS = [
     ('Graphics/Sprites/set04.pieces', 0x85806C, 0x8585A4),
     ('Graphics/Sprites/set04.chr', 0x8585A4, 0x85D5A4),
     ('Graphics/Title1.map.snesjim', 0x85D5C0, 0x85FBB9),
-    ('Sound/driver.spc700', 0x868004, 0x86A6EB),
+    ('Sound/driver.spc700', 0x868004, 0x868AA9),
+    ('Sound/fmtune_playoff_cmdstream.bin', [(0x868AA9, 0x868AB1), (0x868AF1, 0x868B01), (0x868B81, 0x868C25), (0x869D79, 0x86A0A6)], None),
+    ('Sound/fmtune_title_cmdstream.bin', [(0x868AB1, 0x868AB9), (0x868B01, 0x868B11), (0x868E83, 0x868FE5), (0x8692B6, 0x8692C0), (0x86984A, 0x869D79)], None),
+    ('Sound/fmtune_unused2_cmdstream.bin', [(0x868AB9, 0x868AC1), (0x868B11, 0x868B21), (0x868C25, 0x868CFB), (0x8692C0, 0x8692C6), (0x86A0A6, 0x86A4BF)], None),
+    ('Sound/fmtune_goal_cmdstream.bin', [(0x868AC1, 0x868AC9), (0x868B21, 0x868B31), (0x868FE5, 0x869051), (0x86952B, 0x869542), (0x8697C2, 0x86984A)], None),
+    ('Sound/fmtune_periodstart_cmdstream.bin', [(0x868AC9, 0x868AD1), (0x868B31, 0x868B41), (0x8690B7, 0x86913B), (0x86964A, 0x86969B)], None),
+    ('Sound/fmtune_lategame_cmdstream.bin', [(0x868AD1, 0x868AD9), (0x868B41, 0x868B51), (0x869051, 0x8690B7), (0x86969B, 0x8697C2)], None),
+    ('Sound/fmtune_unused7_cmdstream.bin', [(0x868AD9, 0x868AE1), (0x868B51, 0x868B61), (0x86913B, 0x869228), (0x86961D, 0x86964A)], None),
+    ('Sound/fmtune_midperiod_cmdstream.bin', [(0x868AE1, 0x868AE9), (0x868B61, 0x868B71), (0x869228, 0x8692B6), (0x869542, 0x86961D)], None),
+    ('Sound/fmtune_unused9_cmdstream.bin', [(0x868AE9, 0x868AF1), (0x868B71, 0x868B81), (0x868CFB, 0x868E83), (0x8692C6, 0x86952B)], None),
+    ('Sound/sfx_table.bin', 0x86A4BF, 0x86A528),
+    ('Sound/sfx_a1_cmdstream.bin', 0x86A528, 0x86A534),
+    ('Sound/sfx_siren_cmdstream.bin', 0x86A534, 0x86A548),
+    ('Sound/sfx_crowd0_cmdstream.bin', 0x86A548, 0x86A554),
+    ('Sound/sfx_crowd1_cmdstream.bin', 0x86A554, 0x86A560),
+    ('Sound/sfx_crowd2_cmdstream.bin', 0x86A560, 0x86A56C),
+    ('Sound/sfx_crowd3_cmdstream.bin', 0x86A56C, 0x86A578),
+    ('Sound/sfx_crowd4_cmdstream.bin', 0x86A578, 0x86A584),
+    ('Sound/sfx_crowd5_cmdstream.bin', 0x86A584, 0x86A590),
+    ('Sound/sfx_crowd6_cmdstream.bin', 0x86A590, 0x86A59C),
+    ('Sound/sfx_crowd7_cmdstream.bin', 0x86A59C, 0x86A5A8),
+    ('Sound/sfx_crowdoff_cmdstream.bin', 0x86A5A8, 0x86A5B4),
+    ('Sound/sfx_check1_cmdstream.bin', 0x86A5B4, 0x86A5C0),
+    ('Sound/sfx_check2_cmdstream.bin', 0x86A5C0, 0x86A5CC),
+    ('Sound/sfx_playerwall_cmdstream.bin', 0x86A5CC, 0x86A5D8),
+    ('Sound/sfx_playerwall2_cmdstream.bin', 0x86A5D8, 0x86A5E4),
+    ('Sound/sfx_shothard_cmdstream.bin', 0x86A5E4, 0x86A5FB),
+    ('Sound/sfx_puckwall1_cmdstream.bin', 0x86A5FB, 0x86A607),
+    ('Sound/sfx_puckwall2_cmdstream.bin', 0x86A607, 0x86A613),
+    ('Sound/sfx_puckwall3_cmdstream.bin', 0x86A613, 0x86A61F),
+    ('Sound/sfx_hithigh_cmdstream.bin', 0x86A61F, 0x86A62B),
+    ('Sound/sfx_hitlow_cmdstream.bin', 0x86A62B, 0x86A637),
+    ('Sound/sfx_shotfh_cmdstream.bin', 0x86A637, 0x86A643),
+    ('Sound/sfx_shotbh_cmdstream.bin', 0x86A643, 0x86A64F),
+    ('Sound/sfx_puckpost_cmdstream.bin', 0x86A64F, 0x86A65B),
+    ('Sound/sfx_stop1_cmdstream.bin', 0x86A65B, 0x86A667),
+    ('Sound/sfx_stop2_cmdstream.bin', 0x86A667, 0x86A673),
+    ('Sound/sfx_shotwiff2_cmdstream.bin', 0x86A673, 0x86A67F),
+    ('Sound/sfx_shotwiff1_cmdstream.bin', 0x86A67F, 0x86A68B),
+    ('Sound/sfx_shotwiff4_cmdstream.bin', 0x86A68B, 0x86A697),
+    ('Sound/sfx_shotwiff3_cmdstream.bin', 0x86A697, 0x86A6A3),
+    ('Sound/sfx_crowdboo_cmdstream.bin', 0x86A6A3, 0x86A6AF),
+    ('Sound/sfx_oooh2_cmdstream.bin', 0x86A6AF, 0x86A6BB),
+    ('Sound/sfx_crowdcheer_cmdstream.bin', 0x86A6BB, 0x86A6C7),
+    ('Sound/sfx_whistle_cmdstream.bin', 0x86A6C7, 0x86A6EB),
     ('Sound/bootsamples.brr', 0x86A7C9, 0x86FA3A),
     ('Graphics/Sprites/set02.pieces', 0x87805C, 0x8783A0),
     ('Graphics/Sprites/set02.chr', 0x8783A0, 0x87C3A0),
@@ -127,6 +171,9 @@ ASSETS = [
     ('Graphics/Sprites/set01.pieces', 0x8F90F1, 0x8F94F9),
     ('Graphics/Sprites/set01.chr', 0x8F94F9, 0x8FD4F9),
 ]
+def asset_ranges(start, end):
+    # an entry is (file, start, end), or (file, [(start, end), ...], None) for a file made of pieces in ROM order
+    return start if end is None else [(start, end)]
 def rom_offset(a): return ((a >> 16) & 0x7F) * 0x8000 + (a & 0x7FFF)
 def sha1_of(data): return hashlib.sha1(data).hexdigest()
 if __name__ == '__main__':
@@ -136,7 +183,7 @@ if __name__ == '__main__':
     files = []
     for rel, start, end in ASSETS:
         path = os.path.join(EXTRACTED, rel)
-        data = rom[rom_offset(start):rom_offset(end)]
+        data = b''.join(rom[rom_offset(a):rom_offset(b)] for a, b in asset_ranges(start, end))
         if check:
             if not os.path.exists(path) or open(path, 'rb').read() != data:
                 print(f'differs: Extracted/{rel}'); bad += 1

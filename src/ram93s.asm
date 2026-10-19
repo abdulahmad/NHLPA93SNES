@@ -684,7 +684,7 @@ SPCBOOTSAMPLES	=	$2C30			; first BRR sample of the boot set
 SPCSAMPLES		=	$2C50			; first BRR sample of the in-game set
 SPCRESUME		=	$0800			;driver entry after the in-game sample upload (the boot upload starts the
 									;driver at $0400)
-SPCDRIVERSIZE	=	$26E7			; bytes of Extracted/Sound/driver.spc700
+SPCDRIVERSIZE	=	$26E7			; bytes of the SPC700 program (SPCDriver .. SPCDriverEnd)
 BOOTSAMPLESIZE	=	$5271			; bytes of Extracted/Sound/bootsamples.brr
 GAMESAMPLESIZE	=	$B814			; bytes of Extracted/Sound/gamesamples.brr
 replaysize		=	$71				; bytes per replay frame record
