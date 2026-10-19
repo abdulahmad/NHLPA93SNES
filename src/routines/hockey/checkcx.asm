@@ -11,34 +11,34 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	bne .save
 	ldx.b xsave						; restore X
 	sty.b a2						; a2 = Y; d0/d1 = relative velocity, d2/d3 = relative position
-	stz.b evalue
-	lda.w Xvel,x
+	stz.b evalue					; evalue (e) = 0
+	lda.w Xvel,x					; relative velocity: X minus Y
 	sec
 	sbc.w Xvel,y
-	sta.b d0
+	sta.b d0						; d0 = Vx
 	lda.w Yvel,x
 	sec
 	sbc.w Yvel,y
-	sta.b d1
+	sta.b d1						; d1 = Vy
 	sta.b mulb
-	lda.w Xpos,y
+	lda.w Xpos,y					; relative position: Y minus X
 	sec
 	sbc.w Xpos,x
-	sta.b d2
+	sta.b d2						; d2 = Dx
 	lda.w Ypos,y
 	sec
 	sbc.w Ypos,x
-	sta.b d3
+	sta.b d3						; d3 = Dy
 	sta.b mula
 	lda.b d1
-	pha
+	pha								; keep Vy
 	lda.b d0
-	pha
+	pha								; and Vx
 	jsl.l muls32					; signed 32-bit multiply
-	sta.b d1
+	sta.b d1						; d1 = Vy * Dy
 	lda.b mulres+2
 	sta.b d1+2
-	lda.b d2
+	lda.b d2						; Dx
 	sta.b mula
 	lda.b d0
 	sta.b mulb
@@ -46,11 +46,11 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	adc.b d1
 	sta.b d1
 	lda.b d1+2
-	adc.b mulres+2
+	adc.b mulres+2					; plus Vy * Dy
 	bpl .v1n						; v1n < 0: no collision
 	jmp.w .exit4
 .v1n:								;V1n = (Vy*Dy + Vx*Dx) / 16
-	lsr a
+	lsr a							; divide by 16
 	ror.b d1
 	lsr a
 	ror.b d1
@@ -61,53 +61,53 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	lda.w pfteam,x					; same team: no impact
 	cmp.w pfteam,y
 	beq .not
-	lda.b d1+1
+	lda.b d1+1						; impact value
 	and.w #$00FF
-	sta.b d4
+	sta.b d4						; d4 = V1n
 	cmp.w #$0006
 	bcs .g40
-	lda.w #$0005
+	lda.w #$0005					; minimum 5
 	sta.b d4
 .g40:								;minimum impact 5
-	clc
+	clc								; add to the impact of X
 	adc.w impact,x
 	sta.w impact,x
-	lda.w impact,y
+	lda.w impact,y					; and of Y
 	clc
 	adc.b d4
 	sta.w impact,y
 	lda.w pf2fight,y				; impactp = the other (not while fighting)
 	bne .if
-	txa
+	txa								; the other player is impactp
 	lsr a
 	sta.w impactp,y
 .if:
-	lda.w pf2fight,x
+	lda.w pf2fight,x				; X not fighting
 	bne .if2
-	tya
+	tya								; Y is impactp of X
 	lsr a
 	sta.w impactp,x
 .if2:								;impact under 20: no check sound
 	lda.b d4
-	cmp.w #$0014
+	cmp.w #$0014					; impact under 20: no check sound
 	bcc .n1
 	lda.w puckc						; check sound only if one of them has the puck
-	cmp.w SCnum,x
+	cmp.w SCnum,x					; X holds the puck?
 	beq .nc
-	cmp.w SCnum,y
+	cmp.w SCnum,y					; Y holds the puck?
 	bne .n1
 .nc:
-	jsl.l newcheck
+	jsl.l newcheck					; new check
 .n1:
-	jsl.l checkint
-	jsl.l checkcheck
-	jsl.l checkfight
+	jsl.l checkint					; interference
+	jsl.l checkcheck				; check
+	jsl.l checkfight				; fight
 .not:								;same team: no check events
-	lda.b d1
+	lda.b d1						; d4 = V1n
 	sta.b d4
-	pla
+	pla								; restore Vx
 	sta.b d0
-	pla
+	pla								; and Vy
 	sta.b d1
 	lda.b collflag					; collflag set by holdcheck / Bcheck: no transfer
 	bpl .tr
@@ -118,7 +118,7 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	lda.b d1
 	sta.b mulb
 	jsl.l muls32					; signed 32-bit multiply
-	sta.b d1
+	sta.b d1						; keep it
 	lda.b mulres+2
 	sta.b d1+2
 	lda.b d3
@@ -127,7 +127,7 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	sta.b mulb
 	jsl.l muls32					; signed 32-bit multiply
 	sec
-	sbc.b d1
+	sbc.b d1						; minus Vy * Dx
 	sta.b d0
 	lda.b mulres+2
 	sbc.b d1+2
@@ -138,18 +138,18 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	lsr a
 	ror.b d0
 	lsr a
-	ror.b d0
+	ror.b d0						; divide by 16
 	lda.b d0
-	sta.b d5
+	sta.b d5						; d5 = V1t
 	lda.w weight,x					; weights + 140
 	clc
 	adc.w #$008C
-	sta.b d0
+	sta.b d0						; d0 = weight of X + 140
 	ldy.b a2
-	lda.w weight,y
+	lda.w weight,y					; Y weight plus 140
 	clc
 	adc.w #$008C
-	sta.b d1
+	sta.b d1						; d1 = weight of Y + 140
 	sta.b mula
 	lda.b evalue
 	sta.b mulb
@@ -158,22 +158,22 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	lsr a
 	lsr a
 	lsr a
-	sta.b d7+2
+	sta.b d7+2						; m2*e
 	lda.b d1
 	clc
-	adc.b d0
+	adc.b d0						; d1 = m1 + m2
 	sta.b d1
 	lda.b d0
-	sec
+	sec								; m1 - m2*e
 	sbc.b d7+2
-	sta.b mulb
+	sta.b mulb						; mulb = m1 - m2*e
 	lda.b d4
-	sta.b mula
+	sta.b mula						; V1n
 	jsl.l muls32					; signed 32-bit multiply
 	lda.b d1
 	sta.b mula
 	jsl.l divs						; signed divide
-	sta.b d0
+	sta.b d0						; d0 = V1n'
 	lda.b evalue
 	sta.b mulb
 	lda.b d4
@@ -183,13 +183,13 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	lsr a
 	lsr a
 	lsr a
-	bit.w #$0800
+	bit.w #$0800					; sign extend
 	beq .v2n
 	ora.w #$F000
 .v2n:								;V2n = V1n + V1n*e
 	clc
-	adc.b d0
-	sta.b d1
+	adc.b d0						; plus the mass term
+	sta.b d1						; d1 = V2n
 	lda.b d5
 	sta.b mula
 	lda.b d3
@@ -206,7 +206,7 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	adc.b tmp0
 	sta.b tmp0
 	lda.b tmp1
-	adc.b mulres+2
+	adc.b mulres+2					; add
 	lsr a
 	ror.b tmp0
 	lsr a
@@ -214,11 +214,11 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	lsr a
 	ror.b tmp0
 	lsr a
-	ror.b tmp0
+	ror.b tmp0						; divide by 16
 	lda.w Xvel,y
 	clc
-	adc.b tmp0
-	sta.w Xvel,x
+	adc.b tmp0						; plus Y's x velocity
+	sta.w Xvel,x					; new Xvel of X
 	lda.b d5
 	sta.b mula
 	lda.b d2
@@ -233,7 +233,7 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	sta.b mulb
 	jsl.l muls32					; signed 32-bit multiply
 	sec
-	sbc.b tmp0
+	sbc.b tmp0						; difference
 	sta.b tmp0
 	lda.b mulres+2
 	sbc.b tmp1
@@ -244,11 +244,11 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	lsr a
 	ror.b tmp0
 	lsr a
-	ror.b tmp0
+	ror.b tmp0						; divide by 16
 	lda.w Yvel,y
 	clc
-	adc.b tmp0
-	sta.w Yvel,x
+	adc.b tmp0						; plus Y's y velocity
+	sta.w Yvel,x					; new Yvel of X
 	lda.b d1
 	sta.b mula
 	lda.b d2
@@ -261,10 +261,10 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	lsr.b mulres+2
 	ror a
 	lsr.b mulres+2
-	ror a
+	ror a							; divide by 16
 	clc
-	adc.w Xvel,y
-	sta.w Xvel,y
+	adc.w Xvel,y					; plus Y's x velocity
+	sta.w Xvel,y					; new Xvel of Y
 	lda.b d1
 	sta.b mula
 	lda.b d3
@@ -277,12 +277,12 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	lsr.b mulres+2
 	ror a
 	lsr.b mulres+2
-	ror a
+	ror a							; divide by 16
 	clc
-	adc.w Yvel,y
-	sta.w Yvel,y
+	adc.w Yvel,y					; plus Y's y velocity
+	sta.w Yvel,y					; new Yvel of Y
 	lda.w #$FFFF					; collflag
-	sta.b collflag
+	sta.b collflag					; set collflag
 .exit:
 	stx.b xsave						; keep X
 	ldx.w #$0016
@@ -295,6 +295,6 @@ checkcx:							;Collision of object X with a nearby object: checks, interference
 	ldx.b xsave						; restore X
 	rtl
 .exit4:								;drop the saved Vx/Vy
-	pla
+	pla								; drop the saved Vx and Vy
 	pla
 	bra .exit
