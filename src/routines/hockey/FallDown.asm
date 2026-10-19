@@ -6,11 +6,11 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	bcc .f1
 	jmp.w .rtl
 .f1:
-	lda.w pf2fight,y
+	lda.w pf2fight,y				; fighting?
 	beq .spa
 	jmp.w .rtl
 .spa:								;already in one of the fall anims?
-	lda.w SPA,y
+	lda.w SPA,y						; animation of the falling player
 	cmp.w #SPAinjury1
 	bne .s2
 	jmp.w .rtl
@@ -32,19 +32,19 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	jmp.w .rtl
 .s6:								;stumble when stickhand (byte $71) >= $C, nopuckb is 0 and impact <
 									;$10-$1F
-	lda.w #SPAstumble
+	lda.w #SPAstumble				; stumble animation
 	sta.b d1
-	lda.w stickhand,y
+	lda.w stickhand,y				; stickhand rating
 	cmp.w #$000C
 	bcc .fall
-	lda.w nopuckb,y
+	lda.w nopuckb,y					; recent stumble?
 	bne .fall
-	lda.w seed
+	lda.w seed						; random
 	and.w #$000F
-	ora.w #$0010
+	ora.w #$0010					; $10-$1F
 	sta.b d0
 	sec
-	sbc.w impact,y
+	sbc.w impact,y					; minus the impact
 	beq .fall
 	bmi .neg
 	bvc .stumble
@@ -53,25 +53,25 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	bvc .fall
 .stumble:							;no second stumble for $3C
 	lda.w #$003C
-	sta.w nopuckb,y
+	sta.w nopuckb,y					; no second stumble for 60 frames
 	jmp.w .set
 .fall:								;no check stats for a goalie hitter
-	lda.w position,x
+	lda.w position,x				; goalie hitter?
 	beq .nostat
 	stz.b a0						; team checks, player checks, ChkCnt (+3 when fightagg is 0)
-	lda.w pfteam,x
+	lda.w pfteam,x					; team of the hitter
 	beq .tm
 	lda.w #$0002
 	sta.b a0
 .tm:
 	ldy.b a0
-	lda.w tmchecks,y
+	lda.w tmchecks,y				; team checks
 	inc a
-	sta.w tmchecks,y
-	inc.w ChkCnt
-	lda.w pnum,x
+	sta.w tmchecks,y				; count it
+	inc.w ChkCnt					; total check count
+	lda.w pnum,x					; hitter's player number
 	sta.b d0
-	lda.w pfteam,x
+	lda.w pfteam,x					; team offset
 	beq .pl
 	lda.w #$001A
 .pl:
@@ -79,57 +79,57 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	adc.b d0
 	tay
 	sep #$20						; 8-bit A
-	lda.w pchecks,y
+	lda.w pchecks,y					; player checks
 	inc a
-	sta.w pchecks,y
+	sta.w pchecks,y					; count it
 	rep #$20						; 16-bit A
-	lda.w fightagg,x
+	lda.w fightagg,x				; hitter's aggression
 	bne .nostat
 	inc.w ChkCnt
 	inc.w ChkCnt
 .nostat:
 	ldy.b a2						; nopuck 120 for a2
-	lda.w #$0078
+	lda.w #$0078					; puck lockout 120
 	sta.w nopuck,y
 	lda.w Xpos,x					; direction from a2 to the hitter
 	sec
-	sbc.w Xpos,y
+	sbc.w Xpos,y					; minus x of a2
 	sta.b d0
-	lda.w Ypos,x
+	lda.w Ypos,x					; y of the hitter
 	sec
-	sbc.w Ypos,y
+	sbc.w Ypos,y					; minus y of a2
 	sta.b d1
 	jsl.l vtoa						; vector to direction
-	lda.w #SPAfallback
+	lda.w #SPAfallback				; fall back
 	sta.b d1
 	ldy.b a2						; hit from the front: fall back
-	lda.b d0
+	lda.b d0						; direction to the hitter
 	sec
 	sbc.w facedir,y
 	inc a
 	and.w #$0007
-	cmp.w #$0003
+	cmp.w #$0003					; within 2 of the facing?
 	bcc .set
-	lda.w #SPAfallfwd
+	lda.w #SPAfallfwd				; else fall forward
 	sta.b d1
 	lda.w facedir,y					; facedir 0 or 4 and hitter aggress >= 10: third fall
 	and.w #$0003
 	bne .set
-	lda.w aggress,x
+	lda.w aggress,x					; hitter's aggression
 	sec
-	sbc.w #$000A
+	sbc.w #$000A					; minus 10
 	bmi .neg1
 	bvc .f3
 	bra .set
 .neg1:
 	bvc .set
 .f3:
-	cpx.w #$0018
+	cpx.w #$0018					; players only
 	bcs .set
-	lda.w #SPAflip
+	lda.w #SPAflip					; flip
 	sta.b d1
 .set:								;SetSPA d1 for a2
-	ldx.b a2
+	ldx.b a2						; a2
 	ldy.b a3
 	stx.b a3
 	sty.b a2
@@ -142,11 +142,11 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	sty.b a2
 	lda.b crowdlevel				; crowd +300
 	clc
-	adc.w #$012C
+	adc.w #$012C					; plus 300
 	sta.b crowdlevel
 	lda.w puckc						; a2 did not have the puck: check sound only
 	sta.b d0
-	bpl .pc
+	bpl .pc							; a2 had the puck?
 	jmp.w newcheck
 .pc:
 	tya
@@ -155,26 +155,26 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	beq .drop
 	jmp.w newcheck
 .drop:								;a2 had the puck: lose it, maybe an injury
-	lda.w #$FFFF
+	lda.w #$FFFF					; puck is loose
 	sta.w puckc
 	lda.w gmode						;injury: no highlight, fall back, facedir 0/4, no penalty, random(160) <=
 									;impact, clock running
-	bit.w #gmhl
+	bit.w #gmhl						; highlight?
 	bne .snd
-	lda.w SPA,y
+	lda.w SPA,y						; animation
 	cmp.w #SPAfallback
 	bne .snd
-	lda.w facedir,y
+	lda.w facedir,y					; facing
 	and.w #$0003
 	bne .snd
-	lda.w pflags,y
+	lda.w pflags,y					; already penalised?
 	bit.w #pf2pen
 	bne .snd
-	lda.w #$00A0
+	lda.w #$00A0					; random 0-159
 	jsl.l randoma					; random number 0 to A-1
 	ldy.b a2
 	sec
-	sbc.w impact,y
+	sbc.w impact,y					; minus the impact
 	beq .inj
 	bmi .neg2
 	bvs .inj
@@ -182,13 +182,13 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 .neg2:
 	bvs .snd
 .inj:
-	lda.w gmclock
+	lda.w gmclock					; clock stopped?
 	bne .snd
 	ldx.b a2
 	ldy.b a3
 	stx.b a3
 	sty.b a2
-	lda.w #SPAinjury1
+	lda.w #SPAinjury1				; injury animation
 	sta.b d1
 	jsl.l SetSPA					; start animation d1
 	ldx.b a2
@@ -196,33 +196,33 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	stx.b a3
 	sty.b a2
 	jsl.l setInjuryType				; setInjuryType
-	lda.w #$0004
+	lda.w #$0004					; injury countdown
 	sta.w InjCntDown
 	lda.w #PenNoText				;PenNoText if the hitter is a goalie or penalties are off, else
 	;PenRoughing2
 									;and Stop4Pen
 	sta.b d0
-	lda.w position,x
+	lda.w position,x				; hitter a goalie?
 	bne .g
 	jmp.w AddPenalty2
 .g:
-	lda.w OptPen
+	lda.w OptPen					; penalties off?
 	bne .rough
 	jmp.w AddPenalty2
 .rough:
-	lda.w #PenRoughing2
+	lda.w #PenRoughing2				; roughing penalty
 	sta.b d0
 	jsl.l AddPenalty2
-	jmp.w Stop4Pen
+	jmp.w Stop4Pen					; stop play
 .snd:
 	ldy.b a2						; home player fell: boo, else cheer
-	lda.w #SFXcrowdcheer
+	lda.w #SFXcrowdcheer			; cheer
 	pha
 	lda.w pfteam,y
 	bne .3
-	lda.w #SFXcrowdboo
+	lda.w #SFXcrowdboo				; boo for the home team
 	sta.b $01,s
 .3:
-	jsl.l sfx
+	jsl.l sfx						; play it
 .rtl:
 	rtl
