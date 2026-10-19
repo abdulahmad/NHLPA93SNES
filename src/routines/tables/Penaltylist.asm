@@ -1,31 +1,75 @@
 ; The penalties. Penaltylist holds one word per penalty number (the number is the word offset): the offset
 ; of that penalty's data, which follows the list: slow-down time and minutes, text, animation delays.
-; The Pen* equates are in ram93s.asm.
+; The Pen* equates sit beside their entries.
 
-Penaltylist:						;The penalties, by penalty number
-	dw $0000						; 0
-	dw PenDataEOP-Penaltylist		; $02 period over
-	dw PenDataEOG-Penaltylist		; $04 game over
-	dw PenDataGhold-Penaltylist		; $06 out of play
-	dw PenDataGhold-Penaltylist		; $08 goalie holding
-	dw PenDatawhistle-Penaltylist	; $0A whistle
-	dw PenDataice-Penaltylist		; $0C icing
-	dw PenDataGoal-Penaltylist		; $0E goal
-	dw PenDataoffsides-Penaltylist	; $10 offsides
-	dw PenDatarough2-Penaltylist	; $12 roughing, slow down time $A
-	dw PenDataNoText-Penaltylist	; $14 no text
-	dw PenDatacharge-Penaltylist	; $16 charging
-	dw PenDataslash-Penaltylist		; $18 slashing
-	dw PenDatarough-Penaltylist		; $1A roughing
-	dw PenDatacross-Penaltylist		; $1C cross check
-	dw PenDatahook-Penaltylist		; $1E hooking
-	dw PenDatatrip-Penaltylist		; $20 tripping
-	dw PenDataint-Penaltylist		; $22 interference
-	dw PenDataHold-Penaltylist		; $24 holding
-	dw PenDatafight-Penaltylist		; $26 fighting
-	dw PenDatafight2-Penaltylist	; $28 fighting *
-	dw PenDataInst-Penaltylist		; $2A fight instigator
-	dw PenDatadelay-Penaltylist		; $2C delay
+Penaltylist:						;The penalties, by penalty number (the word offset into this table)
+	dw $0000
+PenEOP	=	$02						;period over
+	assert pc()-Penaltylist == PenEOP
+	dw PenDataEOP-Penaltylist
+PenEOG	=	$04						;game over
+	assert pc()-Penaltylist == PenEOG
+	dw PenDataEOG-Penaltylist
+PenOOP	=	$06						;face off / out of play: puck still too long, puck over the glass
+	assert pc()-Penaltylist == PenOOP
+	dw PenDataGhold-Penaltylist
+PenGhold	=	$08					;goalie held the puck / bump
+	assert pc()-Penaltylist == PenGhold
+	dw PenDataGhold-Penaltylist
+PenWhistle	=	$0A					;whistle
+	assert pc()-Penaltylist == PenWhistle
+	dw PenDatawhistle-Penaltylist
+PenIcing	=	$0C					;icing
+	assert pc()-Penaltylist == PenIcing
+	dw PenDataice-Penaltylist
+PenGoal	=	$0E						;goal
+	assert pc()-Penaltylist == PenGoal
+	dw PenDataGoal-Penaltylist
+PenOffsides	=	$10					;offsides
+	assert pc()-Penaltylist == PenOffsides
+	dw PenDataoffsides-Penaltylist
+PenRoughing2	=	$12				;roughing with slow down time $A
+	assert pc()-Penaltylist == PenRoughing2
+	dw PenDatarough2-Penaltylist
+PenNoText	=	$14					;injury stop, no text
+	assert pc()-Penaltylist == PenNoText
+	dw PenDataNoText-Penaltylist
+PenCharging	=	$16					;charging
+	assert pc()-Penaltylist == PenCharging
+	dw PenDatacharge-Penaltylist
+PenSlashing	=	$18					;slashing
+	assert pc()-Penaltylist == PenSlashing
+	dw PenDataslash-Penaltylist
+PenRoughing	=	$1A					;roughing
+	assert pc()-Penaltylist == PenRoughing
+	dw PenDatarough-Penaltylist
+PenCrossChk	=	$1C					;cross check
+	assert pc()-Penaltylist == PenCrossChk
+	dw PenDatacross-Penaltylist
+PenHooking	=	$1E					;hooking
+	assert pc()-Penaltylist == PenHooking
+	dw PenDatahook-Penaltylist
+PenTripping	=	$20					;tripping
+	assert pc()-Penaltylist == PenTripping
+	dw PenDatatrip-Penaltylist
+PenInterference	=	$22				;interference
+	assert pc()-Penaltylist == PenInterference
+	dw PenDataint-Penaltylist
+PenHolding	=	$24					;holding
+	assert pc()-Penaltylist == PenHolding
+	dw PenDataHold-Penaltylist
+PenFighting	=	$26					;fighting, also the penalty byte of a fight in the list
+	assert pc()-Penaltylist == PenFighting
+	dw PenDatafight-Penaltylist
+PenFighting2	=	$28				;fighting *
+	assert pc()-Penaltylist == PenFighting2
+	dw PenDatafight2-Penaltylist
+PenInst	=	$2A						;fight instigator
+	assert pc()-Penaltylist == PenInst
+	dw PenDataInst-Penaltylist
+PenDelay	=	$2C					;delayed penalty ref
+	assert pc()-Penaltylist == PenDelay
+	dw PenDatadelay-Penaltylist
 ;format: dw $ttmm (tt = slow down time in half secs, mm = penalty min.); string (length word counting itself,
 ;text) then dw $ffdd,... (ff = frame, dd = delay; negative ends)
 PenDataEOP:							;period over
