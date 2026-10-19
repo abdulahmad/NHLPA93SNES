@@ -19,9 +19,9 @@ GetNameandAttrib:					;Print player d0's number and name, then the roster column
 	cpx.w #$0008
 	bne .savea
 	ldx.b xsave						; restore X
-	jsl.l getname
+	jsl.l getname					; get the player name
 	jsl.l print						; print it
-	lda.w #$001A
+	lda.w #$001A					; rating column at x 26
 	sta.w printx
 	lda.b d4						; status, energy, handed: no ratings
 	cmp.w #$0003
@@ -34,7 +34,7 @@ GetNameandAttrib:					;Print player d0's number and name, then the roster column
 	lda.w tmdata,y					; team data, player records
 	sta.b a0
 	clc
-	ldy.w #Playerdata
+	ldy.w #Playerdata				; player records offset
 	adc.b [a0],y
 	sta.b a0
 .skip:								; skip to the next team entry
@@ -45,11 +45,11 @@ GetNameandAttrib:					;Print player d0's number and name, then the roster column
 	sta.b a0
 	dec.b d0
 	bpl .skip
-	stz.b d0
+	stz.b d0						; d0 = sum of the ratings
 	stz.b d1
-	lda.w #$000F
+	lda.w #$000F					; test 16 attribute bits
 	sta.b d2
-	lda.b d4
+	lda.b d4						; swap the two halves of d4
 	ldy.b d4+2
 	sta.b d4+2
 	sty.b d4
@@ -79,11 +79,11 @@ GetNameandAttrib:					;Print player d0's number and name, then the roster column
 	sta.b tmp0
 	lda.b a0+2
 	sta.b tmp1
-	lda.b [tmp0]
+	lda.b [tmp0]					; read the packed attribute byte
 	sta.b d3
 	lda.b d2
 	lsr a
-	bcc .2
+	bcc .2							; odd attribute: high nibble
 	lda.b d3
 	lsr a
 	lsr a
@@ -113,12 +113,12 @@ GetNameandAttrib:					;Print player d0's number and name, then the roster column
 	sta.b a0
 	lda.w #attribjmp>>16
 	sta.b a0+2
-	ldy.b d4
+	ldy.b d4						; d4 selects the routine
 	lda.b [a0],y
 	clc
 	adc.b a0
 	sta.b a0
-	sta.w jmlvector+1
+	sta.w jmlvector+1				; patch the jump address
 	lda.b a0+1
 	sta.w jmlvector+2
 	jsl.l jmlvector

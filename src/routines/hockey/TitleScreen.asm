@@ -9,12 +9,12 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	jsl.l InitPPU					; PPU registers off/clear
 	sep #$20						; 8-bit A
 	cli
-	lda.w RDNMI
+	lda.w RDNMI						; enable NMI and auto-joypad read
 	lda.b #NMITIMEN_NMI|NMITIMEN_JOY
 	sta.w NMITIMEN
-	lda.b #$03
+	lda.b #$03						; sprite size and name base
 	sta.w OBSEL
-	lda.b #BGMODE_1
+	lda.b #BGMODE_1					; BG mode 1
 	sta.w BGMODE
 	lda.b #$00
 	sta.w BG1SC
@@ -59,7 +59,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	dex
 	dex
 	bpl .prio
-	lda.w #$1000
+	lda.w #$1000					; VRAM address $1000
 	sta.w VMADDL
 	ldx.w #$0000
 .tiles:								; copy the title tiles to VRAM
@@ -89,7 +89,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	lda.w #SmallFontTiles>>16
 	sta.b tmp1
 	jsl.l DecompressBytecode
-	lda.w #unpackbuf&$FFFF
+	lda.w #unpackbuf&$FFFF			; remap the font pixels
 	sta.b a0
 	lda.w #unpackbuf>>16
 	sta.b a0+2
@@ -100,7 +100,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	lda.w #$0064
 	sta.b d0
 	jsl.l remap						; remap the 4bpp pixels ([a0] data, [a1] table, d0 tiles)
-	jsl.l StartSong6
+	jsl.l StartSong6				; start the title music
 	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pal3,$00,$1C)
 	stz.b d0
@@ -119,20 +119,20 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	sta.b DMAlistend
 	lda.w #VBlank_VScroll			; title vblank handler
 	sta.b vbint
-	lda.w #$0001
+	lda.w #$0001					; fade in
 	sta.b fadein
 .wait1:								; wait for the next frame
 	cmp.b vbint
 	beq .wait1
 .top2:								;next credits page
-	ldy.w #$0002
+	ldy.w #$0002					; next credits page
 	lda.b [a0],y
 	and.w #$00FF
 	cmp.w #$00FF					; end of the credits
 	bne .top4
 	jmp.w .exit
 .top4:								;blank the 6 rows below the screen
-	lda.w printy
+	lda.w printy					; blank the 6 rows below the screen
 	pha
 	ldx.w #$0006
 .erase:								; erase the credits text
@@ -142,7 +142,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	adc.b $01,s
 	and.w #$001F
 	sta.w printy
-	lda.w #CreditsBlank
+	lda.w #CreditsBlank				; blank line text
 	sta.b a1
 	lda.w #CreditsBlank>>16
 	sta.b a1+2
@@ -166,7 +166,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	inc a
 	and.w #$001F
 	sta.w printy
-	lda.b [a0]
+	lda.b [a0]						; next line of the page
 	clc
 	adc.b a0
 	sta.b a0
@@ -179,11 +179,11 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	cmp.w #$00FF
 	bne .top4x
 .scroll:							; scroll the credits
-	lda.b [a0]
+	lda.b [a0]						; advance past the page
 	clc
 	adc.b a0
 	sta.b a0
-	pla
+	pla								; printy moves by 6 rows
 	clc
 	adc.w #6
 	and.w #$001F
@@ -210,10 +210,10 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	lda.b d3
 	cmp.w #$00FE					; $FE: no Start (copyright page)
 	bne .nopause
-	stz.w padnew1
+	stz.w padnew1					; copyright page: ignore Start
 	stz.w padnew1+2
 .nopause:							; no pause: check for Start
-	lda.w padnew1
+	lda.w padnew1					; Start pressed?
 	ora.w padnew1+2
 	bit.w #JOYSTART
 	bne .exit
@@ -243,12 +243,12 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	ora.w padnew1+2
 	bit.w #JOYSTART
 	bne .exit
-	lda.b vcount
+	lda.b vcount					; page time up?
 	cmp.b d2
 	bne .top6
-	jmp.w .top2
+	jmp.w .top2						; next page
 .exit:								;wait for the default vblank handler, return
-	lda.b vbint
+	lda.b vbint						; wait for the default vblank handler
 	cmp.w #vb2						; the default vblank handler
 	bne .exit
 	rtl
