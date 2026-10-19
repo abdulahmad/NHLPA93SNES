@@ -1,27 +1,27 @@
-PenaltyList:						;The penalties, by penalty number
+Penaltylist:						;The penalties, by penalty number
 	dw $0000						; 0
-	dw PenDataEOP-PenaltyList		; $02 period over
-	dw PenDataEOG-PenaltyList		; $04 game over
-	dw PenDataGhold-PenaltyList		; $06 out of play
-	dw PenDataGhold-PenaltyList		; $08 goalie holding
-	dw PenDatawhistle-PenaltyList	; $0A whistle
-	dw PenDataice-PenaltyList		; $0C icing
-	dw PenDataGoal-PenaltyList		; $0E goal
-	dw PenDataoffsides-PenaltyList	; $10 offsides
-	dw PenDatarough2-PenaltyList	; $12 roughing, slow down time $A
-	dw PenDataNoText-PenaltyList	; $14 no text
-	dw PenDatacharge-PenaltyList	; $16 charging
-	dw PenDataslash-PenaltyList		; $18 slashing
-	dw PenDatarough-PenaltyList		; $1A roughing
-	dw PenDatacross-PenaltyList		; $1C cross check
-	dw PenDatahook-PenaltyList		; $1E hooking
-	dw PenDatatrip-PenaltyList		; $20 tripping
-	dw PenDataint-PenaltyList		; $22 interference
-	dw PenDataHold-PenaltyList		; $24 holding
-	dw PenDatafight-PenaltyList		; $26 fighting
-	dw PenDatafight2-PenaltyList	; $28 fighting *
-	dw PenDataInst-PenaltyList		; $2A fight instigator
-	dw PenDatadelay-PenaltyList		; $2C delay
+	dw PenDataEOP-Penaltylist		; $02 period over
+	dw PenDataEOG-Penaltylist		; $04 game over
+	dw PenDataGhold-Penaltylist		; $06 out of play
+	dw PenDataGhold-Penaltylist		; $08 goalie holding
+	dw PenDatawhistle-Penaltylist	; $0A whistle
+	dw PenDataice-Penaltylist		; $0C icing
+	dw PenDataGoal-Penaltylist		; $0E goal
+	dw PenDataoffsides-Penaltylist	; $10 offsides
+	dw PenDatarough2-Penaltylist	; $12 roughing, slow down time $A
+	dw PenDataNoText-Penaltylist	; $14 no text
+	dw PenDatacharge-Penaltylist	; $16 charging
+	dw PenDataslash-Penaltylist		; $18 slashing
+	dw PenDatarough-Penaltylist		; $1A roughing
+	dw PenDatacross-Penaltylist		; $1C cross check
+	dw PenDatahook-Penaltylist		; $1E hooking
+	dw PenDatatrip-Penaltylist		; $20 tripping
+	dw PenDataint-Penaltylist		; $22 interference
+	dw PenDataHold-Penaltylist		; $24 holding
+	dw PenDatafight-Penaltylist		; $26 fighting
+	dw PenDatafight2-Penaltylist	; $28 fighting *
+	dw PenDataInst-Penaltylist		; $2A fight instigator
+	dw PenDatadelay-Penaltylist		; $2C delay
 ;format: dw $ttmm (tt = slow down time in half secs, mm = penalty min.); string (length word counting itself,
 ;text) then dw $ffdd,... (ff = frame, dd = delay; negative ends)
 PenDataEOP:							;period over

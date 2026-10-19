@@ -74,9 +74,9 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	and.w #$00FF
 	sta.b d0
 	tay
-	lda.w #PenaltyList
+	lda.w #Penaltylist
 	sta.b a1
-	lda.w #PenaltyList>>16
+	lda.w #Penaltylist>>16
 	sta.b a1+2
 	lda.b [a1],y
 	clc

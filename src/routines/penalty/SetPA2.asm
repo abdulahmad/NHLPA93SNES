@@ -27,19 +27,19 @@ SetPA2:								;Step the referee animation to its next frame and delay
 	sta.b d0
 	inc.w RefStep
 	inc.w RefStep
-	lda.w RefPen					;PenaltyList entry of RefPen: its animation offset (+2), then the
+	lda.w RefPen					;Penaltylist entry of RefPen: its animation offset (+2), then the
 									;frame/delay word at RefStep
 	sta.b d1
 	tax
-	lda.l PenaltyList,x
+	lda.l Penaltylist,x
 	inc a
 	inc a
 	tax
 	clc
-	adc.l PenaltyList,x
+	adc.l Penaltylist,x
 	adc.b d0
 	tax
-	lda.l PenaltyList,x
+	lda.l Penaltylist,x
 	sta.b d0
 	bpl .0
 	eor.w #$FFFF					; negative: last pair, RefStep = -1

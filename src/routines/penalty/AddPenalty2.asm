@@ -70,9 +70,9 @@ AddPenalty2:						;Call penalty d0 on player X without the checks; used for forc
 	and.w #$FF00
 	ora.b d0
 	sta.b [a1]
-	lda.w #PenaltyList>>16			; a0 = PenaltyList + [d0]
+	lda.w #Penaltylist>>16			; a0 = Penaltylist + [d0]
 	sta.b a0+2
-	lda.w #PenaltyList
+	lda.w #Penaltylist
 	sta.b a0
 	ldy.b d0
 	clc

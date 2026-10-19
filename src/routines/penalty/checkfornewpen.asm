@@ -26,9 +26,9 @@ checkfornewpen:						;Look for a new penalty call. Stops play at once when the p
 	and.w #$00FF
 	sta.b d0
 	tay
-	lda.w #PenaltyList				; a1 = PenaltyList entry; minutes?
+	lda.w #Penaltylist				; a1 = Penaltylist entry; minutes?
 	sta.b a1
-	lda.w #PenaltyList>>16
+	lda.w #Penaltylist>>16
 	sta.b a1+2
 	lda.b [a1],y
 	clc
@@ -74,9 +74,9 @@ checkfornewpen:						;Look for a new penalty call. Stops play at once when the p
 	and.w #$00FF
 	sta.b d0
 	tay
-	lda.w #PenaltyList				; delay byte (+1) * 32
+	lda.w #Penaltylist				; delay byte (+1) * 32
 	sta.b a1
-	lda.w #PenaltyList>>16
+	lda.w #Penaltylist>>16
 	sta.b a1+2
 	lda.b [a1],y
 	clc

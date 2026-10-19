@@ -3,7 +3,7 @@
 if pc() < $888000
 	org $888000
 endif
-incsrc "../data/gfx/GameSetupMap.asm"
+incsrc "../data/gfx/GameSetUpMap.asm"
 incsrc "../data/gfx/SmallFontMap.asm"
 incsrc "../routines/middle/mulu32.asm"
 incsrc "../routines/penalty/getlinee.asm"

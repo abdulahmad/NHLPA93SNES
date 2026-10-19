@@ -141,13 +141,13 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	lda.w #$1C00
 	sta.w printa
 .other:
-	lda.w #36						; 36 bytes per TeamBlocksMap entry
+	lda.w #36						; 36 bytes per Teamblocksmap entry
 	sta.b mulb
 	jsl.l mulu16					; 16-bit multiply
 	tay
-	lda.w #TeamBlocksMap
+	lda.w #Teamblocksmap
 	sta.b a2
-	lda.w #TeamBlocksMap>>16
+	lda.w #Teamblocksmap>>16
 	sta.b a2+2
 	lda.w printy					; textmap offset (y * 128 + x) * 2
 	asl a

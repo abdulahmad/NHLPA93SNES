@@ -266,17 +266,17 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	lda.w #$0009
 	sta.w printy
 .top:
-	lda.w #AttribMenuSkater
+	lda.w #PAttribColumns
 	sta.b a1
-	lda.w #AttribMenuSkater>>16
+	lda.w #PAttribColumns>>16
 	sta.b a1+2
 	lda.w DispAttribCtr
 	sta.b d0
 	lda.w SelectedPlayerIdx
 	bne .2
-	lda.w #AttribMenuGoalie
+	lda.w #GAttribColumns
 	sta.b a1
-	lda.w #AttribMenuGoalie>>16
+	lda.w #GAttribColumns>>16
 	sta.b a1+2
 	bra .2
 .next:
@@ -346,9 +346,9 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	sec
 	adc.b d0
 	sta.b a3
-	lda.w #PositionNames
+	lda.w #PlayerPositionText
 	sta.b a4+4
-	lda.w #PositionNames>>16
+	lda.w #PlayerPositionText>>16
 	sta.b a4+6
 	lda.w #$0004
 	sta.b d1

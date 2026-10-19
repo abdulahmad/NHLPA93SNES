@@ -43,9 +43,9 @@ prefmes:							;Print the message for penalty d0, or clear it when negative: und
 	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $BF,$05,$0A
 	ldy.b d0
-	lda.w #PenaltyList
+	lda.w #Penaltylist
 	sta.b a1
-	lda.w #PenaltyList>>16
+	lda.w #Penaltylist>>16
 	sta.b a1+2
 	lda.b [a1],y
 	clc
@@ -93,9 +93,9 @@ prefmes:							;Print the message for penalty d0, or clear it when negative: und
 	jsl.l printz
 	dw $0005						; printz inline string: length (counts itself), then control bytes / text
 	db $BF,$11,$0B
-	lda.w #PenaltyList
+	lda.w #Penaltylist
 	sta.b a1
-	lda.w #PenaltyList>>16
+	lda.w #Penaltylist>>16
 	sta.b a1+2
 	ldy.b d0
 	lda.b [a1],y
