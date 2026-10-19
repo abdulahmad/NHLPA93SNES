@@ -27,7 +27,7 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	bit.w #pfjoycon
 	bne .rts
 	jmp.w assinsert					; insert the assignment
-.rts:
+.rts:								; return
 	rtl
 .nopc:								;every aioff frames: find the teammate nearest the (moving) puck
 	lda.w temp1,x					; timer
@@ -40,7 +40,7 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	adc.w aioff,x					; reload temp1 from aioff
 	bpl .setcnt
 	lda.w #$0000
-.setcnt:
+.setcnt:							; store the countdown, then clear tmnear
 	sta.w temp1,x
 	ldy.b a2						; team of this player
 	lda.w #$0000					; tmnear = 0
@@ -72,7 +72,7 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	ldy.b a2						; team of this player
 	lda.w tmsort,y					; a0 = first object of the team
 	sta.b a0
-.de0:
+.de0:								; loop over the opponent slots
 	ldy.b a0
 	lda.w position,y				; position
 	bpl .pos						; skip empty slots
@@ -100,7 +100,7 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	cmp.w #apassrec					; skip a player on apassrec
 	bne .dist
 	jmp.w .next
-.dist:
+.dist:								; distance of this player to the puck
 	lda.b a0
 	jsl.l GetHot					; hot spot offset
 	ldy.b a0
@@ -226,7 +226,7 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	lda.w position,x				; position
 	cmp.w #$0003
 	bcc .nodec
-.nfar:
+.nfar:								; not far from the puck: power play check
 	lda.w sflags
 	bit.w #sf2pwrplay				; sf2pwrplay
 	beq .x
@@ -245,7 +245,7 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	sta.b d0
 	lda.b d1						; shift count
 	sta.b tmp0
-.shl:
+.shl:								; shift left
 	dec.b tmp0
 	bmi .rnd
 	asl.b d0						; shift left
@@ -270,7 +270,7 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	bit.w #pfjoycon					; joystick controlled?
 	beq .mode
 	jmp.w .rts
-.mode:
+.mode:								; team mode: use the in-between spot
 	ldy.b a2
 	lda.w tmflags,y					; tmfmid: always the in-between spot
 	bit.w #tmfmid
@@ -308,7 +308,7 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	sec
 	sbc.w #$01E8					; $1E8 = 2*$F4 for the top goal
 	sta.b d1
-.nd0:
+.nd0:								; distance step
 	lda.b d0
 	pha
 	asl a							; asr #1
@@ -341,7 +341,7 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	bmi .neg1
 	bvc .clamp1
 	bra .go
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvc .go
 .clamp1:
 	lda.w #$0044					; clamp y
@@ -355,7 +355,7 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	bmi .neg2
 	bvs .clamp2
 	bra .go
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvs .go
 .clamp2:
 	lda.w #$FFBC					; clamp y

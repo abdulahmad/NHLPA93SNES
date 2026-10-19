@@ -81,7 +81,7 @@ ReadPassBits:						;Turn the password bits back into the playoff state; a bad ch
 	beq .rtl
 	lda.w #$FFFF					; bad password
 	sta.w postarts					; mark it invalid
-.rtl:
+.rtl:								; return
 	rtl
 .sd:								;d0 = passbits mod d0 (SuperDiv), added to the checksum d7
 	jsl.l SuperDiv					; read d0 values from the bits

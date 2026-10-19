@@ -10,7 +10,7 @@ ClearOffsidesIfAllPlayers:			;Clear team a2's offsides flag once none of its
 	sta.b a0						; a0 = first
 	lda.w #$0005					; six skaters
 	sta.b d1
-.top:
+.top:								; check each player
 	ldy.b a0
 	lda.w position,y				; position
 	bmi .next						; none
@@ -22,7 +22,7 @@ ClearOffsidesIfAllPlayers:			;Clear team a2's offsides flag once none of its
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
-.next:
+.next:								; next player
 	inc.b a0
 	inc.b a0
 	lda.b d0						; y
@@ -31,7 +31,7 @@ ClearOffsidesIfAllPlayers:			;Clear team a2's offsides flag once none of its
 	beq .more
 	bmi .neg
 	bvs .more						; still past it
-.rtl:
+.rtl:								; far branch to ChkOffsides_rtl
 	jmp.w ChkOffsides_rtl
 .neg:
 	bvs .rtl						; still past it

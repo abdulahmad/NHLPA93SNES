@@ -39,7 +39,7 @@ Endfaceoff:							;Drop the puck: pick the face off winner and send the puck off
 	bit.w #$0080
 	beq .f2
 	ora.w #$FF00
-.f2:
+.f2:								; add the winner's X
 	clc
 	adc.b d2
 	sta.b d2
@@ -49,7 +49,7 @@ Endfaceoff:							;Drop the puck: pick the face off winner and send the puck off
 	bcs .p1won
 	lda.w #$0004					; visitors won
 	sta.b a1
-.p1won:
+.p1won:								; player 1 won the faceoff
 	ldx.b a1
 	lda.w fofdata2+2,x
 	bit.w #$0800					; winner faces down: fodir2, -$800
@@ -58,7 +58,7 @@ Endfaceoff:							;Drop the puck: pick the face off winner and send the puck off
 	sta.b d3
 	lda.w #$F800
 	sta.b d4
-.pos:
+.pos:								; joystick direction
 	lda.b d3
 	bit.w #$0008
 	bne .nojoy
@@ -79,7 +79,7 @@ Endfaceoff:							;Drop the puck: pick the face off winner and send the puck off
 	lda.b d0
 	eor.w #$0004
 	sta.b d0
-.nj2:
+.nj2:								; scale the direction to a table index
 	asl.b d0
 	asl.b d0
 	ldx.b d0

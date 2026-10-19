@@ -74,7 +74,7 @@ PushRef:							;Draw referee frame d0 in the referee window; frame $40 erases th
 	cmp.b textdirtyhi				; dirty range high
 	bcc .hi
 	sta.b textdirtyhi				; new high
-.hi:
+.hi:								; next position
 	inc.b a0
 	inc.b a0
 	inc.b tmp1						; next position

@@ -13,7 +13,7 @@ updatefaceoff:						;Step the puck drop animation; at its end erase the face off
 	bmi .neg
 	bvs .set
 	bra .rtl
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .rtl
 .set:
 	lda.b d0						; d0 = 10 - d0
@@ -23,7 +23,7 @@ updatefaceoff:						;Step the puck drop animation; at its end erase the face off
 	adc.w #$000A
 	sta.b d0
 	sta.w fofdata					; drop animation frame
-.rtl:
+.rtl:								; return
 	rtl
 .erase:
 	jsl.l printz					; erase the faceoff box

@@ -71,14 +71,14 @@ assscore:							;Assignment: celebrating a goal; the scorer pumps his arm
 	lda.w #120
 	jsl.l randoma					; random number 0 to A-1
 	sta.w temp1,x					; store it
-.rtl:
+.rtl:								; return
 	rtl
 .chkcon:							;joystick controlled: stand, else skateto
 	lda.w pflags,x					; player flags
 	bit.w #pfjoycon					; joystick controlled?
 	bne .rtl2						; yes: stand
 	jml.l skateto					; else skate to the target
-.rtl2:
+.rtl2:								; return
 	rtl
 unusedFF86:							;unused, $FF fill to the end of the bank
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF

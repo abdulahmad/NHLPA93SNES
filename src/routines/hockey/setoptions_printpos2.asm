@@ -5,5 +5,5 @@ setoptions_printpos2:				;Where the name of a player shown on the scouting repor
 	bne .rtl
 	lda.w #20						; else x = 20
 	sta.w printx
-.rtl:
+.rtl:								; return
 	rtl

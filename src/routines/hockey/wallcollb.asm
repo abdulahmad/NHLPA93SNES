@@ -3,7 +3,7 @@ wallcollb:							;Object X hits a wall: the puck may go over the glass and out o
 	cpx.w #$001C					; not the puck: wallcoll
 	beq .puck
 	jmp.w wallcoll
-.puck:
+.puck:								; puck above the glass?
 	lda.w Zpos+puckobj
 	sec
 	sbc.w #$0020					; Zpos > 32: over
@@ -11,33 +11,33 @@ wallcollb:							;Object X hits a wall: the puck may go over the glass and out o
 	bmi .neg
 	bvs .z1
 	bra .0
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .0
-.z1:
+.z1:								; puck low enough to hit the wall
 	lda.w Zpos+puckobj
 	cmp.w #$0016					; Zpos <= 21: wallcoll
 	bcs .y280
 	jmp.w wallcoll
-.y280:
+.y280:								; puck Y at the end boards
 	lda.w pucky
 	sec
 	sbc.w #$0112					; y >= 274
 	bmi .neg1
 	bvc .x13
 	bra .0
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvc .0
-.x13:
+.x13:								; puck X in the goal mouth range
 	lda.w puckx
 	sec
 	sbc.w #$000D					; x 13-15 (the goal mouth)
 	bmi .neg2
 	bvc .x15
-.wc1:
+.wc1:								; far branch to wallcoll
 	jmp.w wallcoll
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvc .wc1
-.x15:
+.x15:								; puck X upper limit
 	lda.w puckx
 	sec
 	sbc.w #$000F
@@ -45,16 +45,16 @@ wallcollb:							;Object X hits a wall: the puck may go over the glass and out o
 	bmi .neg3
 	bvs .vy
 	bra wallcoll
-.neg3:
+.neg3:								; signed compare: overflow flag corrects the sign
 	bvs wallcoll
-.vy:
+.vy:								; Y velocity check
 	lda.w puckvy
 	sec
 	sbc.w #$0FA0					; Yvel >= $FA0
 	bmi .neg4
 	bvc .glass
 	bra wallcoll
-.neg4:
+.neg4:								; signed compare: overflow flag corrects the sign
 	bvc wallcoll
 .glass:								;over the glass at the goal: shadow animation, sound, crowd
 	phx
@@ -100,5 +100,5 @@ wallcollb:							;Object X hits a wall: the puck may go over the glass and out o
 	jsl.l AddPenalty2
 	ldx.w #$001C
 	stx.b a3
-.rtl:
+.rtl:								; return
 	rtl

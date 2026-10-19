@@ -19,7 +19,7 @@ DecompressBytecode:					;Unpack a compressed stream to unpackbuf. Each control b
 	dex
 	bpl .litloop
 	bra .next						; next command
-.clear:
+.clear:								; command class
 	tay
 	and.w #$00F0					; command class in bits 4-7
 	cmp.w #$0020					; $2x: run of zeros
@@ -28,7 +28,7 @@ DecompressBytecode:					;Unpack a compressed stream to unpackbuf. Each control b
 	and.w #$000F
 	tax								; run length - 1
 	lda.w #$0000					; fill with zero
-.clrloop:
+.clrloop:							; zero-fill loop
 	sta.b [tmp1+1]
 	inc.b tmp1+1
 	dex
@@ -44,7 +44,7 @@ DecompressBytecode:					;Unpack a compressed stream to unpackbuf. Each control b
 	inx
 	lda.b [tmp0]					; the byte to repeat
 	inc.b tmp0
-.fillloop:
+.fillloop:							; fill loop
 	sta.b [tmp1+1]
 	inc.b tmp1+1
 	dex

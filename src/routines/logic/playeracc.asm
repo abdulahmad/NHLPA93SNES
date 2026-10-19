@@ -13,7 +13,7 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	bit.w #$2000
 	beq .sx
 	ora.w #$C000
-.sx:
+.sx:								; x increment of the direction
 	sta.b d1
 	lda.l dirtab8F,x				; x increment of the direction
 	sta.b mula
@@ -25,7 +25,7 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	bit.w #$2000
 	beq .sy
 	ora.w #$C000
-.sy:
+.sy:								; y increment of the direction
 	sta.b d0
 	ldx.b a3
 	lda.w Wallsin,x					; wall normal y: don't push into the wall
@@ -60,7 +60,7 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	clc
 	adc.w #$0008
 	sta.b d2
-.ng:
+.ng:								; negative acceleration
 	lda.b d2
 	pha								; keep the acceleration factor
 	sta.b mula
@@ -176,9 +176,9 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	sbc.w #$0C00
 	bmi .neg						; below $C00: just lower it
 	bvc .add
-.set:
+.set:								; far branch to setpde
 	jmp.w setpde
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .set
 .add:
 	lda.w endurance,x				; above $C00: also add the endurance byte
@@ -187,5 +187,5 @@ playeracc:							;Accelerate player X in direction d2 by his weight and leg stre
 	adc.b d0
 	sta.b d0
 	jmp.w setpde
-.rtl:
+.rtl:								; return
 	rtl

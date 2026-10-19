@@ -38,7 +38,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	stz.w charofs2
 	lda.w blankchar
 	ldx.w #$07FE					; clear the text map with the blank
-.clrtext:
+.clrtext:							; clear the text map
 	sta.l textmap,x
 	dex
 	dex
@@ -49,7 +49,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	sta.b tmp1
 	jsl.l DecompressBytecode		; unpack
 	ldx.w #$03FE					; copy the unpacked map into the back map
-.copymap:
+.copymap:							; copy the scouting map to the back map
 	lda.l TestList,x
 	sta.l backmap,x
 	sta.l backmap+$400,x
@@ -67,7 +67,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	cpx.w #$04A0					; $04A0 bytes
 	bne .easntiles
 	ldx.w #$0010					; clear $10 words of VRAM
-.padvram:
+.padvram:							; clear the rest of VRAM
 	stz.w VMDATAL
 	dex
 	bne .padvram
@@ -138,7 +138,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	stz.b tmp1						; row counter
 .ronrow:
 	stz.b tmp0						; column counter
-.roncol:
+.roncol:							; row column offset
 	lda.b tmp1
 	sta.b mula						; row * 8
 	lda.w #$0008
@@ -253,7 +253,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	sta.b [a0]						; append the away team
 	inc.b a0
 	inc.b a0
-.same:
+.same:								; closing paragraph
 	lda.w #$001D
 	sta.b [a0]
 	inc.b a0
@@ -295,5 +295,5 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	jsl.l UpdateScoutingDisplay		; UpdateScoutingDisplay
 	dec.w screentimer				; count down the screen timer
 	bpl .top
-.rtl:
+.rtl:								; return
 	rtl

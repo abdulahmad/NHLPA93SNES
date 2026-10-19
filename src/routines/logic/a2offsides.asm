@@ -12,14 +12,14 @@ a2offsides:							;Offsides if the player's team is flagged and the puck is past
 	eor.w #$FFFF					; negate for the bottom end
 	inc a
 	sta.b d0
-.0:
+.0:									; distance to the blue line
 	lda.b d0
 	sec								; distance to the blue line
 	sbc.w #blueline					; blueline
 	bmi .neg						; signed compare
 	bvc .team
 	bra .rtl
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .rtl
 .team:
 	stz.b a0						; a0 = team offset
@@ -46,5 +46,5 @@ a2offsides:							;Offsides if the player's team is flagged and the puck is past
 	ldy.b a3
 	stx.b a3
 	sty.b a2
-.rtl:
+.rtl:								; return
 	rtl

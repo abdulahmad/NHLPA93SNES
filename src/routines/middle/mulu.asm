@@ -68,7 +68,7 @@ mulu:								;Unsigned multiply: mulres (32-bit) = mula * mulb
 	sep #$20						; 8-bit A
 	bcc .c1
 	inc.b mulres+3
-.c1:
+.c1:								; multiply by the high byte of mulb
 	lda.b mula+1
 	sta.w WRMPYA
 	lda.b mulb
@@ -82,7 +82,7 @@ mulu:								;Unsigned multiply: mulres (32-bit) = mula * mulb
 	sep #$20						; 8-bit A
 	bcc .c2
 	inc.b mulres+3
-.c2:
+.c2:								; use the high byte of mulb
 	lda.b mulb+1
 	sta.w WRMPYB
 	rep #$30						; 16-bit registers

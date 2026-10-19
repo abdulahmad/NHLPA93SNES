@@ -48,7 +48,7 @@ SprSort:							;Sort the objects by screen position for drawing
 	bmi .neg
 	bvc .swap
 	bra .1
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .1
 .swap:
 	lda.w OOlist,x					; swap the two list entries

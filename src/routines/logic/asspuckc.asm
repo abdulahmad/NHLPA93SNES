@@ -39,7 +39,7 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	adc.w aioff,x					; reload from aioff
 	bpl .set
 	lda.w #$0000
-.set:
+.set:								; store the countdown, then check the other team and line changes
 	sta.w temp1,x
 	jsl.l checkob					; check the other team
 	jsl.l chk4lc					; line change
@@ -86,7 +86,7 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	lda.w #.chkdir>>16
 	sta.b a0+2
 	jml.l skateto					; d0/d1 = target, a0 = callback
-.rtl:
+.rtl:								; return
 	rtl
 .chkdir:							;skateto callback. d0 = direction; turn away from an opponent within 20 of
 									;where the puck will be (threat = count)
@@ -102,7 +102,7 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	bit.w #$0080
 	beq .x2
 	ora.w #$FF00
-.x2:
+.x2:								; future puck X
 	clc
 	adc.w puckx						; plus the puck x
 	sta.b d2						; d2 = future puck x
@@ -111,7 +111,7 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	bit.w #$0080
 	beq .y2
 	ora.w #$FF00
-.y2:
+.y2:								; future puck Y
 	clc
 	adc.w pucky						; plus the puck y
 	sta.b d3						; d3 = future puck y
@@ -130,7 +130,7 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	bit.w #$0080
 	beq .cx
 	ora.w #$FF00
-.cx:
+.cx:								; X distance from the opponent
 	clc
 	adc.w Xpos,y					; plus his x
 	sec
@@ -147,7 +147,7 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	bit.w #$0080
 	beq .cy
 	ora.w #$FF00
-.cy:
+.cy:								; Y distance from the opponent
 	clc
 	adc.w Ypos,y					; plus his y
 	sec
@@ -185,5 +185,5 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	dec.b d4						; opponents left
 	bmi .rtl2
 	jmp.w .cd0
-.rtl2:
+.rtl2:								; return
 	rtl

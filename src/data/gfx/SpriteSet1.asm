@@ -17,5 +17,5 @@ SpriteSet1:							;frame set 1 (SPFswing): frames 97-144
 	assert .tiles-.pieces == 4*258
 .tiles:								;512 4bpp tiles (32 bytes each)
 	incbin "../../../Extracted/Graphics/Sprites/set01.chr"
-SpriteSet1End:
+SpriteSet1End:						; end of SpriteSet1
 	assert SpriteSet1End-SpriteSet1 == $474+512*32

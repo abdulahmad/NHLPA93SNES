@@ -12,7 +12,7 @@ dostop:								;Player X stops
 	beq .yabs
 	eor.w #$FFFF					; negate
 	inc a
-.yabs:
+.yabs:								; speed above the limit: stop
 	cmp.w #$1001
 	bcc StopNA
 .set:								;moving fast: glide (skating backwards) or stop animation
@@ -51,13 +51,13 @@ StopNA:								;slow player a3 by 150 on each axis, no animation change. Falls i
 	sta.w Xvel,x
 	bmi .y
 	lda.w #$0000
-.xp:
+.xp:								; slow down the X velocity
 	sec
 	sbc.b mulres
 	sta.w Xvel,x
 	bpl .y
 	stz.w Xvel,x
-.y:
+.y:									; Y velocity
 	lda.w Yvel,x
 	bpl .yp
 	clc
@@ -65,11 +65,11 @@ StopNA:								;slow player a3 by 150 on each axis, no animation change. Falls i
 	sta.w Yvel,x
 	bmi .rts
 	lda.w #$0000
-.yp:
+.yp:								; slow down the Y velocity
 	sec
 	sbc.b mulres
 	sta.w Yvel,x
 	bpl .rts
 	stz.w Yvel,x
-.rts:
+.rts:								; return
 	rtl

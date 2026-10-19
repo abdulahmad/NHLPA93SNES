@@ -6,7 +6,7 @@ skatetopuckinit:					;d0 / d1 = where the puck will be soon
 	bit.w #$0040					; sign bit of the 7 bits
 	beq .x
 	ora.w #$FF80					; sign extend
-.x:
+.x:									; puck x plus the lead
 	clc
 	adc.w puckx						; plus the puck x
 	sta.b d0						; d0 = predicted x
@@ -17,7 +17,7 @@ skatetopuckinit:					;d0 / d1 = where the puck will be soon
 	bit.w #$0040
 	beq .y							; negative
 	ora.w #$FF80
-.y:
+.y:									; puck y plus the lead
 	clc
 	adc.w pucky						; plus the puck y
 	sta.b d1						; d1 = predicted y

@@ -11,14 +11,14 @@ forceblack:							;Turn the screen black: default interrupt handlers, mark the s
 	sec
 	sbc.w #$003C					; minus 60
 	ldx.w #$0000					; clear the frame times
-.frametime:
+.frametime:							; stamp the sprite frame times as stale
 	sta.l sprframetime,x
 	inx								; stale
 	inx
 	cpx.w #$4C74					; $4C74 bytes
 	bne .frametime
 	ldx.w #$0000					; clear the slot times
-.slottime:
+.slottime:							; stamp the sprite slot times as stale
 	sta.w sprslottime,x
 	inx
 	inx

@@ -14,7 +14,7 @@ asseben:							;Assignment: player X comes onto the ice from the bench
 	sbc.w #$0006
 	bmi .0							; home
 	inc a							; away: +1
-.0:
+.0:									; scale factor 14
 	sta.b mulb
 	lda.w #$000E					; 14
 	sta.b mula
@@ -28,7 +28,7 @@ asseben:							;Assignment: player X comes onto the ice from the bench
 	lda.w #SPAwallright				; animation
 	sta.b d1
 	jml.l SetSPA					; start it
-.rtl:
+.rtl:								; return
 	rtl
 .nna:
 	lda.w #$0004					; facing

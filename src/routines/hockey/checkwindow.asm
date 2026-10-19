@@ -21,7 +21,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	bmi .neg
 	bvc .ylmax
 	bra .ok
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .ok
 .ylmax:
 	lda.w #$0032					; limit 50
@@ -38,7 +38,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	bmi .vl
 	bvs .ylmin
 	bra .ok
-.vl:
+.vl:								; signed compare: overflow flag corrects the sign
 	bvs .ok
 .ylmin:
 	lda.w #$FFCE					; limit -50
@@ -55,7 +55,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	bit.w #$0100
 	beq .sy
 	ora.w #$FE00
-.sy:
+.sy:								; add the object's Y
 	clc
 	adc.w Ypos,x					; plus the object's y
 	clc
@@ -75,9 +75,9 @@ checkwindow:						;Move the view so the screen follows the puck
 	bmi .neg1
 	bvs .up
 	bra .1
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .1
-.up:
+.up:								; scrolling up
 	lda.b d2
 	sec
 	sbc.w #$FFF6					; d1 = target - 10 (scrolling up)
@@ -88,13 +88,13 @@ checkwindow:						;Move the view so the screen follows the puck
 	bmi .neg2
 	bvs .yslimd
 	bra .2
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvs .2
 .yslimd:
 	lda.w #$FF39					; limit -199
 	sta.b d1
 	bra .2
-.1:
+.1:									; check the dead band below
 	lda.b d0
 	sec
 	sbc.w #$000A					; more than 10 below?
@@ -102,9 +102,9 @@ checkwindow:						;Move the view so the screen follows the puck
 	bmi .neg3
 	bvc .down
 	bra .2x
-.neg3:
+.neg3:								; signed compare: overflow flag corrects the sign
 	bvc .2x
-.down:
+.down:								; scrolling down
 	lda.b d2
 	sec
 	sbc.w #$000A					; d1 = target + 10 (scrolling down)
@@ -114,7 +114,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	bmi .neg4
 	bvc .yslimu
 	bra .2
-.neg4:
+.neg4:								; signed compare: overflow flag corrects the sign
 	bvc .2
 .yslimu:
 	lda.w #$0100					; limit $100
@@ -134,7 +134,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	cmp.w #$0000					; at least 1
 	bne .neg5
 	inc a
-.neg5:
+.neg5:								; store the new vertical position
 	clc
 	adc.w Vpos
 	sta.w Vpos						; new vertical position
@@ -148,9 +148,9 @@ checkwindow:						;Move the view so the screen follows the puck
 	bmi .neg6
 	bvs .left
 	bra .3
-.neg6:
+.neg6:								; signed compare: overflow flag corrects the sign
 	bvs .3
-.left:
+.left:								; scrolling left
 	lda.b d3
 	sec
 	sbc.w #$FFD8					; d1 = target + 40 (scrolling left)
@@ -160,13 +160,13 @@ checkwindow:						;Move the view so the screen follows the puck
 	bmi .neg7
 	bvs .xslimn
 	bra .4
-.neg7:
+.neg7:								; signed compare: overflow flag corrects the sign
 	bvs .4
 .xslimn:
 	lda.w #$FFC4					; limit -60
 	sta.b d1
 	bra .4
-.3:
+.3:									; check the dead band to the right
 	lda.b d0
 	sec
 	sbc.w #$0028					; more than 40 to the right?
@@ -174,9 +174,9 @@ checkwindow:						;Move the view so the screen follows the puck
 	bmi .neg8
 	bvc .right
 	bra .rtl
-.neg8:
+.neg8:								; signed compare: overflow flag corrects the sign
 	bvc .rtl
-.right:
+.right:								; scrolling right
 	lda.b d3
 	sec
 	sbc.w #$0028					; d1 = target - 40 (scrolling right)
@@ -187,7 +187,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	bmi .neg9
 	bvc .xslim
 	bra .4
-.neg9:
+.neg9:								; signed compare: overflow flag corrects the sign
 	bvc .4
 .xslim:
 	lda.w #$003C					; limit 60
@@ -207,9 +207,9 @@ checkwindow:						;Move the view so the screen follows the puck
 	cmp.w #$0000					; at least 1
 	bne .h2
 	inc a
-.h2:
+.h2:								; store the new horizontal position
 	clc
 	adc.w Hpos
 	sta.w Hpos						; new horizontal position
-.rtl:
+.rtl:								; return
 	rtl

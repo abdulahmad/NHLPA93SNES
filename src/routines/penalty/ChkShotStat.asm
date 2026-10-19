@@ -33,5 +33,5 @@ ChkShotStat:						;If a shot was taken, add it to the shooting team's shots
 	dex
 	bpl .restore
 	ldx.b xsave						; restore X
-.rtl:
+.rtl:								; return
 	rtl

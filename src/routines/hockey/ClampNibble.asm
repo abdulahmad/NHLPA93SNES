@@ -6,5 +6,5 @@ ClampNibble:						;Clamp A to 0-15
 	cmp.w #$000F					; already 0-14: done
 	bcc .x
 	lda.w #$000F					; cap at 15
-.x:
+.x:									; return
 	rtl

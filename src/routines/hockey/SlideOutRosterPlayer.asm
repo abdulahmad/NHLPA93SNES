@@ -4,5 +4,5 @@ SlideOutRosterPlayer:				;The player shown for team a2 skates off
 	lda.w tmflags,y
 	ora.w #tmfmid					; team slides out (tmfmid)
 	sta.w tmflags,y
-.rtl:
+.rtl:								; return
 	rtl

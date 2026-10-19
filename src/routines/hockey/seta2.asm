@@ -14,5 +14,5 @@ seta2:								;a2 = the team of the controller that paused
 	beq .rtl						; a2 stays 0
 	inc.b a2						; team 2: a2 = 2
 	inc.b a2
-.rtl:
+.rtl:								; return
 	rtl

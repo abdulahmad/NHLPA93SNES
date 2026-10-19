@@ -123,15 +123,15 @@ shotdiradj:							;Aim a computer shot at the open side when the goalie covers t
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b d4
-.s:
+.s:									; set the default shot direction
 	lda.w #$0002
 	sta.b d0
 	lda.b d4						; sign of the angle
 	bpl .x
 	lda.w #$0006					; direction 6 on the other side
 	sta.b d0
-.x:
+.x:									; store the pass direction
 	lda.b d0
 	sta.w passdir					; set the pass direction
-.rtl:
+.rtl:								; return
 	rtl

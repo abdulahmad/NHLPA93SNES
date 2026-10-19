@@ -13,7 +13,7 @@ ConvertByteToDigits:				;Write the two digit number d0 as two characters at [a1]
 	clc
 	adc.w #$0030					; ASCII
 	sta.b tmp0						; tens character
-.ones:
+.ones:								; ones digit
 	lda.b d0
 	and.w #$000F					; ones
 	clc

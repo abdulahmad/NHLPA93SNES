@@ -89,7 +89,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	cpx.w #$04A0
 	bne .easntiles
 	ldx.w #$03FE					; copy the unpacked map into the back map
-.copymap:
+.copymap:							; copy the roster map with the extra chars added
 	lda.l TestList,x
 	clc
 	adc.w ExtraChars				; plus extra chars
@@ -123,13 +123,13 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	beq .cont1
 	lda.w cont2team
 	sta.b tmp0
-.cont1:
+.cont1:								; team selected
 	lda.b tmp0
 	cmp.w #$0002
 	bne .gotteam
 	lda.w #$0002
 	sta.b a2
-.gotteam:
+.gotteam:							; found the team: line of that team
 	ldy.b a2
 	lda.w tmline,y					; line of that team
 	inc a
@@ -148,7 +148,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	clc
 	adc.w charofs
 	ldx.w #$07FE					; clear the text map
-.clrtext:
+.clrtext:							; clear the text map
 	sta.l textmap,x
 	dex
 	dex
@@ -162,7 +162,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	lda.w VisTeam
 	sta.b d1						; away team
 	lda.w #$0030
-.home:
+.home:								; draw the team blocks and print the title
 	sta.b d0
 	jsl.l DrawTeamBlocks			; draw the team blocks
 	jsl.l printz					; print the string that follows
@@ -229,7 +229,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	bcs .again
 	sta.w SelectedPlayerIdx			; new selected line
 	jsl.l .show						; reprint
-.again:
+.again:								; far branch to .loop
 	jmp.w .loop
 .col:
 	lda.b d0						; move the attribute column by d0
@@ -274,7 +274,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	lda.w #GAttribColumns>>16
 	sta.b a1+2
 	bra .2
-.next:
+.next:								; next entry
 	lda.b a1
 	clc
 	adc.b [a1]
@@ -285,7 +285,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	bmi .check
 	dec.b d0
 	bpl .next
-.check:
+.check:								; check for the end of the table
 	lda.b [a1]
 	bpl .found
 	dec.w DispAttribCtr				; ran past the end: go back one column
@@ -352,11 +352,11 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	bmi .neg
 	bvc .fewer
 	bra .row
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .row
-.fewer:
+.fewer:								; fewer rows
 	dec.b d1
-.row:
+.row:								; print the names
 	lda.w #$0002					; print the names at x 2
 	sta.w printx
 	lda.b a4+4
@@ -380,5 +380,5 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	inc.w printy
 	dec.b d1
 	bpl .row						; more rows?
-.rtl:
+.rtl:								; return
 	rtl

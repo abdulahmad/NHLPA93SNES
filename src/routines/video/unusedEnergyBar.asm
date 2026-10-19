@@ -32,14 +32,14 @@ unusedEnergyBar:					;Build an energy bar of d0 in the message area without prin
 	cmp.w #$0020
 	bcc .cap
 	lda.w #$001F
-.cap:
+.cap:								; energy bar capacity
 	sta.b d0
 	ldy.w #$0002
 	lda.w #$0006
 	sta.w mesarea
 	lda.w #$0003
 	sta.b d3
-.char:
+.char:								; each character
 	lda.w #$FFFF
 	sta.b d2
 	lda.b d0
@@ -49,14 +49,14 @@ unusedEnergyBar:					;Build an energy bar of d0 in the message area without prin
 	bcc .level
 	lda.w #$0007
 	sta.b d2
-.level:
+.level:								; bar level
 	lda.b d2
 	sec
 	adc.b d1
 	and.w #$00FF
 	bne .tile
 	lda.w #$0020
-.tile:
+.tile:								; store the tile
 	sta.w mesarea,y
 	iny
 	lda.b d0
@@ -69,7 +69,7 @@ unusedEnergyBar:					;Build an energy bar of d0 in the message area without prin
 	beq .nod1
 	lda.w #$0C00
 	tsb.w printa
-.nod1:
+.nod1:								; set up the print
 	lda.w #mesarea
 	sta.b a1
 	lda.w #mesarea>>16

@@ -28,7 +28,7 @@ checkplcoll:						;Check object X against the objects near it in y
 	bmi .neg
 	bvs .uy
 	bra .cl
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .cl
 .uy:
 	lda.w Xpos,y					; its x
@@ -55,7 +55,7 @@ checkplcoll:						;Check object X against the objects near it in y
 	lda.w OOlistpos,x				; X's index in the sorted list
 	beq .ex							; at the bottom: done
 	sta.b d1
-.1:
+.1:									; next object down the list
 	ldy.b d1
 	lda.w OOlist-1,y				; next object down the list
 	and.w #$00FF
@@ -71,7 +71,7 @@ checkplcoll:						;Check object X against the objects near it in y
 	bmi .neg1
 	bvs .dy
 	bra .ex
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .ex
 .dy:
 	lda.w Xpos,y					; its x
@@ -94,5 +94,5 @@ checkplcoll:						;Check object X against the objects near it in y
 .dnext:
 	dec.b d1						; next down
 	bne .1
-.ex:
+.ex:								; return
 	rtl

@@ -42,7 +42,7 @@ PWprint:							;Print the password, unless it is hidden
 	inc.b a1
 	lda.w #15
 	sta.b d1
-.top:
+.top:								; print each character
 	lda.b [a0]
 	inc.b a0
 	and.w #$00FF
@@ -75,5 +75,5 @@ PWprint:							;Print the password, unless it is hidden
 	dex
 	bpl .restore
 	ldx.b xsave						; restore X
-.rtl:
+.rtl:								; return
 	rtl

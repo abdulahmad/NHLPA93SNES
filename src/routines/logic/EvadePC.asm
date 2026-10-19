@@ -8,7 +8,7 @@ EvadePC:							;Near the puck carrier: d0 = the direction away from him
 	bit.w #$0080
 	beq .xs
 	ora.w #$FF00					; sign extend
-.xs:
+.xs:								; add the object's X
 	clc
 	adc.w Xpos,x					; plus x
 	sec
@@ -27,7 +27,7 @@ EvadePC:							;Near the puck carrier: d0 = the direction away from him
 	bit.w #$0080
 	beq .ys
 	ora.w #$FF00					; sign extend
-.ys:
+.ys:								; add the object's Y
 	clc
 	adc.w Ypos,x					; plus y
 	sec
@@ -48,5 +48,5 @@ EvadePC:							;Near the puck carrier: d0 = the direction away from him
 	sbc.w pucky
 	sta.b d1						; d1 = dy from the carrier
 	jml.l vtoa						; vector to direction: away from him
-.rtl:
+.rtl:								; return
 	rtl

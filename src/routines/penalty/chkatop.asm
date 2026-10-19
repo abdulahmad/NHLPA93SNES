@@ -8,7 +8,7 @@ chkatop:							;Once a second, add to the attack zone time of the team with the 
 	bmi .neg						; signed compare
 	bvs .lo
 	bra .1
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .1
 .lo:
 	inc.b d1						; team 1
@@ -19,7 +19,7 @@ chkatop:							;Once a second, add to the attack zone time of the team with the 
 	bmi .neg1
 	bvs .1
 	bra .rtl
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .rtl
 .1:									; in the zone
 	lda.w gmode						; gmdir: swap the teams
@@ -33,5 +33,5 @@ chkatop:							;Once a second, add to the attack zone time of the team with the 
 	lda.w tmATOP,y					; attack zone time
 	inc a							; one more
 	sta.w tmATOP,y
-.rtl:
+.rtl:								; return
 	rtl

@@ -106,41 +106,41 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	sbc.w #$FFF9					; off screen to the left?
 	bmi .xlov
 	bvc .xhi
-.xloout:
+.xloout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.xlov:
+.xlov:								; signed compare: overflow flag corrects the sign
 	bvc .xloout
-.xhi:
+.xhi:								; off screen to the right?
 	lda.b sprox
 	sec
 	sbc.w #$00FF					; off screen to the right?
 	beq .ylo
 	bmi .xhiv
 	bvs .ylo
-.xhiout:
+.xhiout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.xhiv:
+.xhiv:								; signed compare: overflow flag corrects the sign
 	bvs .xhiout
-.ylo:
+.ylo:								; off screen above?
 	lda.b sproy
 	sec
 	sbc.w #$FFF9					; off screen above?
 	bmi .ylov
 	bvc .yhi
-.yloout:
+.yloout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.ylov:
+.ylov:								; signed compare: overflow flag corrects the sign
 	bvc .yloout
-.yhi:
+.yhi:								; off screen below?
 	lda.b sproy
 	sec
 	sbc.w #$00DF					; off screen below?
 	beq .cache
 	bmi .yhiv
 	bvs .cache
-.yhiout:
+.yhiout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.yhiv:
+.yhiv:								; signed compare: overflow flag corrects the sign
 	bvs .yhiout
 .cache:								;cached and still fresh: reuse its slot
 	lda.b sprframe					; frame number plus set offset
@@ -165,7 +165,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	cmp.b sprslotend				; wrapped to the end slot
 	bne .chk
 	jml.l addframe_full				; VRAM sprite cache full
-.chk:
+.chk:								; look for a free sprite slot older than the current frame
 	asl a
 	tax
 	lda.b sprclock
@@ -272,48 +272,48 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	sbc.w #$FFF1					; off screen to the left?
 	bmi .bxlov
 	bvc .bxhi
-.bxloout:
+.bxloout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.bxlov:
+.bxlov:								; signed compare: overflow flag corrects the sign
 	bvc .bxloout
-.bxhi:
+.bxhi:								; off screen to the right?
 	lda.b sprox
 	sec
 	sbc.w #$00FF					; off screen to the right?
 	beq .bylo
 	bmi .bxhiv
 	bvs .bylo
-.bxhiout:
+.bxhiout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.bxhiv:
+.bxhiv:								; signed compare: overflow flag corrects the sign
 	bvs .bxhiout
-.bylo:
+.bylo:								; off screen above?
 	lda.b sproy
 	sec
 	sbc.w #$FFF1					; off screen above?
 	bmi .bylov
 	bvc .byhi
-.byloout:
+.byloout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.bylov:
+.bylov:								; signed compare: overflow flag corrects the sign
 	bvc .byloout
-.byhi:
+.byhi:								; off screen below?
 	lda.b sproy
 	sec
 	sbc.w #$00DF					; off screen below?
 	beq .bcache
 	bmi .byhiv
 	bvs .bcache
-.byhiout:
+.byhiout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.byhiv:
+.byhiv:								; signed compare: overflow flag corrects the sign
 	bvs .byhiout
 .bcache:
 	lda.b sprframe					; frame number plus set offset
 	clc
 	adc.b sprsetofs
 	cmp.w #$131D					; frame beyond the table: hang
-.bhang1:
+.bhang1:							; hangs if the carry is set (should not happen)
 	bcs .bhang1
 	asl a
 	asl a
@@ -370,7 +370,7 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	asl a
 	adc.w #$6000					; VRAM address of the slot
 	ldx.b DMAlistend				; append two DMA list entries
-.bhang2:
+.bhang2:							; second row at +$100
 	cpx.w #$0571
 	bcs .bhang2
 	sta.w DMAList+dmavram,x

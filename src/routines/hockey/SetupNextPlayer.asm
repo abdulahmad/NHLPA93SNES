@@ -11,7 +11,7 @@ SetupNextPlayer:					;The next player of team a2 to show in the team block, with
 	lda.w #-40						; park the sprite off screen
 	sta.w OldXpos,x
 	stz.w SPA,x						; stop its animation
-.order:
+.order:								; roster order index
 	ldy.b a2
 	lda.w tmPwrGoals,y				; index into the roster order
 	sta.b d0
@@ -29,7 +29,7 @@ SetupNextPlayer:					;The next player of team a2 to show in the team block, with
 	lda.w #$0000					; wrap to the first slot
 	sta.w tmPwrGoals,y
 	bra .order
-.got:
+.got:								; remember the slot
 	ldy.b a2
 	lda.b d0
 	sta.w tmPenalties,y				; remember the slot
@@ -54,7 +54,7 @@ SetupNextPlayer:					;The next player of team a2 to show in the team block, with
 	bne .pl							; slot 0 is the goalie
 	lda.w tmgoalie,y
 	sta.b d0
-.pl:
+.pl:								; store the player
 	lda.b d0
 	ldy.b a2
 	sta.w tmPwrPlays,y

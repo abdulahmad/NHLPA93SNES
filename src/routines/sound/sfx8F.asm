@@ -15,7 +15,7 @@ sfx8F:								;Queue the sound number pushed before the call, unless sound effec
 	pla								; the sound (0 = none)
 	beq .ret						; no sound: skip
 	jsl.l QueueSound				; queue it
-.ret:
+.ret:								; far branch to jmlvector
 	jml.l jmlvector
 .muted:
 	pla								; drop the pushed sound

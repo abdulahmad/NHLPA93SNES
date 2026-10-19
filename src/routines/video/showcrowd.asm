@@ -53,7 +53,7 @@ showcrowd:							;Draw the crowd and penalty box sprites
 .nextpb:
 	dec.b d2						; sprites left
 	bpl .pbt
-.rtl:
+.rtl:								; return
 	rtl
 .sc:								;d0 = frame (0 = none): SPFcrowd-1 + d0 (+31 horizontal) at the rink
 									;scroll position

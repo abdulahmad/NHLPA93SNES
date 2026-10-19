@@ -26,7 +26,7 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	bit.w #$0080
 	beq .vx
 	ora.w #$FF00
-.vx:
+.vx:								; add the lead in X
 	clc
 	adc.b $01,s
 	sec
@@ -41,7 +41,7 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	bit.w #$0080
 	beq .vy
 	ora.w #$FF00
-.vy:
+.vy:								; add the lead in Y
 	clc
 	adc.b $03,s
 	sec
@@ -120,7 +120,7 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	beq .dx
 	eor.w #$FFFF					; negate
 	inc a
-.dx:
+.dx:								; X distance to the puck
 	sta.b tmp0
 	lda.w Ypos,x					; distance to the puck, Y
 	sec
@@ -129,7 +129,7 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	beq .dy
 	eor.w #$FFFF					; negate
 	inc a
-.dy:
+.dy:								; add the Y distance
 	clc
 	adc.b tmp0						; Manhattan distance
 	cmp.w #$0036					; close to the puck: slow down, Xvel*7/8, Yvel*7/16

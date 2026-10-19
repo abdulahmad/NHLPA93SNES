@@ -13,5 +13,5 @@ SpriteSet8:							;frame set 8 (arrows, pads, puck and goal): frames 384-405
 	assert .tiles-.pieces == 4*75
 .tiles:								;128 4bpp tiles (32 bytes each)
 	incbin "../../../Extracted/Graphics/Sprites/set08.chr"
-SpriteSet8End:
+SpriteSet8End:						; end of SpriteSet8
 	assert SpriteSet8End-SpriteSet8 == $164+128*32

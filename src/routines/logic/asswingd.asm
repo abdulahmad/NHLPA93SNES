@@ -32,7 +32,7 @@ asswingd:							;Assignment: a wing on defense covers his side
 	adc.w aidef,x					; reload from aidef
 	bpl .store
 	lda.w #$0000					; not below zero
-.store:
+.store:								; store the re-think timer
 	sta.w temp1,x
 	lda.w puckc						; our team has the puck: awingo
 	bmi .nodec
@@ -57,7 +57,7 @@ asswingd:							;Assignment: a wing on defense covers his side
 	bne .0
 	lda.w #-100						; mirror x for the left wing
 	sta.b d0
-.0:
+.0:									; target y for the top goal
 	lda.w #158
 	sta.b d1						; target y 158
 	lda.w pfgoal,x					; pfgoal: defending the top goal
@@ -81,13 +81,13 @@ asswingd:							;Assignment: a wing on defense covers his side
 	bmi .neg
 	bvs .hi0
 	bra .lo
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .lo
-.hi0:
+.hi0:								; puck y becomes the target
 	lda.w pucky
 	sta.b d1
 	bra .go
-.rtl:
+.rtl:								; return
 	rtl
 .lo:
 	lda.w #-264						; far limit y -264
@@ -97,11 +97,11 @@ asswingd:							;Assignment: a wing on defense covers his side
 	bmi .neg1
 	bvc .set1
 	bra .go
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvc .go
-.set1:
+.set1:								; keep the target
 	bra .set
-.up:
+.up:								; top goal side
 	lda.w #78						; top goal: blue line y 78
 	sta.b d2
 	ldy.b a2
@@ -114,9 +114,9 @@ asswingd:							;Assignment: a wing on defense covers his side
 	bmi .neg2
 	bvc .up0
 	bra .hi
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvc .hi
-.up0:
+.up0:								; puck y becomes the target
 	lda.w pucky
 	sta.b d1
 	bra .go
@@ -129,7 +129,7 @@ asswingd:							;Assignment: a wing on defense covers his side
 	bmi .neg3
 	bvs .set
 	bra .go
-.neg3:
+.neg3:								; signed compare: overflow flag corrects the sign
 	bvs .go
 .set:
 	lda.b d2						; use the limit

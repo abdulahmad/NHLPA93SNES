@@ -71,7 +71,7 @@ doinput:							;Pad input for player X. d0 = pad directions, d1 = new buttons, d
 	bne .pc1
 	lda.w pf2aip,x					; animation in progress
 	bne .rtl
-.pc1:
+.pc1:								; pass direction pending?
 	lda.w sflags
 	bit.w #sfspdir					; pass direction pending?
 	beq .nopass
@@ -80,7 +80,7 @@ doinput:							;Pad input for player X. d0 = pad directions, d1 = new buttons, d
 	bit.w #sfssdir					; shot direction pending?
 	beq .noshot
 	jmp.w ShotMode					; shot mode
-.noshot:
+.noshot:							; no shot: check the pass button
 	lda.b d1
 	bit.w #bbut						; B: pass
 	bne .setpassmode
@@ -116,7 +116,7 @@ doinput:							;Pad input for player X. d0 = pad directions, d1 = new buttons, d
 	bit.w #$8000					; B pressed?
 	beq .rtl
 	jmp.w changeplayer				; switch player
-.rtl:
+.rtl:								; return
 	rtl
 .setpassmode:						;the goalie keeps the puck behind the net (|x| < 16, |y| $108-$10F)
 	lda.w position,x				; goalie?
@@ -145,5 +145,5 @@ doinput:							;Pad input for player X. d0 = pad directions, d1 = new buttons, d
 	sta.w passdir
 	lda.w #sfspdir					; pass direction pending
 	tsb.w sflags
-.rtl2:
+.rtl2:								; return
 	rtl

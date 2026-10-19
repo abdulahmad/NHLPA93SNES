@@ -19,5 +19,5 @@ periodicevents:						;Run every game loop; the slower checks once a second
 	jsl.l RestoreBenchEnergy		; RestoreBenchEnergy
 	jsl.l CheckInjury				; CheckInjury
 	jmp.w updatepwrplay
-.rtl:
+.rtl:								; return
 	rtl

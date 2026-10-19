@@ -10,9 +10,9 @@ checkgoalp:							;Player X runs into the goal a2
 	beq .pl
 	bmi .neg
 	bvs .pl
-.ex1:
+.ex1:								; far branch to .rtl
 	jmp.w .rtl
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .ex1
 .pl:								;players only (SCnum <= 11)
 	cpx.w #$0017					; only players
@@ -120,5 +120,5 @@ checkgoalp:							;Player X runs into the goal a2
 	sta.b d2
 	pla								; restore y
 	sta.b d3
-.rtl:
+.rtl:								; return
 	rtl

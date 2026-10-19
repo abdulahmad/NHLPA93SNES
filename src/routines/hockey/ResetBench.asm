@@ -19,7 +19,7 @@ ResetBench:							;Empty the penalty boxes and put every player on his own bench
 	lda.b a0						; team
 	beq .idx						; home
 	lda.w #$0034					; away team offset $34
-.idx:
+.idx:								; index the bench
 	adc.b d0
 	tay								; index
 	lda.w tmpdst,y					; state

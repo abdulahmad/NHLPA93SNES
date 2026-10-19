@@ -16,7 +16,7 @@ goalieacc:							;The goalie skates in direction d0, turning one step toward it
 	lda.w pf2aip,x
 	bne .rts						; animation in progress
 	jmp.w SetSPA					; start the ready stance
-.rts:
+.rts:								; return
 	rtl
 .d1:								;d0 = wanted direction: step facedir one eighth toward it
 	sec

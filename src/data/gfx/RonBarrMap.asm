@@ -3,5 +3,5 @@ RonBarrMap:							;the Ron Barr picture of the scouting report, packed for
 									;map, 64 colours at
 		;   +$90, tiles at +$190 (loaded by the scouting report)
 	incbin "../../../Extracted/Graphics/RonBarr.map.snesjim"
-RonBarrMapEnd:
+RonBarrMapEnd:						; end of RonBarrMap
 	assert RonBarrMapEnd-RonBarrMap == $636

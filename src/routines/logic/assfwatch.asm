@@ -73,12 +73,12 @@ assfwatch:							;Assignment: a player watching a fight skates to a spot near it
 	bmi .neg
 	bvc .cl1
 	bra .x0
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .x0
 .cl1:
 	lda.b d3						; upper limit
 	sta.b d0
-.x0:
+.x0:								; negate X for the other side
 	lda.b d3
 	eor.w #$FFFF					; negate
 	inc a
@@ -90,12 +90,12 @@ assfwatch:							;Assignment: a player watching a fight skates to a spot near it
 	bmi .neg1
 	bvs .cl2
 	bra .x1
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .x1
 .cl2:
 	lda.b d3						; lower limit
 	sta.b d0
-.x1:
+.x1:								; store the spot X
 	lda.b d0
 	sta.w temp3,x					; store the spot x
 	lda.w #$0050					; 80 pixels
@@ -131,5 +131,5 @@ assfwatch:							;Assignment: a player watching a fight skates to a spot near it
 	sta.w Yvel,x					; new y velocity
 	jsl.l skateto					; d0/d1 = spot, [a0] = arrival routine
 	jmp.w check4check				; then check for a check
-.rts:
+.rts:								; return
 	rtl

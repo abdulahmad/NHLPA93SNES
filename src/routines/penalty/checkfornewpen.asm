@@ -49,7 +49,7 @@ checkfornewpen:						;Look for a new penalty call. Stops play at once when the p
 	bit.w #$0080
 	beq .pl
 	ora.w #$FF00
-.pl:
+.pl:								; player offset
 	sec
 	sbc.w #$0006
 	eor.b d0
@@ -96,22 +96,22 @@ checkfornewpen:						;Look for a new penalty call. Stops play at once when the p
 	beq .nx
 	bmi .neg
 	bvc .longer
-.nx:
+.nx:								; far branch to .next
 	jmp.w .next
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .nx
 .longer:							;Pencntdwn = delay*32 if longer
 	lda.b d1						; longer: take it
 	sta.w Pencntdwn					; countdown
 	jmp.w .next
-.rtl:
+.rtl:								; return
 	rtl
 .dc:								;delayed call: PenDelay ref once
 	lda.w #gmpendel					; first delayed call: SetPA PenDelay
 	tsb.w gmode
 	beq .dc2
 	jmp.w .next
-.dc2:
+.dc2:								; set the penalty delay
 	lda.w #PenDelay
 	sta.b d0
 	jsl.l SetPA						; PenDelay announcement

@@ -9,7 +9,7 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	cmp.w #9
 	bcc .dp0
 	jmp.w .rtl
-.dp0:
+.dp0:								; pick a random teammate to pass to
 	lda.w #6
 	jsl.l randoma					; random number 0 to A-1
 	sta.b d0
@@ -27,7 +27,7 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	beq .ax
 	eor.w #$FFFF					; negate
 	inc a
-.ax:
+.ax:								; puck X limit
 	cmp.w #41
 	bcs .bl
 	lda.w pucky
@@ -35,7 +35,7 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	beq .ay
 	eor.w #$FFFF					; negate
 	inc a
-.ay:
+.ay:								; puck Y limit
 	cmp.w #205
 	bcc .bl
 	jmp.w .rtl
@@ -44,13 +44,13 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	cpx.b d0
 	bne .b1
 	jmp.w .rtl
-.b1:
+.b1:								; check the pass target
 	ldy.b d0
 	sty.b a0
 	lda.w position,y				; not to the goalie or an illegal player
 	bne .b2
 	jmp.w .rtl
-.b2:
+.b2:								; illegal pass target: leave
 	bpl .b3
 	jmp.w .rtl
 .b3:
@@ -59,7 +59,7 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	ora.w pfalock,y
 	beq .b4
 	jmp.w .rtl
-.b4:
+.b4:								; distance in Y to the target
 	lda.w Ypos,y
 	sta.b d0
 	lda.w Ypos,x
@@ -96,9 +96,9 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	bmi .neg
 	bvs .le
 	bra .ok
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .ok
-.le:
+.le:								; compare the lane distance
 	lda.b d0
 	sec
 	sbc.b d1
@@ -107,9 +107,9 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	sbc.w #-15
 	bmi .neg1
 	bvc .ok
-.miss:
+.miss:								; far branch to .rtl
 	jmp.w .rtl
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvc .miss
 .ok:
 	lda.w Ypos,y					; passdir, d2 = distance squared
@@ -147,7 +147,7 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	bcs .co0
 	lda.w #12
 	sta.b a1
-.co0:
+.co0:								; check an opponent in the lane
 	ldy.b a1
 	lda.w Ypos,y
 	sec
@@ -180,7 +180,7 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	jsl.l vtoa						; nearer opponent in the lane: no pass
 	cmp.w passdir
 	beq .rtl
-.co1:
+.co1:								; next opponent
 	inc.b a1
 	inc.b a1
 	dec.b d3
@@ -193,7 +193,7 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	pla
 	rep #$30						; 16-bit registers
 	jml.l assexit					; assignment over
-.rtl:
+.rtl:								; return
 	rtl
 unusedFF8C:							;unused, $FF fill to the end of the bank
 	db $FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF,$FF

@@ -99,7 +99,7 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	bit.w #JOYSTART					; Start: done
 	beq .keys
 	jmp.w .exit
-.keys:
+.keys:								; read the pad buttons
 	stz.b d0
 	dec.b d0
 	bit.w #abut						; Y: left
@@ -151,7 +151,7 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	cmp.w #PWrange					; PWrange
 	bcc .pwset
 	jmp.w .input
-.pwset:
+.pwset:								; set the digit
 	pha
 	jsl.l .setd5
 	phx
@@ -220,7 +220,7 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	lda.w #3
 	sta.b d0
 	sta.b d1
-.rtl:
+.rtl:								; return
 	rtl
 .exit:								;Start
 	jsl.l DecodePW
@@ -233,7 +233,7 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	jsl.l printz					; print the string that follows
 	%StringCt(CC_Font1,$02,$15,"Y - Exit Screen")
 	lda.w #VBlank_SprPal
-.wait2:
+.wait2:								; wait for the next frame
 	cmp.b vbint
 	beq .wait2
 	jsl.l QueueTextDMA				; queue the changed textmap words

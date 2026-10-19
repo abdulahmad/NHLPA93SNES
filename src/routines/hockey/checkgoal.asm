@@ -6,9 +6,9 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	beq .z
 	bmi .neg
 	bvs .z
-.ex1:
+.ex1:								; far branch to .rtl
 	jmp.w .rtl
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .ex1
 .z:
 	cpx.w #puckobj					; not the puck: checkgoalp
@@ -29,9 +29,9 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	beq .xl
 	bmi .neg1
 	bvs .xl
-.ex2:
+.ex2:								; far branch to .rtl
 	jmp.w .rtl
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .ex2
 .xl:
 	lda.b d4						; left edge
@@ -43,9 +43,9 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	sbc.b d4
 	bmi .neg2
 	bvc .yh
-.ex3:
+.ex3:								; far branch to .rtl
 	jmp.w .rtl
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvc .ex3
 .yh:
 	lda.w #$0004					; goal depth 4
@@ -61,9 +61,9 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	beq .yl
 	bmi .neg3
 	bvs .yl
-.ex4:
+.ex4:								; far branch to .rtl
 	jmp.w .rtl
-.neg3:
+.neg3:								; signed compare: overflow flag corrects the sign
 	bvs .ex4
 .yl:
 	lda.b d5						; front edge
@@ -75,9 +75,9 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	sbc.b d5
 	bmi .neg4
 	bvc .inside
-.ex5:
+.ex5:								; far branch to .rtl
 	jmp.w .rtl
-.neg4:
+.neg4:								; signed compare: overflow flag corrects the sign
 	bvc .ex5
 .inside:							;inside the goal area now
 	lda.w #$FFFF					; collflag
@@ -88,7 +88,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	bmi .neg5
 	bvc .over
 	bra .nod
-.neg5:
+.neg5:								; signed compare: overflow flag corrects the sign
 	bvc .nod
 .over:								;OldZpos >= 13: came over the top
 	lda.w OldZpos+puckobj			; restore the old height
@@ -112,7 +112,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b d1
-.an:
+.an:								; puck on the right side of the goal line?
 	lda.b d1
 	bpl .nocon						; puck on the wrong side?
 	lda.w #$0001
@@ -163,7 +163,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	beq .m1
 	eor.w #$FFFF					; negate
 	inc a
-.m1:
+.m1:								; take the high word of the product
 	sta.b mula
 	lda.b mulres+2					; high word
 	bit.w #$8000
@@ -174,7 +174,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	cmp.b mula						; compare with the y movement
 	bcc .dv
 	jmp.w .sideentry				; side entry
-.dv:
+.dv:								; divide by the Y distance
 	lda.b d1
 	sta.b mula
 	jsl.l divs						; d5 = d5*d3 / d1
@@ -187,11 +187,11 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	sbc.b d4						; against the edge
 	bmi .neg6
 	bvc .xl2
-.se1:
+.se1:								; far branch to .sideentry
 	jmp.w .sideentry
-.neg6:
+.neg6:								; signed compare: overflow flag corrects the sign
 	bvc .se1
-.xl2:
+.xl2:								; negate X for the other side
 	lda.b d4
 	eor.w #$FFFF					; negate
 	inc a
@@ -202,9 +202,9 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	beq .mouth						; between the posts?
 	bmi .neg7
 	bvs .mouth
-.se2:
+.se2:								; far branch to .sideentry
 	jmp.w .sideentry
-.neg7:
+.neg7:								; signed compare: overflow flag corrects the sign
 	bvs .se2
 .mouth:								;crossed between the posts
 	stz.b d1						; crossed between the posts
@@ -235,9 +235,9 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	bmi .neg8
 	bvs .ml
 	bra .deflectsf					; off the post
-.neg8:
+.neg8:								; signed compare: overflow flag corrects the sign
 	bvs .deflectsf
-.ml:
+.ml:								; negate X for the other post
 	lda.b d4
 	eor.w #$FFFF					; negate
 	inc a
@@ -247,9 +247,9 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	sbc.b d4
 	bmi .neg9
 	bvs .deflectsf
-.goal:
+.goal:								; far branch to Goal
 	jmp.w Goal
-.neg9:
+.neg9:								; signed compare: overflow flag corrects the sign
 	bvs .goal
 .deflectsf:							;off the post
 	jsl.l ChkShotStat				; off the post: sfx and crowd +300
@@ -269,7 +269,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
-.df0:
+.df0:								; deflect: give the puck a new Y velocity
 	lda.b d0
 	sta.w puckvy					; puck y velocity
 	lda.w #$2000					; random x velocity
@@ -291,7 +291,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	inc a
 .dz:
 	sta.w puckvz					; store it
-.rtl:
+.rtl:								; return
 	rtl
 .sideentry:							;off the side: wallcoll with normal (0, +-256)
 	stz.b d0						; normal x 0

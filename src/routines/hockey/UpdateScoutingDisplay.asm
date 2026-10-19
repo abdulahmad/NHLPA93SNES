@@ -8,7 +8,7 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	bmi .neg
 	bvs .tm
 	bra .rtl
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .rtl
 .tm:
 	lda.w asv						; asv: no delay
@@ -39,7 +39,7 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	sta.w ScoutingReportTimer
 	lda.w #$01E0					; leave the screen after 480 frames
 	sta.w screentimer
-.rtl:
+.rtl:								; return
 	rtl
 .para:								;blank line between paragraphs
 	jsl.l ScrollDisplayUp			; blank line between paragraphs
@@ -48,7 +48,7 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	lda.b a1+2
 	sta.b a2+2
 	bra .cnt
-.find:
+.find:								; find the next line of the text
 	lda.b [a2]
 	inc.b a2
 	and.w #$00FF
@@ -101,7 +101,7 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	lda.w #$0000
 	sta.b a0+2
 	stz.b d1						; word length
-.wd:
+.wd:								; find the end of the word
 	lda.b [a2]
 	and.w #$00FF
 	cmp.w #$000D					; end of line?
@@ -160,7 +160,7 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 .scr:
 	jsl.l ScrollDisplayUp			; scroll up
 	bra .noscr
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .scr
 .noscr:
 	jsl.l printz					; print at column + DispAttribCtr, line + VertLineScrolling
@@ -185,7 +185,7 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	bra .team
 .hmtm:								;home goalie
 	stz.b a1						; home goalie, team 1
-.team:
+.team:								; goalie of the selected team
 	ldy.b a1
 	lda.w tmgoalie,y				; his player number
 	sta.b d1
@@ -205,7 +205,7 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	adc.b [a1]						; skip the player
 	adc.w #$0008					; plus the fixed part
 	sta.b a1
-.pn:
+.pn:								; count down to the player
 	dec.b d1
 	bpl .pl
 	bra .name
@@ -225,7 +225,7 @@ UpdateScoutingDisplay:				;Every frame of the scouting report: print the next wo
 	bne .ar
 .mtl:
 	lda.w #Montreal					; Montreal for the All-Star teams
-.ar:
+.ar:								; store the team
 	sta.b a1
 	bra .tname
 .home:								;home team name

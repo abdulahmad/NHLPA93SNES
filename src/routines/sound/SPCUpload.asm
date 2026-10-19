@@ -27,11 +27,11 @@ SPCUpload:							;Send an upload stream (blocks of length, address and data) to 
 	ldy.w #$0000
 	inc.b sndptr+2
 	jmp.w .first
-.first:
+.first:								; first byte of a block: send zero
 	xba
 	lda.b #$00
 	bra .send
-.byte:
+.byte:								; send the next byte
 	xba
 	lda.b [sndptr],y
 	iny
@@ -39,10 +39,10 @@ SPCUpload:							;Send an upload stream (blocks of length, address and data) to 
 	ldy.w #$0000
 	inc.b sndptr+2
 	jmp.w .byte2
-.byte2:
+.byte2:								; send the next byte (second half)
 	xba
 	jmp.w .ack
-.ack:
+.ack:								; wait for the SPC to echo the counter
 	cmp.w APUIO0
 	bne .ack
 	inc a
@@ -54,7 +54,7 @@ SPCUpload:							;Send an upload stream (blocks of length, address and data) to 
 	dex
 	bne .byte
 	jmp.w .endblk
-.endblk:
+.endblk:							; wait for the end of the block acknowledge
 	cmp.w APUIO0
 	bne .endblk
 	jmp.w .inc3
@@ -76,7 +76,7 @@ SPCUpload:							;Send an upload stream (blocks of length, address and data) to 
 	and.w #$7FFF
 	tay
 	inc.b sndptr+2
-.dest:
+.dest:								; set the destination address
 	lda.b [sndptr],y
 	sta.w APUIO2
 	iny
@@ -96,7 +96,7 @@ SPCUpload:							;Send an upload stream (blocks of length, address and data) to 
 	pla
 	sta.w APUIO0
 	jmp.w .blkack
-.blkack:
+.blkack:							; wait for the block acknowledge
 	cmp.w APUIO0
 	bne .blkack
 	bvc .done						; V set: more blocks

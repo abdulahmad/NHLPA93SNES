@@ -49,7 +49,7 @@ chkhit:								;In a fight, is player X hit by player a0?
 	cmp.w #SPFfight+6				; high punch frames
 	bne .1
 	jmp.w .hithigh
-.1:
+.1:									; fight animation frame 6: hit high
 	cmp.w #SPFfight+6+5
 	bne .2
 	jmp.w .hithigh
@@ -57,7 +57,7 @@ chkhit:								;In a fight, is player X hit by player a0?
 	cmp.w #SPFfight+7				; low punch frames
 	bne .3
 	jmp.w .hitlow
-.3:
+.3:									; fight animation frame 7: hit low
 	cmp.w #SPFfight+7+5
 	bne .4
 	jmp.w .hitlow
@@ -98,12 +98,12 @@ chkhit:								;In a fight, is player X hit by player a0?
 	bmi .neg
 	bvc .cl1
 	bra .chkneg
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .chkneg
-.cl1:
+.cl1:								; clamp the hit direction to +$5A
 	lda.w #$005A
 	sta.b d0
-.chkneg:
+.chkneg:							; check the lower limit
 	lda.b d0
 	sec
 	sbc.w #$FFA6
@@ -111,12 +111,12 @@ chkhit:								;In a fight, is player X hit by player a0?
 	bmi .neg1
 	bvs .cl2
 	bra .drcont
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .drcont
-.cl2:
+.cl2:								; clamp the hit direction to -$5A
 	lda.w #$FFA6
 	sta.b d0
-.drcont:
+.drcont:							; scale the hit direction
 	lda.b d0
 	lsr a
 	lsr a
@@ -142,7 +142,7 @@ chkhit:								;In a fight, is player X hit by player a0?
 	sta.w pf2aip,x
 	jsl.l SetSPA					; start animation d1
 	jmp.w .ex
-.hithigh:
+.hithigh:							; hit high: swap the players
 	ldx.b a0
 	ldy.b a3
 	stx.b a3
@@ -159,7 +159,7 @@ chkhit:								;In a fight, is player X hit by player a0?
 	pha
 	jsl.l sfx
 	jmp.w .ex
-.hitlow:
+.hitlow:							; hit low: swap the players
 	ldx.b a0
 	ldy.b a3
 	stx.b a3

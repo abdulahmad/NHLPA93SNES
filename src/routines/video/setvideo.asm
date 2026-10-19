@@ -45,5 +45,5 @@ setvideo:							;Once per game frame, when vblank is idle: build the sprite tabl
 	bpl .resta
 	ldx.b xsave						; restore X
 	ldx.b a3						; X = a3
-.rtl:
+.rtl:								; return
 	rtl

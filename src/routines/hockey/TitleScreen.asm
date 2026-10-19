@@ -27,7 +27,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	rep #$30						; 16-bit registers
 	lda.w blankchar
 	ldx.w #$07FE
-.clr:
+.clr:								; clear the text map
 	sta.l textmap,x
 	dex
 	dex
@@ -39,20 +39,20 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	jsl.l DecompressBytecode
 	lda.l TestList					; first map word fills backmap
 	ldx.w #$07FE
-.fill:
+.fill:								; fill the back map
 	sta.l backmap,x
 	dex
 	dex
 	bpl .fill
 	ldx.w #$06FE
-.map:
+.map:								; copy the title map to the back map
 	lda.l TestList,x
 	sta.l backmap,x
 	dex
 	dex
 	bpl .map
 	ldx.w #$057E					; rows 0-21: priority
-.prio:
+.prio:								; set the priority bit on the back map
 	lda.l backmap,x
 	ora.w #$2000
 	sta.l backmap,x
@@ -62,7 +62,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	lda.w #$1000
 	sta.w VMADDL
 	ldx.w #$0000
-.tiles:
+.tiles:								; copy the title tiles to VRAM
 	lda.l TestList+$800,x
 	sta.w VMDATAL
 	inx
@@ -72,7 +72,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	sep #$20						; 8-bit A
 	stz.w CGADD
 	ldx.w #$0000
-.pal:
+.pal:								; load the title palette
 	lda.l TestList+$700,x
 	sta.w CGDATA
 	inx
@@ -80,7 +80,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	bne .pal
 	rep #$30						; 16-bit registers
 	ldx.w #$0010
-.clearvr:
+.clearvr:							; clear the rest of VRAM
 	stz.w VMDATAL
 	dex
 	bne .clearvr
@@ -121,7 +121,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	sta.b vbint
 	lda.w #$0001
 	sta.b fadein
-.wait1:
+.wait1:								; wait for the next frame
 	cmp.b vbint
 	beq .wait1
 .top2:								;next credits page
@@ -135,7 +135,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	lda.w printy
 	pha
 	ldx.w #$0006
-.erase:
+.erase:								; erase the credits text
 	stz.w printx
 	txa
 	clc
@@ -178,7 +178,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	beq .scroll
 	cmp.w #$00FF
 	bne .top4x
-.scroll:
+.scroll:							; scroll the credits
 	lda.b [a0]
 	clc
 	adc.b a0
@@ -203,7 +203,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	sta.b d0
 	lda.w #VBlank_VScroll
 	sta.b vbint
-.wait:
+.wait:								; wait for the next frame
 	cmp.b vbint
 	beq .wait
 	jsl.l ReadPads					; read the pads
@@ -212,7 +212,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	bne .nopause
 	stz.w padnew1
 	stz.w padnew1+2
-.nopause:
+.nopause:							; no pause: check for Start
 	lda.w padnew1
 	ora.w padnew1+2
 	bit.w #JOYSTART
@@ -238,7 +238,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	bne .top6s
 	stz.w padnew1
 	stz.w padnew1+2
-.top6s:
+.top6s:								; check for Start on either pad
 	lda.w padnew1
 	ora.w padnew1+2
 	bit.w #JOYSTART

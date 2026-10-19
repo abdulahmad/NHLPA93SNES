@@ -4,7 +4,7 @@ AttribStatus:						;Roster column: where the player is (ice, bench, injured) or 
 	lda.b a2						; team
 	beq .team
 	lda.w #$0034					; away team offset $34
-.team:
+.team:								; team offset
 	adc.b d0
 	tay								; index
 	lda.w tmpdst,y					; tmpdst: negative = not of the status
@@ -20,7 +20,7 @@ AttribStatus:						;Roster column: where the player is (ice, bench, injured) or 
 .inj:
 	lda.w #$0003					; injured
 	sta.b d0
-.st:
+.st:								; status text list
 	lda.w #StatusTextTbl>>16
 	sta.b a1+2						; text list
 	lda.w #StatusTextTbl
@@ -44,7 +44,7 @@ AttribStatus:						;Roster column: where the player is (ice, bench, injured) or 
 	beq .t							; clear
 	lda.w #$0005					; text 5
 	sta.b d0
-.t:
+.t:									; status text list for the goalie
 	lda.w #StatusTextTbl>>16
 	sta.b a1+2
 	lda.w #StatusTextTbl

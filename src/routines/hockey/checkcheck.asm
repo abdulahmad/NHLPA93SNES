@@ -44,7 +44,7 @@ checkcheck:							;Two players are in contact: check what happens each way
 	bpl .restore
 	ldx.b xsave						; restore X
 	ldx.b a3
-.rtl:
+.rtl:								; return
 	rtl
 .cc:								;X is checking a2
 	ldy.b a2						; a2 holding: holdcheck
@@ -52,11 +52,11 @@ checkcheck:							;Two players are in contact: check what happens each way
 	cmp.w #SPAHold
 	bne .h2
 	jml.l holdcheck
-.h2:
+.h2:								; hook check: hand over to holdcheck
 	cmp.w #SPAhook
 	bne .b
 	jml.l holdcheck
-.b:
+.b:									; sweep check: hand over to Bcheck
 	cmp.w #SPAsweepchk
 	bne .burst
 	jml.l Bcheck
@@ -69,7 +69,7 @@ checkcheck:							;Two players are in contact: check what happens each way
 	lda.w #$0100
 	sta.w impact,x
 	sta.w impact,y
-.nofight:
+.nofight:							; no fight: compare positions
 	lda.w Xpos,y
 	sec
 	sbc.w Xpos,x
@@ -113,9 +113,9 @@ checkcheck:							;Two players are in contact: check what happens each way
 	sbc.w #$0014
 	bmi .neg
 	bvc .fall
-.ex1:
+.ex1:								; far branch to .rtl
 	jmp.w .rtl
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .ex1
 .fall:								;d0 = (120 (*2 joystick) - weight + weight of a2) / 2 - impact of a2
 	lda.w #$0078
@@ -124,7 +124,7 @@ checkcheck:							;Two players are in contact: check what happens each way
 	bit.w #pfjoycon
 	beq .00
 	asl.b d0
-.00:
+.00:								; weight difference
 	lda.b d0
 	sec
 	sbc.w weight,x
@@ -144,7 +144,7 @@ checkcheck:							;Two players are in contact: check what happens each way
 	bmi .neg1
 	bvc .pen
 	bra .down
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvc .down
 .pen:
 	jsl.l checkagr					;checkagr <= 4 and no highlight: PenCharging or PenSlashing (d0 = penalty
@@ -153,12 +153,12 @@ checkcheck:							;Two players are in contact: check what happens each way
 	cmp.w #$0005
 	bcc .nohl
 	jmp.w .rtl
-.nohl:
+.nohl:								; not a highlight: roll
 	lda.w gmode
 	bit.w #gmhl
 	beq .roll
 	jmp.w .rtl
-.roll:
+.roll:								; random roll
 	lda.w seed+1
 	and.w #$0002
 	clc
@@ -180,7 +180,7 @@ checkcheck:							;Two players are in contact: check what happens each way
 	adc.w #PenRoughing
 	sta.b d0
 	jsl.l AddPenalty
-.dn2:
+.dn2:								; far branch to FallDown
 	jmp.w FallDown
 .list:								;check anim by direction
 	dw SPAshoulderchkl,SPAshoulderchkr,SPAhipchkr,SPAhipchkr,SPAhipchkr,SPAhipchkl,SPAhipchkl,SPAshoulderchkl

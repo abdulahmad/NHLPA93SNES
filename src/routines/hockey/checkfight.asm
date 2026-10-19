@@ -7,9 +7,9 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	sbc.w #$000A					; minus 10
 	bmi .neg
 	bvc .i2
-.ex1:
+.ex1:								; far branch to .rtl
 	jmp.w .rtl
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .ex1
 .i2:
 	lda.w impact,y					; impact of the other
@@ -17,9 +17,9 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	sbc.w #$000A					; minus 10
 	bmi .neg1
 	bvc .lock
-.ex2:
+.ex2:								; far branch to .rtl
 	jmp.w .rtl
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvc .ex2
 .lock:
 	lda.w pfalock,y					; animation locked?
@@ -80,7 +80,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	sbc.w ChkCnt					; 40 minus the check count
 	bpl .pos
 	lda.w #$0000					; at least 0
-.pos:
+.pos:								; position difference scaled
 	lsr a
 	lsr a
 	clc
@@ -137,7 +137,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	bmi .neg2
 	bvc .flip
 	bra .1
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvc .1
 .flip:
 	lda.b d1						; flip the facing
@@ -201,7 +201,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	bpl .restore
 	ldx.b xsave						; restore X
 	ldx.b a3
-.rtl:
+.rtl:								; return
 	rtl
 .sf:								;start the fight for X against a2
 	ldy.b a2						; impactp = a2
@@ -231,7 +231,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	sta.w attribute,x
 	lda.w #$0400					; $400
 	sta.b d1
-.sf2:
+.sf2:								; store the X velocity
 	lda.b d1
 	sta.w Xvel,x					; x velocity
 	lda.w pflags,x					; unavailable, no player coll; pf2aip; SPAfight

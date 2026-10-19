@@ -31,12 +31,12 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	sta.w temp1,x					; expired: reevaluate
 	bmi .dec
 	jmp.w .nodec
-.dec:
+.dec:								; reload the timer from aidef
 	clc
 	adc.w aidef,x					; reload from aidef
 	bpl .st							; not below zero
 	lda.w #$0000
-.st:
+.st:								; store the re-think timer
 	sta.w temp1,x
 	lda.w puckc						; other team has the puck: acenterd
 	bmi .de0
@@ -68,7 +68,7 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	bmi .neg1
 	bvc .z1
 	bra .de2
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvc .de2
 .z1:
 	lda.w #$0008					; zone 8
@@ -79,7 +79,7 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	bmi .neg2
 	bvc .z2
 	bra .de2
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvc .de2
 .z2:
 	ldy.b a2						; tmflags bit 4: stay in the middle zone
@@ -93,7 +93,7 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	bmi .neg3
 	bvc .z3
 	bra .de2
-.neg3:
+.neg3:								; signed compare: overflow flag corrects the sign
 	bvc .de2
 .z3:
 	lda.w #$0018					; zone 24
@@ -150,7 +150,7 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	lda.w #EvadePC>>16
 	sta.b a0+2
 	jml.l skateto					; d0/d1 = target, a0 = callback
-.rtl:
+.rtl:								; return
 	rtl
 .dedata:							;per zone (x, random x range, y, random y range)
 	dw 0,60,-70,10					; zone 0

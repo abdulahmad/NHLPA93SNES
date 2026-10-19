@@ -75,7 +75,7 @@ maketree:							;Build the playoff tree from the seeds and the series wins, then
 	lda.w #$0000
 	sta.b a0+2
 	stz.b a1
-.2:
+.2:									; clear the score of the game
 	ldx.b a1
 	stz.w gss1,x
 	stz.w gss2,x
@@ -130,7 +130,7 @@ maketree:							;Build the playoff tree from the seeds and the series wins, then
 	and.w #$00FF
 	sta.w gst1,x
 	rtl
-.flip:
+.flip:								; flip the team flag
 	lda.w gsflags,x
 	and.w #~gsftf&$FFFF
 	sta.w gsflags,x

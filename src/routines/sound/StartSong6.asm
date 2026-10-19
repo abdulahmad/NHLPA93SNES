@@ -13,5 +13,5 @@ StartSong6:							;Start the title screen music unless it is already playing
 	rep #$30						; 16-bit registers
 	lda.w #6
 	sta.w cursong					; remember the song
-.rtl:
+.rtl:								; return
 	rtl

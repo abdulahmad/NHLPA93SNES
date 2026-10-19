@@ -29,5 +29,5 @@ ShotMode:							;Pad input while shooting: aim with the pad and build shot power
 	lda.w #$0018					; clamp to the end
 	sta.w SPAnum,x
 	bra doshot						; shoot
-.rts:
+.rts:								; return
 	rtl

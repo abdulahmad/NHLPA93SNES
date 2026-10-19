@@ -18,7 +18,7 @@ checkint:							;A goalie and another player collide: the skater falls, and a ha
 	sta.b d0
 	pla
 	sta.b d0+2
-.rtl:
+.rtl:								; return
 	rtl
 .ci:								;a2 must be a goalie, clock running
 	ldy.b a2						; a2
@@ -37,7 +37,7 @@ checkint:							;A goalie and another player collide: the skater falls, and a ha
 	bmi .neg
 	bvc .pc
 	bra .rtl
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .rtl
 .pc:								;impact of X > 2
 	lda.w impact,x					; impact of X
@@ -47,7 +47,7 @@ checkint:							;A goalie and another player collide: the skater falls, and a ha
 	bmi .neg1
 	bvc .fall
 	bra .rtl
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvc .rtl
 .fall:								;X falls
 	ldx.b a2						; X falls
@@ -66,7 +66,7 @@ checkint:							;A goalie and another player collide: the skater falls, and a ha
 	bmi .neg2
 	bvc .pen
 	bra .rtl
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvc .rtl
 .pen:								;no double minor; penalty 3 times in (20 - GGSleft)
 	lda.w pflags,x					; player flags

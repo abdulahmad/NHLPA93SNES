@@ -11,5 +11,5 @@ passmode:							;Pass mode: a pad direction sets the pass direction and passes; 
 	ora.w #$0008					; set bit 3
 	sta.b d0
 	bra dopass						; pass
-.rtl:
+.rtl:								; return
 	rtl

@@ -111,7 +111,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	bcc .ndi
 	lda.w #gmdir
 	tsb.w gmode
-.ndi:
+.ndi:								; not a demo: reset flags
 	stz.w sflags3
 	lda.w #sf2drec					; sflags = sf2drec
 	sta.w sflags
@@ -140,7 +140,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	lda.w #.postab>>16
 	sta.b a0+2
 	stz.b a1
-.ploop:
+.ploop:								; loop over the players
 	ldx.b a1
 	lda.w position,x
 	sta.b d1
@@ -150,7 +150,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	clc
 	adc.w #6
 	sta.b d1
-.pl0:
+.pl0:								; index the player table
 	asl.b d1
 	asl.b d1
 	ldy.b d1
@@ -216,10 +216,10 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	sta.w gameclock+2
 	bcs .clk1
 	dec.w gameclock
-.clk1:
+.clk1:								; clock countdown done
 	dex
 	bne .clk
-.frame:
+.frame:								; run one game frame
 	lda.b d7
 	pha
 	jsl.l DoGameFrame
@@ -244,7 +244,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	and.w #$0002
 	tax
 	inc.w tmscore,x
-.endhl:
+.endhl:								; end of the highlight: restore
 	pla
 	stx.b xsave						; keep X
 	ldx.w #$0002
@@ -377,7 +377,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	lda.b d1
 	bit.w #JOYSTART
 	beq .exit
-.exit2:
+.exit2:								; exit with the button flag set
 	lda.w #sf3sbut
 	tsb.w sflags3
 .exit:
@@ -401,11 +401,11 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	ldx.b xsave						; restore X
 	ldx.b a3
 	rtl
-.nhl1:
+.nhl1:								; NHL highlight 1: load, then randomize results
 	jsl.l .lo
 	jsl.l .ranres
 	bra .exit2
-.nhl0:
+.nhl0:								; NHL highlight 0: randomize results
 	jsl.l .ranres
 	bra .exit
 .setteam:							;team a2 for the highlight: energy, setpersonel, forcepldata, no
@@ -435,13 +435,13 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	eor.w #$0001
 	adc.w gss2,y
 	sta.w gss2,y
-.rr0:
+.rr0:								; set the period to 5
 	lda.w #5
 	sta.w gsper,y
 	rtl
 .sv:								;save the game state (gmode-1 .. ScoreSumbytes) to hlsavebuf
 	ldx.w #$0000
-.sv1:
+.sv1:								; save the game mode to the highlight buffer
 	lda.w gmode-1,x
 	sta.l hlsavebuf,x
 	inx
@@ -457,7 +457,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	rtl
 .lo:								;restore the game state from hlsavebuf
 	ldx.w #$0000
-.lo1:
+.lo1:								; restore the game mode from the highlight buffer
 	lda.l hlsavebuf,x
 	sta.w gmode-1,x
 	inx

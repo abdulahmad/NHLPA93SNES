@@ -35,5 +35,5 @@ faceoffinput:						;Pad input for a player taking a face off
 	lda.w #SPAfaceoffr				; reverse pull
 	sta.b d1
 	jmp.w SetSPA					; start it
-.rtl:
+.rtl:								; return
 	rtl

@@ -30,7 +30,7 @@ AddPenalty2:						;Call penalty d0 on player X without the checks; used for forc
 	bmi .neg
 	bvc .snd
 	bra .nosnd
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .nosnd
 .snd:								;goal and up: crowd and a sound
 	lda.b crowdlevel				; crowd +200
@@ -43,7 +43,7 @@ AddPenalty2:						;Call penalty d0 on player X without the checks; used for forc
 	beq .sfx
 	lda.w #SFXcrowdcheer
 	sta.b $01,s
-.sfx:
+.sfx:								; play the penalty sound
 	jsl.l sfx
 .nosnd:
 	lda.w #PenBuf					; a1 = PenBuf, 32 slots
@@ -61,7 +61,7 @@ AddPenalty2:						;Call penalty d0 on player X without the checks; used for forc
 	dec.b d1
 	bpl .find
 	bra .noplayer
-.put:
+.put:								; put the penalty in the list
 	dec.b a1
 	dec.b a1
 	txa								; store (SCnum << 8) | penalty
@@ -109,5 +109,5 @@ AddPenalty2:						;Call penalty d0 on player X without the checks; used for forc
 	dex
 	bpl .restore
 	ldx.b xsave						; restore X
-.rtl:
+.rtl:								; return
 	rtl

@@ -22,7 +22,7 @@ find3d:								;Project a rink position (x, y, z) to screen coordinates; off scr
 	sec								; y
 	sbc.w Vpos						; minus the scroll y
 	sta.b d1
-.cx:
+.cx:								; absolute X
 	lda.b d0
 	bit.w #$8000					; absolute x
 	beq .ax
@@ -49,7 +49,7 @@ find3d:								;Project a rink position (x, y, z) to screen coordinates; off scr
 	beq .ay
 	eor.w #$FFFF					; negate
 	inc a
-.ay:
+.ay:								; offscreen check
 	cmp.w #$0091
 	bcs .off
 	lda.w #$0070					; center y $70

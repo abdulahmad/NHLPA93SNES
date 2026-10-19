@@ -3,5 +3,5 @@ Teamblocksmap:						;TeamBlocks.map: one 9 x 2 tile block per team (palette 1, t
 									;DrawTeamBlocks)
 									;team 0
 	incbin "../../../Extracted/Graphics/TeamBlocks.snesmap"
-TeamblocksmapEnd:
+TeamblocksmapEnd:					; end of Teamblocksmap
 	assert (TeamblocksmapEnd-Teamblocksmap)/36 == NumofTeams

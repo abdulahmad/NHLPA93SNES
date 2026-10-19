@@ -36,7 +36,7 @@ SetHor_rink:						;Clear the text screen, draw the horizontal rink scoreboard ba
 	lda.w #$001C					; 28 rows
 	sta.b tmp0
 	ldx.w #$0000					; map offset 0
-.row2:
+.row2:								; second half of the rink map
 	ldy.w #$0020
 .col2:
 	lda.l HorRinkMap+$10,x			; rink map words from +$10

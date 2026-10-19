@@ -4,7 +4,7 @@ Intermission:						;Between periods: the pause menu screen with the scores of th
 	jsl.l SetupTeamForIntermission	; set up the two teams for the screen
 	lda.w #$0000
 	ldy.w #$001E					; clear Xpos of the 16 objects
-.0:
+.0:									; clear the object X positions
 	sta.w Xpos,y
 	dey
 	dey
@@ -34,10 +34,10 @@ Intermission:						;Between periods: the pause menu screen with the scores of th
 	jsl.l InitTicker				; start the score ticker
 	lda.w TickerNum
 	sta.w tickerstart				; ticker starts from the current game
-.top:
+.top:								; clear the object X positions again
 	lda.w #$0000
 	ldy.w #$001E					; clear Xpos of the 16 objects again
-.clr:
+.clr:								; loop
 	sta.w Xpos,y
 	dey
 	dey
@@ -55,5 +55,5 @@ Intermission:						;Between periods: the pause menu screen with the scores of th
 	jsl.l PauseMenu					; run the pause menu
 	bne .top						; nonzero: show the screen again
 	stz.w demoflag					; leave demo mode
-.rtl:
+.rtl:								; return
 	rtl

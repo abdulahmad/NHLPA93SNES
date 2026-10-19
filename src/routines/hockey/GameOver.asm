@@ -20,5 +20,5 @@ GameOver:							;After a game: the password and the playoff screen; on to the us
 	trb.w sflags3
 	beq .tree						; no alternative tree
 	jml.l Opening3					; alternative tree
-.tree:
+.tree:								; far branch to Opening4
 	jml.l Opening4

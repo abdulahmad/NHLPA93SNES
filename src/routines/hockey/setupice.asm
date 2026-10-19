@@ -66,7 +66,7 @@ setupice:							;Set up the rink: the variables, the rink and text graphics, the
 	lda.w #$1000					; vram $1000
 	sta.w VMADDL
 	ldx.w #$0000
-.up1:
+.up1:								; upload part 1 of the unpacked rink tiles
 	lda.l unpackbuf,x
 	sta.w VMDATAL
 	inx
@@ -79,7 +79,7 @@ setupice:							;Set up the rink: the variables, the rink and text graphics, the
 	sta.b tmp1
 	jsl.l DecompressBytecode
 	ldx.w #$0000
-.up2:
+.up2:								; upload part 2 of the unpacked rink tiles
 	lda.l unpackbuf,x
 	sta.w VMDATAL
 	inx
@@ -92,7 +92,7 @@ setupice:							;Set up the rink: the variables, the rink and text graphics, the
 	sta.b tmp1
 	jsl.l DecompressBytecode
 	ldx.w #$0000
-.up3:
+.up3:								; upload part 3 of the unpacked rink tiles
 	lda.l unpackbuf,x
 	sta.w VMDATAL
 	inx
@@ -105,7 +105,7 @@ setupice:							;Set up the rink: the variables, the rink and text graphics, the
 	sta.b tmp1
 	jsl.l DecompressBytecode
 	ldx.w #$0000
-.up4:
+.up4:								; upload part 4 of the unpacked rink tiles
 	lda.l unpackbuf,x
 	sta.w VMDATAL
 	inx
@@ -118,7 +118,7 @@ setupice:							;Set up the rink: the variables, the rink and text graphics, the
 	sta.b tmp1
 	jsl.l DecompressBytecode
 	ldx.w #$0000
-.up5:
+.up5:								; upload part 5 of the unpacked rink tiles
 	lda.l unpackbuf,x
 	sta.w VMDATAL
 	inx
@@ -195,7 +195,7 @@ setupice:							;Set up the rink: the variables, the rink and text graphics, the
 	dex
 	dex
 	bpl .l01
-.gok:
+.gok:								; colors set: reset the pad control bits
 	jsl.l setplayercolors
 	lda.w #$FFFF					; PadControlBits = $FFFF, padcont = 0
 	sta.w PadControlBits

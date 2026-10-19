@@ -36,7 +36,7 @@ Gameloop:							;Main game loop: wait for a frame, run the clock, music and crow
 	lda.w gmclock
 	bne .cue
 	ldx.b d7
-.clk:
+.clk:								; clock countdown, one tick per frame
 	lda.w gameclock
 	beq .clk1
 	lda.w gameclock+2
@@ -45,14 +45,14 @@ Gameloop:							;Main game loop: wait for a frame, run the clock, music and crow
 	sta.w gameclock+2
 	bcs .clk1
 	dec.w gameclock
-.clk1:
+.clk1:								; next frame tick
 	dex
 	bne .clk
 .cue:
 	lda.w cuetimer					; music cue: sounds back near its end
 	beq .p3
 	ldx.b d7
-.cue1:
+.cue1:								; cue timer countdown
 	dec.w cuetimer
 	lda.w cuetimer
 	beq .p3
@@ -60,26 +60,26 @@ Gameloop:							;Main game loop: wait for a frame, run the clock, music and crow
 	bne .cue2
 	jsl.l sndqreset					; reset the sound queue
 	bra .p3
-.cue2:
+.cue2:								; next frame tick
 	dex
 	bne .cue1
-.p3:
+.p3:								; third period cue
 	lda.w p3cue						; third period cue
 	beq .cheer
 	sec
 	sbc.b d7
 	bpl .p3a
 	lda.w #$0000
-.p3a:
+.p3a:								; store the countdown
 	sta.w p3cue
 	bne .cheer
 	lda.w cuetimer					; another cue plays: try next frame
 	beq .p3go
 	inc.w p3cue
 	bra .cheer
-.p3go:
+.p3go:								; start the third period song
 	jsl.l StartSong3
-.cheer:
+.cheer:								; crowd cheer
 	lda.w cheercnt					; crowd cheers after a goal: every 150 frames
 	beq .frame
 	lda.b vcount
@@ -95,7 +95,7 @@ Gameloop:							;Main game loop: wait for a frame, run the clock, music and crow
 	clc
 	adc.w #150
 	sta.w cheervc
-.frame:
+.frame:								; run the game frame and demo
 	jsl.l DoGameFrame
 	jsl.l demoread
 	bra .gh
@@ -172,10 +172,10 @@ Gameloop:							;Main game loop: wait for a frame, run the clock, music and crow
 	trb.w tmflags+2
 	lda.w #$FFFF
 	sta.w lcplayer
-.pause:
+.pause:								; pause check
 	lda.w sflags
 	bit.w #sfpz
 	beq .loop
 	jsl.l Pausemode
-.loop:
+.loop:								; far branch to Gameloop
 	jmp.w Gameloop

@@ -22,7 +22,7 @@ CheckBump:							;Goalie X pushed against the net with the puck near: if he is m
 	beq .dy
 	eor.w #$FFFF					; negate
 	inc a
-.dy:
+.dy:								; Y distance small enough to bump?
 	cmp.w #$0029
 	bcs .ex
 	lda.w Xvel,x
@@ -33,7 +33,7 @@ CheckBump:							;Goalie X pushed against the net with the puck near: if he is m
 	beq .vy
 	eor.w #$FFFF					; negate
 	inc a
-.vy:
+.vy:								; Y velocity limit
 	cmp.w #$2001
 	bcs .bb
 	lda.b d0
@@ -41,7 +41,7 @@ CheckBump:							;Goalie X pushed against the net with the puck near: if he is m
 	beq .vx
 	eor.w #$FFFF					; negate
 	inc a
-.vx:
+.vx:								; X velocity limit
 	cmp.w #$2001
 	bcs .bb
 .ex:
@@ -54,7 +54,7 @@ CheckBump:							;Goalie X pushed against the net with the puck near: if he is m
 	dex
 	bpl .restore
 	ldx.b xsave						; restore X
-.rtl:
+.rtl:								; return
 	rtl
 .bb:								;drop the saved d0-d3 and the jsl return: return to the caller of
 									;checkgoalp
@@ -72,7 +72,7 @@ CheckBump:							;Goalie X pushed against the net with the puck near: if he is m
 	bit.w #$2000
 	beq .sx
 	ora.w #$C000
-.sx:
+.sx:								; store the new X velocity
 	sta.b d0
 	ldy.b a2
 	sta.w Xvel,y
@@ -82,7 +82,7 @@ CheckBump:							;Goalie X pushed against the net with the puck near: if he is m
 	bit.w #$2000
 	beq .sy
 	ora.w #$C000
-.sy:
+.sy:								; store the new Y velocity
 	sta.b d1
 	sta.w Yvel,y
 	stz.w Xvel,x

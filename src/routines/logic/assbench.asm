@@ -28,7 +28,7 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 	bne .0
 	lda.w #-80
 	sta.b d0
-.0:
+.0:									; target y at the bench
 	lda.b d0
 	sta.w temp4,x					; target y at the bench
 	lda.w #-144
@@ -71,9 +71,9 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 	beq .gli0
 	bmi .neg
 	bvs .gli0
-.nd:
+.nd:								; far branch to .nodec
 	jmp.w .nodec
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .nd
 .gli0:
 	lda.w #SPAglide					; SPAglide (goalie SPAgready)
@@ -103,7 +103,7 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 	bmi .neg1
 	bvs .stop
 	bra .rtl
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .rtl
 .stop:
 	stz.w Xvel,x					; stop sliding
@@ -120,7 +120,7 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 	lda.w #100
 	sta.w temp1,x					; door timer 100: at the door
 	sta.w pfalock,x					; lock the assignment
-.rtl:
+.rtl:								; return
 	rtl
 .done:
 	stz.w frame,x					; hide the sprite
@@ -132,11 +132,11 @@ assbench:							;Assignment: player X skates to the bench door and leaves; the n
 	beq .away
 	lda.w #2
 	sta.b a0
-.away:
+.away:								; which team's bench
 	lda.b a0
 	beq .t0
 	lda.w #maxros*2					; second team offset
-.t0:
+.t0:								; index the bench slot
 	clc
 	adc.b d0
 	tay

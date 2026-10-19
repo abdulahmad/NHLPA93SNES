@@ -15,5 +15,5 @@ adda43:								;Step a4 to the next replay frame, wrapping around the replay buf
 	sta.b a4
 	lda.w #ReplayBufferStart>>16
 	sta.b a4+2
-.rtl:
+.rtl:								; return
 	rtl

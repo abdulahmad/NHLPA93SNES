@@ -9,5 +9,5 @@ NewTicker2:							;d3 = the next game for the ticker, or negative when none is l
 	cmp.w gamenum					; the current game itself
 	beq NewTicker2					; skip it
 	bra NewTicker3					; show it
-.rtl:
+.rtl:								; return
 	rtl

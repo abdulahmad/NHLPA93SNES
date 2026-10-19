@@ -84,9 +84,9 @@ Framer:								;Draw a frame and fill it. d0 / d1 = width / height, printx / pri
 	cmp.b textdirtylo
 	bcs .lo
 	sta.b textdirtylo
-.lo:
+.lo:								; low end of the dirty range
 	cmp.b textdirtyhi
 	bcc .hi
 	sta.b textdirtyhi
-.hi:
+.hi:								; high end of the dirty range
 	rtl

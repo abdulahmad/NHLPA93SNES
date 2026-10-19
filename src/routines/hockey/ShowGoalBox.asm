@@ -54,7 +54,7 @@ ShowGoalBox:						;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the
 	beq .home
 	inc.b a2
 	inc.b a2
-.home:
+.home:								; print the home team box
 	lda.w #GoalBoxText
 	sta.b a1
 	lda.w #GoalBoxText>>16
@@ -66,7 +66,7 @@ ShowGoalBox:						;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the
 	beq .tmofs
 	clc
 	adc.w #$001A
-.tmofs:
+.tmofs:								; goals of the scorer
 	tay
 	lda.w tmgoals,y					; goals of the scorer
 	and.w #$00FF
@@ -76,7 +76,7 @@ ShowGoalBox:						;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the
 	clc
 	adc.b [a1]
 	sta.b a1
-.goal:
+.goal:								; print the goal box
 	jsl.l printbig
 	ldy.w #$0003
 	lda.b [a4],y

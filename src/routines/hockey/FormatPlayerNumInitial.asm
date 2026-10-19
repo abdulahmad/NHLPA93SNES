@@ -90,7 +90,7 @@ FormatPlayerNumInitial:				;mesarea = the number, first initial and last name of
 	and.w #$00FF
 	cmp.w #' '
 	bne .skipfirst
-.last:
+.last:								; last character
 	lda.b [a0]
 	inc.b a0
 	sta.b [a1]

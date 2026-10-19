@@ -14,7 +14,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	bmi .neg
 	bvs .low
 	bra .side
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .side
 .low:								;puck region: +2 when low
 	inc.b d2
@@ -115,9 +115,9 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	sbc.w #$0002					; minus 2
 	bmi .neg1
 	bvs .saved
-.nosave:
+.nosave:							; far branch to .rtl
 	jmp.w .rtl
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .nosave
 .saved:
 	jsl.l ChkShotStat				; ChkShotStat
@@ -182,7 +182,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	bne .sx
 	lda.b a2						; goalie player number
 	jsl.l GetHot					; hot spot offset
-.sx:
+.sx:								; X velocity, signed low byte
 	lda.b d1
 	and.w #$00FF					; low byte
 	bit.w #$0080
@@ -210,7 +210,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	sta.w Yvel+1,x
 	rep #$20						; 16-bit A
 	jmp.w puckflip					; flip the puck
-.rtl:
+.rtl:								; return
 	rtl
 .nopc:								;loose puck: the goalie holds it if it is slow enough
 	ldy.b a2
@@ -230,21 +230,21 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	sbc.w puckvx					; minus puck x velocity
 	bmi .neg2
 	bvc .c2
-.b1:
+.b1:								; far branch to .bounce
 	jmp.w .bounce
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvc .b1
-.c2:
+.c2:								; puck Y relative to the net
 	lda.b d0
 	sec
 	sbc.w puckvy					; minus puck y velocity
 	bmi .neg3
 	bvc .c3
-.b2:
+.b2:								; far branch to .bounce
 	jmp.w .bounce
-.neg3:
+.neg3:								; signed compare: overflow flag corrects the sign
 	bvc .b2
-.c3:
+.c3:								; negate the Y distance
 	lda.b d0
 	eor.w #$FFFF					; negate
 	inc a
@@ -254,20 +254,20 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	beq .c4
 	bmi .neg4
 	bvs .c4
-.b3:
+.b3:								; far branch to .bounce
 	jmp.w .bounce
-.neg4:
+.neg4:								; signed compare: overflow flag corrects the sign
 	bvs .b3
-.c4:
+.c4:								; puck Y relative to the net
 	lda.b d0
 	sec
 	sbc.w puckvy					; minus puck y velocity
 	beq .c5
 	bmi .neg5
 	bvs .c5
-.b4:
+.b4:								; far branch to .bounce
 	jmp.w .bounce
-.neg5:
+.neg5:								; signed compare: overflow flag corrects the sign
 	bvs .b4
 .c5:
 	ldy.b a2						; goalie

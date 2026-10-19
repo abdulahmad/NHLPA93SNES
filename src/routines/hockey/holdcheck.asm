@@ -35,7 +35,7 @@ holdcheck:							;a2 holds or hooks X: both slow down, and a holding or hooking 
 	bne .nopc
 	lda.w #$0008					; puck not held anymore
 	trb.w sflags					; X has the puck
-.nopc:
+.nopc:								; no puck carrier: compare the velocities
 	ldy.b a2
 	lda.w Xvel,x					; x velocities
 	clc
@@ -93,5 +93,5 @@ holdcheck:							;a2 holds or hooks X: both slow down, and a holding or hooking 
 	sty.b a2
 	lda.w #$FFFF					; set collflag
 	sta.b collflag
-.rtl:
+.rtl:								; return
 	rtl

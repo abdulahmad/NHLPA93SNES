@@ -2,7 +2,7 @@ PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start 
 									;else run the chosen item.
 		;   A = 0 to leave, 1 to redraw
 	stz.w psitem
-.gj:
+.gj:								; redraw the menu and read the pad
 	jsl.l Pmenu
 	jsl.l PauseReadJoy
 	lda.b d1						; Start: leave
@@ -64,7 +64,7 @@ PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start 
 	bit.w #cbut
 	bne .sr1
 	jmp.w .gj
-.sr1:
+.sr1:								; stats report, then redraw
 	jsl.l StatsReport
 	jsl.l SetHor_rink
 	bra .redraw
@@ -74,7 +74,7 @@ PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start 
 	bit.w #cbut
 	bne .ros1
 	jmp.w .gj
-.ros1:
+.ros1:								; team roster, then restore the screen
 	jsl.l TeamRosterScreen
 	jsl.l sndqreset					; reset the sound queue
 	jsl.l forceblack				; blank the screen
@@ -89,7 +89,7 @@ PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start 
 	sta.w TM
 	stz.w CGADD
 	ldx.w #$0000
-.pal:
+.pal:								; restore the palette from the buffer
 	lda.l palbuffer,x
 	sta.w CGDATA
 	inx
@@ -154,19 +154,19 @@ PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start 
 	bit.w #JOYLEFT
 	bne .prevg
 	jmp.w .gj
-.prevg:
+.prevg:								; previous goalie
 	lda.w tmgoalie,y
 	bmi .lastg
-.dec:
+.dec:								; step the goalie index down
 	dec a
-.set:
+.set:								; store the new goalie and update the players on the ice
 	sta.w tmgoalie,y
 	jsl.l setpersonel				; update the players on the ice
 	jmp.w .gj
-.lastg:
+.lastg:								; wrap to the last goalie
 	lda.b d0
 	bra .dec
-.nextg:
+.nextg:								; next goalie
 	lda.w tmgoalie,y
 	bmi .firstg
 	inc a
@@ -174,7 +174,7 @@ PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start 
 	bcc .set
 	lda.w #$FFFF
 	bra .set
-.firstg:
+.firstg:							; wrap to the first goalie
 	lda.w #$0000
 	bra .set
 .jump:								;Resume Game, Instant Replay, Stats Report, Goalie, Team Roster

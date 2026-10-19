@@ -6,7 +6,7 @@ assshoot:							;Assignment: computer shooting: wind up, then shoot when the swi
 	and.w #~pfna&$FFFF
 	sta.w pflags,x
 	bra SetShotMode					; set the shot mode
-.nna:
+.nna:								; new assignment: check the shot direction flag
 	lda.w sflags
 	bit.w #sfssdir					; sfssdir
 	bne .swing

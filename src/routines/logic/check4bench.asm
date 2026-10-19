@@ -35,7 +35,7 @@ check4bench:						;If a line change wants player X off, send him to the bench (o
 	lda.w #abench					; abench
 	sta.b d0						; d0 = bench assignment
 	jmp.w assreplace				; replace the assignment
-.rts:
+.rts:								; return
 	rtl
 .samepl:							;same roster player: just change position
 	sep #$20						; pop the jsl return address

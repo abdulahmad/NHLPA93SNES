@@ -1,6 +1,6 @@
 AdvanceStringPtr:					;a1 = string d0 of the string list [a1]
 	bra .cnt						; count first
-.next:
+.next:								; skip to the next string
 	lda.b a1
 	clc
 	adc.b [a1]						; plus the string length: next string

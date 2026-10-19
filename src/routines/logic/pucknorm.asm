@@ -44,7 +44,7 @@ pucknorm:							;Assignment: the puck most of the time. Follows the carrier, wat
 	bit.w #$2000					; asr #2
 	beq .x
 	ora.w #$C000
-.x:
+.x:									; add the normal to the puck X
 	clc
 	adc.w puckx
 	sta.w puckx
@@ -58,7 +58,7 @@ pucknorm:							;Assignment: the puck most of the time. Follows the carrier, wat
 	bit.w #$2000
 	beq .y
 	ora.w #$C000
-.y:
+.y:									; add the normal to the puck Y
 	clc
 	adc.w pucky
 	sta.w pucky
@@ -66,7 +66,7 @@ pucknorm:							;Assignment: the puck most of the time. Follows the carrier, wat
 	sta.w puckvx
 	lda.w Yvel,y
 	sta.w puckvy
-.nothandled:
+.nothandled:						; puck not handled: check the ice and offsides
 	jsl.l PuckIChk
 	jsl.l ChkOffsides
 	lda.w gmclock					; clock stopped
@@ -84,7 +84,7 @@ pucknorm:							;Assignment: the puck most of the time. Follows the carrier, wat
 	dec.w temp2b+puckobj
 	bpl .np
 	jsl.l AddPenalty2
-.np:
+.np:								; still puck check done
 	bra .z
 .mv:								;reset the still puck timer
 	lda.w #$0078

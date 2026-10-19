@@ -86,7 +86,7 @@ ShowRinkRows:						;Queue the rink map rows that the vertical scroll brought on 
 	cmp.w #$0800					; wrap at $800
 	bne .nowrap
 	lda.w #$0400					; back to $400
-.nowrap:
+.nowrap:							; no wrap: DMA source
 	sta.b tmp2
 	lda.b tmp0						; map source
 	sta.w DMAList,y

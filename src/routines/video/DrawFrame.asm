@@ -47,7 +47,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	bit.w #$0080
 	beq .px
 	ora.w #$FF00
-.px:
+.px:								; store the X offset
 	sta.b sprox
 	iny
 	lda.b [farptr],y				; y offset, sign extended
@@ -55,7 +55,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	bit.w #$0080
 	beq .py
 	ora.w #$FF00
-.py:
+.py:								; store the Y offset
 	sta.b sproy
 	iny
 	lda.b [farptr],y				; tile number, 32 bytes per tile
@@ -82,7 +82,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	bpl .size
 	lda.w #$0006
 	sta.b sprpal
-.size:
+.size:								; piece size bits
 	txa
 	and.w #$00C0					; bits 6-7 of the piece attribute
 	sta.b sprpattr
@@ -106,9 +106,9 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	sbc.w #$FFF9					; off screen to the left?
 	bmi .xlov
 	bvc .xhi
-.xloout:
+.xloout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.xlov:
+.xlov:								; signed compare: overflow flag corrects the sign
 	bvc .xloout
 .xhi:
 	lda.b sprox						; off screen to the right?
@@ -117,9 +117,9 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	beq .sy
 	bmi .xhiv
 	bvs .sy
-.xhiout:
+.xhiout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.xhiv:
+.xhiv:								; signed compare: overflow flag corrects the sign
 	bvs .xhiout
 .sy:
 	lda.b sprvflip					; mirror y for a flip
@@ -137,9 +137,9 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	sbc.w #$FFF9
 	bmi .ylov
 	bvc .yhi
-.yloout:
+.yloout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.ylov:
+.ylov:								; signed compare: overflow flag corrects the sign
 	bvc .yloout
 .yhi:
 	lda.b sproy						; off screen below?
@@ -148,16 +148,16 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	beq .cache
 	bmi .yhiv
 	bvs .cache
-.yhiout:
+.yhiout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.yhiv:
+.yhiv:								; signed compare: overflow flag corrects the sign
 	bvs .yhiout
 .cache:
 	lda.b sprframe					; frame number plus set offset
 	clc
 	adc.b sprsetofs
 	cmp.w #$131D					; frame beyond the table: hang
-.hang1:
+.hang1:								; hangs if the carry is set (should not happen)
 	bcs .hang1
 	asl a
 	asl a
@@ -184,7 +184,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 .shorten:
 	dec.b sprslotlife				; keep slots for less time
 	lda.b sprslot
-.chk:
+.chk:								; look for a free sprite slot older than the current frame
 	asl a
 	tax
 	lda.b sprclock					; age of this slot
@@ -221,7 +221,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	tax
 	lda.b sprslot
 	sta.l sprframetime+2,x			; remember the slot for the frame
-.have:
+.have:								; slot found: stamp it
 	lda.b sprclock
 	sta.l sprframetime,x			; stamp the frame time
 	lda.l sprframetime+2,x
@@ -290,9 +290,9 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	sbc.w #$FFF1
 	bmi .bxlov
 	bvc .bxhi
-.bxloout:
+.bxloout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.bxlov:
+.bxlov:								; signed compare: overflow flag corrects the sign
 	bvc .bxloout
 .bxhi:
 	lda.b sprox						; off screen to the right?
@@ -301,9 +301,9 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	beq .by
 	bmi .bxhiv
 	bvs .by
-.bxhiout:
+.bxhiout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.bxhiv:
+.bxhiv:								; signed compare: overflow flag corrects the sign
 	bvs .bxhiout
 .by:
 	lda.b sprvflip					; mirror y for a flip
@@ -321,9 +321,9 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	sbc.w #$FFF1
 	bmi .bylov
 	bvc .byhi
-.byloout:
+.byloout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.bylov:
+.bylov:								; signed compare: overflow flag corrects the sign
 	bvc .byloout
 .byhi:
 	lda.b sproy						; off screen below?
@@ -332,16 +332,16 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	beq .bcache
 	bmi .byhiv
 	bvs .bcache
-.byhiout:
+.byhiout:							; far branch to .nextpiece
 	jmp.w .nextpiece
-.byhiv:
+.byhiv:								; signed compare: overflow flag corrects the sign
 	bvs .byhiout
 .bcache:
 	lda.b sprframe					; frame number plus set offset
 	clc
 	adc.b sprsetofs
 	cmp.w #$131D
-.bhang1:
+.bhang1:							; hangs if the carry is set (should not happen)
 	bcs .bhang1
 	asl a
 	asl a
@@ -367,10 +367,10 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	cmp.w #$0005
 	bcs .bshorten
 	jml.l addframe_full				; VRAM sprite cache full
-.bshorten:
+.bshorten:							; shorten the slot life
 	dec.b sprslotlife
 	lda.b sprbigslot
-.bchk:
+.bchk:								; check the big slot
 	and.w #$000F					; skip slots that straddle a row
 	cmp.w #$000F
 	beq .bfind
@@ -437,7 +437,7 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	tax
 	lda.b sprbigslot
 	sta.l sprframetime+2,x			; remember the slot for the frame
-.bhave:
+.bhave:								; big slot found: stamp it
 	lda.b sprclock
 	sta.l sprframetime,x			; stamp the frame time
 	lda.l sprframetime+2,x

@@ -60,5 +60,5 @@ eraser:								;Fill a d0 by d1 rectangle of the text map at printx / printy wit
 	cmp.b textdirtyhi				; above the dirty end
 	bcc .rtl
 	sta.b textdirtyhi				; new dirty end
-.rtl:
+.rtl:								; return
 	rtl

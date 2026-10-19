@@ -133,7 +133,7 @@ checkcoll:							;Move object X to its new x / y (d2 / d3), checking wall and pl
 .sort:
 	lda.w OOlistpos,x				; move up/down OOlist by y
 	sta.b d1
-.2:
+.2:									; top of the object list?
 	ldy.b d1
 	cpy.w #$000F					; top of the list?
 	beq .cl2
@@ -148,7 +148,7 @@ checkcoll:							;Move object X to its new x / y (d2 / d3), checking wall and pl
 	bmi .neg
 	bvc .swapup						; X is lower: swap up
 	bra .cl2
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .cl2
 .swapup:
 	inc.w OOlistpos,x				; move X up the list
@@ -168,7 +168,7 @@ checkcoll:							;Move object X to its new x / y (d2 / d3), checking wall and pl
 	lda.w OOlistpos,x				; X's position in the sorted list
 	beq .ex2						; at the bottom: done
 	sta.b d1
-.3:
+.3:									; object below in the list
 	ldy.b d1
 	lda.w OOlist-1,y				; object below
 	and.w #$00FF
@@ -180,7 +180,7 @@ checkcoll:							;Move object X to its new x / y (d2 / d3), checking wall and pl
 	bmi .neg1
 	bvs .swapdn						; X is higher: swap down
 	bra .ex2
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .ex2
 .swapdn:
 	dec.w OOlistpos,x				; move X down the list

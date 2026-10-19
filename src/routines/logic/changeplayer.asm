@@ -26,7 +26,7 @@ changeplayer:						;Switch controller d4 to the teammate nearest the puck, or sw
 	bit.w #$0080
 	beq .ly
 	ora.w #$FF00
-.ly:
+.ly:								; candidate y relative to the puck
 	clc
 	adc.w pucky						; plus the puck y
 	pha								; keep it
@@ -36,7 +36,7 @@ changeplayer:						;Switch controller d4 to the teammate nearest the puck, or sw
 	bit.w #$0080
 	beq .lx
 	ora.w #$FF00
-.lx:
+.lx:								; candidate x relative to the puck
 	clc
 	adc.w puckx						; plus the puck x
 	pha
@@ -97,7 +97,7 @@ changeplayer:						;Switch controller d4 to the teammate nearest the puck, or sw
 	sta.b d5
 	lda.b d0+2
 	sta.b d5+2
-.next:
+.next:								; next candidate
 	inx
 	inx
 	dec.b d2

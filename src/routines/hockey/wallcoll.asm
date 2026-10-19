@@ -84,9 +84,9 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bmi .neg
 	bvs .hard
 	bra .pok
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .pok
-.hard:
+.hard:								; hard hit: random bounce
 	lda.w #$0800
 	jsl.l randoma					; random number 0 to A-1
 	eor.w #$FFFF					; negate
@@ -102,9 +102,9 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bmi .neg1
 	bvc .s2
 	bra .snd
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvc .snd
-.s2:
+.s2:								; louder wall sound, variant 2
 	pla
 	lda.w #SFXpuckwall1+1			; louder variant 2
 	pha
@@ -114,9 +114,9 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bmi .neg2
 	bvc .s3
 	bra .snd
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvc .snd
-.s3:
+.s3:								; wall sound, variant 3
 	pla
 	lda.w #SFXpuckwall1+2			; variant 3
 	pha
@@ -154,11 +154,11 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	beq .p1
 	bmi .neg3
 	bvs .p1
-.nocoll1:
+.nocoll1:							; far branch to .nocoll
 	jmp.w .nocoll
-.neg3:
+.neg3:								; signed compare: overflow flag corrects the sign
 	bvs .nocoll1
-.p1:
+.p1:								; fast into the boards: board sound
 	lda.b d2
 	sec
 	sbc.w #$F000					; v1n <= -$1000 and impact >= 10: board sound
@@ -166,7 +166,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bmi .neg4
 	bvs .imp
 	bra .nosfx
-.neg4:
+.neg4:								; signed compare: overflow flag corrects the sign
 	bvs .nosfx
 .imp:
 	lda.w impact,x					; impact
@@ -175,7 +175,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bmi .neg5
 	bvc .psnd
 	bra .nosfx
-.neg5:
+.neg5:								; signed compare: overflow flag corrects the sign
 	bvc .nosfx
 .psnd:
 	lda.w seed+1					; random sound variant
@@ -198,7 +198,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bmi .neg6
 	bvc .min
 	bra .noadd
-.neg6:
+.neg6:								; signed compare: overflow flag corrects the sign
 	bvc .noadd
 .min:
 	lda.w #$FC18					; limit -1000

@@ -11,7 +11,7 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	lda.w #$0000
 	sta.w tmPwrGoals,y				; restart the roster order
 	jsl.l SlideOutRosterPlayer		; slide the old player out
-.cur:
+.cur:								; first object of the team
 	ldy.b a2
 	lda.w tmsort,y					; X = a3 = first object of the team
 	sta.b a3
@@ -33,9 +33,9 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	bvs .rtl
 .next1:
 	jmp.w SetupNextPlayer			; set up the next player
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .next1
-.rtl:
+.rtl:								; return
 	rtl
 .in:								;skating in from the left
 	lda.w OldXpos,x					; skating in: x += 1 while negative
@@ -127,7 +127,7 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	sta.b [a1]
 	inc.b a1
 	bra .first
-.pr1:
+.pr1:								; message area offset
 	lda.b a1
 	sec
 	sbc.w #mesarea
@@ -151,7 +151,7 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	lda.b [a0]						; then the last name on the next line
 	sta.b tmp0
 	ldy.w #$0001					; skip the first name
-.space:
+.space:								; skip spaces
 	iny
 	lda.b [a0],y
 	and.w #$00FF
@@ -161,7 +161,7 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	sta.b a1
 	lda.w #$0000
 	sta.b a1+2
-.last:
+.last:								; copy until the end of the entry
 	iny
 	cpy.b tmp0						; until the end of the entry
 	beq .pr2
@@ -169,7 +169,7 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	sta.b [a1]
 	inc.b a1
 	bra .last
-.pr2:
+.pr2:								; finish the message area offset
 	lda.b a1
 	sec
 	sbc.w #mesarea

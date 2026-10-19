@@ -31,7 +31,7 @@ print:								;Print string [a1] into the text map at printx / printy. The strin
 	cmp.w #$0040					; "@" = blank tile
 	bne .font						; "@" is a blank tile
 	jmp.w .blank
-.font:
+.font:								; index the font character
 	phx
 	asl a							; character index
 	tax
@@ -49,7 +49,7 @@ print:								;Print string [a1] into the text map at printx / printy. The strin
 	cmp.b textdirtylo				; textdirtylo/hi
 	bcs .hi
 	sta.b textdirtylo
-.hi:
+.hi:								; update the high end of the dirty range
 	cmp.b textdirtyhi
 	bcc .nextc						; new high
 	sta.b textdirtyhi

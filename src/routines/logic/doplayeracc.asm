@@ -11,7 +11,7 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	beq .d0
 	lda.w #SPAglideback				; glide back animation
 	sta.b d1
-.d0:
+.d0:								; low nibble: direction
 	lda.b d0
 	and.w #$000F					; low nibble: direction or 8/9
 	sta.b d0
@@ -27,7 +27,7 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	lda.w pf2aip,x					; animation in progress: leave it
 	bne .rtl
 	jml.l SetSPA					; start animation d1
-.rtl:
+.rtl:								; return
 	rtl
 .d1:								;a direction: pfrev, then the turn
 	lda.b d1						; save the animation
@@ -58,7 +58,7 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	bit.w #$0100
 	beq .sx
 	ora.w #$FE00
-.sx:
+.sx:								; add the puck y
 	clc
 	adc.w pucky						; plus the puck y
 	sec
@@ -124,7 +124,7 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	and.w #$0007
 	cmp.w #$0003
 	bcs .done						; not within one step: stay forward
-.setrev:
+.setrev:							; start skating backwards
 	inc a
 	sta.w pfrev,x					; start skating backwards
 	bra .done
@@ -154,7 +154,7 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	lda.b tmp0
 	bne .turn						; facing the right way: no turn
 	jml.l noturn0
-.turn:
+.turn:								; turning: compare the velocity with the new direction
 	lda.w Xvel,x
 	sta.b mula
 	sta.b mulb
@@ -179,12 +179,12 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	bmi .neg
 	bvs .vs
 	bra .iok
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .iok
-.vs:
+.vs:								; slower turn rate
 	lda.w #$0180
 	sta.b d4
-.iok:
+.iok:								; accept the turn
 	lda.b tmp0						; turn step
 	sta.b mula
 	lda.b d4

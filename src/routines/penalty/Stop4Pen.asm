@@ -48,12 +48,12 @@ Stop4Pen:							;Stop play for a penalty: stop the clock, set the face off spot 
 	bmi .neg
 	bvc .x0
 	bra .0
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .0
 .x0:
 	lda.w #$0046					; x limit 70
 	sta.b d0
-.0:
+.0:									; clamp the faceoff X
 	lda.b d0
 	sec
 	sbc.w #$FFBA					; and to -70
@@ -61,7 +61,7 @@ Stop4Pen:							;Stop play for a penalty: stop the clock, set the face off spot 
 	bmi .neg1
 	bvs .x1
 	bra .1
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .1
 .x1:
 	lda.w #$FFBA					; -70
@@ -73,7 +73,7 @@ Stop4Pen:							;Stop play for a penalty: stop the clock, set the face off spot 
 	bmi .neg2
 	bvc .yhi
 	bra .2
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvc .2
 .yhi:
 	lda.w #$00CE					; end spot y 206
@@ -84,7 +84,7 @@ Stop4Pen:							;Stop play for a penalty: stop the clock, set the face off spot 
 	bpl .2
 	lda.w #$FFBA					; x -70
 	sta.b d0
-.2:
+.2:									; clamp the faceoff Y
 	lda.b d1
 	sec
 	sbc.w #$FF5A					; beyond -166?
@@ -92,7 +92,7 @@ Stop4Pen:							;Stop play for a penalty: stop the clock, set the face off spot 
 	bmi .neg3
 	bvs .ylo
 	bra .3
-.neg3:
+.neg3:								; signed compare: overflow flag corrects the sign
 	bvs .3
 .ylo:
 	lda.w #$FF32					; end spot y -206
@@ -103,7 +103,7 @@ Stop4Pen:							;Stop play for a penalty: stop the clock, set the face off spot 
 	bpl .3
 	lda.w #$FFBA					; x -70
 	sta.b d0
-.3:
+.3:									; store the faceoff spot
 	lda.b d0
 	sta.w fox						; face off x
 	lda.b d1

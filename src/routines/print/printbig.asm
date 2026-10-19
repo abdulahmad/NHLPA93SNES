@@ -76,13 +76,13 @@ printbig:							;print with the big font (2 by 2 tiles per character)
 	cmp.b textdirtylo				; update the dirty range low
 	bcs .lo
 	sta.b textdirtylo
-.lo:
+.lo:								; low end of the dirty range
 	clc
 	adc.w #$0021
 	cmp.b textdirtyhi				; and the high end
 	bcc .bot
 	sta.b textdirtyhi
-.bot:
+.bot:								; bottom row of the big char
 	ldx.b d0
 	lda.l BigFontMap+$98,x			; bottom left (+$98)
 	clc
@@ -129,7 +129,7 @@ printbig:							;print with the big font (2 by 2 tiles per character)
 	cmp.b textdirtylo				; dirty range low
 	bcs .bl1
 	sta.b textdirtylo
-.bl1:
+.bl1:								; bottom row high end
 	clc
 	adc.w #$0020					; and the high end
 	cmp.b textdirtyhi

@@ -19,5 +19,5 @@ SpriteSet14:						;frame set 14: frames 659-720, 6-byte pieces (DrawFrameHi)
 	assert .tiles-SpriteSet14 == $11EC
 .tiles:								;151 4bpp tiles (32 bytes each)
 	incbin "../../../Extracted/Graphics/Sprites/set14.chr"
-SpriteSet14End:
+SpriteSet14End:						; end of SpriteSet14
 	assert SpriteSet14End-SpriteSet14 == $11EC+151*32

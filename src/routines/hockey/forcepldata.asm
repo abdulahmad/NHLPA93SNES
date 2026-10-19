@@ -24,14 +24,14 @@ forcepldata:						;Face offs: move team a2's players straight to their new posit
 	sta.b a3
 	lda.w #$0005
 	sta.b d4
-.top:
+.top:								; each object: take its new position
 	ldx.b a3
 	lda.w newpos,x					; position = newpos (byte)
 	and.w #$00FF
 	bit.w #$0080
 	beq .pos
 	ora.w #$FF00
-.pos:
+.pos:								; store the position
 	sta.b d0
 	sta.w position,x
 	cmp.w #$0000
@@ -44,7 +44,7 @@ forcepldata:						;Face offs: move team a2's players straight to their new posit
 	lda.w #anearest					; anearest
 	sta.b d0
 	jsl.l assinsert					; insert assignment d0
-.notnear:
+.notnear:							; not near the bench: the player number
 	ldx.b a3
 	lda.w newpnum,x					; tmpdst of newpnum = TMPDICE: on the ice
 	and.w #$00FF
@@ -53,14 +53,14 @@ forcepldata:						;Face offs: move team a2's players straight to their new posit
 	lda.b a2
 	beq .idx
 	lda.w #maxros*2
-.idx:
+.idx:								; index into the player table
 	adc.b d3
 	tay
 	lda.w #TMPDICE
 	sta.w tmpdst,y
 	lsr.b d3
 	jsl.l setplayer					; setplayer
-.next:
+.next:								; next object
 	ldx.b a3
 	lda.w #$FFFF					; newpnum = newpos = -1
 	sta.w newpnum,x

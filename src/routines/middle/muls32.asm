@@ -29,5 +29,5 @@ muls32:								;Signed multiply with a 32-bit result in mulres
 	sta.b mulres+2
 	lda.b mulres					; low word back in A
 	clc								; clear carry
-.rtl:
+.rtl:								; return
 	rtl

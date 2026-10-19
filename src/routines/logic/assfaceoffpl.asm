@@ -61,7 +61,7 @@ assfaceoffpl:						;Assignment: the players taking the face off
 	lda.w #$0001					; flag
 	sta.w pf2aip,x
 	jmp.w SetSPA					; start it
-.rts:
+.rts:								; return
 	rtl
 .exit:
 	lda.w #$0014					; nopuck = 20

@@ -7,5 +7,5 @@ setc2player:						;Give controller 2 to player d0
 	jsl.l restorepl					; give the old player back to the computer
 	lda.b d0
 	sta.w c2playernum				; new controlled player
-.rtl:
+.rtl:								; return
 	rtl

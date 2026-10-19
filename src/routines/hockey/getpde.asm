@@ -11,7 +11,7 @@ getpde:								;d0 = the energy of player X
 	lda.b a2
 	beq .idx						; team 0: no offset
 	lda.w #$0034					; away team entries start $34 bytes in
-.idx:
+.idx:								; index the energy table
 	adc.b d1
 	tay								; index into the table
 	lda.w tmpde,y					; energy

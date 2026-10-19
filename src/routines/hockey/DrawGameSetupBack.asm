@@ -32,7 +32,7 @@ DrawGameSetupBack:					;Draw the game setup screen backdrop with the NHLPA logo
 .row:
 	lda.w #$0007					; 8 columns
 	sta.b tmp0
-.col:
+.col:								; row times 8
 	lda.b tmp1
 	sta.b mula						; row
 	lda.w #$0008

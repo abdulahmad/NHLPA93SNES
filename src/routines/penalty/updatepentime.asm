@@ -42,7 +42,7 @@ updatepentime:						;Once a second, count down the penalty box times of both tea
 	lda.b a2
 	beq .noa22						; team
 	lda.w #$0034					; away team offset
-.noa22:
+.noa22:								; index the penalty entry
 	clc
 	adc.b d0
 	tay
@@ -62,7 +62,7 @@ updatepentime:						;Once a second, count down the penalty box times of both tea
 	jsl.l RemovePlayerFromList		; out: remove from the list
 .stay:
 	bra .next						; next entry
-.rtl:
+.rtl:								; return
 	rtl
 .done:
 	lda.w mesarea					; first player
@@ -74,7 +74,7 @@ updatepentime:						;Once a second, count down the penalty box times of both tea
 	bne .n1
 	jsl.l .chk						; check the first
 	bra .two
-.n1:
+.n1:								; any penalty time left?
 	lda.b d1
 	cmp.w #$FFFF					; none left
 	bne .rtl
@@ -85,7 +85,7 @@ updatepentime:						;Once a second, count down the penalty box times of both tea
 	lda.b a2						; team
 	beq .noa23
 	lda.w #$0034					; away team offset
-.noa23:
+.noa23:								; index the penalty entry
 	clc
 	adc.b d0
 	tay
@@ -96,13 +96,13 @@ updatepentime:						;Once a second, count down the penalty box times of both tea
 	bmi .neg
 	bvs .le5
 	bra .rtl
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .rtl
 .le5:
 	lda.w tmpdst,y					; state
 	bne .rtl2						; time left
 	jsl.l releasepl					; release him
-.rtl2:
+.rtl2:								; return
 	rtl
 .coinpen:
 	dec a							; one second less
@@ -116,7 +116,7 @@ updatepentime:						;Once a second, count down the penalty box times of both tea
 	lda.w #$1000					; state
 	sta.w tmpdst,y
 	jmp.w RemovePlayerFromList		; remove from the list
-.clr:
+.clr:								; penalty over: clear the state and remove the player
 	lda.w #$0000
 	sta.w tmpdst,y					; clear the state
 	jmp.w RemovePlayerFromList		; remove from the list

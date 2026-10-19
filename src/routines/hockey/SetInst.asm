@@ -11,9 +11,9 @@ SetInst:							;Start a fight between X and a2 when both are aggressive enough; 
 	sbc.w #$0002
 	bmi .neg						; both need fightagg >= 2
 	bvc .r2
-.ex1:
+.ex1:								; far branch to checkfight_rtl
 	jmp.w checkfight_rtl
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .ex1
 .r2:
 	lda.w pnum,y					; d1 = $10 - 2 * a2 checks
@@ -21,7 +21,7 @@ SetInst:							;Start a fight between X and a2 when both are aggressive enough; 
 	lda.w pfteam,y
 	beq .tm
 	lda.w #$001A
-.tm:
+.tm:								; team offset of the player
 	clc
 	adc.w pnum,y
 	tay
@@ -43,9 +43,9 @@ SetInst:							;Start a fight between X and a2 when both are aggressive enough; 
 	beq .set
 	bmi .neg1
 	bvs .set
-.ex2:
+.ex2:								; far branch to checkfight_rtl
 	jmp.w checkfight_rtl
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .ex2
 .set:
 	lda.w #$0001					; flag both players as fighting
@@ -69,7 +69,7 @@ SetInst:							;Start a fight between X and a2 when both are aggressive enough; 
 	beq .1
 	lda.w #$000C					; other team: first slot at $0C
 	sta.b a3
-.1:
+.1:									; skip the player himself
 	ldx.b a3
 	cpx.b a4						; skip X himself
 	beq .next
@@ -84,9 +84,9 @@ SetInst:							;Start a fight between X and a2 when both are aggressive enough; 
 	jsl.l AddPenalty2				; add it to the first eligible teammate
 	ldx.b a4						; restore X
 	stx.b a3
-.rtl:
+.rtl:								; return
 	rtl
-.next:
+.next:								; next object
 	inc.b a3
 	inc.b a3
 	dec.b d0

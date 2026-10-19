@@ -32,5 +32,5 @@ asspassrec:							;Assignment: waiting for a pass. Ends when someone has the puc
 	and.w #~pfdoff&$FFFF
 	sta.w pflags,x
 	jmp.w assexit					; assignment over
-.rts:
+.rts:								; return
 	rtl

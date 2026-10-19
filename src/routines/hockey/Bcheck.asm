@@ -61,5 +61,5 @@ Bcheck:								;Player a2 body checks a3: a3 falls if he is in front, and a char
 	sty.b a2
 	lda.w #$FFFF					; set collflag
 	sta.b collflag
-.rtl:
+.rtl:								; return
 	rtl

@@ -38,7 +38,7 @@ EncodePW:							;After a playoff game, work out the winners and the new password
 	bit.w #sf3alttree
 	beq .tree						; normal tree
 	ldy.w #$000E					; 8 words
-.cp:
+.cp:								; copy the pass bits
 	lda.w tpassbits,y
 	sta.w passbits,y
 	dey
@@ -59,5 +59,5 @@ EncodePW:							;After a playoff game, work out the winners and the new password
 	beq .rtl						; keep it
 	lda.w #$0003
 	sta.w OptPlayMode				; else 3
-.rtl:
+.rtl:								; return
 	rtl

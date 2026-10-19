@@ -14,5 +14,5 @@ StartSong4:							;Start music cue 4 unless it is already playing. Unused
 	sta.w cursong					; remember the song
 	lda.w #$022E					; time until the cue ends
 	sta.w cuetimer					; set the cue timer
-.rtl:
+.rtl:								; return
 	rtl

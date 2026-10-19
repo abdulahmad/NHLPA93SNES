@@ -11,7 +11,7 @@ Setplass:							;Set player X's first assignment from his position
 	and.w #$00FF					; assignment
 	sta.b d0
 	jmp.w assreplace				; set it
-.rtl:
+.rtl:								; return
 	rtl
 .alist:								;assignment for each position (goalie, LD, RD, LW, C, RW, extra)
 	db agoalie,adefd,adefd,awingd,acenterd,awingd,acenterd

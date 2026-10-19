@@ -36,7 +36,7 @@ DisplayStats:						;The STATS page of the pause menu: shots, power play, penalti
 	sta.b a0
 	lda.w #DisplayStats_sslist>>16
 	sta.b a0+2
-.sstop:
+.sstop:								; stop at the end of the list
 	lda.b [a0]
 	inc.b a0
 	inc.b a0
@@ -77,7 +77,7 @@ DisplayStats:						;The STATS page of the pause menu: shots, power play, penalti
 	sta.b a1
 	lda.b a3+2
 	sta.b a1+2
-.nextss:
+.nextss:							; next stat
 	lda.b [a1]
 	inc a
 	lsr a

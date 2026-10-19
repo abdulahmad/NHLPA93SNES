@@ -2,7 +2,7 @@ Fprint_list:						;Print string d0 of the string list [a1]
 	lda.b d0
 	bne .step						; not the first: skip one
 	jml.l print						; print this string
-.step:
+.step:								; next string
 	lda.b [a1]
 	clc
 	adc.b a1						; next string

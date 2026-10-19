@@ -80,13 +80,13 @@ updatereplay:						;Save this frame into the replay buffer
 	lda.w position,x				; position of the first, low nibble
 	bpl .n0
 	lda.w #$FFFF
-.n0:
+.n0:								; low nibble of the byte
 	and.w #$000F
 	sta.b [a0]
 	lda.w position+2,x				; position of the second, high nibble
 	bpl .n1
 	lda.w #$FFFF
-.n1:
+.n1:								; scale the entry
 	asl a
 	asl a
 	asl a
@@ -135,5 +135,5 @@ updatereplay:						;Save this frame into the replay buffer
 	inc.b a0
 	lda.w Vpos						; vertical scroll
 	sta.b [a0]
-.rtl:
+.rtl:								; return
 	rtl

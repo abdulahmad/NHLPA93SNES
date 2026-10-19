@@ -4,11 +4,11 @@ coinsearch:							;Count team a2's players kept off the ice by penalties (not co
 	sta.b d1						; six players
 	lda.w #$0032					; last roster word
 	sta.b d0
-.top:
+.top:								; loop over the players
 	lda.b a2
 	beq .tm							; team
 	lda.w #$0034					; away team offset
-.tm:
+.tm:								; team offset
 	clc
 	adc.b d0
 	tay								; index

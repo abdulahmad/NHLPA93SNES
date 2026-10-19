@@ -15,5 +15,5 @@ assdopen:							;Assignment: put player X in the penalty box
 	lda.w #$FFFF					; off the ice
 	sta.w position,x
 	stz.w frame,x					; frame 0
-.rtl:
+.rtl:								; return
 	rtl

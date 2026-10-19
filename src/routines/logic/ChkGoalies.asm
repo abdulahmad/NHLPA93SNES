@@ -46,5 +46,5 @@ ChkGoalies_CPG:						;d0 = team (1/2), a2/a1 = team/other
 	ora.w #$FF00					; tmgoalie high byte $FF: pulled
 	sta.w tmgoalie,y				; pulled
 	jmp.w setpersonel
-.rtl:
+.rtl:								; return
 	rtl

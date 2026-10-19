@@ -44,7 +44,7 @@ checkob:							;Show the little warning referee when a teammate is over the blue
 	bmi .neg
 	bvs .bottom
 	bra .nob
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .nob
 .bottom:							;any teammate below the blue line?
 	ldy.b a0
@@ -57,9 +57,9 @@ checkob:							;Show the little warning referee when a teammate is over the blue
 	bmi .neg1
 	bvs .bn
 	bra .ob
-.neg1:
+.neg1:								; signed compare: overflow flag corrects the sign
 	bvs .ob
-.bn:
+.bn:								; next player
 	inc.b a0
 	inc.b a0
 	dec.b d0
@@ -89,7 +89,7 @@ checkob:							;Show the little warning referee when a teammate is over the blue
 	dex
 	bpl .restore
 	ldx.b xsave						; restore X
-.rts:
+.rts:								; return
 	rtl
 .ob:								;offside: set the signal, ref up
 	lda.w #$0006					; d0 = 6
@@ -102,16 +102,16 @@ checkob:							;Show the little warning referee when a teammate is over the blue
 	bpl .ex
 	jsl.l PushRef
 	bra .ex
-.top:
+.top:								; compare the puck Y
 	lda.b d1
 	sec
 	sbc.w pucky
 	bmi .neg2
 	bvc .top1
 	bra .nob
-.neg2:
+.neg2:								; signed compare: overflow flag corrects the sign
 	bvc .nob
-.top1:
+.top1:								; each player of the other team
 	ldy.b a0
 	lda.w position,y
 	bmi .tn
@@ -121,9 +121,9 @@ checkob:							;Show the little warning referee when a teammate is over the blue
 	bmi .neg3
 	bvc .tn
 	bra .ob
-.neg3:
+.neg3:								; signed compare: overflow flag corrects the sign
 	bvc .ob
-.tn:
+.tn:								; next player
 	inc.b a0
 	inc.b a0
 	dec.b d0

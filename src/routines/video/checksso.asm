@@ -13,7 +13,7 @@ checksso:							;Draw the arrows that show where the two players are when they a
 	lda.w #SPFarrow+3				; player 2: SPFarrow+3
 	sta.b d3
 	jsl.l .ca						; draw it
-.rtl:
+.rtl:								; return
 	rtl
 .ca:								;a0 = pad object (ffo index), a3 = sso, d3 = first arrow frame
 	ldy.b a0
@@ -37,7 +37,7 @@ checksso:							;Draw the arrows that show where the two players are when they a
 	sbc.w #$C5
 	sta.b d1
 	bra .hord
-.nhor:
+.nhor:								; subtract the horizontal scroll
 	lda.b d0
 	sec								; x minus the scroll x
 	sbc.w Hpos
@@ -54,12 +54,12 @@ checksso:							;Draw the arrows that show where the two players are when they a
 	bmi .r0
 	bvc .rb
 	bra .0
-.r0:
+.r0:								; signed compare: overflow flag corrects the sign
 	bvc .0
 .rb:
 	lda.w #8						; right bit
 	sta.b d2
-.0:
+.0:									; left edge
 	lda.b d0
 	sec								; screen x
 	sbc.w #-116						; left
@@ -67,23 +67,23 @@ checksso:							;Draw the arrows that show where the two players are when they a
 	bmi .neg
 	bvs .lb
 	bra .1
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvs .1
 .lb:
 	lda.w #4						; left bit
 	tsb.b d2
-.1:
+.1:									; top edge
 	lda.b d1
 	sec								; screen y
 	sbc.w #100						; above
 	bmi .u0
 	bvc .ub
 	bra .2
-.u0:
+.u0:								; signed compare: overflow flag corrects the sign
 	bvc .2
 .ub:
 	inc.b d2						; up bit
-.2:
+.2:									; bottom edge
 	lda.b d1
 	sec
 	sbc.w #-100						; below
@@ -91,7 +91,7 @@ checksso:							;Draw the arrows that show where the two players are when they a
 	bmi .d0
 	bvs .db
 	bra .3
-.d0:
+.d0:								; signed compare: overflow flag corrects the sign
 	bvs .3
 .db:
 	inc.b d2						; down bit

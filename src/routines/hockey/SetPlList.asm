@@ -90,7 +90,7 @@ SetPlList:							;Make the list of the players team a2 wants on the ice now
 	lda.b a2
 	beq .idx						; first team?
 	lda.w #$0034					; second team offset
-.idx:
+.idx:								; index the player
 	clc
 	adc.b d3						; plus the player index
 	tay
@@ -145,13 +145,13 @@ SetPlList:							;Make the list of the players team a2 wants on the ice now
 	dec.b d4						; next slot
 	bmi .rtl						; all done
 	jmp.w .1
-.rtl:
+.rtl:								; return
 	rtl
 .all:								;try every roster player, last first
 	jsl.l GetPlayerCount			; GetPlayerCount
 	lda.b d0						; player count
 	sta.b d3
-.try:
+.try:								; try the previous slot
 	lda.b d3
 	sta.b d0
 	dec.b d3

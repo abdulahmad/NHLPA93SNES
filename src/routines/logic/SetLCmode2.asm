@@ -7,7 +7,7 @@ SetLCmode2:							;Draw the line change box for team a2, one row per line it can
 	lda.b fobox						; faceoff box up: do not clear
 	bne .cords
 	jsl.l eraser					; d0/d1 size, d2 tile
-.cords:
+.cords:								; place the box
 	jsl.l setlccords
 	lda.w printy					; lower half of the screen?
 	sec
@@ -15,13 +15,13 @@ SetLCmode2:							;Draw the line change box for team a2, one row per line it can
 	bmi .neg
 	bvc .lower
 	bra .box
-.neg:
+.neg:								; signed compare: overflow flag corrects the sign
 	bvc .box
 .lower:								;lower box: sf3llcs
 	lda.w #sf3llcs
 	tsb.w sflags3
 	bra .frame
-.box:
+.box:								; draw the box and frame
 	jsl.l box
 	jsl.l setlccords
 .frame:
@@ -76,9 +76,9 @@ SetLCmode2:							;Draw the line change box for team a2, one row per line it can
 	pla
 	sta.b d0
 	jsl.l linebar
-.up:
+.up:								; move up one line
 	dec.w printy
-.next:
+.next:								; next line
 	dec.b d4
 	bpl .loop
 	pla

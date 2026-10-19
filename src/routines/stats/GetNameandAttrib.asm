@@ -27,7 +27,7 @@ GetNameandAttrib:					;Print player d0's number and name, then the roster column
 	cmp.w #$0003
 	bcs .rate
 	jmp.w .jump
-.rate:
+.rate:								; player rating attributes
 	ldy.b a2
 	lda.w #TeamList>>16
 	sta.b a0+2
@@ -37,7 +37,7 @@ GetNameandAttrib:					;Print player d0's number and name, then the roster column
 	ldy.w #Playerdata
 	adc.b [a0],y
 	sta.b a0
-.skip:
+.skip:								; skip to the next team entry
 	lda.b a0
 	clc
 	adc.b [a0]
@@ -53,20 +53,20 @@ GetNameandAttrib:					;Print player d0's number and name, then the roster column
 	ldy.b d4+2
 	sta.b d4+2
 	sty.b d4
-.bit:
+.bit:								; test one attribute bit
 	lda.b d4
 	sta.b tmp0
 	lda.b d4+2
 	sta.b tmp1
 	lda.b d2
 	sta.b tmp2
-.shift:
+.shift:								; shift the remaining bits
 	dec.b tmp2
 	bmi .test
 	lsr.b tmp1
 	ror.b tmp0
 	bra .shift
-.test:
+.test:								; bit set: read the attribute
 	lsr.b tmp0
 	bcc .next
 	lda.b d2
@@ -90,7 +90,7 @@ GetNameandAttrib:					;Print player d0's number and name, then the roster column
 	lsr a
 	lsr a
 	sta.b d3
-.2:
+.2:									; keep the low nibble
 	lda.b d3
 	and.w #$000F
 	sta.b d3
@@ -101,7 +101,7 @@ GetNameandAttrib:					;Print player d0's number and name, then the roster column
 	clc
 	adc.w #$000F
 	sta.b d1						; d1 = 15 * count (max)
-.next:
+.next:								; next attribute
 	dec.b d2
 	bpl .bit
 	lda.b d4
