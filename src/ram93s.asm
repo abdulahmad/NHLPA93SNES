@@ -631,6 +631,25 @@ sndbank			=	$164F			;sound set loaded into the SPC (1 = the in-game sounds); sfx
 									;only for it
 cursong			=	$1651			;song playing on the SPC (0 = none); set by the song starters in banks
 									;$86/$89
+; sndbank: the sample set loaded into the SPC700 (1 = the in-game sounds, 2 = the boot set)
+SoundBankGame	=	1
+SoundBankBoot	=	2
+; The values cursong takes: the starters' own numbers (the cue of the same song is the Sng* value below).
+CurSngGoal		=	1
+CurSngPeriodStart	=	2
+CurSngLateGame	=	3
+CurSngPP		=	4
+CurSngFaceoff	=	5
+CurSngTitle		=	6
+CurSngEOP		=	7
+CurSngEOG		=	8
+CurSngPO		=	9
+; The frames a music cue plays (cuetimer), during which sound effects are dropped
+SngGoalLen		=	$0240
+SngPeriodStartLen	=	$01CE
+SngLateGameLen	=	$0474
+SngPPLen		=	$022E
+SngFaceoffLen	=	$041A
 ; The songs, numbered as the game numbers them: the cue number on port 0 of the sound program (92 and 93G
 ; names). StartSng<name> sends it (songs 4-8 through MusicCue, 1-3 and 9 on APUIO0). cursong holds the
 ; starter's own number 1-9 (Goal 1 ... PO 9), not the cue.

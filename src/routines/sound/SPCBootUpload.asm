@@ -18,7 +18,7 @@ SPCBootUpload:						;Wait for the sound queue to empty, then upload the sound dr
 	beq .vblank
 	lda.w #$0001					; sndbank 2, no song
 	sta.b sndlock					; lock the queue
-	lda.w #$0002					; bank 2
+	lda.w #SoundBankBoot			; bank 2
 	sta.w sndbank
 	stz.w cursong					; no song
 	lda.w #BootSoundUpload&$FFFF	; sndptr = BootSoundUpload
