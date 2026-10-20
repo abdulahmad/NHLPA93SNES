@@ -631,15 +631,18 @@ sndbank			=	$164F			;sound set loaded into the SPC (1 = the in-game sounds); sfx
 									;only for it
 cursong			=	$1651			;song playing on the SPC (0 = none); set by the song starters in banks
 									;$86/$89
-SngGoal		=	1					;song 1: home goal (StartSngGoal, cursong)
-SngPeriodStart		=	2			;song 2: period start (StartSngPeriodStart, cursong)
-SngLateGame		=	3				;song 3: third period (StartSngLateGame, cursong)
-SngPP		=	4					;song 4: power play (unused) (StartSngPP, cursong)
-SngFaceoff		=	5				;song 5: mid-period faceoff (StartSngFaceoff, cursong)
-SngTitle		=	6				;song 6: title screen (StartSngTitle, cursong)
-SngEOP		=	7					;song 7: end of period (unused) (StartSngEOP, cursong)
-SngEOG		=	8					;song 8: end of game (unused) (StartSngEOG, cursong)
-SngPO		=	9					;song 9: playoff screen (StartSngPO, cursong)
+; The songs, numbered as the game numbers them: the cue number on port 0 of the sound program (92 and 93G
+; names). StartSng<name> sends it (songs 4-8 through MusicCue, 1-3 and 9 on APUIO0). cursong holds the
+; starter's own number 1-9 (Goal 1 ... PO 9), not the cue.
+SngPO			=	1				;playoff screen (boot sample set)
+SngEOP			=	2				;end of period (unused, boot set)
+SngTitle		=	3				;title screen and the game menu (boot set)
+SngGoal			=	4				;home goal (game sample set)
+SngPeriodStart	=	5				;period start
+SngLateGame		=	6				;third period
+SngPP			=	7				;power play (unused)
+SngFaceoff		=	8				;face off, mid-period
+SngEOG			=	9				;end of game (unused, boot set)
 DMAList			=	$1653			;vram dma list (7-byte entries, see dma* offsets), filled up to DMAlistend
 printfontset	=	$1BCB			; tile base of the selected print font (control code)
 ; print control codes: a byte with bit 7 set picks palette, priority and font (font 1-3 also picks the map)
@@ -795,6 +798,17 @@ SFXsiren		=	$A0				; goal siren
 SFXwhistle		=	$89				; whistle
 SFXcheck		=	$90				; +0/1: check (93 $1C-$1F)
 SFXplayerwall	=	$9E				; +0/1: player hits the boards (93 $20)
+SFXcheck2		=	$91				; second check sound (93 $1D); the puck body sound has the same two
+SFXpuckwall2	=	$96				; puck off the boards, variant 2 (SFXpuckwall1+1)
+SFXpuckwall3	=	$97				; variant 3 (SFXpuckwall1+2)
+SFXshotwiff2	=	$99				; missed shot, variant 2 (SFXshotwiff+1)
+SFXshotwiff3	=	$9A				; variant 3
+SFXshotwiff4	=	$9B				; variant 4
+SFXstop2		=	$9D				; skate stop, second sound (SFXstop+1)
+SFXplayerwall2	=	$9F				; player hits the boards, second sound (SFXplayerwall+1)
+SFXhorn			=	$A1				; horn at the end of a period (93G SFXhorn); nothing in the code sends it
+SFXcrowd		=	$80				; +1-7: crowd noise level, loops (updatesound)
+SFXcrowdoff		=	$88				; crowd noise off
 ; joypad bits (SNES)
 JOYSTART	=	$1000				; Start
 JOYR		=	$0010				; R shoulder

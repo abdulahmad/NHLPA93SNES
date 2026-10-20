@@ -1,6 +1,6 @@
 StartSngPeriodStart:				;Start the period start music unless it is already playing
 	lda.w cursong
-	cmp.w #SngPeriodStart			; already playing
+	cmp.w #2						; already playing
 	beq .rtl
 	lda.w sndbank					; sound bank loaded
 	cmp.w #$0001					; bank 1 is the game bank
@@ -8,9 +8,9 @@ StartSngPeriodStart:				;Start the period start music unless it is already playi
 	jsl.l sndqreset					; reset the sound queue
 	jsl.l SPCGameUpload				; upload the game sound
 .cmd:								; music cue 5
-	lda.w #$0005					; music cue number
+	lda.w #SngPeriodStart			; music cue number
 	jsl.l MusicCue					; driver command A (music cue)
-	lda.w #SngPeriodStart
+	lda.w #2
 	sta.w cursong					; remember the song
 	lda.w #$01CE					; time until the cue ends
 	sta.w cuetimer					; set the cue timer
