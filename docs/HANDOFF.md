@@ -1,3 +1,24 @@
+# Handoff: NHLPA93 SNES
+
+## Status (2026-10-20)
+
+- Everything is merged. `node tools/build.js` is byte-identical to the retail ROM. The long plan below is history: its steps 1 to 5 are merged (including the comment pass: every label has a comment).
+- Sound names follow 93G: the song cues are `SngPO`, `SngEOP`, `SngTitle`, ... `SngEOG` in `src/ram93s.asm`, and `src/routines/sound/StartSng*.asm` replaces `StartSong1` to `StartSong9`. The sample set values are `SoundBankGame` and `SoundBankBoot`, and the song lengths `Sng*Len`. `SPCGameUpload` and `QueueSound` have header comments.
+- Renamed: `EASNBGMap` (the background map, file `EASNBG.map.sjim`), `Refs2.smap` / `Ref2.chr.pak`. `GetGoalieCount` sits with the stats routines like 93G.
+- Placement: routine files live in topic folders under `src/routines`, not by 93G source file (94S keeps the 94G layout instead).
+- NHL9XStudio reads this repo (`docs/sync.md` there). Its SNES pictures use the ROM offsets in `lib/games.js`.
+
+## How to work
+
+- Build: `node tools/build.js`; layout check: `python3 tools/check_comments.py`; rules: `CONTRIBUTING.md`.
+- Never commit ROMs, `Extracted/` or `output/`. Renames go in `docs/history/name_map.csv`.
+
+## Open
+
+- Nothing pending here. After any change, regenerate nhl-disasm-report and check NHL94SNES.
+
+---
+
 ## Alignment with 93G (started 2026-10-19, branch align-93g, NOT merged yet)
 
 Goal (user request): make 93S source, file naming, data layout, extraction and comments look like NHLPA93Genesis (and NHL92Genesis), keeping the build byte-identical. Analysis files: `docs/align/conventions_93g_vs_93s.md` (differences with priorities, 10-step plan in its section 7), `docs/align/comment_pass_plan.md` (+ `measure.py`, `post.py` regenerate the per-routine plan json, `comment_worker_brief.md` the rules a comment worker follows).
