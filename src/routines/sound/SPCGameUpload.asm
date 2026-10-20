@@ -1,4 +1,6 @@
-SPCGameUpload:						;Wait for the sound queue to empty, then upload the in-game sample set
+SPCGameUpload:						;Switch the SPC700 to the in-game set: wait for the sound queue to empty,
+									;then upload the in-game sound program and samples (GameSoundUpload).
+									;Afterwards SoundBankGame is loaded and no song plays
 	phy								; save Y
 	phx
 	pha
@@ -12,9 +14,9 @@ SPCGameUpload:						;Wait for the sound queue to empty, then upload the in-game 
 .vblank:							; wait for the frame
 	cmp.b vcount					; wait for them
 	bne .vblank
-	lda.w #$0001					; sndbank 1, no song
-	sta.b sndlock					; lock the sound queue
-	sta.w sndbank					; bank 1
+	lda.w #$0001					; 1 is both the lock flag and SoundBankGame, so one load sets both
+	sta.b sndlock					; lock the sound queue while the set uploads
+	sta.w sndbank					; SoundBankGame: the in-game set is loaded
 	stz.w cursong					; no song
 	lda.w #GameSoundUpload&$FFFF	; sndptr = GameSoundUpload
 	sta.b sndptr					; pointer to the upload

@@ -1,14 +1,15 @@
-QueueSound:							;Queue sound A for the sound driver. Dropped while a music cue plays;
-									;loads the in-game sound set first
-		;   when a game sound needs it
+QueueSound:							;Send sound A to the SPC700 sound program (an effect $80-$A1, or $00 for
+									;stop): it goes into the sound queue that VBlank empties one entry a
+									;frame. Dropped while a music cue plays (cuetimer). A game sound first
+									;uploads the in-game sample set (SPCGameUpload) if the boot set is loaded
 	phx								; cuetimer running: drop it
 	ldx.w cuetimer
 	bne .exit
 	phy								; keep Y
 	pha								; keep the sound
-	ldx.w #$0001					; lock the queue
-	stx.b sndlock
-	cpx.w sndbank					; game set not loaded and a game sound: upload it first
+	ldx.w #$0001					; 1 is the lock flag and also SoundBankGame
+	stx.b sndlock					; lock the queue
+	cpx.w sndbank					; is SoundBankGame loaded? if not, upload it first
 	beq .put						; already loaded
 	cmp.w #$00A2					; sound numbers $A2 and up are boot sounds
 	bcs .put
