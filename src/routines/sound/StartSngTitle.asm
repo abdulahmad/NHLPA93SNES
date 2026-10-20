@@ -1,17 +1,17 @@
 StartSngTitle:						;Start the title screen music unless it is already playing
 	lda.w cursong					; current song
-	cmp.w #SngTitle					; already playing
+	cmp.w #CurSngTitle				; already playing
 	beq .rtl
 	lda.w sndbank					; sound bank loaded
-	cmp.w #2						; bank 2 is the game bank
+	cmp.w #SoundBankBoot			; bank 2 is the boot set
 	beq .cmd
 	jsl.l SPCBootUpload				; else upload it
-.cmd:								; APUIO0 = 3: play song 6
-	sep #$20						; APUIO0 = 3: play song 6
-	lda.b #$03
+.cmd:								; APUIO0 = SngTitle: play it
+	sep #$20						; APUIO0 = SngTitle: play it
+	lda.b #SngTitle
 	sta.w APUIO0
 	rep #$30						; 16-bit registers
-	lda.w #SngTitle
+	lda.w #CurSngTitle
 	sta.w cursong					; remember the song
 .rtl:								; return
 	rtl

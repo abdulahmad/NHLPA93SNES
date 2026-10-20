@@ -54,7 +54,7 @@ setupice:							;Set up the rink: the variables, the rink and text graphics, the
 	bpl .pal
 	jsl.l sndqreset					; sound queue reset
 	lda.w sndbank					; in-game sound set not loaded yet: load it
-	cmp.w #$0001
+	cmp.w #SoundBankGame
 	beq .gfx
 	jsl.l SPCGameUpload
 .gfx:								;decompress each tile set to $7F0000 and send it to vram

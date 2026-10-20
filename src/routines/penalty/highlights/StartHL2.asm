@@ -41,7 +41,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	jsl.l forceblack				; blank the screen
 	jsl.l sndqreset					; reset the sound queue
 	lda.w sndbank
-	cmp.w #$0001
+	cmp.w #SoundBankGame
 	beq .snd
 	jsl.l SPCGameUpload
 .snd:								; HomeTeam/VisTeam of game a0
