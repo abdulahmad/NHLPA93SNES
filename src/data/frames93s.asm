@@ -91,7 +91,7 @@ SPAgready_table:					;table of the animation above: direction offsets, flags, fr
 	dw SPFgready+14,-10
 	assert SPAgready_table-SPAlist == SPAgready
 
-SPAgready2		=	$0134
+SPAgready2		=	$0134			;goalie ready position, held frame (used by the goalie scripts)
 SPAgready2_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .0-SPAgready2_table			; direction 0
 	dw .1-SPAgready2_table			; direction 1
