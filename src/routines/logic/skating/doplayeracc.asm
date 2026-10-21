@@ -31,9 +31,9 @@ doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning
 	rtl
 .d1:								;a direction: pfrev, then the turn
 	lda.b d1						; save the animation
-	pha
+	pha								; $03,s = the animation (d1)
 	lda.b d0						; and the wanted direction
-	pha
+	pha								; $01,s = the wanted direction (d0)
 	sta.b d2						; d2 = wanted direction
 	txa
 	lsr a

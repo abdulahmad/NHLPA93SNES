@@ -39,7 +39,7 @@ VBlank:								;Main game play vblank: run the transfer list, set the rink scrol
 	sta.w BG2HOFS
 	lda.w Vscroll
 	and.b #$07						; fine row
-	pha
+	pha								; $01,s = the fine row
 	rep #$30						; 16-bit registers
 	lda.w vramrow
 	asl a

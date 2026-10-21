@@ -1,7 +1,7 @@
 StatsReport:						;Show the game stats until A is pressed or a minute passes
 	jsl.l DisplayStats				; draw the stats
 	lda.b vcount					; start time
-	pha
+	pha								; $01,s = the start time
 .wait:								; wait for the pad that paused
 	jsl.l setvideo					; update the screen
 	jsl.l ReadPads					; read the pads

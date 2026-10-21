@@ -95,7 +95,7 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	bne .rwd
 	pla
 	lsr a
-	pha
+	pha								; $01,s = half the step count
 .fwd:								;then forward to the middle
 	lda.b $01,s
 	beq .go

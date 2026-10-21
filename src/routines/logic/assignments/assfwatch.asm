@@ -26,11 +26,11 @@ assfwatch:							;Assignment: a player watching a fight skates to a spot near it
 	lda.w Ypos,x					; player y
 	sec
 	sbc.w yc1						; minus the fight y
-	pha								; keep dy
+	pha								; keep dy: $03,s
 	lda.w Xpos,x					; player x
 	sec
 	sbc.w xc1						; minus the fight x
-	pha								; keep dx
+	pha								; keep dx: $01,s
 	sta.b mula						; dx squared
 	sta.b mulb
 	jsl.l muls32					; signed 32-bit multiply

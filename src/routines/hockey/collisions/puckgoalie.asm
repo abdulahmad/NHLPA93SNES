@@ -141,7 +141,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	cmp.w #$3000					; hard shot?
 	bcc .nosong
 	lda.w #SFXcrowdcheer			; crowd: home save
-	pha
+	pha								; 1,s = the crowd sound number
 	ldy.b a2
 	lda.w pfteam,y					; team of the goalie
 	beq .song

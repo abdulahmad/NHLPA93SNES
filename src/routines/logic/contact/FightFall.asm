@@ -81,7 +81,7 @@ FightFall:							;Player X lost the fight: the other player gets a fighting pena
 	jsl.l SetSPA					; start animation d1
 	stz.b a2
 	lda.w #SFXcrowdcheer			; home won: cheer
-	pha
+	pha								; $01,s = the crowd sound number
 	lda.w pfteam,x
 	bne .snd
 	lda.w #$0002
