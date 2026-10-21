@@ -3,7 +3,7 @@
 
 GameSoundUpload:					;in-game sample set for the SPC700 sound driver (the boot stream at
 									;BootSoundUpload carries the driver itself)
-	dw GameSampleDirEnd-GameSampleDir, SPCSAMPLEDIR	; block 1: 76 bytes to APU $2C00
+	dw GameSampleDirEnd-GameSampleDir, SPCSAMPLEDIR	; block 1: 76 bytes, the sample directory
 
 GameSampleDir:						;DSP sample directory: per sample the APU address of its start and of its
 									;loop point
@@ -27,7 +27,7 @@ GameSampleDir:						;DSP sample directory: per sample the APU address of its sta
 	dw SPCSAMPLES+$AF80,SPCSAMPLES+$AFDA	; sample $11: start, loop (offsets in gamesamples.brr)
 	dw SPCSAMPLES+$B034,SPCSAMPLES+$B814	; sample $12: start, loop (offsets in gamesamples.brr)
 GameSampleDirEnd:					; end of GameSampleDir
-	dw GAMESAMPLESIZE, SPCSAMPLES	; block 2: the BRR samples to APU $2C50
+	dw GAMESAMPLESIZE, SPCSAMPLES	; block 2: the BRR samples
 
 GameSamples:						;BRR samples (9-byte blocks)
 	incbin "../../../Extracted/Sound/gamesamples.brr"

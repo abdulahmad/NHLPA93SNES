@@ -267,7 +267,7 @@ tmp2			=	$77				; scratch word
 mula			=	$7D				;multiply/divide operand A (32-bit with mula+2). Helpers: muls16, mulu
 									;(bank $8D/$88), muls (bank $82)
 mulb			=	$83				; multiply/divide operand B (32-bit with mulb+2)
-mulres			=	$93				; multiply result low word; mulres+2 ($95) = high word (68k swap)
+mulres			=	$93				; multiply result low word; mulres+2 = high word (68k swap)
 mulneg			=	$98				; muls32: count of negative operands
 mulsign			=	$81				; divs: count of negative operands
 mulcnt			=	$87				; divs: bit loop count (16)
@@ -303,7 +303,7 @@ printm			=	$D4				;byte offset of the print map in textmap (map number from the 
 									;control code)
 collflag		=	$D8				; a player collision happened: checkcoll restores the old position
 crowdcnt		=	$DA				; count down to the next crowd animation step
-crowdframe		=	$DC				;crowd frame: low byte = random extra frame (loud crowd), high byte ($DD)
+crowdframe		=	$DC				;crowd frame: low byte = random extra frame (loud crowd), high byte
 									;= frame from cd0
 crowdlevel		=	$DE				;level of crowd excitement (+$50 per punch, +$258 for a won fight, +$C8
 									;for a faceoff win)
@@ -333,7 +333,7 @@ fodir1				=	$0132		; pull direction of the home center on the faceoff (dpad, neg
 fodir2				=	$0134
 fodropx				=	$0136		; faceoff box x (pixels)
 fodropy				=	$0138		; faceoff box y
-fofdata2			=	$013A		;face off pull frame for the home ($013A) and visiting ($013E) center
+fofdata2			=	$013A		;face off pull frame of the home (fofdata2) and visiting (+4) center
 									;(assfaceoffpl)
 fofdata				=	$0142		; frame/attribute of the faceoff ref (big faceoff sprites)
 fox					=	$0146		; faceoff spot x
@@ -347,7 +347,7 @@ tickerstart			=	$0158		;TickerNum at the start of the intermission (Intermission
 Hpos				=	$0154		; ice rink horizontal position
 Hscroll				=	$0156		; horizontal scroll: BG2HOFS = Hscroll+$C0 (VBlank)
 HmAwBonus			=	$015A		; setplayer: home bonus / visitor penalty
-iflags				=	$015C		;icing flags (if* masks); high byte ($015D) = icingPlayer (SCnum).
+iflags				=	$015C		;icing flags (if* masks); high byte (iflags+1) = icingPlayer (SCnum).
 									;iflags/icingPlayer
 joypad1				=	$015E		; controller 1 buttons (SNES joypad bits, JOY* masks)
 joypad2				=	$0160		; controller 2 buttons
@@ -373,7 +373,7 @@ gamenum				=	$014C		; index of the user game in the playoff game arrays (-1 = no
 mesarea				=	$0191		; temp area for print strings (length word, then characters)
 lastplayer			=	$017D		; SCnum of the last player who touched the puck (doshot)
 PushWidthBuf		=	$01F5		;PushNumberWidth string: length word (digits + 2), then the digits right
-									;aligned, spaces before (8 chars to $01FE)
+									;aligned, spaces before (8 characters)
 Satt				=	$01FF		; sprite attribute table (OAM shadow, $220 bytes), sent by VBlank
 SattHi				=	$03FF		; OAM high table shadow (x bit 8 and size, 2 bits per sprite)
 printx				=	$047B		; x cordinate for printing (text map column)
@@ -406,8 +406,8 @@ printfont			=	$0479		; font number (0-3) from the print control code
 puckcross			=	$0489		;2 entries of (x, frames): where/when the puck crosses the top / bottom
 									;goal line ($FFFF frames = never)
 repeatdelay			=	$0499		; ProcessInputWithRepeat: frames to the next key repeat
-ReplayBufferPtr		=	$0495		;long pointer to the next replay frame record (bank $7E, wraps at $7EFF41
-									;to $7E8174)
+ReplayBufferPtr		=	$0495		;long pointer to the next replay frame record (wraps at ReplayBufferEnd
+									;to ReplayBufferStart)
 Oldrow				=	$049B		; last rink map row (vertical scrolling of the map data; 999 = redraw all)
 vramrow				=	$049D		;BG2 tile map row (0-31) at the top of the ring buffer: BG2VOFS =
 									;vramrow*8 + (Vscroll&7)
@@ -596,8 +596,8 @@ tmchecks	=	$1402				; checks stat
 tmpasscomp	=	$1406				; completed passes
 tmflags		=	$140A				; team flags
 tmlcchoice	=	$140E				; line change box row chosen (0-2). team word $2E
-tmgoals		=	$1412				; goals per roster player (bytes, +$1A for team 2; team bytes $B4)
-pchecks		=	$1446				; checks per roster player (bytes, +$1A for team 2; team bytes $11C)
+tmgoals		=	$1412				; goals per roster player (bytes, +$1A for team 2)
+pchecks		=	$1446				; checks per roster player (bytes, +$1A for team 2)
 tmpde		=	$147A				; energy of each roster player (word per player, +$34 for team 2)
 tmpdst		=	$14E2				; bench/ice/box state of each roster player (+$34 for team 2)
 tmboxlist	=	$154A				;penalty box list of roster players (bytes, +$1A for team 2, negative
