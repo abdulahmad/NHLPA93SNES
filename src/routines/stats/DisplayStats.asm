@@ -47,7 +47,7 @@ DisplayStats:						;The STATS page of the pause menu: shots, power play, penalti
 	clc
 	adc.b a2
 	tay
-	lda.w $0000,y					; stat word of team a2 (absolute address +$0000,y)
+	lda.w $0000,y					; stat word of team a2
 	sta.b d0
 	jsl.l PushNumber				; number to text
 	lda.b [a0]

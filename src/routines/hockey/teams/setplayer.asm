@@ -305,7 +305,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	adc.b ThirdPBonus
 	jsl.l ClampNibble
 	sta.w spodds,x
-	iny								; byte 7: passacc, GGSleft
+	iny								; byte 7: passacc, aggress
 	lda.b [a0],y					; pass accuracy high nibble
 	lsr a
 	lsr a
@@ -320,7 +320,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	sta.w passacc,x
 	lda.b [a0],y					; goalie games-saved-left low nibble
 	and.w #$000F
-	sta.w GGSleft,x
+	sta.w aggress,x
 	ply								; restore Y and X
 	plx
 	rtl

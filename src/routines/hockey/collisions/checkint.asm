@@ -68,13 +68,13 @@ checkint:							;A goalie and another player collide: the skater falls, and a ha
 	bra .rtl
 .neg2:								; signed compare: overflow flag corrects the sign
 	bvc .rtl
-.pen:								;no double minor; penalty 3 times in (20 - GGSleft)
+.pen:								;no double minor; penalty 3 times in (20 - aggress)
 	lda.w pflags,x					; player flags
 	bit.w #pf2pen					; already penalised?
 	bne .rtl
 	lda.w #$0014
 	sec
-	sbc.w GGSleft,x					; 20 minus the games left
+	sbc.w aggress,x					; 20 minus aggression
 	jsl.l randoma					; random number 0 to A-1
 	cmp.w #$0003					; 3 in 20
 	bcs .rtl

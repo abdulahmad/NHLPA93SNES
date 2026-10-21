@@ -1,18 +1,18 @@
 ; Boot SPC upload (sndbank 2): the stream the main CPU sends the SPC700 at start-up. Four blocks, each headed
 ; by its length and APU address: the sound program (SPCDriver), the instrument table, the DSP sample
-; directory and the BRR samples, then an end block that starts the program at $0400. The program is cut
+; directory and the BRR samples, then an end block that starts the program at SPCDRIVER. The program is cut
 ; into code and command streams in Extracted/Sound (see docs/file-formats.md).
 
 BootSoundUpload:					;boot SPC upload: the sound driver and its sample set (sndbank 2)
 	dw SPCDRIVERSIZE, SPCDRIVER		; block 1: the driver code
 
-SPCDriver:							;SPC700 sound program, loaded at APU $0400: the N-SPC sequencer code and
+SPCDriver:							;SPC700 sound program, loaded at SPCDRIVER: the N-SPC sequencer code and
 									;tables, then the songs (order lists, channel sets, command streams) and
 									;the sound effect programs (steps $80 note, $81 repeat, $82 pitch sweep,
 									;$83 end, $84 loop). One file per song/effect in Extracted/Sound, named
 									;like the 93G fmtune_* / sfx_* command streams. The SPC700 code is not
 									;disassembled.
-SPCCode:							;N-SPC sequencer code, note tables and the cue pointer table ($0400-$0EA4)
+SPCCode:							;N-SPC sequencer code, note tables and the cue pointer table
 	incbin "../../../Extracted/Sound/driver.spc700"
 fmtune_playoff_order:				;cue 1 order list: set pointer, jump and end markers
 	incbin "../../../Extracted/Sound/fmtune_playoff_cmdstream.bin":$0..$8
@@ -50,47 +50,47 @@ fmtune_midperiod_set:				;cue 8 set: pointers to the 8 channel streams
 	incbin "../../../Extracted/Sound/fmtune_midperiod_cmdstream.bin":$8..$18
 fmtune_unused9_set:					;cue 9 set: pointers to the 8 channel streams
 	incbin "../../../Extracted/Sound/fmtune_unused9_cmdstream.bin":$8..$18
-fmtune_playoff_stream:				;cue 1 channel command streams ($0F7D-$1020)
+fmtune_playoff_stream:				;cue 1 channel command streams
 	incbin "../../../Extracted/Sound/fmtune_playoff_cmdstream.bin":$18..$BC
-fmtune_unused2_stream:				;cue 2 channel command streams ($1021-$10F6)
+fmtune_unused2_stream:				;cue 2 channel command streams
 	incbin "../../../Extracted/Sound/fmtune_unused2_cmdstream.bin":$18..$EE
-fmtune_unused9_stream:				;cue 9 channel command streams ($10F7-$127E)
+fmtune_unused9_stream:				;cue 9 channel command streams
 	incbin "../../../Extracted/Sound/fmtune_unused9_cmdstream.bin":$18..$1A0
-fmtune_title_stream:				;cue 3 channel command streams ($127F-$13E0)
+fmtune_title_stream:				;cue 3 channel command streams
 	incbin "../../../Extracted/Sound/fmtune_title_cmdstream.bin":$18..$17A
-fmtune_goal_stream:					;cue 4 channel command streams ($13E1-$144C)
+fmtune_goal_stream:					;cue 4 channel command streams
 	incbin "../../../Extracted/Sound/fmtune_goal_cmdstream.bin":$18..$84
-fmtune_lategame_stream:				;cue 6 channel command streams ($144D-$14B2)
+fmtune_lategame_stream:				;cue 6 channel command streams
 	incbin "../../../Extracted/Sound/fmtune_lategame_cmdstream.bin":$18..$7E
-fmtune_periodstart_stream:			;cue 5 channel command streams ($14B3-$1536)
+fmtune_periodstart_stream:			;cue 5 channel command streams
 	incbin "../../../Extracted/Sound/fmtune_periodstart_cmdstream.bin":$18..$9C
-fmtune_unused7_stream:				;cue 7 channel command streams ($1537-$1623)
+fmtune_unused7_stream:				;cue 7 channel command streams
 	incbin "../../../Extracted/Sound/fmtune_unused7_cmdstream.bin":$18..$105
-fmtune_midperiod_stream:			;cue 8 channel command streams ($1624-$16B1)
+fmtune_midperiod_stream:			;cue 8 channel command streams
 	incbin "../../../Extracted/Sound/fmtune_midperiod_cmdstream.bin":$18..$A6
-fmtune_title_stream2:				;cue 3 channel command streams ($16B2-$16BB)
+fmtune_title_stream2:				;cue 3 channel command streams
 	incbin "../../../Extracted/Sound/fmtune_title_cmdstream.bin":$17A..$184
-fmtune_unused2_stream2:				;cue 2 channel command streams ($16BC-$16C1)
+fmtune_unused2_stream2:				;cue 2 channel command streams
 	incbin "../../../Extracted/Sound/fmtune_unused2_cmdstream.bin":$EE..$F4
-fmtune_unused9_stream2:				;cue 9 channel command streams ($16C2-$1926)
+fmtune_unused9_stream2:				;cue 9 channel command streams
 	incbin "../../../Extracted/Sound/fmtune_unused9_cmdstream.bin":$1A0..$405
-fmtune_goal_stream2:				;cue 4 channel command streams ($1927-$193D)
+fmtune_goal_stream2:				;cue 4 channel command streams
 	incbin "../../../Extracted/Sound/fmtune_goal_cmdstream.bin":$84..$9B
-fmtune_midperiod_stream2:			;cue 8 channel command streams ($193E-$1A18)
+fmtune_midperiod_stream2:			;cue 8 channel command streams
 	incbin "../../../Extracted/Sound/fmtune_midperiod_cmdstream.bin":$A6..$181
-fmtune_unused7_stream2:				;cue 7 channel command streams ($1A19-$1A45)
+fmtune_unused7_stream2:				;cue 7 channel command streams
 	incbin "../../../Extracted/Sound/fmtune_unused7_cmdstream.bin":$105..$132
-fmtune_periodstart_stream2:			;cue 5 channel command streams ($1A46-$1A96)
+fmtune_periodstart_stream2:			;cue 5 channel command streams
 	incbin "../../../Extracted/Sound/fmtune_periodstart_cmdstream.bin":$9C..$ED
-fmtune_lategame_stream2:			;cue 6 channel command streams ($1A97-$1BBD)
+fmtune_lategame_stream2:			;cue 6 channel command streams
 	incbin "../../../Extracted/Sound/fmtune_lategame_cmdstream.bin":$7E..$1A5
-fmtune_goal_stream3:				;cue 4 channel command streams ($1BBE-$1C45)
+fmtune_goal_stream3:				;cue 4 channel command streams
 	incbin "../../../Extracted/Sound/fmtune_goal_cmdstream.bin":$9B..$123
-fmtune_title_stream3:				;cue 3 channel command streams ($1C46-$2174)
+fmtune_title_stream3:				;cue 3 channel command streams
 	incbin "../../../Extracted/Sound/fmtune_title_cmdstream.bin":$184..$6B3
-fmtune_playoff_stream2:				;cue 1 channel command streams ($2175-$24A1)
+fmtune_playoff_stream2:				;cue 1 channel command streams
 	incbin "../../../Extracted/Sound/fmtune_playoff_cmdstream.bin":$BC..$3E9
-fmtune_unused2_stream3:				;cue 2 channel command streams ($24A2-$28BA)
+fmtune_unused2_stream3:				;cue 2 channel command streams
 	incbin "../../../Extracted/Sound/fmtune_unused2_cmdstream.bin":$F4..$50D
 sfx_table:							;sound effect tables: program pointer per cue $80-$A1, voice per effect
 	incbin "../../../Extracted/Sound/sfx_table.bin"
@@ -218,4 +218,4 @@ BootSamples:						;BRR samples of the boot set (9-byte blocks)
 	incbin "../../../Extracted/Sound/bootsamples.brr"
 BootSamplesEnd:						; end of BootSamples
 	assert BootSamplesEnd-BootSamples == BOOTSAMPLESIZE
-	dw $0000, SPCDRIVER				; end block: length 0, start the driver at $0400
+	dw $0000, SPCDRIVER				; end block: length 0, start the driver

@@ -57,7 +57,7 @@ setupice:							;Set up the rink: the variables, the rink and text graphics, the
 	cmp.w #SoundBankGame
 	beq .gfx
 	jsl.l SPCGameUpload
-.gfx:								;decompress each tile set to $7F0000 and send it to vram
+.gfx:								;decompress each tile set to unpackbuf and send it to vram
 	lda.w #IceRinkTiles				; packed rink tiles
 	sta.b tmp0
 	lda.w #IceRinkTiles>>16
@@ -135,7 +135,7 @@ setupice:							;Set up the rink: the variables, the rink and text graphics, the
 	lda.w #SmallFontTiles>>16
 	sta.b tmp1
 	jsl.l DecompressBytecode
-	stz.b a0						; sprite frame list from the $7F0000 data
+	stz.b a0						; sprite frame list from the unpackbuf data
 	lda.w #unpackbuf>>16
 	sta.b a0+2
 	lda.w #PixelRemap83

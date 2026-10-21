@@ -84,7 +84,7 @@ printbig:							;print with the big font (2 by 2 tiles per character)
 	sta.b textdirtyhi
 .bot:								; bottom row of the big char
 	ldx.b d0
-	lda.l BigFontMap+(76*2),x		; bottom left (+$98)
+	lda.l BigFontMap+(76*2),x		; bottom left
 	clc
 	adc.w BigFontChars
 	adc.w printfontset

@@ -1,6 +1,6 @@
 clockcont_0:						;End of a period: in the third period the winners celebrate (with the
 									;Stanley Cup after the final), and the clock stops
-	ldx.w #$001C					; object 14 (offset $1C)
+	ldx.w #$001C					; object 14
 	stx.b a3
 	lda.w #$18						; assignment $18
 	sta.b d0

@@ -6,7 +6,7 @@ if pc() < $8F8000
 endif
 
 BigFontMap:							;bigfont.map: big font tiles of each character: 76 top-row words, then the
-									;76 bottom-row words (+$98); printbig uses BigFontIndex
+									;76 bottom-row words; printbig uses BigFontIndex
 	incbin "../../Extracted/Graphics/BigFont.smap"
 
 incsrc "../routines/video/hud/unusedEnergyBar.asm"

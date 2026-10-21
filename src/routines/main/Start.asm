@@ -6,7 +6,7 @@ Start:								;Reset entry and cold start: switch to native mode, clear RAM, set
 	xce								; native mode
 	rep #$30						; 16-bit registers
 	lda.w #$1FFF
-	tcs								; stack $1FFF
+	tcs								; stack at the top of low RAM
 	lda.w #$0000
 	tcd								; D = 0
 	sep #$20						; 8-bit A
@@ -14,7 +14,7 @@ Start:								;Reset entry and cold start: switch to native mode, clear RAM, set
 	plb								; DB = $00 (low RAM and registers)
 	rep #$30						; 16-bit registers
 	ldx.w #$0000
-.clrdp:								;clear $0000-$164D (DP and low RAM)
+.clrdp:								;clear the direct page and the low RAM variables
 	stz.b vcount,x
 	inx
 	inx
@@ -40,7 +40,7 @@ Start:								;Reset entry and cold start: switch to native mode, clear RAM, set
 	cpx.w #$4C74
 	bne .clrcache
 	ldx.w #$0000
-.clrslots:							;sprslottime ($04AB-$08AA): every VRAM sprite slot free
+.clrslots:							;sprslottime: every VRAM sprite slot free
 	sta.w sprslottime,x
 	inx
 	inx
@@ -83,7 +83,7 @@ Start:								;Reset entry and cold start: switch to native mode, clear RAM, set
 	jsl.l SPCBootUpload
 	stz.b sndlock
 	stz.b vbactive					; vblank handlers may run
-	jsl.l ResetPassWord				; $1610-$161F = $1E
-	jsl.l DefaultMenus				; initial menu choices at $1600
+	jsl.l ResetPassWord				; PassWord: 16 characters of $1E
+	jsl.l DefaultMenus				; initial menu choices from OptPlayMode on
 	jsl.l Readjoy12
 	jml.l Opening					; on to the title screen

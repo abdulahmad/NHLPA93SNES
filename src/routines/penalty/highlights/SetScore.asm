@@ -104,7 +104,7 @@ SetScore:							;Play one period of playoff game a0 with random goals; a game ti
 	ldy.b d0
 	lda.b [a1],y
 	sta.b a1
-	ldy.w #ScoutReport				; 8(a1): byte 0 of the scouting report holds the scoring odds rows
+	ldy.w #ScoutReport				; ScoutReport: byte 0 of the scouting report holds the scoring odds rows
 	adc.b [a1],y
 	sta.b a1
 	lda.b [a1]
