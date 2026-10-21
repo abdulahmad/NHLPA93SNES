@@ -17,7 +17,7 @@ UpdateRosterPlayer:					;Step team a2's roster player through his animation, the
 	sta.b a3
 	tax
 	lda.w tmflags,y					; team flags
-	bit.w #tmfmid
+	bit.w #tmfslide
 	beq .in
 	inc.w OldZpos,x					; skating out: x += 3
 	inc.w OldZpos,x

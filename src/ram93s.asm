@@ -789,6 +789,7 @@ attrxflip	=	$0800				; x flip
 attryflip	=	$1000				; y flip
 ; tmflags bits
 tmfmid		=	$0002				; nearest player takes the spot between puck and own goal
+tmfslide	=	tmfmid				; team slides out (SlideOutRosterPlayer); 93G shares the bit the same way
 tmflcc		=	$0001				; line change box needs redrawing
 tmflast		=	$0004				; next touch overwrites the last touch only
 tmflcm		=	$0008				; team in line change mode
