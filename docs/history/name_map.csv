@@ -29,3 +29,4 @@ ClearTeamStats,clearTeamStats,93G
 (raw offset),pldendur,92G setplayer fields (.pld rating byte; as 94G)
 (raw offset),pldpass,92G setplayer fields (.pld rating byte; as 94G)
 (raw offset),pldsize,92G setplayer fields (.pld rating byte; as 94G)
+(raw offset),tmftimeout,93G (tmfmid and tmfslide share it)
