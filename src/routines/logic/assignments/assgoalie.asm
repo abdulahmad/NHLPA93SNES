@@ -288,9 +288,9 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	cmp.w #$002E
 	bcs .in
 	lda.b d1
-	pha
+	pha								; $03,s = d1
 	lda.b d0
-	pha
+	pha								; $01,s = d0
 	jsl.l vtoa						; vector to direction
 	jsl.l AdjustFacingDirection		; turn toward the puck
 	lda.b $01,s

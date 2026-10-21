@@ -35,7 +35,7 @@ NewTicker3:							;Show the ticker box for game d3: round, period and both teams
 	sbc.w #$0004
 	sta.w printy					; print y - 4
 	lda.w printx
-	pha								; keep x on the stack
+	pha								; keep x on the stack: $01,s
 	jsl.l GetShifter				; set up the shifter for this game
 	lda.w #$2400
 	sta.w printa					; palette for the text

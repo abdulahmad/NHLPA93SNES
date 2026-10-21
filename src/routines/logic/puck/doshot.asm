@@ -24,7 +24,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	and.w #$0003
 	clc
 	adc.w #SFXshotwiff
-	pha
+	pha								; $01,s = the sound number
 	lda.w #sfssdir
 	trb.w sflags					; sfssdir off, pfalock on
 	sta.w pfalock,x
@@ -105,15 +105,15 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	iny
 	lda.b [a0],y
 	sta.b d2
-	pha
+	pha								; z diff (d2): $07,s at the .ar pha
 	lda.b d1
 	sec
 	sbc.w pucky
 	sta.b d1
-	pha
+	pha								; y diff (d1): $05,s at the .ar pha
 ;d3 = distance to the target point
 	lda.b d0
-	pha
+	pha								; x diff (d0): $03,s at the .ar pha
 	sta.b mula
 	sta.b mulb
 	jsl.l muls32					; signed 32-bit multiply
@@ -179,7 +179,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	sta.b d0
 .ar:								; random aim error
 	lda.b d0
-	pha
+	pha								; $01,s adjust; after its pla $05,s is the z diff
 	jsl.l randomas					; random number -A to A-1
 	adc.b $03,s
 	sta.b $03,s

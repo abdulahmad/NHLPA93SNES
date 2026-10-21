@@ -38,7 +38,7 @@ AddPenalty2:						;Call penalty d0 on player X without the checks; used for forc
 	adc.w #$00C8
 	sta.b Crowdlevel
 	lda.w #SFXcrowdboo				; home penalized: boo; visitors: cheer
-	pha
+	pha								; $01,s = the crowd sound number
 	lda.w pfteam,x
 	beq .sfx
 	lda.w #SFXcrowdcheer

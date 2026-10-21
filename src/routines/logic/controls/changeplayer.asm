@@ -29,7 +29,7 @@ changeplayer:						;Switch controller d4 to the teammate nearest the puck, or sw
 .ly:								; candidate y relative to the puck
 	clc
 	adc.w pucky						; plus the puck y
-	pha								; keep it
+	pha								; keep it: $03,s = target y
 	lda.w puckvx					; puck x velocity high byte
 	xba
 	and.w #$00FF
@@ -39,7 +39,7 @@ changeplayer:						;Switch controller d4 to the teammate nearest the puck, or sw
 .lx:								; candidate x relative to the puck
 	clc
 	adc.w puckx						; plus the puck x
-	pha
+	pha								; $01,s = target x
 	lda.w #$0005					; 6 players
 	sta.b d2
 	lda.b d4						; controller number

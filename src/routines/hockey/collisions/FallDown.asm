@@ -217,7 +217,7 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 .snd:								; crowd boos a home player's fall, cheers the other
 	ldy.b a2						; home player fell: boo, else cheer
 	lda.w #SFXcrowdcheer			; cheer
-	pha
+	pha								; 1,s = the sound number (boo or cheer)
 	lda.w pfteam,y
 	bne .3
 	lda.w #SFXcrowdboo				; boo for the home team

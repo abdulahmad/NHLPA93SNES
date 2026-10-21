@@ -12,9 +12,9 @@ skatetopuck:						;Player X skates to the puck, slowing down near it; may sweep 
 	sta.w temp2,x					; aim at the puck, steering around the goal
 	jsl.l avdgoal
 	lda.b d1
-	pha								; save the avoid-goal target
+	pha								; save the avoid-goal target: $03,s = y (d1)
 	lda.b d0
-	pha
+	pha								; $01,s = x (d0)
 	txa
 	jsl.l GetHot					; get the player's hot spot
 	lda.b d0

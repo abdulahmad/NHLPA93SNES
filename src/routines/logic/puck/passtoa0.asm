@@ -60,7 +60,7 @@ passtoa0:							;Pass the puck to player a0, leading him by his speed
 	jsl.l muls32					; signed 32-bit multiply
 	lda.b mulres+2					; y pixels per 1/4 second
 	sta.b d1
-	pha
+	pha								; $03,s = y speed (d1)
 	lda.w Xvel,y					; receiver x velocity
 	sta.b mulb
 	lda.w #$00F0
@@ -68,7 +68,7 @@ passtoa0:							;Pass the puck to player a0, leading him by his speed
 	jsl.l muls32					; signed 32-bit multiply
 	lda.b mulres+2					; x pixels per 1/4 second
 	sta.b d0
-	pha
+	pha								; $01,s = x speed (d0)
 	sta.b mulb
 	lda.b d2
 	sta.b mula

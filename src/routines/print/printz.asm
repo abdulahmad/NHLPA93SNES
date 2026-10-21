@@ -1,8 +1,8 @@
 printz:								;print with the string following the call, returning after it. Keeps a1
 	lda.b a1+2						; save a1
-	pha
+	pha								; save a1: $03,s = a1+2
 	lda.b a1
-	pha
+	pha								; $01,s = a1; $05,s / $07,s = the return address and its bank
 	lda.b $07,s						; a1 = return address+1: the string
 	sta.b a1+2
 	lda.b $05,s

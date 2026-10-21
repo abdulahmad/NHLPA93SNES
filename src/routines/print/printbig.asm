@@ -139,7 +139,7 @@ printbig:							;print with the big font (2 by 2 tiles per character)
 .code:								;control byte -$ab, x, y: attribute b, map a
 	eor.w #$FFFF					; negate
 	inc a
-	pha
+	pha								; $01,s = the control record value, negated
 	and.w #$0030					; palette bits
 	asl a
 	asl a

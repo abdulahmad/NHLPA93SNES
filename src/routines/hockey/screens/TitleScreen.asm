@@ -133,7 +133,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	jmp.w .exit
 .top4:								;blank the 6 rows below the screen
 	lda.w printy					; blank the 6 rows below the screen
-	pha
+	pha								; 1,s = printy
 	ldx.w #$0006
 .erase:								; erase the credits text
 	stz.w printx

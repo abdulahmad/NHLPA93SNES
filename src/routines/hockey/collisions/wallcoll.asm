@@ -15,9 +15,9 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bne .save
 	ldx.b xsave						; restore X
 	lda.b d1						;v1n = (Yvel*cos - Xvel*sin)/256, negated; v1t = (Xvel*cos + Yvel*sin)/256
-	pha
+	pha								; $03,s = d1, sin
 	lda.b d0
-	pha
+	pha								; $01,s = d0, cos
 	sta.b mulb
 	lda.w Yvel,x					; Yvel * cos
 	sta.b mula

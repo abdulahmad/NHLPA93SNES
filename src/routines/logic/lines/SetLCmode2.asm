@@ -32,7 +32,7 @@ SetLCmode2:							;Draw the line change box for team a2, one row per line it can
 	lda.w #$0002
 	sta.b d4
 	lda.w printx
-	pha
+	pha								; $01,s = the starting column
 .loop:								;rows 2..0: button letter, line name, energy bar
 	lda.b $01,s
 	sta.w printx

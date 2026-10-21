@@ -32,7 +32,7 @@ CompLine:							;The computer team picks a line by the man advantage, the score 
 	inc.b d0
 .0:									; try a line, keep its number
 	lda.b d0
-	pha								; keep the line
+	pha								; keep the line: $01,s
 	jsl.l getlinee					; energy of that line
 	lda.b d0
 	sta.b d1						; d1 = its energy

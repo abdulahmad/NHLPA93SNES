@@ -39,7 +39,7 @@ checkcoll:							;Move object X to its new x / y (d2 / d3), checking wall and pl
 	lda.b d0+2
 	pha
 	lda.b d0
-	pha
+	pha								; after the 14 pushes: $01,s = d0, $03,s = d0+2 .. $19,s = d6
 	lda.w Xpos,x					; around the hot spot with the wall
 	sta.b d2
 	lda.w Ypos,x					; y of X
