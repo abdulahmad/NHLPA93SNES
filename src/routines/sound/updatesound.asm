@@ -1,6 +1,6 @@
-updatesound:						;Move the crowd noise volume toward crowdlevel and send it when it changes
+updatesound:						;Move the crowd noise volume toward Crowdlevel and send it when it changes
 	ldy.b d7						; frames
-	lda.b crowdlevel				; target volume crowdlevel * 8 + $200 (max $CFF)
+	lda.b Crowdlevel				; target volume Crowdlevel * 8 + $200 (max $CFF)
 	asl a							; times 8
 	asl a
 	asl a

@@ -1,10 +1,10 @@
 CwdFight:							;The crowd reacts to a punch; the hit player X is pushed back by the
 									;puncher's strength
 	ldy.b a0						; puncher
-	lda.b crowdlevel				; crowd noise
+	lda.b Crowdlevel				; crowd noise
 	clc
 	adc.w #$0050					; +80
-	sta.b crowdlevel
+	sta.b Crowdlevel
 	lda.w #$0005					; (5 + puncher strength) * 500
 	clc								; puncher strength
 	adc.w temp3,y

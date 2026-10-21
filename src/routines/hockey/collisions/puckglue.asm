@@ -33,10 +33,10 @@ puckglue:							;Player a2 takes the puck
 	lda.w tmfowon,y					; faceoff wins
 	inc a
 	sta.w tmfowon,y
-	lda.b crowdlevel				; +200
+	lda.b Crowdlevel				; +200
 	clc								; crowd noise
 	adc.w #$00C8
-	sta.b crowdlevel
+	sta.b Crowdlevel
 .snd:								; d0 = the player number
 	lda.b a2						; player
 	lsr a							; number

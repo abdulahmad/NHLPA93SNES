@@ -4,10 +4,10 @@ setInjuryType:						;Player a2 is injured for the period: the crowd reacts, the 
 	lda.w pflags,y
 	ora.w #pf2unav
 	sta.w pflags,y					; the player is unavailable
-	lda.b crowdlevel
+	lda.b Crowdlevel
 	clc
 	adc.w #$012C
-	sta.b crowdlevel				; the crowd gets louder
+	sta.b Crowdlevel				; the crowd gets louder
 	lda.w #SFXoooh2
 	pha
 	jsl.l sfx						; play the groan

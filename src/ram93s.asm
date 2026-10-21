@@ -305,7 +305,7 @@ collflag		=	$D8				; a player collision happened: checkcoll restores the old pos
 crowdcnt		=	$DA				; count down to the next crowd animation step
 crowdframe		=	$DC				;crowd frame: low byte = random extra frame (loud crowd), high byte
 									;= frame from cd0
-crowdlevel		=	$DE				;level of crowd excitement (+$50 per punch, +$258 for a won fight, +$C8
+Crowdlevel		=	$DE				;level of crowd excitement (+$50 per punch, +$258 for a won fight, +$C8
 									;for a faceoff win)
 crowdstep		=	$E0				; animation step for the crowd (0-$1E)
 bosgames		=	$D6				; 0-6 game of the best of seven series, 7 = single games

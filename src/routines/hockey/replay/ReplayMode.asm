@@ -1,7 +1,7 @@
 ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single frame steps,
 									;with the pad scrolling the view
 	stz.b DMAlistend
-	stz.b crowdlevel
+	stz.b Crowdlevel
 	lda.w #sf2replay				; sf2replay: replay on
 	tsb.w sflags
 	jsl.l ClrHor					; back to the vertical rink

@@ -18,3 +18,5 @@ EASNmap,EASNBGMap,93G
 fightagg,fighting,93G
 aggress,checking,93G
 GGSleft,aggress,92G/93G (GGSleft kept as an alias for the goalie glove-left use in puckgoalie)
+crowdlevel,Crowdlevel,92G/93G
+ClearTeamStats,clearTeamStats,93G
