@@ -522,7 +522,8 @@ spodds		=	$105F				; shot/pass odds
 rostnum		=	$103F
 stickhand	=	$107F
 endurance	=	$109F				; endurance (goalies: stick save right)
-GGSleft		=	$10BF				; byte $73: goalie glove save left
+aggress		=	$10BF				; aggression: penalty odds (goalies: glove save left)
+GGSleft		=	aggress				; goalie glove save left (92 name), puckgoalie
 fighting	=	$10DF				; fighting rating (fight strength and fight odds; 93 $74)
 checking	=	$10FF				; checking rating (check odds; 93 $75)
 handed		=	$111F				; nonzero: right handed (0 = lefty for the faceoff frames)

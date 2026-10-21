@@ -1,9 +1,8 @@
-checkagr:							;Penalty roll for player X: small results call a penalty. Joystick players
-									;are judged less often, players
-		;   near the puck more often
-	lda.w #$0014					; $14 minus the energy left
+checkagr:							;Penalty roll for player X: random below (20 - aggress) * 16, doubled
+									;for a joystick player, halved near the puck; small results call a penalty
+	lda.w #$0014					; 20 minus aggress
 	sec
-	sbc.w GGSleft,x
+	sbc.w aggress,x
 	asl a
 	asl a
 	asl a
