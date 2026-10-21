@@ -60,20 +60,20 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	stz.w puckvx
 	stz.w puckvy
 	stz.w puckvz
-	stz.w Xvel+$18					; goal nets (objects 12/13) at y +-268
-	stz.w Yvel+$18
-	stz.w Xpos+$18
+	stz.w Xvel+netobj1				; goal nets (objects 12/13) at y +-268
+	stz.w Yvel+netobj1
+	stz.w Xpos+netobj1
 	lda.w #$010C
-	sta.w Ypos+$18
-	stz.w Xvel+$1A					; goal net 2 at y -268
-	stz.w Yvel+$1A
-	stz.w Xpos+$1A
+	sta.w Ypos+netobj1
+	stz.w Xvel+netobj2				; goal net 2 at y -268
+	stz.w Yvel+netobj2
+	stz.w Xpos+netobj2
 	lda.w #$FEF4
-	sta.w Ypos+$1A
+	sta.w Ypos+netobj2
 	lda.w #SPFpuck					; object 15 (puck shadow) = SPFpuck
-	sta.w frame+$1E
-	stz.w SPA+$1E
-	stz.w attribute+$1E
+	sta.w frame+puckobj+2
+	stz.w SPA+puckobj+2
+	stz.w attribute+puckobj+2
 	stz.w attribute+puckobj
 	lda.w #sfslock					; clear sfslock: free up scrolling
 	trb.w sflags

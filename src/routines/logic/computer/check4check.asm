@@ -1,12 +1,12 @@
 check4check:						;Look for a good chance to check an opponent
 	lda.w #$0014					; $14
 	sec
-	sbc.w aggress,x					; minus aggression
+	sbc.w checking,x				; minus the checking rating
 	sta.b d0
 	lda.w OptPen					; penalties on: half the chance
 	beq .nopen
 	asl.b d0						; double it
-.nopen:								; 0 <= d0 < ($14 - aggress) [*2]
+.nopen:								; 0 <= d0 < ($14 - checking) [*2]
 	lda.b d0						; random 0 to d0
 	jsl.l randoma					; random number 0 to A-1
 	cmp.w #$0004					; under 4: check

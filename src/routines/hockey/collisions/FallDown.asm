@@ -58,7 +58,7 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 .fall:								;no check stats for a goalie hitter
 	lda.w position,x				; goalie hitter?
 	beq .nostat
-	stz.b a0						; team checks, player checks, ChkCnt (+3 when fightagg is 0)
+	stz.b a0						; team checks, player checks, ChkCnt (+3 when fighting is 0)
 	lda.w pfteam,x					; team of the hitter
 	beq .tm
 	lda.w #$0002
@@ -83,7 +83,7 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	inc a
 	sta.w pchecks,y					; count it
 	rep #$20						; 16-bit A
-	lda.w fightagg,x				; hitter's aggression
+	lda.w fighting,x				; hitter's fighting rating
 	bne .nostat
 	inc.w ChkCnt
 	inc.w ChkCnt
@@ -112,10 +112,10 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	bcc .set
 	lda.w #SPAfallfwd				; else fall forward
 	sta.b d1
-	lda.w facedir,y					; facedir 0 or 4 and hitter aggress >= 10: third fall
+	lda.w facedir,y					; facedir 0 or 4 and hitter checking >= 10: third fall
 	and.w #$0003
 	bne .set
-	lda.w aggress,x					; hitter's aggression
+	lda.w checking,x				; hitter's checking rating
 	sec
 	sbc.w #$000A					; minus 10
 	bmi .neg1

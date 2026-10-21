@@ -36,7 +36,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	jsl.l DecompressBytecode		; unpack the bracket graphics
 	ldx.w #$0000
 .treetiles:							; copy the bracket tiles to VRAM
-	lda.l TestList+$100,x
+	lda.l unpackbuf+$100,x
 	sta.w VMDATAL
 	inx
 	inx
@@ -44,7 +44,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	bne .treetiles
 	ldx.w #$0000
 .treepal:							; load the bracket palette
-	lda.l TestList,x
+	lda.l unpackbuf,x
 	sta.l palbuffer,x
 	inx
 	inx
@@ -89,7 +89,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	jsl.l DecompressBytecode
 	ldx.w #$0000
 .blocktiles:						; copy the team block tiles to VRAM
-	lda.l TestList,x
+	lda.l unpackbuf,x
 	sta.w VMDATAL
 	inx
 	inx
@@ -182,7 +182,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	adc.w scorechars
 	adc.w charofs
 	ora.w printa
-	sta.l textmap+$EE,x
+	sta.l textmap+(3*$40)+(23*2),x
 	iny
 	iny
 	inx
@@ -211,7 +211,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	ldy.w #23						; 23 rows
 .arrowrow:							; copy an arrow row into the text map
 	lda.b [tmp0]
-	sta.l textmap+$200,x
+	sta.l textmap+(8*$40)+(0*2),x
 	lda.b tmp0
 	clc
 	adc.w #24
@@ -290,8 +290,8 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	jsl.l DecompressBytecode
 	ldx.w #$001E					; logo palette to palette row 2
 .logopal:							; load the logo palette
-	lda.l TestList+$A0,x
-	sta.l palbuffer+$C0,x
+	lda.l unpackbuf+$A0,x
+	sta.l palbuffer+(6*$20),x
 	dex
 	dex
 	bpl .logopal
@@ -304,7 +304,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	sta.w VMADDL
 	ldx.w #$0000
 .logotiles:							; copy the logo tiles to VRAM
-	lda.l TestList+$1A0,x
+	lda.l unpackbuf+$1A0,x
 	sta.w VMDATAL
 	inx
 	inx
@@ -322,7 +322,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	adc.b tmp0
 	asl a
 	tax
-	lda.l TestList,x
+	lda.l unpackbuf,x
 	adc.w logochars					; add the logo tile base
 	ora.w #$1800					; palette 6
 	pha
@@ -338,7 +338,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	asl a
 	tax
 	pla
-	sta.l textmap+$A78,x			; store into the text map
+	sta.l backmap+(9*$40)+(28*2),x	; store into the back map (row 9, column 28)
 	inc.b tmp0
 	lda.b tmp0
 	cmp.w #8
@@ -526,7 +526,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	adc.b tmp1
 	and.w #$001F
 	ora.b tmp2
-	sta.l palbuffer+$E2				; write the blended color
+	sta.l palbuffer+(7*$20)+(1*2)	; write the blended color
 	lda.w joypad1					; held: left/right scroll
 	ora.w joypad2
 	cmp.w #JOYLEFT

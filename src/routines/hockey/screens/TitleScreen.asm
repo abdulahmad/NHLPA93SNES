@@ -37,7 +37,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	lda.w #Title1Map>>16
 	sta.b tmp1
 	jsl.l DecompressBytecode
-	lda.l TestList					; first map word fills backmap
+	lda.l unpackbuf					; first map word fills backmap
 	ldx.w #$07FE
 .fill:								; fill the back map
 	sta.l backmap,x
@@ -46,7 +46,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	bpl .fill
 	ldx.w #$06FE
 .map:								; copy the title map to the back map
-	lda.l TestList,x
+	lda.l unpackbuf,x
 	sta.l backmap,x
 	dex
 	dex
@@ -63,7 +63,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	sta.w VMADDL
 	ldx.w #$0000
 .tiles:								; copy the title tiles to VRAM
-	lda.l TestList+$800,x
+	lda.l unpackbuf+$800,x
 	sta.w VMDATAL
 	inx
 	inx
@@ -73,7 +73,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	stz.w CGADD
 	ldx.w #$0000
 .pal:								; load the title palette
-	lda.l TestList+$700,x
+	lda.l unpackbuf+$700,x
 	sta.w CGDATA
 	inx
 	cpx.w #$0100

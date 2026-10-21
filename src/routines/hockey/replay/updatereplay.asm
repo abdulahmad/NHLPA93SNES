@@ -104,7 +104,7 @@ updatereplay:						;Save this frame into the replay buffer
 									;glovecords, PBnum, Hpos, Vpos
 	sta.b [a0]						; puck height
 	inc.b a0
-	lda.w Zpos+$1E					; puck shadow height
+	lda.w Zpos+puckobj+2			; puck shadow height
 	sta.b [a0]
 	inc.b a0
 	lda.w lastsfx					; last sound effect

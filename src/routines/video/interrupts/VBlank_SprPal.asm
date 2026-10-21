@@ -43,7 +43,7 @@ VBlank_SprPal:						;Vblank: as VBlank, plus the sprite palettes; once, then bac
 	rep #$30						; 16-bit
 	lda.w #DMA_CGRAM				; DMAP7=$00, BBAD7=$22 (CGDATA)
 	sta.w DMAP7
-	lda.w #(palbuffer+$140)&$FFFF	; color $A0
+	lda.w #(palbuffer+(10*$20))&$FFFF	; color $A0
 	sta.w A1T7L
 	lda.w #$0040					; 32 colors
 	sta.w DAS7L

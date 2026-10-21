@@ -25,7 +25,7 @@ ScrollDisplayUp:					;The next line of the scouting report text; scroll the text
 	ldx.b xsave						; restore X
 	lda.w #$0007					; 8 rows
 	sta.b d3
-	lda.w #textmap+$114				; textmap+$114: the text box
+	lda.w #textmap+(4*$40)+(10*2)	; the text box (row 4, column 10)
 	sta.b d1
 	lda.w #textmap>>16
 	sta.b d1+2

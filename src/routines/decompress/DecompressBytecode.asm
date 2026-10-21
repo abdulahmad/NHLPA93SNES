@@ -2,7 +2,7 @@ DecompressBytecode:					;Unpack a compressed stream to unpackbuf. Each control b
 									;literal copy, a run of zeros or of one byte,
 		;   or a copy from earlier output
 	stz.b tmp1+1					; output pointer = $7F0000
-	lda.w #TestList>>16				; output bank
+	lda.w #unpackbuf>>16			; output bank
 	sta.b tmp1+3
 .next:								; next command byte of the stream
 	lda.b [tmp0]					; next command byte
@@ -72,7 +72,7 @@ DecompressBytecode:					;Unpack a compressed stream to unpackbuf. Each control b
 	sbc.b tmp2+2
 	tax
 .backloop:							; copy bytes from earlier output, going up
-	lda.l TestList,x				; copy a byte from earlier output
+	lda.l unpackbuf,x				; copy a byte from earlier output
 	inx
 	sta.b [tmp1+1]
 	inc.b tmp1+1
@@ -173,7 +173,7 @@ DecompressBytecode:					;Unpack a compressed stream to unpackbuf. Each control b
 	sbc.b tmp2+2
 	tax
 .revloop:							; copy bytes from earlier output, going down
-	lda.l TestList,x				; copy a byte from earlier output
+	lda.l unpackbuf,x				; copy a byte from earlier output
 	dex								; going down
 	sta.b [tmp1+1]
 	inc.b tmp1+1

@@ -14,7 +14,7 @@ assfight:							;Assignment: fighting. A computer fighter punches when close; bo
 	and.w #~pfna&$FFFF
 	sta.w pflags,x
 	jsl.l getpde					; energy
-	lda.w fightagg,x				; getpde * fightagg / $1000
+	lda.w fighting,x				; getpde * fighting / $1000
 	sta.b d1
 	sta.b mula
 	lda.b d0

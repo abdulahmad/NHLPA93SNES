@@ -48,7 +48,7 @@ setupice:							;Set up the rink: the variables, the rink and text graphics, the
 .pal:								;rink palette to both halves of palbuffer
 	lda.l RinkPalette,x
 	sta.l palbuffer,x
-	sta.l palbuffer+$100,x
+	sta.l palbuffer+(8*$20),x
 	dex
 	dex
 	bpl .pal

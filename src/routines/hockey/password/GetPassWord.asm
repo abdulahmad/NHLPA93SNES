@@ -169,12 +169,12 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	sta.l backmap,x
 	sta.l backmap+2,x
 	sta.l backmap+4,x
-	sta.l backmap+$40,x
-	sta.l backmap+$42,x
-	sta.l backmap+$44,x
-	sta.l backmap+$80,x
-	sta.l backmap+$82,x
-	sta.l backmap+$84,x
+	sta.l backmap+(1*$40)+(0*2),x
+	sta.l backmap+(1*$40)+(1*2),x
+	sta.l backmap+(1*$40)+(2*2),x
+	sta.l backmap+(2*$40)+(0*2),x
+	sta.l backmap+(2*$40)+(1*2),x
+	sta.l backmap+(2*$40)+(2*2),x
 	plx
 	pla
 	sta.b d5

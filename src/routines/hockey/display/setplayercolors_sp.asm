@@ -27,8 +27,8 @@ setplayercolors_sp:					;Convert one team's colors into the palette buffer
 	asl a
 	asl a							; to bits 10-14
 	ora.b tmp1+1
-	sta.l palbuffer+$40,x			; team slot in the palette buffer
-	sta.l palbuffer+$140,x			; second copy
+	sta.l palbuffer+(2*$20),x		; team slot in the palette buffer
+	sta.l palbuffer+(10*$20),x		; second copy
 	inx
 	inx
 	iny

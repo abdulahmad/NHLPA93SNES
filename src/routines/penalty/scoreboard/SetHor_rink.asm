@@ -39,7 +39,7 @@ SetHor_rink:						;Clear the text screen, draw the horizontal rink scoreboard ba
 .row2:								; second half of the rink map
 	ldy.w #$0020
 .col2:								; rink map words from + $10
-	lda.l HorRinkMap+$10,x			; rink map words from +$10
+	lda.l HorRinkMap+(8*2),x		; rink map words from column 8
 	sta.w VMDATAL
 	inx
 	inx

@@ -13,7 +13,7 @@ DrawGameSetupBack:					;Draw the game setup screen backdrop with the NHLPA logo
 	jsl.l DecompressBytecode		; decompress it
 	ldx.w #$07FE					; copy to the back map
 .map:								; copy the map words to the back map
-	lda.l TestList,x				; map word
+	lda.l unpackbuf,x				; map word
 	and.w #$DFFF					; priority bit off
 	sta.l backmap,x					; to the back map
 	dex
@@ -41,7 +41,7 @@ DrawGameSetupBack:					;Draw the game setup screen backdrop with the NHLPA logo
 	adc.b tmp0						; plus the column
 	asl a							; logo map word + logochars
 	tax
-	lda.l TestList,x				; logo map word
+	lda.l unpackbuf,x				; logo map word
 	adc.w logochars					; plus the logo tile base
 	pha								; keep it
 	lda.b tmp1						; row
@@ -54,7 +54,7 @@ DrawGameSetupBack:					;Draw the game setup screen backdrop with the NHLPA logo
 	asl a							; word offset
 	tax
 	pla								; word back
-	sta.l textmap+$18,x				; into the text map
+	sta.l textmap+(12*2),x			; into the text map
 	dec.b tmp0						; next column
 	bpl .col
 	dec.b tmp1						; next row

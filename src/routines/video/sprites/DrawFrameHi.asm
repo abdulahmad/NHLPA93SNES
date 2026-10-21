@@ -356,12 +356,12 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	bcc .bfind
 	lda.b sprclock
 	sec
-	sbc.w sprslottime+$20,x
+	sbc.w sprslottime+(16*2),x
 	cmp.b sprslotlife
 	bcc .bfind
 	lda.b sprclock
 	sec
-	sbc.w sprslottime+$22,x
+	sbc.w sprslottime+(16*2)+2,x
 	cmp.b sprslotlife
 	bcc .bfind
 	txa
@@ -410,8 +410,8 @@ DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, upl
 	lda.b sprclock					; stamp all four slot times
 	sta.w sprslottime,x
 	sta.w sprslottime+2,x
-	sta.w sprslottime+$20,x
-	sta.w sprslottime+$22,x
+	sta.w sprslottime+(16*2),x
+	sta.w sprslottime+(16*2)+2,x
 	lda.b sprcount
 	asl a
 	asl a
