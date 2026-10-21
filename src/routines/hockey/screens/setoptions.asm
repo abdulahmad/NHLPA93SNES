@@ -76,7 +76,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	stz.w CGADD
 	ldx.w #$0000
 .setuppal:							; load the main palette
-	lda.l TestList+$800,x
+	lda.l unpackbuf+$800,x
 	sta.l palbuffer,x
 	sta.w CGDATA
 	inx
@@ -95,7 +95,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	sta.w VMADDL
 	ldx.w #$0000
 .setuptiles:						; load the font and rink tiles
-	lda.l TestList+$900,x
+	lda.l unpackbuf+$900,x
 	sta.w VMDATAL
 	inx
 	inx
@@ -140,7 +140,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	jsl.l DecompressBytecode
 	ldx.w #$0000
 .logotiles:							; load the logo tiles
-	lda.l TestList+$1A0,x
+	lda.l unpackbuf+$1A0,x
 	sta.w VMDATAL
 	inx
 	inx
@@ -153,7 +153,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	jsl.l DecompressBytecode
 	ldx.w #$0000
 .blocktiles:						; load the team block tiles
-	lda.l TestList,x
+	lda.l unpackbuf,x
 	sta.w VMDATAL
 	inx
 	inx

@@ -36,7 +36,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	jsl.l DecompressBytecode		; unpack the bracket graphics
 	ldx.w #$0000
 .treetiles:							; copy the bracket tiles to VRAM
-	lda.l TestList+$100,x
+	lda.l unpackbuf+$100,x
 	sta.w VMDATAL
 	inx
 	inx
@@ -44,7 +44,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	bne .treetiles
 	ldx.w #$0000
 .treepal:							; load the bracket palette
-	lda.l TestList,x
+	lda.l unpackbuf,x
 	sta.l palbuffer,x
 	inx
 	inx
@@ -89,7 +89,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	jsl.l DecompressBytecode
 	ldx.w #$0000
 .blocktiles:						; copy the team block tiles to VRAM
-	lda.l TestList,x
+	lda.l unpackbuf,x
 	sta.w VMDATAL
 	inx
 	inx
@@ -290,7 +290,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	jsl.l DecompressBytecode
 	ldx.w #$001E					; logo palette to palette row 2
 .logopal:							; load the logo palette
-	lda.l TestList+$A0,x
+	lda.l unpackbuf+$A0,x
 	sta.l palbuffer+$C0,x
 	dex
 	dex
@@ -304,7 +304,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	sta.w VMADDL
 	ldx.w #$0000
 .logotiles:							; copy the logo tiles to VRAM
-	lda.l TestList+$1A0,x
+	lda.l unpackbuf+$1A0,x
 	sta.w VMDATAL
 	inx
 	inx
@@ -322,7 +322,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	adc.b tmp0
 	asl a
 	tax
-	lda.l TestList,x
+	lda.l unpackbuf,x
 	adc.w logochars					; add the logo tile base
 	ora.w #$1800					; palette 6
 	pha

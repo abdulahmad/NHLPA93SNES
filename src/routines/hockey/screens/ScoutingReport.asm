@@ -50,7 +50,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	jsl.l DecompressBytecode		; unpack
 	ldx.w #$03FE					; copy the unpacked map into the back map
 .copymap:							; copy the scouting map to the back map
-	lda.l TestList,x
+	lda.l unpackbuf,x
 	sta.l backmap,x
 	sta.l backmap+$400,x
 	dex
@@ -60,7 +60,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	sta.w VMADDL
 	ldx.w #$0000
 .easntiles:							; EASN tiles to VRAM
-	lda.l TestList+$400,x			; EASN tiles to VRAM
+	lda.l unpackbuf+$400,x			; EASN tiles to VRAM
 	sta.w VMDATAL
 	inx
 	inx
@@ -78,7 +78,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	jsl.l DecompressBytecode		; unpack
 	ldx.w #$0000
 .blocktiles:						; team block tiles to VRAM
-	lda.l TestList,x				; team block tiles to VRAM
+	lda.l unpackbuf,x				; team block tiles to VRAM
 	sta.w VMDATAL
 	inx
 	inx
@@ -91,7 +91,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	jsl.l DecompressBytecode		; unpack
 	ldx.w #$0000
 .fonttiles:							; small font tiles to VRAM
-	lda.l TestList,x				; small font tiles to VRAM
+	lda.l unpackbuf,x				; small font tiles to VRAM
 	sta.w VMDATAL
 	inx
 	inx
@@ -121,7 +121,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	stz.w CGADD						; palette from color 0
 	ldx.w #$0000
 .ronpal:							; Ron Barr palette to CRAM
-	lda.l TestList+$90,x			; palette bytes in the unpacked data
+	lda.l unpackbuf+$90,x			; palette bytes in the unpacked data
 	sta.w CGDATA
 	inx
 	cpx.w #$0080					; $80 bytes
@@ -129,7 +129,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	rep #$30						; 16-bit registers
 	ldx.w #$0000
 .rontiles:							; Ron Barr tiles to VRAM
-	lda.l TestList+$190,x			; Ron Barr tiles to VRAM
+	lda.l unpackbuf+$190,x			; Ron Barr tiles to VRAM
 	sta.w VMDATAL
 	inx
 	inx
@@ -147,7 +147,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	adc.b tmp0						; plus column
 	asl a
 	tax
-	lda.l TestList,x				; map entry
+	lda.l unpackbuf,x				; map entry
 	adc.w ronbarrchars				; plus the Ron Barr character base
 	pha
 	lda.b tmp1

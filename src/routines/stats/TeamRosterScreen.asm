@@ -69,7 +69,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	jsl.l DecompressBytecode		; unpack
 	ldx.w #$0000
 .blocktiles:						; team block tiles to VRAM
-	lda.l TestList,x				; team block tiles to VRAM
+	lda.l unpackbuf,x				; team block tiles to VRAM
 	sta.w VMDATAL
 	inx
 	inx
@@ -82,7 +82,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	jsl.l DecompressBytecode		; unpack
 	ldx.w #$0000
 .easntiles:							; EASN tiles to VRAM
-	lda.l TestList+$400,x			; EASN tiles to VRAM
+	lda.l unpackbuf+$400,x			; EASN tiles to VRAM
 	sta.w VMDATAL
 	inx
 	inx
@@ -90,7 +90,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	bne .easntiles
 	ldx.w #$03FE					; copy the unpacked map into the back map
 .copymap:							; copy the roster map with the extra chars added
-	lda.l TestList,x
+	lda.l unpackbuf,x
 	clc
 	adc.w ExtraChars				; plus extra chars
 	clc
@@ -109,7 +109,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	stz.w CGADD						; palette from color 0
 	ldx.w #$0000
 .ronpal:							; Ron Barr palette to CRAM
-	lda.l TestList+$90,x			; palette bytes in the unpacked data
+	lda.l unpackbuf+$90,x			; palette bytes in the unpacked data
 	sta.w CGDATA
 	inx
 	cpx.w #$0080
