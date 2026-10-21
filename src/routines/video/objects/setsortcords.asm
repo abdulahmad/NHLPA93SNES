@@ -37,6 +37,6 @@ setsortcords:						;Draw the sorted objects in display order, hiding ones that a
 .next:								; next entry
 	inc.b a4						; next entry
 	lda.b a4
-	cmp.w #OOlist+$10				; 16 objects
+	cmp.w #OOlist+Sortobjs			; 16 objects
 	bne .top
 	rtl								; done

@@ -84,13 +84,13 @@ printbig:							;print with the big font (2 by 2 tiles per character)
 	sta.b textdirtyhi
 .bot:								; bottom row of the big char
 	ldx.b d0
-	lda.l BigFontMap+$98,x			; bottom left (+$98)
+	lda.l BigFontMap+(76*2),x		; bottom left (+$98)
 	clc
 	adc.w BigFontChars
 	adc.w printfontset
 	ora.w printa
 	ldx.b d1
-	sta.l textmap+$40,x				; bottom left tile
+	sta.l textmap+(1*$40)+(0*2),x	; bottom left tile
 	lda.b d2						; two columns wide?
 	beq .next
 	ldx.b d0
@@ -102,13 +102,13 @@ printbig:							;print with the big font (2 by 2 tiles per character)
 	ldx.b d1
 	sta.l textmap+2,x				; top right tile
 	ldx.b d0
-	lda.l BigFontMap+$9A,x			; bottom right
+	lda.l BigFontMap+(76*2)+2,x		; bottom right
 	clc
 	adc.w BigFontChars
 	adc.w printfontset
 	ora.w printa
 	ldx.b d1
-	sta.l textmap+$42,x				; bottom right tile
+	sta.l textmap+(1*$40)+(1*2),x	; bottom right tile
 	inc.w printx					; extra column
 .next:								; next column
 	inc.w printx					; next column
@@ -123,7 +123,7 @@ printbig:							;print with the big font (2 by 2 tiles per character)
 	ora.w printa
 	ldx.b d1
 	sta.l textmap,x					; top blank tile
-	sta.l textmap+$40,x				; bottom blank tile
+	sta.l textmap+(1*$40)+(0*2),x	; bottom blank tile
 	txa
 	lsr a
 	cmp.b textdirtylo				; dirty range low

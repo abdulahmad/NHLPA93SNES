@@ -54,7 +54,7 @@ DrawGameSetupBack:					;Draw the game setup screen backdrop with the NHLPA logo
 	asl a							; word offset
 	tax
 	pla								; word back
-	sta.l textmap+$18,x				; into the text map
+	sta.l textmap+(12*2),x			; into the text map
 	dec.b tmp0						; next column
 	bpl .col
 	dec.b tmp1						; next row

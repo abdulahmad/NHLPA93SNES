@@ -96,7 +96,7 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	clc
 	adc.w charofs2					; plus the character offset
 	sta.l backmap,x
-	sta.l backmap+$400,x
+	sta.l backmap+(16*$40)+(0*2),x
 	dex
 	dex
 	bpl .copymap

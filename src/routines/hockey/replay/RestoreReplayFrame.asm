@@ -119,7 +119,7 @@ RestoreReplayFrame:					;Put one recorded replay frame back into the
 	beq .sz
 	ora.w #$FF00
 .sz:								; no sound effect to restore
-	sta.w Zpos+$1E					; store it
+	sta.w Zpos+puckobj+2			; store it
 	lda.b [a0]						; last sound effect
 	inc.b a0
 	and.w #$00FF

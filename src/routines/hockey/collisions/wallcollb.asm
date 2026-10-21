@@ -88,7 +88,7 @@ wallcollb:							;Object X hits a wall: the puck may go over the glass and out o
 	lda.w #$8000
 	tsb.w attribute+puckobj
 .1:									; shadow frame 0; the clock stopped?
-	stz.w frame+$1E					; shadow frame 0
+	stz.w frame+puckobj+2			; shadow frame 0
 	lda.w gmclock					; clock stopped
 	bne .rtl
 	lda.w ltplayer					; penalty 6 for the last touch player

@@ -393,12 +393,12 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	bcc .bfind
 	lda.b sprclock					; all four tiles must be old enough
 	sec
-	sbc.w sprslottime+$20,x
+	sbc.w sprslottime+(16*2),x
 	cmp.b sprslotlife
 	bcc .bfind
 	lda.b sprclock
 	sec
-	sbc.w sprslottime+$22,x
+	sbc.w sprslottime+(16*2)+2,x
 	cmp.b sprslotlife
 	bcc .bfind
 	txa								; VRAM address of the slot
@@ -447,8 +447,8 @@ DrawFrame:							;Draw a sprite frame made of small pieces, as DrawFrameHi
 	lda.b sprclock
 	sta.w sprslottime,x
 	sta.w sprslottime+2,x			; stamp all four slot times
-	sta.w sprslottime+$20,x
-	sta.w sprslottime+$22,x
+	sta.w sprslottime+(16*2),x
+	sta.w sprslottime+(16*2)+2,x
 	lda.b sprcount
 	asl a
 	asl a

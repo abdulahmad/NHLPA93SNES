@@ -17,5 +17,5 @@ ClearTeamStats:						;Clear the team stats (but the goalie choice) and both pena
 	sta.w tmgoalie
 	lda.w #$FFFF					; both penalty box lists empty
 	sta.w tmboxlist					; empty
-	sta.w tmboxlist+$1A				; second list
+	sta.w tmboxlist+maxros			; second list
 	jml.l setteams					; set up the teams

@@ -44,7 +44,7 @@ DrawTeamBlocks:						;Draw team d1's name block at printx / printy
 	adc.w scorechars
 	adc.w printfontset
 	ora.w printa
-	sta.l textmap+$2E,x				; second row: one text row down
+	sta.l textmap+(23*2),x			; second row: one text row down
 	iny
 	iny
 	inx

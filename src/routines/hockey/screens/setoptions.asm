@@ -85,7 +85,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	ldx.w #$0000
 .rinkpal:							; load the rink palette
 	lda.l RinkPalette,x
-	sta.l palbuffer+$100,x
+	sta.l palbuffer+(8*$20),x
 	sta.w CGDATA
 	inx
 	cpx.w #$0100
@@ -168,7 +168,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	jsl.l InitSortObjects			; sort the objects
 	lda.w #$0028					; roster player X start
 	sta.w OldXpos
-	sta.w OldXpos+$C
+	sta.w rosxoff+(6*2)
 	lda.w #.text					; option text
 	sta.b a1
 	lda.w #.text>>16

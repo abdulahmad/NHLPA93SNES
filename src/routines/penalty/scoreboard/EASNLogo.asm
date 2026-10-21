@@ -19,7 +19,7 @@ EASNLogo:							;Draw the EASN logo on the rink unless a power play is on
 	adc.w charofs					; plus the character offset
 	ldx.b tmp1
 	ora.w #$2000					; palette
-	sta.l textmap+$642,x			; into the text map
+	sta.l textmap+(25*$40)+(1*2),x	; into the text map
 	inc.b tmp0						; next source
 	inc.b tmp0
 	inc.b tmp1						; next text

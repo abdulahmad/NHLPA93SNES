@@ -468,6 +468,7 @@ Zfrac		=	$09BF				; fraction of Zpos
 attribute	=	$09DF				; frame attribute bits (attrxflip, attryflip)
 oldframe	=	$09FF				; last frame
 OldXpos		=	$0A1F
+rosxoff		=	OldXpos				; roster screen: sprite x offset from Xpos (slides -40..+40)
 OldXfrac	=	$0A3F				; OldXpos low word
 OldYpos		=	$0A5F
 OldYfrac	=	$0A7F
@@ -535,6 +536,7 @@ pfnc		=	$11FF				; nonzero: no collision mode. pflags bit pfnc
 Ylist		=	$121F				; y of each sort object
 OOlistpos	=	$123F				; position of each object in OOlist
 OOlist		=	$125F				; 16 bytes: object order list, bottom of the screen last
+Sortobjs	=	16					; number of sorted graphics objects
 pspeed		=	$126F				; |Xvel|+|Yvel| after a burst (SNES only, read by the hit code)
 
 ; Game state
@@ -729,6 +731,8 @@ BOOTSAMPLESIZE	=	$5271			; bytes of Extracted/Sound/bootsamples.brr
 GAMESAMPLESIZE	=	$B814			; bytes of Extracted/Sound/gamesamples.brr
 replaysize		=	$71				; bytes per replay frame record
 puckobj			=	$1C				; object index of the puck
+netobj1		=	$18					; object index*2 of goal net 1 (y +268)
+netobj2		=	$1A					; object index*2 of goal net 2 (y -268)
 JMLOPCODE		=	$5C				; jml opcode (sfxretjml)
 DPCLEAREND		=	$164E			; Start clears DP/RAM $0000 up to here
 ; DMAList entry offsets

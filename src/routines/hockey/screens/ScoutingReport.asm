@@ -52,7 +52,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 .copymap:							; copy the scouting map to the back map
 	lda.l unpackbuf,x
 	sta.l backmap,x
-	sta.l backmap+$400,x
+	sta.l backmap+(16*$40)+(0*2),x
 	dex
 	dex
 	bpl .copymap
@@ -160,7 +160,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	asl a
 	tax
 	pla
-	sta.l backmap+$44,x				; store in the back map
+	sta.l backmap+(1*$40)+(2*2),x	; store in the back map
 	inc.b tmp0
 	lda.b tmp0
 	cmp.w #$0008					; 8 columns
