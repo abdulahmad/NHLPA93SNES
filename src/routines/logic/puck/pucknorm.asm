@@ -9,14 +9,14 @@ pucknorm:							;Assignment: the puck most of the time. Follows the carrier, wat
 	lda.w #$0078
 	sta.w temp2b+puckobj
 .nna:								; puck crossing times count down
-	lda.w puckcross+2				; puckcross times count down
+	lda.w puckcross+pcframes		; puckcross times count down
 	sec
 	sbc.b d7
-	sta.w puckcross+2
-	lda.w puckcross+6
+	sta.w puckcross+pcframes
+	lda.w puckcross+pcsize+pcframes
 	sec
 	sbc.b d7
-	sta.w puckcross+6
+	sta.w puckcross+pcsize+pcframes
 	lda.w temp1+puckobj				; every 5 frames: findpc
 	sec
 	sbc.b d7

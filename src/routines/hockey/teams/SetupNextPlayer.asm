@@ -3,7 +3,7 @@ SetupNextPlayer:					;The next player of team a2 to show in the team block, with
 	jsl.l setplayercolors_palbuffer	; set the player palette for the block
 	ldy.b a2
 	lda.w tmflags,y					; clear the mid-animation flag
-	and.w #~tmfmid&$FFFF
+	and.w #~tmfslide&$FFFF
 	sta.w tmflags,y
 	lda.w tmsort,y					; sort slot of this team
 	sta.b a3

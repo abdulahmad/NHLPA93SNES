@@ -17,7 +17,7 @@ checkfo:							;Draw the face off sprites
 	clc								; plus the base frame
 	adc.w #SPFfaceoff-1				; -1 for 1-based
 	sta.b sprframe
-	lda.w fofdata2+2,x				; flip bits
+	lda.w fofdata2+foattr,x			; flip bits
 	and.w #$0800
 	sta.b sprhflip					; horizontal flip
 	cpx.w #$0004					; third entry (the ref): sprflag

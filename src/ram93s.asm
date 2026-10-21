@@ -789,10 +789,27 @@ attrxflip	=	$0800				; x flip
 attryflip	=	$1000				; y flip
 ; tmflags bits
 tmfmid		=	$0002				; nearest player takes the spot between puck and own goal
+tmfslide	=	tmfmid				; team slides out (SlideOutRosterPlayer); 93G shares the bit the same way
 tmflcc		=	$0001				; line change box needs redrawing
 tmflast		=	$0004				; next touch overwrites the last touch only
 tmflcm		=	$0008				; team in line change mode
 tmfoside	=	$0010				; team offsides
+; record fields (names shared with 93G, 94G and 94S)
+sstime		=	0					; ScoreSum entry (6 bytes per goal): word period / time
+ssflags		=	2					; byte 2 + skater difference (goal type); bit 7 = away team scored
+ssscorer	=	3					; byte scorer
+ssassist1	=	4					; byte first assist (negative none)
+ssassist2	=	5					; byte second assist (negative none)
+sssize		=	6
+pbpen		=	0					; PenBuf entry (2 bytes): penalty number (0 = free)
+pbscnum		=	1					; SCnum of the player
+pcx			=	0					; puckcross entry (4 bytes; entry 0 top, 1 bottom): word x
+pcframes	=	2					; word frames
+pcsize		=	4
+foframe		=	0					; fofdata2, fofdata: 4 bytes per big faceoff sprite (centers, ref): frame
+foattr		=	2					; word attribute (bit 11 x flip)
+fosize		=	4
+plpos		=	6					; PlList: 6 wanted roster players, then their positions
 ; joypad
 cbut	=	$0080					; shoot / check button in d2
 ; rink

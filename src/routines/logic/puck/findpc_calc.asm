@@ -27,7 +27,7 @@ findpc_calc:						;findpc for one goal line
 	bpl .time
 	jmp.w .nocross
 .time:								; frames until crossing
-	sta.w puckcross+2,y				; frames until crossing
+	sta.w puckcross+pcframes,y		; frames until crossing
 	lda.w puckvx
 	sta.b mula
 	lda.b d0
@@ -86,6 +86,6 @@ findpc_calc:						;findpc for one goal line
 	bra .rtl
 .nocross:							; no crossing: mark it with -1
 	lda.w #$FFFF
-	sta.w puckcross+2,y
+	sta.w puckcross+pcframes,y
 .rtl:								; return
 	rtl
