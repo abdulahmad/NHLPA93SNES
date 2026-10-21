@@ -7,9 +7,9 @@ updatereplay:						;Save this frame into the replay buffer
 	lda.w sflags					; state flags
 	bit.w #sf2drec					; sf2drec: keep overwriting the same frame
 	bne .frame
-	lda.w ReplayBufferPtr			; next record (113 bytes)
+	lda.w ReplayBufferPtr			; next record
 	clc								; step the pointer by one record
-	adc.w #$0071
+	adc.w #replaysize
 	sta.w ReplayBufferPtr
 	bcc .wrap
 	inc.w ReplayBufferPtr+2
