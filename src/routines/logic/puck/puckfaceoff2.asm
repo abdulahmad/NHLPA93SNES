@@ -26,11 +26,11 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	cpx.w #$001C
 	bne .savea
 	ldx.b xsave						; restore X
-	lda.b crowdlevel				; limit crowd level
+	lda.b Crowdlevel				; limit crowd level
 	cmp.w #$0258
 	bcc .ntm
 	lda.w #$0258
-	sta.b crowdlevel
+	sta.b Crowdlevel
 .ntm:								; stop clock
 	lda.w #sfpz						;no pause, no lower lc box, no gloves, no icing, no refs, no goalie moves,
 									;puck invisible and loose

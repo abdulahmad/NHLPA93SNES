@@ -17,10 +17,10 @@ Goal:								;The puck is in the goal: add the score, sound the siren, log it, u
 	lda.b vcount
 	sta.w sfxmutetime
 	jsl.l freezewindow
-	lda.b crowdlevel				; crowd +500
+	lda.b Crowdlevel				; crowd +500
 	clc
 	adc.w #$01F4
-	sta.b crowdlevel
+	sta.b Crowdlevel
 	stz.b a2						; a2 = scoring team (0/2), a1 = other
 	lda.w #$0002
 	sta.b a1

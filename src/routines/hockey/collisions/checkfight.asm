@@ -108,10 +108,10 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	dey
 	dey
 	bpl .clr
-	lda.b crowdlevel				; crowd +1000; no pass/shot dir; puckc = X; yc1 = middle; sfslock
+	lda.b Crowdlevel				; crowd +1000; no pass/shot dir; puckc = X; yc1 = middle; sfslock
 	clc
 	adc.w #$03E8					; plus 1000
-	sta.b crowdlevel
+	sta.b Crowdlevel
 	lda.w #sfspdir|sfssdir			; no pass or shot direction
 	trb.w sflags
 	ldy.b a2						; a2

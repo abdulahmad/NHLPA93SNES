@@ -234,7 +234,7 @@ org `$82B86C` when `pc()` is below it.
 - `$82FD17` routines/video/sprites/addframe_hi.asm
 - `$82FD54` routines/logic/skating/noturn.asm
 - `$82FD64` routines/video/text/marktexthi.asm
-- `$82FD6B` routines/stats/ClearTeamStats.asm
+- `$82FD6B` routines/stats/clearTeamStats.asm
 - `$82FD95` routines/penalty/penalties/ClearPenaltyMessage.asm
 - `$82FDB5` routines/hockey/screens/startpause2.asm
 - `$82FDBF` routines/print/printbigz.asm

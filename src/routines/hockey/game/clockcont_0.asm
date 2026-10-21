@@ -83,17 +83,17 @@ clockcont_0:						;End of a period: in the third period the winners celebrate (w
 	bpl .celeb
 .gameover:							; clear the penalties, crowd
 	jsl.l ClearPenaltyBuffer		; clear the penalties
-	lda.b crowdlevel				; crowd
+	lda.b Crowdlevel				; crowd
 	clc
 	adc.w #$03E8					; +1000
-	sta.b crowdlevel
+	sta.b Crowdlevel
 	lda.w #$0040					; clock stopped
 	sta.w gmclock
 	tsb.w gmode						; game mode
 	lda.w tmscore					; scores
 	cmp.w tmscore+2
 	bmi .awaywon					; away won
-	stz.b crowdlevel				; crowd quiet
+	stz.b Crowdlevel				; crowd quiet
 	lda.w #$0003					; cheer 3 times
 	sta.w cheercnt
 	lda.b vcount					; frame

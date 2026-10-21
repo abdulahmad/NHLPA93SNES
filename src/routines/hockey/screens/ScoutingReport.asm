@@ -1,6 +1,6 @@
 ScoutingReport:						;The scouting report screen: both teams, their ratings and the scrolling
 									;commentary until Start
-	jsl.l ClearTeamStats			; reset the team stats
+	jsl.l clearTeamStats			; reset the team stats
 	jsl.l forceblack				; blank the screen
 	jsl.l InitPPU					; set up the PPU
 	sep #$20						; 8-bit A

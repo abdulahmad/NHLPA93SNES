@@ -75,10 +75,10 @@ wallcollb:							;Object X hits a wall: the puck may go over the glass and out o
 	lda.w #SFXbglass				; over the glass sound
 	pha
 	jsl.l sfx
-	lda.b crowdlevel				; crowd +600
+	lda.b Crowdlevel				; crowd +600
 	clc
 	adc.w #$0258
-	sta.b crowdlevel
+	sta.b Crowdlevel
 .0:									;puck out of play
 	lda.w #sfslock					; sfslock; puck pfnc
 	tsb.w sflags

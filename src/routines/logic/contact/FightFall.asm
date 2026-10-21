@@ -34,10 +34,10 @@ FightFall:							;Player X lost the fight: the other player gets a fighting pena
 	sta.w Pencntdwn
 	lda.w #$FFFF					; temp3(a0) = -1: fight over for him
 	sta.w temp3,y
-	lda.b crowdlevel
+	lda.b Crowdlevel
 	clc
 	adc.w #$0258					; +600
-	sta.b crowdlevel
+	sta.b Crowdlevel
 	lda.w #$003C
 	sta.b d0
 	jsl.l randomd0					; random number 0 to d0-1

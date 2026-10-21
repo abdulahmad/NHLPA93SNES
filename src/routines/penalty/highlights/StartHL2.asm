@@ -60,7 +60,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	cpx.w #$0004
 	bne .pushg
 	ldx.b xsave						; restore X
-	jsl.l ClearTeamStats
+	jsl.l clearTeamStats
 	jsl.l restoreteams				; restore the teams
 	stz.b a2
 	jsl.l reenergizeteam

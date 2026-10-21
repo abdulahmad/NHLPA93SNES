@@ -140,10 +140,10 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	ldy.b a3
 	stx.b a3
 	sty.b a2
-	lda.b crowdlevel				; crowd +300
+	lda.b Crowdlevel				; crowd +300
 	clc
 	adc.w #$012C					; plus 300
-	sta.b crowdlevel
+	sta.b Crowdlevel
 	lda.w puckc						; a2 did not have the puck: check sound only
 	sta.b d0
 	bpl .pc							; a2 had the puck?

@@ -33,10 +33,10 @@ AddPenalty2:						;Call penalty d0 on player X without the checks; used for forc
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .nosnd
 .snd:								;goal and up: crowd and a sound
-	lda.b crowdlevel				; crowd +200
+	lda.b Crowdlevel				; crowd +200
 	clc
 	adc.w #$00C8
-	sta.b crowdlevel
+	sta.b Crowdlevel
 	lda.w #SFXcrowdboo				; home penalized: boo; visitors: cheer
 	pha
 	lda.w pfteam,x

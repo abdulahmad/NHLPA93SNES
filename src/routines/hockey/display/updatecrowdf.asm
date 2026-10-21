@@ -1,5 +1,5 @@
 updatecrowdf:						;Every game loop: let the crowd level fade and step the crowd animation
-	lda.b crowdlevel
+	lda.b Crowdlevel
 	sec
 	sbc.w #$015E					; 350
 	bmi .neg
@@ -8,23 +8,23 @@ updatecrowdf:						;Every game loop: let the crowd level fade and step the crowd
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .dec
 .loud:								; a loud crowd calms down faster
-	dec.b crowdlevel				; loud crowd calms down faster
-	dec.b crowdlevel
-	dec.b crowdlevel
+	dec.b Crowdlevel				; loud crowd calms down faster
+	dec.b Crowdlevel
+	dec.b Crowdlevel
 .dec:								; decay the crowd level
-	lda.b crowdlevel
+	lda.b Crowdlevel
 	sec
 	sbc.b d7
-	sta.b crowdlevel
+	sta.b Crowdlevel
 	bpl .0
-	stz.b crowdlevel
+	stz.b Crowdlevel
 .0:									; decay the crowd counter
 	lda.b crowdcnt
 	sec
 	sbc.b d7
 	sta.b crowdcnt
 	bpl .cf
-	lda.b crowdlevel
+	lda.b Crowdlevel
 	lsr a
 	sta.b d0
 	cmp.w #$0080
@@ -67,7 +67,7 @@ updatecrowdf:						;Every game loop: let the crowd level fade and step the crowd
 	sep #$20						; 8-bit A
 	stz.b crowdframe
 	rep #$30						; 16-bit registers
-	lda.b crowdlevel
+	lda.b Crowdlevel
 	cmp.w #$0119					; 280
 	bcc .rtl
 	lda.w seed

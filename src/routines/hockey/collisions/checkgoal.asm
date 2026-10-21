@@ -256,10 +256,10 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	lda.w #SFXpuckpost				; post sound
 	pha
 	jsl.l sfx						; play it
-	lda.b crowdlevel
+	lda.b Crowdlevel
 	clc								; crowd level plus 300
 	adc.w #$012C
-	sta.b crowdlevel
+	sta.b Crowdlevel
 	lda.w #$1000					; random Yvel away from the goal, Xvel/Zvel +-$1000
 	jsl.l randoma					; random number 0 to A-1
 	sta.b d0

@@ -248,8 +248,8 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	lda.w #$0096
 	sta.w pf2aip,x
 	clc
-	adc.b crowdlevel
-	sta.b crowdlevel
+	adc.b Crowdlevel
+	sta.b Crowdlevel
 .rtl:								; return
 	rtl
 .de1:								;a0 = puckcross entry of my goal, d3 = goal line
@@ -559,10 +559,10 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	lda.b [a1],y
 	sta.b d1
 	jsl.l SetSPA					; start animation d1
-	lda.b crowdlevel				; crowd +150
+	lda.b Crowdlevel				; crowd +150
 	clc
 	adc.w #$0096
-	sta.b crowdlevel
+	sta.b Crowdlevel
 .de8:								; target x = crossing x, or hug the post when the puck is wide
 	lda.b [a0]
 	sta.b d0

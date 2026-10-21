@@ -1,4 +1,4 @@
-ClearTeamStats:						;Clear the team stats (but the goalie choice) and both penalty box lists,
+clearTeamStats:						;Clear the team stats (but the goalie choice) and both penalty box lists,
 									;then set up the teams
 	lda.w tmgoalie					; keep tmgoalie (2 words)
 	pha
