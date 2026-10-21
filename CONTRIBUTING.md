@@ -60,8 +60,9 @@ A comment-only or rename-only change must not change a single byte. Never commit
   `92 <name>` and `from 92 <name>` equivalents above and value differences such as `(92 $58)`.
 - No raw addresses or offsets in comments: no RAM or ROM addresses and no structure offsets. Write the name
   instead (`tmgoalie`, not `$13F2`; `unpackbuf`, not `$7F0000`) or say what the value means, and leave out an
-  address that only repeats the operand. The only numbers allowed are the address range on an include line and a
-  value difference such as `(92 $58)` on the line of the name it belongs to.
+  address that only repeats the operand. The only numbers allowed are the address range on an include line or on
+  a section header of the RAM map, and a value difference such as `(92 $58)` on the line of the name it belongs
+  to.
 
 ## 5. Comment layout
 
