@@ -61,7 +61,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	cpx.w #$0004
 	bne .savea
 	ldx.b xsave						; restore X
-	ldy.w #$0008					; team data + word at +8: bonus bytes
+	ldy.w #ScoutReport				; scouting report (bonus) bytes
 	lda.b [a0],y
 	clc
 	adc.b a0
@@ -169,7 +169,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	dex
 	bpl .resta
 	ldx.b xsave						; restore X
-	ldy.w #$0000					; a0 = roster records
+	ldy.w #pldnum					; a0 = roster records
 	lda.b [a0],y
 	clc
 	adc.b a0
@@ -189,7 +189,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	lda.b [a0]						; byte 0: rostnum
 	and.w #$00FF
 	sta.w rostnum,x
-	ldy.w #$0001					; byte 1: weight (high nibble*8), legstr
+	ldy.w #pldweight				; byte 1: weight (high nibble*8), legstr
 	lda.b [a0],y
 	and.w #$00F0					; weight in the high nibble
 	lsr a

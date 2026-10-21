@@ -806,6 +806,16 @@ pbscnum		=	1					; SCnum of the player
 pcx			=	0					; puckcross entry (4 bytes; entry 0 top, 1 bottom): word x
 pcframes	=	2					; word frames
 pcsize		=	4
+pldnum		=	0					; .pld player ratings, 8 bytes after the name (92 setplayer field names):
+									; jersey number -> rostnum (setplayer then steps y through the rest)
+pldweight	=	1					; high nibble weight, low nibble leg power legstr
+pldlegspd	=	2					; high nibble speed legspd, low nibble offense aioff
+pldaidef	=	3					; high nibble defense aidef, low nibble shot power shotspd
+pldcheck	=	4					; high nibble checking, bit 0 handed, bits 1-3 fighting
+pldstick	=	5					; high nibble stickhandling stickhand, low nibble shot accuracy
+pldendur	=	6					; high nibble endurance, low nibble shoot / pass odds spodds
+pldpass		=	7					; high nibble passing passacc, low nibble aggression aggress
+pldsize		=	8
 foframe		=	0					; fofdata2, fofdata: 4 bytes per big faceoff sprite (centers, ref): frame
 foattr		=	2					; word attribute (bit 11 x flip)
 fosize		=	4
