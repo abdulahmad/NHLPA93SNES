@@ -261,7 +261,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	sta.b d3
 	lda.w pfgoal,x
 	beq .de2
-	lda.w #puckcross+4
+	lda.w #puckcross+pcsize
 	sta.b a0
 	lda.w #$FEFC
 	sta.b d3

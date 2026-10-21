@@ -20,7 +20,7 @@ assfaceoffpl:						;Assignment: the players taking the face off
 	sta.b a0+2
 	lda.w pfteam,x					; team
 	beq .0							; team 0
-	lda.w #fofdata2+4				; visitors
+	lda.w #fofdata2+fosize			; visitors
 	sta.b a0
 .0:									; d0 = SPAnum/4 + 1, +3 for right handed: frame code
 	lda.w SPAnum,x					; frame = SPAnum/4 + 1, +3 for a righty

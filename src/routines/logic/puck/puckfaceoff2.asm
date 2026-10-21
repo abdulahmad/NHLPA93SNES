@@ -41,8 +41,8 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	stz.w iflags
 	lda.w #$FFFF					; -1 marks the ref count, crossings, puck carrier and receiver as none
 	sta.w RefCnt
-	sta.w puckcross+2
-	sta.w puckcross+6
+	sta.w puckcross+pcframes
+	sta.w puckcross+pcsize+pcframes
 	sta.w Zpos+puckobj
 	sta.w puckc
 	sta.w passReceiverPlayerNum
@@ -414,21 +414,21 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	lda.w #$0001					; fofdata2: home pull frame 1, away 4, ref 7
 	sta.w fofdata2
 	lda.w #$8000
-	sta.w fofdata2+2
-	sta.w fofdata+2
+	sta.w fofdata2+foattr
+	sta.w fofdata+foattr
 	lda.w #$0004
-	sta.w fofdata2+4
+	sta.w fofdata2+fosize
 	lda.w #$A800
-	sta.w fofdata2+6
+	sta.w fofdata2+fosize+foattr
 	lda.w #$0007
 	sta.w fofdata
 	lda.w gmode
 	bit.w #gmdir					; gmdir: flip the attributes
 	bne .nfl
 	lda.w #$8800
-	sta.w fofdata2+2
+	sta.w fofdata2+foattr
 	lda.w #$A000
-	sta.w fofdata2+6
+	sta.w fofdata2+fosize+foattr
 .nfl:								; no pull directions yet
 	lda.w #$FFFF					; fodir1/fodir2 = none
 	sta.w fodir1

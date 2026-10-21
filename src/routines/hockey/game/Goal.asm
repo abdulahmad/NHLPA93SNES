@@ -147,8 +147,8 @@ Goal:								;The puck is in the goal: add the score, sound the siren, log it, u
 	sta.w puckvz
 	stz.w Zpos+puckobj
 	lda.w #$FFFF					; puckcross never; pfnc
-	sta.w puckcross+2
-	sta.w puckcross+6
+	sta.w puckcross+pcframes
+	sta.w puckcross+pcsize+pcframes
 	sta.w pfnc+puckobj
 	lda.w #pnothing
 	sta.b d0

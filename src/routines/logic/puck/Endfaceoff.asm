@@ -33,7 +33,7 @@ Endfaceoff:							;Drop the puck: pick the face off winner and send the puck off
 	clc
 	adc.b d2
 	sta.b d2
-	ldx.w fofdata2+4
+	ldx.w fofdata2+fosize
 	lda.l .ftab-1,x
 	and.w #$00FF
 	bit.w #$0080
@@ -51,7 +51,7 @@ Endfaceoff:							;Drop the puck: pick the face off winner and send the puck off
 	sta.b a1
 .p1won:								; player 1 won the faceoff
 	ldx.b a1
-	lda.w fofdata2+2,x
+	lda.w fofdata2+foattr,x
 	bit.w #$0800					; winner faces down: fodir2, -$800
 	beq .pos
 	lda.w fodir2

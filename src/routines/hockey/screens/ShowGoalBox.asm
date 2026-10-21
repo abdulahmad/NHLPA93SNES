@@ -36,7 +36,7 @@ ShowGoalBox:						;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the
 	sta.b d0
 	lda.w #$0005					; box height 5
 	sta.b d1
-	ldy.w #$0004					; assist byte
+	ldy.w #ssassist1				; assist byte
 	lda.b [a4],y
 	bit.w #$0080					; no assist: box one row smaller
 	bne .frame
@@ -48,7 +48,7 @@ ShowGoalBox:						;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the
 .frame:								; draw the box frame
 	jsl.l Framer					; draw the frame d0 x d1
 	stz.b a2
-	ldy.w #$0002
+	ldy.w #ssflags
 	lda.b [a4],y					; home or visitor flag in the entry
 	bit.w #$0080
 	beq .home
@@ -59,7 +59,7 @@ ShowGoalBox:						;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the
 	sta.b a1
 	lda.w #GoalBoxText>>16
 	sta.b a1+2
-	ldy.w #$0003					; scorer number
+	ldy.w #ssscorer					; scorer number
 	lda.b [a4],y
 	and.w #$00FF
 	ldy.b a2
@@ -78,7 +78,7 @@ ShowGoalBox:						;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the
 	sta.b a1
 .goal:								; print the goal box
 	jsl.l printbig
-	ldy.w #$0003
+	ldy.w #ssscorer
 	lda.b [a4],y
 	and.w #$00FF
 	sta.b d0

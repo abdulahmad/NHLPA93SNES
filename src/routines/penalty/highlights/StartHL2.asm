@@ -120,8 +120,8 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	stz.w iflags
 	lda.w #$FFFF					; RefCnt, puckcross times -1
 	sta.w RefCnt
-	sta.w puckcross+2
-	sta.w puckcross+6
+	sta.w puckcross+pcframes
+	sta.w puckcross+pcsize+pcframes
 	jsl.l setupice
 	jsl.l ClrHor					; back to the vertical rink
 	stz.w Vpos
