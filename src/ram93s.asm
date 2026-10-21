@@ -522,8 +522,8 @@ rostnum		=	$103F
 stickhand	=	$107F
 endurance	=	$109F				; endurance (goalies: stick save right)
 GGSleft		=	$10BF				; byte $73: goalie glove save left
-fightagg	=	$10DF				; fighting aggression
-aggress		=	$10FF				; aggress ($75)
+fighting	=	$10DF				; fighting rating (fight strength and fight odds; 93 $74)
+checking	=	$10FF				; checking rating (check odds; 93 $75)
 handed		=	$111F				; nonzero: right handed (0 = lefty for the faceoff frames)
 pfgoal		=	$113F				; nonzero: shoots at the top goal. pflags bit pfgoal
 pf2fight	=	$115F				; nonzero: fighting. pflags2 bit pf2fight

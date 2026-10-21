@@ -44,7 +44,7 @@ FightFall:							;Player X lost the fight: the other player gets a fighting pena
 	ldy.b a0
 	lda.b d0
 	sec
-	sbc.w aggress,y					; random 60 vs the winner aggress: injury?
+	sbc.w checking,y				; random 60 vs the winner checking: injury?
 	beq .inj
 	bmi .neg
 	bvs .inj

@@ -242,8 +242,8 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	lda.w attribute,x				; clear the x flip
 	and.w #~attrxflip&$FFFF
 	sta.w attribute,x
-	iny								; byte 4: aggress, handed, fightagg
-	lda.b [a0],y					; aggressiveness in the high nibble
+	iny								; byte 4: checking, handed, fighting
+	lda.b [a0],y					; checking rating in the high nibble
 	lsr a
 	lsr a
 	lsr a
@@ -252,7 +252,7 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	clc
 	adc.b ThirdPBonus
 	jsl.l ClampNibble
-	sta.w aggress,x
+	sta.w checking,x
 	lda.b [a0],y
 	and.w #$0001					; bit 0 set: left handed
 	sta.w handed,x
@@ -260,10 +260,10 @@ setplayer:							;Bring roster player d3 onto the ice as object X and set his st
 	lda.w attribute,x
 	ora.w #attrxflip
 	sta.w attribute,x
-.ha:								; fight aggression from the player data
-	lda.b [a0],y					; fight aggression bits
+.ha:								; fighting rating from the player data
+	lda.b [a0],y					; fighting rating bits
 	and.w #$000E
-	sta.w fightagg,x
+	sta.w fighting,x
 	iny								; byte 5: stickhand, shotacc
 	lda.b [a0],y					; stick handling high nibble
 	lsr a

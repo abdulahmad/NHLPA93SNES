@@ -1,15 +1,15 @@
 SetInst:							;Start a fight between X and a2 when both are aggressive enough; if X was
 									;shoulder checking, an
 		;   instigator penalty goes to one of his teammates
-	lda.w fightagg,x
-	cmp.b d0						; aggression threshold in d0
+	lda.w fighting,x
+	cmp.b d0						; fighting rating threshold in d0
 	bcc checkfight_rtl
-	ldy.b a2						; tmp0 = fightagg of a2 >= 2
-	lda.w fightagg,y				; fightagg of the opponent
+	ldy.b a2						; tmp0 = fighting of a2 >= 2
+	lda.w fighting,y				; fighting of the opponent
 	sta.b tmp0
 	sec
 	sbc.w #$0002
-	bmi .neg						; both need fightagg >= 2
+	bmi .neg						; both need fighting >= 2
 	bvc .r2
 .ex1:								; far branch to checkfight_rtl
 	jmp.w checkfight_rtl
@@ -39,7 +39,7 @@ SetInst:							;Start a fight between X and a2 when both are aggressive enough; 
 	sta.b d1
 	ldy.b a2
 	sec
-	sbc.b tmp0						; compare with the first player's aggression
+	sbc.b tmp0						; compare with the first player's fighting rating
 	beq .set
 	bmi .neg1
 	bvs .set

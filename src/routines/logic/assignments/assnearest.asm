@@ -238,10 +238,10 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 	inc.b d1
 	inc.b d1
 	inc.b d1
-.x:									; random range ($14 - aggress) << d1
-	lda.w #$0014					; ($14-aggress) << d1
+.x:									; random range ($14 - checking) << d1
+	lda.w #$0014					; ($14-checking) << d1
 	sec
-	sbc.w aggress,x					; minus aggression
+	sbc.w checking,x				; minus the checking rating
 	sta.b d0
 	lda.b d1						; shift count
 	sta.b tmp0

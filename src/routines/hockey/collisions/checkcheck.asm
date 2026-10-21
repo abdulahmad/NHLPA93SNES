@@ -136,10 +136,10 @@ checkcheck:							;Two players are in contact: check what happens each way
 	sta.b d0
 	beq .down
 	bmi .down
-	jsl.l randomd0					; random < aggress: down
+	jsl.l randomd0					; random < checking: down
 	lda.b d0
 	sec
-	sbc.w aggress,x
+	sbc.w checking,x
 	beq .down
 	bmi .neg1
 	bvc .pen

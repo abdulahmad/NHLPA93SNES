@@ -11,14 +11,14 @@ Bcheck:								;Player a2 body checks a3: a3 falls if he is in front, and a char
 .fight:								; fighting? then the penalties option
 	lda.w pf2fight,x				; fighting?
 	bne .rtl
-	lda.w OptPen					; penalties off: a2 needs randomd0($10 + aggression - a3 legstr) >= 12
+	lda.w OptPen					; penalties off: a2 needs randomd0($10 + checking - a3 legstr) >= 12
 	bne .dir
 	lda.w pflags,y
 	bit.w #pfjoycon
 	beq .dir
 	lda.w #16
 	clc
-	adc.w aggress,y
+	adc.w checking,y
 	sec
 	sbc.w legstr,x
 	jsl.l randoma					; random number 0 to A-1
