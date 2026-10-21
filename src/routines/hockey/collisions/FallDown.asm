@@ -199,7 +199,7 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	lda.w #$0004					; injury countdown
 	sta.w InjCntDown
 	lda.w #PenNoText				;PenNoText if the hitter is a goalie or penalties are off, else
-	;PenRoughing2
+									;PenRoughing2
 									;and Stop4Pen
 	sta.b d0
 	lda.w position,x				; hitter a goalie?
