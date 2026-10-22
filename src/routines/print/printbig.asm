@@ -10,7 +10,7 @@ printbig:							;print with the big font (2 by 2 tiles per character)
 	cpx.w #$000C
 	bne .save
 	ldx.b xsave						; restore X
-	ldy.w #$0002					; y = 2: after the length word
+	ldy.w #strtext					; y = 2: after the length word
 .top:								; end of the string?
 	tya								; end of the string?
 	cmp.b [a1]

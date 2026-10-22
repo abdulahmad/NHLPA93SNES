@@ -6,7 +6,7 @@ print:								;Print string [a1] into the text map at printx / printy. The strin
 .hang:								;string longer than 255: hang
 	bcs .hang
 	phx								; keep X
-	ldy.w #$0002					; Y = 2: skip the length word
+	ldy.w #strtext					; Y = 2: skip the length word
 .pos:								; X = (printy*32+printx)*2 + printmap
 	lda.w printy					; X = (printy*32+printx)*2 + printm
 	asl a
