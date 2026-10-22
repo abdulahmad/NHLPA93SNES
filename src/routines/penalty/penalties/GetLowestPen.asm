@@ -1,5 +1,5 @@
-GetLowestPen:						;d0 = the power play time left, from the penalty box times. a2 = team on
-									;the power play, a3 = the shorthanded team
+GetLowestPen:						;d0 = the power play time left, from the penalty box times. a2 = the
+									;shorthanded team, a3 = the team on the power play
 	stz.b d0						; d0 = 0
 	stz.b d3						; d3 = 0
 	lda.b a2						; team
@@ -8,7 +8,7 @@ GetLowestPen:						;d0 = the power play time left, from the penalty box times. a
 .a:									; a0 = list offset
 	sta.b a0						; a0 = list offset
 .top:								; add up the steps between successive non-coincident penalties
-	ldy.b a0						; penalty box list of the power play team ($80 ends)
+	ldy.b a0						; penalty box list of the shorthanded team ($80 ends)
 	inc.b a0						; next entry
 	lda.w tmboxlist,y
 	and.w #$00FF					; player
@@ -37,9 +37,9 @@ GetLowestPen:						;d0 = the power play time left, from the penalty box times. a
 	sta.b d3						; remember it
 	bra .top
 .t2:								; 6 on ice, done
-	ldy.b a3						; shorthanded team
-	lda.w tmap,y					; shorthanded team players
-	cmp.w #6						; all six: no power play
+	ldy.b a3						; power play team
+	lda.w tmap,y					; power play team players
+	cmp.w #6						; all six: done
 	beq .rtl
 	lda.b d0						; total
 	sec
