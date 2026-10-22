@@ -1,7 +1,7 @@
 Framer:								;Draw a frame and fill it. d0 / d1 = width / height, printx / printy /
 									;printm = top left corner
 
-		;   a d0 x d1 box of FramerMap pieces at printx/printy
+									;a d0 x d1 box of FramerMap pieces at printx/printy
 	phx								; keep X
 	lda.w printx					; print x
 	sta.b tmp0						; left edge

@@ -174,7 +174,7 @@ incsrc "../routines/penalty/penalties/SetPA.asm"
 RonBarrMap:							;the Ron Barr picture of the scouting report, packed for
 									;DecompressBytecode (RonBarr.map.sjim, 1590 bytes): unpacked an 8 x 9
 									;map, 64 colors at
-		;   +$90, tiles at +$190 (loaded by the scouting report)
+									;+$90, tiles at +$190 (loaded by the scouting report)
 	incbin "../../Extracted/Graphics/RonBarr.map.sjim"
 
 incsrc "../routines/hockey/replay/adda43.asm"

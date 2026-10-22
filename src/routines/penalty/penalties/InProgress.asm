@@ -1,6 +1,6 @@
 InProgress:							;The referee's work after a whistle: send each penalized player to the
 									;box, update the scoreboard and stats,
-		;   then recount the players and go to the face off
+									;then recount the players and go to the face off
 	lda.w RefCnt					; animation in progress: exit
 	bmi .step
 	jmp.w .rtl

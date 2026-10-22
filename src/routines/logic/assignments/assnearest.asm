@@ -1,6 +1,7 @@
 assnearest:							;Assignment: the player nearest the puck who does not have it. Hands the
 									;job to a teammate who is nearer,
-		;   then skates to the puck or to a spot between the puck and his goal, looking for a check
+									;then skates to the puck or to a spot between the puck and his goal,
+									;looking for a check
 	lda.w pflags,x					; player flags
 	bit.w #pfna						; pfna
 	beq .nna

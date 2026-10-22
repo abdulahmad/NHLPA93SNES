@@ -1,6 +1,6 @@
 PickStartingGoalie:					;Pick team a2's starting goalie; computer teams in the later playoff
 									;rounds pick one at random by the
-		;   scouting report weights
+									;scouting report weights
 	stx.b xsave						; keep X
 	ldx.w #$0000					; save d0 and a0
 .save:								; save d0 and the words after it (2 words)

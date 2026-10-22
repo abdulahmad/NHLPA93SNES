@@ -1,6 +1,6 @@
 TeamRosterScreen:					;Team Roster screen: each line's players and one attribute column. The pad
 									;moves, Y switches team,
-		;   Start leaves
+									;Start leaves
 	jsl.l forceblack				; blank the screen
 	sep #$20						; 8-bit A
 	stz.w BG1HOFS					; scroll both backgrounds to 0

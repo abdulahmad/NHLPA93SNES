@@ -1,6 +1,6 @@
 setoptions:							;The options screen: up and down pick a line, left and right change it,
 									;Start goes on;
-		;   left idle, a demo game starts with random teams
+									;left idle, a demo game starts with random teams
 	lda.w #vb2_blank				; blank vblank handler while the screen is built
 	sta.b vbint
 	lda.w #HBdefault				; default horizontal-blank handler
@@ -294,7 +294,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 .IncItem:							;add d2 to option d7 (OptPlayMode + d7) within .pslim (d2 = 0: just limit
 									;it). Players is fixed to One outside Regular Season; Team 1 has $18
 									;choices in the playoffs; a new
-		;   mode or Team 1 in the playoffs restarts them (NewPO)
+									;mode or Team 1 in the playoffs restarts them (NewPO)
 	lda.w #OptPlayMode				; a2 = options table
 	sta.b a2
 	lda.w #$0000
@@ -473,7 +473,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 .nms:								;move to line d7 + d0 (0..$C), skipping the lines fixed in this mode
 									;(Players in the playoffs, lines 1-3 in Cont. Playoffs, Team 2 in the
 									;playoffs), then move the frame from line d3
-		;   to d7
+									;to d7
 	lda.b d7						; keep the old line
 	sta.b d3
 .nms0:								; move the cursor line

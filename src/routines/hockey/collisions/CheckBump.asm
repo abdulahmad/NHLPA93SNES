@@ -1,6 +1,6 @@
 CheckBump:							;Goalie X pushed against the net with the puck near: if he is moving fast,
 									;bump the net, stop him and
-		;   call a goalie holding penalty
+									;call a goalie holding penalty
 	stx.b xsave						; keep X
 	ldx.w #$0000
 .save:								; save d0 and the words after it (4 words)

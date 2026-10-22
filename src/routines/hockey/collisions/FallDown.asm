@@ -1,6 +1,6 @@
 FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the fall
 									;animation, maybe an injury with a penalty,
-		;   and the crowd
+									;and the crowd
 	ldy.b a2						; players only, not fighting
 	cpy.w #$0018
 	bcc .f1

@@ -1,6 +1,6 @@
 PenGoalStuff:						;After a goal on a power play, let the first player out of the box whose
 									;penalty is not coincidental.
-		;   a1 = team scored on, a2 = scoring team
+									;a1 = team scored on, a2 = scoring team
 	stx.b xsave						; keep X
 	ldx.w #$0000
 .save:								; save d0 and the words after it (6 words)

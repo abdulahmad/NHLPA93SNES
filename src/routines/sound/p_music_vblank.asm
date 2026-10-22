@@ -1,6 +1,6 @@
 p_music_vblank:						;Vblank sound handler: every other frame, send the next queued sound
 									;command to the sound driver.
-		;   Waits a little after a sample upload
+									;Waits a little after a sample upload
 	lda.w sndsettle					; wait after the sample upload
 	bne .settle
 	sep #$30						; 8-bit registers

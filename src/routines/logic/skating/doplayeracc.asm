@@ -1,6 +1,6 @@
 doplayeracc:						;Player X skates in direction d0 (or glides or stops), turning toward it
 									;and skating backwards
-		;   in his own zone
+									;in his own zone
 	lda.w position,x				; goalie?
 	bne .skater
 	jml.l goalieacc					; goalie is special
