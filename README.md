@@ -63,3 +63,7 @@ Other scripts:
 - [Adding a team](docs/adding-a-team.md)
 - [Source file map](docs/file-map.md): every file per bank in ROM order
 - [Handoff notes](docs/HANDOFF.md): alignment with 93G, current state
+
+## Credits
+
+Thanks to chaos, StaticEck, McMarkis, Drezz, smozoma and kingraph for their help with the disassembly.
