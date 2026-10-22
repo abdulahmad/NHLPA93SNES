@@ -1,6 +1,6 @@
 PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start leaves,
 									;else run the chosen item.
-		;   A = 0 to leave, 1 to redraw
+									;A = 0 to leave, 1 to redraw
 	stz.w psitem
 .gj:								; redraw the menu and read the pad
 	jsl.l Pmenu						; draw the pause menu

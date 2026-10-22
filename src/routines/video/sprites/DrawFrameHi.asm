@@ -1,6 +1,6 @@
 DrawFrameHi:						;Draw a sprite frame at sprx / spry: one sprite per piece, uploading the
 									;piece tiles to free video memory
-		;   when they are not cached
+									;when they are not cached
 	lda.b sprnodraw					; drawing disabled: done
 	beq .go
 	jml.l addframe_end

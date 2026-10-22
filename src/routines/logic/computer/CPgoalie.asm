@@ -1,6 +1,6 @@
 CPgoalie:							;Should the computer pull its goalie? In the last minute of the third
 									;period when behind by two and the play
-		;   is in its attacking half. d1 = puck or face off y
+									;is in its attacking half. d1 = puck or face off y
 	lda.w gsp						; 3rd period only
 	cmp.w #$0002
 	bne .rtl

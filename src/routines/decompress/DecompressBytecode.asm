@@ -1,6 +1,6 @@
 DecompressBytecode:					;Unpack a compressed stream to unpackbuf. Each control byte picks a
 									;literal copy, a run of zeros or of one byte,
-		;   or a copy from earlier output
+									;or a copy from earlier output
 	stz.b tmp1+1					; output pointer = unpackbuf
 	lda.w #unpackbuf>>16			; output bank
 	sta.b tmp1+3

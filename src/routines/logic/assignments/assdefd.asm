@@ -1,6 +1,6 @@
 assdefd:							;Assignment: a defenseman on defense stays between the furthest attacker
 									;and his goal, and joins the attack
-		;   when the puck is past the line
+									;when the puck is past the line
 	lda.w pfalock,x					; assignment locked?
 	beq .go
 	jmp.w .rtl

@@ -1,6 +1,7 @@
 puckfaceoff:						;Assignment: the start of play. Period end and overtime checks, a delayed
 									;penalty, the computer goalies
-		;   and line changes (a timed line change box for human teams), then the face off
+									;and line changes (a timed line change box for human teams), then the face
+									;off
 	lda.w pflags,x
 	bit.w #pfna
 	bne .first

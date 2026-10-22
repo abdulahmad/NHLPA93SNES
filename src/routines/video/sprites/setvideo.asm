@@ -1,6 +1,6 @@
 setvideo:							;Once per game frame, when vblank is idle: build the sprite table and the
 									;transfer list for the next vblank.
-		;   Not vblank code itself
+									;Not vblank code itself
 	lda.b vbint						; vblank busy with a list: skip this frame
 	cmp.w #vb2						; skip if vblank is not ready
 	beq .go							; the blank vblank handler

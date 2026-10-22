@@ -1,6 +1,6 @@
 UpdateScoutingDisplay:				;Every frame of the scouting report: print the next word of the commentary
 									;when its timer runs out,
-		;   filling in team and goalie names
+									;filling in team and goalie names
 	lda.w ScoutingReportTimer		; text finished ($7FFF)
 	sec
 	sbc.w #$1000					; $1000 and above: text finished

@@ -1,6 +1,6 @@
 SetupTeamForIntermission:			;Before a period: reset the bench, refill every player's energy and pick
 									;each team's starting line
-		;   (power play or penalty kill line when a team is a man up or short)
+									;(power play or penalty kill line when a team is a man up or short)
 	jsl.l ResetBench				; bench reset
 	stz.b a2						; team 0
 	lda.w #$0002					; other team 1

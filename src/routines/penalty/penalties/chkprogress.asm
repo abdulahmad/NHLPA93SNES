@@ -1,6 +1,6 @@
 chkprogress:						;Move the referee and the game through a penalty: when the stop delay runs
 									;out, switch to the horizontal rink
-		;   for the player to go to the box
+									;for the player to go to the box
 	lda.w gmode						; gmpen: ref in progress
 	bit.w #gmpen
 	bne .pen

@@ -1,6 +1,6 @@
 assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the puck (a
 									;penalty if he holds it too long),
-		;   follow and lead the puck, make saves, hug the post and rush a loose puck
+									;follow and lead the puck, make saves, hug the post and rush a loose puck
 	lda.w pfalock,x					; anim locked: nothing
 	beq .go
 	jmp.w .rtl

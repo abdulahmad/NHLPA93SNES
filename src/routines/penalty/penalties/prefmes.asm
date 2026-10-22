@@ -1,6 +1,6 @@
 prefmes:							;Print the message for penalty d0, or clear it when negative: under the
 									;referee on the vertical rink,
-		;   one centered line on the horizontal rink
+									;one centered line on the horizontal rink
 	stx.b xsave						; save d0 through d5
 	ldx.w #$0000
 .save:								; save d0 and the words after it (6 words)

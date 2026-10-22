@@ -1,6 +1,6 @@
 print:								;Print string [a1] into the text map at printx / printy. The string starts
 									;with its length word and may hold
-		;   control codes for position and color
+									;control codes for position and color
 	lda.b [a1]						; string length
 	cmp.w #$0100
 .hang:								;string longer than 255: hang

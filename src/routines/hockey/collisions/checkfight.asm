@@ -1,6 +1,6 @@
 checkfight:							;Look for the start of a fight between a2 and X after a hard hit; if it
 									;starts, both get fighting
-		;   penalties and the other players stop to watch
+									;penalties and the other players stop to watch
 	ldy.b a2						; the other player
 	lda.w impact,x					; impact of X
 	sec

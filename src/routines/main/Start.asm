@@ -1,6 +1,6 @@
 Start:								;Reset entry and cold start: switch to native mode, clear RAM, set up the
 									;interrupt handlers and sprite tile cache,
-		;   check the ROM, start the hardware and sound, then go to the title screen
+									;check the ROM, start the hardware and sound, then go to the title screen
 	sei								; interrupts off
 	clc
 	xce								; native mode

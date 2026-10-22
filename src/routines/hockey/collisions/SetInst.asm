@@ -1,6 +1,6 @@
 SetInst:							;Start a fight between X and a2 when both are aggressive enough; if X was
 									;shoulder checking, an
-		;   instigator penalty goes to one of his teammates
+									;instigator penalty goes to one of his teammates
 	lda.w fighting,x
 	cmp.b d0						; fighting rating threshold in d0
 	bcc checkfight_rtl

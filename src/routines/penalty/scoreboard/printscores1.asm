@@ -1,6 +1,6 @@
 printscores1:						;Draw the scoreboard: the period and score boxes on the vertical rink, or
 									;the period, teams and scores on the
-		;   horizontal rink
+									;horizontal rink
 	stx.b xsave						; keep X
 	ldx.w #$0000
 .save:								; save d0 and the words after it (6 words)

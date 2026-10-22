@@ -1,6 +1,6 @@
 ChkOffsides:						;Clear each team's offsides flag once it is back onside; when the puck
 									;crosses a blue line into the zone
-		;   with an attacker already past it, flag that team offsides
+									;with an attacker already past it, flag that team offsides
 	lda.w gmode						; game mode
 	bit.w #gmoffs
 	beq .rtl						; gmoffs clear: return

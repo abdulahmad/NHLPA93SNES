@@ -38,7 +38,7 @@ dostop:								;Player X stops
 	jsl.l SetSPA					; start animation d1
 StopNA:								;slow player a3 by 150 on each axis, no animation change. Falls in from
 									;dostop, also entered from goalieacc and others
-		;   slow player X by $70*d7 on each axis, no animation change
+									;slow player X by $70*d7 on each axis, no animation change
 	lda.w #$0070					; $70 per frame
 	sta.b mula
 	lda.b d7
