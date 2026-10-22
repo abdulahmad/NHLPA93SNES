@@ -214,7 +214,7 @@ samples, started at `$0800`). Each upload block is headed by its length and APU 
 | `sfx_<name>_cmdstream.bin` | one sound effect program: steps `$80` note, `$81` repeat, `$82` pitch sweep, `$83` end, `$84` loop |
 | `sfx_table.bin` | the effect program pointers and voices (105 bytes) |
 | `bootsamples.brr` | the sample block of the boot upload: BRR blocks of 9 bytes (16 samples each) |
-| `sfx_<name>_brr.bin`, `sample_<nn>_brr.bin` | one BRR sample each of the in-game upload (sample $00-$12 of `GameSampleDir`), named after the effect that plays it like 93G's `sfx_<name>_pcm.bin`; `sample_11`/`sample_12` are not used by any effect. Looping samples ($00, $0F, $10, $11) have a `_loop` label at the loop point |
+| `sfx_<name>_brr.bin`, `sample_<nn>_brr.bin` | one BRR sample each of the in-game upload (sample $00-$12 of `GameSampleDir`), named after the effect that plays it like 93G's `sfx_<name>_pcm.bin`; `sample_11`/`sample_12` are the in-game music samples (instrument $1B fanfare lead in songs 4-8, $1C fanfare drum in songs 4-7), not used by any effect. Looping samples ($00, $0F, $10, $11) have a `_loop` label at the loop point |
 
 Cues (port 0): `$00` stop music; `$01`-`$09` songs (boot set: 1 playoff screen, 2 unused, 3 title screen, 9 unused; game set: 4 home goal,
 5 period start, 6 third period, 7 unused, 8 mid-period); `$80`-`$87` crowd noise level; `$88` crowd off; `$89`-`$A1` sound effects;
