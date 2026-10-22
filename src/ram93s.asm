@@ -730,7 +730,7 @@ SPCRESUME		=	$0800			;driver entry after the in-game sample upload (the boot upl
 									;driver at $0400)
 SPCDRIVERSIZE	=	$26E7			; bytes of the SPC700 program (SPCDriver .. SPCDriverEnd)
 BOOTSAMPLESIZE	=	$5271			; bytes of Extracted/Sound/bootsamples.brr
-GAMESAMPLESIZE	=	$B814			; bytes of Extracted/Sound/gamesamples.brr
+GAMESAMPLESIZE	=	$B814			; bytes of the in-game BRR samples (GameSamples)
 replaysize		=	$71				; bytes per replay frame record
 puckobj			=	$1C				; object index of the puck
 netobj1		=	$18					; object index*2 of goal net 1 (y +268)
