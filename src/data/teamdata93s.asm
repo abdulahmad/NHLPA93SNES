@@ -135,7 +135,7 @@ AllStarsEast:						; team record: All Stars East (ASE), team 24
 	%Player("Kevin Hatcher",		05AA,AADF,E4D7,F7D8)
 	%Player("Eric Desjardins",		287D,AADA,B2D4,F4A5)
 	%Player("Scott Stevens",		049D,ADFA,F7AA,F4DB)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("All Stars East")
 .ta:								; team abbreviation string
@@ -190,7 +190,7 @@ AllStarsWest:						; team record: All Stars West (ASW), team 25
 	%Player("Mark Tinordi",			2588,5828,B582,E25D)
 	%Player("Larry Robinson",		19A9,6396,A396,9397)
 	%Player("Dave Ellett",			047B,B82E,95B5,E5B8)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("All Stars West")
 .ta:								; team abbreviation string
@@ -247,7 +247,7 @@ Boston:								; team record: Boston (BOS), team 0
 	%Player("Gordon Murphy",		286F,C39C,CA93,F998)
 	%Player("Jim Wiemer",			3686,33C3,6B63,966B)
 	%Player("Bob Beers",			2279,9306,7230,9305)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("Boston")
 .ta:								; team abbreviation string
@@ -304,7 +304,7 @@ Buffalo:							; team record: Buffalo (BUF), team 1
 	%Player("Randy Moller",			2488,5225,9652,555D)
 	%Player("Grant Ledyard",		037B,885B,8B52,E287)
 	%Player("Randy Hillier",		2365,2002,5A20,2B5D)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("Buffalo")
 .ta:								; team abbreviation string
@@ -360,7 +360,7 @@ Calgary:							; team record: Calgary (CGY), team 2
 	%Player("Trent Yawney",			1868,5555,8788,B287)
 	%Player("Alexnder Godynyuk",	2185,8525,9B55,222D)
 	%Player("Neil Sheehy",			1595,2225,8A22,282D)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("Calgary")
 .ta:								; team abbreviation string
@@ -417,7 +417,7 @@ Chicago:							; team record: Chicago (CHI), team 3
 	%Player("Keith Brown",			046D,D7D7,BAA4,FAAA)
 	%Player("Rod Buskas",			2584,4144,5A41,A44D)
 	%Player("Igor Kravchuk",		037D,AA4A,81D4,74A4)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("Chicago")
 .ta:								; team abbreviation string
@@ -473,7 +473,7 @@ Detroit:							; team record: Detroit (DET), team 4
 	%Player("Yves Racine",			335A,A77D,B5A4,D4AA)
 	%Player("Brad Marsh",			20A4,74D4,A547,A47A)
 	%Player("Bobby Dollas",			0897,A4D1,231A,7F17)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("Detroit")
 .ta:								; team abbreviation string
@@ -529,7 +529,7 @@ Edmonton:							; team record: Edmonton (EDM), team 5
 	%Player("Norm MacIver",			3659,9CF9,9166,C097)
 	%Player("Kevin Lowe",			046C,9369,A1C3,C39D)
 	%Player("Craig Muni",			2873,33C3,C533,6667)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("Edmonton")
 .ta:								; team abbreviation string
@@ -585,7 +585,7 @@ Hartford:							; team record: Hartford (HFD), team 6
 	%Player("Randy Ladouceur",		29A8,2282,5552,852B)
 	%Player("Adam Burt",			0668,852B,8385,B288)
 	%Player("Doug Houda",			2762,2255,0225,852B)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("Hartford")
 .ta:								; team abbreviation string
@@ -642,7 +642,7 @@ LosAngeles:							; team record: Los Angeles (LA), team 8
 	%Player("Charlie Huddy",		2289,6639,9393,9397)
 	%Player("Tim Watters",			0556,6363,7360,636D)
 	%Player("Brent Thompson",		5643,3333,6530,633D)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("Los Angeles")
 .ta:								; team abbreviation string
@@ -698,7 +698,7 @@ LongIsland:							; team record: Long Island (LI), team 7
 	%Player("Jeff Norton",			0869,9996,7363,9095)
 	%Player("Wayne McBean",			0663,33F6,6363,6C65)
 	%Player("Scott Lachance",		0776,66F3,6163,6332)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("Long Island")
 .ta:								; team abbreviation string
@@ -754,7 +754,7 @@ Minnesota:							; team record: Minnesota (MIN), team 9
 	%Player("Mark Tinordi",			2488,5828,B582,E25D)
 	%Player("David Shaw",			2685,5225,8452,555A)
 	%Player("Derian Hatcher",		2888,55B5,6558,B82D)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("Minnesota")
 .ta:								; team abbreviation string
@@ -811,7 +811,7 @@ Montreal:							; team record: Montreal (MTL), team 10
 	%Player("Sylvain Lefebvre",		038A,A4D4,8374,A4A8)
 	%Player("Kevin Haller",			1457,7774,8747,F478)
 	%Player("Patrice Brisebois",	434A,A7DA,A674,7475)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("Montreal")
 .ta:								; team abbreviation string
@@ -867,7 +867,7 @@ NewJersey:							; team record: New Jersey (NJ), team 11
 	%Player("Alexei Kasatonov",		079D,AADD,B5DA,F4D5)
 	%Player("Slava Fetisov",		02AD,77DD,B5D4,F1D8)
 	%Player("Scott Stevens",		049D,ADFA,F7AA,F4DB)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("New Jersey")
 .ta:								; team abbreviation string
@@ -925,7 +925,7 @@ NewYork:							; team record: New York (NY), team 12
 	%Player("Jay Wells",			2487,74A7,A577,717C)
 	%Player("Per Djoos",			4447,A7D7,8074,D176)
 	%Player("Normand Rochefort",	0597,7114,B171,7A49)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("New York")
 .ta:								; team abbreviation string
@@ -975,7 +975,7 @@ Ottawa:								; team record: Ottawa (OTW), team 13
 	%Player("Dominic Lavoie",		3880,0020,2000,220A)
 	%Player("Darren Rumble",		3470,0020,2100,220A)
 	%Player("Brad Miller",			44A2,5255,8D22,855F)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("Ottawa")
 .ta:								; team abbreviation string
@@ -1032,7 +1032,7 @@ Philadelphia:						; team record: Philadelphia (PHI), team 14
 	%Player("Dan Kordic",			0680,0390,7603,693C)
 	%Player("Mark Howe",			0259,99FC,71C9,F3C3)
 	%Player("Corey Foster",			4470,0603,1133,6C36)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("Philadelphia")
 .ta:								; team abbreviation string
@@ -1088,7 +1088,7 @@ Pittsburgh:							; team record: Pittsburgh (PIT), team 15
 	%Player("Paul Stanton",			2269,933C,9463,C6C9)
 	%Player("Grant Jennings",		0376,6396,A769,663C)
 	%Player("Jim Paek",				0266,9393,6333,6366)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("Pittsburgh")
 .ta:								; team abbreviation string
@@ -1146,7 +1146,7 @@ Quebec:								; team record: Quebec (QUE), team 16
 	%Player("Tony Twist",			1590,0050,3D00,280C)
 	%Player("Curtis Leschyshyn",	0788,B505,8355,E289)
 	%Player("Dan Lambert",			5042,2822,015B,5256)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("Quebec")
 .ta:								; team abbreviation string
@@ -1203,7 +1203,7 @@ SanJose:							; team record: San Jose (SJ), team 17
 	%Player("Link Gaetz",			2388,8208,BD85,288F)
 	%Player("Jay More",				0468,550B,8485,E28C)
 	%Player("Doug Wilson",			245B,880F,81B5,E5B3)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("San Jose")
 .ta:								; team abbreviation string
@@ -1260,7 +1260,7 @@ StLouis:							; team record: St. Louis (STL), team 18
 	%Player("Paul Cavallini",		148C,C999,95C3,F699)
 	%Player("Lee Norwood",			2076,66C3,7763,636C)
 	%Player("Rob Robinson",			4493,6033,6160,6933)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("St. Louis")
 .ta:								; team abbreviation string
@@ -1311,7 +1311,7 @@ TampaBay:							; team record: Tampa Bay (TBY), team 19
 	%Player("Bob McGill",			0464,411D,B274,7F4A)
 	%Player("Jeff Bloemberg",		3870,0020,2000,222A)
 	%Player("Shawn Chambers",		2570,0000,2100,220A)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("Tampa Bay")
 .ta:								; team abbreviation string
@@ -1368,7 +1368,7 @@ Toronto:							; team record: Toronto (TOR), team 20
 	%Player("Darryl Shannon",		2868,5225,8182,B552)
 	%Player("Bob Halkidis",			3372,2222,2725,582B)
 	%Player("Dimitri Mironov",		1568,5208,218B,55B0)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("Toronto")
 .ta:								; team abbreviation string
@@ -1425,7 +1425,7 @@ Vancouver:							; team record: Vancouver (VAN), team 21
 	%Player("Doug Lidster",			037A,AADA,B2D7,F4D4)
 	%Player("Randy Gregg",			2494,4444,5144,744A)
 	%Player("Adrien Plavsic",		0667,7AD7,A374,7177)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("Vancouver")
 .ta:								; team abbreviation string
@@ -1482,7 +1482,7 @@ Winnipeg:							; team record: Winnipeg (WPG), team 23
 	%Player("Randy Carlyle",		0876,6396,A360,F966)
 	%Player("Shawn Cronin",			4480,0030,7D00,C60F)
 	%Player("Mario Marois",			3363,3333,6463,9969)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("Winnipeg")
 .ta:								; team abbreviation string
@@ -1539,7 +1539,7 @@ Washington:							; team record: Washington (WSH), team 22
 	%Player("Rod Langway",			059A,74D4,A1A1,A172)
 	%Player("Ken Sabourin",			0284,4141,1111,771B)
 	%Player("Brad Schlegel",		285A,7147,7071,D770)
-	dw 2							; end of the player list (empty name)
+	dw 2							; end of player data: empty String
 .tn:								; team name string (Teamname)
 	%String("Washington")
 .ta:								; team abbreviation string
