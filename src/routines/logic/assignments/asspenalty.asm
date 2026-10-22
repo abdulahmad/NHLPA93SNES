@@ -105,10 +105,12 @@ asspenalty:							;Assignment: player X skates to the penalty box, glides in and
 	lda.w #6						; face 6 = left (2 = right for a left handed player)
 	sta.b d2						; face 6
 	lda.w handed,x
-	beq .righty						; right handed (handed = 0)
+	beq .left						; right handed (handed = 0)
 	lda.w #2						; left handed: face 2 = right
 	sta.b d2
-.righty:							; turn one step toward d2
+.left:								; label name is 92G's; the branch is taken by right handed players
+									; (handed 0), who keep d2 = 6 (face left); left handed set d2 = 2
+									; turn one step toward d2
 	lda.w facedir,x					; facing direction
 	cmp.b d2						; there yet?
 	beq .ok
