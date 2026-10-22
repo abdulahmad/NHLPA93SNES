@@ -527,7 +527,7 @@ aggress		=	$10BF				; aggression: penalty odds (goalies: glove save left)
 GGSleft		=	aggress				; goalie glove save left (92 name), puckgoalie
 fighting	=	$10DF				; fighting rating (fight strength and fight odds; 93 $74)
 checking	=	$10FF				; checking rating (check odds; 93 $75)
-handed		=	$111F				; nonzero: right handed (0 = lefty for the faceoff frames)
+handed		=	$111F				; nonzero: left handed (pldcheck bit 0; 0 = right handed: +3 faceoff)
 pfgoal		=	$113F				; nonzero: shoots at the top goal. pflags bit pfgoal
 pf2fight	=	$115F				; nonzero: fighting. pflags2 bit pf2fight
 pfalock		=	$117F				; nonzero: locked until the animation is done. pflags bit pfalock

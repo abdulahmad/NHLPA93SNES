@@ -95,18 +95,20 @@ asspenalty:							;Assignment: player X skates to the penalty box, glides in and
 .step:								; reload the timer
 	adc.w #8						; reload it
 	sta.w temp1,x
-;glide in, turn toward the wall (facedir 6 or 2 by handedness)
+;glide in, turn toward d2: right handed faces 6 (left, away from the box), left handed faces 2
+;(right, toward the box). Righty faces 6 (mirrored to frame dir 2), lefty faces 2: both show the
+;same glide frame, the righty x-flipped
 	lda.w #SPAglide					; SPAglide, pfnc
 	sta.b d1
 	sta.w pfnc,x					; no collisions
 	jsl.l SetSPA					; start animation d1
-	lda.w #6						; face 6 (2 for the other hand)
+	lda.w #6						; face 6 = left (2 = right for a left handed player)
 	sta.b d2						; face 6
 	lda.w handed,x
-	beq .left						; left handed?
-	lda.w #2
+	beq .righty						; right handed (handed = 0)
+	lda.w #2						; left handed: face 2 = right
 	sta.b d2
-.left:								; turn one step toward d2
+.righty:							; turn one step toward d2
 	lda.w facedir,x					; facing direction
 	cmp.b d2						; there yet?
 	beq .ok
