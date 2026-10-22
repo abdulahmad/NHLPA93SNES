@@ -40,7 +40,7 @@ part (`s` for SNES): the SNES files are not the same as the Genesis ones, so the
 | `.spal` | Palette of SNES BGR555 words | `Pals/Rink` |
 | `.bin` | Tables or text with their own format, described below | `HotList`, `Text/ScoutingReportText`, `Sound/sfx_table` |
 | `_cmdstream.bin` | Command streams of the sound program, see [Sound](#sound) | `Sound/fmtune_<song>`, `Sound/sfx_<name>` |
-| `.brr` | SPC700 BRR sound samples | `Sound/bootsamples`, `Sound/gamesamples` |
+| `.brr` | SPC700 BRR sound samples | `Sound/bootsamples` (the game set is `Sound/*_brr.bin`) |
 | `.spc700` | SPC700 sound driver code and tables | `Sound/driver` |
 
 Genesis and SNES side by side:
@@ -213,7 +213,8 @@ samples, started at `$0800`). Each upload block is headed by its length and APU 
 | `fmtune_<song>_cmdstream.bin` | a song, named like 93G's `fmtune_*_cmdstream`: its order list, its channel set (pointers to 8 channel streams) and the channel streams, joined in address order |
 | `sfx_<name>_cmdstream.bin` | one sound effect program: steps `$80` note, `$81` repeat, `$82` pitch sweep, `$83` end, `$84` loop |
 | `sfx_table.bin` | the effect program pointers and voices (105 bytes) |
-| `bootsamples.brr`, `gamesamples.brr` | the sample blocks of the two uploads: BRR blocks of 9 bytes (16 samples each) |
+| `bootsamples.brr` | the sample block of the boot upload: BRR blocks of 9 bytes (16 samples each) |
+| `sfx_<name>_brr.bin`, `sample_<nn>_brr.bin` | one BRR sample each of the in-game upload (sample $00-$12 of `GameSampleDir`), named after the effect that plays it like 93G's `sfx_<name>_pcm.bin`; `sample_11`/`sample_12` are not used by any effect. Looping samples ($00, $0F, $10, $11) have a `_loop` label at the loop point |
 
 Cues (port 0): `$00` stop music; `$01`-`$09` songs (boot set: 1 playoff screen, 2 unused, 3 title screen, 9 unused; game set: 4 home goal,
 5 period start, 6 third period, 7 unused, 8 mid-period); `$80`-`$87` crowd noise level; `$88` crowd off; `$89`-`$A1` sound effects;

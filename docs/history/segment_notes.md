@@ -58,7 +58,7 @@ Starts at RonBarrMap (boundary moved from $80F008).
 
 $818000-$818FFF  ROM $08000-$08FFF: the in-game SPC700 upload stream (GameSoundUpload), $818000-$82B86B. setupice sends it
 with the uploader at $82FA7A ($82FAB9: blocks of length word, APU address word, data; a length of 0 ends and jumps to the address).
-Blocks: the sample directory (to APU $2C00), the BRR samples (data/gamesamples.brr, to APU $2C50), the end block (jump to SPCRESUME, in bank82_B000).
+Blocks: the sample directory (to APU $2C00), the BRR samples (now one Extracted/Sound/<name>_brr.bin per sample, to APU $2C50), the end block (jump to SPCRESUME, in bank82_B000).
 The samples run on through bank $81 (one incbin slice per segment file) and end in bank82_B000.
 
 ## bank81_9000 (org $819000)
