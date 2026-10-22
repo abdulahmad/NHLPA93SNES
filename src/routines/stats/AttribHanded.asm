@@ -6,4 +6,4 @@ AttribHanded:						;Roster column: shooting hand
 	sta.b a1+2
 	lda.w #HandedTextTbl
 	sta.b a1
-	jml.l Fprint_list				; d0 = index, [a1] = list
+	jml.l Fprint					; d0 = index, [a1] = list

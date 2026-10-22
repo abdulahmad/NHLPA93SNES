@@ -61,7 +61,7 @@ SpriteSet1:							;frame set 1 (SPFswing): frames 97-144
 	incbin "../../Extracted/Graphics/Sprites/Sprites097_144.sanim"
 incsrc "../routines/logic/controls/fightinput.asm"
 incsrc "../routines/hockey/collisions/holdcheck.asm"
-incsrc "../routines/print/Fprint_list.asm"
+incsrc "../routines/print/Fprint.asm"
 incsrc "../routines/print/Framer.asm"
 incsrc "../routines/logic/assignments/assnothing.asm"
 incsrc "../routines/stats/GetGoalieCount.asm"

@@ -40,7 +40,7 @@ printscores1:						;Draw the scoreboard: the period and score boxes on the verti
 	sta.b a1
 	lda.w #PerLabels>>16
 	sta.b a1+2
-	jsl.l Fprint_list
+	jsl.l Fprint
 	jsl.l EASNLogo
 	lda.w sflags3					; lower line change box is up
 	bit.w #sf3llcs

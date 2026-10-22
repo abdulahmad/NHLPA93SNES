@@ -379,7 +379,7 @@ $8F902A,InitScores,CODE_8F902A,93G,from StartGame,penalty_b8F
 $8F9073,ResetPassWord,CODE_8F9073,92G,,hockey_b8F
 $8FD4F9,fightinput,CODE_8FD4F9,93G,from joyplayer,logic_b8F
 $8FD5BF,holdcheck,CODE_8FD5BF,93G,from checkcheck,hockey_b8F
-$8FD68C,Fprint_list,CODE_8FD68C,93G,,penalty_b8F
+$8FD68C,Fprint,CODE_8FD68C,93G,,penalty_b8F
 $8FD69F,Framer,CODE_8FD69F,93G,,middle_b8F
 $8FD75A,assnothing,CODE_8FD75A,93G,,logic_b8F
 $8FD76B,GetGoalieCount,CODE_8FD76B,93G,,logic_b8F

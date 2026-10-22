@@ -536,7 +536,7 @@ org `$8F8000` when `pc()` is below it.
 - `$8F9085` SpriteSet1 (data)
 - `$8FD4F9` routines/logic/controls/fightinput.asm
 - `$8FD5BF` routines/hockey/collisions/holdcheck.asm
-- `$8FD68C` routines/print/Fprint_list.asm
+- `$8FD68C` routines/print/Fprint.asm
 - `$8FD69F` routines/print/Framer.asm
 - `$8FD75A` routines/logic/assignments/assnothing.asm
 - `$8FD76B` routines/stats/GetGoalieCount.asm
