@@ -25,7 +25,7 @@ AttribStatus:						;Roster column: where the player is (ice, bench, injured) or 
 	sta.b a1+2						; text list
 	lda.w #StatusTextTbl
 	sta.b a1
-	jml.l Fprint_list				; d0 = index, [a1] = list
+	jml.l Fprint					; d0 = index, [a1] = list
 .pen:								; penalty
 	lda.b d0						; state
 	bit.w #TMPDINJ
@@ -49,4 +49,4 @@ AttribStatus:						;Roster column: where the player is (ice, bench, injured) or 
 	sta.b a1+2
 	lda.w #StatusTextTbl
 	sta.b a1
-	jml.l Fprint_list				; d0 = index, [a1] = list
+	jml.l Fprint					; d0 = index, [a1] = list
