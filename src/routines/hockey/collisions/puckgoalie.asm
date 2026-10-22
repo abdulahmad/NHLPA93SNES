@@ -1,6 +1,5 @@
 puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. A hard shot
-									;from the blue line area may
-		;   slip through; a slow loose puck is held
+									;from the blue line area may slip through; a slow loose puck is held
 	lda.w gmode						; game mode
 	bit.w #gmhl						; gmhl
 	beq .go
@@ -140,12 +139,12 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 .vy:								; hard shot?
 	cmp.w #$3000					; hard shot?
 	bcc .nosong
-	lda.w #SFXcrowdcheer			; crowd: home save
+	lda.w #SFXcrowdcheer			; crowd cheer (home goalie)
 	pha								; 1,s = the crowd sound number
 	ldy.b a2
 	lda.w pfteam,y					; team of the goalie
 	beq .song
-	lda.w #SFXoooh2					; home goalie: sound
+	lda.w #SFXoooh2					; visiting goalie: oooh
 	sta.b $01,s
 .song:								; play the crowd sound
 	jsl.l sfx						; play it
