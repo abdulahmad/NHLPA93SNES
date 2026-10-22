@@ -6,7 +6,7 @@ On the stock tree the PC arrives exactly there and the org is skipped. A bank fi
 files in exact ROM order. Routines are in `src/routines/<93G module>/<area>/<Routine>.asm`
 (one routine per file; a routine that falls through into the next keeps both). Data blocks that are only an `incbin` sit in the bank file itself, at their ROM position (listed here by label); other data is in `src/data/<category>/<Name>.asm`.
 The SNES internal header and vectors are in `src/header/snes_header.asm` (end of bank $80).
-Bank $90 is included last. The stock build writes no bytes there.
+The ROM is 512 KB (banks $80-$8F). Bank $90 is not in the default build; docs/adding-a-team.md says how to add it.
 Regenerate this file with `python3 tools/gen_file_map.py` after `npm run build:retail`.
 
 ## src/banks/b80_engine.asm
@@ -200,13 +200,13 @@ org `$808000`.
 - `$80FED1` routines/penalty/energy/reenergizeteam.asm (also unusedFF)
 - `$80FFC0` header/snes_header.asm
 
-## src/banks/b81_game_samples.asm
+## src/banks/b81_samples.asm
 
 org `$818000` when `pc()` is below it.
 
 - `$818000` data/sound/gamesound.asm (also GameSampleDir, GameSampleDirEnd, GameSamples, GameSamplesEnd)
 
-## src/banks/b82_rink_tiles_anim_tables.asm
+## src/banks/b82_samples_rink.asm
 
 org `$82B86C` when `pc()` is below it.
 
@@ -241,7 +241,7 @@ org `$82B86C` when `pc()` is below it.
 - `$82FDD3` routines/print/appendz.asm
 - `$82FDE7` routines/logic/assignments/asscentero.asm (also unusedFF82)
 
-## src/banks/b83_teams_rink_maps.asm
+## src/banks/b83_teams.asm
 
 org `$838000` when `pc()` is below it.
 
@@ -260,7 +260,7 @@ org `$838000` when `pc()` is below it.
 - `$83FAEC` RefsMap (data)
 - `$83FDFC` routines/logic/assignments/assgoalietopuck.asm (also unusedFF83)
 
-## src/banks/b84_scouting_rosters.asm
+## src/banks/b84_sprites_scouting.asm
 
 org `$848000` when `pc()` is below it.
 
@@ -301,7 +301,7 @@ org `$848000` when `pc()` is below it.
 - `$84FE5F` data/text/HandedTextTbl.asm
 - `$84FE6F` routines/stats/AttribWeight.asm (also unusedFF84)
 
-## src/banks/b85_title_map.asm
+## src/banks/b85_sprites_title.asm
 
 org `$858000` when `pc()` is below it.
 
@@ -314,7 +314,7 @@ org `$858000` when `pc()` is below it.
 - `$85FF96` routines/hockey/util/nullrtl85.asm
 - `$85FF97` routines/hockey/game/ResetClock.asm (also unusedFF85)
 
-## src/banks/b86_sound_driver.asm
+## src/banks/b86_sound.asm
 
 org `$868000` when `pc()` is below it.
 
@@ -333,12 +333,12 @@ org `$868000` when `pc()` is below it.
 - `$86FCE3` routines/hockey/teams/PickStartingGoalie.asm
 - `$86FD86` routines/logic/assignments/assscore.asm (also unusedFF86)
 
-## src/banks/b87_ref_tiles_drawframe.asm
+## src/banks/b87_sprites_refs.asm
 
 org `$878000` when `pc()` is below it.
 
 - `$878000` SpriteSet2 (data)
-- `$??????` EASNBGMap (data)
+- `$87C3A0` EASNBGMap (data)
 - `$87C6B4` FaceOffTiles (data)
 - `$87CABA` Teamblocksmap (data)
 - `$87CE62` routines/video/sprites/DrawFrame.asm
@@ -349,7 +349,7 @@ org `$878000` when `pc()` is below it.
 - `$87F55E` RefTiles (data)
 - `$87FF78` routines/logic/assignments/assepen.asm (also unusedFF87)
 
-## src/banks/b88_teamblocks_playoffs_password.asm
+## src/banks/b88_sprites_teamblocks.asm
 
 org `$888000` when `pc()` is below it.
 
@@ -380,7 +380,7 @@ org `$888000` when `pc()` is below it.
 - `$88FDB2` routines/hockey/password/SuperAdd.asm
 - `$88FDD0` routines/logic/skating/skateto.asm (also unusedFF88)
 
-## src/banks/b89_hor_ref_replay_music.asm
+## src/banks/b89_sprites_replay.asm
 
 org `$898000` when `pc()` is below it.
 
@@ -410,7 +410,7 @@ org `$898000` when `pc()` is below it.
 - `$89FD6A` routines/logic/skating/EvadePC.asm
 - `$89FDD6` routines/logic/assignments/asswingd.asm (also unusedFF89)
 
-## src/banks/b8A_credits_bracket.asm
+## src/banks/b8A_sprites.asm
 
 org `$8A8000` when `pc()` is below it.
 
@@ -421,7 +421,7 @@ org `$8A8000` when `pc()` is below it.
 - `$8AFD6D` routines/logic/lines/getlchoice.asm
 - `$8AFE21` routines/penalty/highlights/SetScore.asm (also unusedFF8A)
 
-## src/banks/b8B_opening_playoffs.asm
+## src/banks/b8B_sprites.asm
 
 org `$8B8000` when `pc()` is below it.
 
@@ -437,7 +437,7 @@ org `$8B8000` when `pc()` is below it.
 - `$8BFFCC` routines/video/hud/showref.asm
 - `$8BFFD3` routines/logic/skating/skatetopuckinit.asm
 
-## src/banks/b8C_nhlpa_logo.asm
+## src/banks/b8C_sprites.asm
 
 org `$8C8000` when `pc()` is below it.
 
@@ -446,7 +446,7 @@ org `$8C8000` when `pc()` is below it.
 - `$8CFC1A` routines/video/objects/checksso.asm
 - `$8CFD83` routines/logic/puck/chk4pass.asm (also unusedFF8C)
 
-## src/banks/b8D_bigfont_highlights.asm
+## src/banks/b8D_sprites.asm
 
 org `$8D8000` when `pc()` is below it.
 
@@ -473,7 +473,7 @@ org `$8D8000` when `pc()` is below it.
 - `$8DFE1B` routines/logic/controls/clrplayer.asm
 - `$8DFE36` routines/logic/skating/avdgoal.asm (also unused008D)
 
-## src/banks/b8E_gameloop.asm
+## src/banks/b8E_sprites.asm
 
 org `$8E8000` when `pc()` is below it.
 
@@ -607,9 +607,3 @@ org `$8F8000` when `pc()` is below it.
 - `$8FFE8E` routines/sound/sfx8F.asm
 - `$8FFEB4` routines/hockey/screens/ShowGoalBox.asm
 - `$8FFFDC` data/text/GoalBoxText.asm (also unusedFF8F)
-
-## src/banks/b90_expanded.asm
-
-org `$908000` when `pc()` is below it.
-
-No bytes in the stock build.

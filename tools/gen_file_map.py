@@ -14,7 +14,7 @@ out = ['# Source file map', '',
        'files in exact ROM order. Routines are in `src/routines/<93G module>/<area>/<Routine>.asm`',
        '(one routine per file; a routine that falls through into the next keeps both). Data blocks that are only an `incbin` sit in the bank file itself, at their ROM position (listed here by label); other data is in `src/data/<category>/<Name>.asm`.',
        'The SNES internal header and vectors are in `src/header/snes_header.asm` (end of bank $80).',
-       'Bank $90 is included last. The stock build writes no bytes there.',
+       'The ROM is 512 KB (banks $80-$8F). Bank $90 is not in the default build; docs/adding-a-team.md says how to add it.',
        'Regenerate this file with `python3 tools/gen_file_map.py` after `npm run build:retail`.', '']
 for b in sorted(glob.glob(os.path.join(SRC, 'banks', '*.asm'))):
     text = open(b).read()
