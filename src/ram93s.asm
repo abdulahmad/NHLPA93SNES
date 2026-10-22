@@ -370,6 +370,7 @@ ltx					=	$018D		; last touch x
 lty					=	$018F		; last touch y
 gamelevel			=	$014A		; 0-3: depth into the playoff tree (4 = finished)
 gamenum				=	$014C		; index of the user game in the playoff game arrays (-1 = none)
+strtext				=	2			; String: start of the text after its length word
 mesarea				=	$0191		; temp area for print strings (length word, then characters)
 lastplayer			=	$017D		; SCnum of the last player who touched the puck (doshot)
 PushWidthBuf		=	$01F5		;PushNumberWidth string: length word (digits + 2), then the digits right
