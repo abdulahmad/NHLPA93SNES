@@ -28,8 +28,8 @@ GameSampleDir:						;DSP sample directory: per sample the APU address of its sta
 	dw GSAMP(sfx_playerwall_brr),GSAMP(sfx_a1_brr)	; sample $0E: playerwall, playerwall2 (no loop)
 	dw GSAMP(sfx_a1_brr),GSAMP(sfx_a1_brr_loop)	; sample $0F: sfx_a1 (loops)
 	dw GSAMP(sfx_siren_brr),GSAMP(sfx_siren_brr_loop)	; sample $10: siren (loops)
-	dw GSAMP(sample_11_brr),GSAMP(sample_11_brr_loop)	; sample $11: no effect uses it (loops)
-	dw GSAMP(sample_12_brr),GSAMP(GameSamplesEnd)	; sample $12: no effect uses it (no loop)
+	dw GSAMP(sample_11_brr),GSAMP(sample_11_brr_loop)	; sample $11: music, fanfare lead (loops)
+	dw GSAMP(sample_12_brr),GSAMP(GameSamplesEnd)	; sample $12: music, fanfare drum (no loop)
 GameSampleDirEnd:					; end of GameSampleDir
 	dw GAMESAMPLESIZE, SPCSAMPLES	; block 2: the BRR samples
 
@@ -74,11 +74,13 @@ sfx_siren_brr:						;BRR sample $10 (GameSampleDir): siren
 	incbin "../../../Extracted/Sound/sfx_siren_brr.bin":$0..$7E
 sfx_siren_brr_loop:					;loop point of sample $10
 	incbin "../../../Extracted/Sound/sfx_siren_brr.bin":$7E..$E1
-sample_11_brr:						;BRR sample $11 (GameSampleDir): no effect uses it
+sample_11_brr:						;BRR sample $11 (GameSampleDir): instrument $1B, the
+									;fanfare lead of songs 4-8
 	incbin "../../../Extracted/Sound/sample_11_brr.bin":$0..$5A
 sample_11_brr_loop:					;loop point of sample $11
 	incbin "../../../Extracted/Sound/sample_11_brr.bin":$5A..$B4
-sample_12_brr:						;BRR sample $12 (GameSampleDir): no effect uses it
+sample_12_brr:						;BRR sample $12 (GameSampleDir): instrument $1C, the
+									;fanfare drum of songs 4-7
 	incbin "../../../Extracted/Sound/sample_12_brr.bin"
 GameSamplesEnd:						; end of GameSamples
 	dw $0000, SPCRESUME				; end block: length 0, start the driver at $0800
