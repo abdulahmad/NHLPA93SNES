@@ -52,7 +52,7 @@ Genesis and SNES side by side:
 | Map word | priority 15, palette 14-13, vflip 12, hflip 11, tile 10-0 | vflip 15, hflip 14, priority 13, palette 12-10, tile 9-0 |
 | Packing | `.map.jim` / `.anim` containers, tiles optionally packed (bit 15 of the tile count) | the same `DecompressBytecode` stream, in `.map.sjim` and `.chr.pak` |
 | Sprite pieces | 8 bytes, hardware sprite size code | 4 bytes (6 for the crowd), see [Sprite sets](#sprite-sets-sanim) |
-| Sound | Z80 driver, FM patches, PCM samples, 68000 event streams | SPC700 driver (N-SPC style), BRR samples, command streams inside the driver |
+| Sound | Z80 driver, FM patches, PCM samples, 68000 event streams | SPC700 sound CPU driver, BRR samples, command streams inside the driver |
 
 ## Packed streams (`.pak`)
 
@@ -202,14 +202,14 @@ fixed ones for the intro and closing lines. Words are separated by spaces; `_` `
 
 ## Sound
 
-The game uploads a sound program to the SPC700 and then only writes one byte cues to port 0 (counter on port 1). The program is a Nintendo
-N-SPC style sequencer with the songs and effects inside it. There are two uploads, both in the source (`src/data/sound/`): the boot stream
+The game uploads a sound program to the SPC700 and then only writes one byte cues to port 0 (counter on port 1). The program is the 93S sound CPU driver,
+a sequencer with the songs and effects inside it (source: `src/data/sound/spcdriver.asm`). There are two uploads, both in the source (`src/data/sound/`): the boot stream
 (driver, instrument table, sample directory, boot samples, started at `$0400`) and the in-game stream (sample directory and the game
 samples, started at `$0800`). Each upload block is headed by its length and APU address, and an end block of length 0 starts the program.
 
 | File | Content |
 |------|---------|
-| `driver.spc700` | the SPC700 sound program, loaded at APU `$0400`: sequencer code, note tables, cue pointer table (the first `$AA5` bytes of the driver block). The code is not disassembled |
+| `driver.spc700` | the SPC700 sound program, loaded at APU `$0400`: sequencer code, note tables, cue pointer table (the first `$AA5` bytes of the driver block). Assembled from `src/data/sound/spcdriver.asm` (asar `arch spc700`); the build checks it byte for byte against this file |
 | `fmtune_<song>_cmdstream.bin` | a song, named like 93G's `fmtune_*_cmdstream`: its order list, its channel set (pointers to 8 channel streams) and the channel streams, joined in address order |
 | `sfx_<name>_cmdstream.bin` | one sound effect program: steps `$80` note, `$81` repeat, `$82` pitch sweep, `$83` end, `$84` loop |
 | `sfx_table.bin` | the effect program pointers and voices (105 bytes) |
