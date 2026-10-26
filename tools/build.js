@@ -176,6 +176,14 @@ async function assemble(name) {
     const a = await assemble('assemble');
     step('assemble', `${a.version}, ${a.warnings} warnings -> ${rel(a.bin)}`);
 
+    // The 93S sound CPU driver (src/data/sound/spcdriver.asm) must equal the extracted Extracted/Sound/driver.spc700.
+    {
+        const want = fs.readFileSync(path.join(ROOT, 'Extracted', 'Sound', 'driver.spc700'));
+        const got = fs.readFileSync(a.bin).subarray(0x30004, 0x30004 + want.length);
+        if (!got.equals(want)) fail('assemble', 'spcdriver.asm does not match Extracted/Sound/driver.spc700', '', 'MISMATCH');
+        detail(`spcdriver.asm MATCH Extracted/Sound/driver.spc700 (${want.length} bytes)`);
+    }
+
     // 3. header: pad and checksum a grown image; the result is output/retail/nhlpa93snes.sfc.
     begin('header');
     const h = await node('patchHeader.js', [a.bin]);

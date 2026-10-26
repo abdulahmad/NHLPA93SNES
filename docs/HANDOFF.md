@@ -141,7 +141,7 @@ AttribMenuSkater/Goalie) moved to `data/text/`; the sprite animation list and ta
 into the routine before; `XxxEnd` end labels stay in their table's file; GameSamples (bank $81) runs into $82, so b82 starts at $82B86C.
 Data merges: bank $83 team data (TeamList..playoffseats) is one file `data/teamdata93s.asm` (`data/teams/` gone; Credits moved to
 `data/text/Credits.asm`); bank $81 sound is `data/sound/gamesound.asm` (GameSoundUpload, GameSampleDir, GameSamples); bank $86 is
-`data/sound/bootsound.asm` (BootSoundUpload, SPCDriver, BootInstruments, BootSampleDir, BootSamples).
+`data/sound/bootsound.asm` (BootSoundUpload, SPCDriver (code in `data/sound/spcdriver.asm`, the 93S sound CPU driver as SPC700 source), BootInstruments, BootSampleDir, BootSamples).
 Module audit: every `routines/<module>/` file checked against 93G (ref93) then 92G; misplaced ones moved (UnpackNibbles,
 WeightedRandomSelect -> middle; DoHiLights, StartHL2, clearTeamStats, VBjsr -> hockey; updatesound -> video; by judgment HBjsr,
 BRKHalt -> hockey (interrupt vectors beside VBjsr), noturn -> logic (playeracc), TeamRosterScreen, RosterG, RosterGoalies -> stats
