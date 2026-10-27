@@ -5,8 +5,9 @@
 // is missing or stale; this script writes Extracted/.extract-complete.json last. docs/file-formats.md describes the formats.
 // It also writes Extracted/Text/PlayerNames.txt, the real player names (one per line, in the order of the %Player rows of
 // teamdata93s.asm, which holds placeholders): tools/build.js puts them into the copy of teamdata93s.asm that is assembled.
-// Usage: node tools/extractAssets93s.js nhlpa93retail.sfc           (write every asset and the marker)
-//        node tools/extractAssets93s.js nhlpa93retail.sfc --check   (compare Extracted/ with the ROM, exit 1 on a difference)
+// Usage: node tools/extractAssets93s.js [nhlpa93retail.sfc]           (write every asset and the marker)
+//        node tools/extractAssets93s.js [nhlpa93retail.sfc] --check   (compare Extracted/ with the ROM, exit 1 on a difference)
+// With no ROM path it uses the ROM in the repo folder, found by its SHA-1 and size (tools/roms.js).
 // Each entry: file name below Extracted/, first ROM address, end address (exclusive), as SNES LoROM/FastROM addresses
 // ($80:8000 is the start of the file). An entry with `pieces` is one file made of several ranges in ROM order.
 const fs = require('fs');
@@ -207,10 +208,10 @@ function readPlayerNames(rom) {
 const slice = (rom, a) => Buffer.concat(rangesOf(a).map(([s, e]) => rom.subarray(romOffset(s), romOffset(e))));
 
 const args = process.argv.slice(2);
-const romFile = args.find((a) => !a.startsWith('-'));
+const romFile = args.find((a) => !a.startsWith('-')) || require('./roms').romPath('retail');
 const check = args.includes('--check');
 if (!romFile) {
-    console.error('Usage: node tools/extractAssets93s.js <rom_file_path> [--check]');
+    console.error('Usage: node tools/extractAssets93s.js [<rom_file_path>] [--check]   (the ROM in the repo folder when no path is given)');
     process.exit(1);
 }
 const rom = fs.readFileSync(romFile);

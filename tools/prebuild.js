@@ -6,26 +6,24 @@
 
 const GAME = "NHLPA Hockey '93 (Super Nintendo)";
 const EXTRACTOR = 'tools/extractAssets93s.js';
-const ROM = { label: "NHLPA Hockey '93 SNES retail (USA)", file: 'nhlpa93retail.sfc',
-              sha1: '76a01492cfb656e9fce0094bca356c312adfea0e', size: 0x80000 };
+const { ROMS, findRom, sha1Of } = require('./roms');
+const ROM = ROMS.retail;
 // ---------------------------------------------------------------------------------------------
 const fs = require('fs');
 const path = require('path');
-const crypto = require('crypto');
 const { spawnSync } = require('child_process');
 
 const ROOT = path.join(__dirname, '..');
 const EXTRACTED = path.join(ROOT, 'Extracted');
 const MARKER = path.join(EXTRACTED, '.extract-complete.json');
 
-const sha1Of = (buf) => crypto.createHash('sha1').update(buf).digest('hex');
 const sizeText = (n) => `${n} bytes (0x${n.toString(16).toUpperCase()}, ${n / 0x100000 >= 1 ? n / 0x100000 + ' MB' : n / 1024 + ' KB'})`;
 
 function romBlock(rom) {
     return [
         `  ${rom.label}`,
-        `    Put it at:  ${path.join(ROOT, rom.file)}`,
-        `                (${rom.file} in the repo folder)`,
+        `    Put it in:  ${ROOT}`,
+        `                (any file name: it is found by its SHA-1 and size; ${rom.file} is the usual name)`,
         `    SHA-1:      ${rom.sha1}`,
         `    Size:       ${sizeText(rom.size)}`,
     ].join('\n');
@@ -37,7 +35,7 @@ function stop(lines) {
     console.error(lines.join('\n'));
     console.error('');
     console.error(`ROMs are not included in the repo. Use your own dump of the ${GAME} cartridge,`);
-    console.error('saved under exactly that file name (no copier header), then run the build again. The assets in Extracted/');
+    console.error('in the repo folder (any file name, no copier header), then run the build again. The assets in Extracted/');
     console.error('are then extracted from it automatically.');
     console.error('');
     process.exit(1);
@@ -61,16 +59,18 @@ function extractedState() {
     return null;
 }
 
-// 1. The ROM this build needs.
-const romPath = path.join(ROOT, ROM.file);
-if (!fs.existsSync(romPath)) stop(['This build needs this ROM, exactly the version shown:', romBlock(ROM)]);
-const data = fs.readFileSync(romPath);
-if (sha1Of(data) !== ROM.sha1 || data.length !== ROM.size) {
-    stop([`Found ${romPath}, but it is not the right ROM:`,
-          `    its SHA-1 is ${sha1Of(data)}, size ${sizeText(data.length)}.`,
-          '    (a bad dump, a hack, another revision, or a file with a 512-byte copier header)',
-          'This build needs this ROM, exactly the version shown:', romBlock(ROM)]);
+// 1. The ROM this build needs: a file in the repo folder with this SHA-1 and size, whatever its name.
+const found = findRom(ROM);
+if (!found.ok) {
+    if (found.reason === 'wrong') {
+        stop([`Found ${found.path}, but it is not the right ROM:`,
+              `    its SHA-1 is ${found.sha1}, size ${sizeText(found.size)}.`,
+              '    (a bad dump, a hack, another revision, or a file with a 512-byte copier header)',
+              'This build needs this ROM, exactly the version shown:', romBlock(ROM)]);
+    }
+    stop(['This build needs this ROM, exactly the version shown:', romBlock(ROM)]);
 }
+const romPath = found.path;
 
 // 2. Extracted/ assets: extract again if missing or incomplete.
 const why = extractedState();
@@ -78,7 +78,7 @@ if (!why) {
     console.log('prebuild: ROM OK, Extracted/ assets complete.');
     process.exit(0);
 }
-console.log(`prebuild: ${why}; extracting assets from ${ROM.file} ...`);
+console.log(`prebuild: ${why}; extracting assets from ${path.relative(ROOT, romPath)} ...`);
 const res = spawnSync(process.execPath, [path.join(ROOT, EXTRACTOR), romPath], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
 const out = (res.stdout || '') + (res.stderr || '');
 const after = res.status === 0 ? extractedState() : 'the extractor failed';

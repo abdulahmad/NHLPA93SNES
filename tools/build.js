@@ -5,7 +5,7 @@
 //   node tools/build.js --clean                delete output/ and Extracted/
 // --no-color (or NO_COLOR) turns the colors off; they are also off when the output is not a terminal.
 // retail: assembled with asar 1.91 (tools/bin/asar from tools/setup.sh, else asar on PATH), the header patched if the image
-// grew (tools/patchHeader.js; the stock image is left as it is), verified against nhlpa93retail.sfc.
+// grew (tools/patchHeader.js; the stock image is left as it is), verified against the ROM (found in the repo folder by its SHA-1 and size, any file name: tools/roms.js).
 // The mode has its own folder: output/retail/nhlpa93snes.sfc is the ROM, output/retail/obj/ holds the intermediates
 // (asar's log and its symbol file).
 const fs = require('fs');
@@ -16,7 +16,7 @@ const ROOT = path.join(__dirname, '..');
 const WIN = process.platform === 'win32';
 const BIN = path.join(ROOT, 'tools', 'bin', WIN ? 'asar.exe' : 'asar');
 const MODES = {
-    retail: { ref: 'nhlpa93retail.sfc' },
+    retail: {},
 };
 
 const args = process.argv.slice(2);
@@ -26,6 +26,7 @@ const mode = MODES[modeName];
 const OUT = path.join(ROOT, 'output', modeName);
 const OBJ = path.join(OUT, 'obj');
 const ROM = 'nhlpa93snes.sfc';
+const { ROMS, findRom } = require('./roms');
 const rel = (p) => path.relative(ROOT, p).split(path.sep).join('/');
 
 // ANSI colors: off when stdout is not a terminal, NO_COLOR is set, or --no-color. Windows 10+ cmd and
@@ -51,7 +52,7 @@ const ABOUT = {
     prebuild: 'check the retail ROM and extract graphics/sound/text assets into Extracted/',
     assemble: 'asar turns src/nhlpa93snes.asm into the ROM image',
     header: 'pad the image and store the checksum if the ROM grew (the stock image is left as it is)',
-    verify: 'compare byte-for-byte with the retail ROM (nhlpa93retail.sfc)',
+    verify: 'compare byte-for-byte with the retail ROM',
     output: 'delete the built ROMs and intermediates in output/',
     Extracted: 'delete extracted graphics/sound assets (rebuilt by the next build)',
 };
@@ -148,7 +149,7 @@ function buildTeamData() {
     begin('names');
     const srcPath = path.join(ROOT, 'src', 'data', 'teamdata93s.asm');
     const namesPath = path.join(ROOT, 'Extracted', 'Text', 'PlayerNames.txt');
-    if (!fs.existsSync(namesPath)) fail('names', `${rel(namesPath)} is missing, run node tools/extractAssets93s.js nhlpa93retail.sfc`);
+    if (!fs.existsSync(namesPath)) fail('names', `${rel(namesPath)} is missing, run node tools/prebuild.js`);
     const names = fs.readFileSync(namesPath, 'latin1').split('\n');
     if (names[names.length - 1] === '') names.pop();
     let i = 0;
@@ -224,9 +225,10 @@ function buildTeamData() {
 
     // 5. verify against the reference ROM.
     begin('verify');
-    const r = await node('verifyRom.js', [final, mode.ref]);
+    const refPath = findRom(ROMS.retail).path;
+    const r = await node('verifyRom.js', [final, refPath]);
     const first = r.out.split(/\r?\n/).find((l) => l.trim()) || '';
     if (r.status !== 0 || !/^MATCH/.test(first)) fail('verify', rel(final), r.out, 'MISMATCH');
-    step('verify', `MATCH ${rel(final)} == ${mode.ref}`);
+    step('verify', `MATCH ${rel(final)} == ${rel(refPath)}`);
     detail(r.out);
 })();
