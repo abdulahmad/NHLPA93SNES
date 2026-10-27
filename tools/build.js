@@ -130,6 +130,15 @@ async function assemble(name) {
     const out = path.join(OBJ, ROM);
     fs.rmSync(out, { force: true });
     const argv = ['--fix-checksum=off', '--symbols=wla', `--symbols-path=${base}.sym`, 'src/nhlpa93snes.asm', out];
+    // No asar yet (neither tools/bin nor on PATH): fetch it with the setup script (Windows: the prebuilt release; elsewhere: build v1.91).
+    if (!fs.existsSync(BIN) && (await run('asar', ['--version'])).status === -1) {
+        const setup = WIN
+            ? ['powershell', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', path.join(__dirname, 'setup.ps1')]]
+            : ['sh', [path.join(__dirname, 'setup.sh')]];
+        console.log('                   asar not found: installing asar 1.91 into tools/bin (tools/' + path.basename(setup[1][setup[1].length - 1]) + ')');
+        const s = await run(setup[0], setup[1]);
+        if (s.status !== 0) fail(name, 'asar 1.91 not found and the automatic install failed (run `sh tools/setup.sh` or `tools\\setup.ps1` yourself, or put asar on PATH)', s.out);
+    }
     let r = fs.existsSync(BIN) ? await run(BIN, argv) : await run('asar', argv);
     if (r.status === -1 && !fs.existsSync(BIN)) fail(name, 'asar 1.91 not found: run `sh tools/setup.sh` (Linux/macOS) or `tools\\setup.ps1` (Windows), or put asar on PATH', r.out);
     const logPath = `${base}.log`;
