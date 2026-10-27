@@ -91,8 +91,8 @@ Those are NOT recommendations. Only the structure/style choices are.
   2. G: `.godds` on its own line then `dc.b 197,34`; S `.godds:\tdb 197,34` on the label line (all but ASE).
      G `.sr` then `hex2 ...` on the next line; S `.sr:\t%hex2(...)`. Rec 1.9 (P=L,E=S,B=Y): put data on the next line
      (S already does this for ASE `.godds`, `.ls:`, `.pld:`).
-  3. Player lines: G `Player 'Patrick Roy',<tab>335F,AFFF,0100,FFFF` (names padded with tabs so ratings align, no `$`);
-     S `%Player("Patrick Roy", $335F,...)` single space. Rec 1.10 (P=L,E=S,B=Y): column-align ratings with tabs
+  3. Player lines: G `Player 'P001______',<tab>335F,AFFF,0100,FFFF` (names padded with tabs so ratings align, no `$`);
+     S `%Player("P001______", $335F,...)` single space. Rec 1.10 (P=L,E=S,B=Y): column-align ratings with tabs
      like G (cosmetic). Macro `$`-prefix requirement is an asar limit (the macro could prepend `$` via
      `$<w1>` - see 4).
   4. List terminator: G `dc.b 0,2`; S `dw 2 ; end of the player list (empty name)`. Same bytes. Align to

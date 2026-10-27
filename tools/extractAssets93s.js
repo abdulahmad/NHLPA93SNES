@@ -3,6 +3,8 @@
 // teamdata93s.asm, packed graphics and maps, sprite sets, text and sound blocks) into Extracted/<Graphics|Sound|Text>/
 // (the folders of the NHLPA 93 Genesis project). Extracted/ is not committed. tools/prebuild.js runs this when Extracted/
 // is missing or stale; this script writes Extracted/.extract-complete.json last. docs/file-formats.md describes the formats.
+// It also writes Extracted/Text/PlayerNames.txt, the real player names (one per line, in the order of the %Player rows of
+// teamdata93s.asm, which holds placeholders): tools/build.js puts them into the copy of teamdata93s.asm that is assembled.
 // Usage: node tools/extractAssets93s.js nhlpa93retail.sfc           (write every asset and the marker)
 //        node tools/extractAssets93s.js nhlpa93retail.sfc --check   (compare Extracted/ with the ROM, exit 1 on a difference)
 // Each entry: file name below Extracted/, first ROM address, end address (exclusive), as SNES LoROM/FastROM addresses
@@ -182,6 +184,26 @@ const assets = [
 const romOffset = (a) => ((a >> 16) & 0x7F) * 0x8000 + (a & 0x7FFF);
 const sha1Of = (buf) => crypto.createHash('sha1').update(buf).digest('hex');
 const rangesOf = (a) => a.pieces || [[a.start, a.end]];
+// The player names, in the order of the %Player rows of src/data/teamdata93s.asm: the team records in ROM order, the players of
+// each record in order. TeamList ($83:8000) holds 26 long pointers to the team records; a record starts with six word offsets,
+// the first (Playerdata) leads to the players: each is a length word that counts itself and the name, the name and 8 rating
+// bytes; an empty String (length word 2) ends them.
+const TEAM_LIST = 0x838000;
+const PLAYER_NAMES = 'Text/PlayerNames.txt';
+function readPlayerNames(rom) {
+    const list = romOffset(TEAM_LIST), records = [];
+    for (let i = 0; i < 26; i++) records.push(romOffset(rom.readUInt32LE(list + i * 4)));
+    records.sort((a, b) => a - b);
+    const names = [];
+    for (const rec of records) {
+        let pos = rec + rom.readUInt16LE(rec);
+        for (let len = rom.readUInt16LE(pos); len > 2; len = rom.readUInt16LE(pos)) {
+            names.push(rom.toString('latin1', pos + 2, pos + len));
+            pos += len + 8;
+        }
+    }
+    return names;
+}
 const slice = (rom, a) => Buffer.concat(rangesOf(a).map(([s, e]) => rom.subarray(romOffset(s), romOffset(e))));
 
 const args = process.argv.slice(2);
@@ -201,6 +223,17 @@ console.log('ROM: NHLPA Hockey \'93 SNES retail (USA)');
 
 let bad = 0;
 const written = [];
+const playerNames = Buffer.from(readPlayerNames(rom).join('\n') + '\n', 'latin1');
+{
+    const out = path.join(EXTRACTED, PLAYER_NAMES);
+    if (check) {
+        if (!fs.existsSync(out) || !fs.readFileSync(out).equals(playerNames)) { console.log(`differs: Extracted/${PLAYER_NAMES}`); bad++; }
+    } else {
+        fs.mkdirSync(path.dirname(out), { recursive: true });
+        fs.writeFileSync(out, playerNames);
+        written.push({ path: PLAYER_NAMES, size: playerNames.length });
+    }
+}
 for (const a of assets) {
     const out = path.join(EXTRACTED, a.file);
     const data = slice(rom, a);
@@ -213,7 +246,7 @@ for (const a of assets) {
     }
 }
 // Files in Extracted/ that are not assets: reported by --check, deleted by an extraction.
-const names = new Set(assets.map((a) => a.file));
+const names = new Set([...assets.map((a) => a.file), PLAYER_NAMES]);
 const walk = (d) => (fs.existsSync(d) ? fs.readdirSync(d, { withFileTypes: true }) : []).flatMap((e) => (e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]));
 for (const f of walk(EXTRACTED)) {
     const rel = path.relative(EXTRACTED, f).split(path.sep).join('/');
@@ -222,9 +255,9 @@ for (const f of walk(EXTRACTED)) {
     else { fs.rmSync(f); console.log(`deleted (not an asset): Extracted/${rel}`); }
 }
 if (check) {
-    console.log(`${assets.length - bad} of ${assets.length} assets match the ROM`);
+    console.log(`${assets.length + 1 - bad} of ${assets.length + 1} assets match the ROM`);
     process.exit(bad ? 1 : 0);
 }
 fs.writeFileSync(MARKER, JSON.stringify({ rom: 'retail', romSha1, extractor: path.basename(__filename),
     extractorSha1: sha1Of(fs.readFileSync(__filename)), files: written }, null, 1) + '\n');
-console.log(`Extracted ${assets.length} assets from NHLPA 93 SNES ROM.`);
+console.log(`Extracted ${assets.length} assets and ${playerNames.toString('latin1').split('\n').length - 1} player names from NHLPA 93 SNES ROM.`);
