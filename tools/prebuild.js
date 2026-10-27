@@ -19,25 +19,43 @@ const MARKER = path.join(EXTRACTED, '.extract-complete.json');
 
 const sizeText = (n) => `${n} bytes (0x${n.toString(16).toUpperCase()}, ${n / 0x100000 >= 1 ? n / 0x100000 + ' MB' : n / 1024 + ' KB'})`;
 
+// The ROM message: colors when the build asked for them (NHL_COLOR) or on a terminal; emoji on a UTF-8 terminal (NHL_EMOJI=0/1 overrides).
+const COLOR = Boolean(process.env.NHL_COLOR) || (Boolean(process.stderr.isTTY) && !('NO_COLOR' in process.env));
+const EMOJI = process.env.NHL_EMOJI !== undefined ? process.env.NHL_EMOJI === '1'
+    : process.platform === 'win32' ? Boolean(process.env.WT_SESSION || process.env.TERM_PROGRAM || process.env.ConEmuANSI)
+    : /utf-?8/i.test(process.env.LC_ALL || process.env.LC_CTYPE || process.env.LANG || '');
+const sgr = (code) => (t) => (COLOR ? `\x1b[${code}m${t}\x1b[0m` : String(t));
+const k = { red: sgr('1;31'), green: sgr('32'), yellow: sgr('33'), cyan: sgr('36'), bold: sgr('1'), dim: sgr('2') };
+const icon = (emoji, plain) => (EMOJI ? `${emoji} ` : plain ? `${plain} ` : '');
+
 function romBlock(rom) {
     return [
-        `  ${rom.label}`,
-        `    Put it in:  ${ROOT}`,
-        `                (any file name: it is found by its SHA-1 and size; ${rom.file} is the usual name)`,
-        `    SHA-1:      ${rom.sha1}`,
-        `    Size:       ${sizeText(rom.size)}`,
+        `    ${k.bold(rom.label)}`,
+        `      ${k.cyan('Put it in:')}  ${ROOT}`,
+        `      ${k.cyan('Any name:')}   it is found by its SHA-1 and size (${rom.file} is the usual name)`,
+        `      ${k.cyan('SHA-1:')}      ${k.yellow(rom.sha1)}`,
+        `      ${k.cyan('Size:')}       ${sizeText(rom.size)}`,
     ].join('\n');
 }
 
-function stop(lines) {
-    console.error('');
-    console.error('*** BUILD STOPPED: ROM file needed ***');
-    console.error(lines.join('\n'));
-    console.error('');
-    console.error(`ROMs are not included in the repo. Use your own dump of the ${GAME} cartridge,`);
-    console.error('in the repo folder (any file name, no copier header), then run the build again. The assets in Extracted/');
-    console.error('are then extracted from it automatically.');
-    console.error('');
+// info: { building: what the build needs, wrong: [{ path, sha1, size }] files that are not the right ROM, hint: what a wrong file may be,
+//         have: [{ label, id }] other revisions whose ROM is in the folder, want: [rom] the ROMs that would let this build run }
+function stop(info) {
+    const out = ['', k.red(`${icon('\u{1F6D1}', 'X')}BUILD STOPPED: ROM needed`)];
+    out.push(`${icon('\u{1F3D2}', '')}You are building ${k.cyan(info.building)}, but ${info.wrong.length ? 'the ROM in the repo folder is not that one' : 'no ROM of ' + (info.want.length > 1 ? 'those revisions' : 'that revision') + ' is in the repo folder'}.`);
+    for (const w of info.wrong) {
+        out.push('', k.yellow(`${icon('\u26A0\uFE0F', '!')}Found ${w.path}, but it is not the right ROM:`));
+        out.push(`    its SHA-1 is ${k.yellow(w.sha1)}, size ${sizeText(w.size)}.`);
+        out.push(k.dim(`    (${info.hint})`));
+    }
+    if (info.have && info.have.length) {
+        out.push('', k.green(`${icon('\u2705', 'OK')}The ROMs you have, and the command that builds each:`));
+        for (const h of info.have) out.push(`    ${k.green('\u2713')} ${h.label}  ${k.dim('->')}  ${k.bold(`npm run build:${h.id}`)}`);
+    }
+    out.push('', k.cyan(`${icon('\u{1F4C0}', '')}${info.have && info.have.length ? 'To build the one you asked for, add this ROM' : info.want.length > 1 ? 'This build needs one of these ROMs, each exactly the version shown' : 'This build needs this ROM, exactly the version shown'}:`));
+    for (const rom of info.want) out.push(romBlock(rom));
+    out.push('', k.dim(`${icon('\u2139\uFE0F', '')}ROMs are not included in the repo. Use your own dump of the ${GAME} cartridge, in the repo folder under any file name${info.noheader ? ' (no copier header)' : ''}, then run the build again. The assets in Extracted/ are then extracted from it automatically.`), '');
+    console.error(out.join('\n'));
     process.exit(1);
 }
 
@@ -62,13 +80,8 @@ function extractedState() {
 // 1. The ROM this build needs: a file in the repo folder with this SHA-1 and size, whatever its name.
 const found = findRom(ROM);
 if (!found.ok) {
-    if (found.reason === 'wrong') {
-        stop([`Found ${found.path}, but it is not the right ROM:`,
-              `    its SHA-1 is ${found.sha1}, size ${sizeText(found.size)}.`,
-              '    (a bad dump, a hack, another revision, or a file with a 512-byte copier header)',
-              'This build needs this ROM, exactly the version shown:', romBlock(ROM)]);
-    }
-    stop(['This build needs this ROM, exactly the version shown:', romBlock(ROM)]);
+    stop({ building: ROM.label, wrong: found.reason === 'wrong' ? [found] : [], have: [], want: [ROM], noheader: true,
+           hint: 'a bad dump, a hack, another revision, or a file with a 512-byte copier header' });
 }
 const romPath = found.path;
 
