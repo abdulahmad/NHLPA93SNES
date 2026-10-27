@@ -38,7 +38,7 @@ The SNES port is a hybrid: it began as a port of NHL92 Genesis (likely while NHL
 
 1. Install node from https://nodejs.org/en/download if it isn't already installed on your machine. No `npm i` is needed: the scripts have no dependencies.
 
-2. Install asar 1.91 into `tools/bin` with `sh tools/setup.sh` (Linux/macOS; needs git, cmake and a C++ compiler) or `tools\setup.ps1` (Windows). An asar 1.91 on PATH also works.
+2. asar 1.91 is installed into `tools/bin` by the first build if it is missing; to do it yourself, run `sh tools/setup.sh` (Linux/macOS; needs git, cmake and a C++ compiler) or `tools\setup.ps1` (Windows). An asar 1.91 on PATH also works.
 
 3. Copy the NHLPA Hockey 93 Super Nintendo retail ROM into the `NHLPA93SNES` folder (no copier header). `nhlpa93retail.sfc` is the usual name, but any file name works: the build finds the ROM by its SHA-1 and size (`tools/roms.js`). It is not in the repo (`.sfc`, `.smc` and `.bin` files there are gitignored).
 
