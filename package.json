@@ -4,9 +4,9 @@
   "description": "Build scripts for NHLPA Hockey 93 (Super Nintendo)",
   "scripts": {
     "assets": "node tools/prebuild.js",
-    "extractassets": "node tools/extractAssets93s.js nhlpa93retail.sfc",
+    "extractassets": "node tools/extractAssets93s.js",
     "build:retail": "node tools/build.js retail",
-    "verify:retail": "node tools/verifyRom.js output/retail/nhlpa93snes.sfc nhlpa93retail.sfc",
+    "verify:retail": "node tools/verifyRom.js output/retail/nhlpa93snes.sfc retail",
     "clean": "node tools/build.js --clean"
   },
   "author": "",

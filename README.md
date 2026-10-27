@@ -40,7 +40,7 @@ The SNES port is a hybrid: it began as a port of NHL92 Genesis (likely while NHL
 
 2. Install asar 1.91 into `tools/bin` with `sh tools/setup.sh` (Linux/macOS; needs git, cmake and a C++ compiler) or `tools\setup.ps1` (Windows). An asar 1.91 on PATH also works.
 
-3. Copy the NHLPA Hockey 93 Super Nintendo retail ROM into the `NHLPA93SNES` folder as `nhlpa93retail.sfc` (no copier header). It is not in the repo (gitignored); the build refuses any other file at that name.
+3. Copy the NHLPA Hockey 93 Super Nintendo retail ROM into the `NHLPA93SNES` folder (no copier header). `nhlpa93retail.sfc` is the usual name, but any file name works: the build finds the ROM by its SHA-1 and size (`tools/roms.js`). It is not in the repo (`.sfc`, `.smc` and `.bin` files there are gitignored).
 
     | ROM | File name | SHA-1 | Size |
     | --- | --- | --- | --- |
@@ -57,7 +57,7 @@ The SNES port is a hybrid: it began as a port of NHL92 Genesis (likely while NHL
     The built ROM is `output/retail/nhlpa93snes.sfc`; `output/retail/obj/` holds asar's log and its symbol file (`nhlpa93snes.sym`, read by `tools/gen_file_map.py` and `tools/scan_cleanup.py`).
 
 Other scripts:
-- `npm run assets`: ROM check and asset extraction only (`npm run extractassets` runs the extractor directly; `node tools/extractAssets93s.js nhlpa93retail.sfc --check` compares `Extracted/` with the ROM)
+- `npm run assets`: ROM check and asset extraction only (`npm run extractassets` runs the extractor directly; `node tools/extractAssets93s.js --check` compares `Extracted/` with the ROM)
 - `npm run clean`: delete `output/` and `Extracted/` (re-extracted by the next build)
 - `tools/verify_all.sh`: extracts fresh, builds, and runs the asset and comment checks, printing ALL MATCH
 - Add `--verbose` to `node tools/build.js ...` for the full tool output; `--no-color` (or `NO_COLOR`) turns the colors off

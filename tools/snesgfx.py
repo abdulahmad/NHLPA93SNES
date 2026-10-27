@@ -9,7 +9,7 @@ Formats (see docs/file-formats.md):
   *.sanim     sprite frame set: header, first piece of each frame, pieces, tiles (Extracted/Graphics/Sprites/Sprites<first>_<last>.sanim)
 
 Commands:
-  unpack IN [-o OUT]                  unpack a .pak file (or --rom ADDR: a packed stream in nhlpa93retail.sfc)
+  unpack IN [-o OUT]                  unpack a .pak file (or --rom ADDR: a packed stream in the retail ROM)
   tiles IN [-o PNG]                   tile sheet of a .chr / unpacked file (--offset, --count, --columns)
   map MAP --tiles CHR [-o PNG]        render a map with its tiles (--width in tiles, --map-offset, --tiles-offset)
   screen IN.map.sjim [-o PNG]         unpack a packed screen and render it (--map-size, --pal-offset, --tiles-offset)
@@ -35,7 +35,8 @@ import os, struct
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ROM = os.path.join(ROOT, 'nhlpa93retail.sfc')
+import rompath
+ROM = rompath.rom_path()
 
 
 def lorom_offset(addr):

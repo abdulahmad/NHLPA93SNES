@@ -12,7 +12,7 @@ written as big endian words (as on the Genesis, the team data was ported as it w
 The `src/**/*.asm` files `incbin` binary assets from `Extracted/{Graphics,Sound,Text}/`, the folder layout of the NHLPA 93 Genesis
 project. `Extracted/` is not committed. `tools/extractAssets93s.js` writes it from `nhlpa93retail.sfc` (143 assets, each an exact ROM range),
 `tools/prebuild.js` checks the ROM SHA-1 and runs the extraction when `Extracted/` is missing or stale, and `tools/build.js` runs
-`prebuild.js` first, so the build stays byte-identical. `node tools/extractAssets93s.js nhlpa93retail.sfc --check` compares the folder with the ROM.
+`prebuild.js` first, so the build stays byte-identical. `node tools/extractAssets93s.js --check` compares the folder with the ROM (the ROM in the repo folder, found by its SHA-1 and size).
 
 ### Names
 

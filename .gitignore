@@ -2,9 +2,12 @@ output/
 Extracted/
 *.log
 __pycache__/
-# ROM dumps (not distributed; see README for file names and SHA-1)
+# ROM dumps (not distributed; see README for the SHA-1). The ROM can have any file name in the root folder.
 nhl*.sfc
 nhl*.smc
 nhl*.bin
+/*.sfc
+/*.smc
+/*.bin
 tools/bin/
 node_modules/
