@@ -1,6 +1,8 @@
 # NHLPA Hockey '93 (SNES)
 
-> **Making a mod, hack, port or other derivative work from this repo? You must credit me (abdulahmad) and everyone credited in this repo, clearly, in your own repo and in every release. See [Credits and derivative works](#credits-and-derivative-works).**
+> **📀 Game data is not included.** This repository has the assembly code only. The graphics, team palettes, sprites, sound samples, music, text and the NHLPA player names are extracted from your own copy of the original ROM when you build, and are not in the repo. You need the NHLPA Hockey 93 Super Nintendo ROM, with the file name and SHA-1 listed under [Build](#build), or the build stops.
+
+> **🤝 Making a mod, hack, port or other derivative work from this repo? You must credit me (abdulahmad) and everyone credited in this repo, clearly, in your own repo and in every release. See [Credits and derivative works](#credits-and-derivative-works).**
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for how changes are made (names, comments, layout, verification).
 
@@ -47,9 +49,10 @@ The SNES port is a hybrid: it began as a port of NHL92 Genesis (likely while NHL
 4. Run `npm run build:retail` (or `node tools/build.js retail`). It prints one line per step, with a short note under it and the result under that:
 
     1. **prebuild**: check the ROM and extract graphics, sound and text assets into `Extracted/` (when it is missing or stale).
-    2. **assemble**: asar turns `src/nhlpa93snes.asm` into the ROM image.
-    3. **header**: pad the image and store the checksum if the ROM grew (`tools/patchHeader.js`; the stock image is left as it is).
-    4. **verify**: compare byte for byte with `nhlpa93retail.sfc`.
+    2. **names**: `src/data/teamdata93s.asm` has placeholders instead of the NHLPA player names (they are licensed data and are not in the repository). The prebuild extracts the real names from your ROM into `Extracted/Text/PlayerNames.txt`, and this step writes them into a copy, `output/retail/obj/teamdata93s.asm`, which `src/banks/b83_teams.asm` includes. A name must have the length of its placeholder.
+    3. **assemble**: asar turns `src/nhlpa93snes.asm` into the ROM image.
+    4. **header**: pad the image and store the checksum if the ROM grew (`tools/patchHeader.js`; the stock image is left as it is).
+    5. **verify**: compare byte for byte with `nhlpa93retail.sfc`.
 
     The built ROM is `output/retail/nhlpa93snes.sfc`; `output/retail/obj/` holds asar's log and its symbol file (`nhlpa93snes.sym`, read by `tools/gen_file_map.py` and `tools/scan_cleanup.py`).
 

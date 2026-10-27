@@ -227,6 +227,8 @@ transpose, call, pitch envelope, echo, ...). NHL9XStudio's `docs/NHL93S-SOUND.md
 
 ## Team data (`src/data/teamdata93s.asm`)
 
+The file in git is anonymized: each `%Player` row has a same-length placeholder (`P001___` ... `P601`) instead of the NHLPA player name. `tools/extractAssets93s.js` writes the real names to `Extracted/Text/PlayerNames.txt` (one per line, in row order) and `tools/build.js` assembles a copy with them put back (`output/retail/obj/teamdata93s.asm`). Names change per row only with the same length: the player's length word counts the name.
+
 `TeamList` is a table of 26 long pointers (`NumofTeams`), indexed by team number (clubs 0-23, AllStarsEast 24, AllStarsWest 25).
 A team record, all words little endian:
 

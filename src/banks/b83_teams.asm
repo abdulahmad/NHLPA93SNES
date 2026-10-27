@@ -4,7 +4,9 @@
 if pc() < $838000
 	org $838000
 endif
-incsrc "../data/teamdata93s.asm"
+; src/data/teamdata93s.asm with the real player names put back by tools/build.js
+; (the file in git has placeholders and needs the ROM, see its header)
+incsrc "../../output/retail/obj/teamdata93s.asm"
 
 SmallFontTiles:						;packed small font tiles (100 4bpp tiles, the print font of SmallFontMap;
 									;setupice and banks $83/$88/$8F unpack them, PixelRemap83)

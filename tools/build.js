@@ -47,6 +47,7 @@ let n = 0;
 // redrawn with a green check or a red cross when it ends (cut to the terminal width so it never
 // wraps). Otherwise both lines are printed once, after the step.
 const ABOUT = {
+    names: 'put the real player names (extracted from the ROM) into a copy of src/data/teamdata93s.asm, which has placeholders',
     prebuild: 'check the retail ROM and extract graphics/sound/text assets into Extracted/',
     assemble: 'asar turns src/nhlpa93snes.asm into the ROM image',
     header: 'pad the image and store the checksum if the ROM grew (the stock image is left as it is)',
@@ -138,6 +139,32 @@ async function assemble(name) {
     return { bin: out, warnings, version: ((await run(fs.existsSync(BIN) ? BIN : 'asar', ['--version'])).out.split(/\r?\n/)[0] || 'asar').replace(/,.*/, '') };
 }
 
+// The team data: src/data/teamdata93s.asm holds placeholders instead of the NHLPA player names. The extractor writes the real
+// names from the ROM to Extracted/Text/PlayerNames.txt (one per line, in the order of the %Player rows); this copies the source
+// to obj/teamdata93s.asm with each placeholder replaced by its name, which src/banks/b83_teams.asm includes. A name must have
+// the length of its placeholder: the %Player macro writes the length word, so a different length would move the data after it.
+// The copy is two folders deeper than the source, so its relative incbin paths get one more "../".
+function buildTeamData() {
+    begin('names');
+    const srcPath = path.join(ROOT, 'src', 'data', 'teamdata93s.asm');
+    const namesPath = path.join(ROOT, 'Extracted', 'Text', 'PlayerNames.txt');
+    if (!fs.existsSync(namesPath)) fail('names', `${rel(namesPath)} is missing, run node tools/extractAssets93s.js nhlpa93retail.sfc`);
+    const names = fs.readFileSync(namesPath, 'latin1').split('\n');
+    if (names[names.length - 1] === '') names.pop();
+    let i = 0;
+    let out = fs.readFileSync(srcPath, 'latin1').replace(/^([ \t]*%Player\(")([^"]*)(")/gm, (m, a, placeholder, z) => {
+        const name = names[i++];
+        if (name === undefined) fail('names', `${rel(srcPath)} has more %Player rows than ${rel(namesPath)} has names (${names.length})`);
+        if (name.length !== placeholder.length) fail('names', `Player row ${i}: the name '${name}' has ${name.length} characters, its placeholder '${placeholder}' has ${placeholder.length}`);
+        return a + name + z;
+    });
+    if (i !== names.length) fail('names', `${rel(namesPath)} has ${names.length} names, ${rel(srcPath)} has ${i} %Player rows`);
+    out = out.replace(/incbin "\.\.\/\.\.\//g, 'incbin "../../../');
+    const dest = path.join(OBJ, 'teamdata93s.asm');
+    fs.writeFileSync(dest, out, 'latin1');
+    step('names', `${i} player names -> ${rel(dest)}`);
+}
+
 (async () => {
     if (args.includes('--clean')) {
         steps = 2;
@@ -157,7 +184,7 @@ async function assemble(name) {
         console.log(c.green('CLEAN'));
         return;
     }
-    steps = 4;
+    steps = 5;
     fs.mkdirSync(OBJ, { recursive: true });
 
     // 1. prebuild: ROM check (path, SHA-1, size) and Extracted/ assets.
@@ -171,7 +198,10 @@ async function assemble(name) {
         detail(r.out);
     }
 
-    // 2. assemble: the ROM.
+    // 2. names: the team data with the real player names, which b83_teams.asm includes.
+    buildTeamData();
+
+    // 3. assemble: the ROM.
     begin('assemble');
     const a = await assemble('assemble');
     step('assemble', `${a.version}, ${a.warnings} warnings -> ${rel(a.bin)}`);
@@ -184,7 +214,7 @@ async function assemble(name) {
         detail(`spcdriver.asm MATCH Extracted/Sound/driver.spc700 (${want.length} bytes)`);
     }
 
-    // 3. header: pad and checksum a grown image; the result is output/retail/nhlpa93snes.sfc.
+    // 4. header: pad and checksum a grown image; the result is output/retail/nhlpa93snes.sfc.
     begin('header');
     const h = await node('patchHeader.js', [a.bin]);
     if (h.status !== 0) fail('header', 'patchHeader.js failed', h.out);
@@ -192,7 +222,7 @@ async function assemble(name) {
     fs.renameSync(a.bin, final);
     step('header', h.out.trim() ? h.out.trim().replace(/^header \S+: /, '') : `image unchanged (stock size and checksum) -> ${rel(final)}`);
 
-    // 4. verify against the reference ROM.
+    // 5. verify against the reference ROM.
     begin('verify');
     const r = await node('verifyRom.js', [final, mode.ref]);
     const first = r.out.split(/\r?\n/).find((l) => l.trim()) || '';
