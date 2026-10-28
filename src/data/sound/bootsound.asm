@@ -6,11 +6,11 @@
 BootSoundUpload:					;boot SPC upload: the sound driver and its sample set (sndbank 2)
 	dw SPCDRIVERSIZE, SPCDRIVER		; block 1: the driver code
 
-SPCDriver:							;SPC700 sound program, loaded at SPCDRIVER: the 93S sound CPU driver code and
-									;tables, then the songs (order lists, channel sets, command streams) and
-									;the sound effect programs (steps $80 note, $81 repeat, $82 pitch sweep,
-									;$83 end, $84 loop). One file per song/effect in Extracted/Sound, named
-									;like the 93G fmtune_* / sfx_* command streams.
+SPCDriver:							;SPC700 sound program, loaded at SPCDRIVER: the 93S sound CPU driver code
+									;and tables, then the songs (order lists, channel sets, command streams)
+									;and the sound effect programs (steps $80 note, $81 repeat, $82 pitch
+									;sweep, $83 end, $84 loop). One file per song/effect in Extracted/Sound,
+									;named like the 93G fmtune_* / sfx_* command streams.
 SPCCode:							;the 93S sound CPU driver: code, tables and the cue pointer table
 	arch spc700
 	base SPCDRIVER
