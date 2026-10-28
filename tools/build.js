@@ -27,6 +27,8 @@ const OUT = path.join(ROOT, 'output', modeName);
 const OBJ = path.join(OUT, 'obj');
 const ROM = 'nhlpa93snes.sfc';
 const { ROMS, findRom } = require('./roms');
+// The generated file gets each player's id (the number of his placeholder, P001) as a comment at the end of his row.
+const idNote = (rest, ph) => rest + (rest.includes(';') ? ' ' : '\t;') + ph.slice(0, 4);
 const rel = (p) => path.relative(ROOT, p).split(path.sep).join('/');
 
 // ANSI colors: off when stdout is not a terminal, NO_COLOR is set, or --no-color. Windows 10+ cmd and
@@ -192,11 +194,11 @@ function buildTeamData() {
     const names = fs.readFileSync(namesPath, 'latin1').split('\n');
     if (names[names.length - 1] === '') names.pop();
     let i = 0;
-    let out = fs.readFileSync(srcPath, 'latin1').replace(/^([ \t]*%Player\(")([^"]*)(")/gm, (m, a, placeholder, z) => {
+    let out = fs.readFileSync(srcPath, 'latin1').replace(/^([ \t]*%Player\(")([^"]*)(")([^\r\n]*)/gm, (m, a, placeholder, z, rest) => {
         const name = names[i++];
         if (name === undefined) fail('names', `${rel(srcPath)} has more %Player rows than ${rel(namesPath)} has names (${names.length})`);
         if (name.length !== placeholder.length) fail('names', `Player row ${i}: the name '${name}' has ${name.length} characters, its placeholder '${placeholder}' has ${placeholder.length}`);
-        return a + name + z;
+        return a + name + z + idNote(rest, placeholder);
     });
     if (i !== names.length) fail('names', `${rel(namesPath)} has ${names.length} names, ${rel(srcPath)} has ${i} %Player rows`);
     out = out.replace(/incbin "\.\.\/\.\.\//g, 'incbin "../../../');
