@@ -24,27 +24,27 @@ SPC_T0TARGET	=	$FA
 SPC_T0OUT		=	$FD
 
 ; direct page
-port_in			=	$00			; ports 0-1 as last read (stable)
-port_out		=	$04			; sent on ports 2-3
-port_in_last	=	$08			; ports 0-1 at the previous music tick
-sfx_voices		=	$1A			; voices held by sound effects (the music leaves them alone)
-order_ptr		=	$1C			; order list pointer
-order_loop		=	$1E			; order list loop count
-key_on			=	$2F			; DSP KON shadow
-key_off			=	$30			; DSP KOF shadow
-voice_bit		=	$31			; bit of the voice being processed
-voice_x			=	$32			; its index (voice * 2)
-dsp_flg			=	$33			; DSP FLG shadow
-noise_on		=	$34			; DSP NON shadow
-echo_on			=	$35			; DSP EON shadow
-pitch_mod		=	$36			; DSP PMON shadow
-echo_feedback	=	$39			; DSP EFB shadow
+port_in			=	$00				; ports 0-1 as last read (stable)
+port_out		=	$04				; sent on ports 2-3
+port_in_last	=	$08				; ports 0-1 at the previous music tick
+sfx_voices		=	$1A				; voices held by sound effects (the music leaves them alone)
+order_ptr		=	$1C				; order list pointer
+order_loop		=	$1E				; order list loop count
+key_on			=	$2F				; DSP KON shadow
+key_off			=	$30				; DSP KOF shadow
+voice_bit		=	$31				; bit of the voice being processed
+voice_x			=	$32				; its index (voice * 2)
+dsp_flg			=	$33				; DSP FLG shadow
+noise_on		=	$34				; DSP NON shadow
+echo_on			=	$35				; DSP EON shadow
+pitch_mod		=	$36				; DSP PMON shadow
+echo_feedback	=	$39				; DSP EFB shadow
 global_transpose =	$3A
-tempo			=	$3C			; 16 bits, high byte used
-master_volume	=	$42			; 16 bits, high byte used
-percussion_base	=	$49			; first instrument of the percussion notes
-echo_volume_l	=	$4A			; 16 bits, high byte to DSP EVOLL
-echo_volume_r	=	$4C			; 16 bits, high byte to DSP EVOLR
+tempo			=	$3C				; 16 bits, high byte used
+master_volume	=	$42				; 16 bits, high byte used
+percussion_base	=	$49				; first instrument of the percussion notes
+echo_volume_l	=	$4A				; 16 bits, high byte to DSP EVOLL
+echo_volume_r	=	$4C				; 16 bits, high byte to DSP EVOLR
 
 function spcaddr(x) = x-SPCDriver+SPCDRIVER	; sound RAM address of a label in the upload
 
