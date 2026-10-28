@@ -3,59 +3,118 @@
 ; 93G macro names. The String macros write every string the print routines read: a length word that counts
 ; itself, then the text and control bytes (String: text only; the others name the shape of the bytes).
 
+; Player(name, w1, w2, w3, w4): one roster record.
+;   Emits: dw length (counts itself and the name), the name, then the 4 ratings as big-endian words.
+;   name: quoted name (the build puts the real names in place of the P001_ placeholders).
+;   w1..w4: the ratings, 4 hex digits each, written without $.
+;   Example (teamdata93s.asm:134): %Player("P001_______",335F,AFFF,0100,FFFF)
+;     -> 0D 00 50 30 30 31 5F 5F 5F 5F 5F 5F 5F 33 5F AF FF 01 00 FF FF
 macro Player(name, w1, w2, w3, w4)	;93G Player: length word (counts itself), name,
 	;ratings as 4 big-endian words (hex digits, no $)
 ?l:	dw ?e-?l
 	db "<name>"
 ?e:	db $<w1>>>8,$<w1>&$FF,$<w2>>>8,$<w2>&$FF,$<w3>>>8,$<w3>&$FF,$<w4>>>8,$<w4>&$FF
 endmacro
+; String(text): a print string.
+;   Emits: dw length (little-endian, counts the word itself), then the text. No pad.
+;   text: quoted text.
+;   Example (Pmenu.asm:124): %String("Resume Game")
+;     -> 0D 00 52 65 73 75 6D 65 20 47 61 6D 65
 macro String(text)					;93G String/StringB: length word (counts itself), then the text
 ?l:	dw ?e-?l
 	db "<text>"
 ?e:
 endmacro
+; StringCC(b): one control byte, no text.
+;   Emits: dw length (counts itself), then b.
+;   b: a byte (a control code).
+;   Example (Credits.asm:5): %StringCC($FE)
+;     -> 03 00 FE
 macro StringCC(b)					;String of one control byte (no text)
 ?l:	dw ?e-?l
 	db <b>
 ?e:
 endmacro
+; StringCp(cc, x, y): a control code and position, no text.
+;   Emits: dw length (counts itself), then cc, x, y.
+;   cc: a print control code (CC_Font*: font, palette, priority). x, y: the position.
+;   Example (TitleScreen.asm:105): %StringCp(CC_Font1Pal3,$00,$1C)
+;     -> 05 00 CF 00 1C
 macro StringCp(cc, x, y)			;control code and position, no text
 ?l:	dw ?e-?l
 	db <cc>,<x>,<y>
 ?e:
 endmacro
+; StringBt(b, text): one byte, then the text.
+;   Emits: dw length (counts itself), b, then the text.
+;   b: a byte (a control code). text: quoted text.
+;   Example (PlayoffScreen.asm:352): %StringBt(CC_Font1Pal1,"8d")
+;     -> 05 00 EF 38 64
 macro StringBt(b, text)				;one byte, then the text
 ?l:	dw ?e-?l
 	db <b>,"<text>"
 ?e:
 endmacro
+; StringCt(cc, x, y, text): a control code, position, then the text.
+;   Emits: dw length (counts itself), cc, x, y, then the text.
+;   cc: a print control code (CC_Font*). x, y: the position. text: quoted text.
+;   Example (setoptions.asm:591): %StringCt(CC_Font2,$03,$0D,"Play Mode")
+;     -> 0E 00 FE 03 0D 50 6C 61 79 20 4D 6F 64 65
 macro StringCt(cc, x, y, text)		;control code, x, y, then the text (a print control code sets the
 	;priority, font and map, see CC_Font*)
 ?l:	dw ?e-?l
 	db <cc>,<x>,<y>,"<text>"
 ?e:
 endmacro
+; StringCtc(cc, x, y, text, cc2, x2, y2): StringCt, then a second control code and position.
+;   Emits: dw length (counts itself), cc, x, y, the text, cc2, x2, y2.
+;   cc, cc2: print control codes. x, y, x2, y2: positions. text: quoted text.
+;   Example (ShowGoalBox.asm:94): %StringCtc(CC_Font1Pri,$0E,$06,"Assist by:",CC_Font1Pri,$0C,$07)
+;     -> 12 00 BF 0E 06 41 73 73 69 73 74 20 62 79 3A BF 0C 07
 macro StringCtc(cc, x, y, text, cc2, x2, y2)	;StringCt, then a second code and position
 ?l:	dw ?e-?l
 	db <cc>,<x>,<y>,"<text>",<cc2>,<x2>,<y2>
 ?e:
 endmacro
+; StringCtctc(cc, x, y, text, cc2, x2, y2, text2, cc3, x3, y3): two texts, three codes and positions.
+;   Emits: dw length (counts itself), cc, x, y, text, cc2, x2, y2, text2, cc3, x3, y3.
+;   cc..cc3: print control codes. x, y pairs: positions. text, text2: quoted text.
+;   Example (ShowInjuryBox.asm:31): %StringCtctc(CC_Font1Pri,$0C,$04,"Injury to:",CC_Font1Pri,$0C,$06,
+;   "Out for period",CC_Font1Pri,$0C,$05)
+;     -> 23 00 BF 0C 04 'Injury to:' BF 0C 06 'Out for period' BF 0C 05
 macro StringCtctc(cc, x, y, text, cc2, x2, y2, text2, cc3, x3, y3)	;two texts, three codes
 ?l:	dw ?e-?l
 	db <cc>,<x>,<y>,"<text>",<cc2>,<x2>,<y2>,"<text2>",<cc3>,<x3>,<y3>
 ?e:
 endmacro
+; StringCt4bCt(cc, x, y, text, b1, b2, b3, b4, cc2, x2, y2, text2): StringCt, four bytes, then a
+;   second control code, position and text.
+;   Emits: dw length (counts itself), cc, x, y, text, b1..b4, cc2, x2, y2, text2.
+;   cc, cc2: print control codes. x, y pairs: positions. text, text2: quoted text. b1..b4: bytes.
+;   Example (updatepwrplay.asm:39):
+;   %StringCt4bCt($BF, $01, $19, "   ", $16, $17, $18, $19, $BF, $01, $1A, "   ")
+;     -> 12 00 BF 01 19 20 20 20 16 17 18 19 BF 01 1A 20 20 20
 macro StringCt4bCt(cc, x, y, text, b1, b2, b3, b4, cc2, x2, y2, text2)	;StringCt, four bytes, then a second
 	;code, position and text
 ?l:	dw ?e-?l
 	db <cc>,<x>,<y>,"<text>",<b1>,<b2>,<b3>,<b4>,<cc2>,<x2>,<y2>,"<text2>"
 ?e:
 endmacro
+; StringTb(text, b): the text, then one more byte (e.g. a tile such as the small "st").
+;   Emits: dw length (counts itself), the text, then b. No pad.
+;   text: quoted text. b: a byte.
+;   Example (PerLabels.asm): %StringTb("1",$12)
+;     -> 04 00 31 12
 macro StringTb(text, b)				;the text, then one byte
 ?l:	dw ?e-?l
 	db "<text>",<b>
 ?e:
 endmacro
+; StringBytes(...): raw bytes, no text.
+;   Emits: dw length (counts itself), then each argument as one byte. No pad.
+;   ...: any number of bytes.
+;   Example (94S PerLabels.asm:8; unused here): %StringBytes($0E,$0F,$10,$11)
+;     -> 06 00 0E 0F 10 11
 macro StringBytes(...)				;length word (counts itself), then raw bytes (no text or pad; as 94S)
 ?l:	dw ?e-?l
 	!StringBytesI #= 0
@@ -66,6 +125,11 @@ macro StringBytes(...)				;length word (counts itself), then raw bytes (no text 
 ?e:
 endmacro
 
+; hex2(w1, w2, w3, w4): four big-endian words of hex data.
+;   Emits: 8 bytes, each word high byte first.
+;   w1..w4: 4 hex digits each, written without $ (the macro adds it).
+;   Example (teamdata93s.asm:100): %hex2(7020,00D6,9999,9099)
+;     -> 70 20 00 D6 99 99 90 99
 macro hex2(w1, w2, w3, w4)			;93G hex2: 4 words as big-endian bytes (hex digits, no $)
 	db $<w1>>>8,$<w1>&$FF,$<w2>>>8,$<w2>&$FF,$<w3>>>8,$<w3>&$FF,$<w4>>>8,$<w4>&$FF
 endmacro
