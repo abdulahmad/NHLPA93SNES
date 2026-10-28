@@ -56,6 +56,16 @@ macro StringTb(text, b)				;the text, then one byte
 	db "<text>",<b>
 ?e:
 endmacro
+macro StringBytes(...)				;length word (counts itself), then raw bytes (no text or pad; as 94S)
+?l:	dw ?e-?l
+	!StringBytesI #= 0
+	while !StringBytesI < sizeof(...)
+		db <...[!StringBytesI]>
+		!StringBytesI #= !StringBytesI+1
+	endwhile
+?e:
+endmacro
+
 macro hex2(w1, w2, w3, w4)			;93G hex2: 4 words as big-endian bytes (hex digits, no $)
 	db $<w1>>>8,$<w1>&$FF,$<w2>>>8,$<w2>&$FF,$<w3>>>8,$<w3>&$FF,$<w4>>>8,$<w4>&$FF
 endmacro
