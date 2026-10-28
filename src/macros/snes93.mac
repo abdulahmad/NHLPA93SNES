@@ -110,20 +110,6 @@ macro StringTb(text, b)				;the text, then one byte
 	db "<text>",<b>
 ?e:
 endmacro
-; StringBytes(...): raw bytes, no text.
-;   Emits: dw length (counts itself), then each argument as one byte. No pad.
-;   ...: any number of bytes.
-;   Example (94S PerLabels.asm:8; unused here): %StringBytes($0E,$0F,$10,$11)
-;     -> 06 00 0E 0F 10 11
-macro StringBytes(...)				;length word (counts itself), then raw bytes (no text or pad; as 94S)
-?l:	dw ?e-?l
-	!StringBytesI #= 0
-	while !StringBytesI < sizeof(...)
-		db <...[!StringBytesI]>
-		!StringBytesI #= !StringBytesI+1
-	endwhile
-?e:
-endmacro
 
 ; hex2(w1, w2, w3, w4): four big-endian words of hex data.
 ;   Emits: 8 bytes, each word high byte first.
