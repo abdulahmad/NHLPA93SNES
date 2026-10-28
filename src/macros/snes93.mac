@@ -45,6 +45,12 @@ macro StringCtctc(cc, x, y, text, cc2, x2, y2, text2, cc3, x3, y3)	;two texts, t
 	db <cc>,<x>,<y>,"<text>",<cc2>,<x2>,<y2>,"<text2>",<cc3>,<x3>,<y3>
 ?e:
 endmacro
+macro StringCt4bCt(cc, x, y, text, b1, b2, b3, b4, cc2, x2, y2, text2)	;StringCt, four bytes, then a second
+	;code, position and text
+?l:	dw ?e-?l
+	db <cc>,<x>,<y>,"<text>",<b1>,<b2>,<b3>,<b4>,<cc2>,<x2>,<y2>,"<text2>"
+?e:
+endmacro
 macro StringTb(text, b)				;the text, then one byte
 ?l:	dw ?e-?l
 	db "<text>",<b>

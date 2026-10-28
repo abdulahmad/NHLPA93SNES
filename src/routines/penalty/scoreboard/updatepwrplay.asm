@@ -36,8 +36,7 @@ updatepwrplay:						;Show the power play box: the time left and the team on the 
 	inc.w tmPwrPlays,x				; new power play for the team
 .uppt:								; power play marker string at x 1, y $19, then the team
 	jsl.l printz					; print the string that follows
-	dw $0012						; printz inline string: length (counts itself), then control bytes / text
-	db $BF,$01,$19,"   ",$16,$17,$18,$19,$BF,$01,$1A,"   "
+	%StringCt4bCt($BF, $01, $19, "   ", $16, $17, $18, $19, $BF, $01, $1A, "   ")	; printz inline string
 	jsl.l GetLowestPen				; penalty time of the box
 	jsl.l PushTime					; time as text
 	jsl.l print						; print it
