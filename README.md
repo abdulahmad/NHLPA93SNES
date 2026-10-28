@@ -16,7 +16,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for how changes are made (names, comments
 
 **AI agent: start with [docs/history/START_HERE.md](docs/history/START_HERE.md).**
 
-Bitwise rebuild of NHLPA Hockey '93 for the Super Nintendo, assembled with asar. The full build is byte-identical to `nhlpa93retail.sfc` (sha1 `76a01492cfb656e9fce0094bca356c312adfea0e`). Every bank is disassembled and named; the source is laid out like the NHLPA 93 Genesis source (one file per bank, one file per routine, routine folders named after the 93G modules).
+Reverse engineered source of NHLPA Hockey '93 for the Super Nintendo, assembled with asar. The full build is byte-identical to `nhlpa93retail.sfc` (sha1 `76a01492cfb656e9fce0094bca356c312adfea0e`). Every bank is disassembled and named; the source is laid out like the NHLPA 93 Genesis source (one file per bank, one file per routine, routine folders named after the 93G modules).
 
 ## Lineage
 
