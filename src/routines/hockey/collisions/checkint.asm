@@ -75,7 +75,7 @@ checkint:							;A goalie and another player collide: the skater falls, and a ha
 	lda.w #$0014
 	sec
 	sbc.w aggress,x					; 20 minus aggression
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	cmp.w #$0003					; 3 in 20
 	bcs .rtl
 	lda.w gmode						; not in highlights

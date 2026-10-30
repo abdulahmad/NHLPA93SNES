@@ -69,7 +69,7 @@ assscore:							;Assignment: celebrating a goal; the scorer pumps his arm
 	jsl.l SetSPA					; start animation d1
 .1:									;temp1 = random 120
 	lda.w #120
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	sta.w temp1,x					; store it
 .rtl:								; return
 	rtl

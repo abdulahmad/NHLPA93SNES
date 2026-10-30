@@ -109,7 +109,7 @@ chk4shot:							;Computer player X looks for a shot. A penalty killer under pres
 	bpl .co0						; loop
 .no1:								; odds check passed: roll the dice
 	lda.b d4
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	cmp.w #$0009					; no shot if random(d4) > 8
 	bcs .rts						; too unlikely: no shot
 	lda.w pucky

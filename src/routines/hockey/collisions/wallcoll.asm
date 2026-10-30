@@ -88,7 +88,7 @@ wallcoll:							;Bounce object X off a wall: the puck loses speed and spins; a h
 	bvs .pok
 .hard:								; hard hit: random bounce
 	lda.w #$0800
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	eor.w #$FFFF					; negate
 	inc a
 	sta.w puckvz					; pop the puck up

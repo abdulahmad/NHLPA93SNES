@@ -406,7 +406,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	jsl.l Fprint
 .nol:								;time for the puck drop: 180-299 frames
 	lda.w #$0078					; random puck drop time
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	adc.w #$00B4
 	sta.b d0
 	ldx.b a3						; temp1 = frames to the drop

@@ -21,7 +21,7 @@ Bcheck:								;Player a2 body checks a3: a3 falls if he is in front, and a char
 	adc.w checking,y
 	sec
 	sbc.w legstr,x
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	cmp.w #12
 	bcc .rtl
 .dir:								; direction test: x of X minus the checker's x

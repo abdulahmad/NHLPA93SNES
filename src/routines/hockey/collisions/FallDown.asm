@@ -171,7 +171,7 @@ FallDown:							;Player a2 falls (or stumbles) from a hit by X: check stats, the
 	bit.w #pf2pen
 	bne .snd
 	lda.w #$00A0					; random 0-159
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	ldy.b a2
 	sec
 	sbc.w impact,y					; minus the impact

@@ -73,7 +73,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	stz.w cont1team
 	stz.w cont2team
 	lda.w #120						; gameclock = 120 + random 120
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	adc.w #120
 	sta.w gameclock
 	stx.b xsave						; keep X
@@ -240,7 +240,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	lda.w tmscore					; tied: random goal
 	cmp.w tmscore+2
 	bne .endhl
-	jsl.l random					; random number
+	jsl.l randomd0_seed					; random number
 	and.w #$0002
 	tax
 	inc.w tmscore,x
@@ -425,7 +425,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	cmp.w gss2,y
 	bne .rr0
 	lda.w #2
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	ldy.b a0
 	pha
 	clc

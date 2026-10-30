@@ -135,7 +135,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	lda.b [a0],y					; x random range
 	dey
 	dey
-	jsl.l randomas					; random number -A to A-1
+	jsl.l randomd0sA					; random number -A to A-1
 	adc.b [a0],y					; plus the zone x
 	sta.w temp3,x					; temp3 = spot x
 	iny
@@ -147,7 +147,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	lda.b [a0],y					; y random range
 	dey
 	dey
-	jsl.l randomas					; random number -A to A-1
+	jsl.l randomd0sA					; random number -A to A-1
 	adc.b [a0],y					; plus the zone y
 	sta.w temp4,x					; temp4 = spot y
 .nodec:								; mirror x by position, y by pfgoal

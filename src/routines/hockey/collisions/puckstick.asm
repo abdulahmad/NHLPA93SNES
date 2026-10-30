@@ -66,7 +66,7 @@ puckstick:							;The puck hits player a2's stick
 	sbc.b d0						; minus a2 value
 	clc
 	adc.w #$0024					; plus 36
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	cmp.w #$0003					; steal fails
 	bcs .rtl
 .steal:								; steal: nopuck for both players from the scaled stickhand

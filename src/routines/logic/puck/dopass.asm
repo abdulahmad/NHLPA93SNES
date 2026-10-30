@@ -207,7 +207,7 @@ dopass:								;Pass the puck in the pass direction, to the best teammate there 
 	adc.w Xvel,x					; plus the passer's x velocity
 	sta.w puckvx					; puck x velocity
 	lda.w #$1000					; random vertical velocity up to $1000
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	sta.w puckvz					; puck z velocity
 .exit:								; start animation for player passing
 	lda.w position,x				; goalie?

@@ -8,11 +8,11 @@ check4check:						;Look for a good chance to check an opponent
 	asl.b d0						; double it
 .nopen:								; 0 <= d0 < ($14 - checking) [*2]
 	lda.b d0						; random 0 to d0
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	cmp.w #$0004					; under 4: check
 	bcc .go
 	lda.b d0
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	cmp.w #$0004
 	bcs .rts						; 4 or more: no check
 .go:								; 6 opponents

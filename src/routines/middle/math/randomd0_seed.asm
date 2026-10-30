@@ -1,4 +1,4 @@
-random:								;Step the random number seed and return a new random number
+randomd0_seed:								;Step the random number seed and return a new random number
 	lda.w seed						; mula = seed (32-bit)
 	sta.b mula
 	lda.w seed+2

@@ -5,13 +5,13 @@ chk4pass:							;Computer player X looks for a good pass: an onside teammate wit
 	lda.w #16
 	clc
 	adc.w spodds,x
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	cmp.w #9
 	bcc .dp0
 	jmp.w .rtl
 .dp0:								; pick a random teammate to pass to
 	lda.w #6
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	sta.b d0
 	cpx.w #12						; team mates of the away team are 6-11
 	bcc .dp1
