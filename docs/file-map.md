@@ -538,7 +538,7 @@ org `$8F8000` when `pc()` is below it.
 - `$8FD5BF` routines/hockey/collisions/holdcheck.asm
 - `$8FD68C` routines/print/Fprint.asm
 - `$8FD69F` routines/print/Framer.asm
-- `$8FD75A` routines/logic/assignments/assnothing.asm
+- `$8FD75A` routines/logic/assignments/donothing.asm
 - `$8FD76B` routines/stats/GetGoalieCount.asm
 - `$8FD793` routines/print/AdvanceStringPtr.asm
 - `$8FD7A1` data/text/PAttribColumns.asm

@@ -1,4 +1,4 @@
-assnothing:							;A computer player stands still
+donothing:							;A computer player stands still
 	lda.w pflags,x
 	bit.w #pfjoycon					; human controlled: leave
 	bne .rtl

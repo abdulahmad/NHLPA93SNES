@@ -5,7 +5,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 .run:								; clock stopped: do nothing
 	lda.w gmclock					; clock stopped: do nothing
 	beq .notclock
-	jml.l assnothing
+	jml.l donothing
 .notclock:							; bench check
 	jsl.l check4bench				; check for a bench change
 	lda.w pflags,x

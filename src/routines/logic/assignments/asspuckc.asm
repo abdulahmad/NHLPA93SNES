@@ -9,10 +9,10 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	lda.w pfalock,x					; anim locked
 	beq .clk
 	jmp.w .rtl
-.clk:								; clock stopped: assnothing
-	lda.w gmclock					; clock stopped: assnothing
+.clk:								; clock stopped: donothing
+	lda.w gmclock					; clock stopped: donothing
 	beq .go
-	jml.l assnothing
+	jml.l donothing
 .go:								; joystick controlled: assexit
 	lda.w pflags,x					; joystick controlled: assexit
 	bit.w #pfjoycon

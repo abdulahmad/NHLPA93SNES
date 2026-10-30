@@ -4,9 +4,9 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	beq .clk
 	jmp.w .rtl
 .clk:								; clock stopped: nothing to do
-	lda.w gmclock					; clock stopped: assnothing
+	lda.w gmclock					; clock stopped: donothing
 	beq .go
-	jml.l assnothing
+	jml.l donothing
 .go:								; bench check
 	jsl.l check4bench				; check for a bench change
 	lda.w pflags,x					; joystick controlled: nothing

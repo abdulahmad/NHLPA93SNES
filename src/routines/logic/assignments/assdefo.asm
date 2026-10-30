@@ -7,7 +7,7 @@ assdefo:							;Assignment: a defenseman on offense holds the blue line on his s
 .clk:								; clock stopped: do nothing
 	lda.w gmclock					; clock stopped: do nothing
 	beq .bench
-	jml.l assnothing
+	jml.l donothing
 .bench:								; bench check
 	jsl.l check4bench				; check for a bench change
 	lda.w pflags,x

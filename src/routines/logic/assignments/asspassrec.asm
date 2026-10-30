@@ -4,7 +4,7 @@ asspassrec:							;Assignment: waiting for a pass. Ends when someone has the puc
 	bne .rts						; locked
 	lda.w gmclock					; clock stopped
 	beq .joy						; stopped: stand still
-	jml.l assnothing				; stand still
+	jml.l donothing				; stand still
 .joy:								; joystick controlled?
 	lda.w pflags,x					; player flags
 	bit.w #pfjoycon					; joystick controlled

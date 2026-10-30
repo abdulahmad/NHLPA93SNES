@@ -7,7 +7,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 .go:								; clock stopped: do nothing
 	lda.w gmclock					; clock stopped: do nothing
 	beq .gm
-	jml.l assnothing
+	jml.l donothing
 .gm:								; bench check
 	jsl.l check4bench				; check for a bench change
 	lda.w pflags,x
