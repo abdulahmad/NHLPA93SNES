@@ -1,4 +1,4 @@
-maketree:							;Build the playoff tree from the seeds and the series wins, then set the
+MakeTree:							;Build the playoff tree from the seeds and the series wins, then set the
 									;controllers
 	stx.b xsave						; keep X
 	ldx.w #$0000

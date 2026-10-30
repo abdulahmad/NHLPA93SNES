@@ -28,7 +28,7 @@ org `$808000`.
 - `$808390` routines/hockey/interrupts/HBjsr.asm
 - `$8083A3` routines/video/interrupts/HBdefault.asm
 - `$8083AB` routines/logic/skating/goalieacc.asm
-- `$808404` routines/logic/skating/dostop.asm (also StopNA)
+- `$808404` routines/logic/skating/dostop.asm (also stopna)
 - `$808496` routines/middle/math/muls16.asm
 - `$8084C4` routines/hockey/teams/getpde.asm (also rtss)
 - `$8084E7` routines/logic/skating/MaxSpeed.asm
@@ -137,7 +137,7 @@ org `$808000`.
 - `$80C46D` routines/hockey/players/updateplayers.asm
 - `$80C894` routines/hockey/collisions/checkcoll.asm
 - `$80CA1D` routines/hockey/collisions/checkwallcoll.asm
-- `$80CBB1` routines/middle/math/sroot.asm
+- `$80CBB1` routines/middle/math/Sroot.asm
 - `$80CBE5` routines/middle/math/divu.asm
 - `$80CC1E` routines/hockey/collisions/wallcollb.asm
 - `$80CCDE` routines/hockey/collisions/wallcoll.asm
@@ -450,7 +450,7 @@ org `$8C8000` when `pc()` is below it.
 
 org `$8D8000` when `pc()` is below it.
 
-- `$8D8000` routines/hockey/playoffs/maketree.asm
+- `$8D8000` routines/hockey/playoffs/MakeTree.asm
 - `$8D8120` routines/video/interrupts/InitPPU.asm
 - `$8D8217` routines/hockey/game/StartPer.asm
 - `$8D82F0` routines/penalty/penalties/GetLowestPen.asm

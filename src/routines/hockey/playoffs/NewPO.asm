@@ -57,4 +57,4 @@ NewPO:								;Start new playoffs with the same team 1 and build the tree
 	dec.b d0						; count down
 	bpl .cg
 .tree:								; build the tree
-	jml.l maketree					; build the tree
+	jml.l MakeTree					; build the tree

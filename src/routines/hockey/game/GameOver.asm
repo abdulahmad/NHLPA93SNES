@@ -15,7 +15,7 @@ GameOver:							;After a game: the password and the playoff screen; on to the us
 	and.w #$7F7F
 	sta.w PassWord
 	jsl.l DecodePW					; decode the password
-	jsl.l maketree					; build the playoff tree
+	jsl.l MakeTree					; build the playoff tree
 	lda.w #sf3alttree				; sf3alttree: Opening4 after the font bases
 	trb.w sflags3
 	beq .tree						; no alternative tree

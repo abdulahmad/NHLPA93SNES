@@ -1,4 +1,4 @@
-sroot:								;d0 = the square root of d0
+Sroot:								;d0 = the square root of d0
 	stz.b tmp0						; low = 0
 	lda.w #$1000					; high = $1000
 	sta.b tmp1

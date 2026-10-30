@@ -410,7 +410,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	sta.b d1
 	bra .de4
 .far:								;scale to a 20 (28 if shooting) pixel arc
-	jsl.l sroot						; distance to the target
+	jsl.l Sroot						; distance to the target
 	lda.b d0
 	inc a
 	sta.b d2
@@ -661,7 +661,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	lda.b d0
 	sta.w temp2b,x
 .nodec:								; accelerate or stop
-	lda.w temp2b,x					; direction > 7: StopNA, else playeracc
+	lda.w temp2b,x					; direction > 7: stopna, else playeracc
 	sta.b d2
 	sec
 	sbc.w #$0007
@@ -673,7 +673,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 .neg7:								; signed compare: overflow flag corrects the sign
 	bvc .acc
 .stop:								; stop
-	jmp.w StopNA					; stop the goalie
+	jmp.w stopna					; stop the goalie
 .rush:								;rush a loose puck when the tmnear stats say so
 	lda.w puckc
 	bmi .r1

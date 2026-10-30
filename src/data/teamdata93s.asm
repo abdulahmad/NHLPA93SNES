@@ -1565,7 +1565,7 @@ Washington:							; team record: Washington (WSH), team 22
 
 
 playoffseats:						; 34 playoff trees x 16 bytes: team numbers in first round tree order
-									; (adjacent pairs meet); used by NewPO and maketree
+									; (adjacent pairs meet); used by NewPO and MakeTree
 	db 15,22,11,12, 1,0,6,10, 5,8,23,21, 9,4,18,3
 	db 11,22,15,12, 6,0,1,10, 23,8,5,21, 18,4,9,3
 	db 15,22,7,12, 6,0,16,10, 5,8,2,21, 9,4,20,3

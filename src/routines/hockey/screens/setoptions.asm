@@ -243,7 +243,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	stz.w OptPlayMode
 	stz.w OptNOP
 .start:								;Start, or the demo: pojoy from OptNOP, the password in Cont.
-									;Playoffs, then maketree
+									;Playoffs, then MakeTree
 	lda.w OptNOP				; pojoy from the number of players
 	sec
 	sbc.w #$0005
@@ -255,7 +255,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 .nopass:							; password entry done or skipped
 	lda.w #$0080					; password bit 7
 	tsb.w PassWord
-	jml.l maketree					; build the playoff tree
+	jml.l MakeTree					; build the playoff tree
 .input:								;a pad pressed (d1): Start, Up/Down (.nms by 2), Left/Right (.IncItem by
 									;1)
 	lda.b d1						; Start pressed

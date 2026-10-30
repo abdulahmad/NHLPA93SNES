@@ -29,7 +29,7 @@ ContinuePlayoffs:					;Continue the playoffs: read the playoff state back from t
 	ora.b bosgames					; plus best of seven
 	sta.b d0
 	beq .ex							; none: leave
-	jsl.l maketree					; build the tree
+	jsl.l MakeTree					; build the tree
 	lda.w #$0007					; menu value from pojoy
 	sec
 	sbc.w pojoy

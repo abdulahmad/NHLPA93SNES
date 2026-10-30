@@ -4,7 +4,7 @@
 if pc() < $8D8000
 	org $8D8000
 endif
-incsrc "../routines/hockey/playoffs/maketree.asm"
+incsrc "../routines/hockey/playoffs/MakeTree.asm"
 incsrc "../routines/video/interrupts/InitPPU.asm"
 incsrc "../routines/hockey/game/StartPer.asm"
 incsrc "../routines/penalty/penalties/GetLowestPen.asm"
