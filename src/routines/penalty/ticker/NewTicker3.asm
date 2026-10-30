@@ -72,12 +72,12 @@ NewTicker3:							;Show the ticker box for game d3: round, period and both teams
 	sta.b d0
 	lda.w gss1,y					; its score
 	sta.b d1
-	jsl.l NewTicker3_tn				; print team and score
+	jsl.l PrintGameInfo				; print team and score
 	ldy.b a0
 	lda.w gst2,y					; second team
 	sta.b d0
 	lda.w gss2,y					; its score
 	sta.b d1
-	jsl.l NewTicker3_tn				; print team and score
+	jsl.l PrintGameInfo				; print team and score
 	pla								; drop the saved x
 	rtl

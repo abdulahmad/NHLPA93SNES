@@ -139,7 +139,7 @@ SetPlList:							;Make the list of the players team a2 wants on the ice now
 	lda.b [a1],y					; player from the line sets
 	and.w #$00FF
 	sta.b d0
-	jsl.l SetPlList_s1		; try to add him
+	jsl.l TryAddPlayerToList		; try to add him
 	beq .s1							; failed: next candidate
 .next1:								; next slot
 	dec.b d4						; next slot
@@ -156,6 +156,6 @@ SetPlList:							;Make the list of the players team a2 wants on the ice now
 	sta.b d0
 	dec.b d3
 	bmi .next1
-	jsl.l SetPlList_s1		; try to add him
+	jsl.l TryAddPlayerToList		; try to add him
 	beq .try
 	bra .next1

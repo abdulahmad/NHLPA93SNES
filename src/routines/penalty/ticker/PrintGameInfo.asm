@@ -1,4 +1,4 @@
-NewTicker3_tn:						;Print one ticker line: team d0's name and score d1
+PrintGameInfo:						;Print one ticker line: team d0's name and score d1
 	lda.b $04,s						; x from the caller
 	sta.w printx
 	inc.w printy					; next row
