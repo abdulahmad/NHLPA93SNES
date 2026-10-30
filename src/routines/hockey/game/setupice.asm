@@ -181,7 +181,7 @@ setupice:							;Set up the rink: the variables, the rink and text graphics, the
 	dec a
 	dec a
 	sta.w vcountmark+2
-	jsl.l defaultsprites2
+	jsl.l defaultsprites_0
 	stz.w Zamx
 	jsl.l nullrtl
 	lda.w gmode

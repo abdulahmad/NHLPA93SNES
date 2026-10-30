@@ -14,7 +14,7 @@ lineinput:							;Pad input while the line change box is open: choose a line, or
 	beq .1
 	and.w #~tmflcc&$FFFF			; clear the request
 	sta.w tmflags,y
-	jsl.l lcfound2					; close the box
+	jsl.l lcfound_close					; close the box
 	jsl.l SetLCmode2				; reopen it
 .1:									; new presses
 	pla								; presses back

@@ -164,10 +164,10 @@ Gameloop:							;Main game loop: wait for a frame, run the clock, music and crow
 	and.w #~pf2lcm&$FFFF
 	sta.w pflags,x
 	stz.b a2
-	jsl.l lcfound2					; line change check, team 1
+	jsl.l lcfound_close					; line change check, team 1
 	lda.w #$0002
 	sta.b a2
-	jsl.l lcfound2					; line change check, team 2
+	jsl.l lcfound_close					; line change check, team 2
 	lda.w #tmflcm					; tmflcm off for both teams
 	trb.w tmflags
 	trb.w tmflags+2

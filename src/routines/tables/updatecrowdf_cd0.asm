@@ -1,4 +1,4 @@
-cd0:								;$ffTT = frame/time for the levels of crowd excitement. Used by
+updatecrowdf_cd0:								;$ffTT = frame/time for the levels of crowd excitement. Used by
 									;updatecrowdf, indexed by crowd level and Crowdstep. 4 blocks of 16
 									;words, one per crowd level range ((Crowdlevel/2) and $60 = byte offset
 									;0,$20,$40,$60); each step (Crowdstep 0-$1E, word index) gives the crowd

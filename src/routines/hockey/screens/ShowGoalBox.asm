@@ -20,10 +20,10 @@ ShowGoalBox:						;The goal box: "GOAL!" or "HAT TRICK!" with the scorer and the
 	bne .savea
 	ldx.b xsave						; restore X
 	stz.b a2						; find the line change data for both teams
-	jsl.l lcfound2
+	jsl.l lcfound_close
 	inc.b a2
 	inc.b a2
-	jsl.l lcfound2
+	jsl.l lcfound_close
 	lda.w #$0000					; a4 = latest entry of the score summary
 	sta.b a4+2
 	lda.w #ScoreSum-6

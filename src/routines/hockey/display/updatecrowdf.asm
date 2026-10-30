@@ -44,9 +44,9 @@ updatecrowdf:						;Every game loop: let the crowd level fade and step the crowd
 	adc.b d0
 	sta.b d0
 	tay
-	lda.w #cd0						; cd0: frame high byte, time low byte
+	lda.w #updatecrowdf_cd0						; updatecrowdf_cd0: frame high byte, time low byte
 	sta.b a0
-	lda.w #cd0>>16
+	lda.w #updatecrowdf_cd0>>16
 	sta.b a0+2
 	lda.b [a0],y
 	xba

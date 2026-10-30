@@ -538,7 +538,7 @@ attryflip	=	$1000				; y flip
 
 ;crowd, zamboni, title logo sprite
 Crowdframe		=	$DC				;crowd frame: low byte = random extra frame (loud crowd), high byte
-									;= frame from cd0
+									;= frame from updatecrowdf_cd0
 Crowdlevel		=	$DE				;level of crowd excitement (+$50 per punch, +$258 for a won fight, +$C8
 									;for a faceoff win)
 Crowdstep		=	$E0				; animation step for the crowd (0-$1E)
