@@ -1,4 +1,4 @@
-CwdFight:							;The crowd reacts to a punch; the hit player X is pushed back by the
+chkhit_cwd:							;The crowd reacts to a punch; the hit player X is pushed back by the
 									;puncher's strength
 	ldy.b a0						; puncher
 	lda.b Crowdlevel				; crowd noise

@@ -48,12 +48,12 @@ org `$808000`.
 - `$808DE9` routines/logic/controls/SetShotMode.asm
 - `$808E33` routines/logic/controls/ShotMode.asm
 - `$808E78` routines/logic/puck/doshot.asm
-- `$8090EB` routines/logic/puck/shotsets.asm
+- `$8090EB` routines/logic/puck/doshot_shotsets.asm
 - `$80910F` routines/logic/assignments/asspassrec.asm
 - `$80915C` routines/logic/assignments/assfight.asm
 - `$809330` routines/logic/contact/chkhit.asm
-- `$809493` routines/logic/contact/CwdFight.asm
-- `$8094CB` routines/logic/contact/FightFall.asm
+- `$809493` routines/logic/contact/chkhit_cwd.asm
+- `$8094CB` routines/logic/contact/chkhit_fall.asm
 - `$809595` routines/logic/assignments/assfwatch.asm
 - `$8096A8` routines/logic/assignments/assfaceoff.asm
 - `$8096F9` routines/logic/assignments/assexit.asm

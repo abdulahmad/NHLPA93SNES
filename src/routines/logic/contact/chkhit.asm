@@ -66,7 +66,7 @@ chkhit:								;In a fight, is player X hit by player a0?
 	beq .grab
 	cmp.w #SPFfight+4+5
 	beq .grab
-.ex:								;movem the registers back (global: CwdFight/FightFall paths jump here)
+.ex:								;movem the registers back (global: chkhit_cwd/chkhit_fall paths jump here)
 	stx.b xsave						; keep X
 	ldx.w #$000E
 .resta:								; pull a0 and the words after it back
@@ -147,11 +147,11 @@ chkhit:								;In a fight, is player X hit by player a0?
 	ldy.b a3
 	stx.b a3
 	sty.b a0
-	jsl.l CwdFight
+	jsl.l chkhit_cwd
 	lda.w #$0001					; pf2aip
 	sta.w pf2aip,x
 	dec.w temp3,x					; strength -1; out of strength: falls
-	bmi FightFall
+	bmi chkhit_fall
 	lda.w #SPAfhith
 	sta.b d1
 	jsl.l SetSPA					; start animation d1
@@ -164,11 +164,11 @@ chkhit:								;In a fight, is player X hit by player a0?
 	ldy.b a3
 	stx.b a3
 	sty.b a0
-	jsl.l CwdFight
+	jsl.l chkhit_cwd
 	lda.w #$0001
 	sta.w pf2aip,x
 	dec.w temp3,x
-	bmi FightFall
+	bmi chkhit_fall
 	lda.w #SPAfhitl
 	sta.b d1
 	jsl.l SetSPA					; start animation d1
