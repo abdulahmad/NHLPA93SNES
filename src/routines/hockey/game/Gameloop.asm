@@ -65,18 +65,18 @@ Gameloop:							;Main game loop: wait for a frame, run the clock, music and crow
 	dex
 	bne .cue1
 .p3:								; third period cue
-	lda.w p3cue						; third period cue
+	lda.w periodendtime				; third period cue
 	beq .cheer
 	sec
 	sbc.b d7
 	bpl .p3a
 	lda.w #$0000
 .p3a:								; store the countdown
-	sta.w p3cue
+	sta.w periodendtime
 	bne .cheer
 	lda.w cuetimer					; another cue plays: try next frame
 	beq .p3go
-	inc.w p3cue
+	inc.w periodendtime
 	bra .cheer
 .p3go:								; start the third period song
 	jsl.l StartSngLateGame

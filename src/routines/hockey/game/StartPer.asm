@@ -32,7 +32,7 @@ StartPer:							;Start a period: reset the rink and clock, face off at center ic
 	lda.w #$1B
 	sta.b d0
 	jsl.l assreplace				; set the assignment
-	lda.w gsp						; third period: p3cue = random time
+	lda.w gsp						; third period: periodendtime = random time
 	cmp.w #$0002
 	bne .p3
 	lda.w gameclock
@@ -42,7 +42,7 @@ StartPer:							;Start a period: reset the rink and clock, face off at center ic
 	jsl.l mulu16					; A = mula * mulb
 	jsl.l randomd0A					; random number 0 to A-1
 	inc a
-	sta.w p3cue
+	sta.w periodendtime
 .p3:								; periods 1 and 2: mid-period cue
 	lda.w gsp						; periods 1 and 2: mid-period cue at half time
 	cmp.w #$0002
