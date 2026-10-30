@@ -56,13 +56,13 @@ printscores1:						;Draw the scoreboard: the period and score boxes on the verti
 	%StringCp(CC_Font1Pri,$1C,$18)
 	stz.b d3						; home team on the lower row
 	stz.b a2
-	jsl.l PrintTeamNameAndScore
+	jsl.l printscores1_ps
 	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pri,$18,$18)
 	inc.b d3
 	inc.b a2
 	inc.b a2
-	jsl.l PrintTeamNameAndScore
+	jsl.l printscores1_ps
 	stz.b a2
 	lda.w #2						; a2/a3: the team at the top / bottom end by gmdir
 	sta.b a3
@@ -123,9 +123,9 @@ printscores1:						;Draw the scoreboard: the period and score boxes on the verti
 	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pri,$17,$02)
 	stz.b d3
-	jsl.l PrintTeamNameAndScore_name
+	jsl.l printscores1_ps_name
 	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pri,$06,$02)
 	inc.b d3
-	jsl.l PrintTeamNameAndScore_name
+	jsl.l printscores1_ps_name
 	bra .ex

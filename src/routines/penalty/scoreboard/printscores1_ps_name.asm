@@ -1,4 +1,4 @@
-PrintTeamNameAndScore_name:						;Print team d3's name, then move down two rows
+printscores1_ps_name:						;Print team d3's name, then move down two rows
 	lda.w printx					; keep print x
 	pha
 	lda.w tmdata					; tmdata of team d3

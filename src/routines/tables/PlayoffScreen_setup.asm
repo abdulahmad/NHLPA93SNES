@@ -1,9 +1,9 @@
-PlayoffTreeSetup:					;The playoff tree layout for each round
-	dw .l0-PlayoffTreeSetup
-	dw .l1-PlayoffTreeSetup
-	dw .l2-PlayoffTreeSetup
-	dw .l3-PlayoffTreeSetup
-	dw .l4-PlayoffTreeSetup
+PlayoffScreen_setup:					;The playoff tree layout for each round
+	dw .l0-PlayoffScreen_setup
+	dw .l1-PlayoffScreen_setup
+	dw .l2-PlayoffScreen_setup
+	dw .l3-PlayoffScreen_setup
+	dw .l4-PlayoffScreen_setup
 
 .l0:								;gamelevel 0: 16 team slots (x, y)
 	db 16

@@ -115,11 +115,11 @@ org `$808000`.
 - `$80B92D` routines/print/print.asm
 - `$80B9F4` routines/penalty/scoreboard/updatepwrplay.asm
 - `$80BAAF` routines/penalty/scoreboard/updatepwrplay_clr.asm
-- `$80BABC` routines/penalty/scoreboard/PrintTeamNameAndScore_name.asm
+- `$80BABC` routines/penalty/scoreboard/printscores1_ps_name.asm
 - `$80BAF2` routines/logic/computer/ChkGoalies.asm (also ChkGoalies_CPG)
 - `$80BB5A` routines/hockey/teams/setpersonel.asm
 - `$80BCB0` routines/hockey/teams/SetPlList.asm
-- `$80BDEB` routines/hockey/teams/TryAddPlayerToList.asm
+- `$80BDEB` routines/hockey/teams/SetPlList_s1.asm
 - `$80BE47` routines/logic/computer/ReturnGoalies.asm (also ReturnGoalies_r)
 - `$80BE89` routines/logic/computer/CPgoalie.asm
 - `$80BED1` routines/hockey/display/updatecrowdf.asm
@@ -284,7 +284,7 @@ org `$848000` when `pc()` is below it.
 - `$84F532` routines/hockey/screens/UpdateScoutingDisplay.asm
 - `$84F734` routines/hockey/screens/ScrollDisplayUp.asm
 - `$84F79D` PlayoffTiles (data)
-- `$84F816` routines/video/objects/defaultsprites2.asm
+- `$84F816` routines/video/objects/defaultsprites_0.asm
 - `$84F960` routines/video/objects/SsoInitTable.asm
 - `$84F980` routines/video/objects/FfoInitTable.asm
 - `$84F9B2` routines/video/objects/SortObjInitTable.asm
@@ -329,7 +329,7 @@ org `$868000` when `pc()` is below it.
 - `$86FC8A` routines/hockey/game/GetPeriodTimeRemaining.asm
 - `$86FCA1` routines/hockey/game/GetPeriodTime.asm
 - `$86FCAF` routines/hockey/game/GetPeriodTime_timetab.asm
-- `$86FCB7` routines/logic/lines/lcfound2.asm
+- `$86FCB7` routines/logic/lines/lcfound_close.asm
 - `$86FCE3` routines/hockey/teams/PickStartingGoalie.asm
 - `$86FD86` routines/logic/assignments/assscore.asm (also unusedFF86)
 
@@ -375,7 +375,7 @@ org `$888000` when `pc()` is below it.
 - `$88F2B0` routines/hockey/screens/TitleScreen.asm
 - `$88F4F0` data/text/CreditsBlank.asm
 - `$88F512` routines/hockey/playoffs/PlayoffScreen.asm
-- `$88F9FB` routines/tables/PlayoffTreeSetup.asm
+- `$88F9FB` routines/tables/PlayoffScreen_setup.asm
 - `$88FBA6` routines/logic/assignments/assdefd.asm
 - `$88FDB2` routines/hockey/password/SuperAdd.asm
 - `$88FDD0` routines/logic/skating/skateto.asm (also unusedFF88)
@@ -389,7 +389,7 @@ org `$898000` when `pc()` is below it.
 - `$899383` SpriteSet13 (data)
 - `$89E95D` routines/penalty/scoreboard/printscores1.asm
 - `$89EAB1` routines/penalty/scoreboard/printscores1_per.asm
-- `$89EAD7` routines/penalty/scoreboard/PrintTeamNameAndScore.asm
+- `$89EAD7` routines/penalty/scoreboard/printscores1_ps.asm
 - `$89EB14` routines/penalty/util/nullrtl89.asm
 - `$89EB15` routines/sound/p_music_vblank.asm
 - `$89EB45` RefTilesHor (data)
@@ -512,7 +512,7 @@ org `$8F8000` when `pc()` is below it.
 - `$8F8858` routines/penalty/ticker/NewTicker.asm
 - `$8F8861` routines/penalty/ticker/NewTicker2.asm
 - `$8F887A` routines/penalty/ticker/NewTicker3.asm
-- `$8F8960` routines/penalty/ticker/PrintGameInfo.asm
+- `$8F8960` routines/penalty/ticker/NewTicker3_tn.asm
 - `$8F89A3` data/text/GameLabels.asm
 - `$8F8ABC` routines/video/hud/showzam.asm
 - `$8F8AE9` routines/middle/util/waitxsr.asm
@@ -602,7 +602,7 @@ org `$8F8000` when `pc()` is below it.
 - `$8FFB8B` routines/middle/math/divs16.asm
 - `$8FFBDC` routines/logic/skating/doplayeracc.asm
 - `$8FFDD8` routines/logic/controls/ResetAndSelectPlayers.asm
-- `$8FFDFB` routines/tables/cd0.asm
+- `$8FFDFB` routines/tables/updatecrowdf_cd0.asm
 - `$8FFE7B` routines/sound/MusicCue.asm
 - `$8FFE8E` routines/sound/sfx8F.asm
 - `$8FFEB4` routines/hockey/screens/ShowGoalBox.asm

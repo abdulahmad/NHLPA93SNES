@@ -11,7 +11,7 @@ SpriteSet13:						;frame set 13 (goalie catch, glass and save): frames 606-658
 	incbin "../../Extracted/Graphics/Sprites/Sprites606_658.sanim"
 incsrc "../routines/penalty/scoreboard/printscores1.asm"
 incsrc "../routines/penalty/scoreboard/printscores1_per.asm"
-incsrc "../routines/penalty/scoreboard/PrintTeamNameAndScore.asm"
+incsrc "../routines/penalty/scoreboard/printscores1_ps.asm"
 incsrc "../routines/penalty/util/nullrtl89.asm"
 incsrc "../routines/sound/p_music_vblank.asm"
 

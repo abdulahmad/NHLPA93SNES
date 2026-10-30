@@ -1,4 +1,4 @@
-lcfound2:							;Close the line change box and redraw the scoreboard
+lcfound_close:							;Close the line change box and redraw the scoreboard
 	jsl.l setlccords				; line change box coordinates
 	lda.w printy					; print y
 	sec

@@ -106,9 +106,9 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	sta.b a1
 	lda.w #$0000
 	sta.b a1+2
-	lda.w #PlayoffTreeSetup			; a0 = PlayoffTreeSetup level gamelevel
+	lda.w #PlayoffScreen_setup			; a0 = PlayoffScreen_setup level gamelevel
 	sta.b a0
-	lda.w #PlayoffTreeSetup>>16
+	lda.w #PlayoffScreen_setup>>16
 	sta.b a0+2
 	lda.w gamelevel					; tree setup for this game level
 	asl a
@@ -120,7 +120,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	inc.b a0
 	and.w #$00FF
 	sta.b d4
-.team:								;DrawTeamBlocks: team block of tree slot d4 at x, y
+.team:								;PlayoffScreen_doteam: team block of tree slot d4 at x, y
 	lda.b [a0]
 	inc.b a0
 	and.w #$00FF
@@ -192,7 +192,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	dec.b d4						; next team block
 	beq .arrow
 	jmp.w .team
-.arrow:								;DrawTreeArrow: arrow column (23 rows of PlayoffBracketMap) at x; $FF ends
+.arrow:								;PlayoffScreen_doarrow: arrow column (23 rows of PlayoffBracketMap) at x; $FF ends
 	lda.b [a0]						; next arrow column
 	inc.b a0
 	and.w #$00FF
