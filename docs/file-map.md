@@ -557,7 +557,7 @@ org `$8F8000` when `pc()` is below it.
 - `$8FDC0D` routines/hockey/screens/ScoutingReport.asm
 - `$8FDED2` routines/hockey/screens/PrintScoutRatings.asm
 - `$8FDF66` data/text/ScoutLabels.asm
-- `$8FDFE2` routines/hockey/players/PuckcSpots.asm
+- `$8FDFE2` routines/hockey/players/asspuckc_postab.asm
 - `$8FE00A` routines/penalty/energy/SetupTeamForIntermission.asm
 - `$8FE04C` routines/video/sprites/ClearSprites.asm
 - `$8FE0E4` routines/video/dma/remap.asm
