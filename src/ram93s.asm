@@ -1,13 +1,14 @@
 ; NHLPA 93 SNES RAM map and hardware names (WRAM $7E0000-$7FFFFF, low 8K mirrored at $0000-$1FFF in banks
 ; $00-$3F/$80-$BF).
-; Equates only, no ROM bytes. Hardware registers first, then work RAM, then constants. Prefer the 68000 RAM
-; names for the same role. Define each name once.
+; Equates only, no ROM bytes. Grouped and ordered like 93G ram93.asm: ports and record offsets, hardware,
+; buttons, sounds, rink, then the work RAM in 93G's rs order; 93S-only names in the group they belong to.
+; Prefer the 68000 RAM names for the same role. Define each name once.
 ; Like the 93G module files, data/teamdata93s.asm holds the team record offsets, data/frames93s.asm
 ; the animation and sprite frame equates and routines/tables/asstab.asm the assignment names.
 ;
 ; Format: Name = $xxxx (asar equate). DP names are < $100 and are written with .b; others with .w / .l.
-; The constants section at the end holds values (bit masks, animation offsets, sound numbers), not addresses.
 
+;video and sound ports (93S: the SNES PPU, CPU, APU and DMA registers and their values)
 ; SNES hardware registers (standard names, fullsnes/anomie). Equates only, no bytes.
 INIDISP			=	$2100
 OBSEL			=	$2101
@@ -202,7 +203,6 @@ DASB7			=	$4377
 A2A7L			=	$4378
 A2A7H			=	$4379
 NLTR7			=	$437A
-
 ; Register values (bits and common settings). Equates only.
 INIDISP_FBLANK	=	$80				; INIDISP bit 7: forced blank (brightness in bits 0-3)
 NMITIMEN_NMI	=	$80				; NMITIMEN bit 7: vblank NMI on
@@ -221,9 +221,114 @@ DMA_VRAMWORD	=	$1801			; DMAP $01 (two registers, A->B, increment), BBAD $18 (VM
 DMA_CGRAM		=	$2200			; DMAP $00 (one register), BBAD $22 (CGDATA)
 DMA_OAM			=	$0400			; DMAP $00 (one register), BBAD $04 (OAMDATA)
 
-; Work RAM, grouped and ordered like 93G ram93.asm (its rs order from varstart). Names in 93G are in its
-; order inside a group; 93S-only names follow in their group. Direct page is $00-$FF (written with .b);
-; $0100-$1FFF is absolute (DB = $80 mirrors bank $00 WRAM); banks $7E/$7F hold the big buffers.
+;record and field offsets (names shared with 93G, 94G and 94S)
+; record fields (names shared with 93G, 94G and 94S)
+sstime		=	0					; ScoreSum entry (6 bytes per goal): word period / time
+ssflags		=	2					; byte 2 + skater difference (goal type); bit 7 = away team scored
+ssscorer	=	3					; byte scorer
+ssassist1	=	4					; byte first assist (negative none)
+ssassist2	=	5					; byte second assist (negative none)
+sssize		=	6
+pbpen		=	0					; PenBuf entry (2 bytes): penalty number (0 = free)
+pbscnum		=	1					; SCnum of the player
+pcx			=	0					; puckcross entry (4 bytes; entry 0 top, 1 bottom): word x
+pcframes	=	2					; word frames
+pcsize		=	4
+foframe		=	0					; fofdata2, fofdata: 4 bytes per big faceoff sprite (centers, ref): frame
+foattr		=	2					; word attribute (bit 11 x flip)
+fosize		=	4
+plpos		=	6					; PlList: 6 wanted roster players, then their positions
+pldnum		=	0					; .pld player ratings, 8 bytes after the name (92 setplayer field names):
+									; jersey number -> rostnum (setplayer then steps y through the rest)
+pldweight	=	1					; high nibble weight, low nibble leg power legstr
+pldlegspd	=	2					; high nibble speed legspd, low nibble offense aioff
+pldaidef	=	3					; high nibble defense aidef, low nibble shot power shotspd
+pldcheck	=	4					; high nibble checking, bit 0 handed, bits 1-3 fighting
+pldstick	=	5					; high nibble stickhandling stickhand, low nibble shot accuracy
+pldendur	=	6					; high nibble endurance, low nibble shoot / pass odds spodds
+pldpass		=	7					; high nibble passing passacc, low nibble aggression aggress
+pldsize		=	8
+
+;joystick buttons (93S: SNES pad bits)
+bbut		=	$8000				; B: pass / switch player
+; joypad
+cbut	=	$0080					; shoot / check button in d2
+abut		=	$4000				; Y: hold / line change
+; joypad bits (SNES)
+JOYSTART	=	$1000				; Start
+JOYR		=	$0010				; R shoulder
+JOYL		=	$0020				; L shoulder
+JOYRIGHT	=	$0100				; dpad right
+JOYLEFT		=	$0200				; dpad left
+JOYDOWN		=	$0400				; dpad down
+JOYUP		=	$0800				; dpad up
+JOYA		=	$0080				; A button
+OFFSCREEN	=	$4E20				; find3d: d1 for a point off the screen (20000)
+
+;sfx / song numbers (93S: SNES sfx and song numbers, SPC700 addresses)
+SngGoal			=	4				;home goal (game sample set)
+SngPeriodStart	=	5				;period start
+SngLateGame		=	6				;third period
+SngPP			=	7				;power play (unused)
+SngFaceoff		=	8				;face off, mid-period
+SngTitle		=	3				;title screen and the game menu (boot set)
+SngEOP			=	2				;end of period (unused, boot set)
+SFXsiren		=	$A0				; goal siren
+SFXwhistle		=	$89				; whistle
+SFXhorn			=	$A1				; horn at the end of a period (93G SFXhorn); nothing in the code sends it
+SFXshotwiff		=	$98				; +0-3: missed shot (doshot)
+SFXhithigh		=	$92				; SFXhithigh 9
+SFXhitlow		=	$93				; SFXhitlow $A
+SFXcrowdcheer	=	$8A				; home player won the fight, home goalie save (93 song $B)
+SFXcrowdboo		=	$8B				; visitor won the fight (93 song $C)
+SFXoooh2		=	$8C				; hard shot saved by the visiting goalie, an injury (93 $D)
+SFXbglass		=	$8C				; puck over the glass (93 $E)
+SFXshotbh		=	$8E				; backhand shot (93 $14)
+SFXshotfh		=	$8D				; forehand shot (93 $18)
+SFXcheck		=	$90				; +0/1: check (93 $1C-$1F)
+SFXplayerwall	=	$9E				; +0/1: player hits the boards (93 $20)
+SFXplayerwall2	=	$9F				; player hits the boards, second sound (SFXplayerwall+1)
+SFXpuckbody		=	$90				; +0/1: puck hits a body (93 $24)
+SFXpuckpost		=	$94				; puck off the post
+SFXpuckwall1	=	$95				; +0-2: puck off the boards by speed (93 $28-$2B)
+SFXpuckwall2	=	$96				; puck off the boards, variant 2 (SFXpuckwall1+1)
+SFXpuckwall3	=	$97				; variant 3 (SFXpuckwall1+2)
+; The songs, numbered as the game numbers them: the cue number on port 0 of the sound program (92 and 93G
+; names). StartSng<name> sends it (songs 4-8 through MusicCue, 1-3 and 9 on APUIO0). cursong holds the
+; starter's own number 1-9 (Goal 1 ... PO 9), not the cue.
+SngPO			=	1				;playoff screen (boot sample set)
+SngEOG			=	9				;end of game (unused, boot set)
+; SPC700 (APU RAM) addresses used by the sound uploads
+SPCSAMPLEDIR	=	$2C00			; DSP sample directory (DIR = $2C)
+SPCDRIVER		=	$0400			; SPC700 sound driver code (boot upload); the boot upload starts it here
+SPCINSTR		=	$2B00			; instrument table of the boot set (6 bytes per instrument)
+SPCBOOTSAMPLES	=	$2C30			; first BRR sample of the boot set
+SPCSAMPLES		=	$2C50			; first BRR sample of the in-game set
+SPCRESUME		=	$0800			;driver entry after the in-game sample upload (the boot upload starts the
+									;driver at $0400)
+SPCDRIVERSIZE	=	$26E7			; bytes of the SPC700 program (SPCDriver .. SPCDriverEnd)
+BOOTSAMPLESIZE	=	$5271			; bytes of Extracted/Sound/bootsamples.brr
+GAMESAMPLESIZE	=	$B814			; bytes of the in-game BRR samples (GameSamples)
+; sounds (sfx numbers)
+SFXstop			=	$9C				; +0/1: skate stop (dostop, controlled player)
+SFXshothard		=	$8F				; shot with passspeed >= $32
+SFXcheck2		=	$91				; second check sound (93 $1D); the puck body sound has the same two
+SFXshotwiff2	=	$99				; missed shot, variant 2 (SFXshotwiff+1)
+SFXshotwiff3	=	$9A				; variant 3
+SFXshotwiff4	=	$9B				; variant 4
+SFXstop2		=	$9D				; skate stop, second sound (SFXstop+1)
+SFXcrowd		=	$80				; +1-7: crowd noise level, loops (updatesound)
+SFXcrowdoff		=	$88				; crowd noise off
+
+;rink distances
+goalline	=	$B0					; blueline+goalline = $108
+; rink
+blueline	=	$58
+sideline	=	$88					; distance from center to side boards
+
+;memory layout, replay
+replaysize		=	$71				; bytes per replay frame record
+Sortobjs	=	16					; number of sorted graphics objects
 
 ;SNES port: the 68k registers in direct page (a0-a4, d0-d7: 4 bytes each, word code uses the low word), scratch and math operands
 xsave		=	$0A					;X saved around the movem-style push/pop loops of the 68k port (stx xsave
@@ -370,13 +475,22 @@ newpos		=	$0E9F				; requested next position (negative = none)
 newpnum		=	$0EBF				; requested next roster player (negative = none)
 pflags		=	$0EDF				;pflags (bits 0-7) and pflags2 (bit n at bit n+10); some flags have their
 									;own arrays below
+; pflags bits (pflags2 bit n is bit n+10)
+pfdoff		=	$0001				; deceleration off
+pfna		=	$0002				; new assignment
 pfnc		=	$11FF				; nonzero: no collision mode. pflags bit pfnc
+pfjoycon	=	$0008				; joystick controlled
 pfrev		=	$11BF				; nonzero: skating backwards. pflags bit pfrev
 pfalock		=	$117F				; nonzero: locked until the animation is done. pflags bit pfalock
 pfteam		=	$119F				; 0 = home, nonzero = visitors. pflags bit pfteam
 pfgoal		=	$113F				; nonzero: shoots at the top goal. pflags bit pfgoal
 pf2fight	=	$115F				; nonzero: fighting. pflags2 bit pf2fight
 pf2aip		=	$11DF				; nonzero: animation in progress. pflags2 bit pf2aip
+pf2unav		=	$1000				; unavailable
+pf2lcm		=	$2000				; line change mode
+pf2pen		=	$4000				; caused a penalty
+pf2npc		=	$8000				; no player collision
+pf2inj		=	$0004				; injured
 pnum		=	$0F1F				; player's team location number (low byte)
 weight		=	$0F3F
 legstr		=	$0F5F
@@ -408,8 +522,19 @@ temp2b		=	$0CFF				;temp2+1 (low byte; the port also uses it where uses temp2 as
 									;swing time, pass wait)
 facefrac	=	$0DDF				;turn fraction of facedir: doplayeracc adds the turn rate here and carries
 									;into facedir. facedir.l low word
-Sortobjs	=	16					; number of sorted graphics objects
 pspeed		=	$126F				; |Xvel|+|Yvel| after a burst (SNES only, read by the hit code)
+puckobj			=	$1C				; object index of the puck
+netobj1		=	$18					; object index*2 of goal net 1 (y +268)
+puckc	=	newpos+puckobj			; SCnum of the puck carrier, negative = loose. puckc (puck newpos)
+puckvz	=	Zvel+puckobj
+puckvy	=	Yvel+puckobj
+pucky	=	Ypos+puckobj
+puckvx	=	Xvel+puckobj
+puckx	=	Xpos+puckobj
+netobj2		=	$1A					; object index*2 of goal net 2 (y -268)
+; attribute bits
+attrxflip	=	$0800				; x flip
+attryflip	=	$1000				; y flip
 
 ;crowd, zamboni, title logo sprite
 Crowdframe		=	$DC				;crowd frame: low byte = random extra frame (loud crowd), high byte
@@ -436,6 +561,12 @@ wcradiusx			=	$08E3		; wall collision radius x
 wcradiusy			=	$08E5		; wall collision radius y
 vramrow				=	$049D		;BG2 tile map row (0-31) at the top of the ring buffer: BG2VOFS =
 									;vramrow*8 + (Vscroll&7)
+; DMAList entry offsets
+dmasrc	=	0						; word: source address
+dmabank	=	2						; byte: source bank
+dmalen	=	3						; word: byte count
+dmavram	=	5						; word: VRAM word address
+dmasize	=	7						; bytes per entry
 
 ;palette fades and brightness
 brightness	=	$04					;INIDISP shadow (0-15 brightness, $80 forced blank), written each vblank
@@ -485,6 +616,10 @@ ltx					=	$018D		; last touch x
 lty					=	$018F		; last touch y
 iflags				=	$015C		;icing flags (if* masks); high byte (iflags+1) = icingPlayer (SCnum).
 									;iflags/icingPlayer
+; iflags bits
+ifcgl	=	$0001					; puck crossed the goal line
+ifdir	=	$0002					; icing toward the top goal
+ifok	=	$0004					; icing possible
 joypad1				=	$015E		; controller 1 buttons (SNES joypad bits, JOY* masks)
 joypad2				=	$0160		; controller 2 buttons
 joypad3				=	$0162		; controller 3 buttons (multitap)
@@ -496,6 +631,8 @@ carriedy			=	$0181		;pucky while the puck is carried: the y a shot was taken fro
 cheatpads	=	$1648				; 3 words: the last three new pad presses (the unreached Gameloop .cheat)
 
 ;clock, scroll lock, face off spot, collision
+; clock
+jps		=	24						; jiffys per second
 xc1					=	$08F5		; scroll lock x (fight)
 yc1					=	$08F7		; scroll lock y
 yleader				=	$08F9		; lead distance on scrolling
@@ -552,8 +689,38 @@ sprframetime	=	$7E2000			;4 bytes per sprite frame: sprclock when its tiles were
 ;game mode and state flags
 gmode				=	$1288		; game mode flags (gm* masks)
 gmclock				=	$128A		; nonzero: game clock is stopped. gmode bit gmclock
+; gmode bits
+gmdir		=	$0002				; 0 = home team goes up
+gmpen		=	$0004				; penalty called, ref in progress
+gmpendel	=	$0008				; delayed penalty has been called
+gmhl		=	$0010				; hilight mode
+gmoffs		=	$0020				; offsides on
+gmeog		=	$0040				; end the period at the next faceoff
 sflags				=	$128C		; sflags (low byte) and sflags2 (high byte) as one word (sf*/sf2* masks)
+; sflags (low byte = sflags, high byte = sflags2)
+sfpz		=	$0001				; pause mode
+sfpj		=	$0002				; pause started by controller 2
+sfspdir		=	$0004				; set pass dir mode
+sfssdir		=	$0008				; set shot dir mode
+sfwrap		=	$0010				; replay has wrapped around
+sfscrl		=	$0020				; replay scrolled by hand: Hpos/Vpos not from the frames
+sfslock		=	$0040				; scroll lock to xc1/yc1
+sf2faceoff	=	$0100				; face off in progress
+sf2refref	=	$0200				; ref needs refresh
+sf2drec		=	$0400				; disable replay record
+sf2replay	=	$0800				; replay in progress
+sf2shot		=	$1000				; shot was taken
+sf2pwrplay	=	$2000				; power play in progress
+sf2pwrtm	=	$4000				; 0 for team 1 in power play
+sf2offsig	=	$8000				; offsides little ref on
 sflags3				=	$1290		; sflags3 (sf3* masks)
+; sflags3 bits
+sf3llcs		=	$0001				; lower line change box on screen
+sf3rmplay	=	$0002				; replay play mode on
+sf3alttree	=	$0004				; alt. playoff tree
+sf3sbut		=	$0008				; Start pressed during the highlights: skip the rest
+sf3fo		=	$0010				; face off just ended: the next puck pickup wins it
+sf3icetime	=	$0020				; count frames on ice per player
 sfhormode			=	$128E		; nonzero: screen in horizontal mode. sflags bit sfhor
 
 ;controllers and teams
@@ -603,6 +770,14 @@ tmap		=	$13EE				; active players on ice
 tmgoalie	=	$13F2				;goalie: low byte = goalie 0/1, $FFxx = pulled (xx = goalie to return, $FF
 									;= stays out)
 tmflags		=	$140A				; team flags
+tmflcc		=	$0001				; line change box needs redrawing
+tmflcm		=	$0008				; team in line change mode
+tmflast		=	$0004				; next touch overwrites the last touch only
+tmfoside	=	$0010				; team offsides
+; tmflags bits
+tmftimeout	=	$0002				; 93G timeout bit; 93S has no timeout, the bit is shared as in 93G
+tmfmid		=	tmftimeout			; nearest player takes the spot between puck and own goal
+tmfslide	=	tmftimeout			; team slides out (SlideOutRosterPlayer)
 tmfowon		=	$13DA				; faceoffs won
 tmchecks	=	$1402				; checks stat
 tmpasscomp	=	$1406				; completed passes
@@ -614,6 +789,8 @@ tmnear		=	$13FA				;32-bit (tmnear = low word, +4 = high word): nearest distance
 									;puck (assnearest). team long $2A
 tmlcchoice	=	$140E				; line change box row chosen (0-2). team word $2E
 tmpde		=	$147A				; energy of each roster player (word per player, +$34 for team 2)
+; roster
+maxros	=	26						; roster slots per team
 tmpdst		=	$14E2				; bench/ice/box state of each roster player (+$34 for team 2)
 tmboxlist	=	$154A				;penalty box list of roster players (bytes, +$1A for team 2, negative
 									;ends; team bytes $9A)
@@ -621,6 +798,13 @@ tmgoals		=	$1412				; goals per roster player (bytes, +$1A for team 2)
 pchecks		=	$1446				; checks per roster player (bytes, +$1A for team 2)
 colorflag1			=	$08B7		; cleared by setplayercolors (no reader found)
 colorflag2			=	$08B9		; cleared by setplayercolors (no reader found)
+; injury
+INJfight	=	$112C				; tmpdst value for a player injured in a fight (93 $112C)
+; tmpdst values
+TMPDICE		=	$FFFF				; on the ice
+TMPDBENCH	=	$FFFE				; on the bench
+TMPDOUT		=	$FFFD				; out of the game
+TMPDINJ		=	$1000				; injured: box time with this bit has no penalty
 
 ;playoff game structures
 gst1		=	$157F				;playoff games: one word per game (8) for each
@@ -632,6 +816,9 @@ gsper		=	$15BF				; gsper (period)
 gss1		=	$15CF				; gss1 (team 1 score)
 gss2		=	$15DF
 gsflags		=	$15EF				; gsflags (gsf* masks)
+gsftf		=	$0001				; the teams of the game are flipped
+gsfhl		=	$0002				; game shown in the score ticker
+gsfso		=	$0004				; game over
 gamenum				=	$014C		; index of the user game in the playoff game arrays (-1 = none)
 postarts			=	$0451		; 0-31: playoff tree layout; negative after DecodePW = bad password
 bosgames		=	$D6				; 0-6 game of the best of seven series, 7 = single games
@@ -663,6 +850,7 @@ tickerstart			=	$0158		;TickerNum at the start of the intermission (Intermission
 psitem				=	$0485		; pause menu item (0-4)
 tickervc			=	$08D9		;Vcount when the ticker box was last shown (Intermission:
 									;next one after $150 frames)
+DPCLEAREND		=	$164E			; Start clears DP/RAM $0000 up to here
 
 ;options, demo, random seed
 OptPlayMode	=	$1600				; play mode (0 regular season, 1 continue playoffs, 2/3 new playoffs)
@@ -685,6 +873,8 @@ passbits	=	$1624				;password bits: a 128-bit number, 8 words, low word first (S
 									;PushBits). PassBits
 tpassbits	=	$1634				; 8 words: passbits before all games are resolved (EncodePW)
 PassWord	=	$1610				; 16 password characters (indexes into PasstoText; bit 7 hides it)
+PWrange		=	30					; characters in PasstoText
+pwlength	=	16					; password characters
 
 ;sound driver (93S: SPC700 command queue, uploads and music cues)
 sndptr		=	$1A					; long pointer to the SPC upload stream ($1A-$1C, bank in $1C)
@@ -731,192 +921,4 @@ SngPeriodStartLen	=	$01CE
 SngLateGameLen	=	$0474
 SngPPLen		=	$022E
 SngFaceoffLen	=	$041A
-; The songs, numbered as the game numbers them: the cue number on port 0 of the sound program (92 and 93G
-; names). StartSng<name> sends it (songs 4-8 through MusicCue, 1-3 and 9 on APUIO0). cursong holds the
-; starter's own number 1-9 (Goal 1 ... PO 9), not the cue.
-SngPO			=	1				;playoff screen (boot sample set)
-SngEOP			=	2				;end of period (unused, boot set)
-SngTitle		=	3				;title screen and the game menu (boot set)
-SngGoal			=	4				;home goal (game sample set)
-SngPeriodStart	=	5				;period start
-SngLateGame		=	6				;third period
-SngPP			=	7				;power play (unused)
-SngFaceoff		=	8				;face off, mid-period
-SngEOG			=	9				;end of game (unused, boot set)
-
-; --- constants (values, not addresses) ---
-gsftf		=	$0001				; the teams of the game are flipped
-gsfhl		=	$0002				; game shown in the score ticker
-gsfso		=	$0004				; game over
-PWrange		=	30					; characters in PasstoText
-pwlength	=	16					; password characters
-sf3alttree	=	$0004				; alt. playoff tree
-; SPC700 (APU RAM) addresses used by the sound uploads
-SPCSAMPLEDIR	=	$2C00			; DSP sample directory (DIR = $2C)
-SPCDRIVER		=	$0400			; SPC700 sound driver code (boot upload); the boot upload starts it here
-SPCINSTR		=	$2B00			; instrument table of the boot set (6 bytes per instrument)
-SPCBOOTSAMPLES	=	$2C30			; first BRR sample of the boot set
-SPCSAMPLES		=	$2C50			; first BRR sample of the in-game set
-SPCRESUME		=	$0800			;driver entry after the in-game sample upload (the boot upload starts the
-									;driver at $0400)
-SPCDRIVERSIZE	=	$26E7			; bytes of the SPC700 program (SPCDriver .. SPCDriverEnd)
-BOOTSAMPLESIZE	=	$5271			; bytes of Extracted/Sound/bootsamples.brr
-GAMESAMPLESIZE	=	$B814			; bytes of the in-game BRR samples (GameSamples)
-replaysize		=	$71				; bytes per replay frame record
-puckobj			=	$1C				; object index of the puck
-netobj1		=	$18					; object index*2 of goal net 1 (y +268)
-netobj2		=	$1A					; object index*2 of goal net 2 (y -268)
 JMLOPCODE		=	$5C				; jml opcode (sfxretjml)
-DPCLEAREND		=	$164E			; Start clears DP/RAM $0000 up to here
-; DMAList entry offsets
-dmasrc	=	0						; word: source address
-dmabank	=	2						; byte: source bank
-dmalen	=	3						; word: byte count
-dmavram	=	5						; word: VRAM word address
-dmasize	=	7						; bytes per entry
-; gmode bits
-gmdir		=	$0002				; 0 = home team goes up
-gmpen		=	$0004				; penalty called, ref in progress
-gmpendel	=	$0008				; delayed penalty has been called
-gmhl		=	$0010				; hilight mode
-gmoffs		=	$0020				; offsides on
-gmeog		=	$0040				; end the period at the next faceoff
-; sflags (low byte = sflags, high byte = sflags2)
-sfpz		=	$0001				; pause mode
-sfpj		=	$0002				; pause started by controller 2
-sfspdir		=	$0004				; set pass dir mode
-sfssdir		=	$0008				; set shot dir mode
-sfwrap		=	$0010				; replay has wrapped around
-sfscrl		=	$0020				; replay scrolled by hand: Hpos/Vpos not from the frames
-sfslock		=	$0040				; scroll lock to xc1/yc1
-sf2faceoff	=	$0100				; face off in progress
-sf2refref	=	$0200				; ref needs refresh
-sf2drec		=	$0400				; disable replay record
-sf2replay	=	$0800				; replay in progress
-sf2shot		=	$1000				; shot was taken
-sf2pwrplay	=	$2000				; power play in progress
-sf2pwrtm	=	$4000				; 0 for team 1 in power play
-sf2offsig	=	$8000				; offsides little ref on
-; pflags bits (pflags2 bit n is bit n+10)
-pfdoff		=	$0001				; deceleration off
-pfna		=	$0002				; new assignment
-pfjoycon	=	$0008				; joystick controlled
-pf2unav		=	$1000				; unavailable
-pf2lcm		=	$2000				; line change mode
-pf2pen		=	$4000				; caused a penalty
-pf2npc		=	$8000				; no player collision
-pf2inj		=	$0004				; injured
-; sflags3 bits
-sf3llcs		=	$0001				; lower line change box on screen
-sf3rmplay	=	$0002				; replay play mode on
-sf3sbut		=	$0008				; Start pressed during the highlights: skip the rest
-sf3fo		=	$0010				; face off just ended: the next puck pickup wins it
-sf3icetime	=	$0020				; count frames on ice per player
-; iflags bits
-ifcgl	=	$0001					; puck crossed the goal line
-ifdir	=	$0002					; icing toward the top goal
-ifok	=	$0004					; icing possible
-; attribute bits
-attrxflip	=	$0800				; x flip
-attryflip	=	$1000				; y flip
-; tmflags bits
-tmftimeout	=	$0002				; 93G timeout bit; 93S has no timeout, the bit is shared as in 93G
-tmfmid		=	tmftimeout			; nearest player takes the spot between puck and own goal
-tmfslide	=	tmftimeout			; team slides out (SlideOutRosterPlayer)
-tmflcc		=	$0001				; line change box needs redrawing
-tmflast		=	$0004				; next touch overwrites the last touch only
-tmflcm		=	$0008				; team in line change mode
-tmfoside	=	$0010				; team offsides
-; record fields (names shared with 93G, 94G and 94S)
-sstime		=	0					; ScoreSum entry (6 bytes per goal): word period / time
-ssflags		=	2					; byte 2 + skater difference (goal type); bit 7 = away team scored
-ssscorer	=	3					; byte scorer
-ssassist1	=	4					; byte first assist (negative none)
-ssassist2	=	5					; byte second assist (negative none)
-sssize		=	6
-pbpen		=	0					; PenBuf entry (2 bytes): penalty number (0 = free)
-pbscnum		=	1					; SCnum of the player
-pcx			=	0					; puckcross entry (4 bytes; entry 0 top, 1 bottom): word x
-pcframes	=	2					; word frames
-pcsize		=	4
-pldnum		=	0					; .pld player ratings, 8 bytes after the name (92 setplayer field names):
-									; jersey number -> rostnum (setplayer then steps y through the rest)
-pldweight	=	1					; high nibble weight, low nibble leg power legstr
-pldlegspd	=	2					; high nibble speed legspd, low nibble offense aioff
-pldaidef	=	3					; high nibble defense aidef, low nibble shot power shotspd
-pldcheck	=	4					; high nibble checking, bit 0 handed, bits 1-3 fighting
-pldstick	=	5					; high nibble stickhandling stickhand, low nibble shot accuracy
-pldendur	=	6					; high nibble endurance, low nibble shoot / pass odds spodds
-pldpass		=	7					; high nibble passing passacc, low nibble aggression aggress
-pldsize		=	8
-foframe		=	0					; fofdata2, fofdata: 4 bytes per big faceoff sprite (centers, ref): frame
-foattr		=	2					; word attribute (bit 11 x flip)
-fosize		=	4
-plpos		=	6					; PlList: 6 wanted roster players, then their positions
-; joypad
-cbut	=	$0080					; shoot / check button in d2
-; rink
-blueline	=	$58
-goalline	=	$B0					; blueline+goalline = $108
-sideline	=	$88					; distance from center to side boards
-; roster
-maxros	=	26						; roster slots per team
-; clock
-jps		=	24						; jiffys per second
-; sounds (sfx numbers)
-SFXstop			=	$9C				; +0/1: skate stop (dostop, controlled player)
-SFXshotwiff		=	$98				; +0-3: missed shot (doshot)
-SFXshotfh		=	$8D				; forehand shot (93 $18)
-SFXshotbh		=	$8E				; backhand shot (93 $14)
-SFXshothard		=	$8F				; shot with passspeed >= $32
-SFXcrowdcheer	=	$8A				; home player won the fight, home goalie save (93 song $B)
-SFXcrowdboo		=	$8B				; visitor won the fight (93 song $C)
-SFXhithigh		=	$92				; SFXhithigh 9
-SFXhitlow		=	$93				; SFXhitlow $A
-SFXpuckbody		=	$90				; +0/1: puck hits a body (93 $24)
-SFXoooh2		=	$8C				; hard shot saved by the visiting goalie, an injury (93 $D)
-SFXbglass		=	$8C				; puck over the glass (93 $E)
-SFXpuckwall1	=	$95				; +0-2: puck off the boards by speed (93 $28-$2B)
-SFXpuckpost		=	$94				; puck off the post
-SFXsiren		=	$A0				; goal siren
-SFXwhistle		=	$89				; whistle
-SFXcheck		=	$90				; +0/1: check (93 $1C-$1F)
-SFXplayerwall	=	$9E				; +0/1: player hits the boards (93 $20)
-SFXcheck2		=	$91				; second check sound (93 $1D); the puck body sound has the same two
-SFXpuckwall2	=	$96				; puck off the boards, variant 2 (SFXpuckwall1+1)
-SFXpuckwall3	=	$97				; variant 3 (SFXpuckwall1+2)
-SFXshotwiff2	=	$99				; missed shot, variant 2 (SFXshotwiff+1)
-SFXshotwiff3	=	$9A				; variant 3
-SFXshotwiff4	=	$9B				; variant 4
-SFXstop2		=	$9D				; skate stop, second sound (SFXstop+1)
-SFXplayerwall2	=	$9F				; player hits the boards, second sound (SFXplayerwall+1)
-SFXhorn			=	$A1				; horn at the end of a period (93G SFXhorn); nothing in the code sends it
-SFXcrowd		=	$80				; +1-7: crowd noise level, loops (updatesound)
-SFXcrowdoff		=	$88				; crowd noise off
-; joypad bits (SNES)
-JOYSTART	=	$1000				; Start
-JOYR		=	$0010				; R shoulder
-JOYL		=	$0020				; L shoulder
-JOYRIGHT	=	$0100				; dpad right
-JOYLEFT		=	$0200				; dpad left
-JOYDOWN		=	$0400				; dpad down
-JOYUP		=	$0800				; dpad up
-JOYA		=	$0080				; A button
-bbut		=	$8000				; B: pass / switch player
-abut		=	$4000				; Y: hold / line change
-; injury
-INJfight	=	$112C				; tmpdst value for a player injured in a fight (93 $112C)
-; tmpdst values
-TMPDICE		=	$FFFF				; on the ice
-TMPDBENCH	=	$FFFE				; on the bench
-TMPDOUT		=	$FFFD				; out of the game
-TMPDINJ		=	$1000				; injured: box time with this bit has no penalty
-
-OFFSCREEN	=	$4E20				; find3d: d1 for a point off the screen (20000)
-; --- addresses: puck fields (need puckobj above) ---
-puckx	=	Xpos+puckobj
-pucky	=	Ypos+puckobj
-puckvx	=	Xvel+puckobj
-puckvy	=	Yvel+puckobj
-puckvz	=	Zvel+puckobj
-puckc	=	newpos+puckobj			; SCnum of the puck carrier, negative = loose. puckc (puck newpos)
