@@ -567,7 +567,7 @@ org `$8F8000` when `pc()` is below it.
 - `$8FE2F9` routines/penalty/penalties/ClearPenaltyBuffer.asm
 - `$8FE316` routines/middle/math/randomd0s.asm
 - `$8FE32B` routines/hockey/screens/DefaultMenus.asm
-- `$8FE369` routines/penalty/penalties/checkagr.asm
+- `$8FE369` routines/hockey/collisions/checkagr.asm"
 - `$8FE3B0` routines/middle/util/WeightedRandomSelect.asm
 - `$8FE404` routines/video/interrupts/forceblack.asm
 - `$8FE43C` routines/logic/controls/passmode.asm
