@@ -551,9 +551,9 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	dec.b d0
 .de7:								; index the save list
 	asl.b d0
-	lda.w #GoalieSaveList
+	lda.w #assgoalie_list
 	sta.b a1
-	lda.w #GoalieSaveList>>16
+	lda.w #assgoalie_list>>16
 	sta.b a1+2
 	ldy.b d0
 	lda.b [a1],y
