@@ -595,4 +595,4 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	%StringCt(CC_Font2,$03,$15,"Per. Length")
 	%StringCt(CC_Font2,$03,$17,"Penalties")
 	%StringCt(CC_Font2,$03,$19,"Line Changes")
-	%StringCC(0)					;end (a 0 byte)
+	%StringCC(CC_End)					;end (a 0 byte)

@@ -28,7 +28,7 @@ endmacro
 ; StringCC(b): one control byte, no text.
 ;   Emits: dw length (counts itself), then b.
 ;   b: a byte (a control code).
-;   Example (Credits.asm:5): %StringCC($FE)
+;   Example (Credits.asm:5): %StringCC(CC_LastPage)
 ;     -> 03 00 FE
 macro StringCC(b)					;String of one control byte (no text)
 ?l:	dw ?e-?l
@@ -92,7 +92,7 @@ endmacro
 ;   Emits: dw length (counts itself), cc, x, y, text, b1..b4, cc2, x2, y2, text2.
 ;   cc, cc2: print control codes. x, y pairs: positions. text, text2: quoted text. b1..b4: bytes.
 ;   Example (updatepwrplay.asm:39):
-;   %StringCt4bCt($BF, $01, $19, "   ", $16, $17, $18, $19, $BF, $01, $1A, "   ")
+;   %StringCt4bCt(CC_Font1Pri, $01, $19, "   ", $16, $17, $18, $19, CC_Font1Pri, $01, $1A, "   ")
 ;     -> 12 00 BF 01 19 20 20 20 16 17 18 19 BF 01 1A 20 20 20
 macro StringCt4bCt(cc, x, y, text, b1, b2, b3, b4, cc2, x2, y2, text2)	;StringCt, four bytes, then a second
 	;code, position and text

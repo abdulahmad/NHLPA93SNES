@@ -10,4 +10,4 @@ ScoutLabels:						;scouting labels: the rating names of the scouting report; a $
 	%String("Power Play Adv.")
 	%String("-    Home Team Adv.    ")
 	%String("Overall")
-	%StringCC($FF)
+	%StringCC(CC_ListEnd)
