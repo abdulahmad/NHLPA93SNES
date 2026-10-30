@@ -112,7 +112,7 @@ SPAgready2_table:					;table of the animation above: direction offsets, flags, f
 .7:	dw SPFGoalie+21,-30				; frame/time list for direction 7
 	assert SPAgready2_table-SPAlist == SPAgready2
 
-SPAgglover		=	$0166			; glove save (GoalieSaveList 0)
+SPAgglover		=	$0166			; glove save (assgoalie_list 0)
 SPAgglover_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .0-SPAgglover_table			; direction 0
 	dw .1-SPAgglover_table			; direction 1
@@ -133,7 +133,7 @@ SPAgglover_table:					;table of the animation above: direction offsets, flags, f
 .7:	dw SPFGoalie+22,-32				; frame/time list for direction 7
 	assert SPAgglover_table-SPAlist == SPAgglover
 
-SPAgglovel		=	$0198			; glove save (GoalieSaveList 1)
+SPAgglovel		=	$0198			; glove save (assgoalie_list 1)
 SPAgglovel_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .0-SPAgglovel_table			; direction 0
 	dw .1-SPAgglovel_table			; direction 1
@@ -154,7 +154,7 @@ SPAgglovel_table:					;table of the animation above: direction offsets, flags, f
 .7:	dw SPFGoalie+23,-32				; frame/time list for direction 7
 	assert SPAgglovel_table-SPAlist == SPAgglovel
 
-SPAgstickr		=	$01CA			; stick save (GoalieSaveList 4) (93G $20C)
+SPAgstickr		=	$01CA			; stick save (assgoalie_list 4) (93G $20C)
 SPAgstickr_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .0-SPAgstickr_table			; direction 0
 	dw .1-SPAgstickr_table			; direction 1
@@ -175,7 +175,7 @@ SPAgstickr_table:					;table of the animation above: direction offsets, flags, f
 .7:	dw SPFGoalie+78,-32				; frame/time list for direction 7
 	assert SPAgstickr_table-SPAlist == SPAgstickr
 
-SPAgstickl		=	$01FC			; stick save (GoalieSaveList 5) (93G $23E)
+SPAgstickl		=	$01FC			; stick save (assgoalie_list 5) (93G $23E)
 SPAgstickl_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .0-SPAgstickl_table			; direction 0
 	dw .1-SPAgstickl_table			; direction 1
@@ -196,7 +196,7 @@ SPAgstickl_table:					;table of the animation above: direction offsets, flags, f
 .7:	dw SPFGoalie+79,-32				; frame/time list for direction 7
 	assert SPAgstickl_table-SPAlist == SPAgstickl
 
-SPAgstackr		=	$022E			; stack pad save (GoalieSaveList 2) (93G $270)
+SPAgstackr		=	$022E			; stack pad save (assgoalie_list 2) (93G $270)
 SPAgstackr_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .0-SPAgstackr_table			; direction 0
 	dw .1-SPAgstackr_table			; direction 1
@@ -217,7 +217,7 @@ SPAgstackr_table:					;table of the animation above: direction offsets, flags, f
 .7:	dw SPFGoalie+50,8,SPFGoalie+51,-20	; frame/time list for direction 7
 	assert SPAgstackr_table-SPAlist == SPAgstackr
 
-SPAgstackl		=	$0280			; stack pad save (GoalieSaveList 3) (93G $2C2)
+SPAgstackl		=	$0280			; stack pad save (assgoalie_list 3) (93G $2C2)
 SPAgstackl_table:					;table of the animation above: direction offsets, flags, frame/time lists
 	dw .0-SPAgstackl_table			; direction 0
 	dw .1-SPAgstackl_table			; direction 1

@@ -194,7 +194,7 @@ org `$808000`.
 - `$80F6AD` routines/logic/assignments/assgoalie.asm
 - `$80FCC9` routines/logic/skating/ClampYPosition.asm
 - `$80FD05` routines/logic/skating/AdjustFacingDirection.asm
-- `$80FD70` routines/logic/assignments/GoalieSaveList.asm
+- `$80FD70` routines/logic/assignments/assgoalie_list.asm
 - `$80FD7C` routines/logic/puck/shotdiradj.asm
 - `$80FE89` routines/logic/skating/CalcAngleOffset.asm
 - `$80FED1` routines/penalty/energy/reenergizeteam.asm (also unusedFF)
