@@ -3,7 +3,7 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	lda.w #$0080					; show the password again
 	trb.w PassWord
 	jsl.l orjoy
-	jsl.l DrawGameSetupBack
+	jsl.l setoptions_drawback
 	jsl.l ReadPads					; read the pads
 	jsl.l orjoy
 	jsl.l ClearSprites				; clear the sprite table

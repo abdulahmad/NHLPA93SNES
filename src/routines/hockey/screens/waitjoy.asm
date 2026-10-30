@@ -1,5 +1,5 @@
 waitjoy:						;Wait for a new button press; in the demo the pause ends by itself
-	jsl.l IntermissionTick			; ticker and highlights
+	jsl.l Intermission_tick			; ticker and highlights
 	bne .force						; done: force Start
 	jsl.l setvideo					; update the video
 	lda.b Vcount					; frame counter

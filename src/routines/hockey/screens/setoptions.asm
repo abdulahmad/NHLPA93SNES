@@ -66,7 +66,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	sta.w logochars
 	adc.w #$0035
 	sta.w scorechars
-	jsl.l DrawGameSetupBack			; draw the setup background
+	jsl.l setoptions_drawback			; draw the setup background
 	lda.w #GameSetUpMap				; decompress the setup graphics
 	sta.b tmp0
 	lda.w #GameSetUpMap>>16
@@ -373,7 +373,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	lda.b d5
 	sta.b d3
 	rtl
-.ps:								;print the choices of all 7 lines (.psd), then PrintTeamNames
+.ps:								;print the choices of all 7 lines (.psd), then setoptions_teamnames
 	lda.b d7						; remember the cursor line
 	sta.b d6
 	lda.w #$FFFE					; start before line 0
@@ -389,7 +389,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	bne .psloop
 	lda.b d6						; restore the cursor line
 	sta.b d7
-	jml.l PrintTeamNames			; print the team names
+	jml.l setoptions_teamnames			; print the team names
 .psd:								;print the choice of line d7 at x $11 (14 chars erased first): string d3
 									;of its .pl list; the team lines print the team name (.psdtp)
 	jsl.l printz					; print the string that follows

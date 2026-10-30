@@ -31,7 +31,7 @@ Intermission:						;Between periods: the pause menu screen with the scores of th
 	sec
 	sbc.w #$0150					; ticker clock = frame counter - $150
 	sta.w tickervc
-	jsl.l InitTicker				; start the score ticker
+	jsl.l Intermission_ticker				; start the score ticker
 	lda.w TickerNum
 	sta.w tickerstart				; ticker starts from the current game
 .top:								; clear the object X positions again

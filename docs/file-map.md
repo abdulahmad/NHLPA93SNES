@@ -310,7 +310,7 @@ org `$858000` when `pc()` is below it.
 - `$85D5C0` Title1Map (data)
 - `$85FBB9` routines/video/sprites/SetSframeHi.asm
 - `$85FF0E` routines/hockey/input/getpzjoy.asm
-- `$85FF1E` routines/hockey/screens/PrintTeamNames.asm
+- `$85FF1E` routines/hockey/screens/setoptions_teamnames.asm
 - `$85FF96` routines/hockey/util/nullrtl85.asm
 - `$85FF97` routines/hockey/game/ResetClock.asm (also unusedFF85)
 
@@ -365,7 +365,7 @@ org `$888000` when `pc()` is below it.
 - `$88872E` FramerTiles (data)
 - `$8887AE` routines/video/crowd/showcrowd.asm
 - `$888853` routines/hockey/password/SuperMult.asm
-- `$8888C3` routines/hockey/screens/DrawGameSetupBack.asm
+- `$8888C3` routines/hockey/screens/setoptions_drawback.asm
 - `$888942` routines/middle/math/mulu.asm
 - `$888A0F` SpriteSet8 (data)
 - `$889B73` TeamBlocksTiles (data)
@@ -502,10 +502,10 @@ org `$8F8000` when `pc()` is below it.
 - `$8F85FA` routines/penalty/scoreboard/pplpen.asm
 - `$8F8682` routines/print/PushNumber.asm
 - `$8F86B6` routines/penalty/ticker/Intermission.asm
-- `$8F873F` routines/penalty/ticker/InitTicker.asm
+- `$8F873F` routines/penalty/ticker/Intermission_ticker.asm
 - `$8F8757` routines/stats/StatsReport.asm
-- `$8F877D` routines/penalty/ticker/IntermissionTick.asm
-- `$8F87A8` routines/penalty/ticker/TickerNext.asm
+- `$8F877D` routines/penalty/ticker/Intermission_tick.asm
+- `$8F87A8` routines/penalty/ticker/NewTicker2_next.asm
 - `$8F87C0` routines/video/crowd/KillCrowd.asm
 - `$8F87C9` routines/print/appstring.asm
 - `$8F87EA` routines/print/PushTime.asm

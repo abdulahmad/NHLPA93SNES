@@ -1,4 +1,4 @@
-DrawGameSetupBack:					;Draw the game setup screen backdrop with the NHLPA logo
+setoptions_drawback:					;Draw the game setup screen backdrop with the NHLPA logo
 	lda.w blankchar					; blank character
 	ldx.w #$07FE					; 2KB
 .clr:								; clear the text map
