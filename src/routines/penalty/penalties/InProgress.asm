@@ -265,11 +265,11 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	jsl.l SetPA
 	bra .ex
 .exit:								; PenBuf empty: recount the players on ice for both teams
-	stz.b a2						; coinsearch for both teams, clear gmpen, the puck: pfaceoff
-	jsl.l coinsearch
+	stz.b a2						; InProgress_ap for both teams, clear gmpen, the puck: pfaceoff
+	jsl.l InProgress_ap
 	lda.w #$0002
 	sta.b a2
-	jsl.l coinsearch
+	jsl.l InProgress_ap
 	lda.w #gmpen					; penalty mode over
 	trb.w gmode
 	ldx.w #puckscnum

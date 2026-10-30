@@ -1,4 +1,4 @@
-coinsearch:							;Count team a2's players kept off the ice by penalties (not coincidental
+InProgress_ap:							;Count team a2's players kept off the ice by penalties (not coincidental
 									;ones) to set how many it has on the ice
 	lda.w #$0006					; d1 = 6 players, d0 = last roster word
 	sta.b d1						; six players

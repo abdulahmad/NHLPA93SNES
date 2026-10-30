@@ -79,7 +79,7 @@ Signed-compare overflow tails (`bmi` / `bvs` / `bvc`) are `.neg`, `.neg1`, `.neg
 
 Locals renamed only where 93 Genesis has no such label: `TitleScreen` `.clearvr` (16 video-memory words), `VBjsr` `.rti`, `UpdateRosterPlayer` `.space`, `updatepentime` `.stay`, `updatepwrplay` `.diff`, `chkprogress` `.over`, `Fprint` `.step`, `SetSframe` / `SetSframeHi` `.nextpiece`, `printbig` `.nextch`, `chk4pass` `.miss` (the 93G `.ok` join stays). Unused labels with no branch were removed from `prefmes` and `passtoa0`.
 
-Left on their 93 Genesis names: `SetPlList_s1` `.no`, `UpdateScoutingDisplay` `.cont`, `checkcoll` `.xx`, `checkwindow` `.ok`, `assbench` / `asspenalty` `.ok`, `assgoalie` `.out`, `chk4shot` `.no1`, `GetNameandAttrib` `.skip`. `.loop`, `.next`, `.done` and `.exit` stay. `.cont1` stays: it is the controller-1 side of `cont1team` / `cont2team`.
+Left on their 93 Genesis names: `TryAddPlayerToList` `.no`, `UpdateScoutingDisplay` `.cont`, `checkcoll` `.xx`, `checkwindow` `.ok`, `assbench` / `asspenalty` `.ok`, `assgoalie` `.out`, `chk4shot` `.no1`, `GetNameandAttrib` `.skip`. `.loop`, `.next`, `.done` and `.exit` stay. `.cont1` stays: it is the controller-1 side of `cont1team` / `cont2team`.
 
 Inline comments from 93 Genesis, on the matching instruction: `holdcheck` (facing, the puck carrier, the second hold anim, the two penalties), `chkprogress` (the minutes search, `temp1 = 120*60`), `GetNameandAttrib` (the roster record, the rating sum). The `holdcheck` header had X and a2 swapped: a2 is the one holding, X is the opponent.
 

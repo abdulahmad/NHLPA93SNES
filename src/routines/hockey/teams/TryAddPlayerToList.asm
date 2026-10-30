@@ -1,4 +1,4 @@
-SetPlList_s1:					;Add roster player d0 to slot d4 of the list of players wanted on the ice,
+TryAddPlayerToList:					;Add roster player d0 to slot d4 of the list of players wanted on the ice,
 									;if he is available
 	lda.b d0						; roster player
 	sta.b d1						; keep the number in d1

@@ -119,7 +119,7 @@ org `$808000`.
 - `$80BAF2` routines/logic/computer/ChkGoalies.asm (also ChkGoalies_CPG)
 - `$80BB5A` routines/hockey/teams/setpersonel.asm
 - `$80BCB0` routines/hockey/teams/SetPlList.asm
-- `$80BDEB` routines/hockey/teams/SetPlList_s1.asm
+- `$80BDEB` routines/hockey/teams/TryAddPlayerToList.asm
 - `$80BE47` routines/logic/computer/ReturnGoalies.asm (also ReturnGoalies_r)
 - `$80BE89` routines/logic/computer/CPgoalie.asm
 - `$80BED1` routines/hockey/display/updatecrowdf.asm
@@ -178,7 +178,7 @@ org `$808000`.
 - `$80E8F4` routines/penalty/penalties/limitfo.asm
 - `$80E99F` routines/penalty/penalties/chkprogress.asm
 - `$80EA40` routines/penalty/penalties/InProgress.asm
-- `$80EC89` routines/penalty/penalties/coinsearch.asm
+- `$80EC89` routines/penalty/penalties/InProgress_ap.asm
 - `$80ECC7` routines/penalty/penalties/UpdatePA.asm
 - `$80ED0C` routines/penalty/penalties/SetPA.asm
 - `$80ED38` RonBarrMap (data)
@@ -512,7 +512,7 @@ org `$8F8000` when `pc()` is below it.
 - `$8F8858` routines/penalty/ticker/NewTicker.asm
 - `$8F8861` routines/penalty/ticker/NewTicker2.asm
 - `$8F887A` routines/penalty/ticker/NewTicker3.asm
-- `$8F8960` routines/penalty/ticker/NewTicker3_tn.asm
+- `$8F8960` routines/penalty/ticker/PrintGameInfo.asm
 - `$8F89A3` data/text/GameLabels.asm
 - `$8F8ABC` routines/video/hud/showzam.asm
 - `$8F8AE9` routines/middle/util/waitxsr.asm
