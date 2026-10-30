@@ -1,4 +1,4 @@
-PuckcSpots:							;The spots the puck carrier skates to
+asspuckc_postab:							;The spots the puck carrier skates to
 	dw -100,-20
 	dw 100,-20
 	dw -120,40
