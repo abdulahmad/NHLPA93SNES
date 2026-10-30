@@ -229,12 +229,12 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	dec.b d6
 	bpl .frame
 	lda.w #NumofTeams				; demo: random teams, both computer
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	sta.w Opt1team
 	sta.w HomeTeam					; home team
 .team2:								; pick a second team different from the first
 	lda.w #NumofTeams
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	cmp.w Opt1team
 	beq .team2
 	sta.w Opt2team

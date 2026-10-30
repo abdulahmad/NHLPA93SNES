@@ -89,8 +89,8 @@ org `$808000`.
 - `$80ACC4` routines/logic/puck/updatefaceoff.asm
 - `$80AD34` routines/logic/puck/Endfaceoff.asm
 - `$80AE36` routines/logic/skating/dirtab.asm
-- `$80AE56` routines/middle/math/random.asm
-- `$80AE8B` routines/middle/math/randoma.asm
+- `$80AE56` routines/middle/math/randomd0_seed.asm
+- `$80AE8B` routines/middle/math/randomd0A.asm
 - `$80AE9D` routines/logic/controls/changeplayer.asm
 - `$80AFA8` routines/logic/skating/vtoa.asm
 - `$80B006` routines/logic/animation/SetSPA.asm
@@ -190,7 +190,7 @@ org `$808000`.
 - `$80F5EA` routines/hockey/password/DecodePW.asm
 - `$80F5F2` routines/hockey/screens/Opening3.asm
 - `$80F5FA` routines/hockey/password/SuperDiv.asm
-- `$80F6A1` routines/middle/math/randomas.asm
+- `$80F6A1` routines/middle/math/randomd0sA.asm
 - `$80F6AD` routines/logic/assignments/assgoalie.asm
 - `$80FCC9` routines/logic/skating/ClampYPosition.asm
 - `$80FD05` routines/logic/skating/AdjustFacingDirection.asm

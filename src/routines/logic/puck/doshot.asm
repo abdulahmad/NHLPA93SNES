@@ -144,7 +144,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	bcs .notperf
 	lda.w #$0010
 	adc.w shotacc,x
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	cmp.w #$000F					; chance of a perfect shot
 	bcs .perf
 .notperf:							;aim error from passspeed, shotacc and distance
@@ -180,7 +180,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 .ar:								; random aim error
 	lda.b d0
 	pha								; $01,s adjust; after its pla $05,s is the z diff
-	jsl.l randomas					; random number -A to A-1
+	jsl.l randomd0sA					; random number -A to A-1
 	adc.b $03,s
 	sta.b $03,s
 	lda.b $01,s
@@ -201,7 +201,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	sta.b $05,s
 	pla
 	lsr a
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	adc.b $05,s
 	sta.b $05,s
 .perf:								;puckvx/puckvy = passspeed*$44*dx/d3 and dy/d3; puckvz from the height

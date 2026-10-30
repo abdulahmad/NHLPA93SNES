@@ -118,7 +118,7 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	lda.b [a0],y					; x random range
 	dey
 	dey
-	jsl.l randomas					; random number -A to A-1
+	jsl.l randomd0sA					; random number -A to A-1
 	adc.b [a0],y					; plus the zone x
 	sta.w temp3,x					; temp3 = spot x
 	iny
@@ -130,7 +130,7 @@ asscentero:							;Assignment: the center on offense skates to a spot in the zon
 	lda.b [a0],y					; y random range
 	dey
 	dey
-	jsl.l randomas					; random number -A to A-1
+	jsl.l randomd0sA					; random number -A to A-1
 	adc.b [a0],y					; plus the zone y
 	sta.w temp4,x					; temp4 = spot y
 .nodec:								; target from temp3,temp4

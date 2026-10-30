@@ -154,7 +154,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	bvs .de1j
 .roll:								; random chance to pass
 	lda.w #$0064					; 1 in 4: pass
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	cmp.w #$004B
 	bcs .pass
 	jmp.w .de1

@@ -261,7 +261,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	adc.w #$012C
 	sta.b Crowdlevel
 	lda.w #$1000					; random Yvel away from the goal, Xvel/Zvel +-$1000
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	sta.b d0
 	lda.w pucky
 	bmi .df0
@@ -273,12 +273,12 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	lda.b d0
 	sta.w puckvy					; puck y velocity
 	lda.w #$2000					; random x velocity
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	sec
 	sbc.w #$1000
 	sta.w puckvx					; puck x velocity
 	lda.w #$2000					; random z velocity
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	sec
 	sbc.w #$1000
 	sta.w puckvz					; puck z velocity

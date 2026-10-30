@@ -40,7 +40,7 @@ StartPer:							;Start a period: reset the rink and clock, face off at center ic
 	lda.w #12
 	sta.b mulb
 	jsl.l mulu16					; A = mula * mulb
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	inc a
 	sta.w p3cue
 .p3:								; periods 1 and 2: mid-period cue

@@ -103,7 +103,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	inc a
 	clc
 	adc.w #$00B6					; 182 minus the distance
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	cmp.w #$0003					; 1 in that: slips through
 	bne .frame
 	jmp.w .rtl
@@ -226,7 +226,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	xba
 	and.w #$FF00
 	asl a
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	adc.w #$0C00					; plus $C00
 	sta.b d0						; limit
 	sec

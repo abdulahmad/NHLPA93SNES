@@ -92,7 +92,7 @@ ResolveGames:						;Record the played playoff game and the series wins; when the
 	inc a
 	sta.w gspotwins,y
 	lda.w #200						; random series result: 50/50 per game
-	jsl.l randoma					; random number 0 to A-1
+	jsl.l randomd0A					; random number 0 to A-1
 	lsr a
 	bcc .cr0
 	lda.w gspotwins,y

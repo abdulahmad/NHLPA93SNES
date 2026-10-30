@@ -13,7 +13,7 @@
 
 Leave 34 alone. playoffseats is 34 trees, not the team count.
 
-`src/routines/hockey/setoptions.asm` already takes the count from `NumofTeams`: the two demo ranges that feed `randoma`, and the Team 1 and Team 2 counts in `.pslim`.
+`src/routines/hockey/setoptions.asm` already takes the count from `NumofTeams`: the two demo ranges that feed `randomd0A`, and the Team 1 and Team 2 counts in `.pslim`.
 
 Leave these alone. The number is the same and the meaning is not the team count:
 
