@@ -267,25 +267,12 @@ JOYL		=	$0020				; L shoulder
 JOYA		=	$0080				; A button (same bit as cbut; the menus test it as A)
 osflag	=	$4E20				; find3d: d1 for a point off the screen (20000)
 ; pad state (ReadPads, orjoy)
-PadRaw1				=	$015E		; controller 1 buttons (SNES joypad bits, JOY* masks)
-PadRaw2				=	$0160		; controller 2 buttons
 PadRaw3				=	$0162		; controller 3 buttons (multitap)
 PadRaw4				=	$0164		; controller 4 buttons
 padlast1			=	$0166		; 4 words: buttons at the last ReadPads (PadRaw1-4)
 padnew1				=	$016E		; 4 words: buttons newly pressed at the last ReadPads (PadRaw1-4)
 padvcount			=	$0176		; Vcount of the last ReadPads (the pads are read once per frame)
-lj1					=	$0185		; last controller 1 buttons (debounce)
-lj2					=	$0187
 cheatpads	=	$1648				; 3 words: the last three new pad presses (the unreached Gameloop .cheat)
-repeatdelayframes			=	$0499		; ProcessInputWithRepeat: frames to the next key repeat
-; controller assignment
-PadControlBits		=	$0431		; SCnum nibbles of the pad-controlled players ($FFFF = none)
-padcont				=	$0433		; 4 words
-c1playernum			=	$1292		; player on controller 1 (negative = none)
-c2playernum			=	$1294
-cont1team			=	$1296		; team on controller 1 (0 none, 1 home, 2 away)
-cont2team			=	$1298
-pojoy				=	$044F		; playoff joystick indicator (2+: two players). POJoy
 
 ;sound: songs, sound effects and the sound driver (93S: SNES song and sfx numbers, SPC700 driver)
 ; The songs, numbered as the game numbers them: the cue number on port 0 of the sound program (92 and 93G
@@ -293,8 +280,6 @@ pojoy				=	$044F		; playoff joystick indicator (2+: two players). POJoy
 ; starter's own number 1-9 (Goal 1 ... PO 9), not the cue.
 SngTitle		=	3				;title screen and the game menu (boot set)
 SngEOP			=	2				;end of period (unused, boot set)
-SngEOG			=	9				;end of game (unused, boot set)
-SngPO			=	1				;playoff screen (boot sample set)
 SngGoal			=	4				;home goal (game sample set)
 SngPeriodStart	=	5				;period start
 SngLateGame		=	6				;third period
@@ -322,13 +307,13 @@ cursong			=	$1651			;song playing on the SPC (0 = none); set by the song starter
 goalcue				=	$0429		;nonzero: home team just scored (lead 0-2): assfaceoff plays the goal
 									;music cue at the next faceoff
 percue				=	$042B		; nonzero: period just started: assfaceoff plays the period music cue
-periodendtime		=	$042D		;third period: frames until StartSngLateGame plays its music cue (93G periodendtime; set by
-									;StartPer, 0 = done)
 midpercue			=	$042F		;gameclock value (half the period) at which assfaceoff plays the
 									;mid-period music cue (0 = done)
 cuetimer			=	$04A9		; frames left of a music cue; sfx are dropped while it runs
 ; sndbank: the sample set loaded into the SPC700 (1 = the in-game sounds, 2 = the boot set)
 SoundBankGame	=	1
+SngEOG			=	9				;end of game (unused, boot set)
+SngPO			=	1				;playoff screen (boot sample set)
 SoundBankBoot	=	2
 ; sound effects
 SFXstop			=	$9C				; +0/1: skate stop (dostop, controlled player)
@@ -364,7 +349,6 @@ SFXcrowdoff		=	$88				; crowd noise off
 sfxmutetime			=	$04A7		;Vcount when sound effects were cut off: sfx are dropped for 180 frames
 									;after it
 crowdvol	=	$1646				; crowd noise volume last sent to the sound driver (updatesound); asv = the current level
-lastsfx				=	$017F		; last sound effect requested
 ; driver interface (93S: SPC700 command queue and uploads)
 sndptr		=	$1A					; long pointer to the SPC upload stream ($1A-$1C, bank in $1C)
 sndqin		=	$1D					;sound command queue write index (bank $82 sfx queue at sndqueue, 8 words)
@@ -379,19 +363,16 @@ sndsettle			=	$049F		;set to 10 after the in-game sample upload: p_music_vblank 
 
 ;rink distances
 goalline	=	$B0					; Blueline+goalline = $108
-Blueline	=	$58
-Sideline	=	$88					; distance from center to side boards
 
 ;memory layout, replay buffer and record
 replaystart	=	$7E8174		; first replay frame record
 replaysize		=	$71				; bytes per replay frame record
 replayend		=	$7EFF41		; replay buffer end: adda43 wraps to replaystart
-recbpr		=	$0495		;long pointer to the next replay frame record (wraps at replayend
-									;to replaystart)
 hlsavebuf		=	$7E7E74			;StartHL2: the game state (gmode-1 .. ScoreSumbytes) while a highlight
 									;plays. ReplayStart role
 lastframevc			=	$08DB		; Vcount at the last replay frame shown (ReplayMode, bank $8F); not read
-varend		=	$164E			; Start clears DP/RAM $0000 up to here
+
+Sortobjs	=	16					; number of sorted graphics objects
 
 ;record and field offsets (names shared with 93G, 94G and 94S)
 ; record fields (names shared with 93G, 94G and 94S)
@@ -446,9 +427,6 @@ printm			=	$D4				;byte offset of the print map in textmap (map number from the 
 									;control code)
 printfontset	=	$1BCB			; tile base of the selected print font (control code)
 printfont			=	$0479		; font number (0-3) from the print control code
-mesarea				=	$0191		; temp area for print strings (length word, then characters)
-PushWidthBuf		=	$01F5		;PushNumberWidth string: length word (digits + 2), then the digits right
-									;aligned, spaces before (8 characters)
 strtext				=	2			; String: start of the text after its length word
 textdirtylo		=	$D0				; lowest changed word of textmap (sent at the next vblank); $D2 = highest
 textdirtyhi		=	$D2				; highest changed word of textmap
@@ -456,9 +434,9 @@ textdirtyhi		=	$D2				; highest changed word of textmap
 ; for the text after it; x and y follow. The byte is -(priority << 6 | palette << 4 | font).
 CC_Font1		=	$FF				; font 1
 CC_Font2		=	$FE				; font 2
+CC_Font1Pal1	=	$EF				; font 1, palette 1
 CC_Font1Pri		=	$BF				; font 1, priority set
 CC_Font2Pri		=	$BE				; font 2, priority set
-CC_Font1Pal1	=	$EF				; font 1, palette 1
 CC_Font1Pal3	=	$CF				; font 1, palette 3
 CC_Font1Pal2Pri	=	$9F				; font 1, palette 2, priority set
 ; whole-String markers (a String of just this byte): the list / page readers test it
@@ -476,6 +454,12 @@ backmap			=	$7E7674			;second BG map buffer (32x32 words) after textmap: screen 
 									;(GameSetUpMap, Title1Map, EASNBGMap)
 textsave		=	$7FF800			; copy of textmap while the pause screen is up
 
+; faceoff drop point and the replay record pointer (93G order)
+fodropx				=	$0136		; faceoff box x (pixels)
+fodropy				=	$0138		; faceoff box y
+recbpr		=	$0495		;long pointer to the next replay frame record (wraps at replayend
+									;to replaystart)
+
 ;vblank and frame timing
 VBint		=	$14					; address (bank $80) of the vblank handler VBjsr jumps to
 vbactive	=	$12					;nonzero while the VBint handler runs (or while main code holds vblank
@@ -490,11 +474,16 @@ OldVcount			=	$0427		; Vcount at the last game frame (d7 = Vcount - OldVcount)
 impactstep		=	$E2				; d7*2: impact decay this game frame (game loop)
 velstep			=	$E4				; d7*16: velocity to position scale this game frame
 gravstep		=	$E6				; d7*96: gravity this game frame
+repeatdelayframes			=	$0499		; ProcessInputWithRepeat: frames to the next key repeat
 d7x1024			=	$E8				; d7*1024, set with the other time steps (no reader found yet)
-lldisp				=	$0189		; count down for the once-a-second screen/game updates ($18 frames)
+
+; crowd sound level and the late game music cue timer (93G order)
+asv			=	$1644				; analog sound volume: current crowd noise level (updatesound, 93G asv); also
+									; scouting text without delays (down pressed)
+periodendtime		=	$042D		;third period: frames until StartSngLateGame plays its music cue (93G periodendtime; set by
+									;StartPer, 0 = done)
 
 ;sort objects (SortCords). 93S: structure of arrays, one word per object, 16 objects ($20 bytes per field); index with X/Y = SCnum*2; the byte fields (pnum ... handed) are each a word array
-Sortobjs	=	16					; number of sorted graphics objects
 Xpos		=	$08FF				; Xpos (integer part)
 Xfrac		=	$091F				; fraction of Xpos
 attribute	=	$09DF				; frame attribute bits (attrxflip, attryflip)
@@ -611,8 +600,6 @@ cheervc				=	$0152		; Vcount of the last crowd cheer
 
 ;DMA list, rink scroll and scroll lock
 DMAList			=	$1653			;vram dma list (7-byte entries, see dma* offsets), filled up to DMAlistend
-DMAlistend		=	$A3				;byte offset of the end of DMAList (7 bytes per entry); VBlank sends and
-									;empties it
 ; DMAList entry offsets
 dmasrc	=	0						; word: source address
 dmabank	=	2						; byte: source bank
@@ -626,9 +613,6 @@ Hscroll				=	$0156		; horizontal scroll: BG2HOFS = Hscroll+$C0 (VBlank)
 Vscroll				=	$08E1		; vertical scroll (low 3 bits = BG2 fine scroll)
 vramrow				=	$049D		;BG2 tile map row (0-31) at the top of the ring buffer: BG2VOFS =
 									;vramrow*8 + (Vscroll&7)
-xc1					=	$08F5		; scroll lock x (fight)
-yc1					=	$08F7		; scroll lock y
-yleader				=	$08F9		; lead distance on scrolling
 
 ;palette fades and brightness
 brightness	=	$04					;INIDISP shadow (0-15 brightness, $80 forced blank), written each vblank
@@ -639,6 +623,11 @@ fadein		=	$08					;1: vb2 steps brightness up every 4 frames to 15; >1:
 									;delay count before fading in
 palbuffer		=	$7E6C74			;CGRAM shadow (256 colors, 512 bytes):
 									;VBlank_Cram sends it. palbuffer role
+; rink lines and wall collision radius (93G order)
+Blueline	=	$58
+Sideline	=	$88					; distance from center to side boards
+wcradiusx			=	$08E3		; wall collision radius x
+wcradiusy			=	$08E5		; wall collision radius y
 
 ;screen objects: face off sprites, box, drop and spot, ffo pads, sso arrows
 fofdata2			=	$013A		;face off pull frame of the home (fofdata2) and visiting (+4) center
@@ -646,12 +635,10 @@ fofdata2			=	$013A		;face off pull frame of the home (fofdata2) and visiting (+4
 fofdata				=	$0142		; frame/attribute of the faceoff ref (big faceoff sprites)
 fobox			=	$F4				;nonzero while the faceoff box is on screen (puckfaceoff2 .. Endfaceoff):
 									;SetLCmode2 keeps its area. disflags bit 4
-fodropx				=	$0136		; faceoff box x (pixels)
-fodropy				=	$0138		; faceoff box y
-fox					=	$0146		; faceoff spot x
-foy					=	$0148		; faceoff spot y
-fodir1				=	$0132		; pull direction of the home center on the faceoff (dpad, negative = none)
-fodir2				=	$0134
+; controller assignment (93G order)
+PadControlBits		=	$0431		; SCnum nibbles of the pad-controlled players ($FFFF = none)
+padcont				=	$0433		; 4 words
+; ffo objects
 ffoattr			=	$F6				; 5 words: attribute of the ffo objects (pads 0-3, gloves). ffo attribute
 ffoframe			=	$0100		;5 words: frame of the objects tied to rink scrolling (pads 0-3, gloves at
 									;+8). ffo frame (92 ffo)
@@ -675,6 +662,12 @@ glovecords			=	$014E		; x/y bytes of the dropped gloves (chkhit)
 threat				=	$08D3		; direction of threat on puck handler (nonzero = threat)
 puckcross			=	$0489		;2 entries of (x, frames): where/when the puck crosses the top / bottom
 									;goal line ($FFFF frames = never)
+; pad buttons (ReadPads; 93G order)
+lj1					=	$0185		; last controller 1 buttons (debounce)
+lj2					=	$0187
+PadRaw1				=	$015E		; controller 1 buttons (SNES joypad bits, JOY* masks)
+PadRaw2				=	$0160		; controller 2 buttons
+; last touch
 ltplayer			=	$018B		; last touch player (SCnum)
 ltx					=	$018D		; last touch x
 lty					=	$018F		; last touch y
@@ -686,14 +679,27 @@ ifdir	=	$0002					; icing toward the top goal
 ifok	=	$0004					; icing possible
 carriedy			=	$0181		;pucky while the puck is carried: the y a shot was taken from (puckgoalie)
 
+; jiffy rate, fight scroll lock and faceoff spot (93G order)
+jps		=	24						; jiffys per second
+xc1					=	$08F5		; scroll lock x (fight)
+yc1					=	$08F7		; scroll lock y
+yleader				=	$08F9		; lead distance on scrolling
+fox					=	$0146		; faceoff spot x
+foy					=	$0148		; faceoff spot y
+fodir1				=	$0132		; pull direction of the home center on the faceoff (dpad, negative = none)
+fodir2				=	$0134
+
 ;collision
-wcradiusx			=	$08E3		; wall collision radius x
-wcradiusy			=	$08E5		; wall collision radius y
 deltax			=	$EA				; avdgoal: x correction around the goal
 deltay			=	$EC				; avdgoal: y correction
 collflag		=	$D8				; a player collision happened: checkcoll restores the old position
 evalue			=	$F2				; elasticity value of a player collision (0-16)
-
+; update countdown, print buffers and the last sound effect (93G order)
+lldisp				=	$0189		; count down for the once-a-second screen/game updates ($18 frames)
+mesarea				=	$0191		; temp area for print strings (length word, then characters)
+PushWidthBuf		=	$01F5		;PushNumberWidth string: length word (digits + 2), then the digits right
+									;aligned, spaces before (8 characters)
+lastsfx				=	$017F		; last sound effect requested
 
 ;sprites: sprite attribute table (93S: OAM shadow and the addframe sprite engine)
 Satt				=	$01FF		; sprite attribute table (OAM shadow, $220 bytes), sent by VBlank
@@ -711,6 +717,8 @@ sprx			=	$C9				; addframe parameter: screen x of the frame
 spry			=	$CB				; addframe parameter: screen y
 sprhflip		=	$A5				; addframe parameter: $0800 = x flip (attribute bit 11)
 sprvflip		=	$CD				; addframe parameter: $1000 = attribute bit 12
+DMAlistend		=	$A3				;byte offset of the end of DMAList (7 bytes per entry); VBlank sends and
+									;empties it
 sprcount		=	$A9				; addframe: next OAM entry (sprite count this frame)
 sprpal			=	$AD				; addframe: palette bits of the piece
 sprpattr		=	$AF				; addframe: flip bits of the piece ($C0)
@@ -766,6 +774,11 @@ sf3sbut		=	$0008				; Start pressed during the highlights: skip the rest
 sf3fo		=	$0010				; face off just ended: the next puck pickup wins it
 sf3icetime	=	$0020				; count frames on ice per player
 sfhormode			=	$128E		; nonzero: screen in horizontal mode. sflags bit sfhor
+; controller assignment (93G order)
+c1playernum			=	$1292		; player on controller 1 (negative = none)
+c2playernum			=	$1294
+cont1team			=	$1296		; team on controller 1 (0 none, 1 home, 2 away)
+cont2team			=	$1298
 
 ;teams
 HomeTeam			=	$129A		; home team number (TeamList index)
@@ -787,7 +800,6 @@ RefStep				=	$12EC		; step in the ref animation (negative = done)
 RefPen				=	$12EE		; penalty number of the ref animation
 
 ;period, clock and summaries
-jps		=	24						; jiffys per second
 gsp					=	$12F0		; game period
 gameclock			=	$12F2		; game clock seconds; gameclock+2 = jiffies (-$AAA per frame)
 PerTimeTotal		=	$12F6		; length of this period (seconds)
@@ -865,11 +877,13 @@ postarts			=	$0451		; 0-31: playoff tree layout; negative after DecodePW = bad p
 bosgames		=	$D6				; 0-6 game of the best of seven series, 7 = single games
 gamelevel			=	$014A		; 0-3: depth into the playoff tree (4 = finished)
 potreeteam			=	$0473		; the user's slot in the first playoff round
+pojoy				=	$044F		; playoff joystick indicator (2+: two players). POJoy
 WinBits				=	$08E7		; bits of the teams that go on in the playoff tree
 potree				=	$0453		; 32 bytes: team in each playoff tree slot (16+8+4+2+1+1)
 PlList				=	$0443		; 12 bytes: wanted roster players (6), then their positions (6)
 
 ;menus, bonuses, ticker, stats and scouting screens
+psitem				=	$0485		; pause menu item (0-4)
 TickerNum			=	$08D7		; playoff game the score ticker shows next
 tickerstart			=	$0158		;TickerNum at the start of the intermission (Intermission_tick: all shown
 									;when it comes round again)
@@ -886,12 +900,10 @@ PlayerScrollCtr		=	$08E9		;scouting text: offset of the next word in the paragra
 SelectedPlayerIdx	=	$08ED		; scouting text: TestList index
 ScoutingReportTimer	=	$08EF		; frames to the next word ($7FFF = text finished)
 screentimer			=	$08EB		; frames left on the scouting report screen
-asv			=	$1644				; analog sound volume: current crowd noise level (updatesound, 93G asv); also
-									; scouting text without delays (down pressed)
 TestList		=	$7F0000			; scouting report paragraph numbers (-1 ends)
 nibblebuffer		=	$041F		; 4 words: the weights WeightedRandomSelect picks from (SetScore)
 pausetimer		=	$EE				; pause menu: frames left before a demo pause ends by itself (60000)
-psitem				=	$0485		; pause menu item (0-4)
+varend		=	$164E			; Start clears DP/RAM $0000 up to here
 
 ;options, demo, random seed
 OptPlayMode	=	$1600				; play mode (0 regular season, 1 continue playoffs, 2/3 new playoffs)
@@ -910,9 +922,9 @@ rndb1				=	$0491		; copy of seed byte 1 after each random (8-bit random for othe
 rndb2				=	$0493		; high byte of the new seed after each random
 
 ;password and saved data
+pwlength	=	16					; password characters
+PWrange		=	30					; characters in PasstoText
+PassWord	=	$1610				; 16 password characters (indexes into PasstoText; bit 7 hides it)
 passbits	=	$1624				;password bits: a 128-bit number, 8 words, low word first (SuperDiv,
 									;PushBits). PassBits
 tpassbits	=	$1634				; 8 words: passbits before all games are resolved (EncodePW)
-PassWord	=	$1610				; 16 password characters (indexes into PasstoText; bit 7 hides it)
-PWrange		=	30					; characters in PasstoText
-pwlength	=	16					; password characters
