@@ -61,7 +61,7 @@ Files per batch are listed in comment_plan.json `batches[].files`. Files with fa
 | hockey/GetPassWord.asm | 276 | 52 | 0 | 0 | 0.19 | 9 | 1 |
 | logic/asswingd.asm | 164 | 8 | 8 | 52 | 0.05 | 21 | 6 |
 | penalty/SetScore.asm | 176 | 16 | 22 | 55 | 0.09 | 9 | 10 |
-| hockey/PauseMenu.asm | 175 | 20 | 0 | 0 | 0.11 | 10 | 1 |
+| hockey/Pausemode_menu.asm | 175 | 20 | 0 | 0 | 0.11 | 10 | 1 |
 | logic/asscentero.asm | 170 | 21 | 6 | 59 | 0.12 | 18 | 5 |
 | video/unusedEnergyBar.asm | 115 | 1 | 0 | 0 | 0.01 | 9 | 12 |
 | middle/mulu32.asm | 109 | 1 | 0 | 0 | 0.01 | 2 | 9 |
@@ -76,7 +76,7 @@ Files per batch are listed in comment_plan.json `batches[].files`. Files with fa
 | hockey/checkpuckcoll_ccx.asm | 197 | 12 | 45 | 112 | 0.06 | 22 | 3 |
 | video/InitPPU.asm | 86 | 2 | 0 | 0 | 0.02 | 0 | 12 |
 
-Files with 0 in the 93G columns have no twin found by name (e.g. DrawFrameHi, GetPassWord, PauseMenu, unusedEnergyBar, InitPPU, mulu/mulu32): SNES-only or renamed; check the `92 <name>`/docs rows before writing from scratch.
+Files with 0 in the 93G columns have no twin found by name (e.g. DrawFrameHi, GetPassWord, Pausemode_menu, unusedEnergyBar, InitPPU, mulu/mulu32): SNES-only or renamed; check the `92 <name>`/docs rows before writing from scratch.
 
 ## Systematic issues
 

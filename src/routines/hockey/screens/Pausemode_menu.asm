@@ -1,10 +1,10 @@
-PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start leaves,
+Pausemode_menu:							;Draw the pause menu and read the pad: up and down move, Start leaves,
 									;else run the chosen item.
 									;A = 0 to leave, 1 to redraw
 	stz.w psitem
 .gj:								; redraw the menu and read the pad
-	jsl.l Pmenu						; draw the pause menu
-	jsl.l PauseReadJoy				; read the pad
+	jsl.l SetupPauseScreen						; draw the pause menu
+	jsl.l waitjoy				; read the pad
 	lda.b d1						; Start: leave
 	bit.w #sbut
 	beq .down

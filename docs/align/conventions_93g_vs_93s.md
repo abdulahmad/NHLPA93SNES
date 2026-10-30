@@ -20,7 +20,7 @@ Those are NOT recommendations. Only the structure/style choices are.
 | PlayerPositionText | data/text/PositionNames.asm |
 | bfasciicon | data/gfx/BigFontIndex.asm |
 | PerLabels, linelist, GameLabels, Credits | same names (PerLabels.asm, linelist.asm, GameLabels.asm, Credits.asm) |
-| PauseText/StartGameText/... (menus) | routines/hockey/Pmenu.asm .mlist/.mlist2 (SNES design differs) |
+| PauseText/StartGameText/... (menus) | routines/hockey/SetupPauseScreen.asm .mlist/.mlist2 (SNES design differs) |
 
 ## 1. Data tables: how they are written
 
@@ -31,7 +31,7 @@ Those are NOT recommendations. Only the structure/style choices are.
 - 93S: 233 hand-counted `dw N` length words across 33 files, e.g. routines/tables/PenaltyList.asm
   (`dw 13 / db "Period Over"`), routines/tables/linelist.asm (`dw 5 / db "Sc1"`), data/text/PerLabels.asm,
   PositionNames.asm, GameLabels.asm, AttribMenuSkater/Goalie.asm, RosterLineNames.asm, ScoutLabels.asm,
-  Credits.asm, PasswordText.asm, GoalBoxText.asm, CreditsBlank.asm; routines/hockey/Pmenu.asm .mlist/.mlist2,
+  Credits.asm, PasswordText.asm, GoalBoxText.asm, CreditsBlank.asm; routines/hockey/SetupPauseScreen.asm .mlist/.mlist2,
   setoptions.asm (:475,:569-588), getname.asm, GetPassWord.asm, penalty/NewTicker3.asm:46, StartHL2.asm,
   stats/RosterG.asm, DisplayStats.asm, logic/SetLCmode2.asm.
 - Only 3 files use the 93S `%String` macro already: data/teamdata93s.asm, text/HandedTextTbl.asm, text/StatusTextTbl.asm.

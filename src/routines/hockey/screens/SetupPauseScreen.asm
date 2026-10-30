@@ -1,4 +1,4 @@
-Pmenu:								;Draw the pause menu items with the current one highlighted
+SetupPauseScreen:								;Draw the pause menu items with the current one highlighted
 	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pri,$06,$0D)
 	stz.b d0						; item number

@@ -318,7 +318,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	sta.b d1
 	jsl.l Framer					; d0 x d1
 	jsl.l printscores1				; redraw the scores
-	jsl.l Pmenu						; DisplayStats
+	jsl.l SetupPauseScreen						; DisplayStats
 	stx.b xsave						; keep X
 	ldx.w #$001A
 .resta:								; pull a0 and the words after it back

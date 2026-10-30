@@ -252,8 +252,8 @@ org `$838000` when `pc()` is below it.
 - `$83ECAB` HorRinkMap (data)
 - `$83F72B` RinkPalette (data)
 - `$83F82B` routines/hockey/screens/Pausemode.asm
-- `$83F891` routines/hockey/screens/PauseMenu.asm
-- `$83FA32` routines/hockey/screens/PauseReadJoy.asm
+- `$83F891` routines/hockey/screens/Pausemode_menu.asm
+- `$83FA32` routines/hockey/screens/waitjoy.asm
 - `$83FA79` routines/hockey/screens/PauseResume.asm
 - `$83FA83` routines/hockey/screens/PauseLeave.asm
 - `$83FA87` routines/hockey/screens/Opening2.asm
@@ -579,7 +579,7 @@ org `$8F8000` when `pc()` is below it.
 - `$8FEBE4` routines/stats/RosterG.asm
 - `$8FEBF0` data/text/RosterLineNames.asm
 - `$8FEC68` routines/video/sprites/addframe.asm
-- `$8FECAB` routines/hockey/screens/Pmenu.asm
+- `$8FECAB` routines/hockey/screens/SetupPauseScreen.asm
 - `$8FEE4A` routines/hockey/input/seta2.asm
 - `$8FEE6B` routines/hockey/teams/setpde.asm
 - `$8FEE83` routines/hockey/screens/setoptions.asm

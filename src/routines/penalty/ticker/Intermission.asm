@@ -52,7 +52,7 @@ Intermission:						;Between periods: the pause menu screen with the scores of th
 	jsl.l printscores1				; scores of the other games
 	lda.w #$0002
 	trb.w sflags					; clear the second flag bit of sflags
-	jsl.l PauseMenu					; run the pause menu
+	jsl.l Pausemode_menu					; run the pause menu
 	bne .top						; nonzero: show the screen again
 	stz.w demoflag					; leave demo mode
 .rtl:								; return

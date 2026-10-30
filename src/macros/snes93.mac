@@ -18,7 +18,7 @@ endmacro
 ; String(text): a print string.
 ;   Emits: dw length (little-endian, counts the word itself), then the text. No pad.
 ;   text: quoted text.
-;   Example (Pmenu.asm:124): %String("Resume Game")
+;   Example (SetupPauseScreen.asm:124): %String("Resume Game")
 ;     -> 0D 00 52 65 73 75 6D 65 20 47 61 6D 65
 macro String(text)					;93G String/StringB: length word (counts itself), then the text
 ?l:	dw ?e-?l
