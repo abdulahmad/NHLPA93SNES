@@ -191,9 +191,9 @@ TeamRosterScreen:					;Team Roster screen: each line's players and one attribute
 	lda.w #$0007
 	sta.b DMAlistend
 	lda.w #VBlank_List				; wait for the vblank
-	sta.b vbint
+	sta.b VBint
 .vbwait:							; wait for the next frame
-	cmp.b vbint						; until it changes
+	cmp.b VBint						; until it changes
 	beq .vbwait
 	jsl.l ReadPads					; read the pads
 	jsl.l getpzjoy					; joypad state

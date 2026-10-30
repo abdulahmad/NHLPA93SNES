@@ -1,6 +1,6 @@
 fightinput:							;Pad input in a fight: move and punch
 	lda.w temp3,x					; punch timer
-	ora.w Pencntdwn					; or the penalty countdown
+	ora.w PenCntDwn					; or the penalty countdown
 	bpl .go							; neither running
 	jmp.w .rtl						; else leave
 .go:								; already fighting?

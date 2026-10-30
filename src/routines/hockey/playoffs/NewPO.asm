@@ -17,7 +17,7 @@ NewPO:								;Start new playoffs with the same team 1 and build the tree
 	sta.b a0+2
 	lda.w #15						; 16 teams
 	sta.b d1						; d1 = 15
-	lda.w OptTeam1					; team 1
+	lda.w Opt1team					; team 1
 	sta.b d2						; team
 	cmp.w #24						; all-star teams (24+): team 23
 	bcc .loop
@@ -32,8 +32,8 @@ NewPO:								;Start new playoffs with the same team 1 and build the tree
 	dec.b d1						; next
 	bpl .loop						; more
 	bra .top						; not in the seat: next seat
-.found:								; potree team = slot of OptTeam1
-	lda.b d1						; potreeteam = slot of OptTeam1
+.found:								; potree team = slot of Opt1team
+	lda.b d1						; potreeteam = slot of Opt1team
 	eor.w #$000F					; slot
 	sta.b d1						; reverse
 	sta.w potreeteam				; playoff tree team

@@ -96,7 +96,7 @@ clockcont_0:						;End of a period: in the third period the winners celebrate (w
 	stz.b Crowdlevel				; crowd quiet
 	lda.w #$0003					; cheer 3 times
 	sta.w cheercnt
-	lda.b vcount					; frame
+	lda.b Vcount					; frame
 	sec
 	sbc.w #$0096					; minus 150
 	sta.w cheervc

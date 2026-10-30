@@ -1,6 +1,6 @@
 ReadPads:							;Once per frame, read the four pads: buttons held, new presses and last
 									;buttons
-	lda.b vcount					; once per frame
+	lda.b Vcount					; once per frame
 	cmp.w padvcount					; already read
 	beq .new						; yes
 	sta.w padvcount					; remember it

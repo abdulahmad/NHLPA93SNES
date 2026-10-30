@@ -51,7 +51,7 @@ VBlank_Cram:						;Vblank: run the transfer list, set the scroll and send the pa
 	sta.w MDMAEN
 	rep #$30						; 16-bit registers
 	lda.w #VBlank_CramOnly			; from now on: CGRAM every frame
-	sta.b vbint
+	sta.b VBint
 	ldx.w #$0012					; short delay
 .wait:								;short delay before leaving the handler
 	dex

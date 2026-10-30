@@ -92,7 +92,7 @@ checkfornewpen:						;Look for a new penalty call. Stops play at once when the p
 	asl a
 	sta.b d1						; d1 = delay * 32
 	sec
-	sbc.w Pencntdwn					; compare with the countdown
+	sbc.w PenCntDwn					; compare with the countdown
 	beq .nx
 	bmi .neg
 	bvc .longer
@@ -100,9 +100,9 @@ checkfornewpen:						;Look for a new penalty call. Stops play at once when the p
 	jmp.w .next
 .neg:								; signed compare: overflow flag corrects the sign
 	bvc .nx
-.longer:							;Pencntdwn = delay*32 if longer
+.longer:							;PenCntDwn = delay*32 if longer
 	lda.b d1						; longer: take it
-	sta.w Pencntdwn					; countdown
+	sta.w PenCntDwn					; countdown
 	jmp.w .next
 .rtl:								; return
 	rtl

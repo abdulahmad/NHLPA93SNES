@@ -100,7 +100,7 @@ updatereplay:						;Save this frame into the replay buffer
 	inx
 	dec.b d2
 	bpl .pl
-	lda.w Zpos+puckobj				;puck and shadow height, lastsfx, d7, PadControlBits, crowdframe,
+	lda.w Zpos+puckobj				;puck and shadow height, lastsfx, d7, PadControlBits, Crowdframe,
 									;glovecords, PBnum, Hpos, Vpos
 	sta.b [a0]						; puck height
 	inc.b a0
@@ -118,7 +118,7 @@ updatereplay:						;Save this frame into the replay buffer
 	sta.b [a0]
 	inc.b a0
 	inc.b a0
-	lda.b crowdframe				; crowd animation frame
+	lda.b Crowdframe				; crowd animation frame
 	sta.b [a0]
 	inc.b a0
 	inc.b a0

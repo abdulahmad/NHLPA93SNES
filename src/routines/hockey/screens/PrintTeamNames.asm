@@ -21,9 +21,9 @@ PrintTeamNames:						;Print both team names, then set up the teams
 	ldx.b xsave						; restore X
 	lda.w OptPlayMode				; OptPlayMode 0: teams from the options
 	bne .print
-	lda.w OptTeam1
+	lda.w Opt1team
 	sta.w HomeTeam
-	lda.w OptTeam2
+	lda.w Opt2team
 	sta.w VisTeam
 .print:								; print the team names
 	jsl.l printz					; print the string that follows

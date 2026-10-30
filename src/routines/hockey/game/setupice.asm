@@ -15,9 +15,9 @@ setupice:							;Set up the rink: the variables, the rink and text graphics, the
 	inc a
 	sta.w smallfontchars
 	adc.w #$0064
-	sta.w Framercset
+	sta.w framercset
 	adc.w #$0004
-	sta.w BigFontChars
+	sta.w BigFontchars
 	adc.w #$0090
 	sta.w scorechars
 	adc.w #$0195
@@ -177,12 +177,12 @@ setupice:							;Set up the rink: the variables, the rink and text graphics, the
 	trb.w sflags
 	stz.w Hpos
 	stz.w Vpos
-	lda.b vcount+2					; vcountmark well in the past
+	lda.b Vcount+2					; vcountmark well in the past
 	dec a
 	dec a
 	sta.w vcountmark+2
 	jsl.l InitSortObjects
-	stz.w zamx
+	stz.w Zamx
 	jsl.l nullrtl
 	lda.w gmode
 	bit.w #gmdir					; gmdir

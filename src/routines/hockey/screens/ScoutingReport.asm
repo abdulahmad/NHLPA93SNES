@@ -31,7 +31,7 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	adc.w #$0195					; small font follows
 	sta.w smallfontchars
 	adc.w #$0064					; framer tiles follow
-	sta.w Framercset
+	sta.w framercset
 	adc.w #$0004					; Ron Barr tiles follow
 	sta.w ronbarrchars
 	stz.w charofs					; no character offset
@@ -278,9 +278,9 @@ ScoutingReport:						;The scouting report screen: both teams, their ratings and 
 	lda.w #$0007
 	sta.b DMAlistend
 	lda.w #VBlank_List				; wait for the vblank
-	sta.b vbint
+	sta.b VBint
 .vbwait:							; wait for the next frame
-	cmp.b vbint						; until it changes
+	cmp.b VBint						; until it changes
 	beq .vbwait
 	jsl.l ReadPads					; read the pads
 	lda.w padnew1					; new presses on either pad

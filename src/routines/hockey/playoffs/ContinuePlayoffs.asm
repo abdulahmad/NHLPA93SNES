@@ -33,7 +33,7 @@ ContinuePlayoffs:					;Continue the playoffs: read the playoff state back from t
 	lda.w #$0007					; menu value from pojoy
 	sec
 	sbc.w pojoy
-	sta.w OptPlayers				; number of players
+	sta.w OptNOP				; number of players
 .ex:								; restore the registers
 	stx.b xsave						; X again
 	ldx.w #$000E

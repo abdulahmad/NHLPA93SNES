@@ -1,7 +1,7 @@
 setvideo:							;Once per game frame, when vblank is idle: build the sprite table and the
 									;transfer list for the next vblank.
 									;Not vblank code itself
-	lda.b vbint						; vblank busy with a list: skip this frame
+	lda.b VBint						; vblank busy with a list: skip this frame
 	cmp.w #vb2						; skip if vblank is not ready
 	beq .go							; the blank vblank handler
 	cmp.w #vb2_blank
@@ -34,7 +34,7 @@ setvideo:							;Once per game frame, when vblank is idle: build the sprite tabl
 	jsl.l ShowRinkRows				; queue the rink map rows for Vscroll
 	jsl.l QueueTextDMA				; queue the changed textmap words (textdirtylo/hi)
 	lda.w #VBlank_long				; VBlank sends it all next vblank
-	sta.b vbint						; handler for the next vblank
+	sta.b VBint						; handler for the next vblank
 	stx.b xsave						; X again
 	ldx.w #$003A
 .resta:								; pull the registers back

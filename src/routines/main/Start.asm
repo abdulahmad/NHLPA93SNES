@@ -15,13 +15,13 @@ Start:								;Reset entry and cold start: switch to native mode, clear RAM, set
 	rep #$30						; 16-bit registers
 	ldx.w #$0000
 .clrdp:								;clear the direct page and the low RAM variables
-	stz.b vcount,x
+	stz.b Vcount,x
 	inx
 	inx
 	cpx.w #DPCLEAREND
 	bcc .clrdp
 	lda.w #vb2_blank
-	sta.b vbint
+	sta.b VBint
 	lda.w #HBdefault
 	sta.b hbint
 	lda.w #JMLOPCODE				; jml opcode for the jmlvector trampoline

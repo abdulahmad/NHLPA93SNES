@@ -1,7 +1,7 @@
 showzam:							;Draw the zamboni moving across the horizontal rink
-	lda.b vcount					; frame counter
-	ldy.b vcount+2
-	cmp.b vcount					; stable
+	lda.b Vcount					; frame counter
+	ldy.b Vcount+2
+	cmp.b Vcount					; stable
 	bne showzam
 	sbc.w vcountmark				; minus the mark: elapsed frames
 	sta.b tmp0

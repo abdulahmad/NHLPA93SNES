@@ -2,12 +2,12 @@ Gameloop:							;Main game loop: wait for a frame, run the clock, music and crow
 									;frame of game logic, the demo,
 									;a penalty on a goalie carrying the puck far from his net, line changes
 									;and pause
-	lda.b vcount					; wait for the next frame
-	cmp.w oldvcount
+	lda.b Vcount					; wait for the next frame
+	cmp.w OldVcount
 	beq Gameloop
 	tax								; d7 = frames elapsed; the time steps
 	sec
-	sbc.w oldvcount
+	sbc.w OldVcount
 	sta.b d7
 	asl a
 	sta.b impactstep
@@ -29,7 +29,7 @@ Gameloop:							;Main game loop: wait for a frame, run the clock, music and crow
 	asl a
 	sta.b d7x1024
 	stx.w lastframevc
-	stx.w oldvcount
+	stx.w OldVcount
 	jsl.l ReadPads					; read the pads
 	lda.w sflags					; clock stops in pause and when stopped
 	bit.w #sfpz
@@ -83,7 +83,7 @@ Gameloop:							;Main game loop: wait for a frame, run the clock, music and crow
 .cheer:								; crowd cheer
 	lda.w cheercnt					; crowd cheers after a goal: every 150 frames
 	beq .frame
-	lda.b vcount
+	lda.b Vcount
 	sec
 	sbc.w cheervc
 	cmp.w #150

@@ -2,9 +2,9 @@ PauseReadJoy:						;Wait for a new button press; in the demo the pause ends by i
 	jsl.l IntermissionTick			; ticker and highlights
 	bne .force						; done: force Start
 	jsl.l setvideo					; update the video
-	lda.b vcount					; frame counter
+	lda.b Vcount					; frame counter
 .vb:								; wait for the next frame
-	cmp.b vcount					; wait for the next frame
+	cmp.b Vcount					; wait for the next frame
 	beq .vb
 	jsl.l ReadPads					; ReadPads; ignore L/R
 	lda.w joypad1					; pad 1

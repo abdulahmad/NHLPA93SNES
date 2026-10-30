@@ -140,7 +140,7 @@ RestoreReplayFrame:					;Put one recorded replay frame back into the
 	lda.b [a0]						; crowd frame
 	inc.b a0
 	inc.b a0
-	sta.b crowdframe
+	sta.b Crowdframe
 	lda.b [a0]						; glove coordinates
 	inc.b a0
 	inc.b a0

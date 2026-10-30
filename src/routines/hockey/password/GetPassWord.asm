@@ -84,12 +84,12 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	jsl.l PWprint
 	lda.w #VBlank_SprPal
 .wait:								;wait for the next vblank
-	cmp.b vbint
+	cmp.b VBint
 	beq .wait
 	jsl.l QueueTextDMA				; queue the changed textmap words
 	jsl.l QueueBackmapDMA
 	lda.w #VBlank_SprPal
-	sta.b vbint
+	sta.b VBint
 .pad:								; read the pads
 	jsl.l ReadPads					; read the pads
 	lda.w padnew1
@@ -234,12 +234,12 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	%StringCt(CC_Font1,$02,$15,"Y - Exit Screen")
 	lda.w #VBlank_SprPal
 .wait2:								; wait for the next frame
-	cmp.b vbint
+	cmp.b VBint
 	beq .wait2
 	jsl.l QueueTextDMA				; queue the changed textmap words
 	jsl.l QueueBackmapDMA
 	lda.w #VBlank_SprPal
-	sta.b vbint
+	sta.b VBint
 .notok:								; read the pads
 	jsl.l ReadPads					; read the pads
 	lda.w padnew1

@@ -25,7 +25,7 @@ PauseExit:							;Restore the screen and leave pause mode
 	trb.w sflags					; clear it
 	jsl.l printscores1				; redraw the scores
 	jsl.l setvideo					; update the video
-	lda.b vcount					; frame counter
+	lda.b Vcount					; frame counter
 	sta.w lastframevc				; last frame
-	sta.w oldvcount					; old counter
+	sta.w OldVcount					; old counter
 	rtl

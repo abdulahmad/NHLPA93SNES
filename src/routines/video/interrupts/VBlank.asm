@@ -66,5 +66,5 @@ VBlank:								;Main game play vblank: run the transfer list, set the rink scrol
 	sta.w MDMAEN
 	rep #$30						; 16-bit registers
 	lda.w #vb2						; one shot: back to vb2 next frame
-	sta.b vbint
+	sta.b VBint
 	jmp.w vb2

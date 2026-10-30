@@ -4,7 +4,7 @@ assfight:							;Assignment: fighting. A computer fighter punches when close; bo
 	beq .go
 	jmp.w .rts
 .go:								; fight over?
-	lda.w Pencntdwn					; fight over
+	lda.w PenCntDwn					; fight over
 	bpl .chkna
 	jml.l assnothing
 .chkna:								; new assignment?

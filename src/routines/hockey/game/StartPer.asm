@@ -73,8 +73,8 @@ StartPer:							;Start a period: reset the rink and clock, face off at center ic
 	sta.b textdirtylo
 	stz.b textdirtyhi
 	inc.w percue					; period start music cue
-	stz.b vcount
-	stz.b vcount+2
+	stz.b Vcount
+	stz.b Vcount+2
 	stz.w lastframevc
-	stz.w oldvcount
+	stz.w OldVcount
 	jml.l Gameloop					; the game loop (bank $8E)

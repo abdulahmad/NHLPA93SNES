@@ -7,7 +7,7 @@ sfx8F:								;Queue the sound number pushed before the call, unless sound effec
 	pla
 	sta.w jmlvector+3				; bank
 	rep #$20						; 16-bit A
-	lda.b vcount
+	lda.b Vcount
 	sec
 	sbc.w sfxmutetime
 	cmp.w #$00B4					; muted for 180 frames

@@ -7,7 +7,7 @@ sfx:								;Play the sound effect number pushed before the call, unless sound e
 	pla								; bank of the return address
 	sta.w jmlvector+3				; stored too
 	rep #$20						; 16-bit A
-	lda.b vcount					; sound effects muted?
+	lda.b Vcount					; sound effects muted?
 	sec
 	sbc.w sfxmutetime
 	cmp.w #$00B4					; muted for 180 frames

@@ -66,7 +66,7 @@ printbig:							;print with the big font (2 by 2 tiles per character)
 	tax
 	lda.l BigFontMap,x				; big font map (BigFontMap): top left
 	clc
-	adc.w BigFontChars				; plus the big font tile base
+	adc.w BigFontchars				; plus the big font tile base
 	adc.w printfontset				; plus the font set
 	ora.w printa					; plus the palette and priority
 	ldx.b d1
@@ -86,7 +86,7 @@ printbig:							;print with the big font (2 by 2 tiles per character)
 	ldx.b d0
 	lda.l BigFontMap+(76*2),x		; bottom left
 	clc
-	adc.w BigFontChars
+	adc.w BigFontchars
 	adc.w printfontset
 	ora.w printa
 	ldx.b d1
@@ -96,7 +96,7 @@ printbig:							;print with the big font (2 by 2 tiles per character)
 	ldx.b d0
 	lda.l BigFontMap+2,x			; top right
 	clc
-	adc.w BigFontChars
+	adc.w BigFontchars
 	adc.w printfontset
 	ora.w printa
 	ldx.b d1
@@ -104,7 +104,7 @@ printbig:							;print with the big font (2 by 2 tiles per character)
 	ldx.b d0
 	lda.l BigFontMap+(76*2)+2,x		; bottom right
 	clc
-	adc.w BigFontChars
+	adc.w BigFontchars
 	adc.w printfontset
 	ora.w printa
 	ldx.b d1
@@ -118,7 +118,7 @@ printbig:							;print with the big font (2 by 2 tiles per character)
 .blank:								; blank: big font entry $2C
 	lda.l BigFontMap+$2C			; blank: big font entry $2C on both rows
 	clc
-	adc.w BigFontChars
+	adc.w BigFontchars
 	adc.w printfontset
 	ora.w printa
 	ldx.b d1

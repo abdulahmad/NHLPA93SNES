@@ -169,15 +169,15 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	jsl.l SprSort					; sort the sprites
 	lda.w #180						; 180 frames after the clock stops
 	pha
-	lda.b vcount
-	sta.w oldvcount
+	lda.b Vcount
+	sta.w OldVcount
 .0:									;wait for the next frame
-	lda.b vcount					; the frame time steps as the game loop
-	cmp.w oldvcount
+	lda.b Vcount					; the frame time steps as the game loop
+	cmp.w OldVcount
 	beq .0
 	tax
 	sec
-	sbc.w oldvcount
+	sbc.w OldVcount
 	sta.b d7
 	asl a
 	sta.b impactstep
@@ -199,7 +199,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	asl a
 	sta.b d7x1024
 	stx.w lastframevc
-	stx.w oldvcount
+	stx.w OldVcount
 	jsl.l ReadPads					; read the pads
 	lda.w sflags
 	bit.w #sfpz

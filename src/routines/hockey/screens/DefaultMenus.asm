@@ -21,5 +21,5 @@ DefaultMenus:						;Set the default menu choices at power on
 	dec.b d0						; count down
 	bpl .copy
 	rtl
-.tab:								;OptPlayMode, OptPlayers, OptTeam1, OptTeam2, OptPerlen, OptPen, OptLine
+.tab:								;OptPlayMode, OptNOP, Opt1team, Opt2team, Optperlen, OptPen, OptLine
 	dw $0000,$0001,$000F,$0003,$0001,$0000,$0001
