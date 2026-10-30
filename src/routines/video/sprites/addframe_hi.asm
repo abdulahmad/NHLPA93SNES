@@ -1,5 +1,5 @@
 addframe_hi:						;addframe for the high frame numbers: find the frame set and draw it with
-									;DrawFrameHi
+									;SetSframeHi
 	lda.b sprframe					; frame number
 	cmp.w #SPFcrowd					; 6-byte pieces from SPFcrowd on
 	bcs .hi							; high frames
@@ -19,7 +19,7 @@ addframe_hi:						;addframe for the high frame numbers: find the frame set and d
 	sec
 	sbc.b [farptr]					; minus the set size
 	bcs .next						; frame is later
-	jml.l DrawFrameHi				; in this set
+	jml.l SetSframeHi				; in this set
 .next:								; the rest of the frame number
 	sta.b sprframe					; the rest
 	lda.b sprsetofs

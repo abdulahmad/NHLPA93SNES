@@ -16,7 +16,7 @@ SmallFontTilesEnd:					; end of SmallFontTiles
 incsrc "../routines/hockey/teams/getname.asm"
 
 IceRinkMap:							;the vertical rink tile map: 48 x 85 words (8160 bytes,
-									;IceRink.smap). Rows go to vram as Vpos scrolls (ShowRinkRows)
+									;IceRink.smap). Rows go to vram as Vpos scrolls (updatescroll_rows)
 	incbin "../../Extracted/Graphics/IceRink.smap"
 
 HorRinkMap:							;horizontal rink tile map, 48 x 28 words

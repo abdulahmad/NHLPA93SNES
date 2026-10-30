@@ -77,7 +77,7 @@ The routine files keep the 93G module as their group, and the big modules have a
 
 Signed-compare overflow tails (`bmi` / `bvs` / `bvc`) are `.neg`, `.neg1`, `.neg2`, ... in source order. The earlier `.vN` pass is unchanged. `assdefd` had one leftover `.gt1` tail; it is `.neg2`, and the later tails in that routine moved to `.neg3` and `.neg4`. A `bcc` test is not that pattern. Where 93 Genesis already names the label, that name stays (`CompShoot` `.lt`). `holdcheck` has no 93G label on the facing test, so a facing delta under 3 is `.close`. `remap` has no 93G routine: the pixel bits are `.bit3`..`.bit0` and the video-memory store is `.vram`.
 
-Locals renamed only where 93 Genesis has no such label: `TitleScreen` `.clearvr` (16 video-memory words), `VBjsr` `.rti`, `UpdateRosterPlayer` `.space`, `updatepentime` `.stay`, `updatepwrplay` `.diff`, `chkprogress` `.over`, `Fprint` `.step`, `DrawFrame` / `DrawFrameHi` `.nextpiece`, `printbig` `.nextch`, `chk4pass` `.miss` (the 93G `.ok` join stays). Unused labels with no branch were removed from `prefmes` and `passtoa0`.
+Locals renamed only where 93 Genesis has no such label: `TitleScreen` `.clearvr` (16 video-memory words), `VBjsr` `.rti`, `UpdateRosterPlayer` `.space`, `updatepentime` `.stay`, `updatepwrplay` `.diff`, `chkprogress` `.over`, `Fprint` `.step`, `SetSframe` / `SetSframeHi` `.nextpiece`, `printbig` `.nextch`, `chk4pass` `.miss` (the 93G `.ok` join stays). Unused labels with no branch were removed from `prefmes` and `passtoa0`.
 
 Left on their 93 Genesis names: `TryAddPlayerToList` `.no`, `UpdateScoutingDisplay` `.cont`, `checkcoll` `.xx`, `checkwindow` `.ok`, `assbench` / `asspenalty` `.ok`, `assgoalie` `.out`, `chk4shot` `.no1`, `GetNameandAttrib` `.skip`. `.loop`, `.next`, `.done` and `.exit` stay. `.cont1` stays: it is the controller-1 side of `cont1team` / `cont2team`.
 
@@ -94,7 +94,7 @@ The stock image still matches (`76a01492cfb656e9fce0094bca356c312adfea0e`). No t
 - Each bank file after `$80` orgs only when `pc()` has not already reached that address. On the stock tree the PC arrives exactly there, so the org is skipped. Bank `$80` stays an unconditional org. Bank `$90` is not in the default build (see `docs/adding-a-team.md`). `tools/gen_file_map.py` reads the guarded org; `docs/file-map.md` was regenerated.
 - `NumofTeams` stays 26 (clubs 0-23, AllStarsEast 24, AllStarsWest 25). TeamList, TeamBlocksMap and playoffseats (34 trees, left alone) are asserted. The two demo `randoma` ranges and the Team 1 and Team 2 counts in `setoptions` `.pslim` use `NumofTeams`. Playoff Team 1 stays `lda.w #$0018`. `NewPO` stays `cmp.w #24`.
 
-Next: a new team follows `docs/adding-a-team.md`. Bank `$83`'s `$FF` fill is 354 bytes (`unusedFF83`); a record does not fit, so bank `$90` is added (see `docs/adding-a-team.md`) and the record is assembled there and TeamList points at it. Bank `$87` ends with 9 bytes of `$FF`, so a TeamBlocksMap row needs `assepen` and its fill moved to bank `$90`. `DrawFrame` and `addframe_end` stay together. The `FrameSetTable` header sum checked at startup is `$131D`; leave the sprite-set headers alone.
+Next: a new team follows `docs/adding-a-team.md`. Bank `$83`'s `$FF` fill is 354 bytes (`unusedFF83`); a record does not fit, so bank `$90` is added (see `docs/adding-a-team.md`) and the record is assembled there and TeamList points at it. Bank `$87` ends with 9 bytes of `$FF`, so a TeamBlocksMap row needs `assepen` and its fill moved to bank `$90`. `SetSframe` and `addframe_end` stay together. The `FrameSetTable` header sum checked at startup is `$131D`; leave the sprite-set headers alone.
 
 ## Animation and sprite-frame immediates (2026-10-13)
 
@@ -203,6 +203,6 @@ what the routine does, no `SNES:` second line, no ROM addresses or banks, no str
 - Next: none. Inline comments inside the routines were not touched.
 
 ### Follow-up check (2026-10-12)
-- Unused labels StartSong4, StartSong7, StartSong8, ContinuePlayoffs, unusedEnergyBar: no source references beyond their incsrc lines. Raw ROM search for their addresses as 16/24-bit values found only false hits (SPC700 driver bytes for StartSong7, `jmp Bcheck_rtl` for ContinuePlayoffs). "Unused" kept.
+- Unused labels StartSong4, StartSong7, StartSong8, ContinuePlayoffs, dobar: no source references beyond their incsrc lines. Raw ROM search for their addresses as 16/24-bit values found only false hits (SPC700 driver bytes for StartSong7, `jmp Bcheck_rtl` for ContinuePlayoffs). "Unused" kept.
 - routines/logic: every routine body read; 24 headers corrected.
 - routines/hockey: 67 of the folder's routines read (sampled across sizes and topics, not all); 8 headers corrected. The rest of hockey was not body-checked.

@@ -33,7 +33,7 @@ A full record does not fit in 354 bytes. Add bank $90 (see "Adding bank $90" bel
 
 Teamblocksmap is in the middle of bank $87. The bank ends with 9 bytes of `$FF` (`unusedFF87`), so one 36-byte row does not fit.
 
-`assepen` is the last routine in `src/banks/b87_sprites_refs.asm` (127 bytes, then the 9-byte fill). `asstab` reaches it with `dd assepen`, so the routine and its fill can move into bank $90 (see "Adding bank $90" below). `DrawFrame`, just after the map, uses `jmp.w addframe_end`, so those two stay together in bank $87. The next bank's org pads the gap.
+`assepen` is the last routine in `src/banks/b87_sprites_refs.asm` (127 bytes, then the 9-byte fill). `asstab` reaches it with `dd assepen`, so the routine and its fill can move into bank $90 (see "Adding bank $90" below). `SetSframe`, just after the map, uses `jmp.w addframe_end`, so those two stay together in bank $87. The next bank's org pads the gap.
 
 Bank $8B ends on the `rtl` of `skatetopuckinit` and has no spare fill.
 

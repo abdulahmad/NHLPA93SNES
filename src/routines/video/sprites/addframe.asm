@@ -22,7 +22,7 @@ addframe:							;Draw sprite frame sprframe at sprx / spry: find its frame set, 
 	sec
 	sbc.b [farptr]					; minus the set size
 	bcs .sprframege					; frame is later
-	jml.l DrawFrame					; in this set
+	jml.l SetSframe					; in this set
 .sprframege:						; the rest of the frame number
 	sta.b sprframe					; the rest
 	lda.b sprsetofs

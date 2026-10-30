@@ -55,7 +55,7 @@ Files per batch are listed in comment_plan.json `batches[].files`. Files with fa
 
 | file | code | 93S cm | 93G cm | 93G lines | density | uncommented locals | batch |
 |---|---|---|---|---|---|---|---|
-| video/DrawFrameHi.asm | 464 | 23 | 0 | 0 | 0.05 | 33 | 11 |
+| video/SetSframeHi.asm | 464 | 23 | 0 | 0 | 0.05 | 33 | 11 |
 | logic/skateto.asm | 204 | 6 | 23 | 50 | 0.03 | 13 | 8 |
 | logic/chk4pass.asm | 210 | 16 | 31 | 81 | 0.08 | 19 | 7 |
 | hockey/GetPassWord.asm | 276 | 52 | 0 | 0 | 0.19 | 9 | 1 |
@@ -63,7 +63,7 @@ Files per batch are listed in comment_plan.json `batches[].files`. Files with fa
 | penalty/SetScore.asm | 176 | 16 | 22 | 55 | 0.09 | 9 | 10 |
 | hockey/Pausemode_menu.asm | 175 | 20 | 0 | 0 | 0.11 | 10 | 1 |
 | logic/asscentero.asm | 170 | 21 | 6 | 59 | 0.12 | 18 | 5 |
-| video/unusedEnergyBar.asm | 115 | 1 | 0 | 0 | 0.01 | 9 | 12 |
+| video/dobar.asm | 115 | 1 | 0 | 0 | 0.01 | 9 | 12 |
 | middle/mulu32.asm | 109 | 1 | 0 | 0 | 0.01 | 2 | 9 |
 | hockey/checkpuckcoll.asm | 62 | 5 | 45 | 112 | 0.08 | 10 | 3 |
 | logic/assdefo.asm | 125 | 10 | 8 | 43 | 0.08 | 15 | 6 |
@@ -76,7 +76,7 @@ Files per batch are listed in comment_plan.json `batches[].files`. Files with fa
 | hockey/checkpuckcoll_ccx.asm | 197 | 12 | 45 | 112 | 0.06 | 22 | 3 |
 | video/InitPPU.asm | 86 | 2 | 0 | 0 | 0.02 | 0 | 12 |
 
-Files with 0 in the 93G columns have no twin found by name (e.g. DrawFrameHi, GetPassWord, Pausemode_menu, unusedEnergyBar, InitPPU, mulu/mulu32): SNES-only or renamed; check the `92 <name>`/docs rows before writing from scratch.
+Files with 0 in the 93G columns have no twin found by name (e.g. SetSframeHi, GetPassWord, Pausemode_menu, dobar, InitPPU, mulu/mulu32): SNES-only or renamed; check the `92 <name>`/docs rows before writing from scratch.
 
 ## Systematic issues
 

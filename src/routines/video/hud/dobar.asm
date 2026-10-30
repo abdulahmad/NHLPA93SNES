@@ -1,4 +1,4 @@
-unusedEnergyBar:					;Build an energy bar of d0 in the message area without printing it. Unused
+dobar:					;Build an energy bar of d0 in the message area without printing it. Unused
 	stx.b xsave						; keep X
 	ldx.w #$0000
 .save:								; save d0 and the words after it (8 words)

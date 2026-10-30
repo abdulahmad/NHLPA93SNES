@@ -1,4 +1,4 @@
-ShowRinkRows:						;Queue the rink map rows that the vertical scroll brought on screen
+updatescroll_rows:						;Queue the rink map rows that the vertical scroll brought on screen
 	ldy.b DMAlistend				; end of the DMA list
 	lda.w Vscroll					; vertical scroll
 	clc

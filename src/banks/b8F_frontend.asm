@@ -9,7 +9,7 @@ BigFontMap:							;bigfont.map: big font tiles of each character: 76 top-row wor
 									;76 bottom-row words; printbig uses BigFontIndex
 	incbin "../../Extracted/Graphics/BigFont.smap"
 
-incsrc "../routines/video/hud/unusedEnergyBar.asm"
+incsrc "../routines/video/hud/dobar.asm"
 incsrc "../routines/tables/linelist.asm"
 incsrc "../data/text/PerLabels.asm"
 
@@ -53,7 +53,7 @@ incsrc "../routines/hockey/replay/suba4.asm"
 incsrc "../routines/hockey/replay/adda4.asm"
 incsrc "../routines/video/text/QueueTextDMA.asm"
 incsrc "../routines/video/dma/QueueBackmapDMA.asm"
-incsrc "../routines/video/rink/ShowRinkRows.asm"
+incsrc "../routines/video/rink/updatescroll_rows.asm"
 incsrc "../routines/middle/input/jdtab8F.asm"
 incsrc "../routines/penalty/ticker/InitScores.asm"
 incsrc "../routines/hockey/password/ResetPassWord.asm"
