@@ -15,7 +15,7 @@ Opening2:							;Opening2 from scratch: reset the hardware and RAM, set the defa
 	jsl.l InitPPU					; hardware
 	ldx.w #$0000					; clear RAM
 .clr:								; clear the work area
-	stz.b vcount,x
+	stz.b Vcount,x
 	inx
 	cpx.w #$15FF
 	bne .clr						; $15FF bytes
@@ -43,7 +43,7 @@ Opening2:							;Opening2 from scratch: reset the hardware and RAM, set the defa
 	lda.w #$0020					; sprite priority
 	sta.b sprpriority
 	lda.w #vb2						; blank vblank
-	sta.b vbint
+	sta.b VBint
 	lda.w #HBdefault				; default hblank
 	sta.b hbint
 	jsl.l setoptions				; options

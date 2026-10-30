@@ -61,7 +61,7 @@ Framer:								;Draw a frame and fill it. d0 / d1 = width / height, printx / pri
 .setter:							;one FramerMap piece (X = piece * 2) at printx/printy, printx + 1
 	lda.l FramerMap,x
 	clc
-	adc.w Framercset
+	adc.w framercset
 	clc
 	adc.w printfontset
 	pha

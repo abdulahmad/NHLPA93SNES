@@ -118,11 +118,11 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	lda.w #dmasize
 	sta.b DMAlistend
 	lda.w #VBlank_VScroll			; title vblank handler
-	sta.b vbint
+	sta.b VBint
 	lda.w #$0001					; fade in
 	sta.b fadein
 .wait1:								; wait for the next frame
-	cmp.b vbint
+	cmp.b VBint
 	beq .wait1
 .top2:								;next credits page
 	ldy.w #$0002					; next credits page
@@ -202,9 +202,9 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	and.w #$00FF
 	sta.b d0
 	lda.w #VBlank_VScroll
-	sta.b vbint
+	sta.b VBint
 .wait:								; wait for the next frame
-	cmp.b vbint
+	cmp.b VBint
 	beq .wait
 	jsl.l ReadPads					; read the pads
 	lda.b d3
@@ -220,14 +220,14 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	lda.b d0
 	cmp.b d1
 	bne .top5
-	lda.b vcount					; 90 frames
+	lda.b Vcount					; 90 frames
 	clc
 	adc.w #90
 	sta.b d2
 	lda.b d3
 	cmp.w #$00FE
 	bne .top6s
-	lda.b vcount					; 180 frames for the copyright page
+	lda.b Vcount					; 180 frames for the copyright page
 	clc
 	adc.w #180
 	sta.b d2
@@ -243,12 +243,12 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 	ora.w padnew1+2
 	bit.w #JOYSTART
 	bne .exit
-	lda.b vcount					; page time up?
+	lda.b Vcount					; page time up?
 	cmp.b d2
 	bne .top6
 	jmp.w .top2						; next page
 .exit:								;wait for the default vblank handler, return
-	lda.b vbint						; wait for the default vblank handler
+	lda.b VBint						; wait for the default vblank handler
 	cmp.w #vb2						; the default vblank handler
 	bne .exit
 	rtl

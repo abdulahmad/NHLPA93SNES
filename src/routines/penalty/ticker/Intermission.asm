@@ -10,9 +10,9 @@ Intermission:						;Between periods: the pause menu screen with the scores of th
 	dey
 	bpl .0
 .vc:								; wait until the frame counter is stable
-	lda.b vcount
-	ldy.b vcount+2
-	cmp.b vcount
+	lda.b Vcount
+	ldy.b Vcount+2
+	cmp.b Vcount
 	bne .vc
 	sta.w vcountmark				; remember the frame counter
 	sty.w vcountmark+2
@@ -27,7 +27,7 @@ Intermission:						;Between periods: the pause menu screen with the scores of th
 	sta.b pausetimer
 	lda.w #$0001
 	sta.w demoflag					; demo mode while the screen is up
-	lda.b vcount
+	lda.b Vcount
 	sec
 	sbc.w #$0150					; ticker clock = frame counter - $150
 	sta.w tickervc

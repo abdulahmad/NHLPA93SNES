@@ -5,15 +5,15 @@ ProcessInputWithRepeat:				;Read pads 1 and 2 with key repeat: a held button rep
 	beq .rtl						; none: leave
 	lda.b d2						; d2 = changed buttons
 	bne .chg						; a change: restart the delay
-	dec.w repeatdelay				; count down
+	dec.w repeatdelayframes				; count down
 	bpl .rtl						; not yet: leave
 	lda.w #4						; repeat every 4 frames
-	sta.w repeatdelay
+	sta.w repeatdelayframes
 	lda.b d3						; held buttons count as new presses
 	sta.b d1
 .rtl:								; return
 	rtl
 .chg:								; first repeat delay
 	lda.w #15						; first repeat after 15 frames
-	sta.w repeatdelay
+	sta.w repeatdelayframes
 	rtl

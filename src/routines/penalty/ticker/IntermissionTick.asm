@@ -2,7 +2,7 @@ IntermissionTick:					;During the intermission, show the next ticker score from 
 									;then the highlights
 	lda.w demoflag					; not in the intermission demo
 	beq .rtl
-	lda.b vcount					; time since the last score
+	lda.b Vcount					; time since the last score
 	sec
 	sbc.w tickervc
 	cmp.w #$0150					; $150 frames

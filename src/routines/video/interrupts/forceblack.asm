@@ -2,10 +2,10 @@ forceblack:							;Turn the screen black: default interrupt handlers, mark the s
 									;caches stale and empty the transfer list
 	phx								; keep X
 	lda.w #vb2_blank				; blank vblank handler
-	sta.b vbint
+	sta.b VBint
 	lda.w #HBdefault				; default HBlank handler
 	sta.b hbint
-	lda.b vcount					; frame counter
+	lda.b Vcount					; frame counter
 	pha
 	lda.b sprclock					; sprite clock
 	sec
@@ -26,7 +26,7 @@ forceblack:							;Turn the screen black: default interrupt handlers, mark the s
 	bne .slottime
 	pla
 .vb:								; wait for the next frame
-	cmp.b vcount
+	cmp.b Vcount
 	beq .vb
 	stz.b DMAlistend				; empty the DMA list
 	plx								; restore X

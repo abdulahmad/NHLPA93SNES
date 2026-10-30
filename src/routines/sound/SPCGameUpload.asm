@@ -8,11 +8,11 @@ SPCGameUpload:						;Switch the SPC700 to the in-game set: wait for the sound qu
 	lda.b sndqin
 	cmp.b sndqout
 	bne .qwait
-	lda.b vcount					; frame counter
+	lda.b Vcount					; frame counter
 	clc
 	adc.w #$0006					; plus 6 frames
 .vblank:							; wait for the frame
-	cmp.b vcount					; wait for them
+	cmp.b Vcount					; wait for them
 	bne .vblank
 	lda.w #$0001					; 1 is both the lock flag and SoundBankGame, so one load sets both
 	sta.b sndlock					; lock the sound queue while the set uploads

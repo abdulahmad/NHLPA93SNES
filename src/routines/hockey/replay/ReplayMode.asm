@@ -113,14 +113,14 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	lda.w #$0001
 	sta.b d7
 .top:								;wait d7 frames
-	lda.b vcount
+	lda.b Vcount
 	sec
-	sbc.w oldvcount
+	sbc.w OldVcount
 	cmp.b d7
 	bcc .top
-	lda.b vcount
+	lda.b Vcount
 	sta.w lastframevc
-	sta.w oldvcount
+	sta.w OldVcount
 	jsl.l ReadPads					; read the pads
 	lda.w #$0001
 	sta.b d7
@@ -210,7 +210,7 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	jsl.l SprSort					; sort the sprites
 	lda.w #VBlank_long
 .wait:								; wait for the next frame
-	cmp.b vbint
+	cmp.b VBint
 	beq .wait
 	bra .vid
 .back1:								;L: one frame back

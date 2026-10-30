@@ -9,12 +9,12 @@ VBjsr:								;NMI: jump through the vblank handler vector
 .rti:								;not a vblank NMI, or the last handler still runs
 	pla
 	rti
-.dispatch:							;push vbint-1 and rts into it (A/X/Y stay on the stack for the handler to
+.dispatch:							;push VBint-1 and rts into it (A/X/Y stay on the stack for the handler to
 									;pull)
 	inc.b vbactive					; mark the handler as running
 	phx								; save X and Y
 	phy
-	lda.b vbint						; handler address
+	lda.b VBint						; handler address
 	dec a							; minus 1 for the rts
 	pha
 	rts								; jump to the handler

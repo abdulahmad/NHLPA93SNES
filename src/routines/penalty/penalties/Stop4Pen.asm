@@ -110,17 +110,17 @@ Stop4Pen:							;Stop play for a penalty: stop the clock, set the face off spot 
 	sta.w foy						; face off y
 	jsl.l limitfo					; limit the spot
 .skipfo:							; start the stop delay count from 0
-	lda.b vcount					; sound cut off within 60 frames: reset the queue
+	lda.b Vcount					; sound cut off within 60 frames: reset the queue
 	sec
 	sbc.w sfxmutetime
 	cmp.w #$003C					; within 60 frames?
 	bcc .snd
 	jsl.l sndqreset					; reset the sound queue
 .snd:								; whistle
-	lda.w #SFXwhistle				; whistle, Pencntdwn = 0, gmpen, SetPA PenWhistle
+	lda.w #SFXwhistle				; whistle, PenCntDwn = 0, gmpen, SetPA PenWhistle
 	pha								; whistle
 	jsl.l sfx
-	stz.w Pencntdwn					; clear the penalty countdown
+	stz.w PenCntDwn					; clear the penalty countdown
 	lda.w #gmpen
 	tsb.w gmode						; penalty game mode
 	lda.w #PenWhistle				; penalty whistle

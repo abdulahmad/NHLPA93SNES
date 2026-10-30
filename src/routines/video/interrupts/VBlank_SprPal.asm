@@ -56,5 +56,5 @@ VBlank_SprPal:						;Vblank: as VBlank, plus the sprite palettes; once, then bac
 	sta.w MDMAEN
 	rep #$30						; 16-bit registers
 	lda.w #vb2						; back to vb2 next frame
-	sta.b vbint
+	sta.b VBint
 	jmp.w vb2

@@ -49,7 +49,7 @@ PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start 
 	jsl.l sndqreset					; reset the sound queue
 	lda.b d7
 	pha
-	lda.b vcount+2
+	lda.b Vcount+2
 	dec a
 	dec a
 	sta.w vcountmark+2

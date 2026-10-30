@@ -6,7 +6,7 @@ p_music_vblank:						;Vblank sound handler: every other frame, send the next que
 	sep #$30						; 8-bit registers
 	lda.b sndlock					; queue locked
 	bne .done						; yes: skip
-	lda.b vcount					; every other frame
+	lda.b Vcount					; every other frame
 	lsr a
 	bcc .done
 	ldx.b sndqout					; queue out

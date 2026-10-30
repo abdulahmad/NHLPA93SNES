@@ -5,14 +5,14 @@ chkprogress:						;Move the referee and the game through a penalty: when the sto
 	bit.w #gmpen
 	bne .pen
 	jmp.w .rtl
-.pen:								; Pencntdwn negative: InProgress
-	lda.w Pencntdwn					; Pencntdwn negative: InProgress
+.pen:								; PenCntDwn negative: InProgress
+	lda.w PenCntDwn					; PenCntDwn negative: InProgress
 	bpl .cnt
 	jmp.w InProgress
 .cnt:								; count down the penalty counter
 	sec
 	sbc.b d7
-	sta.w Pencntdwn
+	sta.w PenCntDwn
 	bmi .over
 	jmp.w .rtl
 .over:								; stop delay over

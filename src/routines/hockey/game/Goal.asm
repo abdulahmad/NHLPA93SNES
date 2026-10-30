@@ -14,7 +14,7 @@ Goal:								;The puck is in the goal: add the score, sound the siren, log it, u
 	lda.w #SFXsiren
 	pha
 	jsl.l sfx
-	lda.b vcount
+	lda.b Vcount
 	sta.w sfxmutetime
 	jsl.l freezewindow
 	lda.b Crowdlevel				; crowd +500

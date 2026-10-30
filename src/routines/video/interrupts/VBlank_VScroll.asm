@@ -34,5 +34,5 @@ VBlank_VScroll:						;Vblank: set the vertical scroll and run the transfer list;
 	rep #$30						; 16-bit
 	stz.b DMAlistend				; list empty
 	lda.w #vb2						; back to vb2
-	sta.b vbint
+	sta.b VBint
 	jmp.w vb2						; finish the vblank

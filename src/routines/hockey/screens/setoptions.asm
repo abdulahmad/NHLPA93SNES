@@ -2,7 +2,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 									;Start goes on;
 									;left idle, a demo game starts with random teams
 	lda.w #vb2_blank				; blank vblank handler while the screen is built
-	sta.b vbint
+	sta.b VBint
 	lda.w #HBdefault				; default horizontal-blank handler
 	sta.b hbint
 	lda.b sprclock					; sprite times are set a second back
@@ -29,9 +29,9 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	lda.b #NMITIMEN_NMI|NMITIMEN_JOY
 	sta.w NMITIMEN
 	rep #$30						; 16-bit registers
-	lda.b vcount					; wait for one frame
+	lda.b Vcount					; wait for one frame
 .vwait:								; wait for a new frame
-	cmp.b vcount
+	cmp.b Vcount
 	beq .vwait
 	jsl.l InitPPU					; reset the PPU
 	sep #$20						; 8-bit A
@@ -61,7 +61,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	sta.w smallfontchars
 	clc
 	adc.w #$0064
-	sta.w Framercset
+	sta.w framercset
 	adc.w #$0004
 	sta.w logochars
 	adc.w #$0035
@@ -202,13 +202,13 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	bne .seed
 	inc.w seed+2
 .seed:								; wait for the vblank handler, then read the pads
-	lda.b vbint
+	lda.b VBint
 	cmp.w #VBlank_SprPal			; VBlank_SprPal not run yet?
 	beq .frame
 	jsl.l ReadPads					; read the pads
-	lda.b vcount
+	lda.b Vcount
 	sta.w lastframevc
-	sta.w oldvcount
+	sta.w OldVcount
 	jsl.l ClearSprites				; hide all sprites
 	jsl.l UpdateRosterPlayers		; animate the roster players
 	jsl.l ReadJoy1					; read pad 1
@@ -225,26 +225,26 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	jsl.l QueueBackmapDMA
 .dmaqueued:							; vblank DMA queued
 	lda.w #VBlank_SprPal
-	sta.b vbint
+	sta.b VBint
 	dec.b d6
 	bpl .frame
 	lda.w #NumofTeams				; demo: random teams, both computer
 	jsl.l randoma					; random number 0 to A-1
-	sta.w OptTeam1
+	sta.w Opt1team
 	sta.w HomeTeam					; home team
 .team2:								; pick a second team different from the first
 	lda.w #NumofTeams
 	jsl.l randoma					; random number 0 to A-1
-	cmp.w OptTeam1
+	cmp.w Opt1team
 	beq .team2
-	sta.w OptTeam2
+	sta.w Opt2team
 	sta.w VisTeam					; visitor team
 	stz.w notdemo					; demo game
 	stz.w OptPlayMode
-	stz.w OptPlayers
-.start:								;Start, or the demo: pojoy from OptPlayers, the password in Cont.
+	stz.w OptNOP
+.start:								;Start, or the demo: pojoy from OptNOP, the password in Cont.
 									;Playoffs, then maketree
-	lda.w OptPlayers				; pojoy from the number of players
+	lda.w OptNOP				; pojoy from the number of players
 	sec
 	sbc.w #$0005
 	sta.w pojoy

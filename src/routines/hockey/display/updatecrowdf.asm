@@ -19,10 +19,10 @@ updatecrowdf:						;Every game loop: let the crowd level fade and step the crowd
 	bpl .0
 	stz.b Crowdlevel
 .0:									; decay the crowd counter
-	lda.b crowdcnt
+	lda.b Crowdcnt
 	sec
 	sbc.b d7
-	sta.b crowdcnt
+	sta.b Crowdcnt
 	bpl .cf
 	lda.b Crowdlevel
 	lsr a
@@ -35,11 +35,11 @@ updatecrowdf:						;Every game loop: let the crowd level fade and step the crowd
 	lda.b d0
 	and.w #$0060					; %01100000
 	sta.b d0
-	lda.b crowdstep
+	lda.b Crowdstep
 	inc a
 	inc a
 	and.w #$001E					; %00011110
-	sta.b crowdstep
+	sta.b Crowdstep
 	clc
 	adc.b d0
 	sta.b d0
@@ -51,7 +51,7 @@ updatecrowdf:						;Every game loop: let the crowd level fade and step the crowd
 	lda.b [a0],y
 	xba
 	sep #$20						; 8-bit A
-	sta.b crowdframe+1
+	sta.b Crowdframe+1
 	rep #$20						; 16-bit A
 	lda.b [a0],y
 	and.w #$00FF
@@ -62,10 +62,10 @@ updatecrowdf:						;Every game loop: let the crowd level fade and step the crowd
 	clc
 	adc.b d1
 	sta.b d1
-	sta.b crowdcnt
+	sta.b Crowdcnt
 .cf:								;random extra frame 19-25 when the crowd is loud
 	sep #$20						; 8-bit A
-	stz.b crowdframe
+	stz.b Crowdframe
 	rep #$30						; 16-bit registers
 	lda.b Crowdlevel
 	cmp.w #$0119					; 280
@@ -77,7 +77,7 @@ updatecrowdf:						;Every game loop: let the crowd level fade and step the crowd
 	cmp.w #$001A
 	bcs .rtl
 	sep #$20						; 8-bit A
-	sta.b crowdframe
+	sta.b Crowdframe
 	rep #$30						; 16-bit registers
 .rtl:								; return
 	rtl

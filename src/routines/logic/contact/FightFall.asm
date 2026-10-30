@@ -31,7 +31,7 @@ FightFall:							;Player X lost the fight: the other player gets a fighting pena
 	pla
 	sta.b a1+2
 	lda.w #$003C					; 60
-	sta.w Pencntdwn
+	sta.w PenCntDwn
 	lda.w #$FFFF					; temp3(a0) = -1: fight over for him
 	sta.w temp3,y
 	lda.b Crowdlevel
@@ -53,7 +53,7 @@ FightFall:							;Player X lost the fight: the other player gets a fighting pena
 	bvs .noinj
 .inj:								;player X is injured
 	lda.w #$00B4					; 180: player is injured
-	sta.w Pencntdwn
+	sta.w PenCntDwn
 	lda.w pflags,x
 	ora.w #pf2inj
 	sta.w pflags,x

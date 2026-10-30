@@ -24,7 +24,7 @@ SpriteSet10:						;frame set 10: frames 462-517
 	incbin "../../Extracted/Graphics/Sprites/Sprites462_517.sanim"
 
 BigFontTiles:						;the big font tiles (144 tiles, BigFont.chr.pak),
-									;packed; setupice sends them to BigFontChars (PixelRemap8D), printbig
+									;packed; setupice sends them to BigFontchars (PixelRemap8D), printbig
 									;draws them
 	incbin "../../Extracted/Graphics/BigFont.chr.pak"
 

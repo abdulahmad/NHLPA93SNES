@@ -28,10 +28,10 @@ showcrowd:							;Draw the crowd and penalty box sprites
 	jsl.l .pb						; draw the second box
 	lda.w sfhormode					; horizontal mode?
 	bne .rtl						; no crowd
-	lda.b crowdframe				; first crowd frame
+	lda.b Crowdframe				; first crowd frame
 	sta.b d0
 	jsl.l .sc						; draw it
-	lda.b crowdframe+1				; second crowd frame
+	lda.b Crowdframe+1				; second crowd frame
 	sta.b d0
 	bra .sc							; draw it
 .pb:								;d2 = count, d3 = first frame

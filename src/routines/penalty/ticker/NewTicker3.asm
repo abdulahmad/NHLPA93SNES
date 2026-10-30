@@ -27,7 +27,7 @@ NewTicker3:							;Show the ticker box for game d3: round, period and both teams
 	lda.w #$0005					; frame height 5
 	sta.b d1
 	jsl.l Framer					; draw the frame
-	lda.b vcount					; ticker clock = frame counter
+	lda.b Vcount					; ticker clock = frame counter
 	sta.w tickervc
 	inc.w printx					; x + 1
 	lda.w printy

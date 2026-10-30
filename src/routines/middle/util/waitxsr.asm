@@ -10,9 +10,9 @@ waitxsr:							;Wait d0 frames or until a button in d1 is pressed (used while th
 	lda.b d1
 	bne .exit						; pressed: done
 	jsl.l setvideo					; update the screen
-	lda.b vcount					; frame counter
+	lda.b Vcount					; frame counter
 .vb:								; wait for the next frame
-	cmp.b vcount
+	cmp.b Vcount
 	beq .vb							; wait for the next frame
 	jsl.l ReadPads					; read the pads
 	pla

@@ -39,12 +39,12 @@ FigureJoy:							;Set which team each controller plays
 	lda.w #4						; po team is team 2
 	sta.b d0
 	lda.w gst1,y					; opponent
-	sta.w OptTeam2					; OptTeam2
+	sta.w Opt2team					; Opt2team
 	bra .itx
 .it1:								; the po team is team 1: opponent
 	stz.b d0						; po team is team 1
 	lda.w gst2,y					; opponent
-	sta.w OptTeam2					; OptTeam2
+	sta.w Opt2team					; Opt2team
 .itx:								; add the joystick offset
 	lda.b d0
 	clc
@@ -70,8 +70,8 @@ FigureJoy:							;Set which team each controller plays
 	lda.b [a0],y
 	sta.w cont2team					; cont2team
 	rtl
-.fjnpo:								; regular season: pads from the table by OptPlayers
-	lda.w OptPlayers				; regular season: .noplist by OptPlayers
+.fjnpo:								; regular season: pads from the table by OptNOP
+	lda.w OptNOP				; regular season: .noplist by OptNOP
 	asl a							; times 4
 	asl a
 	sta.b d0
@@ -96,7 +96,7 @@ FigureJoy:							;Set which team each controller plays
 	dw 2,2
 	dw 2,1
 	dw 1,2
-.noplist:							;cont1team, cont2team by OptPlayers
+.noplist:							;cont1team, cont2team by OptNOP
 	dw 0,0
 	dw 1,0
 	dw 2,0

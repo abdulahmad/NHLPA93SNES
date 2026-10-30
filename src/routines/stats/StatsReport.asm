@@ -1,6 +1,6 @@
 StatsReport:						;Show the game stats until A is pressed or a minute passes
 	jsl.l DisplayStats				; draw the stats
-	lda.b vcount					; start time
+	lda.b Vcount					; start time
 	pha								; $01,s = the start time
 .wait:								; wait for the pad that paused
 	jsl.l setvideo					; update the screen
@@ -9,7 +9,7 @@ StatsReport:						;Show the game stats until A is pressed or a minute passes
 	lda.b d1
 	bit.w #$0080					; A button
 	bne .exit						; pressed: done
-	lda.b vcount
+	lda.b Vcount
 	sec
 	sbc.b $01,s
 	cmp.w #$0E10					; a minute = $E10 frames

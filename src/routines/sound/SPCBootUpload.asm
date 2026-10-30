@@ -12,9 +12,9 @@ SPCBootUpload:						;Wait for the sound queue to empty, then upload the sound dr
 	lda.b sndqin					; queue in
 	cmp.b sndqout					; equals queue out
 	bne .dark						; wait for the queue
-	lda.b vcount					; frame counter
+	lda.b Vcount					; frame counter
 .vblank:							; wait for a new frame
-	cmp.b vcount					; wait for a new frame
+	cmp.b Vcount					; wait for a new frame
 	beq .vblank
 	lda.w #$0001					; sndbank 2, no song
 	sta.b sndlock					; lock the queue
@@ -30,11 +30,11 @@ SPCBootUpload:						;Wait for the sound queue to empty, then upload the sound dr
 	lda.b #NMITIMEN_NMI|NMITIMEN_JOY	; NMI and auto joypad read back on
 	sta.w NMITIMEN
 	rep #$30						; 16-bit
-	lda.b vcount
+	lda.b Vcount
 	inc a
 	inc a
 .frames:							;wait 2 frames
-	cmp.b vcount
+	cmp.b Vcount
 	bne .frames
 	pla								; restore the registers
 	plx

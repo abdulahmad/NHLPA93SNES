@@ -5,7 +5,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	sta.w smallfontchars			; small font tiles first
 	clc
 	adc.w #100
-	sta.w BigFontChars				; big font 100 tiles later
+	sta.w BigFontchars				; big font 100 tiles later
 	adc.w #100
 	sta.w scorechars				; score and team block tiles
 	adc.w #405
@@ -359,7 +359,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	sta.b d0
 	lda.w #4
 	sta.b d1
-	lda.w BigFontChars				; blank the top and bottom rows with big font tile 0
+	lda.w BigFontchars				; blank the top and bottom rows with big font tile 0
 	ora.w #$1000
 	sta.b d2
 	jsl.l eraser					; d0 x d1, tile d2
@@ -370,7 +370,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	sta.b d0
 	lda.w #24
 	sta.b d1
-	lda.w BigFontChars
+	lda.w BigFontchars
 	ora.w #$1000
 	sta.b d2
 	jsl.l eraser					; d0 x d1, tile d2
@@ -422,9 +422,9 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	bne .dma
 	sty.b DMAlistend				; end of the DMA list
 	lda.w #VBlank_Cram				; playoff vblank handler
-	sta.b vbint
+	sta.b VBint
 .wait:								; wait for the next frame
-	cmp.b vbint
+	cmp.b VBint
 	beq .wait
 .pad:								; read the pads
 	jsl.l ReadPads					; read the pads
@@ -434,11 +434,11 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	bne .frame
 	jmp.w .rtl
 .frame:								;color 1 of palette 7 blends between the .blink colors (30 frame cycle)
-	lda.b vcount					; once per frame
+	lda.b Vcount					; once per frame
 	cmp.b d7
 	beq .pad
 	sta.b d7
-	sta.b mulb						; vcount mod 30, then the half
+	sta.b mulb						; Vcount mod 30, then the half
 	lda.w #30
 	sta.b mula
 	jsl.l divu16					; mulb / mula

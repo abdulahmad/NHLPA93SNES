@@ -222,7 +222,7 @@ DMA_CGRAM		=	$2200			; DMAP $00 (one register), BBAD $22 (CGDATA)
 DMA_OAM			=	$0400			; DMAP $00 (one register), BBAD $04 (OAMDATA)
 
 ; Direct page $00-$18: vblank / irq bookkeeping (from VBjsr, vb2, HBjsr in bank80)
-vcount		=	$00					; 32-bit frame counter, +1 per vblank in vb2_main. vcount (word there)
+Vcount		=	$00					; 32-bit frame counter, +1 per vblank in vb2_main. Vcount (word there)
 brightness	=	$04					;INIDISP shadow (0-15 brightness, $80 forced blank), written each vblank
 									;by vb2
 fadeout		=	$06					;nonzero: vb2 steps brightness down every 4 frames until 0.
@@ -233,9 +233,9 @@ xsave		=	$0A					;X saved around the movem-style push/pop loops of the 68k port 
 									;: ldx #0 ...)
 farptr		=	$0C					; long pointer ($0C-$0E) to a frame set table (addframe, addframe_hi)
 sprtileptr	=	$0F					; addframe: long pointer to the tiles of the frame set ($0F-$11)
-vbactive	=	$12					;nonzero while the vbint handler runs (or while main code holds vblank
+vbactive	=	$12					;nonzero while the VBint handler runs (or while main code holds vblank
 									;off): VBjsr skips it
-vbint		=	$14					; address (bank $80) of the vblank handler VBjsr jumps to
+VBint		=	$14					; address (bank $80) of the vblank handler VBjsr jumps to
 hbint		=	$16					;address (bank $80) of the H/V-timer IRQ handler HBjsr jumps to. Default
 									;HBdefault
 hcount		=	$18					; +1 per IRQ that is not a timer IRQ (HBdefault); cleared every vblank
@@ -302,12 +302,12 @@ textdirtyhi		=	$D2				; highest changed word of textmap
 printm			=	$D4				;byte offset of the print map in textmap (map number from the print
 									;control code)
 collflag		=	$D8				; a player collision happened: checkcoll restores the old position
-crowdcnt		=	$DA				; count down to the next crowd animation step
-crowdframe		=	$DC				;crowd frame: low byte = random extra frame (loud crowd), high byte
+Crowdcnt		=	$DA				; count down to the next crowd animation step
+Crowdframe		=	$DC				;crowd frame: low byte = random extra frame (loud crowd), high byte
 									;= frame from cd0
 Crowdlevel		=	$DE				;level of crowd excitement (+$50 per punch, +$258 for a won fight, +$C8
 									;for a faceoff win)
-crowdstep		=	$E0				; animation step for the crowd (0-$1E)
+Crowdstep		=	$E0				; animation step for the crowd (0-$1E)
 bosgames		=	$D6				; 0-6 game of the best of seven series, 7 = single games
 deltax			=	$EA				; avdgoal: x correction around the goal
 deltay			=	$EC				; avdgoal: y correction
@@ -341,7 +341,7 @@ foy					=	$0148		; faceoff spot y
 glovecords			=	$014E		; x/y bytes of the dropped gloves (chkhit)
 cheercnt			=	$0150		;crowd cheers still to play after a goal (SFXcrowdcheer every 150 frames,
 									;Gameloop)
-cheervc				=	$0152		; vcount of the last crowd cheer
+cheervc				=	$0152		; Vcount of the last crowd cheer
 tickerstart			=	$0158		;TickerNum at the start of the intermission (IntermissionTick: all shown
 									;when it comes round again)
 Hpos				=	$0154		; ice rink horizontal position
@@ -355,7 +355,7 @@ joypad3				=	$0162		; controller 3 buttons (multitap)
 joypad4				=	$0164		; controller 4 buttons
 padlast1			=	$0166		; 4 words: buttons at the last ReadPads (joypad1-4)
 padnew1				=	$016E		; 4 words: buttons newly pressed at the last ReadPads (joypad1-4)
-padvcount			=	$0176		; vcount of the last ReadPads (the pads are read once per frame)
+padvcount			=	$0176		; Vcount of the last ReadPads (the pads are read once per frame)
 jmlvector			=	$0178		;RAM jml trampoline: $5C (jml opcode, set by Start), target at +1..+3. sfx
 									;returns through it, updateplayers calls the assignment through it
 lastsfx				=	$017F		; last sound effect requested
@@ -384,7 +384,7 @@ psitem				=	$0485		; pause menu item (0-4)
 sprpieces			=	$0487		; addframe: pieces left in the frame
 padcont				=	$0433		; 4 words
 nibblebuffer		=	$041F		; 4 words: the weights WeightedRandomSelect picks from (SetScore)
-oldvcount			=	$0427		; vcount at the last game frame (d7 = vcount - oldvcount)
+OldVcount			=	$0427		; Vcount at the last game frame (d7 = Vcount - OldVcount)
 goalcue				=	$0429		;nonzero: home team just scored (lead 0-2): assfaceoff plays the goal
 									;music cue at the next faceoff
 percue				=	$042B		; nonzero: period just started: assfaceoff plays the period music cue
@@ -406,7 +406,7 @@ printa				=	$0477		; attribute (palette/priority bits) for print characters
 printfont			=	$0479		; font number (0-3) from the print control code
 puckcross			=	$0489		;2 entries of (x, frames): where/when the puck crosses the top / bottom
 									;goal line ($FFFF frames = never)
-repeatdelay			=	$0499		; ProcessInputWithRepeat: frames to the next key repeat
+repeatdelayframes			=	$0499		; ProcessInputWithRepeat: frames to the next key repeat
 ReplayBufferPtr		=	$0495		;long pointer to the next replay frame record (wraps at ReplayBufferEnd
 									;to ReplayBufferStart)
 Oldrow				=	$049B		; last rink map row (vertical scrolling of the map data; 999 = redraw all)
@@ -416,7 +416,7 @@ rndb1				=	$0491		; copy of seed byte 1 after each random (8-bit random for othe
 rndb2				=	$0493		; high byte of the new seed after each random
 seed				=	$04A1		;32-bit random seed (randomd0). 92 seed, StanleyCupTimer. Its low bits
 									;also serve as a quick random
-sfxmutetime			=	$04A7		;vcount when sound effects were cut off: sfx are dropped for 180 frames
+sfxmutetime			=	$04A7		;Vcount when sound effects were cut off: sfx are dropped for 180 frames
 									;after it
 shotplayer			=	$04A5		; SCnum of the player who shot last
 sndsettle			=	$049F		;set to 10 after the in-game sample upload: p_music_vblank sends no
@@ -427,7 +427,7 @@ sprslottime			=	$04AB		;512 words: sprclock value when each 32-byte VRAM sprite 
 colorflag1			=	$08B7		; cleared by setplayercolors (no reader found)
 colorflag2			=	$08B9		; cleared by setplayercolors (no reader found)
 TickerNum			=	$08D7		; playoff game the score ticker shows next
-tickervc			=	$08D9		;vcount when the ticker box was last shown (Intermission:
+tickervc			=	$08D9		;Vcount when the ticker box was last shown (Intermission:
 									;next one after $150 frames)
 ssoattr				=	$08AB		; 4 words: attribute of the off-screen arrow objects
 ssoframe			=	$08B3		; 4 words: sso frame
@@ -446,10 +446,10 @@ VertLineScrolling	=	$08F3		; scouting text line (0-6)
 xc1					=	$08F5		; scroll lock x (fight)
 yc1					=	$08F7		; scroll lock y
 yleader				=	$08F9		; lead distance on scrolling
-vcountmark			=	$08FB		;32-bit vcount snapshot: elapsed time base (setupice sets it 2*$10000
+vcountmark			=	$08FB		;32-bit Vcount snapshot: elapsed time base (setupice sets it 2*$10000
 									;frames back)
-lastframevc			=	$08DB		; vcount at the last replay frame shown (ReplayMode, bank $8F); not read
-zamx				=	$08DD		; cleared by setupice
+lastframevc			=	$08DB		; Vcount at the last replay frame shown (ReplayMode, bank $8F); not read
+Zamx				=	$08DD		; cleared by setupice
 Vpos				=	$08DF		; ice rink vertical position
 Vscroll				=	$08E1		; vertical scroll (low 3 bits = BG2 fine scroll)
 wcradiusx			=	$08E3		; wall collision radius x
@@ -555,8 +555,8 @@ HomeTeam			=	$129A		; home team number (TeamList index)
 VisTeam				=	$129C		; visiting team number
 PenBuf				=	$129E		; up to 32 penalties: (penalty number, SCnum) byte pairs, 0 = free
 PenaltyBufferEnd	=	PenBuf-2	; the word before PenBuf, used as the list base
-Pencntdwn			=	$12E0		; penalty/fight count down (negative = fight over)
-pentimer			=	$12E2		; frames to the next penalty clock second (updatepentime, 24 per second)
+PenCntDwn			=	$12E0		; penalty/fight count down (negative = fight over)
+Penaltytimer			=	$12E2		; frames to the next penalty clock second (updatepentime, 24 per second)
 PBnum				=	$12E4		; players in the penalty boxes: home*16 + visitors
 InjCntDown			=	$12E6
 penmsgtimer			=	$12E8		;count down to reprinting the horizontal penalty message line ($7FFF =
@@ -615,10 +615,10 @@ gsflags		=	$15EF				; gsflags (gsf* masks)
 
 ; Options
 OptPlayMode	=	$1600				; play mode (0 regular season, 1 continue playoffs, 2/3 new playoffs)
-OptPlayers	=	$1602				; players option
-OptTeam1	=	$1604				; team 1
-OptTeam2	=	$1606				; team 2
-OptPerlen	=	$1608				; period length index
+OptNOP	=	$1602				; players option
+Opt1team	=	$1604				; team 1
+Opt2team	=	$1606				; team 2
+Optperlen	=	$1608				; period length index
 PassWord	=	$1610				; 16 password characters (indexes into PasstoText; bit 7 hides it)
 OptPen		=	$160A				; penalties (0 = off)
 asv			=	$1644				; scouting text without delays (down pressed)
@@ -681,12 +681,12 @@ charofs			=	$1BCD			;added to every text map tile written by the game code ($FF0
 									;in the game screens)
 charofs2		=	$1BCF			;second tile offset: cleared with charofs by the screen setups (the team
 									;roster screen adds it)
-BigFontChars	=	$1BD1			; vram tiles for the big font
+BigFontchars	=	$1BD1			; vram tiles for the big font
 unusedchars		=	$1BD3			; 14 tiles after the faceoff box; set by setupice, not read
 ExtraChars		=	$1BD5			; first free vram tile after the text tiles
 smallfontchars	=	$1BD7			; vram tiles for the small font (print)
 faceoffvrcset	=	$1BD9			; vram tiles for the faceoff box
-Framercset		=	$1BDB			; vram tiles for the Framer box
+framercset		=	$1BDB			; vram tiles for the Framer box
 logochars		=	$1BDD			;vram tiles for the NHLPA logo (game setup and playoff screens, packed at
 									;NHLPALogo)
 refcharshor		=	$1BDF			; vram tiles for the little ref (horizontal rink)
