@@ -322,7 +322,7 @@ cursong			=	$1651			;song playing on the SPC (0 = none); set by the song starter
 goalcue				=	$0429		;nonzero: home team just scored (lead 0-2): assfaceoff plays the goal
 									;music cue at the next faceoff
 percue				=	$042B		; nonzero: period just started: assfaceoff plays the period music cue
-p3cue				=	$042D		;third period: frames until StartSngLateGame plays its music cue (set by
+periodendtime		=	$042D		;third period: frames until StartSngLateGame plays its music cue (93G periodendtime; set by
 									;StartPer, 0 = done)
 midpercue			=	$042F		;gameclock value (half the period) at which assfaceoff plays the
 									;mid-period music cue (0 = done)
@@ -363,7 +363,7 @@ SFXcrowdoff		=	$88				; crowd noise off
 ; sound effect state
 sfxmutetime			=	$04A7		;Vcount when sound effects were cut off: sfx are dropped for 180 frames
 									;after it
-crowdvol	=	$1646				; crowd noise volume last sent to the sound driver (updatesound)
+crowdvol	=	$1646				; crowd noise volume last sent to the sound driver (updatesound); asv = the current level
 lastsfx				=	$017F		; last sound effect requested
 ; driver interface (93S: SPC700 command queue and uploads)
 sndptr		=	$1A					; long pointer to the SPC upload stream ($1A-$1C, bank in $1C)
@@ -881,7 +881,8 @@ PlayerScrollCtr		=	$08E9		;scouting text: offset of the next word in the paragra
 SelectedPlayerIdx	=	$08ED		; scouting text: TestList index
 ScoutingReportTimer	=	$08EF		; frames to the next word ($7FFF = text finished)
 screentimer			=	$08EB		; frames left on the scouting report screen
-asv			=	$1644				; scouting text without delays (down pressed)
+asv			=	$1644				; analog sound volume: current crowd noise level (updatesound, 93G asv); also
+									; scouting text without delays (down pressed)
 TestList		=	$7F0000			; scouting report paragraph numbers (-1 ends)
 nibblebuffer		=	$041F		; 4 words: the weights WeightedRandomSelect picks from (SetScore)
 pausetimer		=	$EE				; pause menu: frames left before a demo pause ends by itself (60000)
