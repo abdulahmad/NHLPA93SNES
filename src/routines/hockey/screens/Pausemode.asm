@@ -31,6 +31,6 @@ Pausemode:							;Pause mode: save the screen, stop the sound, show the pause me
 	sta.b d1
 	jsl.l Framer					; d0 x d1
 	jsl.l printscores1				; redraw the scores
-	jsl.l PauseMenu					; nonzero: draw again
+	jsl.l Pausemode_menu					; nonzero: draw again
 	bne .top
 	jml.l PauseExit					; resume

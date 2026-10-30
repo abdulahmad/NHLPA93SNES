@@ -27,8 +27,8 @@ RinkPalette:						;the game palette: 128 colors (Rink.spal), copied to both
 	incbin "../../Extracted/Graphics/Pals/Rink.spal"
 
 incsrc "../routines/hockey/screens/Pausemode.asm"
-incsrc "../routines/hockey/screens/PauseMenu.asm"
-incsrc "../routines/hockey/screens/PauseReadJoy.asm"
+incsrc "../routines/hockey/screens/Pausemode_menu.asm"
+incsrc "../routines/hockey/screens/waitjoy.asm"
 incsrc "../routines/hockey/screens/PauseResume.asm"
 incsrc "../routines/hockey/screens/PauseLeave.asm"
 incsrc "../routines/hockey/screens/Opening2.asm"
