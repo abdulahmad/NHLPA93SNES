@@ -107,7 +107,7 @@ printscores1:						;Draw the scoreboard: the period and score boxes on the verti
 .sbscreen:							; horizontal rink: score board screen
 	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pri,$0E,$05)
-	jsl.l PrintPerLabel
+	jsl.l printscores1_per
 	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pri,$17,$04)
 	lda.w tmscore					; home score in big font
@@ -123,9 +123,9 @@ printscores1:						;Draw the scoreboard: the period and score boxes on the verti
 	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pri,$17,$02)
 	stz.b d3
-	jsl.l printteamname
+	jsl.l PrintTeamNameAndScore_name
 	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font1Pri,$06,$02)
 	inc.b d3
-	jsl.l printteamname
+	jsl.l PrintTeamNameAndScore_name
 	bra .ex

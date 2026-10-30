@@ -21,7 +21,7 @@ ChkShotStat:						;If a shot was taken, add it to the shooting team's shots
 	sta.b d0
 	lda.w #tmshots					; shots
 	sta.b d1
-	jsl.l addteamstat				; to the team stat
+	jsl.l ChkShotStat_add				; to the team stat
 	plx								; restore X
 	stx.b a3						; X again
 	stx.b xsave						; keep X

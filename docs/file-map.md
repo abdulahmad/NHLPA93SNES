@@ -115,7 +115,7 @@ org `$808000`.
 - `$80B92D` routines/print/print.asm
 - `$80B9F4` routines/penalty/scoreboard/updatepwrplay.asm
 - `$80BAAF` routines/penalty/scoreboard/updatepwrplay_clr.asm
-- `$80BABC` routines/penalty/scoreboard/printteamname.asm
+- `$80BABC` routines/penalty/scoreboard/PrintTeamNameAndScore_name.asm
 - `$80BAF2` routines/logic/computer/ChkGoalies.asm (also ChkGoalies_CPG)
 - `$80BB5A` routines/hockey/teams/setpersonel.asm
 - `$80BCB0` routines/hockey/teams/SetPlList.asm
@@ -144,7 +144,7 @@ org `$808000`.
 - `$80CEC9` routines/logic/puck/puckflip.asm
 - `$80CEE7` routines/hockey/collisions/checkgoal.asm
 - `$80D12E` routines/stats/ChkShotStat.asm
-- `$80D16F` routines/stats/addteamstat.asm
+- `$80D16F` routines/stats/ChkShotStat_add.asm
 - `$80D182` routines/hockey/game/Goal.asm
 - `$80D329` routines/penalty/penalties/PenGoalStuff.asm
 - `$80D3D3` routines/hockey/collisions/checkgoalp.asm
@@ -290,7 +290,7 @@ org `$848000` when `pc()` is below it.
 - `$84F9B2` routines/video/objects/SortObjInitTable.asm
 - `$84FAD2` routines/middle/input/orjoy.asm
 - `$84FAE3` routines/stats/DisplayStats.asm
-- `$84FC30` routines/stats/DisplayStats_sslist.asm
+- `$84FC30` routines/stats/TeamStatTextTbl.asm
 - `$84FC44` routines/stats/GetNameandAttrib.asm
 - `$84FD49` routines/stats/attribjmp.asm
 - `$84FD55` routines/stats/AttribStatus.asm
@@ -388,7 +388,7 @@ org `$898000` when `pc()` is below it.
 - `$8990F0` routines/hockey/replay/ReplayMode.asm
 - `$899383` SpriteSet13 (data)
 - `$89E95D` routines/penalty/scoreboard/printscores1.asm
-- `$89EAB1` routines/penalty/scoreboard/PrintPerLabel.asm
+- `$89EAB1` routines/penalty/scoreboard/printscores1_per.asm
 - `$89EAD7` routines/penalty/scoreboard/PrintTeamNameAndScore.asm
 - `$89EB14` routines/penalty/util/nullrtl89.asm
 - `$89EB15` routines/sound/p_music_vblank.asm

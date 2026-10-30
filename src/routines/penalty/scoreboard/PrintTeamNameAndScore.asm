@@ -1,5 +1,5 @@
 PrintTeamNameAndScore:				;Print team a2's name, then its score as two characters
-	jsl.l printteamname				; print the name
+	jsl.l PrintTeamNameAndScore_name				; print the name
 	lda.w #mesarea					; text buffer
 	sta.b a1
 	lda.w #$0000
