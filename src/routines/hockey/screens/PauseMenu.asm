@@ -6,11 +6,11 @@ PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start 
 	jsl.l Pmenu						; draw the pause menu
 	jsl.l PauseReadJoy				; read the pad
 	lda.b d1						; Start: leave
-	bit.w #JOYSTART
+	bit.w #sbut
 	beq .down
 	jml.l PauseLeave
 .down:								;down
-	bit.w #JOYDOWN
+	bit.w #dbut
 	beq .up
 	inc.w psitem
 	lda.w psitem
@@ -19,7 +19,7 @@ PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start 
 	dec.w psitem
 	bra .gj
 .up:								;up
-	bit.w #JOYUP
+	bit.w #ubut
 	beq .item
 	dec.w psitem
 	bpl .gj
@@ -149,9 +149,9 @@ PauseMenu:							;Draw the pause menu and read the pad: up and down move, Start 
 	jsl.l seta2
 	ldy.b a2						; A or right: next goalie; left: previous; d0 = number of goalies
 	lda.b d1
-	bit.w #cbut|JOYRIGHT
+	bit.w #cbut|rbut
 	bne .nextg
-	bit.w #JOYLEFT
+	bit.w #lbut
 	bne .prevg
 	jmp.w .gj
 .prevg:								; previous goalie

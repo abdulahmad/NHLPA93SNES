@@ -12,7 +12,7 @@ CompShoot:							;Computer player X shoots
 	inc a
 	sta.b d0
 .ds0:								; d0 = puck y toward the goal I shoot at
-	lda.w #blueline+goalline		; swing time = (blueline+goalline - y)/8, max 20
+	lda.w #Blueline+goalline		; swing time = (Blueline+goalline - y)/8, max 20
 	sec								; distance to the goal line
 	sbc.b d0
 	lsr a

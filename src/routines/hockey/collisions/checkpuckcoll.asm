@@ -3,7 +3,7 @@ checkpuckcoll:						;Puck collision with the players near it
 									;the puck and runs checkpuckcoll_ccx on each object within 22 in y:
 									;stick (puckstick), body (puckbody) or goalie (puckgoalie). No
 									;collision while the puck's feet are in the air.
-	lda.w Zpos+puckobj				; puck feet in the air (Zpos > 16): no collision
+	lda.w Zpos+puckscnum				; puck feet in the air (Zpos > 16): no collision
 	sec
 	sbc.w #$0010
 	beq .setup						; Zpos = 16: still low enough
@@ -13,7 +13,7 @@ checkpuckcoll:						;Puck collision with the players near it
 .neg:								; negative result
 	bvs .rtl						; overflow: really positive, Zpos > 16
 .setup:								; puck is low: walk the OOlist up and down from it
-	lda.w OOlistpos+puckobj			; Y = puck position in OOlist
+	lda.w OOlistpos+puckscnum			; Y = puck position in OOlist
 	sta.b d1
 .up:								; loop: next higher object in the OOlist
 	ldy.b d1
@@ -39,7 +39,7 @@ checkpuckcoll:						;Puck collision with the players near it
 	inc.b d1						; next object up
 	bra .up
 .cl:								; walk down the OOlist from the puck
-	lda.w OOlistpos+puckobj
+	lda.w OOlistpos+puckscnum
 	beq .rtl						; puck is the lowest object: done
 	sta.b d1
 .dn:								; loop: next lower object in the OOlist

@@ -6,7 +6,7 @@ checkwindow:						;Move the view so the screen follows the puck
 	lda.w sflags					; sfslock: use xc1/yc1
 	bit.w #sfslock
 	bne .dd							; locked: keep the old target
-	ldx.w #puckobj					; follow the puck, or its carrier with yleader
+	ldx.w #puckscnum					; follow the puck, or its carrier with yleader
 	lda.w puckc						; puck carrier
 	bmi .ok							; loose puck: follow the puck
 	asl a							; carrier's object offset

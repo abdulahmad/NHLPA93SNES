@@ -9,11 +9,11 @@ findpc:								;When and where the puck will cross each goal line
 	cpx.w #$0014
 	bne .save
 	ldx.b xsave						; restore X
-	lda.w #blueline+goalline		; top goal line (blueline+goalline)
+	lda.w #Blueline+goalline		; top goal line (Blueline+goalline)
 	sta.b d4						; y of the goal line
 	ldy.w #$0000					; result slot 0
 	jsl.l findpc_calc				; time and place there
-	lda.w #-(blueline+goalline)		; bottom goal line
+	lda.w #-(Blueline+goalline)		; bottom goal line
 	sta.b d4						; y of the other goal line
 	ldy.w #$0004					; result slot 4
 	jsl.l findpc_calc				; time and place there

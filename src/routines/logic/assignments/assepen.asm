@@ -4,7 +4,7 @@ assepen:							;Assignment: player X leaves the penalty box and comes onto the i
 	beq .nna						; not new
 	and.w #~pfna&$FFFF				; clear the new flag
 	sta.w pflags,x
-;first time: leave the box (PBnum -= 1 for this team), place at the sideline x, y = -60/+60, and climb out
+;first time: leave the box (PBnum -= 1 for this team), place at the Sideline x, y = -60/+60, and climb out
 	ldy.w #$0010					; $10 for team 0
 	lda.w pfteam,x
 	beq .1							; team 0
@@ -26,7 +26,7 @@ assepen:							;Assignment: player X leaves the penalty box and comes onto the i
 .ypos:								; y of the box slot
 	lda.b d0						; y
 	sta.w Ypos,x
-	lda.w #sideline					; x = the sideline
+	lda.w #Sideline					; x = the Sideline
 	sta.w Xpos,x
 	lda.w #$0002					; facing
 	sta.w facedir,x

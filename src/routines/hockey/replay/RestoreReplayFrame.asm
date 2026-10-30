@@ -111,7 +111,7 @@ RestoreReplayFrame:					;Put one recorded replay frame back into the
 	beq .pz
 	ora.w #$FF00
 .pz:								; puck shadow height is zero: skip it
-	sta.w Zpos+puckobj				; store it
+	sta.w Zpos+puckscnum				; store it
 	lda.b [a0]						; puck shadow height
 	inc.b a0
 	and.w #$00FF
@@ -119,7 +119,7 @@ RestoreReplayFrame:					;Put one recorded replay frame back into the
 	beq .sz
 	ora.w #$FF00
 .sz:								; no sound effect to restore
-	sta.w Zpos+puckobj+2			; store it
+	sta.w Zpos+puckscnum+2			; store it
 	lda.b [a0]						; last sound effect
 	inc.b a0
 	and.w #$00FF

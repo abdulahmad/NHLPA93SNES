@@ -44,7 +44,7 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	lda.w gmode						; highlight, clock stopped, the puck fighting
 	and.w #gmhl						; highlight bit
 	ora.w gmclock					; or the clock stopped
-	ora.w pf2fight+puckobj			; or the puck fighting
+	ora.w pf2fight+puckscnum			; or the puck fighting
 	beq .go
 	jmp.w .rtl
 .go:								; keep X and save the registers
@@ -68,8 +68,8 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	cpx.w #$0010
 	bne .savea
 	ldx.b xsave						; restore X
-	ldy.w assnum+puckobj			; puck assignment pfaceoff: no fight
-	lda.w asslist+puckobj*4,y		; assignment of the puck
+	ldy.w assnum+puckscnum			; puck assignment pfaceoff: no fight
+	lda.w asslist+puckscnum*4,y		; assignment of the puck
 	and.w #$00FF
 	cmp.w #pfaceoff					; face off?
 	bne .nofo
@@ -173,9 +173,9 @@ checkfight:							;Look for the start of a fight between a2 and X after a hard h
 	inx
 	dec.b d1
 	bpl .0
-	ldx.w #puckobj					; the puck: pf2fight, pnothing
+	ldx.w #puckscnum					; the puck: pf2fight, pnothing
 	lda.w #$0001
-	sta.w pf2fight+puckobj			; puck fighting
+	sta.w pf2fight+puckscnum			; puck fighting
 	lda.w #pnothing
 	sta.b d0						; puck does nothing
 	jsl.l assinsert					; insert assignment d0

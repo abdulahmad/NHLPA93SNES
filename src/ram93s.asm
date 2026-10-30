@@ -250,20 +250,20 @@ pldpass		=	7					; high nibble passing passacc, low nibble aggression aggress
 pldsize		=	8
 
 ;joystick buttons (93S: SNES pad bits)
+ubut		=	$0800				; dpad up (SNES mask; 93G holds the bit number)
+dbut		=	$0400				; dpad down (SNES mask; 93G holds the bit number)
+lbut		=	$0200				; dpad left (SNES mask; 93G holds the bit number)
+rbut	=	$0100				; dpad right (SNES mask; 93G holds the bit number)
 bbut		=	$8000				; B: pass / switch player
 ; joypad
 cbut	=	$0080					; shoot / check button in d2
 abut		=	$4000				; Y: hold / line change
 ; joypad bits (SNES)
-JOYSTART	=	$1000				; Start
+sbut	=	$1000				; Start (SNES mask; 93G sbut is a bit number)
+osflag	=	$4E20				; find3d: d1 for a point off the screen (20000)
 JOYR		=	$0010				; R shoulder
 JOYL		=	$0020				; L shoulder
-JOYRIGHT	=	$0100				; dpad right
-JOYLEFT		=	$0200				; dpad left
-JOYDOWN		=	$0400				; dpad down
-JOYUP		=	$0800				; dpad up
-JOYA		=	$0080				; A button
-osflag	=	$4E20				; find3d: d1 for a point off the screen (20000)
+JOYA		=	$0080				; A button (same bit as cbut; the menus test it as A)
 
 ;sfx / song numbers (93S: SNES sfx and song numbers, SPC700 addresses)
 SngGoal			=	4				;home goal (game sample set)
@@ -321,13 +321,15 @@ SFXcrowd		=	$80				; +1-7: crowd noise level, loops (updatesound)
 SFXcrowdoff		=	$88				; crowd noise off
 
 ;rink distances
-goalline	=	$B0					; blueline+goalline = $108
+goalline	=	$B0					; Blueline+goalline = $108
 ; rink
-blueline	=	$58
-sideline	=	$88					; distance from center to side boards
+Blueline	=	$58
+Sideline	=	$88					; distance from center to side boards
 
 ;memory layout, replay
+replaystart	=	$7E8174		; first replay frame record
 replaysize		=	$71				; bytes per replay frame record
+replayend		=	$7EFF41		; replay buffer end: adda43 wraps to replaystart
 Sortobjs	=	16					; number of sorted graphics objects
 
 ;SNES port: the 68k registers in direct page (a0-a4, d0-d7: 4 bytes each, word code uses the low word), scratch and math operands
@@ -408,6 +410,8 @@ textsave		=	$7FF800			; copy of textmap while the pause screen is up
 ;face off drop, replay record, vblank and frame timing, menu repeat
 fodropx				=	$0136		; faceoff box x (pixels)
 fodropy				=	$0138		; faceoff box y
+recbpr		=	$0495		;long pointer to the next replay frame record (wraps at replayend
+									;to replaystart)
 VBint		=	$14					; address (bank $80) of the vblank handler VBjsr jumps to
 Vcount		=	$00					; 32-bit frame counter, +1 per vblank in vb2_main. Vcount (word there)
 OldVcount			=	$0427		; Vcount at the last game frame (d7 = Vcount - OldVcount)
@@ -423,15 +427,11 @@ impactstep		=	$E2				; d7*2: impact decay this game frame (game loop)
 velstep			=	$E4				; d7*16: velocity to position scale this game frame
 gravstep		=	$E6				; d7*96: gravity this game frame
 d7x1024			=	$E8				; d7*1024, set with the other time steps (no reader found yet)
-ReplayBufferPtr		=	$0495		;long pointer to the next replay frame record (wraps at ReplayBufferEnd
-									;to ReplayBufferStart)
 vcountmark			=	$08FB		;32-bit Vcount snapshot: elapsed time base (setupice sets it 2*$10000
 									;frames back)
 lastframevc			=	$08DB		; Vcount at the last replay frame shown (ReplayMode, bank $8F); not read
 hlsavebuf		=	$7E7E74			;StartHL2: the game state (gmode-1 .. ScoreSumbytes) while a highlight
 									;plays. ReplayStart role
-ReplayBufferEnd		=	$7EFF41		; replay buffer end: adda43 wraps to ReplayBufferStart
-ReplayBufferStart	=	$7E8174		; first replay frame record
 
 ;sort objects (SortCords). 93S: structure of arrays, one word per object, 16 objects ($20 bytes per field); index with X/Y = SCnum*2; the byte fields (pnum ... handed) are each a word array
 Xpos		=	$08FF				; Xpos (integer part)
@@ -509,6 +509,13 @@ GGSleft		=	aggress				; goalie glove save left (92 name), puckgoalie
 fighting	=	$10DF				; fighting rating (fight strength and fight odds; 93 $74)
 checking	=	$10FF				; checking rating (check odds; 93 $75)
 handed		=	$111F				; nonzero: left handed (pldcheck bit 0; 0 = right handed: +3 faceoff)
+puckscnum			=	$1C				; object index*2 of the puck (93G puckscnum is the index, 14)
+puckx	=	Xpos+puckscnum
+puckvx	=	Xvel+puckscnum
+pucky	=	Ypos+puckscnum
+puckvy	=	Yvel+puckscnum
+puckvz	=	Zvel+puckscnum
+puckc	=	newpos+puckscnum			; SCnum of the puck carrier, negative = loose. puckc (puck newpos)
 Ylist		=	$121F				; y of each sort object
 OOlistpos	=	$123F				; position of each object in OOlist
 OOlist		=	$125F				; 16 bytes: object order list, bottom of the screen last
@@ -523,14 +530,7 @@ temp2b		=	$0CFF				;temp2+1 (low byte; the port also uses it where uses temp2 as
 facefrac	=	$0DDF				;turn fraction of facedir: doplayeracc adds the turn rate here and carries
 									;into facedir. facedir.l low word
 pspeed		=	$126F				; |Xvel|+|Yvel| after a burst (SNES only, read by the hit code)
-puckobj			=	$1C				; object index of the puck
 netobj1		=	$18					; object index*2 of goal net 1 (y +268)
-puckc	=	newpos+puckobj			; SCnum of the puck carrier, negative = loose. puckc (puck newpos)
-puckvz	=	Zvel+puckobj
-puckvy	=	Yvel+puckobj
-pucky	=	Ypos+puckobj
-puckvx	=	Xvel+puckobj
-puckx	=	Xpos+puckobj
 netobj2		=	$1A					; object index*2 of goal net 2 (y -268)
 ; attribute bits
 attrxflip	=	$0800				; x flip

@@ -4,7 +4,7 @@ wallcollb:							;Object X hits a wall: the puck may go over the glass and out o
 	beq .puck
 	jmp.w wallcoll
 .puck:								; puck above the glass?
-	lda.w Zpos+puckobj
+	lda.w Zpos+puckscnum
 	sec
 	sbc.w #$0020					; Zpos > 32: over
 	beq .z1
@@ -14,7 +14,7 @@ wallcollb:							;Object X hits a wall: the puck may go over the glass and out o
 .neg:								; signed compare: overflow flag corrects the sign
 	bvs .0
 .z1:								; puck low enough to hit the wall
-	lda.w Zpos+puckobj
+	lda.w Zpos+puckscnum
 	cmp.w #$0016					; Zpos <= 21: wallcoll
 	bcs .y280
 	jmp.w wallcoll
@@ -82,13 +82,13 @@ wallcollb:							;Object X hits a wall: the puck may go over the glass and out o
 .0:									;puck out of play
 	lda.w #sfslock					; sfslock; puck pfnc
 	tsb.w sflags
-	sta.w pfnc+puckobj
+	sta.w pfnc+puckscnum
 	lda.w pucky						; bottom: y flip
 	bpl .1
 	lda.w #$8000
-	tsb.w attribute+puckobj
+	tsb.w attribute+puckscnum
 .1:									; shadow frame 0; the clock stopped?
-	stz.w frame+puckobj+2			; shadow frame 0
+	stz.w frame+puckscnum+2			; shadow frame 0
 	lda.w gmclock					; clock stopped
 	bne .rtl
 	lda.w ltplayer					; penalty 6 for the last touch player

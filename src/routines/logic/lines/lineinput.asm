@@ -30,7 +30,7 @@ lineinput:							;Pad input while the line change box is open: choose a line, or
 	jml.l lcfound					; d2 = choice
 .a:									; choice 2
 	inc.b d2						; choice 2
-	bit.w #JOYA						; A: choice 2
+	bit.w #cbut						; A (cbut): choice 2
 	beq .dpad						; not pressed
 	jml.l lcfound					; d2 = choice
 .dpad:								; joystick controlled, not locked?

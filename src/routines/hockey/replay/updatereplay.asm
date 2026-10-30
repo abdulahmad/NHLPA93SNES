@@ -7,28 +7,28 @@ updatereplay:						;Save this frame into the replay buffer
 	lda.w sflags					; state flags
 	bit.w #sf2drec					; sf2drec: keep overwriting the same frame
 	bne .frame
-	lda.w ReplayBufferPtr			; next record
+	lda.w recbpr			; next record
 	clc								; step the pointer by one record
 	adc.w #replaysize
-	sta.w ReplayBufferPtr
+	sta.w recbpr
 	bcc .wrap
-	inc.w ReplayBufferPtr+2
+	inc.w recbpr+2
 .wrap:								; wrap the buffer pointer if at the end
-	cmp.w #ReplayBufferEnd&$FFFF	; end of the buffer reached?
+	cmp.w #replayend&$FFFF	; end of the buffer reached?
 	bne .frame
-	lda.w ReplayBufferPtr+2
-	cmp.w #ReplayBufferEnd>>16
+	lda.w recbpr+2
+	cmp.w #replayend>>16
 	bne .frame
 	lda.w #sfwrap					; wrapped: sfwrap, back to the start
 	tsb.w sflags
-	lda.w #ReplayBufferStart&$FFFF
-	sta.w ReplayBufferPtr
-	lda.w #ReplayBufferStart>>16
-	sta.w ReplayBufferPtr+2
+	lda.w #replaystart&$FFFF
+	sta.w recbpr
+	lda.w #replaystart>>16
+	sta.w recbpr+2
 .frame:								; a0 = current record
-	lda.w ReplayBufferPtr			; a0 = current record
+	lda.w recbpr			; a0 = current record
 	sta.b a0
-	lda.w ReplayBufferPtr+2
+	lda.w recbpr+2
 	sta.b a0+2
 	lda.w #$000F					; 16 sort objects
 	sta.b d2
@@ -100,11 +100,11 @@ updatereplay:						;Save this frame into the replay buffer
 	inx
 	dec.b d2
 	bpl .pl
-	lda.w Zpos+puckobj				;puck and shadow height, lastsfx, d7, PadControlBits, Crowdframe,
+	lda.w Zpos+puckscnum				;puck and shadow height, lastsfx, d7, PadControlBits, Crowdframe,
 									;glovecords, PBnum, Hpos, Vpos
 	sta.b [a0]						; puck height
 	inc.b a0
-	lda.w Zpos+puckobj+2			; puck shadow height
+	lda.w Zpos+puckscnum+2			; puck shadow height
 	sta.b [a0]
 	inc.b a0
 	lda.w lastsfx					; last sound effect

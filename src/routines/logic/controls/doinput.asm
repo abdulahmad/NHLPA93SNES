@@ -2,7 +2,7 @@ doinput:							;Pad input for player X. d0 = pad directions, d1 = new buttons, d
 									;controller
 	jsl.l setpads					; setpads; Start: pause
 	lda.b d1						; new buttons
-	bit.w #JOYSTART					; Start pressed?
+	bit.w #sbut					; Start pressed?
 	beq .0
 	lda.b d4						; controller number
 	bne .pause2

@@ -1,5 +1,5 @@
 PauseResume:						;Pause menu Resume Game: A or Start leaves
 	lda.b d1
-	bit.w #JOYSTART|cbut
+	bit.w #sbut|cbut
 	bne PauseLeave
 	jmp.w PauseMenu_gj

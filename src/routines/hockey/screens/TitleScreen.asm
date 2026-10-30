@@ -215,7 +215,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 .nopause:							; no pause: check for Start
 	lda.w padnew1					; Start pressed?
 	ora.w padnew1+2
-	bit.w #JOYSTART
+	bit.w #sbut
 	bne .exit
 	lda.b d0
 	cmp.b d1
@@ -241,7 +241,7 @@ TitleScreen:						;The title screen with its music and the scrolling credits; St
 .top6s:								; check for Start on either pad
 	lda.w padnew1
 	ora.w padnew1+2
-	bit.w #JOYSTART
+	bit.w #sbut
 	bne .exit
 	lda.b Vcount					; page time up?
 	cmp.b d2

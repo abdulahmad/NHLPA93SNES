@@ -96,7 +96,7 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	ora.w padnew1+2
 	beq .pad
 	sta.b d1
-	bit.w #JOYSTART					; Start: done
+	bit.w #sbut					; Start: done
 	beq .keys
 	jmp.w .exit
 .keys:								; read the pad buttons
@@ -108,19 +108,19 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 	inc.b d0
 	bit.w #JOYA						; A: right
 	bne .pwl
-	bit.w #JOYRIGHT					; right: next character
+	bit.w #rbut					; right: next character
 	bne .pws
 	stz.b d0
 	dec.b d0
-	bit.w #JOYLEFT					; left
+	bit.w #lbut					; left
 	bne .pws
 	ldy.w #6
 	sty.b d0
-	bit.w #JOYDOWN					; down: 6 on
+	bit.w #dbut					; down: 6 on
 	bne .pws
 	ldy.w #-6
 	sty.b d0
-	bit.w #JOYUP					; up: 6 back
+	bit.w #ubut					; up: 6 back
 	bne .pws
 	bra .input
 .pwl:								;Y/A: cursor d4 left/right

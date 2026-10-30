@@ -34,7 +34,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	sta.b d0
 	jsl.l waitxsr					; wait d0 frames or a button
 	lda.b d1
-	bit.w #JOYSTART
+	bit.w #sbut
 	beq .play
 	jmp.w .nhl1
 .play:								; blank the screen and reset the sound queue
@@ -235,7 +235,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 .1:									; check both pads: Start or A ends it
 	jsl.l Readjoy12					; Start or A ends it
 	lda.b d1
-	bit.w #JOYSTART|JOYA
+	bit.w #sbut|JOYA
 	beq .0
 	lda.w tmscore					; tied: random goal
 	cmp.w tmscore+2
@@ -301,7 +301,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	lda.w tmscore+2
 	sta.w gss2,y
 	lda.b d1						; Start: skip
-	bit.w #JOYSTART
+	bit.w #sbut
 	beq .stats
 	jmp.w .nhl1
 .stats:								; blank the screen, restore the game state
@@ -375,7 +375,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	sta.b d0
 	jsl.l waitxsr					; wait d0 frames or a button
 	lda.b d1
-	bit.w #JOYSTART
+	bit.w #sbut
 	beq .exit
 .exit2:								; exit with the button flag set
 	lda.w #sf3sbut

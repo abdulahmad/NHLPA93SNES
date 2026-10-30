@@ -11,7 +11,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 .neg:								; signed compare: overflow flag corrects the sign
 	bvs .ex1
 .z:									; the puck only: players use checkgoalp
-	cpx.w #puckobj					; not the puck: checkgoalp
+	cpx.w #puckscnum					; not the puck: checkgoalp
 	beq .puck
 	jmp.w checkgoalp				; else the player version
 .puck:								;puck: inside |dx| <= 16+wcradiusx and |dy| <= 4+wcradiusy?
@@ -82,7 +82,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 .inside:							;inside the goal area now
 	lda.w #$FFFF					; collflag
 	sta.b collflag
-	lda.w OldZpos+puckobj			; height last frame
+	lda.w OldZpos+puckscnum			; height last frame
 	sec
 	sbc.w #$000D					; $0D
 	bmi .neg5
@@ -91,11 +91,11 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 .neg5:								; signed compare: overflow flag corrects the sign
 	bvc .nod
 .over:								;OldZpos >= 13: came over the top
-	lda.w OldZpos+puckobj			; restore the old height
-	sta.w Zpos+puckobj
+	lda.w OldZpos+puckscnum			; restore the old height
+	sta.w Zpos+puckscnum
 	jmp.w .deflectz					; bounce off the top
 .nod:								;pfgoal of the puck = the carrier shot into his own goal
-	stz.w pfgoal+puckobj			; clear pfgoal
+	stz.w pfgoal+puckscnum			; clear pfgoal
 	lda.w puckc						; carrier: loses the puck, nopuck 8
 	bmi .nocon
 	asl a							; carrier player
@@ -116,7 +116,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	lda.b d1
 	bpl .nocon						; puck on the wrong side?
 	lda.w #$0001
-	sta.w pfgoal+puckobj			; own goal by the carrier
+	sta.w pfgoal+puckscnum			; own goal by the carrier
 .nocon:								;d0 = -256 (top entry: +256)
 	lda.w #$FF00					; d1 = (Ypos - OldYpos) >> 8
 	sta.b d0
@@ -217,11 +217,11 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	eor.w #$FFFF					; negate
 	inc a
 	sta.b d0
-	lda.w pfgoal+puckobj			; own goal by the carrier: wallcoll
+	lda.w pfgoal+puckscnum			; own goal by the carrier: wallcoll
 	beq .z13
 	jmp.w wallcoll					; bounce off
 .z13:								;at the crossbar height: off the post
-	lda.w Zpos+puckobj				; puck height
+	lda.w Zpos+puckscnum				; puck height
 	cmp.w #$000D
 	beq .deflectsf					; crossbar height
 	lda.b d4						; mouth = half width - 5
@@ -299,7 +299,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	sta.b d1
 	lda.w puckx						; puck x
 	sec
-	sbc.w OldXpos+puckobj			; minus the old x
+	sbc.w OldXpos+puckscnum			; minus the old x
 	sta.b d2
 	bmi .wc
 	lda.w #$FF00					; other side: -256
