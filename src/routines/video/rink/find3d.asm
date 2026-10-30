@@ -58,6 +58,6 @@ find3d:								;Project a rink position (x, y, z) to screen coordinates; off scr
 	sta.b d1
 	rtl
 .off:								; off screen marker
-	lda.w #OFFSCREEN				; off screen marker
+	lda.w #osflag				; off screen marker
 	sta.b d1
 	rtl

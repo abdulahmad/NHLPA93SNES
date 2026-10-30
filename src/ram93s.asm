@@ -263,7 +263,7 @@ JOYLEFT		=	$0200				; dpad left
 JOYDOWN		=	$0400				; dpad down
 JOYUP		=	$0800				; dpad up
 JOYA		=	$0080				; A button
-OFFSCREEN	=	$4E20				; find3d: d1 for a point off the screen (20000)
+osflag	=	$4E20				; find3d: d1 for a point off the screen (20000)
 
 ;sfx / song numbers (93S: SNES sfx and song numbers, SPC700 addresses)
 SngGoal			=	4				;home goal (game sample set)
