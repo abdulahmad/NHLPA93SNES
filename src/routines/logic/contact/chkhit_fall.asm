@@ -1,4 +1,4 @@
-FightFall:							;Player X lost the fight: the other player gets a fighting penalty and X
+chkhit_fall:							;Player X lost the fight: the other player gets a fighting penalty and X
 									;may be injured
 	lda.b a1+2						; push a1
 	pha

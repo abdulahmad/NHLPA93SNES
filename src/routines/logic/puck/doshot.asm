@@ -81,21 +81,21 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	txa
 	lsr a
 	sta.w lastplayer
-;d1 = target goal y; (d0,d2) = x and z offsets for this direction from shotsets
+;d1 = target goal y; (d0,d2) = x and z offsets for this direction from doshot_shotsets
 	lda.w #Blueline+goalline
 	sta.b d1
 	lda.w pfgoal,x
 	bne .0
 	lda.w #-(Blueline+goalline)
 	sta.b d1
-.0:									;d0/d1 = shotsets[passdir] - puck, d2 = height; d3 = distance to the goal
+.0:									;d0/d1 = doshot_shotsets[passdir] - puck, d2 = height; d3 = distance to the goal
 	lda.w passdir
 	asl a
 	asl a
 	tay
-	lda.w #shotsets
+	lda.w #doshot_shotsets
 	sta.b a0
-	lda.w #shotsets>>16
+	lda.w #doshot_shotsets>>16
 	sta.b a0+2
 	lda.b [a0],y
 	sec
