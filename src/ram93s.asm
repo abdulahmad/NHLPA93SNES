@@ -287,7 +287,7 @@ cont1team			=	$1296		; team on controller 1 (0 none, 1 home, 2 away)
 cont2team			=	$1298
 pojoy				=	$044F		; playoff joystick indicator (2+: two players). POJoy
 
-;sfx / song numbers (93S: SNES sfx and song numbers)
+;sound: songs, sound effects and the sound driver (93S: SNES song and sfx numbers, SPC700 driver)
 ; The songs, numbered as the game numbers them: the cue number on port 0 of the sound program (92 and 93G
 ; names). StartSng<name> sends it (songs 4-8 through MusicCue, 1-3 and 9 on APUIO0). cursong holds the
 ; starter's own number 1-9 (Goal 1 ... PO 9), not the cue.
@@ -306,6 +306,30 @@ SngPeriodStartLen	=	$01CE
 SngLateGameLen	=	$0474
 SngPPLen		=	$022E
 SngFaceoffLen	=	$041A
+; The values cursong takes: the starters' own numbers (the cue of the same song is the Sng* value in the song group).
+CurSngGoal		=	1
+CurSngPeriodStart	=	2
+CurSngLateGame	=	3
+CurSngPP		=	4
+CurSngFaceoff	=	5
+CurSngTitle		=	6
+CurSngEOP		=	7
+CurSngEOG		=	8
+CurSngPO		=	9
+; song state: the song playing and the music cues
+cursong			=	$1651			;song playing on the SPC (0 = none); set by the song starters in banks
+									;$86/$89
+goalcue				=	$0429		;nonzero: home team just scored (lead 0-2): assfaceoff plays the goal
+									;music cue at the next faceoff
+percue				=	$042B		; nonzero: period just started: assfaceoff plays the period music cue
+p3cue				=	$042D		;third period: frames until StartSngLateGame plays its music cue (set by
+									;StartPer, 0 = done)
+midpercue			=	$042F		;gameclock value (half the period) at which assfaceoff plays the
+									;mid-period music cue (0 = done)
+cuetimer			=	$04A9		; frames left of a music cue; sfx are dropped while it runs
+; sndbank: the sample set loaded into the SPC700 (1 = the in-game sounds, 2 = the boot set)
+SoundBankGame	=	1
+SoundBankBoot	=	2
 ; sound effects
 SFXstop			=	$9C				; +0/1: skate stop (dostop, controlled player)
 SFXstop2		=	$9D				; skate stop, second sound (SFXstop+1)
@@ -336,6 +360,22 @@ SFXcrowdboo		=	$8B				; visitor won the fight (93 song $C)
 SFXoooh2		=	$8C				; hard shot saved by the visiting goalie, an injury (93 $D)
 SFXcrowd		=	$80				; +1-7: crowd noise level, loops (updatesound)
 SFXcrowdoff		=	$88				; crowd noise off
+; sound effect state
+sfxmutetime			=	$04A7		;Vcount when sound effects were cut off: sfx are dropped for 180 frames
+									;after it
+crowdvol	=	$1646				; crowd noise volume last sent to the sound driver (updatesound)
+lastsfx				=	$017F		; last sound effect requested
+; driver interface (93S: SPC700 command queue and uploads)
+sndptr		=	$1A					; long pointer to the SPC upload stream ($1A-$1C, bank in $1C)
+sndqin		=	$1D					;sound command queue write index (bank $82 sfx queue at sndqueue, 8 words)
+sndqout		=	$1F					; sound command queue read index
+sndlock		=	$21					;nonzero while main code changes the sound command queue (bank $82); set
+									;by Start during sound init
+sndqueue	=	$23					; sound command queue (8 words)
+sndbank			=	$164F			;sound set loaded into the SPC (1 = the in-game sounds); sfx are queued
+									;only for it
+sndsettle			=	$049F		;set to 10 after the in-game sample upload: p_music_vblank sends no
+									;commands until it counts down
 
 ;rink distances
 goalline	=	$B0					; Blueline+goalline = $108
@@ -870,42 +910,3 @@ tpassbits	=	$1634				; 8 words: passbits before all games are resolved (EncodePW
 PassWord	=	$1610				; 16 password characters (indexes into PasstoText; bit 7 hides it)
 PWrange		=	30					; characters in PasstoText
 pwlength	=	16					; password characters
-
-;sound driver (93S: SPC700 command queue, uploads and music cues)
-sndptr		=	$1A					; long pointer to the SPC upload stream ($1A-$1C, bank in $1C)
-sndqin		=	$1D					;sound command queue write index (bank $82 sfx queue at sndqueue, 8 words)
-sndqout		=	$1F					; sound command queue read index
-sndlock		=	$21					;nonzero while main code changes the sound command queue (bank $82); set
-									;by Start during sound init
-sndqueue	=	$23					; sound command queue (8 words)
-goalcue				=	$0429		;nonzero: home team just scored (lead 0-2): assfaceoff plays the goal
-									;music cue at the next faceoff
-percue				=	$042B		; nonzero: period just started: assfaceoff plays the period music cue
-p3cue				=	$042D		;third period: frames until StartSngLateGame plays its music cue (set by
-									;StartPer, 0 = done)
-midpercue			=	$042F		;gameclock value (half the period) at which assfaceoff plays the
-									;mid-period music cue (0 = done)
-sfxmutetime			=	$04A7		;Vcount when sound effects were cut off: sfx are dropped for 180 frames
-									;after it
-sndsettle			=	$049F		;set to 10 after the in-game sample upload: p_music_vblank sends no
-									;commands until it counts down
-cuetimer			=	$04A9		; frames left of a music cue; sfx are dropped while it runs
-crowdvol	=	$1646				; crowd noise volume last sent to the sound driver (updatesound)
-lastsfx				=	$017F		; last sound effect requested
-sndbank			=	$164F			;sound set loaded into the SPC (1 = the in-game sounds); sfx are queued
-									;only for it
-cursong			=	$1651			;song playing on the SPC (0 = none); set by the song starters in banks
-									;$86/$89
-; sndbank: the sample set loaded into the SPC700 (1 = the in-game sounds, 2 = the boot set)
-SoundBankGame	=	1
-SoundBankBoot	=	2
-; The values cursong takes: the starters' own numbers (the cue of the same song is the Sng* value in the song group).
-CurSngGoal		=	1
-CurSngPeriodStart	=	2
-CurSngLateGame	=	3
-CurSngPP		=	4
-CurSngFaceoff	=	5
-CurSngTitle		=	6
-CurSngEOP		=	7
-CurSngEOG		=	8
-CurSngPO		=	9
