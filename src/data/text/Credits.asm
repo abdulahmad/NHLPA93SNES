@@ -2,55 +2,55 @@ Credits:							;the title screen credit lines (length word, text); $FE ends the 
 									;page, $FF a page, an empty string the list
 	%String("$ 1992 Electronic Arts")
 	%String("Licensed by Nintendo")
-	%StringCC($FE)
+	%StringCC(CC_LastPage)
 
 	%String("Design adapted by")
 	%String("Michael Brook")
 	%String("Scott Orr")
 	%String("Richard Hilleman")
-	%StringCC($FF)
+	%StringCC(CC_PageEnd)
 
 	%String("Technical Design by")
 	%String("Jim Simmons")
-	%StringCC($FF)
+	%StringCC(CC_PageEnd)
 
 	%String("Programmed by")
 	%String("Park Place Productions")
 	%String("William Robinson")
-	%StringCC($FF)
+	%StringCC(CC_PageEnd)
 
 	%String("Graphics by")
 	%String("George Simmons")
 	%String("Brian O'Hara")
 	%String("Curt Toumanian")
-	%StringCC($FF)
+	%StringCC(CC_PageEnd)
 
 	%String("Music and Sound by")
 	%String("Rob Hubbard")
-	%StringCC($FF)
+	%StringCC(CC_PageEnd)
 
 	%String("Produced by")
 	%String("Michael Brook")
-	%StringCC($FF)
+	%StringCC(CC_PageEnd)
 
 	%String("Assistant Producer")
 	%String("Robert Zalot")
-	%StringCC($FF)
+	%StringCC(CC_PageEnd)
 
 	%String("Technical Directors")
 	%String("Scott Cronce")
 	%String("Tom DeBry")
-	%StringCC($FF)
+	%StringCC(CC_PageEnd)
 
 	%String("Testing by")
 	%String("Yun Shin")
 	%String("Steve Matulac")
 	%String("Mike Rubinelli")
-	%StringCC($FF)
+	%StringCC(CC_PageEnd)
 
 	%String("Player Ratings by")
 	%String("Igor Kuperman")
-	%StringCC($FF)
+	%StringCC(CC_PageEnd)
 
 	%String("Special Thanks to")
 	%String("Bob Borgen")
@@ -58,7 +58,7 @@ Credits:							;the title screen credit lines (length word, text); $FE ends the 
 	%String("Ian Pulver")
 	%String("Rob Blake")
 	%String("John McIntyre")
-	%StringCC($FF)
+	%StringCC(CC_PageEnd)
 	dw 2							; empty: end of the credits
-	%StringCC($FF)
-	%StringCC($FF)
+	%StringCC(CC_PageEnd)
+	%StringCC(CC_PageEnd)

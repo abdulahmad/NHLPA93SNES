@@ -461,6 +461,11 @@ CC_Font2Pri		=	$BE				; font 2, priority set
 CC_Font1Pal1	=	$EF				; font 1, palette 1
 CC_Font1Pal3	=	$CF				; font 1, palette 3
 CC_Font1Pal2Pri	=	$9F				; font 1, palette 2, priority set
+; whole-String markers (a String of just this byte): the list / page readers test it
+CC_ListEnd		=	$FF				; ends a label list (ScoutLabels)
+CC_PageEnd		=	$FF				; ends a credits page (Credits)
+CC_LastPage		=	$FE				; ends the copyright page (Credits)
+CC_End			=	0				; ends a line list (PasswordText, setoptions)
 charofs			=	$1BCD			;added to every text map tile written by the game code ($FF00 at boot, 0
 									;in the game screens)
 charofs2		=	$1BCF			;second tile offset: cleared with charofs by the screen setups (the team
