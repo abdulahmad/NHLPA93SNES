@@ -1,5 +1,5 @@
 ReadJoy:							;Read one pad: d1 = buttons held, d0 = its direction
-	lda.w joypad1,x					; buttons
+	lda.w PadRaw1,x					; buttons
 	sta.b d0+2
 	sta.b d1						; buttons held
 	xba								; r/l/d/u bits

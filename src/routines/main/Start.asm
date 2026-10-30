@@ -18,7 +18,7 @@ Start:								;Reset entry and cold start: switch to native mode, clear RAM, set
 	stz.b Vcount,x
 	inx
 	inx
-	cpx.w #DPCLEAREND
+	cpx.w #varend
 	bcc .clrdp
 	lda.w #vb2_blank
 	sta.b VBint
