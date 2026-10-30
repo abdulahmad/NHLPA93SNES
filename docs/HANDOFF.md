@@ -53,7 +53,7 @@ Working rules learned: do NOT run many parallel agents (12 comment workers plus 
 - playoffseats: blank line after every 8 trees, no per-row `; tree N`, header wording from 93G.
 - `cd0` has 93G's explanation and the blank line between the 4 crowd blocks; `Credits` has a blank line between pages.
 93G got the matching comment sync (same wording in `teamdata93.asm`; its playoffseats header said 32 trees, there are 34).
-Left alone on purpose: label case differences against 93G (`maketree` / `MakeTree`, `Crowdlevel` / `Crowdlevel`, ...): 92 itself writes both and SNASM68K ignores case, so the SNES kept the dominant spelling per name.
+Left alone on purpose: label case differences against 93G (`MakeTree` / `MakeTree`, `Crowdlevel` / `Crowdlevel`, ...): 92 itself writes both and SNASM68K ignores case, so the SNES kept the dominant spelling per name.
 
 Table sweep (same day, branch `align-93g-tables`, build MATCH): `Penaltylist` data got 93G's `ttmm` notes and the "String with no text" notes; `PAttribColumns` / `GAttribColumns` lost the repeated `bit mask, rating column` comment and got 93G's `status / energy / handed / weight / fighting / rating` notes plus a format header; `PlayoffTreeSetup` has one `dw` per level, `16+8`-style team counts and a blank line between levels; the SPF equates in `frames93s.asm` carry 93G's descriptions and group breaks; comments spell "color" as 93G does; stale `data/` and `.map.jim` mentions in `BigFontTiles` fixed. Checked and left alone: `ScoutingReportText` (incbin in both games), the SPA table layout (`.0-X_table`, direction notes; the Studio parser reads it), sound and graphics file layout (one file per block here by design), `linelist` texts (the SNES says `Pw1`/`Pw2`, the ROM bytes differ from 93G's `PP1`/`PP2`).
 

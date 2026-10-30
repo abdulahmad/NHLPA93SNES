@@ -46,7 +46,7 @@ assfwatch:							;Assignment: a player watching a fight skates to a spot near it
 	lda.b mulres+2
 	adc.b d0+2
 	sta.b d0+2
-	jsl.l sroot						; distance to the fight
+	jsl.l Sroot						; distance to the fight
 	lda.b d0
 	bne .d							; avoid dividing by zero
 	lda.w #$0001

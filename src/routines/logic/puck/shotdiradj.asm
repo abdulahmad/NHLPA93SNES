@@ -74,7 +74,7 @@ shotdiradj:							;Aim a computer shot at the open side when the goalie covers t
 	lda.b mulres+2
 	adc.b d0+2
 	sta.b d0+2
-	jsl.l sroot						; distance to the goalie
+	jsl.l Sroot						; distance to the goalie
 	lda.b d0
 	sta.b d2						; d2 = distance
 	pla

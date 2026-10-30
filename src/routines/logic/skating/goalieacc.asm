@@ -11,7 +11,7 @@ goalieacc:							;The goalie skates in direction d0, turning one step toward it
 	lda.w Xvel,x					; moving?
 	ora.w Yvel,x					; either axis
 	beq .cgl						; standing: ready stance
-	jmp.w StopNA					; moving: slow down
+	jmp.w stopna					; moving: slow down
 .cgl:								;no direction: ready stance unless an animation is in progress
 	lda.w pf2aip,x
 	bne .rts						; animation in progress

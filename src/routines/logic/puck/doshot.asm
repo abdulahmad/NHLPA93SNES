@@ -129,7 +129,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	lda.b mulres+2
 	adc.b d0+2
 	sta.b d0+2
-	jsl.l sroot
+	jsl.l Sroot
 	bne .1
 	inc a
 .1:									; keep the shot distance

@@ -90,7 +90,7 @@ checkgoalp:							;Player X runs into the goal a2
 	lda.b d0+2
 	adc.b mulres+2
 	sta.b d0+2
-	jsl.l sroot						; length of the normal
+	jsl.l Sroot						; length of the normal
 	inc a							; plus one
 	sta.b d2
 	sta.b mula						; d2 = length

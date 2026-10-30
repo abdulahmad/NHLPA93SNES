@@ -27,8 +27,8 @@ SPFsweep		=	SPFshoulderr+8	; 257 (sweep check)
 SPFfallback		=	SPFsweep+16		; 273 (falling backward)
 SPFfallfwd		=	SPFfallback+32	; 305 (falling forward)
 SPFduck			=	SPFfallfwd+32	; 337 (ducking)
-SPFhold			=	SPFduck+8		; 345 (holding)
-SPFgloves		=	SPFhold+8		; 353 (gloves on the ice (fights))
+SPFHold			=	SPFduck+8		; 345 (holding)
+SPFgloves		=	SPFHold+8		; 353 (gloves on the ice (fights))
 SPFfight		=	SPFgloves+1		; 354 (fighting)
 SPFfinjury		=	SPFfight+17		; 371 - New (fight injury)
 SPFPen			=	SPFfinjury+6	; 377 (frames used by the wall jump animations)
@@ -725,14 +725,14 @@ SPAHold_table:						;table of the animation above: direction offsets, flags, fra
 	dw .6-SPAHold_table				; direction 6
 	dw .7-SPAHold_table				; direction 7
 	dw 0							; attributes
-.0:	dw SPFhold,-30					; frame/time list for direction 0
-.1:	dw SPFhold+1,-30				; frame/time list for direction 1
-.2:	dw SPFhold+2,-30				; frame/time list for direction 2
-.3:	dw SPFhold+3,-30				; frame/time list for direction 3
-.4:	dw SPFhold+4,-30				; frame/time list for direction 4
-.5:	dw SPFhold+5,-30				; frame/time list for direction 5
-.6:	dw SPFhold+6,-30				; frame/time list for direction 6
-.7:	dw SPFhold+7,-30				; frame/time list for direction 7
+.0:	dw SPFHold,-30					; frame/time list for direction 0
+.1:	dw SPFHold+1,-30				; frame/time list for direction 1
+.2:	dw SPFHold+2,-30				; frame/time list for direction 2
+.3:	dw SPFHold+3,-30				; frame/time list for direction 3
+.4:	dw SPFHold+4,-30				; frame/time list for direction 4
+.5:	dw SPFHold+5,-30				; frame/time list for direction 5
+.6:	dw SPFHold+6,-30				; frame/time list for direction 6
+.7:	dw SPFHold+7,-30				; frame/time list for direction 7
 	assert SPAHold_table-SPAlist == SPAHold
 
 SPAHold2		=	$0C2E			; (93G $CE2)
@@ -746,14 +746,14 @@ SPAHold2_table:						;table of the animation above: direction offsets, flags, fr
 	dw .6-SPAHold2_table			; direction 6
 	dw .7-SPAHold2_table			; direction 7
 	dw 0							; attributes
-.0:	dw SPFhold,-30					; frame/time list for direction 0
-.1:	dw SPFhold+1,-30				; frame/time list for direction 1
-.2:	dw SPFhold+2,-30				; frame/time list for direction 2
-.3:	dw SPFhold+3,-30				; frame/time list for direction 3
-.4:	dw SPFhold+4,-30				; frame/time list for direction 4
-.5:	dw SPFhold+5,-30				; frame/time list for direction 5
-.6:	dw SPFhold+6,-30				; frame/time list for direction 6
-.7:	dw SPFhold+7,-30				; frame/time list for direction 7
+.0:	dw SPFHold,-30					; frame/time list for direction 0
+.1:	dw SPFHold+1,-30				; frame/time list for direction 1
+.2:	dw SPFHold+2,-30				; frame/time list for direction 2
+.3:	dw SPFHold+3,-30				; frame/time list for direction 3
+.4:	dw SPFHold+4,-30				; frame/time list for direction 4
+.5:	dw SPFHold+5,-30				; frame/time list for direction 5
+.6:	dw SPFHold+6,-30				; frame/time list for direction 6
+.7:	dw SPFHold+7,-30				; frame/time list for direction 7
 	assert SPAHold2_table-SPAlist == SPAHold2
 
 SPAflail		=	$0C60			; (93G $D14)

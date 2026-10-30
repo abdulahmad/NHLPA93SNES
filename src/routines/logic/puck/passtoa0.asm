@@ -135,7 +135,7 @@ passtoa0:							;Pass the puck to player a0, leading him by his speed
 	lda.b mulres+2
 	sbc.b d3+2
 	sta.b d0+2
-	jsl.l sroot						; square root of the discriminant
+	jsl.l Sroot						; square root of the discriminant
 	lda.w #$0001					; retry counter
 	sta.b d3
 	lda.b d5
