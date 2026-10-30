@@ -2,10 +2,10 @@ GetPassWord:						;The password screen: pick characters from the grid, Start che
 									;password; a bad one offers a retry
 	lda.w #$0080					; show the password again
 	trb.w PassWord
-	jsl.l Readjoy12
+	jsl.l orjoy
 	jsl.l DrawGameSetupBack
 	jsl.l ReadPads					; read the pads
-	jsl.l Readjoy12
+	jsl.l orjoy
 	jsl.l ClearSprites				; clear the sprite table
 	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font2,$01,$12)

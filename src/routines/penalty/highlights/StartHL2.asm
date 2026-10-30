@@ -233,7 +233,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	pha
 	bmi .endhl
 .1:									; check both pads: Start or A ends it
-	jsl.l Readjoy12					; Start or A ends it
+	jsl.l orjoy					; Start or A ends it
 	lda.b d1
 	bit.w #sbut|JOYA
 	beq .0

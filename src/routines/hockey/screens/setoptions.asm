@@ -160,7 +160,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	cpx.w #$32A0
 	bne .blocktiles
 	jsl.l ReadPads					; read the pads
-	jsl.l Readjoy12
+	jsl.l orjoy
 	lda.w #$0000
 	sta.b sprpriority
 	jsl.l printz					; print the string that follows
