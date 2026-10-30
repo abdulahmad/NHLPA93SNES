@@ -32,9 +32,9 @@ DisplayStats:						;The STATS page of the pause menu: shots, power play, penalti
 	inc.b a2
 	inc.b a2
 .ss:								;the .sslist stats of team a2 at printx
-	lda.w #DisplayStats_sslist
+	lda.w #TeamStatTextTbl
 	sta.b a0
-	lda.w #DisplayStats_sslist>>16
+	lda.w #TeamStatTextTbl>>16
 	sta.b a0+2
 .sstop:								; stop at the end of the list
 	lda.b [a0]
