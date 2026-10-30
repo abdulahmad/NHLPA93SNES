@@ -13,7 +13,7 @@ setsortcords:						;Draw the sorted objects in display order, hiding ones that a
 	lda.w Ypos,x					; y
 	sta.b d1
 	jsl.l find3d					; 3d to screen position
-	cmp.w #OFFSCREEN				; off the screen
+	cmp.w #osflag				; off the screen
 	beq .next						; skip it
 	sta.b spry						; screen y
 	lda.b d0
