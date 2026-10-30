@@ -11,7 +11,7 @@ incsrc "../routines/hockey/playoffs/GetShifter.asm"
 Title1Map:							;the title screen backdrop, packed (map, palette, tiles)
 	incbin "../../Extracted/Graphics/Title1.map.sjim"
 
-incsrc "../routines/video/sprites/DrawFrameHi.asm"
+incsrc "../routines/video/sprites/SetSframeHi.asm"
 incsrc "../routines/hockey/input/getpzjoy.asm"
 incsrc "../routines/hockey/screens/PrintTeamNames.asm"
 incsrc "../routines/hockey/util/nullrtl85.asm"

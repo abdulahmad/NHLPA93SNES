@@ -164,7 +164,7 @@ org `$808000`.
 - `$80E13E` routines/hockey/display/updateanim.asm
 - `$80E1E8` routines/hockey/collisions/checkwindow.asm
 - `$80E35E` routines/video/sprites/setvideo.asm
-- `$80E3C9` routines/video/rink/show_rink.asm
+- `$80E3C9` routines/video/rink/updatescroll.asm
 - `$80E3E7` routines/video/objects/checkfo.asm
 - `$80E439` routines/video/objects/setsortcords.asm
 - `$80E495` routines/video/rink/find3d.asm
@@ -284,7 +284,7 @@ org `$848000` when `pc()` is below it.
 - `$84F532` routines/hockey/screens/UpdateScoutingDisplay.asm
 - `$84F734` routines/hockey/screens/ScrollDisplayUp.asm
 - `$84F79D` PlayoffTiles (data)
-- `$84F816` routines/video/objects/InitSortObjects.asm
+- `$84F816` routines/video/objects/defaultsprites2.asm
 - `$84F960` routines/video/objects/SsoInitTable.asm
 - `$84F980` routines/video/objects/FfoInitTable.asm
 - `$84F9B2` routines/video/objects/SortObjInitTable.asm
@@ -308,7 +308,7 @@ org `$858000` when `pc()` is below it.
 - `$858000` SpriteSet4 (data)
 - `$85D5A4` routines/hockey/playoffs/GetShifter.asm
 - `$85D5C0` Title1Map (data)
-- `$85FBB9` routines/video/sprites/DrawFrameHi.asm
+- `$85FBB9` routines/video/sprites/SetSframeHi.asm
 - `$85FF0E` routines/hockey/input/getpzjoy.asm
 - `$85FF1E` routines/hockey/screens/PrintTeamNames.asm
 - `$85FF96` routines/hockey/util/nullrtl85.asm
@@ -341,7 +341,7 @@ org `$878000` when `pc()` is below it.
 - `$87C3A0` EASNBGMap (data)
 - `$87C6B4` FaceOffTiles (data)
 - `$87CABA` Teamblocksmap (data)
-- `$87CE62` routines/video/sprites/DrawFrame.asm
+- `$87CE62` routines/video/sprites/SetSframe.asm
 - `$87D1FE` routines/video/sprites/addframe_end.asm
 - `$87D205` SpriteSet6 (data)
 - `$87F3E9` routines/hockey/replay/RestoreReplayFrame.asm
@@ -489,7 +489,7 @@ org `$8E8000` when `pc()` is below it.
 org `$8F8000` when `pc()` is below it.
 
 - `$8F8000` BigFontMap (data)
-- `$8F8130` routines/video/hud/unusedEnergyBar.asm
+- `$8F8130` routines/video/hud/dobar.asm
 - `$8F8213` routines/tables/linelist.asm
 - `$8F8236` data/text/PerLabels.asm
 - `$8F824D` EASNLogoMap (data)
@@ -529,7 +529,7 @@ org `$8F8000` when `pc()` is below it.
 - `$8F8EAF` routines/hockey/replay/adda4.asm
 - `$8F8EF7` routines/video/text/QueueTextDMA.asm
 - `$8F8F28` routines/video/dma/QueueBackmapDMA.asm
-- `$8F8F4A` routines/video/rink/ShowRinkRows.asm
+- `$8F8F4A` routines/video/rink/updatescroll_rows.asm
 - `$8F901A` routines/middle/input/jdtab8F.asm
 - `$8F902A` routines/penalty/ticker/InitScores.asm
 - `$8F9073` routines/hockey/password/ResetPassWord.asm

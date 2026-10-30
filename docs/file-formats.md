@@ -150,8 +150,8 @@ animations that step through them.
 | 13 | `Sprites606_658.sanim` | `$899383` | 21978 | 606-658 | 53 | 345 | 640 | 4 |
 | 14 | `Sprites659_720.sanim` | `$8ED9A7` | 9420 | 659-720 | 62 | 742 | 151 | 6 |
 
-- Sets 0-13 (frames 1-658, `DrawFrame` `$87CE62`): 4-byte pieces: x, y (signed bytes), tile, attributes.
-- Set 14 (frames 659-720, `DrawFrameHi` `$85FBB9`): 6-byte pieces: x, y (signed words), tile, attributes. These are the crowd: 659-689 for the
+- Sets 0-13 (frames 1-658, `SetSframe` `$87CE62`): 4-byte pieces: x, y (signed bytes), tile, attributes.
+- Set 14 (frames 659-720, `SetSframeHi` `$85FBB9`): 6-byte pieces: x, y (signed words), tile, attributes. These are the crowd: 659-689 for the
   vertical rink, at `IceRink.smap` pixel positions, and 690-720 for the horizontal rink.
 - Attributes: tile bits 8-9 (bits 0-1), palette (bits 2-4), 16 x 16 (bit 5: tiles t, t+1 over t+16, t+17), hflip (6), vflip (7).
   Palette 2 is the home team colors; `sprflag` `$8000` moves it to palette 3, the visitor colors.

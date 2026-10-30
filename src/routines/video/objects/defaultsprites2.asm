@@ -1,4 +1,4 @@
-InitSortObjects:					;Clear the sorted objects and set up the arrows, the rink scroll objects
+defaultsprites2:					;Clear the sorted objects and set up the arrows, the rink scroll objects
 									;and the players from their start tables,
 									;then sort them
 	ldx.w #$0000					; SortCords (all fields of the 16 objects)

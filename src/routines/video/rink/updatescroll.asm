@@ -1,4 +1,4 @@
-show_rink:							;Set the rink scroll from the camera position
+updatescroll:							;Set the rink scroll from the camera position
 	lda.w sfhormode
 	bne .rtl						; horizontal mode has its own scroll
 	lda.w Hpos						; camera x

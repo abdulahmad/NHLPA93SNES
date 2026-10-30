@@ -165,7 +165,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	sta.b sprpriority
 	jsl.l printz					; print the string that follows
 	%StringCp(CC_Font2,$00,$00)
-	jsl.l InitSortObjects			; sort the objects
+	jsl.l defaultsprites2			; sort the objects
 	lda.w #$0028					; roster player X start
 	sta.w OldXpos
 	sta.w rosxoff+(6*2)

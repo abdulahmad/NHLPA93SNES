@@ -24,7 +24,7 @@ Teamblocksmap:						;TeamBlocks.map: one 9 x 2 tile block per team (palette 1, t
 TeamblocksmapEnd:					; end of Teamblocksmap
 	assert (TeamblocksmapEnd-Teamblocksmap)/36 == NumofTeams
 
-incsrc "../routines/video/sprites/DrawFrame.asm"
+incsrc "../routines/video/sprites/SetSframe.asm"
 incsrc "../routines/video/sprites/addframe_end.asm"
 SpriteSet6:							;frame set 6 (duck and hold): frames 337-352
 	incbin "../../Extracted/Graphics/Sprites/Sprites337_352.sanim"

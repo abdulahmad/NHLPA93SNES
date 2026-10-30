@@ -22,7 +22,7 @@ setvideo:							;Once per game frame, when vblank is idle: build the sprite tabl
 	cpx.w #$003C
 	bne .savea
 	ldx.b xsave						; restore X
-	jsl.l show_rink					; rink scroll
+	jsl.l updatescroll					; rink scroll
 	jsl.l checkfo					; face off circles
 	jsl.l checksso					; shootout
 	jsl.l setsortcords				; sort the sprites
@@ -31,7 +31,7 @@ setvideo:							;Once per game frame, when vblank is idle: build the sprite tabl
 	jsl.l showzam					; elapsed time from vcountmark
 	jsl.l showcrowd					; crowd
 	jsl.l showref					; clears sf2refref
-	jsl.l ShowRinkRows				; queue the rink map rows for Vscroll
+	jsl.l updatescroll_rows				; queue the rink map rows for Vscroll
 	jsl.l QueueTextDMA				; queue the changed textmap words (textdirtylo/hi)
 	lda.w #VBlank_long				; VBlank sends it all next vblank
 	sta.b VBint						; handler for the next vblank

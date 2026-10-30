@@ -45,7 +45,7 @@ PlayoffTiles:						;packed playoff screen palette and tiles (decompressor
 									;to vram $1000
 	incbin "../../Extracted/Graphics/PlayoffTiles.chr.pak"
 
-incsrc "../routines/video/objects/InitSortObjects.asm"
+incsrc "../routines/video/objects/defaultsprites2.asm"
 incsrc "../routines/video/objects/SsoInitTable.asm"
 incsrc "../routines/video/objects/FfoInitTable.asm"
 incsrc "../routines/video/objects/SortObjInitTable.asm"
