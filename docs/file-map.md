@@ -288,7 +288,7 @@ org `$848000` when `pc()` is below it.
 - `$84F960` routines/video/objects/SsoInitTable.asm
 - `$84F980` routines/video/objects/FfoInitTable.asm
 - `$84F9B2` routines/video/objects/SortObjInitTable.asm
-- `$84FAD2` routines/middle/input/Readjoy12.asm
+- `$84FAD2` routines/middle/input/orjoy.asm
 - `$84FAE3` routines/stats/DisplayStats.asm
 - `$84FC30` routines/stats/DisplayStats_sslist.asm
 - `$84FC44` routines/stats/GetNameandAttrib.asm

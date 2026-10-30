@@ -85,5 +85,5 @@ Start:								;Reset entry and cold start: switch to native mode, clear RAM, set
 	stz.b vbactive					; vblank handlers may run
 	jsl.l ResetPassWord				; PassWord: 16 characters of $1E
 	jsl.l DefaultMenus				; initial menu choices from OptPlayMode on
-	jsl.l Readjoy12
+	jsl.l orjoy
 	jml.l Opening					; on to the title screen

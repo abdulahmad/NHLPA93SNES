@@ -1,4 +1,4 @@
-Readjoy12:							;Read pads 1 and 2: d1 = the new presses of both
+orjoy:							;Read pads 1 and 2: d1 = the new presses of both
 	jsl.l ReadJoy1					; pad 1 or pad 2
 	lda.b d1						; presses of pad 1
 	pha								; keep them
