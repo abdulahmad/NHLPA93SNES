@@ -30,7 +30,7 @@ FramerTiles:						;the 4 Framer box tiles (4bpp, Framer.chr): sent to vram by
 
 incsrc "../routines/video/crowd/showcrowd.asm"
 incsrc "../routines/hockey/password/SuperMult.asm"
-incsrc "../routines/hockey/screens/DrawGameSetupBack.asm"
+incsrc "../routines/hockey/screens/setoptions_drawback.asm"
 incsrc "../routines/middle/math/mulu.asm"
 SpriteSet8:							;frame set 8 (arrows, pads, puck and goal): frames 384-405
 	incbin "../../Extracted/Graphics/Sprites/Sprites384_405.sanim"

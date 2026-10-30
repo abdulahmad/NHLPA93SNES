@@ -845,7 +845,7 @@ screentimer			=	$08EB		; frames left on the scouting report screen
 TestList		=	$7F0000			; scouting report paragraph numbers (-1 ends)
 nibblebuffer		=	$041F		; 4 words: the weights WeightedRandomSelect picks from (SetScore)
 pausetimer		=	$EE				; pause menu: frames left before a demo pause ends by itself (60000)
-tickerstart			=	$0158		;TickerNum at the start of the intermission (IntermissionTick: all shown
+tickerstart			=	$0158		;TickerNum at the start of the intermission (Intermission_tick: all shown
 									;when it comes round again)
 psitem				=	$0485		; pause menu item (0-4)
 tickervc			=	$08D9		;Vcount when the ticker box was last shown (Intermission:

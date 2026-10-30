@@ -13,6 +13,6 @@ Title1Map:							;the title screen backdrop, packed (map, palette, tiles)
 
 incsrc "../routines/video/sprites/SetSframeHi.asm"
 incsrc "../routines/hockey/input/getpzjoy.asm"
-incsrc "../routines/hockey/screens/PrintTeamNames.asm"
+incsrc "../routines/hockey/screens/setoptions_teamnames.asm"
 incsrc "../routines/hockey/util/nullrtl85.asm"
 incsrc "../routines/hockey/game/ResetClock.asm"

@@ -1,4 +1,4 @@
-PrintTeamNames:						;Print both team names, then set up the teams
+setoptions_teamnames:						;Print both team names, then set up the teams
 	stx.b xsave						; keep X
 	ldx.w #$0000
 .save:								; save d0 and the words after it (16 words)

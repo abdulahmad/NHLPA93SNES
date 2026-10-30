@@ -1,4 +1,4 @@
-InitTicker:							;Start the score ticker for the other games of the round
+NewTicker2_next:							;Go to the next ticker game
 	lda.w TickerNum
 	bmi .last						; none yet
 	ora.w gamenum					; and not the current game
@@ -7,6 +7,6 @@ InitTicker:							;Start the score ticker for the other games of the round
 	jsl.l GetShifter				; find the next game
 	lda.b d1
 	sta.w TickerNum					; the ticker game
-	bmi Intermission_rtl			; none left: leave
+	bmi Intermission_tick_rtl		; none left: leave
 .new:								; show it
 	jmp.w NewTicker2				; show it
