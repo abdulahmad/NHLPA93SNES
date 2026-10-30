@@ -6,7 +6,7 @@ assfight:							;Assignment: fighting. A computer fighter punches when close; bo
 .go:								; fight over?
 	lda.w PenCntDwn					; fight over
 	bpl .chkna
-	jml.l assnothing
+	jml.l donothing
 .chkna:								; new assignment?
 	lda.w pflags,x					; player flags
 	bit.w #pfna

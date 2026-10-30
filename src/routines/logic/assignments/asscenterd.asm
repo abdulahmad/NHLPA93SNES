@@ -3,7 +3,7 @@ asscenterd:							;Assignment: the center on defense, halfway between the puck a
 									;gets the puck
 	lda.w gmclock					; clock stopped
 	beq .go
-	jml.l assnothing				; stand still
+	jml.l donothing				; stand still
 .go:								; bench check
 	jsl.l check4bench				; bench check
 	lda.w pflags,x					; flags

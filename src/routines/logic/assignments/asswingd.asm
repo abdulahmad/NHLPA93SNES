@@ -6,7 +6,7 @@ asswingd:							;Assignment: a wing on defense covers his side
 .clk:								; clock stopped: do nothing
 	lda.w gmclock					; clock stopped: do nothing
 	beq .bench
-	jml.l assnothing
+	jml.l donothing
 .bench:								; bench check
 	jsl.l check4bench				; check for a bench change
 	lda.w pflags,x

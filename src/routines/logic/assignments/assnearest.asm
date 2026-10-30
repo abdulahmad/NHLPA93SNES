@@ -265,7 +265,7 @@ assnearest:							;Assignment: the player nearest the puck who does not have it.
 .clk:								; clock stopped?
 	lda.w gmclock					; clock stopped?
 	beq .joy
-	jml.l assnothing
+	jml.l donothing
 .joy:								; joystick controlled?
 	lda.w pflags,x					; player flags
 	bit.w #pfjoycon					; joystick controlled?
