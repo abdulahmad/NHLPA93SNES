@@ -51,38 +51,38 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	pha
 	lda.w Hpos
 	pha
-	lda.w ReplayBufferPtr			;ReplayBufferPtr must be inside
-	;ReplayBufferStart..ReplayBufferEnd on a frame boundary
-	cmp.w #ReplayBufferStart
-	lda.w ReplayBufferPtr+2
-	sbc.w #ReplayBufferStart>>16
+	lda.w recbpr			;recbpr must be inside
+	;replaystart..replayend on a frame boundary
+	cmp.w #replaystart
+	lda.w recbpr+2
+	sbc.w #replaystart>>16
 	bcs .chk
 .wrap:								;the buffer pointer back inside the replay buffer
-	lda.w #ReplayBufferStart
-	sta.w ReplayBufferPtr
-	lda.w #ReplayBufferStart>>16
-	sta.w ReplayBufferPtr+2
+	lda.w #replaystart
+	sta.w recbpr
+	lda.w #replaystart>>16
+	sta.w recbpr+2
 .chk:								; check the replay buffer limit
-	lda.w #ReplayBufferEnd
-	cmp.w ReplayBufferPtr
-	lda.w #ReplayBufferEnd>>16
-	sbc.w ReplayBufferPtr+2
+	lda.w #replayend
+	cmp.w recbpr
+	lda.w #replayend>>16
+	sbc.w recbpr+2
 	bcc .wrap
-	lda.w ReplayBufferPtr
+	lda.w recbpr
 	sec
-	sbc.w #ReplayBufferStart
+	sbc.w #replaystart
 	sta.b mulb
-	lda.w ReplayBufferPtr+2
-	sbc.w #ReplayBufferStart>>16
+	lda.w recbpr+2
+	sbc.w #replaystart>>16
 	sta.b mulb+2
 	lda.w #replaysize
 	sta.b mula
 	jsl.l divu
 	lda.b mulres+2
 	bne .wrap
-	lda.w ReplayBufferPtr
+	lda.w recbpr
 	sta.b a4
-	lda.w ReplayBufferPtr+2
+	lda.w recbpr+2
 	sta.b a4+2
 	lda.w #$0000
 	pha
@@ -257,7 +257,7 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	jsl.l setvideo					; update the video
 .noplay:							; Start: leave
 	lda.b d1						; Start: leave
-	bit.w #JOYSTART
+	bit.w #sbut
 	bne .exit
 	jmp.w .top
 .exit:								; blank the screen, release the pads
@@ -266,9 +266,9 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	tsb.w PadControlBits
 	lda.w #sfscrl
 	trb.w sflags
-	lda.w ReplayBufferPtr			; back to the current frame
+	lda.w recbpr			; back to the current frame
 	sta.b a4
-	lda.w ReplayBufferPtr+2
+	lda.w recbpr+2
 	sta.b a4+2
 	jsl.l RestoreReplayFrame
 	jsl.l SprSort					; sort the sprites

@@ -198,7 +198,7 @@ passtoa0:							;Pass the puck to player a0, leading him by his speed
 	sta.w temp1,y					; receiver temp1
 	sec
 	sbc.w #$0006					; minus 6
-	sta.w nopuck+puckobj			; puck pickup lockout
+	sta.w nopuck+puckscnum			; puck pickup lockout
 	pla
 	sta.b d0
 	sta.b mulb

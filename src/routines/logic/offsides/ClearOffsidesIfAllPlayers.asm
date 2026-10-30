@@ -27,7 +27,7 @@ ClearOffsidesIfAllPlayers:			;Clear team a2's offsides flag once none of its
 	inc.b a0
 	lda.b d0						; y
 	sec
-	sbc.w #blueline					; minus the blue line
+	sbc.w #Blueline					; minus the blue line
 	beq .more
 	bmi .neg
 	bvs .more						; still past it

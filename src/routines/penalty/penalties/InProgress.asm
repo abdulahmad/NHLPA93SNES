@@ -272,7 +272,7 @@ InProgress:							;The referee's work after a whistle: send each penalized playe
 	jsl.l coinsearch
 	lda.w #gmpen					; penalty mode over
 	trb.w gmode
-	ldx.w #puckobj
+	ldx.w #puckscnum
 	stx.b a3
 	lda.w #pfaceoff					; puck goes to the faceoff assignment
 	sta.b d0

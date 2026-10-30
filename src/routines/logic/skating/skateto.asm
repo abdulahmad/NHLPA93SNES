@@ -162,7 +162,7 @@ skateto:							;Skate toward d0 / d1, with a routine in a0 for avoiding others; 
 	sta.b d0
 	lda.w pucky						; puck y
 	sta.b d1
-	lda.w pf2fight+puckobj			; puck flagged for a fight?
+	lda.w pf2fight+puckscnum			; puck flagged for a fight?
 	beq .nf
 	lda.w xc1						; then face xc1, yc1 instead
 	sta.b d0

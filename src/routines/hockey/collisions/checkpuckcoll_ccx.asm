@@ -31,7 +31,7 @@ checkpuckcoll_ccx:					;Puck contact with a player's stick, body or the goalie
 	beq .z
 	jmp.w .chkbody
 .z:									; available player: the stick needs a low, slow puck
-	lda.w Zpos+puckobj
+	lda.w Zpos+puckscnum
 	sec
 	sbc.w #$0005					; puck above 5
 	beq .zv							; Zpos = 5: low enough
@@ -100,7 +100,7 @@ checkpuckcoll_ccx:					;Puck contact with a player's stick, body or the goalie
 	sta.b d0+2
 	lda.w #$00C4					; cstick^2 ($C4), /4 if the puck is not ready to be caught
 	sta.b d1
-	lda.w nopuck+puckobj
+	lda.w nopuck+puckscnum
 	bmi .lo
 	beq .lo
 	lsr.b d1

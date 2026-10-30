@@ -17,18 +17,18 @@ adda4:								;Move the replay one frame forward
 	pla
 	sta.b a4+2
 	lda.b tmp0						; compare with the buffer pointer
-	cmp.w ReplayBufferPtr
+	cmp.w recbpr
 	bne .nosf2drec
 	lda.b tmp1
-	cmp.w ReplayBufferPtr+2
+	cmp.w recbpr+2
 	bne .nosf2drec
 	rtl								; reached the end
 .nosf2drec:							; not recording: compare the pointers
 	lda.b a4						; compare a4 with the pointer
-	cmp.w ReplayBufferPtr
+	cmp.w recbpr
 	bne .a4ne
 	lda.b a4+2
-	cmp.w ReplayBufferPtr+2
+	cmp.w recbpr+2
 	bne .a4ne
 	rtl								; reached the end
 .a4ne:								; not at the record position: restore and advance

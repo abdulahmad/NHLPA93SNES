@@ -6,12 +6,12 @@ PuckIChk:							;Watch for icing: the loose puck crossing the far goal line
 	bne .rtl						; already called
 	lda.w puckc						; puck carrier
 	bpl .rtl						; a carrier: no icing
-	lda.w #blueline+goalline		; blueline+goalline
+	lda.w #Blueline+goalline		; Blueline+goalline
 	sta.b d0						; d0 = far goal line
 	lda.w iflags
 	bit.w #ifdir					; direction
 	bne .0
-	lda.w #-(blueline+goalline)		; goal line
+	lda.w #-(Blueline+goalline)		; goal line
 	sec
 	sbc.w pucky						; minus puck y
 	beq .rtl						; exactly on it
@@ -23,7 +23,7 @@ PuckIChk:							;Watch for icing: the loose puck crossing the far goal line
 .rtl:								; return
 	rtl
 .0:									; ifdir set: compare against the other goal line
-	lda.w #blueline+goalline		; other end
+	lda.w #Blueline+goalline		; other end
 	sec
 	sbc.w pucky						; minus puck y
 	beq .set

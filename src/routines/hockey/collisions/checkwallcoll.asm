@@ -8,7 +8,7 @@ checkwallcoll:						;Collision of object X with the corners, the goals and the b
 	clc
 	adc.w #$0040
 	sta.b d5						; d5 = corner circle center y
-	lda.w #sideline
+	lda.w #Sideline
 	sec
 	sbc.w wcradiusx					; x half width minus the radius
 	pha								; keep it

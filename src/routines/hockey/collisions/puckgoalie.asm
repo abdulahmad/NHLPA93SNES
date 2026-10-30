@@ -6,7 +6,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	jmp.w .rtl
 .go:								; region 0: puck height
 	stz.b d2						; region 0
-	lda.w Zpos+puckobj				; puck height
+	lda.w Zpos+puckscnum				; puck height
 	sec
 	sbc.w #$0008					; minus 8
 	beq .low
@@ -113,7 +113,7 @@ puckgoalie:							;The puck hits goalie a2: a save or not, by his save ratings. 
 	sbc.w #SPFgdive					; goalie dive frames SPFgdive..+15
 	cmp.w #$0010
 	bcs .saved
-	lda.w Zpos+puckobj				; puck height
+	lda.w Zpos+puckscnum				; puck height
 	sec
 	sbc.w #$0002					; minus 2
 	bmi .neg1

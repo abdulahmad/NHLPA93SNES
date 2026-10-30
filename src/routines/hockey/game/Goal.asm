@@ -145,11 +145,11 @@ Goal:								;The puck is in the goal: add the score, sound the siren, log it, u
 	sta.w pucky
 	lda.w #$0600
 	sta.w puckvz
-	stz.w Zpos+puckobj
+	stz.w Zpos+puckscnum
 	lda.w #$FFFF					; puckcross never; pfnc
 	sta.w puckcross+pcframes
 	sta.w puckcross+pcsize+pcframes
-	sta.w pfnc+puckobj
+	sta.w pfnc+puckscnum
 	lda.w #pnothing
 	sta.b d0
 	jsl.l assreplace				; replace the assignment with d0
@@ -164,7 +164,7 @@ Goal:								;The puck is in the goal: add the score, sound the siren, log it, u
 	lda.w #PenGoal
 	sta.b d0
 	jsl.l AddPenalty2
-	ldx.w #puckobj
+	ldx.w #puckscnum
 	stx.b a3
 	rtl
 .setass:							;give each skater of team a2 that is not fighting assignment d0, clear

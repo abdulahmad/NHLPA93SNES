@@ -21,7 +21,7 @@ PauseReadJoy:						;Wait for a new button press; in the demo the pause ends by i
 	dec.b pausetimer				; demo timer counts down
 	bne .chk
 .force:								; force Start
-	lda.w #JOYSTART					; force Start
+	lda.w #sbut					; force Start
 	tsb.b d1
 .chk:								; any new presses?
 	lda.b d1						; new presses

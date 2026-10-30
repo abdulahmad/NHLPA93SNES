@@ -423,7 +423,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	dex
 	dex
 	bpl .lim1
-	lda.w Zpos+puckobj				; puck below 24: keep it inside the boards
+	lda.w Zpos+puckscnum				; puck below 24: keep it inside the boards
 	cmp.w #$0018
 	bcs .py
 	lda.w puckx
@@ -434,24 +434,24 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	bra .px2
 .neg3:								; signed compare: overflow flag corrects the sign
 	bvs .px2
-.px1:								; clamp puck X to -sideline
+.px1:								; clamp puck X to -Sideline
 	lda.w #$FF78
 	sta.w puckx
 .px2:								; puck X upper limit
 	lda.w puckx
 	sec
-	sbc.w #sideline					; x <= $88
+	sbc.w #Sideline					; x <= $88
 	beq .py
 	bmi .neg4
 	bvc .px3
 	bra .py
 .neg4:								; signed compare: overflow flag corrects the sign
 	bvc .py
-.px3:								; clamp puck X to sideline
-	lda.w #sideline
+.px3:								; clamp puck X to Sideline
+	lda.w #Sideline
 	sta.w puckx
 .py:								;puck on the ice within |y| < 318: keep it inside the boards
-	lda.w Zpos+puckobj
+	lda.w Zpos+puckscnum
 	bne .cy
 	lda.w pucky
 	bit.w #$8000

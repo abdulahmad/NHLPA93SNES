@@ -430,7 +430,7 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	jsl.l ReadPads					; read the pads
 	lda.w padnew1
 	ora.w padnew1+2
-	cmp.w #JOYSTART
+	cmp.w #sbut
 	bne .frame
 	jmp.w .rtl
 .frame:								;color 1 of palette 7 blends between the .blink colors (30 frame cycle)
@@ -529,9 +529,9 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	sta.l palbuffer+(7*$20)+(1*2)	; write the blended color
 	lda.w joypad1					; held: left/right scroll
 	ora.w joypad2
-	cmp.w #JOYLEFT
+	cmp.w #lbut
 	beq .left
-	cmp.w #JOYRIGHT
+	cmp.w #rbut
 	beq .right
 .move:								; apply the scroll step
 	lda.w Hscroll

@@ -310,8 +310,8 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	cmp.w #$002D
 	bcc .out2
 	jmp.w .de5
-.out2:								; near the post: go to the sideline spot
-	lda.w #sideline
+.out2:								; near the post: go to the Sideline spot
+	lda.w #Sideline
 	sta.b d0
 	lda.w Xpos,x
 	bmi .outn
@@ -512,7 +512,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	eor.w #$0001
 	sta.b d0
 .noflip:							; save type: +4 stick, -2 stack when conditions hold
-	lda.w Zpos+puckobj				; puck low (Zpos <= 8) and slow: stick (+4)
+	lda.w Zpos+puckscnum				; puck low (Zpos <= 8) and slow: stick (+4)
 	sec
 	sbc.w #$0008
 	beq .pz

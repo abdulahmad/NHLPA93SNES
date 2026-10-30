@@ -92,7 +92,7 @@ asswingo:							;Assignment: a wing on offense skates to a spot in the zone of t
 	sta.b d2
 	lda.b d0
 	sec
-	sbc.w #blueline					; blue line
+	sbc.w #Blueline					; blue line
 	bmi .neg1
 	bvc .z2
 	bra .de2

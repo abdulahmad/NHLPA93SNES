@@ -15,7 +15,7 @@ a2offsides:							;Offsides if the player's team is flagged and the puck is past
 .0:									; distance to the blue line
 	lda.b d0
 	sec								; distance to the blue line
-	sbc.w #blueline					; blueline
+	sbc.w #Blueline					; Blueline
 	bmi .neg						; signed compare
 	bvc .team
 	bra .rtl

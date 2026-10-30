@@ -51,8 +51,8 @@ asspenalty:							;Assignment: player X skates to the penalty box, glides in and
 	jsl.l muls16					; signed multiply
 	sta.b d1
 	sta.w temp4,x					; box y
-	lda.w #sideline					; temp3 = $88: the sideline
-	sta.w temp3,x					; sideline x
+	lda.w #Sideline					; temp3 = $88: the Sideline
+	sta.w temp3,x					; Sideline x
 	stz.w temp1,x					; clear the timer
 	lda.w pflags,x					; pf2npc: no player collision
 	ora.w #pf2npc					; no player collisions

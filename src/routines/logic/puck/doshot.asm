@@ -82,11 +82,11 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	lsr a
 	sta.w lastplayer
 ;d1 = target goal y; (d0,d2) = x and z offsets for this direction from shotsets
-	lda.w #blueline+goalline
+	lda.w #Blueline+goalline
 	sta.b d1
 	lda.w pfgoal,x
 	bne .0
-	lda.w #-(blueline+goalline)
+	lda.w #-(Blueline+goalline)
 	sta.b d1
 .0:									;d0/d1 = shotsets[passdir] - puck, d2 = height; d3 = distance to the goal
 	lda.w passdir
@@ -171,11 +171,11 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	cmp.w #$00FB					; closer than 251: half the error
 	bcs .cp
 	lsr.b d0
-.cp:								; clamp the aim X to the sideline
+.cp:								; clamp the aim X to the Sideline
 	lda.b d0
-	cmp.w #sideline					; clamp $88
+	cmp.w #Sideline					; clamp $88
 	bcc .ar
-	lda.w #sideline
+	lda.w #Sideline
 	sta.b d0
 .ar:								; random aim error
 	lda.b d0
@@ -281,11 +281,11 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	bpl .restore
 	ldx.b xsave						; restore X
 	ldx.b a3
-	lda.w #blueline+goalline		; puckvy sign toward the shooting goal
+	lda.w #Blueline+goalline		; puckvy sign toward the shooting goal
 	sta.b tmp0
 	lda.w pfgoal,x
 	bne .side
-	lda.w #-(blueline+goalline)
+	lda.w #-(Blueline+goalline)
 	sta.b tmp0
 .side:								; side of the net the puck is on
 	lda.b tmp0

@@ -52,7 +52,7 @@ chkprogress:						;Move the referee and the game through a penalty: when the sto
 	jsl.l NewTicker					; horizontal ref
 	lda.w #$FF00
 	tsb.w puckc
-	ldx.w #puckobj
+	ldx.w #puckscnum
 	stx.b a3
 	lda.w #pnothing
 	sta.b d0

@@ -25,11 +25,11 @@ chk4shot:							;Computer player X looks for a shot. A penalty killer under pres
 	asl a
 	asl a
 	sta.b d4
-	lda.w #blueline+goalline		; blueline+goalline
+	lda.w #Blueline+goalline		; Blueline+goalline
 	sta.b d1
 	lda.w pfgoal,x					; pfgoal selects which goal is attacked
 	bne .c0
-	lda.w #-(blueline+goalline)
+	lda.w #-(Blueline+goalline)
 	sta.b d1
 .c0:								; d1 = y distance to the goal line, d0 = x distance
 	lda.b d1						; d1 = goal distance in Y
@@ -123,7 +123,7 @@ chk4shot:							;Computer player X looks for a shot. A penalty killer under pres
 .ds0:								; shot distance from the goal line
 	lda.b d0
 	bmi .rts						; behind the goal line: no shot
-	lda.w #blueline+goalline
+	lda.w #Blueline+goalline
 	sec
 	sbc.b d0
 	bmi .rts						; beyond the blue line: no shot

@@ -31,7 +31,7 @@ ShowInjuryBox:						;The injury box: the injured player and whether he is out fo
 	%StringCtctc(CC_Font1Pri,$0C,$04,"Injury to:",CC_Font1Pri,$0C,$06,"Out for period",CC_Font1Pri,$0C,$05)
 	jsl.l GetPlayerNumInitial
 	jsl.l print						; print it
-	lda.w pf2fight+puckobj
+	lda.w pf2fight+puckscnum
 	beq .period
 	jsl.l printz					; print the string that follows
 	%StringCt(CC_Font1Pri,$14,$06,"the game")

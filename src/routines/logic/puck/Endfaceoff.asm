@@ -105,7 +105,7 @@ Endfaceoff:							;Drop the puck: pick the face off winner and send the puck off
 	lda.w #$0800					; Zvel = random(0..$800)
 	jsl.l randoma					; random number 0 to A-1
 	sta.w Zvel,x
-	stz.w Zpos+puckobj
+	stz.w Zpos+puckscnum
 	stz.w pfnc,x
 	lda.w #pnorm					; pnorm
 	sta.b d0

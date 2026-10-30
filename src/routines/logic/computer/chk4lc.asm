@@ -11,7 +11,7 @@ chk4lc:								;Should the computer call a line change? Then shoot the puck in
 	lda.b d0
 	bmi .rts						; puck is on the far side
 	sec
-	sbc.w #blueline					; blueline
+	sbc.w #Blueline					; Blueline
 	beq .inzone						; at the blue line
 	bmi .neg						; short of it
 	bvs .inzone						; overflow

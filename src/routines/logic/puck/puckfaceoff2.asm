@@ -43,7 +43,7 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	sta.w RefCnt
 	sta.w puckcross+pcframes
 	sta.w puckcross+pcsize+pcframes
-	sta.w Zpos+puckobj
+	sta.w Zpos+puckscnum
 	sta.w puckc
 	sta.w passReceiverPlayerNum
 	lda.w #sf2refref				; clear sf2refref; faceoff on, replay record off
@@ -71,10 +71,10 @@ puckfaceoff2:						;Assignment: the face off and the setup for play
 	lda.w #$FEF4
 	sta.w Ypos+netobj2
 	lda.w #SPFpuck					; object 15 (puck shadow) = SPFpuck
-	sta.w frame+puckobj+2
-	stz.w SPA+puckobj+2
-	stz.w attribute+puckobj+2
-	stz.w attribute+puckobj
+	sta.w frame+puckscnum+2
+	stz.w SPA+puckscnum+2
+	stz.w attribute+puckscnum+2
+	stz.w attribute+puckscnum
 	lda.w #sfslock					; clear sfslock: free up scrolling
 	trb.w sflags
 	lda.w #$0064					; 100 scroll steps

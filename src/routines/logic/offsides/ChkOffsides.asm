@@ -12,7 +12,7 @@ ChkOffsides:						;Clear each team's offsides flag once it is back onside; when 
 	lda.w #$0002
 	sta.b a1
 	jsl.l ClearOffsidesIfAllPlayers	; and for the away side
-	lda.w #blueline-4				; blueline-4
+	lda.w #Blueline-4				; Blueline-4
 	sta.b d0
 	sec
 	sbc.w pucky						; puck y against the line
@@ -23,9 +23,9 @@ ChkOffsides:						;Clear each team's offsides flag once it is back onside; when 
 .neg1:								; signed compare: overflow flag corrects the sign
 	bvs .neg
 .top:								;puck crossed the top line this frame?
-	lda.w #blueline-4
+	lda.w #Blueline-4
 	sec
-	sbc.w OldYpos+puckobj			; puck y last frame against the line
+	sbc.w OldYpos+puckscnum			; puck y last frame against the line
 	beq .rtl
 	bmi .neg2
 	bvc .t
@@ -33,7 +33,7 @@ ChkOffsides:						;Clear each team's offsides flag once it is back onside; when 
 .neg2:								; signed compare: overflow flag corrects the sign
 	bvc .rtl
 .t:									; blue line + $A
-	lda.w #blueline-4+$A			; +$A
+	lda.w #Blueline-4+$A			; +$A
 	sta.b d0
 	lda.w gmode
 	bit.w #gmdir					; gmdir
@@ -88,7 +88,7 @@ ChkOffsides:						;Clear each team's offsides flag once it is back onside; when 
 .b1:								; check the second line
 	lda.b d0
 	sec
-	sbc.w OldYpos+puckobj
+	sbc.w OldYpos+puckscnum
 	bmi .neg5
 	bvs .b2
 	bra .rtl

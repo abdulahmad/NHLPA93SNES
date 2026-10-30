@@ -76,7 +76,7 @@ asscenterd:							;Assignment: the center on defense, halfway between the puck a
 .rtl:								; return
 	rtl
 .nopfgoal:							; above the blue line?
-	lda.w #blueline					; blue line
+	lda.w #Blueline					; blue line
 	sec
 	sbc.w pucky						; minus puck y
 	bmi .neg1

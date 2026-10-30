@@ -1,16 +1,16 @@
 suba4:								;Move the replay one frame back
 	lda.b a4						; a4
-	cmp.w #ReplayBufferStart		; start of the buffer
+	cmp.w #replaystart		; start of the buffer
 	bne .a4ne
 	lda.b a4+2						; bank
-	cmp.w #ReplayBufferStart>>16
+	cmp.w #replaystart>>16
 	bne .a4ne
 	lda.w sflags					; flags
 	bit.w #sfwrap
 	beq .end						; not wrapped: stay
-	lda.w #ReplayBufferEnd
+	lda.w #replayend
 	sta.b a4						; else the end
-	lda.w #ReplayBufferEnd>>16
+	lda.w #replayend>>16
 	sta.b a4+2
 .a4ne:								; not the same low word
 	lda.b a4						; a4
@@ -21,12 +21,12 @@ suba4:								;Move the replay one frame back
 	sbc.w #$0000					; carry
 	sta.b a4+2
 	lda.b a4
-	cmp.w ReplayBufferPtr			; compare with the pointer
+	cmp.w recbpr			; compare with the pointer
 	beq .a4eq						; equal
 	jml.l RestoreReplayFrame		; restore the frame
 .a4eq:								; same bank as the record pointer
 	lda.b a4+2						; high word
-	cmp.w ReplayBufferPtr+2
+	cmp.w recbpr+2
 	beq .a4eq2						; equal
 	jml.l RestoreReplayFrame		; restore the frame
 .a4eq2:								; undo the move: stay at the record pointer
