@@ -7,8 +7,8 @@ waitjoy:						;Wait for a new button press; in the demo the pause ends by itself
 	cmp.b Vcount					; wait for the next frame
 	beq .vb
 	jsl.l ReadPads					; ReadPads; ignore L/R
-	lda.w joypad1					; pad 1
-	ora.w joypad2					; or pad 2
+	lda.w PadRaw1					; pad 1
+	ora.w PadRaw2					; or pad 2
 	bit.w #JOYR|JOYL				; L or R
 	bne waitjoy				; ignore them
 	jsl.l getpzjoy					; menu sounds and ticker

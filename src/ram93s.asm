@@ -620,12 +620,12 @@ iflags				=	$015C		;icing flags (if* masks); high byte (iflags+1) = icingPlayer 
 ifcgl	=	$0001					; puck crossed the goal line
 ifdir	=	$0002					; icing toward the top goal
 ifok	=	$0004					; icing possible
-joypad1				=	$015E		; controller 1 buttons (SNES joypad bits, JOY* masks)
-joypad2				=	$0160		; controller 2 buttons
-joypad3				=	$0162		; controller 3 buttons (multitap)
-joypad4				=	$0164		; controller 4 buttons
-padlast1			=	$0166		; 4 words: buttons at the last ReadPads (joypad1-4)
-padnew1				=	$016E		; 4 words: buttons newly pressed at the last ReadPads (joypad1-4)
+PadRaw1				=	$015E		; controller 1 buttons (SNES joypad bits, JOY* masks)
+PadRaw2				=	$0160		; controller 2 buttons
+PadRaw3				=	$0162		; controller 3 buttons (multitap)
+PadRaw4				=	$0164		; controller 4 buttons
+padlast1			=	$0166		; 4 words: buttons at the last ReadPads (PadRaw1-4)
+padnew1				=	$016E		; 4 words: buttons newly pressed at the last ReadPads (PadRaw1-4)
 padvcount			=	$0176		; Vcount of the last ReadPads (the pads are read once per frame)
 carriedy			=	$0181		;pucky while the puck is carried: the y a shot was taken from (puckgoalie)
 cheatpads	=	$1648				; 3 words: the last three new pad presses (the unreached Gameloop .cheat)
@@ -850,7 +850,7 @@ tickerstart			=	$0158		;TickerNum at the start of the intermission (Intermission
 psitem				=	$0485		; pause menu item (0-4)
 tickervc			=	$08D9		;Vcount when the ticker box was last shown (Intermission:
 									;next one after $150 frames)
-DPCLEAREND		=	$164E			; Start clears DP/RAM $0000 up to here
+varend		=	$164E			; Start clears DP/RAM $0000 up to here
 
 ;options, demo, random seed
 OptPlayMode	=	$1600				; play mode (0 regular season, 1 continue playoffs, 2/3 new playoffs)

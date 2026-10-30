@@ -527,8 +527,8 @@ PlayoffScreen:						;In playoff mode, the playoff tree screen with the password;
 	and.w #$001F
 	ora.b tmp2
 	sta.l palbuffer+(7*$20)+(1*2)	; write the blended color
-	lda.w joypad1					; held: left/right scroll
-	ora.w joypad2
+	lda.w PadRaw1					; held: left/right scroll
+	ora.w PadRaw2
 	cmp.w #lbut
 	beq .left
 	cmp.w #rbut
