@@ -265,7 +265,10 @@ JOYR		=	$0010				; R shoulder
 JOYL		=	$0020				; L shoulder
 JOYA		=	$0080				; A button (same bit as cbut; the menus test it as A)
 
-;sfx / song numbers (93S: SNES sfx and song numbers, SPC700 addresses)
+;sfx / song numbers (93S: SNES sfx and song numbers)
+; The songs, numbered as the game numbers them: the cue number on port 0 of the sound program (92 and 93G
+; names). StartSng<name> sends it (songs 4-8 through MusicCue, 1-3 and 9 on APUIO0). cursong holds the
+; starter's own number 1-9 (Goal 1 ... PO 9), not the cue.
 SngGoal			=	4				;home goal (game sample set)
 SngPeriodStart	=	5				;period start
 SngLateGame		=	6				;third period
@@ -273,6 +276,14 @@ SngPP			=	7				;power play (unused)
 SngFaceoff		=	8				;face off, mid-period
 SngTitle		=	3				;title screen and the game menu (boot set)
 SngEOP			=	2				;end of period (unused, boot set)
+SngPO			=	1				;playoff screen (boot sample set)
+SngEOG			=	9				;end of game (unused, boot set)
+; The frames a music cue plays (cuetimer), during which sound effects are dropped
+SngGoalLen		=	$0240
+SngPeriodStartLen	=	$01CE
+SngLateGameLen	=	$0474
+SngPPLen		=	$022E
+SngFaceoffLen	=	$041A
 SFXsiren		=	$A0				; goal siren
 SFXwhistle		=	$89				; whistle
 SFXhorn			=	$A1				; horn at the end of a period (93G SFXhorn); nothing in the code sends it
@@ -293,22 +304,6 @@ SFXpuckpost		=	$94				; puck off the post
 SFXpuckwall1	=	$95				; +0-2: puck off the boards by speed (93 $28-$2B)
 SFXpuckwall2	=	$96				; puck off the boards, variant 2 (SFXpuckwall1+1)
 SFXpuckwall3	=	$97				; variant 3 (SFXpuckwall1+2)
-; The songs, numbered as the game numbers them: the cue number on port 0 of the sound program (92 and 93G
-; names). StartSng<name> sends it (songs 4-8 through MusicCue, 1-3 and 9 on APUIO0). cursong holds the
-; starter's own number 1-9 (Goal 1 ... PO 9), not the cue.
-SngPO			=	1				;playoff screen (boot sample set)
-SngEOG			=	9				;end of game (unused, boot set)
-; SPC700 (APU RAM) addresses used by the sound uploads
-SPCSAMPLEDIR	=	$2C00			; DSP sample directory (DIR = $2C)
-SPCDRIVER		=	$0400			; SPC700 sound driver code (boot upload); the boot upload starts it here
-SPCINSTR		=	$2B00			; instrument table of the boot set (6 bytes per instrument)
-SPCBOOTSAMPLES	=	$2C30			; first BRR sample of the boot set
-SPCSAMPLES		=	$2C50			; first BRR sample of the in-game set
-SPCRESUME		=	$0800			;driver entry after the in-game sample upload (the boot upload starts the
-									;driver at $0400)
-SPCDRIVERSIZE	=	$26E7			; bytes of the SPC700 program (SPCDriver .. SPCDriverEnd)
-BOOTSAMPLESIZE	=	$5271			; bytes of Extracted/Sound/bootsamples.brr
-GAMESAMPLESIZE	=	$B814			; bytes of the in-game BRR samples (GameSamples)
 ; sounds (sfx numbers)
 SFXstop			=	$9C				; +0/1: skate stop (dostop, controlled player)
 SFXshothard		=	$8F				; shot with passspeed >= $32
@@ -320,19 +315,7 @@ SFXstop2		=	$9D				; skate stop, second sound (SFXstop+1)
 SFXcrowd		=	$80				; +1-7: crowd noise level, loops (updatesound)
 SFXcrowdoff		=	$88				; crowd noise off
 
-;rink distances
-goalline	=	$B0					; Blueline+goalline = $108
-; rink
-Blueline	=	$58
-Sideline	=	$88					; distance from center to side boards
-
-;memory layout, replay
-replaystart	=	$7E8174		; first replay frame record
-replaysize		=	$71				; bytes per replay frame record
-replayend		=	$7EFF41		; replay buffer end: adda43 wraps to replaystart
-Sortobjs	=	16					; number of sorted graphics objects
-
-;SNES port: the 68k registers in direct page (a0-a4, d0-d7: 4 bytes each, word code uses the low word), scratch and math operands
+;scratch / port registers (SNES port artifacts: the 68k registers in direct page (a0-a4, d0-d7: 4 bytes each, word code uses the low word), scratch, math operands and the jml trampoline)
 xsave		=	$0A					;X saved around the movem-style push/pop loops of the 68k port (stx xsave
 									;: ldx #0 ...)
 a0				=	$33				; 68k a0: object index (SCnum*2) or long pointer [a0] (a0+2 = bank)
@@ -359,6 +342,21 @@ mulres			=	$93				; multiply result low word; mulres+2 = high word (68k swap)
 mulneg			=	$98				; muls32: count of negative operands
 mulsign			=	$81				; divs: count of negative operands
 mulcnt			=	$87				; divs: bit loop count (16)
+jmlvector			=	$0178		;RAM jml trampoline: $5C (jml opcode, set by Start), target at +1..+3. sfx
+									;returns through it, updateplayers calls the assignment through it
+JMLOPCODE		=	$5C				; jml opcode (sfxretjml)
+
+;rink distances
+goalline	=	$B0					; Blueline+goalline = $108
+; rink
+Blueline	=	$58
+Sideline	=	$88					; distance from center to side boards
+
+;memory layout, replay
+replaystart	=	$7E8174		; first replay frame record
+replaysize		=	$71				; bytes per replay frame record
+replayend		=	$7EFF41		; replay buffer end: adda43 wraps to replaystart
+Sortobjs	=	16					; number of sorted graphics objects
 
 ;video: vram layout and tile bases
 BigFontchars	=	$1BD1			; vram tiles for the big font
@@ -883,8 +881,6 @@ sndqout		=	$1F					; sound command queue read index
 sndlock		=	$21					;nonzero while main code changes the sound command queue (bank $82); set
 									;by Start during sound init
 sndqueue	=	$23					; sound command queue (8 words)
-jmlvector			=	$0178		;RAM jml trampoline: $5C (jml opcode, set by Start), target at +1..+3. sfx
-									;returns through it, updateplayers calls the assignment through it
 goalcue				=	$0429		;nonzero: home team just scored (lead 0-2): assfaceoff plays the goal
 									;music cue at the next faceoff
 percue				=	$042B		; nonzero: period just started: assfaceoff plays the period music cue
@@ -905,7 +901,7 @@ cursong			=	$1651			;song playing on the SPC (0 = none); set by the song starter
 ; sndbank: the sample set loaded into the SPC700 (1 = the in-game sounds, 2 = the boot set)
 SoundBankGame	=	1
 SoundBankBoot	=	2
-; The values cursong takes: the starters' own numbers (the cue of the same song is the Sng* value below).
+; The values cursong takes: the starters' own numbers (the cue of the same song is the Sng* value in the song group).
 CurSngGoal		=	1
 CurSngPeriodStart	=	2
 CurSngLateGame	=	3
@@ -915,10 +911,3 @@ CurSngTitle		=	6
 CurSngEOP		=	7
 CurSngEOG		=	8
 CurSngPO		=	9
-; The frames a music cue plays (cuetimer), during which sound effects are dropped
-SngGoalLen		=	$0240
-SngPeriodStartLen	=	$01CE
-SngLateGameLen	=	$0474
-SngPPLen		=	$022E
-SngFaceoffLen	=	$041A
-JMLOPCODE		=	$5C				; jml opcode (sfxretjml)

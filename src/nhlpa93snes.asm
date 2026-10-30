@@ -6,6 +6,7 @@ lorom
 check bankcross off
 incsrc "macros/snes93.mac"
 incsrc "ram93s.asm"
+incsrc "data/sound/spcaddr.asm"
 incsrc "banks/b80_engine.asm"
 incsrc "banks/b81_samples.asm"
 incsrc "banks/b82_samples_rink.asm"
