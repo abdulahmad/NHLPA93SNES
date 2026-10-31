@@ -110,7 +110,7 @@ Replaced the remaining raw SPA and SPF immediates with equates that already exis
 | routines/logic/puckshadow.asm | 1 | SPFpuck |
 | routines/video/FfoInitTable.asm | 4 | SPFpad+2, SPFpad, SPFpad+1, SPFgloves |
 | routines/video/SortObjInitTable.asm | 16 | SPFskatewp (12 player rows), SPFgoal, SPFgoal+1, SPFpuck+1, SPFpuck |
-| routines/hockey/updateplayers.asm | 2 | SPFfinjury, SPFPen |
+| routines/logic/players/updateplayers.asm | 2 | SPFfinjury, SPFPen |
 | routines/logic/GetHot.asm | 1 | SPFPen |
 
 38 replacements of immediates that already had equates. The SNES sprite-set frames that have no 68000 SPF base now have their own:

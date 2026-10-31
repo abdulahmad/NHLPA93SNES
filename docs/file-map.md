@@ -126,7 +126,7 @@ org `$808000`.
 - `$80BF6A` routines/tables/Penaltylist.asm (also PenDataEOP, PenDataEOG, PenDataGoal, PenDataNoText, PenDataice, PenDataoffsides, PenDataGhold, PenDatadelay, PenDatawhistle, PenDatacharge, PenDataslash, PenDatatrip, PenDatarough2, PenDatarough, PenDatahook, PenDatacross, PenDataint, PenDataHold, PenDatafight, PenDatafight2, PenDataInst)
 - `$80C18F` routines/penalty/penalties/AddPenalty.asm
 - `$80C1B0` routines/penalty/penalties/AddPenalty2.asm
-- `$80C278` routines/hockey/collisions/freezewindow.asm
+- `$80C278` routines/logic/collisions/freezewindow.asm
 - `$80C28B` routines/sound/sfx.asm
 - `$80C2B4` routines/hockey/replay/updatereplay.asm
 - `$80C3D4` routines/hockey/input/demoread.asm
@@ -134,7 +134,7 @@ org `$808000`.
 - `$80C429` routines/middle/input/ReadJoy2.asm
 - `$80C447` routines/middle/input/ReadJoy.asm
 - `$80C45D` routines/middle/input/jdtab.asm
-- `$80C46D` routines/hockey/players/updateplayers.asm
+- `$80C46D` routines/logic/players/updateplayers.asm
 - `$80C894` routines/hockey/collisions/checkcoll.asm
 - `$80CA1D` routines/hockey/collisions/checkwallcoll.asm
 - `$80CBB1` routines/middle/math/Sroot.asm
@@ -161,8 +161,8 @@ org `$808000`.
 - `$80E073` routines/logic/controls/faceoffinput.asm
 - `$80E0C5` routines/logic/controls/Holdplayer.asm
 - `$80E0E1` routines/logic/controls/setpads.asm
-- `$80E13E` routines/hockey/display/updateanim.asm
-- `$80E1E8` routines/hockey/collisions/checkwindow.asm
+- `$80E13E` routines/logic/display/updateanim.asm
+- `$80E1E8` routines/logic/collisions/checkwindow.asm
 - `$80E35E` routines/video/sprites/setvideo.asm
 - `$80E3C9` routines/video/rink/updatescroll.asm
 - `$80E3E7` routines/video/objects/checkfo.asm
