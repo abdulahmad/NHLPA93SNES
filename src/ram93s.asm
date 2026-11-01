@@ -266,13 +266,6 @@ JOYR		=	$0010				; R shoulder
 JOYL		=	$0020				; L shoulder
 JOYA		=	$0080				; A button (same bit as cbut; the menus test it as A)
 osflag	=	$4E20				; find3d: d1 for a point off the screen (20000)
-; pad state (ReadPads, orjoy)
-PadRaw3				=	$0162		; controller 3 buttons (multitap)
-PadRaw4				=	$0164		; controller 4 buttons
-padlast1			=	$0166		; 4 words: buttons at the last ReadPads (PadRaw1-4)
-padnew1				=	$016E		; 4 words: buttons newly pressed at the last ReadPads (PadRaw1-4)
-padvcount			=	$0176		; Vcount of the last ReadPads (the pads are read once per frame)
-cheatpads	=	$1648				; 3 words: the last three new pad presses (the unreached Gameloop .cheat)
 
 ;sound: songs, sound effects and the sound driver (93S: SNES song and sfx numbers, SPC700 driver)
 ; The songs, numbered as the game numbers them: the cue number on port 0 of the sound program (92 and 93G
@@ -435,9 +428,9 @@ textdirtyhi		=	$D2				; highest changed word of textmap
 CC_Font1		=	$FF				; font 1
 CC_Font2		=	$FE				; font 2
 CC_Font1Pal1	=	$EF				; font 1, palette 1
+CC_Font1Pal3	=	$CF				; font 1, palette 3
 CC_Font1Pri		=	$BF				; font 1, priority set
 CC_Font2Pri		=	$BE				; font 2, priority set
-CC_Font1Pal3	=	$CF				; font 1, palette 3
 CC_Font1Pal2Pri	=	$9F				; font 1, palette 2, priority set
 ; whole-String markers (a String of just this byte): the list / page readers test it
 CC_ListEnd		=	$FF				; ends a label list (ScoutLabels)
@@ -667,6 +660,12 @@ lj1					=	$0185		; last controller 1 buttons (debounce)
 lj2					=	$0187
 PadRaw1				=	$015E		; controller 1 buttons (SNES joypad bits, JOY* masks)
 PadRaw2				=	$0160		; controller 2 buttons
+PadRaw3				=	$0162		; controller 3 buttons (multitap)
+PadRaw4				=	$0164		; controller 4 buttons
+padlast1			=	$0166		; 4 words: buttons at the last ReadPads (PadRaw1-4)
+padnew1				=	$016E		; 4 words: buttons newly pressed at the last ReadPads (PadRaw1-4)
+padvcount			=	$0176		; Vcount of the last ReadPads (the pads are read once per frame)
+cheatpads	=	$1648				; 3 words: the last three new pad presses (the unreached Gameloop .cheat)
 ; last touch
 ltplayer			=	$018B		; last touch player (SCnum)
 ltx					=	$018D		; last touch x
@@ -787,9 +786,9 @@ lcplayer			=	$0183		;SCnum of the player who opened the line change box ($FFFE =
 									;one)
 
 ;penalties and ref
+PenaltyBufferEnd	=	$129C		; the word before PenBuf (PenBuf-2), used as the list base
 PenBuf				=	$129E		; up to 32 penalties: (penalty number, SCnum) byte pairs, 0 = free
 PenCntDwn			=	$12E0		; penalty/fight count down (negative = fight over)
-PenaltyBufferEnd	=	PenBuf-2	; the word before PenBuf, used as the list base
 Penaltytimer			=	$12E2		; frames to the next penalty clock second (updatepentime, 24 per second)
 PBnum				=	$12E4		; players in the penalty boxes: home*16 + visitors
 InjCntDown			=	$12E6
