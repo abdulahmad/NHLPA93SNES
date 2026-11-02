@@ -1,5 +1,13 @@
 # Handoff: NHLPA93 SNES
 
+## Now
+
+- Stage / unit: see the shared plan (https://github.com/abdulahmad/nhl-disasm-report/blob/main/docs/ALIGNMENT.md); alignment work for 93S is on `claude/project-thread-ggw7zu`.
+- Branch: `claude/project-thread-ggw7zu`
+- Last check: (update when you stop)
+- Next: (update when you stop)
+- Open PRs: none
+
 ## Status (2026-10-20)
 
 - Everything is merged. `node tools/build.js` is byte-identical to the retail ROM. The long plan below is history: its steps 1 to 5 are merged (including the comment pass: every label has a comment).
