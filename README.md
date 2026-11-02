@@ -49,7 +49,7 @@ The SNES port is a hybrid: it began as a port of NHL92 Genesis (likely while NHL
 4. Run `npm run build:retail` (or `node tools/build.js retail`). It prints one line per step, with a short note under it and the result under that:
 
     1. **prebuild**: check the ROM and extract graphics, sound and text assets into `Extracted/` (when it is missing or stale).
-    2. **names**: `src/data/teamdata93s.asm` has placeholders instead of the NHLPA player names (they are licensed data and are not in the repository). The prebuild extracts the real names from your ROM into `Extracted/Text/PlayerNames.txt`, and this step writes them into a copy, `output/retail/obj/teamdata93s.asm`, which `src/banks/b83_teams.asm` includes. A name must have the length of its placeholder.
+    2. **names**: `src/data/teamdata93s.asm` has placeholders instead of the NHLPA player names (they are licensed data and are not in the repository). The prebuild extracts the real names from your ROM into `Extracted/Text/PlayerNames.txt`, and this step writes them into a copy, `output/retail/obj/teamdata93s.asm`, which `src/banks/b83_teams_rink.asm` includes. A name must have the length of its placeholder.
     3. **assemble**: asar turns `src/nhlpa93snes.asm` into the ROM image.
     4. **header**: pad the image and store the checksum if the ROM grew (`tools/patchHeader.js`; the stock image is left as it is).
     5. **verify**: compare byte for byte with `nhlpa93retail.sfc`.

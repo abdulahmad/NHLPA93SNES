@@ -183,7 +183,7 @@ async function assemble(name) {
 
 // The team data: src/data/teamdata93s.asm holds placeholders instead of the NHLPA player names. The extractor writes the real
 // names from the ROM to Extracted/Text/PlayerNames.txt (one per line, in the order of the %Player rows); this copies the source
-// to obj/teamdata93s.asm with each placeholder replaced by its name, which src/banks/b83_teams.asm includes. A name must have
+// to obj/teamdata93s.asm with each placeholder replaced by its name, which src/banks/b83_teams_rink.asm includes. A name must have
 // the length of its placeholder: the %Player macro writes the length word, so a different length would move the data after it.
 // The copy is two folders deeper than the source, so its relative incbin paths get one more "../".
 function buildTeamData() {
@@ -240,7 +240,7 @@ function buildTeamData() {
         detail(r.out);
     }
 
-    // 2. names: the team data with the real player names, which b83_teams.asm includes.
+    // 2. names: the team data with the real player names, which b83_teams_rink.asm includes.
     buildTeamData();
 
     // 3. assemble: the ROM.

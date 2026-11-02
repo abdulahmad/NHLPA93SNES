@@ -9,7 +9,7 @@ The SNES internal header and vectors are in `src/header/snes_header.asm` (end of
 The ROM is 512 KB (banks $80-$8F). Bank $90 is not in the default build; docs/adding-a-team.md says how to add it.
 Regenerate this file with `python3 tools/gen_file_map.py` after `npm run build:retail`.
 
-## src/banks/b80_engine.asm
+## src/banks/b80_engine_game.asm
 
 org `$808000`.
 
@@ -204,7 +204,7 @@ org `$808000`.
 
 org `$818000` when `pc()` is below it.
 
-- `$818000` data/sound/gamesound.asm (also GameSampleDir, GameSampleDirEnd, GameSamples, GameSamplesEnd)
+- `$818000` data/sound/gamesound.asm (also GameSampleDir, GameSampleDirEnd, GameSamples, sfx_whistle_brr, sfx_whistle_brr_loop, sfx_crowdcheer_brr, sfx_check_brr, sfx_check2_brr, sfx_oooh_brr, sfx_hithigh_brr, sfx_shotfh_brr, sfx_shotbh_brr, sfx_crowdboo_brr, sfx_puckwall_brr, sfx_puckpost_brr, sfx_shotwiff_brr, sfx_shotwiff2_brr, sfx_stop_brr, sfx_playerwall_brr, sfx_a1_brr, sfx_a1_brr_loop, sfx_siren_brr, sfx_siren_brr_loop, sample_11_brr, sample_11_brr_loop, sample_12_brr, GameSamplesEnd)
 
 ## src/banks/b82_samples_rink.asm
 
@@ -241,7 +241,7 @@ org `$82B86C` when `pc()` is below it.
 - `$82FDD3` routines/print/appendz.asm
 - `$82FDE7` routines/logic/assignments/asscentero.asm (also unusedFF82)
 
-## src/banks/b83_teams.asm
+## src/banks/b83_teams_rink.asm
 
 org `$838000` when `pc()` is below it.
 
@@ -260,7 +260,7 @@ org `$838000` when `pc()` is below it.
 - `$83FAEC` RefsMap (data)
 - `$83FDFC` routines/logic/assignments/assgoalietopuck.asm (also unusedFF83)
 
-## src/banks/b84_sprites_scouting.asm
+## src/banks/b84_spriteframes_scouting_stats.asm
 
 org `$848000` when `pc()` is below it.
 
@@ -301,7 +301,7 @@ org `$848000` when `pc()` is below it.
 - `$84FE5F` data/text/HandedTextTbl.asm
 - `$84FE6F` routines/stats/AttribWeight.asm (also unusedFF84)
 
-## src/banks/b85_sprites_title.asm
+## src/banks/b85_spriteframes_title.asm
 
 org `$858000` when `pc()` is below it.
 
@@ -314,11 +314,11 @@ org `$858000` when `pc()` is below it.
 - `$85FF96` routines/hockey/util/nullrtl85.asm
 - `$85FF97` routines/hockey/game/ResetClock.asm (also unusedFF85)
 
-## src/banks/b86_sound.asm
+## src/banks/b86_sound_songs.asm
 
 org `$868000` when `pc()` is below it.
 
-- `$868000` data/sound/bootsound.asm (also SPCDriver, SPCCode, fmtune_playoff_order, fmtune_title_order, fmtune_unused2_order, fmtune_goal_order, fmtune_periodstart_order, fmtune_lategame_order, fmtune_unused7_order, fmtune_midperiod_order, fmtune_unused9_order, fmtune_playoff_set, fmtune_title_set, fmtune_unused2_set, fmtune_goal_set, fmtune_periodstart_set, fmtune_lategame_set, fmtune_unused7_set, fmtune_midperiod_set, fmtune_unused9_set, fmtune_playoff_stream, fmtune_unused2_stream, fmtune_unused9_stream, fmtune_title_stream, fmtune_goal_stream, fmtune_lategame_stream, fmtune_periodstart_stream, fmtune_unused7_stream, fmtune_midperiod_stream, fmtune_title_stream2, fmtune_unused2_stream2, fmtune_unused9_stream2, fmtune_goal_stream2, fmtune_midperiod_stream2, fmtune_unused7_stream2, fmtune_periodstart_stream2, fmtune_lategame_stream2, fmtune_goal_stream3, fmtune_title_stream3, fmtune_playoff_stream2, fmtune_unused2_stream3, sfx_table, sfx_a1, sfx_siren, sfx_crowd0, sfx_crowd1, sfx_crowd2, sfx_crowd3, sfx_crowd4, sfx_crowd5, sfx_crowd6, sfx_crowd7, sfx_crowdoff, sfx_check1, sfx_check2, sfx_playerwall, sfx_playerwall2, sfx_shothard, sfx_puckwall1, sfx_puckwall2, sfx_puckwall3, sfx_hithigh, sfx_hitlow, sfx_shotfh, sfx_shotbh, sfx_puckpost, sfx_stop1, sfx_stop2, sfx_shotwiff2, sfx_shotwiff1, sfx_shotwiff4, sfx_shotwiff3, sfx_crowdboo, sfx_oooh2, sfx_crowdcheer, sfx_whistle, SPCDriverEnd, BootInstruments, BootInstrumentsEnd, BootSampleDir, BootSampleDirEnd, BootSamples, BootSamplesEnd)
+- `$868000` data/sound/bootsound.asm (also SPCDriver, SPCCode, SPCCodeEnd, fmtune_playoff_order, fmtune_title_order, fmtune_unused2_order, fmtune_goal_order, fmtune_periodstart_order, fmtune_lategame_order, fmtune_unused7_order, fmtune_midperiod_order, fmtune_unused9_order, fmtune_playoff_set, fmtune_title_set, fmtune_unused2_set, fmtune_goal_set, fmtune_periodstart_set, fmtune_lategame_set, fmtune_unused7_set, fmtune_midperiod_set, fmtune_unused9_set, fmtune_playoff_stream, fmtune_unused2_stream, fmtune_unused9_stream, fmtune_title_stream, fmtune_goal_stream, fmtune_lategame_stream, fmtune_periodstart_stream, fmtune_unused7_stream, fmtune_midperiod_stream, fmtune_title_stream2, fmtune_unused2_stream2, fmtune_unused9_stream2, fmtune_goal_stream2, fmtune_midperiod_stream2, fmtune_unused7_stream2, fmtune_periodstart_stream2, fmtune_lategame_stream2, fmtune_goal_stream3, fmtune_title_stream3, fmtune_playoff_stream2, fmtune_unused2_stream3, sfx_table, sfx_a1, sfx_siren, sfx_crowd0, sfx_crowd1, sfx_crowd2, sfx_crowd3, sfx_crowd4, sfx_crowd5, sfx_crowd6, sfx_crowd7, sfx_crowdoff, sfx_check1, sfx_check2, sfx_playerwall, sfx_playerwall2, sfx_shothard, sfx_puckwall1, sfx_puckwall2, sfx_puckwall3, sfx_hithigh, sfx_hitlow, sfx_shotfh, sfx_shotbh, sfx_puckpost, sfx_stop1, sfx_stop2, sfx_shotwiff2, sfx_shotwiff1, sfx_shotwiff4, sfx_shotwiff3, sfx_crowdboo, sfx_oooh2, sfx_crowdcheer, sfx_whistle, SPCDriverEnd, BootInstruments, BootInstrumentsEnd, BootSampleDir, BootSampleDirEnd, BootSamples, BootSamplesEnd)
 - `$86FA3E` routines/decompress/DecompressBytecode.asm
 - `$86FB96` routines/hockey/teams/RestoreBenchEnergy.asm
 - `$86FBE1` routines/sound/StartSngTitle.asm
@@ -333,7 +333,7 @@ org `$868000` when `pc()` is below it.
 - `$86FCE3` routines/hockey/teams/PickStartingGoalie.asm
 - `$86FD86` routines/logic/assignments/assscore.asm (also unusedFF86)
 
-## src/banks/b87_sprites_refs.asm
+## src/banks/b87_spriteframes.asm
 
 org `$878000` when `pc()` is below it.
 
@@ -349,7 +349,7 @@ org `$878000` when `pc()` is below it.
 - `$87F55E` RefTiles (data)
 - `$87FF78` routines/logic/assignments/assepen.asm (also unusedFF87)
 
-## src/banks/b88_sprites_teamblocks.asm
+## src/banks/b88_spriteframes_setup_playoffs.asm
 
 org `$888000` when `pc()` is below it.
 
@@ -380,7 +380,7 @@ org `$888000` when `pc()` is below it.
 - `$88FDB2` routines/hockey/password/SuperAdd.asm
 - `$88FDD0` routines/logic/skating/skateto.asm (also unusedFF88)
 
-## src/banks/b89_sprites_replay.asm
+## src/banks/b89_spriteframes_refs_replay.asm
 
 org `$898000` when `pc()` is below it.
 
@@ -410,7 +410,7 @@ org `$898000` when `pc()` is below it.
 - `$89FD6A` routines/logic/skating/EvadePC.asm
 - `$89FDD6` routines/logic/assignments/asswingd.asm (also unusedFF89)
 
-## src/banks/b8A_sprites.asm
+## src/banks/b8A_spriteframes.asm
 
 org `$8A8000` when `pc()` is below it.
 
@@ -421,7 +421,7 @@ org `$8A8000` when `pc()` is below it.
 - `$8AFD6D` routines/logic/lines/getlchoice.asm
 - `$8AFE21` routines/penalty/highlights/SetScore.asm (also unusedFF8A)
 
-## src/banks/b8B_sprites.asm
+## src/banks/b8B_spriteframes.asm
 
 org `$8B8000` when `pc()` is below it.
 
@@ -437,7 +437,7 @@ org `$8B8000` when `pc()` is below it.
 - `$8BFFCC` routines/video/hud/showref.asm
 - `$8BFFD3` routines/logic/skating/skatetopuckinit.asm
 
-## src/banks/b8C_sprites.asm
+## src/banks/b8C_spriteframes_logos.asm
 
 org `$8C8000` when `pc()` is below it.
 
@@ -446,7 +446,7 @@ org `$8C8000` when `pc()` is below it.
 - `$8CFC1A` routines/video/objects/checksso.asm
 - `$8CFD83` routines/logic/puck/chk4pass.asm (also unusedFF8C)
 
-## src/banks/b8D_sprites.asm
+## src/banks/b8D_spriteframes_fonts.asm
 
 org `$8D8000` when `pc()` is below it.
 
@@ -473,7 +473,7 @@ org `$8D8000` when `pc()` is below it.
 - `$8DFE1B` routines/logic/controls/clrplayer.asm
 - `$8DFE36` routines/logic/skating/avdgoal.asm (also unused008D)
 
-## src/banks/b8E_sprites.asm
+## src/banks/b8E_spriteframes.asm
 
 org `$8E8000` when `pc()` is below it.
 
@@ -484,7 +484,7 @@ org `$8E8000` when `pc()` is below it.
 - `$8ED9A7` SpriteSet14 (data)
 - `$8EFE73` routines/logic/assignments/assdefo.asm (also unused008E)
 
-## src/banks/b8F_frontend.asm
+## src/banks/b8F_spriteframes_hud_flow.asm
 
 org `$8F8000` when `pc()` is below it.
 
@@ -567,7 +567,7 @@ org `$8F8000` when `pc()` is below it.
 - `$8FE2F9` routines/penalty/penalties/ClearPenaltyBuffer.asm
 - `$8FE316` routines/middle/math/randomd0s.asm
 - `$8FE32B` routines/hockey/screens/DefaultMenus.asm
-- `$8FE369` routines/hockey/collisions/checkagr.asm"
+- `$8FE369` routines/hockey/collisions/checkagr.asm
 - `$8FE3B0` routines/middle/util/WeightedRandomSelect.asm
 - `$8FE404` routines/video/interrupts/forceblack.asm
 - `$8FE43C` routines/logic/controls/passmode.asm
