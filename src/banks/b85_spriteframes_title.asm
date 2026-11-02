@@ -12,7 +12,7 @@ Title1Map:							;the title screen backdrop, packed (map, palette, tiles)
 	incbin "../../Extracted/Graphics/Title1.map.sjim"
 
 incsrc "../routines/video/sprites/SetSframeHi.asm"
-incsrc "../routines/hockey/input/getpzjoy.asm"
-incsrc "../routines/hockey/screens/setoptions_teamnames.asm"
-incsrc "../routines/hockey/util/nullrtl85.asm"
+incsrc "../routines/hockey/replay/getpzjoy.asm"
+incsrc "../routines/hockey/optsetup/setoptions_teamnames.asm"
+incsrc "../routines/hockey/optsetup/nullrtl85.asm"
 incsrc "../routines/hockey/game/ResetClock.asm"

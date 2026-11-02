@@ -5,7 +5,7 @@ if pc() < $8E8000
 	org $8E8000
 endif
 incsrc "../routines/hockey/game/Gameloop.asm"
-incsrc "../routines/hockey/teams/FormatPlayerNumInitial.asm"
+incsrc "../routines/hockey/setup/FormatPlayerNumInitial.asm"
 incsrc "../routines/logic/assignments/assbench.asm"
 SpriteSet3:							;frame set 3 (SPFcelebrate, SPFpump, SPFcup): frames 185-224
 	incbin "../../Extracted/Graphics/Sprites/Sprites185_224.sanim"

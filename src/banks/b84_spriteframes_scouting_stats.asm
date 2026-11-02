@@ -15,18 +15,18 @@ FaceOffMap:							;the 12 x 10 faceoff box map (tiles from FaceOffTiles, attribu
 									;copied into textmap by puckfaceoff2
 	incbin "../../Extracted/Graphics/FaceOff.smap"
 
-incsrc "../routines/print/ConvertByteToDigits.asm"
-incsrc "../routines/hockey/teams/UpdateRosterPlayers.asm"
-incsrc "../routines/hockey/teams/UpdateRosterPlayer.asm"
-incsrc "../routines/hockey/teams/SlideOutRosterPlayer.asm"
-incsrc "../routines/hockey/teams/SetupNextPlayer.asm"
-incsrc "../routines/hockey/teams/PickRosterAnim.asm"
-incsrc "../routines/hockey/teams/GetRosterEntry.asm"
-incsrc "../routines/hockey/teams/SkaterRosterAnims.asm"
-incsrc "../routines/hockey/teams/GoalieRosterAnims.asm"
-incsrc "../routines/hockey/teams/RosterAnimScripts.asm"
-incsrc "../routines/hockey/teams/RosterOrderTable.asm"
-incsrc "../routines/hockey/display/UpdateTeamSprites.asm"
+incsrc "../routines/hockey/setup/ConvertByteToDigits.asm"
+incsrc "../routines/hockey/optsetup/UpdateRosterPlayers.asm"
+incsrc "../routines/hockey/optsetup/UpdateRosterPlayer.asm"
+incsrc "../routines/hockey/optsetup/SlideOutRosterPlayer.asm"
+incsrc "../routines/hockey/optsetup/SetupNextPlayer.asm"
+incsrc "../routines/hockey/optsetup/PickRosterAnim.asm"
+incsrc "../routines/hockey/optsetup/GetRosterEntry.asm"
+incsrc "../routines/hockey/optsetup/SkaterRosterAnims.asm"
+incsrc "../routines/hockey/optsetup/GoalieRosterAnims.asm"
+incsrc "../routines/hockey/optsetup/RosterAnimScripts.asm"
+incsrc "../routines/hockey/optsetup/RosterOrderTable.asm"
+incsrc "../routines/hockey/optsetup/UpdateTeamSprites.asm"
 
 HotList:							;hot spot (stick blade) x, y bytes for every sprite frame, read by GetHot
 	incbin "../../Extracted/Graphics/HotList.bin"
@@ -37,15 +37,15 @@ RinkLogoTiles:						;packed rink logo tiles (14 tiles, $1C0 bytes unpacked), sen
 	incbin "../../Extracted/Graphics/RinkLogoTiles.chr.pak"
 RinkLogoTilesEnd:					; end of RinkLogoTiles
 
-incsrc "../routines/hockey/screens/UpdateScoutingDisplay.asm"
-incsrc "../routines/hockey/screens/ScrollDisplayUp.asm"
+incsrc "../routines/hockey/setup/UpdateScoutingDisplay.asm"
+incsrc "../routines/hockey/setup/ScrollDisplayUp.asm"
 
 PlayoffTiles:						;packed playoff screen palette and tiles (decompressor
 									;DecompressBytecode): 128 colors, then 6 tiles; PlayoffScreen sends them
 									;to vram $1000
 	incbin "../../Extracted/Graphics/PlayoffTiles.chr.pak"
 
-incsrc "../routines/video/objects/defaultsprites_0.asm"
+incsrc "../routines/hockey/setup/defaultsprites_0.asm"
 incsrc "../routines/video/objects/SsoInitTable.asm"
 incsrc "../routines/video/objects/FfoInitTable.asm"
 incsrc "../routines/video/objects/SortObjInitTable.asm"
