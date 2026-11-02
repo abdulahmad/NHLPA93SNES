@@ -80,7 +80,7 @@ org `$808000`.
 - `$80A1B4` routines/hockey/collide/makepde.asm
 - `$80A21A` routines/hockey/collide/puckbody.asm
 - `$80A2FA` routines/hockey/collide/puckgoalie.asm
-- `$80A52A` routines/logic/puck/pucknothing.asm
+- `$80A52A` routines/logic/puck/puckunflip.asm
 - `$80A550` routines/logic/puck/puckfaceoff.asm
 - `$80A70F` routines/logic/lines/SetLCmode.asm
 - `$80A748` routines/logic/lines/SetLCmode2.asm

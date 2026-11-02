@@ -96,5 +96,5 @@ pucknorm:							;Assignment: the puck most of the time. Follows the carrier, wat
 	beq .flat
 	jmp.w checkpuckcoll
 .flat:								; stop spinning, check collisions
-	jsl.l pucknothing				; pucknothing: stop spinning
+	jsl.l puckunflip				; puckunflip: stop spinning
 	jmp.w checkpuckcoll				; bra checkpuckcoll

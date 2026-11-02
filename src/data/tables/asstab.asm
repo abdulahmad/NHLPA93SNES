@@ -83,7 +83,7 @@ pshad	=	$19						;puck object: puck shadow
 	dd puckshadow
 pnothing	=	$1A					;puck object: just slides along
 	assert (pc()-asstab)/4 == pnothing
-	dd pucknothing
+	dd puckunflip
 pfaceoff	=	$1B					;puck object: faceoff start
 	assert (pc()-asstab)/4 == pfaceoff
 	dd puckfaceoff
