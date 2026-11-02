@@ -5,7 +5,7 @@
 ; then the work RAM in 93G's rs order; 93S-only names in the group they belong to.
 ; Prefer the 68000 RAM names for the same role. Define each name once.
 ; Like the 93G module files, data/teamdata93s.asm holds the team record offsets, data/frames93s.asm
-; the animation and sprite frame equates and routines/tables/asstab.asm the assignment names.
+; the animation and sprite frame equates and data/tables/asstab.asm the assignment names.
 ;
 ; Format: Name = $xxxx (asar equate). DP names are < $100 and are written with .b; others with .w / .l.
 

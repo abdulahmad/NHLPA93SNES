@@ -123,7 +123,7 @@ org `$808000`.
 - `$80BE47` routines/logic/computer/ReturnGoalies.asm (also ReturnGoalies_r)
 - `$80BE89` routines/logic/computer/CPgoalie.asm
 - `$80BED1` routines/hockey/game/updatecrowdf.asm
-- `$80BF6A` routines/tables/Penaltylist.asm (also PenDataEOP, PenDataEOG, PenDataGoal, PenDataNoText, PenDataice, PenDataoffsides, PenDataGhold, PenDatadelay, PenDatawhistle, PenDatacharge, PenDataslash, PenDatatrip, PenDatarough2, PenDatarough, PenDatahook, PenDatacross, PenDataint, PenDataHold, PenDatafight, PenDatafight2, PenDataInst)
+- `$80BF6A` data/tables/Penaltylist.asm (also PenDataEOP, PenDataEOG, PenDataGoal, PenDataNoText, PenDataice, PenDataoffsides, PenDataGhold, PenDatadelay, PenDatawhistle, PenDatacharge, PenDataslash, PenDatatrip, PenDatarough2, PenDatarough, PenDatahook, PenDatacross, PenDataint, PenDataHold, PenDatafight, PenDatafight2, PenDataInst)
 - `$80C18F` routines/penalty/penalties/AddPenalty.asm
 - `$80C1B0` routines/penalty/penalties/AddPenalty2.asm
 - `$80C278` routines/logic/collisions/freezewindow.asm
@@ -375,7 +375,7 @@ org `$888000` when `pc()` is below it.
 - `$88F2B0` routines/hockey/title/TitleScreen.asm
 - `$88F4F0` data/text/CreditsBlank.asm
 - `$88F512` routines/hockey/playoffs/PlayoffScreen.asm
-- `$88F9FB` routines/tables/PlayoffScreen_setup.asm
+- `$88F9FB` data/tables/PlayoffScreen_setup.asm
 - `$88FBA6` routines/logic/assignments/assdefd.asm
 - `$88FDB2` routines/hockey/password/SuperAdd.asm
 - `$88FDD0` routines/logic/skating/skateto.asm (also unusedFF88)
@@ -462,7 +462,7 @@ org `$8D8000` when `pc()` is below it.
 - `$8D85A9` routines/hockey/setup/PeriodOver.asm
 - `$8D8605` routines/hockey/setup/GetPlayerName.asm
 - `$8D865A` routines/video/interrupts/updatesound.asm
-- `$8D86A8` routines/tables/asstab.asm
+- `$8D86A8` data/tables/asstab.asm
 - `$8D871C` routines/middle/math/mulu16.asm
 - `$8D87B0` routines/logic/puck/puckshadow.asm
 - `$8D87FB` routines/hockey/setup/setd0player.asm
@@ -490,7 +490,7 @@ org `$8F8000` when `pc()` is below it.
 
 - `$8F8000` BigFontMap (data)
 - `$8F8130` routines/penalty/scoreboard/dobar.asm
-- `$8F8213` routines/tables/linelist.asm
+- `$8F8213` data/tables/linelist.asm
 - `$8F8236` data/text/PerLabels.asm
 - `$8F824D` EASNLogoMap (data)
 - `$8F8269` data/gfx/BigFontIndex.asm
@@ -592,8 +592,8 @@ org `$8F8000` when `pc()` is below it.
 - `$8FF63D` routines/penalty/penalties/prefmes.asm
 - `$8FF741` routines/hockey/game/CheckInjury.asm
 - `$8FF74A` routines/hockey/collide/setInjuryType.asm
-- `$8FF7B6` routines/tables/sublist.asm
-- `$8FF820` routines/tables/priolist.asm
+- `$8FF7B6` data/tables/sublist.asm
+- `$8FF820` data/tables/priolist.asm
 - `$8FF827` routines/hockey/setup/ShowInjuryBox.asm
 - `$8FF8C4` routines/logic/puck/passtoa0.asm
 - `$8FFAF3` routines/stats/GetPlayerCount.asm
@@ -602,7 +602,7 @@ org `$8F8000` when `pc()` is below it.
 - `$8FFB8B` routines/middle/math/divs16.asm
 - `$8FFBDC` routines/logic/skating/doplayeracc.asm
 - `$8FFDD8` routines/logic/controls/ResetAndSelectPlayers.asm
-- `$8FFDFB` routines/tables/updatecrowdf_cd0.asm
+- `$8FFDFB` data/tables/updatecrowdf_cd0.asm
 - `$8FFE7B` routines/sound/MusicCue.asm
 - `$8FFE8E` routines/sound/sfx8F.asm
 - `$8FFEB4` routines/hockey/setup/ShowGoalBox.asm
