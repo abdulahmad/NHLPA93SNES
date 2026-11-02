@@ -12,7 +12,7 @@
 
 ;	tools/build.js (the 'names' step) copies this file to
 ;	output/retail/obj/teamdata93s.asm with the real names put back, and
-;	src/banks/b83_teams.asm includes that copy.
+;	src/banks/b83_teams_rink.asm includes that copy.
 
 ;	Keep the placeholder lengths when editing a name or adding a player.
 ;

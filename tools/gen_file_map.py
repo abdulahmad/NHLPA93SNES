@@ -39,7 +39,7 @@ for b in sorted(glob.glob(os.path.join(SRC, 'banks', '*.asm'))):
         files += 1
         f = m.group(1)
         if f.endswith('output/retail/obj/teamdata93s.asm'):
-            f = 'data/teamdata93s.asm'    # b83_teams.asm includes the copy tools/build.js makes with the real player names
+            f = 'data/teamdata93s.asm'    # b83_teams_rink.asm includes the copy tools/build.js makes with the real player names
         g = [x for x in re.findall(r'^([A-Za-z_]\w*):', open(os.path.join(SRC, f)).read(), re.M)]
         a = sym.get(g[0], '??????') if g else ('80FFC0' if 'snes_header' in f else '??????')
         out.append('- `$%s` %s%s' % (a, f, (' (also ' + ', '.join(g[1:]) + ')') if len(g) > 1 else ''))
