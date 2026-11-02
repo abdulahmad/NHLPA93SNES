@@ -30,3 +30,4 @@ ClearTeamStats,clearTeamStats,93G
 (raw offset),pldpass,92G setplayer fields (.pld rating byte; as 94G)
 (raw offset),pldsize,92G setplayer fields (.pld rating byte; as 94G)
 (raw offset),tmftimeout,93G (tmfmid and tmfslide share it)
+GetRosterEntry89,GetPlayerNamePointer,93G (same callers getname and FormatPlayerNumInitial; 93G keeps GetRosterEntry as the other copy)

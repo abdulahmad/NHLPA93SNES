@@ -1,4 +1,4 @@
-GetRosterEntry89:					;Bank $89 copy of GetRosterEntry (called from getname and
+GetPlayerNamePointer:					;Bank $89 copy of GetRosterEntry (called from getname and
 									;FormatPlayerNumInitial): a0 = the roster record of player d0 of team a2
 	lda.w #TeamList>>16				; team list bank
 	sta.b a0+2

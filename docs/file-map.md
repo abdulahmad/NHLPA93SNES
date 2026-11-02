@@ -403,7 +403,7 @@ org `$898000` when `pc()` is below it.
 - `$89FC63` routines/sound/StartSngFaceoff.asm
 - `$89FC8F` routines/middle/util/CopyWords.asm
 - `$89FCC1` routines/hockey/setup/ClearRosterName.asm
-- `$89FCD8` routines/hockey/setup/GetRosterEntry89.asm
+- `$89FCD8` routines/hockey/setup/GetPlayerNamePointer.asm
 - `$89FCFD` routines/hockey/setup/FinalizeTextBuffer.asm
 - `$89FD0C` routines/hockey/game/StartGame.asm
 - `$89FD3A` routines/hockey/game/restoreteams.asm
