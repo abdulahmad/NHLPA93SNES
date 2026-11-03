@@ -515,7 +515,7 @@ org `$8F8000` when `pc()` is below it.
 - `$8F8960` routines/stats/PrintGameInfo.asm
 - `$8F89A3` data/text/GameLabels.asm
 - `$8F8ABC` routines/video/hud/showzam.asm
-- `$8F8AE9` routines/middle/util/waitxsr.asm
+- `$8F8AE9` routines/middle/util/waitx.asm
 - `$8F8B11` routines/hockey/game/clockcont.asm
 - `$8F8B21` routines/hockey/game/clockcont_0.asm
 - `$8F8C1B` routines/penalty/highlights/DoHiLights.asm

@@ -32,7 +32,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	%String("Highlight from game:")
 	lda.w #180						; 180 frames, Start skips
 	sta.b d0
-	jsl.l waitxsr					; wait d0 frames or a button
+	jsl.l waitx						; wait d0 frames or a button
 	lda.b d1
 	bit.w #sbut
 	beq .play
@@ -373,7 +373,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	jsl.l NewTicker3
 	lda.w #180
 	sta.b d0
-	jsl.l waitxsr					; wait d0 frames or a button
+	jsl.l waitx						; wait d0 frames or a button
 	lda.b d1
 	bit.w #sbut
 	beq .exit
