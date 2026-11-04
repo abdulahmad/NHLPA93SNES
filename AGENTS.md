@@ -5,7 +5,7 @@
 Read, in this order, before any work: this file, `docs/RULES.md`, the Now block at the top of `docs/HANDOFF.md`, and the
 stage of the shared plan that the Now block names (https://github.com/abdulahmad/nhl-disasm-report/blob/main/docs/ALIGNMENT.md; it is on the `claude/project-thread-ggw7zu` branch of nhl-disasm-report until merged).
 
-* **Check:** `node tools/build.js` (prints MATCH; `tools/verify_all.sh` also runs the comment layout check) before every commit. Moves and renames also run the pairing gate in nhl-disasm-report
+* **Check:** `node tools/build.js` (prints MATCH; `tools/verify_all.sh` also runs the comment layout check) before every commit, and `python3 tools/check_scope.py <unit files>` (prints `scope OK`). Moves and renames also run the pairing gate in nhl-disasm-report
   (`tools/gate.sh`); no count may rise. "It looks right" or "the model is confident" is never a check.
 * **Unit:** one folder, one 94G file or one segment, small enough to finish in one session. A worker edits only that unit's
   files, the bank or include lines that point at them, and `docs/name_map.csv`.

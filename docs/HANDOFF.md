@@ -2,11 +2,11 @@
 
 ## Now
 
-- Stage / unit: see the shared plan (https://github.com/abdulahmad/nhl-disasm-report/blob/main/docs/ALIGNMENT.md); alignment work for 93S is on `claude/project-thread-ggw7zu`.
+- Stage / unit: CONTRIBUTING.md rewrite; added `tools/check_scope.py` (HARNESS scope gate).
 - Branch: `claude/project-thread-ggw7zu`
-- Last check: (update when you stop)
-- Next: (update when you stop)
-- Open PRs: none
+- Last check: docs + scope script
+- Next: do not merge to main
+- Open PRs: (this unit)
 
 ## Status (2026-10-20)
 
