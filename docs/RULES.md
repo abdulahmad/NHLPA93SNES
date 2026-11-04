@@ -27,3 +27,4 @@ rule in the same commit as the fix that confirmed it, newest last: `- YYYY-MM-DD
 ## Learned
 
 - 2026-11-04 contributing: CONTRIBUTING.md must not contradict History: lineage lives only in the name history file, never in source comments. (CONTRIBUTING rewrite vs RULES History row)
+- 2026-11-04 comments: leftover trailing comments off column 36 (or over 110 columns) fail verify_all even when the ROM MATCH; realign with tabs, wrap the comment. (origin/main after #120: 134 layout errors)

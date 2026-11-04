@@ -7,14 +7,14 @@ updatereplay:						;Save this frame into the replay buffer
 	lda.w sflags					; state flags
 	bit.w #sf2drec					; sf2drec: keep overwriting the same frame
 	bne .frame
-	lda.w recbpr			; next record
+	lda.w recbpr					; next record
 	clc								; step the pointer by one record
 	adc.w #replaysize
 	sta.w recbpr
 	bcc .wrap
 	inc.w recbpr+2
 .wrap:								; wrap the buffer pointer if at the end
-	cmp.w #replayend&$FFFF	; end of the buffer reached?
+	cmp.w #replayend&$FFFF			; end of the buffer reached?
 	bne .frame
 	lda.w recbpr+2
 	cmp.w #replayend>>16
@@ -26,7 +26,7 @@ updatereplay:						;Save this frame into the replay buffer
 	lda.w #replaystart>>16
 	sta.w recbpr+2
 .frame:								; a0 = current record
-	lda.w recbpr			; a0 = current record
+	lda.w recbpr					; a0 = current record
 	sta.b a0
 	lda.w recbpr+2
 	sta.b a0+2
@@ -100,7 +100,7 @@ updatereplay:						;Save this frame into the replay buffer
 	inx
 	dec.b d2
 	bpl .pl
-	lda.w Zpos+puckscnum				;puck and shadow height, lastsfx, d7, PadControlBits, Crowdframe,
+	lda.w Zpos+puckscnum			;puck and shadow height, lastsfx, d7, PadControlBits, Crowdframe,
 									;glovecords, PBnum, Hpos, Vpos
 	sta.b [a0]						; puck height
 	inc.b a0

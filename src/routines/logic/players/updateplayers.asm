@@ -423,7 +423,7 @@ updateplayers:						;Animation, speed, position, input and assignment for every 
 	dex
 	dex
 	bpl .lim1
-	lda.w Zpos+puckscnum				; puck below 24: keep it inside the boards
+	lda.w Zpos+puckscnum			; puck below 24: keep it inside the boards
 	cmp.w #$0018
 	bcs .py
 	lda.w puckx

@@ -88,7 +88,8 @@ doshot:								;The stick is at the puck: launch it toward the goal
 	bne .0
 	lda.w #-(Blueline+goalline)
 	sta.b d1
-.0:									;d0/d1 = doshot_shotsets[passdir] - puck, d2 = height; d3 = distance to the goal
+.0:									;d0/d1 = doshot_shotsets[passdir] - puck, d2 = height; d3 = distance to
+									;the goal
 	lda.w passdir
 	asl a
 	asl a
@@ -180,7 +181,7 @@ doshot:								;The stick is at the puck: launch it toward the goal
 .ar:								; random aim error
 	lda.b d0
 	pha								; $01,s adjust; after its pla $05,s is the z diff
-	jsl.l randomd0sA					; random number -A to A-1
+	jsl.l randomd0sA				; random number -A to A-1
 	adc.b $03,s
 	sta.b $03,s
 	lda.b $01,s

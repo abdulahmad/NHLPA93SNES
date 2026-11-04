@@ -6,12 +6,12 @@ adda43:								;Step a4 to the next replay frame, wrapping around the replay buf
 	bcc .nc							; carry into the bank
 	inc.b a4+2
 .nc:								; no wrap: carry into the bank
-	cmp.w #replayend&$FFFF	; past the end of the buffer: wrap
+	cmp.w #replayend&$FFFF			; past the end of the buffer: wrap
 	bne .rtl						; not the end of the buffer
 	lda.b a4+2
 	cmp.w #replayend>>16
 	bne .rtl						; not the end
-	lda.w #replaystart&$FFFF	; wrap to the start
+	lda.w #replaystart&$FFFF		; wrap to the start
 	sta.b a4
 	lda.w #replaystart>>16
 	sta.b a4+2

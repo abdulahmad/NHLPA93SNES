@@ -2,10 +2,10 @@
 
 ## Now
 
-- Stage / unit: CONTRIBUTING.md rewrite; added `tools/check_scope.py` (HARNESS scope gate).
-- Branch: `claude/project-thread-ggw7zu`
-- Last check: docs + scope script
-- Next: do not merge to main
+- Stage / unit: comment-layout MATCH (column 36 / wrap at 110).
+- Branch: `cursor/93s-comment-layout-020b`
+- Last check: `tools/verify_all.sh` ALL MATCH; `python3 tools/check_comments.py` comment layout OK
+- Next: do not merge to main (Abdul: item 1 of 1 then 3 then 4)
 - Open PRs: (this unit)
 
 ## Status (2026-10-20)

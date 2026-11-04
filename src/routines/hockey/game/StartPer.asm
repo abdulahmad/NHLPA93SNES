@@ -25,7 +25,7 @@ StartPer:							;Start a period: reset the rink and clock, face off at center ic
 	sta.w c1playernum
 	sta.w c2playernum
 	sta.w lcplayer
-	ldx.w #puckscnum					; puck: puckfaceoff at centre ice
+	ldx.w #puckscnum				; puck: puckfaceoff at centre ice
 	stx.b a3
 	stz.w fox						; face off x = 0
 	stz.w foy						; face off y = 0
@@ -65,7 +65,7 @@ StartPer:							;Start a period: reset the rink and clock, face off at center ic
 	lda.w #sfwrap					; sfwrap off
 	trb.w sflags
 	stz.w lastsfx
-	lda.w #replaystart		; replay buffer start
+	lda.w #replaystart				; replay buffer start
 	sta.w recbpr
 	lda.w #replaystart>>16
 	sta.w recbpr+2

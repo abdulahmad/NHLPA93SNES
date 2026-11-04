@@ -71,7 +71,7 @@ FigureJoy:							;Set which team each controller plays
 	sta.w cont2team					; cont2team
 	rtl
 .fjnpo:								; regular season: pads from the table by OptNOP
-	lda.w OptNOP				; regular season: .noplist by OptNOP
+	lda.w OptNOP					; regular season: .noplist by OptNOP
 	asl a							; times 4
 	asl a
 	sta.b d0

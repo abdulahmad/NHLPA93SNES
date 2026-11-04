@@ -51,7 +51,7 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	pha
 	lda.w Hpos
 	pha
-	lda.w recbpr			;recbpr must be inside
+	lda.w recbpr					;recbpr must be inside
 	;replaystart..replayend on a frame boundary
 	cmp.w #replaystart
 	lda.w recbpr+2
@@ -266,7 +266,7 @@ ReplayMode:							;Instant replay: rewind, play, stop, slow motion and single fr
 	tsb.w PadControlBits
 	lda.w #sfscrl
 	trb.w sflags
-	lda.w recbpr			; back to the current frame
+	lda.w recbpr					; back to the current frame
 	sta.b a4
 	lda.w recbpr+2
 	sta.b a4+2

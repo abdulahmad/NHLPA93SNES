@@ -66,7 +66,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	sta.w logochars
 	adc.w #$0035
 	sta.w scorechars
-	jsl.l setoptions_drawback			; draw the setup background
+	jsl.l setoptions_drawback		; draw the setup background
 	lda.w #GameSetUpMap				; decompress the setup graphics
 	sta.b tmp0
 	lda.w #GameSetUpMap>>16
@@ -244,7 +244,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	stz.w OptNOP
 .start:								;Start, or the demo: pojoy from OptNOP, the password in Cont.
 									;Playoffs, then MakeTree
-	lda.w OptNOP				; pojoy from the number of players
+	lda.w OptNOP					; pojoy from the number of players
 	sec
 	sbc.w #$0005
 	sta.w pojoy
@@ -389,7 +389,7 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	bne .psloop
 	lda.b d6						; restore the cursor line
 	sta.b d7
-	jml.l setoptions_teamnames			; print the team names
+	jml.l setoptions_teamnames		; print the team names
 .psd:								;print the choice of line d7 at x $11 (14 chars erased first): string d3
 									;of its .pl list; the team lines print the team name (.psdtp)
 	jsl.l printz					; print the string that follows
@@ -595,4 +595,4 @@ setoptions:							;The options screen: up and down pick a line, left and right c
 	%StringCt(CC_Font2,$03,$15,"Per. Length")
 	%StringCt(CC_Font2,$03,$17,"Penalties")
 	%StringCt(CC_Font2,$03,$19,"Line Changes")
-	%StringCC(CC_End)					;end (a 0 byte)
+	%StringCC(CC_End)				;end (a 0 byte)

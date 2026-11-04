@@ -1,4 +1,4 @@
-Intermission_ticker:							;Start the score ticker for the other games of the round
+Intermission_ticker:				;Start the score ticker for the other games of the round
 	lda.w TickerNum
 	bmi .last						; none yet
 	ora.w gamenum					; and not the current game

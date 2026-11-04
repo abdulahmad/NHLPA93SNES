@@ -233,14 +233,14 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	pha
 	bmi .endhl
 .1:									; check both pads: Start or A ends it
-	jsl.l orjoy					; Start or A ends it
+	jsl.l orjoy						; Start or A ends it
 	lda.b d1
 	bit.w #sbut|JOYA
 	beq .0
 	lda.w tmscore					; tied: random goal
 	cmp.w tmscore+2
 	bne .endhl
-	jsl.l randomd0_seed					; random number
+	jsl.l randomd0_seed				; random number
 	and.w #$0002
 	tax
 	inc.w tmscore,x
@@ -318,7 +318,7 @@ StartHL2:							;Play the highlight of playoff game a0 with its score; Start or 
 	sta.b d1
 	jsl.l Framer					; d0 x d1
 	jsl.l printscores1				; redraw the scores
-	jsl.l SetupPauseScreen						; DisplayStats
+	jsl.l SetupPauseScreen			; DisplayStats
 	stx.b xsave						; keep X
 	ldx.w #$001A
 .resta:								; pull a0 and the words after it back
