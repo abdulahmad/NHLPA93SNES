@@ -11,7 +11,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 .neg:								; signed compare: overflow flag corrects the sign
 	bvs .ex1
 .z:									; the puck only: players use checkgoalp
-	cpx.w #puckscnum					; not the puck: checkgoalp
+	cpx.w #puckscnum				; not the puck: checkgoalp
 	beq .puck
 	jmp.w checkgoalp				; else the player version
 .puck:								;puck: inside |dx| <= 16+wcradiusx and |dy| <= 4+wcradiusy?
@@ -221,7 +221,7 @@ checkgoal:							;Collision with the goal: over the top, into the net for a goal
 	beq .z13
 	jmp.w wallcoll					; bounce off
 .z13:								;at the crossbar height: off the post
-	lda.w Zpos+puckscnum				; puck height
+	lda.w Zpos+puckscnum			; puck height
 	cmp.w #$000D
 	beq .deflectsf					; crossbar height
 	lda.b d4						; mouth = half width - 5

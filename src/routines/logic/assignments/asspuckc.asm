@@ -50,7 +50,7 @@ asspuckc:							;Assignment: the puck carrier. Checks for offsides, line changes
 	clc
 	adc.w temp3,x
 	sta.b d0
-	lda.w #asspuckc_postab				; spot table
+	lda.w #asspuckc_postab			; spot table
 	sta.b a0
 	lda.w #asspuckc_postab>>16
 	sta.b a0+2

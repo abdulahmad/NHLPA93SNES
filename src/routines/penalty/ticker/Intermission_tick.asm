@@ -7,7 +7,7 @@ Intermission_tick:					;During the intermission, show the next ticker score from
 	sbc.w tickervc
 	cmp.w #$0150					; $150 frames
 	bcc .wait						; not yet
-	jsl.l NewTicker2_next				; next ticker score
+	jsl.l NewTicker2_next			; next ticker score
 	lda.w tickerstart				; back at the first game?
 	cmp.w TickerNum
 	bne Intermission_tick			; no: show the next one

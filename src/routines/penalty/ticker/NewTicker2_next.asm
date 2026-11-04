@@ -1,4 +1,4 @@
-NewTicker2_next:							;Go to the next ticker game
+NewTicker2_next:					;Go to the next ticker game
 	lda.w TickerNum
 	bmi .last						; none yet
 	ora.w gamenum					; and not the current game

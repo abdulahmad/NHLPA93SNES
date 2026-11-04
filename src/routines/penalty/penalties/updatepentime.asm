@@ -4,7 +4,7 @@ updatepentime:						;Once a second, count down the penalty box times of both tea
 	trb.w sflags3
 	lda.w gmclock					; clock stopped
 	bne .rtl						; yes: leave
-	lda.w Penaltytimer					; second countdown
+	lda.w Penaltytimer				; second countdown
 	sec								; minus d7
 	sbc.b d7
 	sta.w Penaltytimer

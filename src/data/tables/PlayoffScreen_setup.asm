@@ -1,4 +1,4 @@
-PlayoffScreen_setup:					;The playoff tree layout for each round
+PlayoffScreen_setup:				;The playoff tree layout for each round
 	dw .l0-PlayoffScreen_setup
 	dw .l1-PlayoffScreen_setup
 	dw .l2-PlayoffScreen_setup

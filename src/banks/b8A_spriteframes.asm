@@ -7,8 +7,8 @@ endif
 SpriteSet12:						;frame set 12 (includes SPFflip, SPFstumble, SPFhook): frames 532-605
 	incbin "../../Extracted/Graphics/Sprites/Sprites532_605.sanim"
 
-PlayoffBracketMap:					;PlayoffScreen_doarrow graphics: 23 rows of 12 map words; PlayoffScreen copies
-									;column n (arrow graphics n) to the tree
+PlayoffBracketMap:					;PlayoffScreen_doarrow graphics: 23 rows of 12 map words; PlayoffScreen
+									;copies column n (arrow graphics n) to the tree
 	incbin "../../Extracted/Graphics/Arrows.smap"
 
 incsrc "../data/text/Credits.asm"

@@ -512,7 +512,7 @@ assgoalie:							;Assignment: the goalie. Back to the crease, hold or pass the p
 	eor.w #$0001
 	sta.b d0
 .noflip:							; save type: +4 stick, -2 stack when conditions hold
-	lda.w Zpos+puckscnum				; puck low (Zpos <= 8) and slow: stick (+4)
+	lda.w Zpos+puckscnum			; puck low (Zpos <= 8) and slow: stick (+4)
 	sec
 	sbc.w #$0008
 	beq .pz

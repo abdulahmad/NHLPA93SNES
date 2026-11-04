@@ -1,6 +1,6 @@
 randomd0A:							;A = a random number from 0 to A-1
 	pha								; keep the limit
-	jsl.l randomd0_seed					; random 16-bit number
+	jsl.l randomd0_seed				; random 16-bit number
 	sta.b mula
 	pla								; limit
 	sta.b mulb

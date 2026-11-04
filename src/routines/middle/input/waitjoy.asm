@@ -1,4 +1,4 @@
-waitjoy:						;Wait for a new button press; in the demo the pause ends by itself
+waitjoy:							;Wait for a new button press; in the demo the pause ends by itself
 	jsl.l Intermission_tick			; ticker and highlights
 	bne .force						; done: force Start
 	jsl.l setvideo					; update the video
@@ -10,7 +10,7 @@ waitjoy:						;Wait for a new button press; in the demo the pause ends by itself
 	lda.w PadRaw1					; pad 1
 	ora.w PadRaw2					; or pad 2
 	bit.w #JOYR|JOYL				; L or R
-	bne waitjoy				; ignore them
+	bne waitjoy						; ignore them
 	jsl.l getpzjoy					; menu sounds and ticker
 	jsl.l nullrtl85
 	lda.w demoflag					; demo with no controller teams: count down pausetimer
@@ -21,11 +21,11 @@ waitjoy:						;Wait for a new button press; in the demo the pause ends by itself
 	dec.b pausetimer				; demo timer counts down
 	bne .chk
 .force:								; force Start
-	lda.w #sbut					; force Start
+	lda.w #sbut						; force Start
 	tsb.b d1
 .chk:								; any new presses?
 	lda.b d1						; new presses
-	beq waitjoy				; none: wait
+	beq waitjoy						; none: wait
 	lda.w #60000					; reset the demo timer
 	sta.b pausetimer
 	rtl

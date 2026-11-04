@@ -4,7 +4,7 @@ pucknorm:							;Assignment: the puck most of the time. Follows the carrier, wat
 	lda.w #pfna
 	trb.w pflags+puckscnum			; pfna
 	beq .nna
-	stz.w temp1+puckscnum				; temp1 = 0, temp2b = still puck timer 120
+	stz.w temp1+puckscnum			; temp1 = 0, temp2b = still puck timer 120
 	stz.w temp2+puckscnum
 	lda.w #$0078
 	sta.w temp2b+puckscnum
@@ -17,7 +17,7 @@ pucknorm:							;Assignment: the puck most of the time. Follows the carrier, wat
 	sec
 	sbc.b d7
 	sta.w puckcross+pcsize+pcframes
-	lda.w temp1+puckscnum				; every 5 frames: findpc
+	lda.w temp1+puckscnum			; every 5 frames: findpc
 	sec
 	sbc.b d7
 	sta.w temp1+puckscnum

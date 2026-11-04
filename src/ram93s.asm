@@ -9,7 +9,8 @@
 ;
 ; Format: Name = $xxxx (asar equate). DP names are < $100 and are written with .b; others with .w / .l.
 
-;scratch / port registers (SNES port artifacts: the 68k registers in direct page (a0-a4, d0-d7: 4 bytes each, word code uses the low word), scratch, math operands and the jml trampoline)
+;scratch / port registers (SNES port artifacts: the 68k registers in direct page (a0-a4, d0-d7: 4 bytes each,
+;word code uses the low word), scratch, math operands and the jml trampoline)
 xsave		=	$0A					;X saved around the movem-style push/pop loops of the 68k port (stx xsave
 									;: ldx #0 ...)
 a0				=	$33				; 68k a0: object index (SCnum*2) or long pointer [a0] (a0+2 = bank)
@@ -46,15 +47,15 @@ JMLOPCODE		=	$5C				; jml opcode (sfxretjml)
 ubut		=	$0800				; dpad up (SNES mask; 93G holds the bit number)
 dbut		=	$0400				; dpad down (SNES mask; 93G holds the bit number)
 lbut		=	$0200				; dpad left (SNES mask; 93G holds the bit number)
-rbut	=	$0100				; dpad right (SNES mask; 93G holds the bit number)
+rbut	=	$0100					; dpad right (SNES mask; 93G holds the bit number)
 bbut		=	$8000				; B: pass / switch player
 cbut	=	$0080					; shoot / check button in d2
 abut		=	$4000				; Y: hold / line change
-sbut	=	$1000				; Start (SNES mask; 93G sbut is a bit number)
+sbut	=	$1000					; Start (SNES mask; 93G sbut is a bit number)
 JOYR		=	$0010				; R shoulder
 JOYL		=	$0020				; L shoulder
 JOYA		=	$0080				; A button (same bit as cbut; the menus test it as A)
-osflag	=	$4E20				; find3d: d1 for a point off the screen (20000)
+osflag	=	$4E20					; find3d: d1 for a point off the screen (20000)
 
 ;sound: songs, sound effects and the sound driver (93S: SNES song and sfx numbers, SPC700 driver)
 ; The songs, numbered as the game numbers them: the cue number on port 0 of the sound program (92 and 93G
@@ -73,7 +74,8 @@ SngPeriodStartLen	=	$01CE
 SngLateGameLen	=	$0474
 SngPPLen		=	$022E
 SngFaceoffLen	=	$041A
-; The values cursong takes: the starters' own numbers (the cue of the same song is the Sng* value in the song group).
+; The values cursong takes: the starters' own numbers (the cue of the same song is the Sng* value in the song
+; group).
 CurSngGoal		=	1
 CurSngPeriodStart	=	2
 CurSngLateGame	=	3
@@ -130,7 +132,8 @@ SFXcrowdoff		=	$88				; crowd noise off
 ; sound effect state
 sfxmutetime			=	$04A7		;Vcount when sound effects were cut off: sfx are dropped for 180 frames
 									;after it
-crowdvol	=	$1646				; crowd noise volume last sent to the sound driver (updatesound); asv = the current level
+crowdvol	=	$1646				; crowd noise volume last sent to the sound driver (updatesound); asv =
+									; the current level
 ; driver interface (93S: SPC700 command queue and uploads)
 sndptr		=	$1A					; long pointer to the SPC upload stream ($1A-$1C, bank in $1C)
 sndqin		=	$1D					;sound command queue write index (bank $82 sfx queue at sndqueue, 8 words)
@@ -147,9 +150,9 @@ sndsettle			=	$049F		;set to 10 after the in-game sample upload: p_music_vblank 
 goalline	=	$B0					; Blueline+goalline = $108
 
 ;memory layout, replay buffer and record
-replaystart	=	$7E8174		; first replay frame record
+replaystart	=	$7E8174				; first replay frame record
 replaysize		=	$71				; bytes per replay frame record
-replayend		=	$7EFF41		; replay buffer end: adda43 wraps to replaystart
+replayend		=	$7EFF41			; replay buffer end: adda43 wraps to replaystart
 hlsavebuf		=	$7E7E74			;StartHL2: the game state (gmode-1 .. ScoreSumbytes) while a highlight
 									;plays. ReplayStart role
 lastframevc			=	$08DB		; Vcount at the last replay frame shown (ReplayMode, bank $8F); not read
@@ -239,7 +242,7 @@ textsave		=	$7FF800			; copy of textmap while the pause screen is up
 ; faceoff drop point and the replay record pointer (93G order)
 fodropx				=	$0136		; faceoff box x (pixels)
 fodropy				=	$0138		; faceoff box y
-recbpr		=	$0495		;long pointer to the next replay frame record (wraps at replayend
+recbpr		=	$0495				;long pointer to the next replay frame record (wraps at replayend
 									;to replaystart)
 
 ;vblank and frame timing
@@ -256,16 +259,17 @@ OldVcount			=	$0427		; Vcount at the last game frame (d7 = Vcount - OldVcount)
 impactstep		=	$E2				; d7*2: impact decay this game frame (game loop)
 velstep			=	$E4				; d7*16: velocity to position scale this game frame
 gravstep		=	$E6				; d7*96: gravity this game frame
-repeatdelayframes			=	$0499		; ProcessInputWithRepeat: frames to the next key repeat
+repeatdelayframes			=	$0499	; ProcessInputWithRepeat: frames to the next key repeat
 d7x1024			=	$E8				; d7*1024, set with the other time steps (no reader found yet)
 
 ; crowd sound level and the late game music cue timer (93G order)
-asv			=	$1644				; analog sound volume: current crowd noise level (updatesound, 93G asv); also
-									; scouting text without delays (down pressed)
-periodendtime		=	$042D		;third period: frames until StartSngLateGame plays its music cue (93G periodendtime; set by
-									;StartPer, 0 = done)
+asv			=	$1644				; analog sound volume: current crowd noise level (updatesound, 93G asv);
+									; also scouting text without delays (down pressed)
+periodendtime		=	$042D		;third period: frames until StartSngLateGame plays its music cue (93G
+									;periodendtime; set by StartPer, 0 = done)
 
-;sort objects (SortCords). 93S: structure of arrays, one word per object, 16 objects ($20 bytes per field); index with X/Y = SCnum*2; the byte fields (pnum ... handed) are each a word array
+;sort objects (SortCords). 93S: structure of arrays, one word per object, 16 objects ($20 bytes per field);
+;index with X/Y = SCnum*2; the byte fields (pnum ... handed) are each a word array
 Xpos		=	$08FF				; Xpos (integer part)
 Xfrac		=	$091F				; fraction of Xpos
 attribute	=	$09DF				; frame attribute bits (attrxflip, attryflip)
@@ -355,13 +359,13 @@ GGSleft		=	aggress				; goalie glove save left (92 name), puckgoalie
 fighting	=	$10DF				; fighting rating (fight strength and fight odds; 93 $74)
 checking	=	$10FF				; checking rating (check odds; 93 $75)
 handed		=	$111F				; nonzero: left handed (pldcheck bit 0; 0 = right handed: +3 faceoff)
-puckscnum			=	$1C				; object index*2 of the puck (93G puckscnum is the index, 14)
+puckscnum			=	$1C			; object index*2 of the puck (93G puckscnum is the index, 14)
 puckx	=	Xpos+puckscnum
 puckvx	=	Xvel+puckscnum
 pucky	=	Ypos+puckscnum
 puckvy	=	Yvel+puckscnum
 puckvz	=	Zvel+puckscnum
-puckc	=	newpos+puckscnum			; SCnum of the puck carrier, negative = loose. puckc (puck newpos)
+puckc	=	newpos+puckscnum		; SCnum of the puck carrier, negative = loose. puckc (puck newpos)
 netobj1		=	$18					; object index*2 of goal net 1 (y +268)
 netobj2		=	$1A					; object index*2 of goal net 2 (y -268)
 Ylist		=	$121F				; y of each sort object
@@ -578,7 +582,7 @@ lcplayer			=	$0183		;SCnum of the player who opened the line change box ($FFFE =
 PenaltyBufferEnd	=	$129C		; the word before PenBuf (PenBuf-2), used as the list base
 PenBuf				=	$129E		; up to 32 penalties: (penalty number, SCnum) byte pairs, 0 = free
 PenCntDwn			=	$12E0		; penalty/fight count down (negative = fight over)
-Penaltytimer			=	$12E2		; frames to the next penalty clock second (updatepentime, 24 per second)
+Penaltytimer			=	$12E2	; frames to the next penalty clock second (updatepentime, 24 per second)
 PBnum				=	$12E4		; players in the penalty boxes: home*16 + visitors
 InjCntDown			=	$12E6
 penmsgtimer			=	$12E8		;count down to reprinting the horizontal penalty message line ($7FFF =
@@ -691,11 +695,11 @@ screentimer			=	$08EB		; frames left on the scouting report screen
 TestList		=	$7F0000			; scouting report paragraph numbers (-1 ends)
 nibblebuffer		=	$041F		; 4 words: the weights WeightedRandomSelect picks from (SetScore)
 pausetimer		=	$EE				; pause menu: frames left before a demo pause ends by itself (60000)
-varend		=	$164E			; Start clears DP/RAM $0000 up to here
+varend		=	$164E				; Start clears DP/RAM $0000 up to here
 
 ;options, demo, random seed
 OptPlayMode	=	$1600				; play mode (0 regular season, 1 continue playoffs, 2/3 new playoffs)
-OptNOP	=	$1602				; players option
+OptNOP	=	$1602					; players option
 Opt1team	=	$1604				; team 1
 Opt2team	=	$1606				; team 2
 Optperlen	=	$1608				; period length index

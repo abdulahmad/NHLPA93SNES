@@ -1,6 +1,6 @@
 suba4:								;Move the replay one frame back
 	lda.b a4						; a4
-	cmp.w #replaystart		; start of the buffer
+	cmp.w #replaystart				; start of the buffer
 	bne .a4ne
 	lda.b a4+2						; bank
 	cmp.w #replaystart>>16
@@ -21,7 +21,7 @@ suba4:								;Move the replay one frame back
 	sbc.w #$0000					; carry
 	sta.b a4+2
 	lda.b a4
-	cmp.w recbpr			; compare with the pointer
+	cmp.w recbpr					; compare with the pointer
 	beq .a4eq						; equal
 	jml.l RestoreReplayFrame		; restore the frame
 .a4eq:								; same bank as the record pointer
