@@ -30,7 +30,7 @@ FramerTiles:						;the 4 Framer box tiles (4bpp, Framer.chr): sent to vram by
 
 incsrc "../routines/video/crowd/showcrowd.asm"
 incsrc "../routines/hockey/password/SuperMult.asm"
-incsrc "../routines/hockey/screens/setoptions_drawback.asm"
+incsrc "../routines/hockey/optsetup/setoptions_drawback.asm"
 incsrc "../routines/middle/math/mulu.asm"
 SpriteSet8:							;frame set 8 (arrows, pads, puck and goal): frames 384-405
 	incbin "../../Extracted/Graphics/Sprites/Sprites384_405.sanim"
@@ -44,10 +44,10 @@ SpriteSet7:							;frame set 7 (gloves, fight, injury and penalty box): frames 3
 	incbin "../../Extracted/Graphics/Sprites/Sprites353_383.sanim"
 incsrc "../routines/hockey/password/GetPassWord.asm"
 incsrc "../data/text/PasswordText.asm"
-incsrc "../routines/hockey/screens/TitleScreen.asm"
+incsrc "../routines/hockey/title/TitleScreen.asm"
 incsrc "../data/text/CreditsBlank.asm"
 incsrc "../routines/hockey/playoffs/PlayoffScreen.asm"
-incsrc "../routines/tables/PlayoffScreen_setup.asm"
+incsrc "../data/tables/PlayoffScreen_setup.asm"
 incsrc "../routines/logic/assignments/assdefd.asm"
 incsrc "../routines/hockey/password/SuperAdd.asm"
 incsrc "../routines/logic/skating/skateto.asm"

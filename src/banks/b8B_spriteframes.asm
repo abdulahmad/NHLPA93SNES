@@ -5,9 +5,9 @@ if pc() < $8B8000
 	org $8B8000
 endif
 incsrc "../routines/hockey/playoffs/NewPO.asm"
-incsrc "../routines/hockey/input/FigureJoy.asm"
-incsrc "../routines/hockey/screens/Opening.asm"
-incsrc "../routines/hockey/screens/Opening4.asm"
+incsrc "../routines/hockey/setup/FigureJoy.asm"
+incsrc "../routines/hockey/setup/Opening.asm"
+incsrc "../routines/hockey/setup/Opening4.asm"
 incsrc "../routines/hockey/password/ReadPassBits.asm"
 incsrc "../routines/hockey/playoffs/ResolveGames.asm"
 SpriteSet5:							;frame set 5 (falls: SPFfallback, SPFfallfwd): frames 273-336

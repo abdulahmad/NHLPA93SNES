@@ -30,3 +30,6 @@ ClearTeamStats,clearTeamStats,93G
 (raw offset),pldpass,92G setplayer fields (.pld rating byte; as 94G)
 (raw offset),pldsize,92G setplayer fields (.pld rating byte; as 94G)
 (raw offset),tmftimeout,93G (tmfmid and tmfslide share it)
+GetRosterEntry89,GetPlayerNamePointer,93G (same callers getname and FormatPlayerNumInitial; 93G keeps GetRosterEntry as the other copy)
+pucknothing,puckunflip,93G (the body is puckunflip; the 93G pucknothing is only a bra to it, and Rev B points the table at puckunflip)
+waitxsr,waitx,93G (middle93 waitx: wait d0 frames or a button; 94G and 95G keep waitx)

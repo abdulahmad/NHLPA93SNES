@@ -1,5 +1,13 @@
 # Handoff: NHLPA93 SNES
 
+## Now
+
+- Stage / unit: CONTRIBUTING.md rewrite; added `tools/check_scope.py` (HARNESS scope gate).
+- Branch: `claude/project-thread-ggw7zu`
+- Last check: docs + scope script
+- Next: do not merge to main
+- Open PRs: (this unit)
+
 ## Status (2026-10-20)
 
 - Everything is merged. `node tools/build.js` is byte-identical to the retail ROM. The long plan below is history: its steps 1 to 5 are merged (including the comment pass: every label has a comment).

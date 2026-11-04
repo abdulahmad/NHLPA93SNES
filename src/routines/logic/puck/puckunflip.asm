@@ -1,4 +1,4 @@
-pucknothing:						;Assignment: the puck just slides and stops spinning
+puckunflip:						;Assignment: the puck just slides and stops spinning
 	lda.w SPAnum+puckscnum			; current puck animation
 	cmp.w #$0008					; SPAnum 2*4..6*4: flip the face
 	bcc .k							; before the spin frames: skip

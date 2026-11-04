@@ -30,7 +30,7 @@ FormatPlayerNumInitial:				;mesarea = the number, first initial and last name of
 	cpx.w #$0004
 	bne .savea
 	ldx.b xsave						; restore X
-	jsl.l GetRosterEntry89
+	jsl.l GetPlayerNamePointer
 	stx.b xsave						; keep X
 	ldx.w #$0000
 .pushrec:							; save a0 and the words after it (2 words)

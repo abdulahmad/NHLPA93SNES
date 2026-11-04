@@ -13,7 +13,7 @@ SmallFontTiles:						;packed small font tiles (100 4bpp tiles, the print font of
 	incbin "../../Extracted/Graphics/SmallFont.chr.pak"
 SmallFontTilesEnd:					; end of SmallFontTiles
 
-incsrc "../routines/hockey/teams/getname.asm"
+incsrc "../routines/hockey/setup/getname.asm"
 
 IceRinkMap:							;the vertical rink tile map: 48 x 85 words (8160 bytes,
 									;IceRink.smap). Rows go to vram as Vpos scrolls (updatescroll_rows)
@@ -26,12 +26,12 @@ RinkPalette:						;the game palette: 128 colors (Rink.spal), copied to both
 									;halves of palbuffer by setupice
 	incbin "../../Extracted/Graphics/Pals/Rink.spal"
 
-incsrc "../routines/hockey/screens/Pausemode.asm"
-incsrc "../routines/hockey/screens/Pausemode_menu.asm"
-incsrc "../routines/hockey/screens/waitjoy.asm"
-incsrc "../routines/hockey/screens/PauseResume.asm"
-incsrc "../routines/hockey/screens/PauseLeave.asm"
-incsrc "../routines/hockey/screens/Opening2.asm"
+incsrc "../routines/hockey/game/Pausemode.asm"
+incsrc "../routines/hockey/game/Pausemode_menu.asm"
+incsrc "../routines/middle/input/waitjoy.asm"
+incsrc "../routines/hockey/game/PauseResume.asm"
+incsrc "../routines/hockey/game/PauseLeave.asm"
+incsrc "../routines/hockey/setup/Opening2.asm"
 
 RefsMap:							;the ref window frames, 7 frames of 8 x 7 words (Refs.smap);
 									;PushRef copies frame d0 (+$70 each)
