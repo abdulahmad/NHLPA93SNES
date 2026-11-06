@@ -32,7 +32,7 @@ asscenterd:							;Assignment: the center on defense, halfway between the puck a
 	sec
 	sbc.w #$0006					; his side
 	sta.b d1						; d1
-	lda.w #$0006					; new assignment: offense
+	lda.w #acentero					; new assignment: offense
 	sta.b d0
 	txa								; player
 	lsr a

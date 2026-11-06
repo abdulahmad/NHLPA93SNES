@@ -28,3 +28,4 @@ rule in the same commit as the fix that confirmed it, newest last: `- YYYY-MM-DD
 
 - 2026-11-04 contributing: CONTRIBUTING.md must not contradict History: lineage lives only in the name history file, never in source comments. (CONTRIBUTING rewrite vs RULES History row)
 - 2026-11-04 comments: leftover trailing comments off column 36 (or over 110 columns) fail verify_all even when the ROM MATCH; realign with tabs, wrap the comment. (origin/main after #120: 134 layout errors)
+- 2026-11-06 names: `adefo` and the other `a*`/`p*` equates are asstab slot indexes, not the `ass*` routines. Shared slots keep the Genesis name. SNES-only or unnamed slots take the 95PC debug-monitor string in `a*`/`p*` style (94G `abreakaway` even when the number differs; invent `adumpin` — 95PC has none). Use that game's slot numbers. (Abdul)

@@ -87,7 +87,7 @@ assdefd:							;Assignment: a defenseman on defense stays between the furthest a
 	bmi .de0
 	jsl.l chkpk						; check the puck
 	beq .de0
-	lda.w #1						; assignment 1 in d0
+	lda.w #adefo					; assignment 1 in d0
 	sta.b d0
 	lda.b d1
 	sec

@@ -15,7 +15,7 @@ passtoa0:							;Pass the puck to player a0, leading him by his speed
 	ldy.b a3
 	stx.b a3
 	sty.b a0
-	lda.w #$0013					; assignment $13: pass receive
+	lda.w #apassrec					; assignment $13: pass receive
 	sta.b d0
 	jsl.l assinsert					; insert assignment d0
 	ldx.b a0						; swap back

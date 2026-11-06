@@ -39,7 +39,7 @@ asswingd:							;Assignment: a wing on defense covers his side
 	sec
 	sbc.w #6
 	sta.b d1
-	lda.w #4
+	lda.w #awingo
 	sta.b d0
 	txa
 	lsr a

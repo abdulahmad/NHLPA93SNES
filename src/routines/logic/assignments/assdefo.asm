@@ -35,7 +35,7 @@ assdefo:							;Assignment: a defenseman on offense holds the blue line on his s
 	lda.w #$0000					; not below zero
 .store:								; store the re-think timer
 	sta.w temp1,x
-	lda.w #2						; adefd
+	lda.w #adefd					; adefd
 	sta.b d0
 	ldy.b a2						; team of this player
 	lda.w tmflags,y					; offsides: defend
