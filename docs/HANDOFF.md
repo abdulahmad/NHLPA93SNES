@@ -2,11 +2,11 @@
 
 ## Now
 
-- Stage / unit: comment-layout MATCH (column 36 / wrap at 110).
-- Branch: `cursor/93s-comment-layout-020b`
-- Last check: `tools/verify_all.sh` ALL MATCH; `python3 tools/check_comments.py` comment layout OK
-- Next: do not merge to main (Abdul: item 1 of 1 then 3 then 4)
-- Open PRs: (this unit)
+- Stage / unit: asstab slot-index equates — leftover raw immediates now use the existing `a*`/`p*` names (`#acentero`, `#adefo`, …).
+- Branch: `cursor/93s-asstab-equates-4dc5`
+- Last check: `node tools/build.js` MATCH; `python3 tools/check_comments.py` comment layout OK; `python3 tools/check_scope.py` scope OK
+- Next: pairing / report regen after 94S asstab names land
+- Open PRs: this unit
 
 ## Status (2026-10-20)
 

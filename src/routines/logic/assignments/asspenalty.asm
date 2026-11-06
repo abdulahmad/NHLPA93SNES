@@ -143,7 +143,7 @@ asspenalty:							;Assignment: player X skates to the penalty box, glides in and
 	lda.w pflags,x
 	and.w #~pf2pen&$FFFF			; pf2pen off
 	sta.w pflags,x
-	lda.w #$0D						; adopen
+	lda.w #adopen					; adopen
 	sta.b d0
 	jml.l assreplace				; replace the assignment with d0
 .rtl:								; return

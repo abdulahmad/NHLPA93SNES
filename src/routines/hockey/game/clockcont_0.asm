@@ -2,7 +2,7 @@ clockcont_0:						;End of a period: in the third period the winners celebrate (w
 									;Stanley Cup after the final), and the clock stops
 	ldx.w #$001C					; object 14
 	stx.b a3
-	lda.w #$18						; assignment $18
+	lda.w #pnorm					; assignment $18
 	sta.b d0
 	jsl.l assinsert					; insert it
 	lda.w gsp						; period
@@ -10,7 +10,7 @@ clockcont_0:						;End of a period: in the third period the winners celebrate (w
 	bcs .p3							; yes
 	jmp.w .notp3					; no
 .p3:								; assignment 7 for team 0
-	lda.w #$0007					; assignment 7
+	lda.w #ascore					; assignment 7
 	sta.b d0
 	ldx.w #$0000					; team 0
 	stx.b a3
@@ -46,7 +46,7 @@ clockcont_0:						;End of a period: in the third period the winners celebrate (w
 	cmp.w #$0003					; three: the cup
 	bne .winners
 .cup:								; assignment 8: 12 players
-	lda.w #$0008					; assignment 8
+	lda.w #astanley					; assignment 8
 	sta.b d0
 	lda.w #$000B					; 12 players
 	sta.b d2
@@ -73,7 +73,7 @@ clockcont_0:						;End of a period: in the third period the winners celebrate (w
 	lda.w position,x				; position
 	beq .next						; none
 	jsl.l assinsert					; assignment
-	lda.w #$0007					; 7
+	lda.w #ascore					; 7
 	sta.b d0
 .next:								; next player
 	inx

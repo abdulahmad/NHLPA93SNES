@@ -29,7 +29,7 @@ StartPer:							;Start a period: reset the rink and clock, face off at center ic
 	stx.b a3
 	stz.w fox						; face off x = 0
 	stz.w foy						; face off y = 0
-	lda.w #$1B
+	lda.w #pfaceoff
 	sta.b d0
 	jsl.l assreplace				; set the assignment
 	lda.w gsp						; third period: periodendtime = random time
