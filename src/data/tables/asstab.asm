@@ -1,6 +1,8 @@
 asstab:								;The assignment routines that updateplayers calls, by
 									;assignment number. There is no "do nothing" entry, so assignment
 									;numbers from assscore on are one lower than in 92.
+anull	=	$00						;empty assignment (rtss)
+	assert (pc()-asstab)/4 == anull
 	dd rtss
 
 adefo	=	$01						;defensive player on offense (assdefo)

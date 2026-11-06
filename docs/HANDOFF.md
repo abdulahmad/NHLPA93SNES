@@ -2,10 +2,10 @@
 
 ## Now
 
-- Stage / unit: asstab slot-index equates — leftover raw immediates now use the existing `a*`/`p*` names (`#acentero`, `#adefo`, …).
-- Branch: `cursor/93s-asstab-equates-4dc5`
-- Last check: `node tools/build.js` MATCH; `python3 tools/check_comments.py` comment layout OK; `python3 tools/check_scope.py` scope OK
-- Next: pairing / report regen after 94S asstab names land
+- Stage / unit: asstab slot $00 named `anull` (95PC "null" / `rtss`). Shared 92G `a*`/`p*` names already in place.
+- Branch: `cursor/asstab-anull-063b`
+- Last check: `tools/verify_all.sh -q` ALL MATCH; `python3 tools/check_scope.py` scope OK
+- Next: merge when MATCH, then report regen
 - Open PRs: this unit
 
 ## Status (2026-10-20)
