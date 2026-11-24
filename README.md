@@ -14,13 +14,13 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for how changes are made (names, comments
 - Remaining: a pass to align it with NHLPA 93 Genesis, checking every asset is extracted correctly, and using the same file names and formats as the Genesis version (e.g. a file called title1 on Genesis is title1 on SNES too).
 - Music names, frame lists and animation names still need proper labels.
 
-**AI agent: start with [docs/history/START_HERE.md](docs/history/START_HERE.md).**
+**AI agent: start with [AGENTS.md](AGENTS.md).** `docs/history/` is the archive of the finished segment phase.
 
 Reverse engineered source of NHLPA Hockey '93 for the Super Nintendo, assembled with asar. The full build is byte-identical to `nhlpa93retail.sfc` (sha1 `76a01492cfb656e9fce0094bca356c312adfea0e`). Every bank is disassembled and named; the source is laid out like the NHLPA 93 Genesis source (one file per bank, one file per routine, routine folders named after the 93G modules).
 
 ## Lineage
 
-The SNES port is a hybrid: it began as a port of NHL92 Genesis (likely while NHLPA93 Genesis was in development), then added what NHLPA93 needed. Some things look like 92G rather than 93G (in-game scoreboard layout, possibly title-screen credits colour). NHLPA93 Genesis is the naming source of truth; 92G names are used only where the SNES follows 92G with no 93G counterpart. See `docs/discovery93snes.md`. Related: [NHL94Genesis](https://github.com/abdulahmad/NHL94Genesis), [NHL95Genesis](https://github.com/abdulahmad/NHL95Genesis), [NHLPA93Genesis](https://github.com/abdulahmad/NHLPA93Genesis), [NHL92Genesis](https://github.com/abdulahmad/NHL92Genesis); McMarkis's NHL 94 SNES decomp for SNES-only systems.
+The SNES port is a hybrid: it began as a port of NHL92 Genesis (likely while NHLPA93 Genesis was in development), then added what NHLPA93 needed. Some things look like 92G rather than 93G (in-game scoreboard layout, possibly title-screen credits colour). NHLPA93 Genesis is the naming source of truth; 92G names are used only where the SNES follows 92G with no 93G counterpart. See `docs/history/discovery93snes.md`. Related: [NHL94Genesis](https://github.com/abdulahmad/NHL94Genesis), [NHL95Genesis](https://github.com/abdulahmad/NHL95Genesis), [NHLPA93Genesis](https://github.com/abdulahmad/NHLPA93Genesis), [NHL92Genesis](https://github.com/abdulahmad/NHL92Genesis); McMarkis's NHL 94 SNES decomp for SNES-only systems.
 
 ## Layout
 
